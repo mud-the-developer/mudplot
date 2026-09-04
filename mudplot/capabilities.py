@@ -49,7 +49,7 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
     },
     "bar": {
         "required": ["x", "y"],
-        "optional": ["label", "color", "alpha"],
+        "optional": ["label", "color", "alpha", "axis"],
     },
     "errorbar": {
         "required": ["x", "y"],
@@ -64,27 +64,42 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "marker_size",
             "line_width",
             "alpha",
+            "axis",
         ],
     },
     "band": {
         "required": ["x", "y", "y2"],
-        "optional": ["group", "label", "color", "alpha"],
+        "optional": ["group", "label", "color", "alpha", "axis"],
     },
     "hline": {
         "required": ["value"],
-        "optional": ["label", "color", "line_style", "line_width", "alpha"],
+        "optional": [
+            "label",
+            "color",
+            "line_style",
+            "line_width",
+            "alpha",
+            "axis",
+        ],
     },
     "vline": {
         "required": ["value"],
-        "optional": ["label", "color", "line_style", "line_width", "alpha"],
+        "optional": [
+            "label",
+            "color",
+            "line_style",
+            "line_width",
+            "alpha",
+            "axis",
+        ],
     },
     "text": {
         "required": ["text", "at"],
-        "optional": ["color", "alpha"],
+        "optional": ["color", "alpha", "axis"],
     },
     "annotate": {
         "required": ["text", "at"],
-        "optional": ["to", "color", "alpha"],
+        "optional": ["to", "color", "alpha", "axis"],
     },
     "hist": {
         "required": ["x"],

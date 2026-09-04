@@ -263,6 +263,64 @@ def test_cli_gives_clean_error_not_traceback_for_missing_file(tmp_path):
     assert "error:" in result.stderr
 
 
+def test_lazy_render_attribute_survives_repeated_access():
+    # BUG: mudplot's lazy `__getattr__` (PEP 562) resolved `mp.render` via
+    # importlib.import_module("mudplot.render"), but importing a submodule
+    # has the side effect of binding it onto the parent package's namespace
+    # under its own name -- i.e. it set mudplot.render = <submodule>
+    # directly in mudplot.__dict__, silently shadowing the *function* we'd
+    # just resolved. The first mp.render(...) call worked (it used the
+    # freshly-resolved function directly), but every subsequent access
+    # found the submodule sitting in __dict__ instead of the function,
+    # failing with "'module' object is not callable". This also affected
+    # `mp.save` (backed by the same submodule) in either access order.
+    import subprocess
+    import sys
+
+    # A fresh subprocess is required: within this test session mudplot is
+    # already imported and its lazy attributes may already be resolved by
+    # earlier tests, which would make an in-process repro order-dependent.
+    script = (
+        "import mudplot as mp\n"
+        "import matplotlib; matplotlib.use('Agg')\n"
+        "p = mp.plot({'x':[1,2],'y':[3,4]}).line('x','y')\n"
+        "mp.render(p.spec)\n"  # first access -- always worked
+        "mp.render(p.spec)\n"  # second access -- used to break
+        "mp.save(p.spec, '/tmp/_mudplot_lazy_test.png')\n"
+        "mp.render(p.spec)\n"  # after save() -- also used to break
+        "print('OK')\n"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script], capture_output=True, text=True
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "OK"
+
+
+def test_lazy_attributes_stay_functions_regardless_of_access_order():
+    import subprocess
+    import sys
+
+    orders = [
+        "render,render,render",
+        "save,render,save,render",
+        "tex_preview,render,render",
+        "render,save,render,save",
+    ]
+    for order in orders:
+        script = (
+            "import mudplot as mp\n"
+            f"names = {order!r}.split(',')\n"
+            "kinds = [type(getattr(mp, n)).__name__ for n in names]\n"
+            "assert all(k == 'function' for k in kinds), (names, kinds)\n"
+            "print('OK')\n"
+        )
+        result = subprocess.run(
+            [sys.executable, "-c", script], capture_output=True, text=True
+        )
+        assert result.returncode == 0, f"{order}: {result.stderr}"
+
+
 def test_grouped_bars_are_dodged_not_overlapping():
     # BUG: grouped bar charts drew every group's bars at the exact same x
     # position with the same width, so shorter bars were completely hidden
@@ -274,6 +332,57 @@ def test_grouped_bars_are_dodged_not_overlapping():
     xs = sorted({round(float(patch.get_x()), 3) for patch in fig.axes[0].patches})
     # 3 x-positions * 2 groups = 6 distinct (dodged) bar positions, not 3
     assert len(xs) == 6
+
+
+def test_categorical_x_bar_chart_does_not_crash():
+    # BUG: `_col()` forced dtype=float unconditionally, so a very common
+    # case -- a bar chart with string category labels on x, e.g.
+    # {"category": ["control", "treatment"], ...} -- crashed with
+    # "could not convert string to float" instead of working the way plain
+    # matplotlib (which has native categorical-axis support) would.
+    data = {"category": ["control", "treatment", "placebo"], "value": [10, 25, 12]}
+    p = mp.plot(data).bar("category", "value")
+    fig = render(p.spec)
+    ax = fig.axes[0]
+    assert [t.get_text() for t in ax.get_xticklabels()] == [
+        "control",
+        "treatment",
+        "placebo",
+    ]
+    assert len(ax.patches) == 3
+
+
+def test_categorical_x_grouped_bar_chart_dodges_and_labels_correctly():
+    data = {
+        "category": ["control", "treatment", "placebo"] * 2,
+        "value": [10, 25, 12, 8, 30, 15],
+        "sex": ["M"] * 3 + ["F"] * 3,
+    }
+    p = mp.plot(data).bar("category", "value", group="sex")
+    fig = render(p.spec)
+    ax = fig.axes[0]
+    assert [t.get_text() for t in ax.get_xticklabels()] == [
+        "control",
+        "treatment",
+        "placebo",
+    ]
+    assert len(ax.patches) == 6
+
+
+def test_categorical_x_line_and_scatter_do_not_crash():
+    data = {"category": ["a", "b", "c"], "y": [1, 2, 3]}
+    render(mp.plot(data).line("category", "y").spec)
+    render(mp.plot(data).scatter("category", "y").spec)
+
+
+def test_numeric_x_bar_chart_unaffected_by_categorical_support():
+    # regression guard: adding categorical-x support must not change
+    # behaviour for the (much more common) plain-numeric-x case.
+    p = mp.plot({"x": [1, 2, 3], "y": [10, 20, 30]}).bar("x", "y")
+    fig = render(p.spec)
+    ax = fig.axes[0]
+    xs = sorted(patch.get_x() + patch.get_width() / 2 for patch in ax.patches)
+    assert xs == pytest.approx([1.0, 2.0, 3.0])
 
 
 def test_ungrouped_bar_is_not_dodged():

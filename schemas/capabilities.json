@@ -45,7 +45,8 @@
       "optional": [
         "label",
         "color",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "errorbar": {
@@ -63,7 +64,8 @@
         "marker",
         "marker_size",
         "line_width",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "band": {
@@ -76,7 +78,8 @@
         "group",
         "label",
         "color",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "hline": {
@@ -88,7 +91,8 @@
         "color",
         "line_style",
         "line_width",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "vline": {
@@ -100,7 +104,8 @@
         "color",
         "line_style",
         "line_width",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "text": {
@@ -110,7 +115,8 @@
       ],
       "optional": [
         "color",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "annotate": {
@@ -121,7 +127,8 @@
       "optional": [
         "to",
         "color",
-        "alpha"
+        "alpha",
+        "axis"
       ]
     },
     "hist": {

@@ -46,9 +46,25 @@ def __getattr__(name: str):
     target = _LAZY.get(name)
     if target is None:
         raise AttributeError(f"module 'mudplot' has no attribute {name!r}")
-    mod_name, _, attr = target.partition(":")
+    mod_name, _, _attr = target.partition(":")
     mod = importlib.import_module(mod_name)
-    return getattr(mod, attr) if attr else mod
+    # Importing a submodule has the side effect of binding it onto this
+    # package's namespace under *its own* name -- e.g. importing
+    # "mudplot.render" sets ``mudplot.render`` to that submodule directly in
+    # mudplot.__dict__, bypassing __getattr__ entirely on every future
+    # lookup. When a _LAZY key shares a name with its submodule ("render"
+    # does), or when resolving a *different* key that happens to import the
+    # same submodule (e.g. "save" also lives in mudplot.render), that side
+    # effect pre-emptively squats on the "render" slot with the raw module
+    # instead of the function -- so a plain "cache what I just resolved"
+    # fix isn't enough; every _LAZY entry backed by this same submodule has
+    # to be fixed up together, in one pass, regardless of which one was
+    # actually requested.
+    for key, other_target in _LAZY.items():
+        other_mod_name, _, other_attr = other_target.partition(":")
+        if other_mod_name == mod_name:
+            globals()[key] = getattr(mod, other_attr) if other_attr else mod
+    return globals()[name]
 
 
 def __dir__():

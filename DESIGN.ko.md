@@ -186,6 +186,24 @@ mp.save(spec, "fig.pdf")          # effect
 10. **grouped bar 차트가 같은 x 위치에 겹쳐 그려짐** (짧은 막대가 완전히
     가려짐 — 데이터 왜곡 위험) — 그룹 수에 따라 자동으로 나란히 배치(dodge).
 
+### 후속 감사 ("지금 어떤 plot을 지원하는지" 질문에 답하면서 발견)
+
+11. **`capabilities()`가 실제 기능을 과소 보고**: `bar`/`errorbar`/`band`/
+    `hline`/`vline`/`text`/`annotate` 모두 `axis="y2"` 라우팅을 실제로
+    지원하는데, `LAYER_TYPES`에는 `line`/`scatter`만 `axis` 필드가 있다고
+    나와있었음. 자세한 내용은 영어 DESIGN.md §4c2 참고.
+12. **카테고리형 x축 값이 모든 시리즈 레이어에서 크래시함**: `_col()`이
+    무조건 `dtype=float`로 강제 변환해서, bar 차트에 `["control",
+    "treatment"]` 같은 문자열 카테고리를 쓰면 (매우 흔한 사용 사례) 깨졌음.
+    문자열 x 컬럼을 0..n-1 위치로 매핑하고 원래 문자열을 눈금 라벨로 쓰도록
+    수정.
+13. **`mp.render`/`mp.save` lazy 속성이 프로세스에서 첫 호출 후 깨짐**:
+    PEP 562 `__getattr__`가 서브모듈을 import하는 부수효과로 자기 자신의
+    슬롯을 서브모듈 객체로 덮어써서, 두 번째 호출부터 "'module' object is
+    not callable" 에러가 났음. 202개 테스트가 통과했음에도 못 잡힌 이유는
+    거의 모든 테스트가 내부 함수를 직접 import해서 썼기 때문. 관련된 모든
+    lazy 항목을 한 번에 고정하도록 수정.
+
 추가로 방어적 검증 강화: `validate()`에 데이터 컬럼 길이 불일치, 행렬
 비정방형(jagged), 빈 패널, 잘못된 spine 문자, alpha 범위, `at`/`to` 길이
 체크 추가. `SetColorbar`/`SetEncoding`/`SetFont`/`SetAxesStyle`/`SetGridStyle`/

@@ -7,17 +7,17 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `annotate`
 
 - **required**: `text`, `at`
-- **optional**: `to`, `color`, `alpha`
+- **optional**: `to`, `color`, `alpha`, `axis`
 
 ### `band`
 
 - **required**: `x`, `y`, `y2`
-- **optional**: `group`, `label`, `color`, `alpha`
+- **optional**: `group`, `label`, `color`, `alpha`, `axis`
 
 ### `bar`
 
 - **required**: `x`, `y`
-- **optional**: `label`, `color`, `alpha`
+- **optional**: `label`, `color`, `alpha`, `axis`
 
 ### `box`
 
@@ -27,7 +27,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `errorbar`
 
 - **required**: `x`, `y`
-- **optional**: `yerr`, `xerr`, `group`, `label`, `color`, `capsize`, `marker`, `marker_size`, `line_width`, `alpha`
+- **optional**: `yerr`, `xerr`, `group`, `label`, `color`, `capsize`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`
 
 ### `heatmap`
 
@@ -42,7 +42,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `hline`
 
 - **required**: `value`
-- **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`
+- **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`
 
 ### `line`
 
@@ -57,12 +57,12 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `text`
 
 - **required**: `text`, `at`
-- **optional**: `color`, `alpha`
+- **optional**: `color`, `alpha`, `axis`
 
 ### `vline`
 
 - **required**: `value`
-- **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`
+- **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`
 
 ## Palettes
 

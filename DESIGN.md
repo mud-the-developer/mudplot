@@ -219,6 +219,45 @@ regression tests in `tests/test_bugfixes.py`):
     data-integrity risk, not just cosmetic. Fixed with automatic
     side-by-side dodging based on group count.
 
+### Follow-up audit (found while answering "what plot types are supported?")
+
+11. **`capabilities()` under-reported real functionality**: `bar`/
+    `errorbar`/`band`/`hline`/`vline`/`text`/`annotate` all correctly
+    support `axis="y2"` routing in `render.py`/`validate.py`, but
+    `LAYER_TYPES` only listed `axis` as a field for `line`/`scatter`. An
+    agent trusting `capabilities()` to plan a figure would never have
+    discovered this actually worked. Fixed, and locked in with a
+    cross-module consistency test
+    (`tests/test_capabilities_consistency.py`) that pins `LAYER_TYPES`,
+    `LayerSpec`'s real fields, and `render`/`validate`'s type sets together.
+12. **Categorical x-axis values crashed every series layer.** `_col()`
+    forced `dtype=float` unconditionally, so an extremely common case for a
+    bar chart — string category labels like `["control", "treatment"]` on
+    x — failed with "could not convert string to float" instead of working
+    the way plain matplotlib (which has native categorical-axis support)
+    would. Fixed: non-numeric x columns are now mapped to evenly-spaced
+    positions with the original strings applied as tick labels, for
+    line/scatter/bar/errorbar/band alike (numeric x is unaffected).
+13. **The lazy top-level API (`mp.render`, `mp.save`) broke after the
+    first call in a process.** `mudplot/__init__.py`'s PEP 562
+    `__getattr__` resolved these via `importlib.import_module("mudplot.render")`,
+    but importing a submodule has the side effect of binding it onto the
+    parent package's namespace *under its own name* — i.e. it set
+    `mudplot.render = <submodule>` directly in `mudplot.__dict__`,
+    invisibly shadowing the function just returned. The very next
+    `mp.render(...)` access found the submodule sitting in `__dict__`
+    (bypassing `__getattr__` entirely, since Python only calls it for
+    *missing* attributes) and failed with "'module' object is not
+    callable". `mp.save` was affected too (same backing submodule), in
+    either access order. This slipped through 202 passing tests because
+    almost all of them import the real function directly
+    (`from mudplot.render import render`) rather than exercising the lazy
+    top-level attribute repeatedly — exactly the pattern real scripts
+    (rendering more than one figure) and the README's own usage examples
+    rely on. Fixed by having `__getattr__` fix up *every* `_LAZY` entry
+    backed by the same submodule in one pass, so the import side effect
+    can no longer squat on a not-yet-requested name.
+
 Additional defensive validation was added: `validate()` now catches
 mismatched data-column lengths, jagged matrices, empty panels, invalid
 spine characters, out-of-range alpha, and wrong-length `at`/`to`. The

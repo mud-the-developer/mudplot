@@ -62,6 +62,32 @@ All notable changes to this project are documented here.
   the primary axis.
 - Grouped bar charts drew every group at the same x position, hiding
   shorter bars behind taller ones; bars are now dodged automatically.
+- `capabilities()` under-reported that `bar`/`errorbar`/`band`/`hline`/
+  `vline`/`text`/`annotate` all support `axis="y2"` routing (only
+  `line`/`scatter` listed it), even though it worked correctly at render
+  time. Added a cross-module consistency test to prevent this class of
+  drift from recurring.
+- Categorical x-axis values (e.g. bar-chart category labels like
+  `"control"`/`"treatment"`) crashed every series layer with "could not
+  convert string to float". Non-numeric x columns are now mapped to
+  positions with the original strings applied as tick labels.
+- The lazy top-level API (`mp.render`, `mp.save`) broke after the *first*
+  call in a process: resolving one lazy attribute had the side effect of
+  shadowing another (or itself, on the next access) with the raw
+  submodule instead of the intended function, due to how Python binds
+  submodules onto their parent package. This slipped past 202 passing
+  tests because they mostly import the real functions directly rather
+  than exercising the lazy `mp.*` attributes repeatedly -- exactly the
+  pattern real multi-figure scripts (and the README's own examples) use.
 
 See `DESIGN.md` §4c2 and `tests/test_bugfixes.py` for full details on each
 of the above.
+
+## Supported plot types (as of this pass)
+
+`line`, `scatter` (with optional continuous colour mapping + colorbar),
+`bar` (grouped bars auto-dodge; categorical or numeric x), `errorbar`,
+`band` (shaded region / fill_between), `histogram`, `boxplot`, `heatmap`,
+`hline`/`vline` (reference lines), `text`/`annotate`. All support secondary
+y-axis routing except `heatmap`/`hist`/`box`. See `docs/REFERENCE.md` (or
+`mp.capabilities()`) for the authoritative, always-up-to-date list.

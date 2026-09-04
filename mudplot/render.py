@@ -44,6 +44,31 @@ def _col(data_cols, name):
     return np.asarray(data_cols[name], dtype=float)
 
 
+def _x_values(data_cols, name):
+    """x-column values as plot-ready numeric positions.
+
+    Numeric columns pass through unchanged. Categorical columns (e.g. bar
+    chart categories like "control"/"treatment") can't be coerced to float
+    -- rather than crashing, they're mapped to evenly-spaced positions
+    0..n-1 (in first-seen order) so bar/line/scatter/etc. can still plot
+    them; the caller is responsible for applying the returned labels as
+    tick labels.
+
+    Returns ``(positions, labels)`` where ``labels`` is ``None`` for
+    already-numeric columns, or the ordered list of unique category
+    strings otherwise.
+    """
+    raw = data_cols[name]
+    try:
+        return np.asarray(raw, dtype=float), None
+    except (ValueError, TypeError):
+        str_values = [str(v) for v in raw]
+        labels = _unique_stable(str_values)
+        position_of = {label: i for i, label in enumerate(labels)}
+        positions = np.array([position_of[v] for v in str_values], dtype=float)
+        return positions, labels
+
+
 def _series_masks(data_cols, layer: LayerSpec):
     """Yield (label, boolean-mask) for a layer, splitting by ``group``."""
     n = len(data_cols[layer.x])
@@ -81,8 +106,10 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
     target = _target_axes(ax, ax2, layer)
     n_series = len(masks)
 
+    x_all, x_labels = _x_values(data_cols, layer.x)
+
     for series_i, (label, mask) in enumerate(masks):
-        x = _col(data_cols, layer.x)[mask]
+        x = x_all[mask]
         y = _col(data_cols, layer.y)[mask]
         marker = layer.marker or next(marker_cycle)
         linestyle = layer.line_style or next(style_cycle)
@@ -175,6 +202,8 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 alpha=layer.alpha if layer.alpha < 1 else 0.25,
                 linewidth=0,
             )
+
+    return target, x_labels
 
 
 def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
@@ -278,15 +307,29 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
 
     ax2 = ax.twinx() if panel.y2 is not None else None
 
+    # Categorical x columns (e.g. bar-chart categories) get mapped to
+    # numeric positions by _draw_series_layer; remember the first set of
+    # labels seen per target axes so we can apply them as tick labels once,
+    # after every layer has been drawn.
+    categorical_ticks: dict[int, tuple] = {}
+
     for layer in panel.layers:
         if layer.type in _SERIES_TYPES:
-            _draw_series_layer(ax, ax2, spec.data.columns, layer, color_iter, theme)
+            target, x_labels = _draw_series_layer(
+                ax, ax2, spec.data.columns, layer, color_iter, theme
+            )
+            if x_labels is not None and id(target) not in categorical_ticks:
+                categorical_ticks[id(target)] = (target, x_labels)
         elif layer.type in _DIST_TYPES:
             _draw_dist_layer(ax, spec.data.columns, layer, color_iter)
         elif layer.type in _MATRIX_TYPES:
             _draw_matrix_layer(ax, spec, layer)
         else:
             _draw_marker_layer(ax, ax2, layer, color_iter)
+
+    for target, x_labels in categorical_ticks.values():
+        target.set_xticks(range(len(x_labels)))
+        target.set_xticklabels(x_labels)
 
     _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
