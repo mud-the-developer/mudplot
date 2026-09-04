@@ -34,7 +34,8 @@
 
 ## 상태
 
-초기 개발 중. 자세한 로드맵은 [`DESIGN.md`](DESIGN.md) 참고.
+초기 개발 중. 아키텍처/과거 마일스톤은 [`DESIGN.md`](DESIGN.md), 출시된 것은
+[`CHANGELOG.md`](CHANGELOG.md), 구상법 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
 - [x] 색 변환 엔진 (sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH), numpy 전용
 - [x] 색차 (CIE76, CIEDE2000) — Sharma 2005 검증값 통과

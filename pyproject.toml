@@ -30,9 +30,11 @@ classifiers = [
 # nothing beyond the standard library. Numerics and rendering are opt-in.
 dependencies = []
 
-# NOTE: no [project.urls] yet -- this repo has no remote configured. Add
-# Homepage/Repository/Changelog entries once it's pushed somewhere real;
-# a placeholder URL would be actively misleading.
+[project.urls]
+Homepage = "https://github.com/mud-the-developer/mudplot"
+Repository = "https://github.com/mud-the-developer/mudplot"
+Changelog = "https://github.com/mud-the-developer/mudplot/blob/main/CHANGELOG.md"
+Roadmap = "https://github.com/mud-the-developer/mudplot/blob/main/ROADMAP.md"
 
 [project.scripts]
 mudplot = "mudplot.__main__:main"

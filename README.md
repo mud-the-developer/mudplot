@@ -39,8 +39,9 @@ Effects (render/io/preview) are pushed to the edges.
 
 ## Status
 
-Early development. See [`DESIGN.md`](DESIGN.md) for the full roadmap and
-[`CHANGELOG.md`](CHANGELOG.md) for a summary of what's shipped.
+Early development. See [`DESIGN.md`](DESIGN.md) for architecture and past
+milestones, [`CHANGELOG.md`](CHANGELOG.md) for what's shipped, and
+[`ROADMAP.md`](ROADMAP.md) for concrete next steps.
 
 - [x] Colour conversion engine (sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH), numpy-only
 - [x] Colour difference (CIE76, CIEDE2000) — passes Sharma 2005 reference values

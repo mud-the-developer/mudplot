@@ -438,7 +438,22 @@ tests/
 - [x] M11: human-facing dashboard (separate package) — a static docs+design
       gallery site generator built from the engine's own introspection
       (`python -m dashboard`)
-- [ ] M12: Rust askama+tokio+htmx editor (separate crate)
+- [x] M11b: stability hardening pass #1 — 10 real bugs found/fixed (see
+      §4c2), cross-module consistency tests added
+- [x] M11c: a local interactive editor prototype (`python -m dashboard
+      serve`), driving the same Store/actions/reducer as the fluent API
+- [x] M11d: stability hardening pass #2 — 3 more real bugs found/fixed
+      (capabilities() under-reporting, categorical x-axis crash, the
+      deeper lazy-attribute root cause), see §4c2 "Follow-up audit"
+- [x] M12: expanded plot coverage toward matplotlib/seaborn breadth —
+      3-D (`scatter3d`/`line3d`/`surface`/`wireframe`), `violin`, `kde`,
+      `contour`/`contourf`, `pie` (21 layer types total); 2 more bugs
+      found/fixed (pie legend duplication, the render.py→_render.py
+      rename), see §4f and §4c2 "Follow-up audit #2"
+- [ ] M13: Rust askama+tokio+htmx editor (separate crate)
+
+See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond
+this list.
 
 ## 9. Acceptance criteria
 
