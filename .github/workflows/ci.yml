@@ -14,23 +14,23 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install uv
         uses: astral-sh/setup-uv@v5
-      - name: Set up Python ${{ matrix.python-version }}
-        run: uv python install ${{ matrix.python-version }}
+        with:
+          python-version: ${{ matrix.python-version }}
       - name: Install project (with dev extras)
-        run: uv pip install --system -e ".[dev]"
+        run: uv sync --extra dev
       - name: Ruff lint
-        run: ruff check .
+        run: uv run ruff check .
       - name: Ruff format check
-        run: ruff format --check mudplot tests dashboard
+        run: uv run ruff format --check mudplot tests dashboard
       - name: Pytest
-        run: pytest -q
+        run: uv run pytest -q
       - name: Schema/docs export is in sync (drift guard for Rust + humans)
-        run: python scripts/check_schema_sync.py
+        run: uv run python scripts/check_schema_sync.py
       - name: Dashboard site builds
-        run: python -m dashboard --out /tmp/dashboard_build
+        run: uv run python -m dashboard --out /tmp/dashboard_build
       - name: Dashboard editor smoke test
-        run: python scripts/editor_smoke_test.py
+        run: uv run python scripts/editor_smoke_test.py
       - name: Wheel builds and includes py.typed + LICENSE
         run: |
-          python -m pip install build -q
-          python scripts/check_wheel.py
+          uv pip install build
+          uv run python scripts/check_wheel.py
