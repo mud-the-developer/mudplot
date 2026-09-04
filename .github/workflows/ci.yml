@@ -25,41 +25,12 @@ jobs:
       - name: Pytest
         run: pytest -q
       - name: Schema/docs export is in sync (drift guard for Rust + humans)
-        run: |
-          python -m mudplot schema --out /tmp/figure_spec.schema.json
-          python -m mudplot capabilities > /tmp/capabilities.json
-          python -m mudplot docs --out /tmp/REFERENCE.md
-          diff /tmp/figure_spec.schema.json schemas/figure_spec.schema.json
-          diff /tmp/capabilities.json schemas/capabilities.json
-          diff /tmp/REFERENCE.md docs/REFERENCE.md
+        run: python scripts/check_schema_sync.py
       - name: Dashboard site builds
         run: python -m dashboard --out /tmp/dashboard_build
+      - name: Dashboard editor smoke test
+        run: python scripts/editor_smoke_test.py
       - name: Wheel builds and includes py.typed + LICENSE
         run: |
           python -m pip install build -q
-          python -m build --wheel --outdir /tmp/wheel_check .
-          python - <<'PY'
-import zipfile, glob
-wheel = glob.glob("/tmp/wheel_check/*.whl")[0]
-names = zipfile.ZipFile(wheel).namelist()
-assert "mudplot/py.typed" in names, names
-assert any(n.endswith("licenses/LICENSE") for n in names), names
-print("wheel packaging OK:", wheel)
-PY
-      - name: Dashboard editor smoke test
-        run: |
-          python -c "
-          import threading, time, urllib.request
-          from dashboard.editor_server import make_server
-          server = make_server(port=0)
-          port = server.server_address[1]
-          t = threading.Thread(target=server.serve_forever, daemon=True)
-          t.start()
-          time.sleep(0.2)
-          with urllib.request.urlopen(f'http://127.0.0.1:{port}/') as r:
-              assert r.status == 200
-          with urllib.request.urlopen(f'http://127.0.0.1:{port}/fig.png') as r:
-              assert r.status == 200
-          server.shutdown()
-          print('editor smoke test OK')
-          "
+          python scripts/check_wheel.py
