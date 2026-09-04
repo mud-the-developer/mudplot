@@ -1,0 +1,589 @@
+{
+  "spec_version": "0.1",
+  "layers": {
+    "line": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
+        "alpha",
+        "axis"
+      ]
+    },
+    "scatter": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "marker",
+        "marker_size",
+        "alpha",
+        "c",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "axis"
+      ]
+    },
+    "bar": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "label",
+        "color",
+        "alpha"
+      ]
+    },
+    "errorbar": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "yerr",
+        "xerr",
+        "group",
+        "label",
+        "color",
+        "capsize",
+        "marker",
+        "marker_size",
+        "line_width",
+        "alpha"
+      ]
+    },
+    "band": {
+      "required": [
+        "x",
+        "y",
+        "y2"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "alpha"
+      ]
+    },
+    "hline": {
+      "required": [
+        "value"
+      ],
+      "optional": [
+        "label",
+        "color",
+        "line_style",
+        "line_width",
+        "alpha"
+      ]
+    },
+    "vline": {
+      "required": [
+        "value"
+      ],
+      "optional": [
+        "label",
+        "color",
+        "line_style",
+        "line_width",
+        "alpha"
+      ]
+    },
+    "text": {
+      "required": [
+        "text",
+        "at"
+      ],
+      "optional": [
+        "color",
+        "alpha"
+      ]
+    },
+    "annotate": {
+      "required": [
+        "text",
+        "at"
+      ],
+      "optional": [
+        "to",
+        "color",
+        "alpha"
+      ]
+    },
+    "hist": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "bins",
+        "density",
+        "group",
+        "label",
+        "color",
+        "alpha"
+      ]
+    },
+    "box": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "alpha"
+      ]
+    },
+    "heatmap": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
+      ]
+    }
+  },
+  "themes": [
+    "paper",
+    "paper-grid",
+    "minimal",
+    "boxed"
+  ],
+  "journals": [
+    "nature",
+    "ieee"
+  ],
+  "palettes": [
+    "qualitative",
+    "sequential",
+    "diverging"
+  ],
+  "tex_presets": {
+    "article": {
+      "columnwidth_pt": 345.0,
+      "textwidth_pt": 345.0,
+      "fontsize_pt": 10.0,
+      "columns": 1
+    },
+    "ieee": {
+      "columnwidth_pt": 252.0,
+      "textwidth_pt": 516.0,
+      "fontsize_pt": 10.0,
+      "columns": 2
+    },
+    "revtex": {
+      "columnwidth_pt": 246.0,
+      "textwidth_pt": 510.0,
+      "fontsize_pt": 10.0,
+      "columns": 2
+    },
+    "nature": {
+      "columnwidth_pt": 250.38425196850392,
+      "textwidth_pt": 512.1496062992127,
+      "fontsize_pt": 7.0,
+      "columns": 2
+    },
+    "acm": {
+      "columnwidth_pt": 241.0,
+      "textwidth_pt": 506.0,
+      "fontsize_pt": 9.0,
+      "columns": 2
+    }
+  },
+  "actions": {
+    "AddLayer": [
+      {
+        "name": "layer",
+        "type": "LayerSpec",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "AddPanel": [],
+    "RemoveLayer": [
+      {
+        "name": "layer_index",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetAutoLabel": [
+      {
+        "name": "enabled",
+        "type": "bool",
+        "required": false,
+        "default": true
+      }
+    ],
+    "SetAxesStyle": [
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetAxisLabel": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "text",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetColorbar": [
+      {
+        "name": "layer_index",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "show",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "label",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetData": [
+      {
+        "name": "columns",
+        "type": "dict",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetDpi": [
+      {
+        "name": "dpi",
+        "type": "int",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetEncoding": [
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetFont": [
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetGridStyle": [
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetJournal": [
+      {
+        "name": "name",
+        "type": "str or None",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetLayout": [
+      {
+        "name": "rows",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "cols",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "width_ratios",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "height_ratios",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "SetLegend": [
+      {
+        "name": "show",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "title",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "location",
+        "type": "str",
+        "required": false,
+        "default": "best"
+      },
+      {
+        "name": "frame",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetLimits": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "lo",
+        "type": "float",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "hi",
+        "type": "float",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetMatrix": [
+      {
+        "name": "name",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "values",
+        "type": "list",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetPalette": [
+      {
+        "name": "kind",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetPanelLabel": [
+      {
+        "name": "label",
+        "type": "str or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetScale": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "scale",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetSecondaryAxis": [
+      {
+        "name": "label",
+        "type": "str",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "scale",
+        "type": "str",
+        "required": false,
+        "default": "linear"
+      },
+      {
+        "name": "limits",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetShare": [
+      {
+        "name": "x",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "y",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "SetSize": [
+      {
+        "name": "width",
+        "type": "float",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "height",
+        "type": "float",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetSuptitle": [
+      {
+        "name": "text",
+        "type": "str",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetTheme": [
+      {
+        "name": "name",
+        "type": "str",
+        "required": true,
+        "default": null
+      }
+    ],
+    "SetTicksStyle": [
+      {
+        "name": "params",
+        "type": "dict",
+        "required": false,
+        "default": {}
+      }
+    ],
+    "SetTitle": [
+      {
+        "name": "text",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ]
+  }
+}

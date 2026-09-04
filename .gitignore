@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# venv
+.venv/
+
+# uv
+.uv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+
+# outputs
+*.png
+*.jpg
+*.pdf
+!src/SciencePlots/examples/figures/*.jpg
+dashboard/site_build/
+
+# caches
+.pytest_cache/
+.ruff_cache/
+
+# reference repo
+src/SciencePlots/

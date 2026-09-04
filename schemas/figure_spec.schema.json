@@ -1,0 +1,636 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FigureSpec",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "default": "0.1"
+    },
+    "size": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "dpi": {
+      "type": "integer",
+      "default": 300
+    },
+    "theme": {
+      "$ref": "#/$defs/ThemeSpec"
+    },
+    "data": {
+      "$ref": "#/$defs/DataSpec"
+    },
+    "suptitle": {
+      "type": "string",
+      "default": ""
+    },
+    "auto_label_panels": {
+      "type": "boolean",
+      "default": false
+    },
+    "width_ratios": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "height_ratios": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "panels": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PanelSpec"
+      }
+    },
+    "layout": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "share_x": {
+      "type": "string",
+      "default": "none"
+    },
+    "share_y": {
+      "type": "string",
+      "default": "none"
+    },
+    "journal": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "$defs": {
+    "ThemeSpec": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "default": "paper"
+        },
+        "font": {
+          "$ref": "#/$defs/FontSpec"
+        },
+        "axes": {
+          "$ref": "#/$defs/AxesSpec"
+        },
+        "grid": {
+          "$ref": "#/$defs/GridSpec"
+        },
+        "ticks": {
+          "$ref": "#/$defs/TicksSpec"
+        },
+        "palette": {
+          "$ref": "#/$defs/PaletteSpec"
+        },
+        "redundant_encoding": {
+          "type": "boolean",
+          "default": true
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "line_styles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "FontSpec": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string",
+          "default": "sans-serif"
+        },
+        "size": {
+          "type": "number",
+          "default": 10.0
+        },
+        "title_size": {
+          "type": "number",
+          "default": 11.0
+        },
+        "label_size": {
+          "type": "number",
+          "default": 10.0
+        },
+        "tick_size": {
+          "type": "number",
+          "default": 8.5
+        },
+        "use_tex": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "AxesSpec": {
+      "type": "object",
+      "properties": {
+        "line_width": {
+          "type": "number",
+          "default": 0.8
+        },
+        "spines": {
+          "type": "string",
+          "default": "LB"
+        },
+        "spine_offset": {
+          "type": "number",
+          "default": 0.0
+        }
+      }
+    },
+    "GridSpec": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "default": false
+        },
+        "axis": {
+          "type": "string",
+          "default": "both"
+        },
+        "line_width": {
+          "type": "number",
+          "default": 0.5
+        },
+        "alpha": {
+          "type": "number",
+          "default": 0.5
+        }
+      }
+    },
+    "TicksSpec": {
+      "type": "object",
+      "properties": {
+        "direction": {
+          "type": "string",
+          "default": "out"
+        },
+        "major_size": {
+          "type": "number",
+          "default": 3.0
+        },
+        "minor_size": {
+          "type": "number",
+          "default": 1.5
+        },
+        "width": {
+          "type": "number",
+          "default": 0.8
+        },
+        "minor_visible": {
+          "type": "boolean",
+          "default": false
+        },
+        "top": {
+          "type": "boolean",
+          "default": false
+        },
+        "right": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "PaletteSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "qualitative"
+        },
+        "lightness": {
+          "type": "number",
+          "default": 65.0
+        },
+        "chroma": {
+          "type": "number",
+          "default": 55.0
+        },
+        "hue_start": {
+          "type": "number",
+          "default": 20.0
+        },
+        "cvd_safe": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+    "DataSpec": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "object"
+        },
+        "matrices": {
+          "type": "object"
+        }
+      }
+    },
+    "PanelSpec": {
+      "type": "object",
+      "properties": {
+        "layers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayerSpec"
+          }
+        },
+        "x": {
+          "$ref": "#/$defs/AxisSpec"
+        },
+        "y": {
+          "$ref": "#/$defs/AxisSpec"
+        },
+        "y2": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AxisSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "title": {
+          "type": "string",
+          "default": ""
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "legend": {
+          "$ref": "#/$defs/LegendSpec"
+        }
+      }
+    },
+    "LayerSpec": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "default": "line"
+        },
+        "x": {
+          "type": "string",
+          "default": ""
+        },
+        "y": {
+          "type": "string",
+          "default": ""
+        },
+        "group": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line_style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "marker": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "marker_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alpha": {
+          "type": "number",
+          "default": 1.0
+        },
+        "yerr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "xerr": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "capsize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y2": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "at": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "to": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bins": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          ],
+          "default": 20
+        },
+        "density": {
+          "type": "boolean",
+          "default": false
+        },
+        "c": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cmap_kind": {
+          "type": "string",
+          "default": "sequential"
+        },
+        "colorbar": {
+          "type": "boolean",
+          "default": false
+        },
+        "clabel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "matrix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "axis": {
+          "type": "string",
+          "default": "y"
+        }
+      }
+    },
+    "AxisSpec": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "default": ""
+        },
+        "scale": {
+          "type": "string",
+          "default": "linear"
+        },
+        "limits": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      }
+    },
+    "LegendSpec": {
+      "type": "object",
+      "properties": {
+        "show": {
+          "type": "boolean",
+          "default": true
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "location": {
+          "type": "string",
+          "default": "best"
+        },
+        "frame": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  }
+}

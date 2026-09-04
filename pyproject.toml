@@ -1,0 +1,76 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mudplot"
+version = "0.0.1"
+description = "Perceptually-uniform, colorblind-safe plotting for scientific papers (LCH-based palettes on top of Matplotlib)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "mud" }]
+keywords = [
+    "matplotlib",
+    "color-palette",
+    "colorblind-safe",
+    "LCH",
+    "CIELAB",
+    "scientific-plotting",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Framework :: Matplotlib",
+]
+# The pure engine (spec / actions / reducer / store / io / tex sizing) needs
+# nothing beyond the standard library. Numerics and rendering are opt-in.
+dependencies = []
+
+# NOTE: no [project.urls] yet -- this repo has no remote configured. Add
+# Homepage/Repository/Changelog entries once it's pushed somewhere real;
+# a placeholder URL would be actively misleading.
+
+[project.scripts]
+mudplot = "mudplot.__main__:main"
+
+[project.optional-dependencies]
+color = ["numpy>=1.23"]                       # colour engine (LCH, CVD, palettes)
+render = ["numpy>=1.23", "matplotlib>=3.6"]   # matplotlib rendering + TeX preview
+all = ["mudplot[render]"]
+dev = ["mudplot[render]", "pytest>=7", "ruff>=0.6"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["mudplot"]
+
+[tool.ruff]
+line-length = 88
+indent-width = 4
+src = ["mudplot", "tests"]
+extend-exclude = ["src/SciencePlots", ".venv", "*.md", "gallery"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "C4",  # flake8-comprehensions
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific
+]
+ignore = [
+    "E741",  # ambiguous variable name (L, C are meaningful in colour code)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E402"]  # matplotlib.use('Agg') before imports in tests
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
