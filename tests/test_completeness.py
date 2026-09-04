@@ -14,7 +14,7 @@ import mudplot as mp
 import numpy as np
 import pytest
 from mudplot import actions as A
-from mudplot.render import render
+from mudplot._render import render
 from mudplot.store import Store
 
 

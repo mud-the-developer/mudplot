@@ -34,6 +34,7 @@ __all__ = [
     "SetMatrix",
     "SetPalette",
     "SetPanelLabel",
+    "SetProjection",
     "SetScale",
     "SetSecondaryAxis",
     "SetShare",
@@ -42,6 +43,7 @@ __all__ = [
     "SetTheme",
     "SetTicksStyle",
     "SetTitle",
+    "SetZAxis",
     "action_from_dict",
     "action_to_dict",
 ]
@@ -114,6 +116,20 @@ class SetShare:
 
 @dataclass(frozen=True)
 class SetSecondaryAxis:
+    label: str = ""
+    scale: str = "linear"
+    limits: list[float] | None = None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetProjection:
+    projection: str  # "2d" | "3d"
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetZAxis:
     label: str = ""
     scale: str = "linear"
     limits: list[float] | None = None
@@ -239,6 +255,8 @@ Action = (
     | SetEncoding
     | SetShare
     | SetSecondaryAxis
+    | SetProjection
+    | SetZAxis
     | SetColorbar
     | SetMatrix
 )
@@ -272,6 +290,8 @@ _ACTION_CLASSES = (
     SetEncoding,
     SetShare,
     SetSecondaryAxis,
+    SetProjection,
+    SetZAxis,
     SetColorbar,
     SetMatrix,
 )

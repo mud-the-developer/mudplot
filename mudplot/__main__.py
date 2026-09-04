@@ -68,8 +68,8 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 
 
 def _cmd_render(args: argparse.Namespace) -> int:
+    from ._render import save
     from .io import load_spec
-    from .render import save
 
     spec = load_spec(args.spec)
     save(spec, args.out)

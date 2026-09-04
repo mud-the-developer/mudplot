@@ -138,7 +138,7 @@ def tex_preview(
 
     import matplotlib.pyplot as plt
 
-    from .render import render
+    from ._render import render
 
     if tex is None:
         return render(spec)

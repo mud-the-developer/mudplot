@@ -24,6 +24,16 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`
 - **optional**: `group`, `label`, `color`, `alpha`
 
+### `contour`
+
+- **required**: `matrix`
+- **optional**: `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`
+
+### `contourf`
+
+- **required**: `matrix`
+- **optional**: `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`
+
 ### `errorbar`
 
 - **required**: `x`, `y`
@@ -44,25 +54,60 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `value`
 - **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`
 
+### `kde`
+
+- **required**: `x`
+- **optional**: `group`, `label`, `color`, `alpha`, `line_width`, `line_style`
+
 ### `line`
 
 - **required**: `x`, `y`
 - **optional**: `group`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+
+### `line3d`
+
+- **required**: `x`, `y`, `z`
+- **optional**: `group`, `label`, `color`, `line_width`, `line_style`, `marker`, `alpha`
+
+### `pie`
+
+- **required**: `x`, `y`
+- **optional**: `color`, `alpha`
 
 ### `scatter`
 
 - **required**: `x`, `y`
 - **optional**: `group`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`, `axis`
 
+### `scatter3d`
+
+- **required**: `x`, `y`, `z`
+- **optional**: `group`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`
+
+### `surface`
+
+- **required**: `matrix`
+- **optional**: `cmap_kind`, `colorbar`, `clabel`, `alpha`
+
 ### `text`
 
 - **required**: `text`, `at`
 - **optional**: `color`, `alpha`, `axis`
 
+### `violin`
+
+- **required**: `x`
+- **optional**: `group`, `label`, `color`, `alpha`
+
 ### `vline`
 
 - **required**: `value`
 - **optional**: `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`
+
+### `wireframe`
+
+- **required**: `matrix`
+- **optional**: `color`, `alpha`
 
 ## Palettes
 
@@ -228,6 +273,13 @@ Every mutation is one of these — send as
 | `label` | `str or None` | True | `None` |
 | `panel` | `int` | False | `0` |
 
+### `SetProjection`
+
+| field | type | required | default |
+|---|---|---|---|
+| `projection` | `str` | True | `None` |
+| `panel` | `int` | False | `0` |
+
 ### `SetScale`
 
 | field | type | required | default |
@@ -282,4 +334,13 @@ Every mutation is one of these — send as
 | field | type | required | default |
 |---|---|---|---|
 | `text` | `str` | True | `None` |
+| `panel` | `int` | False | `0` |
+
+### `SetZAxis`
+
+| field | type | required | default |
+|---|---|---|---|
+| `label` | `str` | False | `''` |
+| `scale` | `str` | False | `'linear'` |
+| `limits` | `list[float] or None` | False | `None` |
 | `panel` | `int` | False | `0` |

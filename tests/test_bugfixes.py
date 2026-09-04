@@ -11,8 +11,8 @@ matplotlib.use("Agg")
 import mudplot as mp
 import pytest
 from mudplot import actions as A
+from mudplot._render import render
 from mudplot.data import to_columns
-from mudplot.render import render
 from mudplot.theme import JOURNAL_SIZES
 
 
@@ -288,6 +288,36 @@ def test_lazy_render_attribute_survives_repeated_access():
         "mp.render(p.spec)\n"  # second access -- used to break
         "mp.save(p.spec, '/tmp/_mudplot_lazy_test.png')\n"
         "mp.render(p.spec)\n"  # after save() -- also used to break
+        "print('OK')\n"
+    )
+    result = subprocess.run(
+        [sys.executable, "-c", script], capture_output=True, text=True
+    )
+    assert result.returncode == 0, result.stderr
+    assert result.stdout.strip() == "OK"
+
+
+def test_lazy_render_survives_internal_relative_import_trigger():
+    # BUG (deeper root cause than the fix above): the *first* fix only
+    # guarded the path through mudplot's own __getattr__, but any ordinary
+    # "from .render import save" *elsewhere* in the codebase (e.g.
+    # Plot.save()) also triggers Python's submodule-parent-binding side
+    # effect on "mudplot.render" WITHOUT ever calling __getattr__ -- so it
+    # could still silently squat on the "render" slot before a single
+    # mp.render access ever happened. The real fix was renaming the
+    # implementation submodule to mudplot._render (no longer colliding
+    # with the desired public name "render"), not any amount of patching
+    # inside __getattr__.
+    import subprocess
+    import sys
+
+    script = (
+        "import mudplot as mp\n"
+        "import matplotlib; matplotlib.use('Agg')\n"
+        "p = mp.plot({'x':[1],'y':[2]}).line('x','y')\n"
+        "p.save('/tmp/_mudplot_lazy_test2.png')\n"  # internal relative import
+        "mp.render(p.spec)\n"  # used to break even on the *first* call here
+        "mp.render(p.spec)\n"
         "print('OK')\n"
     )
     result = subprocess.run(

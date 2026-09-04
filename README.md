@@ -49,8 +49,10 @@ Early development. See [`DESIGN.md`](DESIGN.md) for the full roadmap and
 - [x] Declarative spec model + JSON round-trip + renderer + fluent builder
 - [x] Pure reducer + actions + store (effects separated)
 - [x] TeX-aware WYSIWYG preview (article/ieee/revtex/nature/acm)
-- [x] Layer coverage: line/scatter/bar/errorbar/band/hline/vline/text/annotate
-      + multi-panel layouts
+- [x] Layer coverage: line/scatter/bar/errorbar/band/hline/vline/text/annotate/
+      hist/box/heatmap/violin/kde/pie/contour/contourf + multi-panel layouts
+- [x] 3-D plots: scatter3d/line3d/surface/wireframe, mixable with 2-D panels
+      in the same figure
 - [x] Zero dependencies in the pure core (numpy/matplotlib are effect-only extras)
 - [x] ruff lint rules + CI
 - [x] Broad input-format support (dict/records/DataFrame/numpy/pyarrow/SQL)
@@ -118,6 +120,37 @@ import mudplot as mp
     .theme("paper").journal("nature")
     .palette("qualitative", hue_start=30)
     .save("fig.pdf"))
+```
+
+### Supported plot types
+
+| category | types | notes |
+|---|---|---|
+| basic | `line`, `scatter`, `bar`, `errorbar`, `band` | `group=` for multiple series; bars auto-dodge when grouped; categorical or numeric x |
+| distributions | `hist`, `box`, `violin`, `kde` | `kde` uses a small numpy-only Gaussian KDE (no scipy dependency) |
+| 2-D fields | `heatmap`, `contour`, `contourf` | share a matrix registered via `.matrix(name, values)`; use the same LCH colormaps as the palettes |
+| 3-D | `scatter3d`, `line3d`, `surface`, `wireframe` | panel needs `.projection3d()` first; mixable with 2-D panels in the same figure |
+| annotations | `hline`, `vline`, `text`, `annotate` | |
+| other | `pie` | |
+
+Most types support a continuous colour mapping (`c=` + `colorbar=True`),
+a secondary y-axis (`axis="y2"`), multi-panel layouts, and redundant
+marker/line-style encoding for series (see `mp.capabilities()` for the
+exact, always-up-to-date field list per type).
+
+```python
+# distributions side by side
+(mp.plot(data).layout(1, 2)
+    .violin("value", group="condition", panel=0)
+    .kde("value", group="condition", panel=1))
+
+# a 3-D scatter, colour-mapped by a fourth variable
+(mp.plot(data).projection3d()
+    .scatter3d("x", "y", "z", c="temperature", colorbar=True))
+
+# a scalar field as a heatmap + contour
+(mp.plot({}).matrix("field", grid_values)
+    .heatmap("field").contour("field", levels=8))
 ```
 
 ### Save/load a spec (same format a future Rust editor would use)

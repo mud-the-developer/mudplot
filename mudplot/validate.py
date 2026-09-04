@@ -45,10 +45,25 @@ _AXIS_ROUTABLE_TYPES = {
     "text",
     "annotate",
 }
-_COLUMN_FIELDS = ("x", "y", "y2", "yerr", "xerr", "group", "c")
-_NO_COLUMN_TYPES = {"hline", "vline", "text", "annotate", "heatmap"}
+_COLUMN_FIELDS = ("x", "y", "y2", "yerr", "xerr", "group", "c", "z")
+_NO_COLUMN_TYPES = {
+    "hline",
+    "vline",
+    "text",
+    "annotate",
+    "heatmap",
+    "contour",
+    "contourf",
+    "surface",
+    "wireframe",
+}
 _VALID_SPINE_CHARS = set("LRTB")
 _POINT_TYPES = {"text", "annotate"}  # layers whose ``at``/``to`` is [x, y]
+_MATRIX_LAYER_TYPES = {"heatmap", "contour", "contourf", "surface", "wireframe"}
+_CMAP_LAYER_TYPES = {"heatmap", "contour", "contourf", "surface"}
+_PROJECTIONS = {"2d", "3d"}
+# layer types that only make sense on a projection="3d" panel
+_3D_ONLY_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
 
 
 def _check_column(cols: dict, name: str | None, where: str, issues: list[str]):
@@ -142,6 +157,16 @@ def validate(spec: FigureSpec) -> list[str]:
             issues.append(
                 f"{where_axis}: unknown legend location {panel.legend.location!r}"
             )
+        if panel.projection not in _PROJECTIONS:
+            issues.append(
+                f"{where_axis}: invalid projection {panel.projection!r}; "
+                f"valid: {sorted(_PROJECTIONS)}"
+            )
+        if panel.z is not None and panel.projection != "3d":
+            issues.append(
+                f"{where_axis}: z-axis is configured but projection is "
+                f'{panel.projection!r} (z only applies to "3d" panels)'
+            )
 
         for li, layer in enumerate(panel.layers):
             where = f"panel {pi} layer {li} ({layer.type})"
@@ -155,6 +180,17 @@ def validate(spec: FigureSpec) -> list[str]:
                 val = getattr(layer, field_name, None)
                 if val in (None, ""):
                     issues.append(f"{where}: missing required field {field_name!r}")
+
+            if layer.type in _3D_ONLY_TYPES and panel.projection != "3d":
+                issues.append(
+                    f"{where}: {layer.type!r} requires panel.projection == "
+                    f'"3d" (this panel is {panel.projection!r})'
+                )
+            elif panel.projection == "3d" and layer.type not in _3D_ONLY_TYPES:
+                issues.append(
+                    f"{where}: {layer.type!r} is not a 3-D layer type; a "
+                    f'"3d" panel only supports {sorted(_3D_ONLY_TYPES)}'
+                )
             # x/y/y2/yerr/xerr/group/c hold column *names* for series-like
             # layers; a few layer types don't reference columns at all
             if layer.type not in _NO_COLUMN_TYPES:
@@ -163,7 +199,10 @@ def validate(spec: FigureSpec) -> list[str]:
                     if val:
                         _check_column(cols, val, where, issues)
 
-            if layer.type == "heatmap" and layer.matrix not in spec.data.matrices:
+            if (
+                layer.type in _MATRIX_LAYER_TYPES
+                and layer.matrix not in spec.data.matrices
+            ):
                 issues.append(
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
@@ -184,8 +223,8 @@ def validate(spec: FigureSpec) -> list[str]:
                         "axis (use .secondary_yaxis(...))"
                     )
 
-            uses_cmap = layer.type == "heatmap" or (
-                layer.type == "scatter" and layer.c is not None
+            uses_cmap = layer.type in _CMAP_LAYER_TYPES or (
+                layer.type in {"scatter", "scatter3d"} and layer.c is not None
             )
             if uses_cmap and layer.cmap_kind not in _CMAP_KINDS:
                 issues.append(f"{where}: invalid cmap_kind {layer.cmap_kind!r}")

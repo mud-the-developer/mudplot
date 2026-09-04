@@ -12,8 +12,14 @@ apart silently again.
 
 from dataclasses import fields as dc_fields
 
+from mudplot._render import (
+    _3D_TYPES,
+    _DIST_TYPES,
+    _MATRIX_TYPES,
+    _SERIES_TYPES,
+    _STANDALONE_TYPES,
+)
 from mudplot.capabilities import LAYER_TYPES
-from mudplot.render import _DIST_TYPES, _MATRIX_TYPES, _SERIES_TYPES
 from mudplot.spec import LayerSpec
 from mudplot.validate import _AXIS_ROUTABLE_TYPES
 
@@ -22,6 +28,8 @@ _RENDER_KNOWN_TYPES = (
     _SERIES_TYPES
     | _DIST_TYPES
     | _MATRIX_TYPES
+    | _3D_TYPES
+    | _STANDALONE_TYPES
     | {
         "hline",
         "vline",

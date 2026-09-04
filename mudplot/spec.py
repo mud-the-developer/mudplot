@@ -5,7 +5,7 @@ plain data (numbers, strings, lists, nested dataclasses) so it can round-trip
 through JSON/TOML and later be edited by a Rust (serde) frontend that shares
 the same schema.
 
-Nothing here touches matplotlib; rendering lives in ``mudplot.render``.
+Nothing here touches matplotlib; rendering lives in ``mudplot._render``.
 """
 
 from __future__ import annotations
@@ -155,6 +155,8 @@ class DataSpec(SpecBase):
 @dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
+    # | hist | box | heatmap | violin | kde | pie | contour | contourf
+    # | scatter3d | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name
@@ -187,10 +189,15 @@ class LayerSpec(SpecBase):
     cmap_kind: str = "sequential"  # sequential | diverging
     colorbar: bool = False
     clabel: str | None = None
-    # heatmap: references a DataSpec.matrices key
+    # heatmap / contour / contourf / surface / wireframe: references a
+    # DataSpec.matrices key
     matrix: str | None = None
+    # contour / contourf: number of levels, or explicit level values
+    levels: int | list[float] | None = None
     # route this layer onto the panel's secondary y-axis
     axis: str = "y"  # "y" | "y2"
+    # 3-D layers (scatter3d / line3d): the z column
+    z: str | None = None
 
 
 @dataclass
@@ -214,6 +221,8 @@ class PanelSpec(SpecBase):
     x: AxisSpec = field(default_factory=AxisSpec)
     y: AxisSpec = field(default_factory=AxisSpec)
     y2: AxisSpec | None = None  # secondary y-axis; None -> not created
+    z: AxisSpec | None = None  # 3-D z-axis config; only used if projection="3d"
+    projection: str = "2d"  # "2d" | "3d"
     title: str = ""
     label: str | None = None  # explicit panel tag, e.g. "a"; None -> auto
     legend: LegendSpec = field(default_factory=LegendSpec)

@@ -140,6 +140,12 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetSecondaryAxis(label=label, scale=scale, limits=limits, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].y2 = AxisSpec(label=label, scale=scale, limits=limits)
+        case A.SetProjection(projection=proj, panel=pi):
+            _ensure_panel(s, pi)
+            s.panels[pi].projection = proj
+        case A.SetZAxis(label=label, scale=scale, limits=limits, panel=pi):
+            _ensure_panel(s, pi)
+            s.panels[pi].z = AxisSpec(label=label, scale=scale, limits=limits)
         case A.SetColorbar(layer_index=li, show=show, label=label, panel=pi):
             _ensure_panel(s, pi)
             n_layers = len(s.panels[pi].layers)

@@ -58,7 +58,7 @@ class EditorSession:
 
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
-        from mudplot.render import render
+        from mudplot._render import render
 
         spec = self.store.state
         try:

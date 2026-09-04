@@ -302,6 +302,21 @@
           ],
           "default": null
         },
+        "z": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AxisSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "projection": {
+          "type": "string",
+          "default": "2d"
+        },
         "title": {
           "type": "string",
           "default": ""
@@ -571,9 +586,37 @@
           ],
           "default": null
         },
+        "levels": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "axis": {
           "type": "string",
           "default": "y"
+        },
+        "z": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
     },

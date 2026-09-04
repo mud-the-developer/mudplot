@@ -104,6 +104,13 @@ import mudplot as mp
     .save("fig.pdf"))
 ```
 
+### 지원하는 플롯 종류
+
+기본(line/scatter/bar/errorbar/band), 분포(hist/box/violin/kde),
+2D 필드(heatmap/contour/contourf), 3D(scatter3d/line3d/surface/wireframe),
+주석(hline/vline/text/annotate), pie. 항상 최신 목록은 `mp.capabilities()`
+또는 영어 README.md의 표를 참고. (신규 기능 문서는 기본 영어로 작성)
+
 ### Spec 저장/불러오기 (미래 Rust 에디터와 동일 포맷)
 
 ```python

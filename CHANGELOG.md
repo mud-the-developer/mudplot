@@ -83,11 +83,50 @@ All notable changes to this project are documented here.
 See `DESIGN.md` §4c2 and `tests/test_bugfixes.py` for full details on each
 of the above.
 
-## Supported plot types (as of this pass)
+## [Unreleased] (continued): expanded plot coverage + 2 more bugs
 
-`line`, `scatter` (with optional continuous colour mapping + colorbar),
-`bar` (grouped bars auto-dodge; categorical or numeric x), `errorbar`,
-`band` (shaded region / fill_between), `histogram`, `boxplot`, `heatmap`,
-`hline`/`vline` (reference lines), `text`/`annotate`. All support secondary
-y-axis routing except `heatmap`/`hist`/`box`. See `docs/REFERENCE.md` (or
-`mp.capabilities()`) for the authoritative, always-up-to-date list.
+### Added
+- **3-D plots**: `scatter3d`, `line3d`, `surface`, `wireframe`. A panel
+  opts in via `.projection3d()`; 2-D and 3-D panels can coexist in the same
+  multi-panel figure. `render()` was restructured to build axes with
+  `fig.add_subplot()` per panel (instead of `plt.subplots()`) so each panel
+  can have its own projection, with `sharex`/`sharey` re-implemented
+  manually via `Axes.sharex`/`sharey` for the (2-D-only) "all"/"row"/"col"
+  modes.
+- **Distribution plots**: `violin`, `kde` (a small numpy-only Gaussian KDE
+  -- no scipy dependency).
+- **2-D field plots**: `contour`, `contourf` (share the same
+  `data.matrices` + LCH-colormap infrastructure as `heatmap`).
+- **`pie`** charts.
+- Categorical x-axis values (already fixed for 2-D series layers) and the
+  redundant-encoding/colour-mapping machinery all extend to the new types
+  where it makes sense.
+
+### Fixed
+- **Pie charts silently drew a duplicate, overlapping legend.**
+  `ax.pie(..., labels=...)` also registers each wedge as a legend handle
+  (so `ax.legend()` can be called separately), which collided with
+  mudplot's generic "draw a legend if there are labelled handles" logic --
+  every pie chart got its on-wedge labels *and* a redundant legend on top.
+  Fixed by clearing each wedge's legend label after drawing.
+- **The deepest root cause of the lazy `mp.render`/`mp.save` bug (from the
+  previous pass) was still only partially fixed.** The original fix patched
+  up the colliding `_LAZY` entries inside `__getattr__`, but *any* ordinary
+  import elsewhere in the codebase -- e.g. `Plot.save()`'s own
+  `from .render import save` -- triggers the exact same submodule/parent-
+  binding side effect *without* ever calling `__getattr__`, so it could
+  still silently squat on the "render" slot before a single `mp.render`
+  access happened. The real, permanent fix was renaming the implementation
+  module from `mudplot/render.py` to `mudplot/_render.py` so the collision
+  is structurally impossible rather than something to keep patching around.
+
+## Supported plot types (current)
+
+`line`, `scatter` (continuous colour mapping + colorbar), `bar`
+(auto-dodges when grouped; categorical or numeric x), `errorbar`, `band`,
+`hist`, `box`, `violin`, `kde`, `heatmap`, `contour`, `contourf`, `pie`,
+`hline`/`vline`, `text`/`annotate`, and 3-D `scatter3d`/`line3d`/`surface`/
+`wireframe`. Most support secondary y-axis routing (`heatmap`/`hist`/`box`/
+`violin`/`kde`/`pie`/`contour`/`contourf`/3-D types don't, since it isn't
+meaningful for them). See `docs/REFERENCE.md` (or `mp.capabilities()`) for
+the authoritative, always-up-to-date list.

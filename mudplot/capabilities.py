@@ -113,6 +113,68 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
         "required": ["matrix"],
         "optional": ["cmap_kind", "colorbar", "clabel", "alpha"],
     },
+    "contour": {
+        "required": ["matrix"],
+        "optional": ["cmap_kind", "colorbar", "clabel", "alpha", "levels"],
+    },
+    "contourf": {
+        "required": ["matrix"],
+        "optional": ["cmap_kind", "colorbar", "clabel", "alpha", "levels"],
+    },
+    "violin": {
+        "required": ["x"],
+        "optional": ["group", "label", "color", "alpha"],
+    },
+    "kde": {
+        "required": ["x"],
+        "optional": [
+            "group",
+            "label",
+            "color",
+            "alpha",
+            "line_width",
+            "line_style",
+        ],
+    },
+    "pie": {
+        "required": ["x", "y"],
+        "optional": ["color", "alpha"],
+    },
+    "scatter3d": {
+        "required": ["x", "y", "z"],
+        "optional": [
+            "group",
+            "label",
+            "color",
+            "marker",
+            "marker_size",
+            "alpha",
+            "c",
+            "cmap_kind",
+            "colorbar",
+            "clabel",
+        ],
+    },
+    "line3d": {
+        "required": ["x", "y", "z"],
+        "optional": [
+            "group",
+            "label",
+            "color",
+            "line_width",
+            "line_style",
+            "marker",
+            "alpha",
+        ],
+    },
+    "surface": {
+        "required": ["matrix"],
+        "optional": ["cmap_kind", "colorbar", "clabel", "alpha"],
+    },
+    "wireframe": {
+        "required": ["matrix"],
+        "optional": ["color", "alpha"],
+    },
 }
 
 PALETTE_KINDS = ["qualitative", "sequential", "diverging"]

@@ -4,7 +4,7 @@ matplotlib.use("Agg")
 
 import mudplot as mp
 import numpy as np
-from mudplot.render import render
+from mudplot._render import render
 
 
 def _xy(n=20):

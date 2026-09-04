@@ -19,9 +19,13 @@ __all__ = ["render", "save"]
 # layer types that draw one or more x/y series (and support ``group``)
 _SERIES_TYPES = {"line", "scatter", "bar", "errorbar", "band"}
 # layer types that draw a distribution of a single column (support ``group``)
-_DIST_TYPES = {"hist", "box"}
+_DIST_TYPES = {"hist", "box", "violin", "kde"}
 # layer types that draw a 2-D matrix
-_MATRIX_TYPES = {"heatmap"}
+_MATRIX_TYPES = {"heatmap", "contour", "contourf"}
+# layer types only meaningful on a projection="3d" panel
+_3D_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
+# layer types with their own standalone drawing logic
+_STANDALONE_TYPES = {"pie"}
 
 _OUTSIDE_LEGEND_LOCS = {
     "outside right": {"loc": "center left", "bbox_to_anchor": (1.02, 0.5)},
@@ -206,6 +210,25 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
     return target, x_labels
 
 
+def _gaussian_kde(values: np.ndarray, n_points: int = 200):
+    """A small numpy-only Gaussian KDE (Scott's rule bandwidth).
+
+    Avoids adding scipy as a dependency for one feature; not as fast or
+    feature-complete as scipy.stats.gaussian_kde, but numerically
+    equivalent for the common case (no weights, Gaussian kernel).
+    """
+    values = np.asarray(values, dtype=float)
+    n = len(values)
+    std = values.std(ddof=1) if n > 1 else 1.0
+    bandwidth = 1.06 * std * n ** (-1 / 5) if std > 0 else 1.0
+    lo, hi = values.min() - 3 * bandwidth, values.max() + 3 * bandwidth
+    grid = np.linspace(lo, hi, n_points)
+    # sum of Gaussian kernels centred at each sample, evaluated on the grid
+    diffs = (grid[:, None] - values[None, :]) / bandwidth
+    density = np.exp(-0.5 * diffs**2).sum(axis=1) / (n * bandwidth * np.sqrt(2 * np.pi))
+    return grid, density
+
+
 def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
     masks = list(_series_masks(data_cols, layer))
     if layer.type == "hist":
@@ -229,18 +252,66 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
         for patch in bp["boxes"]:
             patch.set_facecolor(layer.color or next(color_iter))
             patch.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
+    elif layer.type == "violin":
+        values = [_col(data_cols, layer.x)[mask] for _label, mask in masks]
+        labels = [label for label, _mask in masks]
+        positions = range(1, len(values) + 1)
+        parts = ax.violinplot(values, positions=positions, showmedians=True)
+        for body in parts["bodies"]:
+            body.set_facecolor(layer.color or next(color_iter))
+            body.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
+        ax.set_xticks(list(positions))
+        ax.set_xticklabels(labels)
+    elif layer.type == "kde":
+        for label, mask in masks:
+            values = _col(data_cols, layer.x)[mask]
+            grid, density = _gaussian_kde(values)
+            ax.plot(
+                grid,
+                density,
+                label=label,
+                color=layer.color or next(color_iter),
+                linewidth=layer.line_width,
+                linestyle=layer.line_style or "-",
+                alpha=layer.alpha,
+            )
 
 
 def _draw_matrix_layer(ax, spec: FigureSpec, layer: LayerSpec):
     matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
-    im = ax.imshow(
-        matrix,
-        aspect="auto",
-        cmap=_continuous_cmap(layer.cmap_kind),
-        alpha=layer.alpha,
-    )
+    cmap = _continuous_cmap(layer.cmap_kind)
+    if layer.type == "heatmap":
+        im = ax.imshow(matrix, aspect="auto", cmap=cmap, alpha=layer.alpha)
+    elif layer.type == "contour":
+        im = ax.contour(matrix, levels=layer.levels or 8, cmap=cmap, alpha=layer.alpha)
+    elif layer.type == "contourf":
+        im = ax.contourf(matrix, levels=layer.levels or 8, cmap=cmap, alpha=layer.alpha)
+    else:
+        raise ValueError(f"unknown matrix layer type: {layer.type!r}")
     if layer.colorbar:
         ax.figure.colorbar(im, ax=ax, label=layer.clabel or "")
+
+
+def _draw_pie_layer(ax, data_cols, layer: LayerSpec, color_iter):
+    values = _col(data_cols, layer.y)
+    raw_labels = data_cols[layer.x]
+    labels = [str(v) for v in raw_labels]
+    colors = (
+        [layer.color] * len(values)
+        if layer.color
+        else [next(color_iter) for _ in values]
+    )
+    wedges, _texts = ax.pie(
+        values, labels=labels, colors=colors, wedgeprops={"alpha": layer.alpha}
+    )
+    # ax.pie() sets each wedge's legend label to the slice label too, so the
+    # generic "draw a legend if there are any labelled handles" logic in
+    # _draw_panel would add a second, redundant legend on top of the
+    # on-wedge labels already drawn above. Pie charts conventionally use
+    # one or the other, not both -- suppress the legend-registration half.
+    for wedge in wedges:
+        wedge.set_label("_nolegend_")
+    ax.set_aspect("equal")
 
 
 def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
@@ -284,6 +355,74 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
         raise ValueError(f"unknown layer type: {layer.type!r}")
 
 
+def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
+    data_cols = spec.data.columns
+    if layer.type in ("scatter3d", "line3d"):
+        masks = list(_series_masks(data_cols, layer))
+        for label, mask in masks:
+            x = _col(data_cols, layer.x)[mask]
+            y = _col(data_cols, layer.y)[mask]
+            z = _col(data_cols, layer.z)[mask]
+            if layer.type == "scatter3d":
+                if layer.c is not None:
+                    values = _col(data_cols, layer.c)[mask]
+                    sc = ax.scatter(
+                        x,
+                        y,
+                        z,
+                        c=values,
+                        cmap=_continuous_cmap(layer.cmap_kind),
+                        label=label,
+                        s=(layer.marker_size or 6) ** 2,
+                        marker=layer.marker or "o",
+                        alpha=layer.alpha,
+                    )
+                    if layer.colorbar:
+                        ax.figure.colorbar(sc, ax=ax, label=layer.clabel or "")
+                else:
+                    color = layer.color or next(color_iter)
+                    ax.scatter(
+                        x,
+                        y,
+                        z,
+                        label=label,
+                        color=color,
+                        s=(layer.marker_size or 6) ** 2,
+                        marker=layer.marker or "o",
+                        alpha=layer.alpha,
+                    )
+            else:  # line3d
+                color = layer.color or next(color_iter)
+                ax.plot(
+                    x,
+                    y,
+                    z,
+                    label=label,
+                    color=color,
+                    linewidth=layer.line_width,
+                    linestyle=layer.line_style or "-",
+                    marker=layer.marker,
+                    alpha=layer.alpha,
+                )
+    elif layer.type in ("surface", "wireframe"):
+        matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
+        ny, nx = matrix.shape
+        xs, ys = np.meshgrid(np.arange(nx), np.arange(ny))
+        if layer.type == "surface":
+            surf = ax.plot_surface(
+                xs,
+                ys,
+                matrix,
+                cmap=_continuous_cmap(layer.cmap_kind),
+                alpha=layer.alpha,
+            )
+            if layer.colorbar:
+                ax.figure.colorbar(surf, ax=ax, label=layer.clabel or "")
+        else:
+            color = layer.color or next(color_iter)
+            ax.plot_wireframe(xs, ys, matrix, color=color, alpha=layer.alpha)
+
+
 def _apply_axis(ax, axis_spec, set_label, set_scale, set_limits):
     set_label(axis_spec.label)
     if axis_spec.scale == "log":
@@ -298,8 +437,36 @@ def _apply_despine(ax, theme_axes):
             ax.spines[side].set_position(("outward", theme_axes.spine_offset))
 
 
+def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
+    import matplotlib.pyplot as plt
+
+    prop = plt.rcParams["axes.prop_cycle"].by_key().get("color", ["C0"])
+    color_iter = iter(prop * 100)
+
+    for layer in panel.layers:
+        _draw_3d_layer(ax, spec, layer, color_iter)
+
+    ax.set_xlabel(panel.x.label)
+    ax.set_ylabel(panel.y.label)
+    if panel.z is not None:
+        ax.set_zlabel(panel.z.label)
+        if panel.z.limits:
+            ax.set_zlim(panel.z.limits)
+    if panel.title:
+        ax.set_title(panel.title)
+
+    handles, labels = ax.get_legend_handles_labels()
+    leg = panel.legend
+    if leg.show and handles:
+        ax.legend(handles, labels, title=leg.title, frameon=leg.frame)
+
+
 def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
     import matplotlib.pyplot as plt
+
+    if panel.projection == "3d":
+        _draw_panel_3d(ax, spec, panel)
+        return
 
     prop = plt.rcParams["axes.prop_cycle"].by_key().get("color", ["C0"])
     color_iter = iter(prop * 100)  # cycle enough colours
@@ -324,6 +491,8 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
             _draw_dist_layer(ax, spec.data.columns, layer, color_iter)
         elif layer.type in _MATRIX_TYPES:
             _draw_matrix_layer(ax, spec, layer)
+        elif layer.type in _STANDALONE_TYPES:
+            _draw_pie_layer(ax, spec.data.columns, layer, color_iter)
         else:
             _draw_marker_layer(ax, ax2, layer, color_iter)
 
@@ -408,6 +577,45 @@ def _count_colors(spec: FigureSpec) -> int:
     return max(counts, default=1)
 
 
+def _link_shared_axes(axes_grid, rows: int, cols: int, mode: str, axis: str) -> None:
+    """Emulate plt.subplots(sharex=...)'s "none"/"all"/"row"/"col" modes,
+    but after the fact -- needed because 3-D-capable panels are built with
+    fig.add_subplot() one at a time instead of plt.subplots(), which is the
+    only way to give each panel its own projection.
+    """
+    if mode == "none":
+        return
+
+    def link(ax, base):
+        (ax.sharex if axis == "x" else ax.sharey)(base)
+
+    if mode == "all":
+        base = next((a for row in axes_grid for a in row if a is not None), None)
+        if base is None:
+            return
+        for row in axes_grid:
+            for ax in row:
+                if ax is not None and ax is not base:
+                    link(ax, base)
+    elif mode == "row":
+        for row in axes_grid:
+            base = next((a for a in row if a is not None), None)
+            if base is None:
+                continue
+            for ax in row:
+                if ax is not None and ax is not base:
+                    link(ax, base)
+    elif mode == "col":
+        for c in range(cols):
+            column = [axes_grid[r][c] for r in range(rows)]
+            base = next((a for a in column if a is not None), None)
+            if base is None:
+                continue
+            for ax in column:
+                if ax is not None and ax is not base:
+                    link(ax, base)
+
+
 def render(spec: FigureSpec):
     """Build and return a matplotlib Figure for ``spec``.
 
@@ -429,23 +637,30 @@ def render(spec: FigureSpec):
             gridspec_kw["width_ratios"] = spec.width_ratios
         if spec.height_ratios:
             gridspec_kw["height_ratios"] = spec.height_ratios
-        fig, axes = plt.subplots(
-            rows,
-            cols,
-            figsize=tuple(spec.size),
-            dpi=spec.dpi,
-            squeeze=False,
-            sharex=spec.share_x,
-            sharey=spec.share_y,
-            gridspec_kw=gridspec_kw or None,
-        )
-        flat = axes.ravel()
-        for i, (ax, panel) in enumerate(zip(flat, spec.panels, strict=False)):
+
+        # Built with fig.add_subplot() (one call per panel) rather than
+        # plt.subplots(), which can't give individual panels their own
+        # projection (needed for 3-D panels mixed with 2-D ones).
+        fig = plt.figure(figsize=tuple(spec.size), dpi=spec.dpi)
+        gs = fig.add_gridspec(rows, cols, **gridspec_kw)
+        axes_grid = [[None] * cols for _ in range(rows)]
+        panel_axes = []
+        for i, panel in enumerate(spec.panels):
+            r, c = divmod(i, cols)
+            projection = "3d" if panel.projection == "3d" else None
+            ax = fig.add_subplot(gs[r, c], projection=projection)
+            axes_grid[r][c] = ax
+            panel_axes.append(ax)
+
+        # Axis sharing only makes sense between 2-D panels.
+        if not any(p.projection == "3d" for p in spec.panels):
+            _link_shared_axes(axes_grid, rows, cols, spec.share_x, "x")
+            _link_shared_axes(axes_grid, rows, cols, spec.share_y, "y")
+
+        for i, (ax, panel) in enumerate(zip(panel_axes, spec.panels, strict=False)):
             _draw_panel(ax, spec, panel)
             _apply_panel_label(ax, spec, panel, i)
-        # hide any unused axes in the grid
-        for ax in flat[len(spec.panels) :]:
-            ax.set_visible(False)
+
         if spec.suptitle:
             fig.suptitle(spec.suptitle)
         fig.tight_layout()

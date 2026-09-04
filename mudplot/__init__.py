@@ -2,8 +2,9 @@
 
 The pure engine (spec / actions / reducer / store / io / tex sizing) has **no
 third-party dependencies** and is importable on its own. Anything that needs
-numpy (``color``) or matplotlib (``render`` / ``tex_preview``) is loaded lazily
-on first access, so ``import mudplot`` stays dependency-free.
+numpy (``color``) or matplotlib (``render`` / ``tex_preview``, implemented in
+the underscore-prefixed ``mudplot._render``) is loaded lazily on first
+access, so ``import mudplot`` stays dependency-free.
 """
 
 from __future__ import annotations
@@ -27,16 +28,31 @@ from .validate import assert_valid, validate
 __version__ = "0.0.1"
 
 # -- effect layer: needs numpy / matplotlib (lazy via PEP 562) -------------
+#
+# IMPORTANT: none of these keys may equal the *last component* of their own
+# backing submodule's dotted name (e.g. a key "render" backed by module
+# "mudplot.render" would be unsafe). Importing a submodule has the side
+# effect of binding it onto the parent package's namespace under its own
+# name -- Python does this for *any* import of that submodule, including a
+# plain "from .render import x" somewhere else in the codebase, not just
+# through this __getattr__ -- so a colliding key would eventually get
+# silently overwritten with the raw module instead of the intended
+# attribute, breaking every subsequent access with "'module' object is not
+# callable". This is why the rendering implementation lives in the
+# underscore-prefixed ``mudplot._render`` rather than ``mudplot.render``:
+# there is no way to "fix" this collision from the __getattr__ side (undoing
+# an import side effect after every possible import site is not tractable),
+# only to avoid it by construction.
 _LAZY = {
     "color": "mudplot.color",
-    "render": "mudplot.render:render",
-    "save": "mudplot.render:save",
+    "render": "mudplot._render:render",
+    "save": "mudplot._render:save",
     "tex_preview": "mudplot.tex:tex_preview",
 }
 
 if TYPE_CHECKING:  # help type checkers/IDEs see the lazy names
     from . import color
-    from .render import render, save
+    from ._render import render, save
     from .tex import tex_preview
 
 
@@ -48,18 +64,9 @@ def __getattr__(name: str):
         raise AttributeError(f"module 'mudplot' has no attribute {name!r}")
     mod_name, _, _attr = target.partition(":")
     mod = importlib.import_module(mod_name)
-    # Importing a submodule has the side effect of binding it onto this
-    # package's namespace under *its own* name -- e.g. importing
-    # "mudplot.render" sets ``mudplot.render`` to that submodule directly in
-    # mudplot.__dict__, bypassing __getattr__ entirely on every future
-    # lookup. When a _LAZY key shares a name with its submodule ("render"
-    # does), or when resolving a *different* key that happens to import the
-    # same submodule (e.g. "save" also lives in mudplot.render), that side
-    # effect pre-emptively squats on the "render" slot with the raw module
-    # instead of the function -- so a plain "cache what I just resolved"
-    # fix isn't enough; every _LAZY entry backed by this same submodule has
-    # to be fixed up together, in one pass, regardless of which one was
-    # actually requested.
+    # Defensive belt-and-suspenders: fix up every _LAZY entry backed by the
+    # same submodule in one pass (not just the one requested), in case a
+    # future entry ever collides the way described above.
     for key, other_target in _LAZY.items():
         other_mod_name, _, other_attr = other_target.partition(":")
         if other_mod_name == mod_name:

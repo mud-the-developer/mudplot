@@ -165,6 +165,119 @@
         "clabel",
         "alpha"
       ]
+    },
+    "contour": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "levels"
+      ]
+    },
+    "contourf": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "levels"
+      ]
+    },
+    "violin": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "alpha"
+      ]
+    },
+    "kde": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "alpha",
+        "line_width",
+        "line_style"
+      ]
+    },
+    "pie": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "color",
+        "alpha"
+      ]
+    },
+    "scatter3d": {
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "marker",
+        "marker_size",
+        "alpha",
+        "c",
+        "cmap_kind",
+        "colorbar",
+        "clabel"
+      ]
+    },
+    "line3d": {
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "optional": [
+        "group",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "marker",
+        "alpha"
+      ]
+    },
+    "surface": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
+      ]
+    },
+    "wireframe": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "color",
+        "alpha"
+      ]
     }
   },
   "themes": [
@@ -480,6 +593,20 @@
         "default": 0
       }
     ],
+    "SetProjection": [
+      {
+        "name": "projection",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
     "SetScale": [
       {
         "name": "axis",
@@ -583,6 +710,32 @@
         "name": "text",
         "type": "str",
         "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetZAxis": [
+      {
+        "name": "label",
+        "type": "str",
+        "required": false,
+        "default": ""
+      },
+      {
+        "name": "scale",
+        "type": "str",
+        "required": false,
+        "default": "linear"
+      },
+      {
+        "name": "limits",
+        "type": "list[float] or None",
+        "required": false,
         "default": null
       },
       {

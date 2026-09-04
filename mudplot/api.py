@@ -141,8 +141,64 @@ class Plot:
         )
 
     def matrix(self, name: str, values) -> Plot:
-        """Register a 2-D matrix (list of rows) under ``name`` for ``.heatmap()``."""
+        """Register a 2-D matrix (list of rows) under ``name`` for ``.heatmap()``
+        (also used by ``.contour()``/``.contourf()``/``.surface()``/``.wireframe()``).
+        """
         return self.dispatch(A.SetMatrix(name, [list(row) for row in values]))
+
+    def contour(
+        self,
+        matrix: str,
+        *,
+        levels: int | list[float] | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Contour lines of a 2-D matrix registered with ``.matrix(name, values)``."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="contour",
+                    matrix=matrix,
+                    levels=levels,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def contourf(
+        self,
+        matrix: str,
+        *,
+        levels: int | list[float] | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Filled contours of a 2-D matrix registered with ``.matrix(name, values)``."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="contourf",
+                    matrix=matrix,
+                    levels=levels,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
 
     def bar(
         self, x: str, y: str, *, label: str | None = None, panel: int = 0, **style
@@ -298,6 +354,151 @@ class Plot:
             )
         )
 
+    def violin(
+        self,
+        x: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Violin plot of column ``x``, optionally split by ``group``."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(type="violin", x=x, group=group, label=label, **style),
+                panel=panel,
+            )
+        )
+
+    def kde(
+        self,
+        x: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Kernel-density-estimate curve of column ``x`` (numpy-only Gaussian KDE)."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(type="kde", x=x, group=group, label=label, **style),
+                panel=panel,
+            )
+        )
+
+    def pie(self, labels: str, values: str, *, panel: int = 0, **style) -> Plot:
+        """Pie chart: ``labels`` names the category column, ``values`` the sizes."""
+        return self.dispatch(
+            A.AddLayer(LayerSpec(type="pie", x=labels, y=values, **style), panel=panel)
+        )
+
+    def scatter3d(
+        self,
+        x: str,
+        y: str,
+        z: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        c: str | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = False,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """3-D scatter plot; the panel must be set to ``projection3d()`` first."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="scatter3d",
+                    x=x,
+                    y=y,
+                    z=z,
+                    group=group,
+                    label=label,
+                    c=c,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def line3d(
+        self,
+        x: str,
+        y: str,
+        z: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """3-D line plot; the panel must be set to ``projection3d()`` first."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="line3d", x=x, y=y, z=z, group=group, label=label, **style
+                ),
+                panel=panel,
+            )
+        )
+
+    def surface(
+        self,
+        matrix: str,
+        *,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """3-D surface plot of a matrix; the panel must be ``projection3d()``."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="surface",
+                    matrix=matrix,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def wireframe(self, matrix: str, *, panel: int = 0, **style) -> Plot:
+        """3-D wireframe plot of a matrix; the panel must be ``projection3d()``."""
+        return self.dispatch(
+            A.AddLayer(LayerSpec(type="wireframe", matrix=matrix, **style), panel=panel)
+        )
+
+    def projection3d(self, *, panel: int = 0) -> Plot:
+        """Switch a panel to a 3-D projection (for scatter3d/line3d/surface/
+        wireframe layers)."""
+        return self.dispatch(A.SetProjection("3d", panel=panel))
+
+    def zlabel(
+        self,
+        label: str = "",
+        *,
+        scale: str = "linear",
+        limits: list[float] | None = None,
+        panel: int = 0,
+    ) -> Plot:
+        """Configure the z-axis of a ``projection3d()`` panel."""
+        return self.dispatch(
+            A.SetZAxis(label=label, scale=scale, limits=limits, panel=panel)
+        )
+
     def remove_layer(self, layer_index: int, *, panel: int = 0) -> Plot:
         """Remove the layer at ``layer_index`` from ``panel`` (0-indexed)."""
         return self.dispatch(A.RemoveLayer(layer_index, panel=panel))
@@ -434,12 +635,12 @@ class Plot:
 
     # -- materialise (effects) ---------------------------------------------
     def render(self):
-        from .render import render
+        from ._render import render
 
         return render(self.spec)
 
     def save(self, path: str):
-        from .render import save
+        from ._render import save
 
         return save(self.spec, path)
 
