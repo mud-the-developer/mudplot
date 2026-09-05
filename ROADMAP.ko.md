@@ -60,7 +60,13 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 
 ## 5. 패키징/릴리스
 
-- 실제 PyPI 배포 워크플로 (태그 트리거, trusted publishing)
+- GitHub 릴리스: 완료 -- `.github/workflows/release.yml`이 태그(`v*`)마다
+  sdist/wheel을 빌드해 GitHub Release에 첨부함.
+- 실제 PyPI 배포: 의도적으로 보류. PyPI 프로젝트(`mudplot`)에 이 저장소를
+  trusted publisher로 등록(workflow `release.yml`, environment `pypi`)하고
+  GitHub에도 `pypi` environment를 만든 뒤 `release.yml`에 `publish` job을
+  다시 추가할 것 -- 한 번 시도했으나 publisher 미등록으로
+  `invalid-publisher` 오류로 실패함.
 - 버전 정책: 이번 릴리스로 `0.1.0` 적용. pre-1.0이라도 `FigureSpec`
   호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
   안정성에 의존).

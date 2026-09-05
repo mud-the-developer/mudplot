@@ -132,11 +132,16 @@ exercised through it, a reasonable first slice:
 
 ## 5. Packaging / release
 
-- **Actual PyPI publish**: currently only `scripts/check_wheel.py`
-  verifies the wheel builds correctly in CI; nothing publishes it. Add a
-  tag-triggered release workflow (`on: push: tags: ['v*']`) using
+- **GitHub releases**: done — `.github/workflows/release.yml` builds the
+  sdist/wheel and attaches them to a GitHub release on every `v*` tag.
+- **Actual PyPI publish**: deliberately deferred. Register this repo as a
+  trusted publisher on the PyPI project (project name `mudplot`, workflow
+  `release.yml`, environment `pypi`; see
+  https://docs.pypi.org/trusted-publishers/), create a matching `pypi`
+  GitHub environment, then re-add a `publish` job to `release.yml` using
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
-  needed) once the API is stable enough for a real `0.1.0`.
+  needed) -- attempted once already and failed with `invalid-publisher`
+  since no publisher was registered yet.
 - **Versioning**: `0.1.0` as of this release; semver policy: this is a
   young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
   bump the minor version even pre-1.0, since Rust/agent consumers depend on
