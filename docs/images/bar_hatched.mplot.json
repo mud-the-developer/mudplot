@@ -162,6 +162,7 @@
       "title": "Grouped bars: colour + hatch encoding",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": "Cell line",
         "location": "best",

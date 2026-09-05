@@ -667,6 +667,20 @@
     "LegendSpec": {
       "type": "object",
       "properties": {
+        "bbox_to_anchor": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "show": {
           "type": "boolean",
           "default": true

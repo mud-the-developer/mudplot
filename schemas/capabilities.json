@@ -555,6 +555,12 @@
         "type": "int",
         "required": false,
         "default": 0
+      },
+      {
+        "name": "bbox_to_anchor",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
       }
     ],
     "SetLimits": [

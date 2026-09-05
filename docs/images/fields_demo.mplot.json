@@ -651,6 +651,7 @@
       "title": "Synthetic field",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "best",
@@ -720,6 +721,7 @@
       "title": "Same field in 3-D",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "best",

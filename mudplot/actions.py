@@ -211,6 +211,9 @@ class SetLegend:
     location: str = "best"
     frame: bool = False
     panel: int = 0
+    # Explicit [x, y] figure-fraction override (0..1); None leaves
+    # ``location`` in charge (or clears a previous override, if it was set).
+    bbox_to_anchor: list[float] | None = None
 
 
 @dataclass(frozen=True)

@@ -74,6 +74,36 @@ def figsize_for(
     return [w, w * aspect]
 
 
+def _tex_actions(
+    ctx: TexContext,
+    *,
+    fraction: float = 1.0,
+    aspect: float = 0.618,
+    full_width: bool = False,
+    font_scale: float = 0.9,
+) -> list[A.Action]:
+    """The SetSize/SetFont actions that size a spec to ``ctx``.
+
+    Shared by :func:`apply_tex` (pure, spec -> spec) and
+    ``Plot.tex_size()`` (dispatches through the Store, so it participates
+    in the fluent API's action_log/undo like every other builder method).
+    """
+    w, h = figsize_for(ctx, fraction, aspect, full_width=full_width)
+    body = ctx.fontsize_pt * font_scale
+    return [
+        A.SetSize(w, h),
+        A.SetFont(
+            params={
+                "family": ctx.family,
+                "size": body,
+                "label_size": body,
+                "title_size": body + 1,
+                "tick_size": body - 1,
+            }
+        ),
+    ]
+
+
 def apply_tex(
     spec: FigureSpec,
     ctx: TexContext,
@@ -87,20 +117,13 @@ def apply_tex(
 
     Pure: dispatches sizing/font actions through the reducer.
     """
-    w, h = figsize_for(ctx, fraction, aspect, full_width=full_width)
-    body = ctx.fontsize_pt * font_scale
-    actions = [
-        A.SetSize(w, h),
-        A.SetFont(
-            params={
-                "family": ctx.family,
-                "size": body,
-                "label_size": body,
-                "title_size": body + 1,
-                "tick_size": body - 1,
-            }
-        ),
-    ]
+    actions = _tex_actions(
+        ctx,
+        fraction=fraction,
+        aspect=aspect,
+        full_width=full_width,
+        font_scale=font_scale,
+    )
     return reduce_all(spec, actions)
 
 

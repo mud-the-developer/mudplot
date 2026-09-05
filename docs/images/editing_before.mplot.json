@@ -190,6 +190,7 @@
       "title": "Before editing",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "best",

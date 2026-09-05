@@ -565,10 +565,20 @@ class Plot:
         location: str = "best",
         frame: bool = False,
         panel: int = 0,
+        bbox_to_anchor: list[float] | None = None,
     ) -> Plot:
+        """``bbox_to_anchor=[x, y]`` (figure-fraction, 0..1) pins the legend
+        to an exact spot, overriding ``location`` (e.g. after dragging it in
+        the interactive editor). Leave it ``None`` for the usual named
+        locations."""
         return self.dispatch(
             A.SetLegend(
-                show=show, title=title, location=location, frame=frame, panel=panel
+                show=show,
+                title=title,
+                location=location,
+                frame=frame,
+                panel=panel,
+                bbox_to_anchor=bbox_to_anchor,
             )
         )
 
@@ -632,6 +642,40 @@ class Plot:
 
     def size(self, width: float, height: float) -> Plot:
         return self.dispatch(A.SetSize(width, height))
+
+    def tex_size(
+        self,
+        preset,
+        *,
+        columns: int = 1,
+        fraction: float = 1.0,
+        aspect: float = 0.618,
+        font_scale: float = 0.9,
+    ) -> Plot:
+        """Size (and font-match) the figure for a TeX document column layout.
+
+        ``preset`` is a name from ``mp.TEX_PRESETS`` (e.g. ``"ieee"``,
+        ``"nature"``) or a ``TexContext``. ``columns=1`` sizes to a single
+        column's width; ``columns=2`` spans the full text width (for a
+        double-column-spanning ``figure*`` in a two-column document, or a
+        wide figure in a single-column one). This is the same sizing
+        ``preview(tex=...)`` uses, but applied to the actual figure you
+        render/save -- not just a mock-column preview.
+        """
+        from .tex import _resolve_ctx, _tex_actions
+
+        if columns not in (1, 2):
+            raise ValueError(f"columns must be 1 or 2, got {columns!r}")
+        ctx = _resolve_ctx(preset)
+        actions = _tex_actions(
+            ctx,
+            fraction=fraction,
+            aspect=aspect,
+            full_width=(columns == 2),
+            font_scale=font_scale,
+        )
+        self._store.dispatch_all(actions)
+        return self
 
     # -- materialise (effects) ---------------------------------------------
     def render(self):

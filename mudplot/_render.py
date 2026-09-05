@@ -454,6 +454,30 @@ def _apply_axis(ax, axis_spec, set_label, set_scale, set_limits):
         set_limits(axis_spec.limits)
 
 
+def _legend_kwargs(leg, *, ax2_present: bool, fig) -> dict:
+    """Build ax.legend() placement kwargs, honouring a dragged/explicit
+    ``bbox_to_anchor`` override in figure-fraction coordinates (independent
+    of the axes' own position, so it stays put if the axes later resize).
+
+    Returns ``(kwargs, auto_margin)``: ``auto_margin`` tells the caller
+    whether ``_autofit`` should reserve canvas space for this legend. An
+    explicit ``bbox_to_anchor`` (e.g. dragged in the interactive editor) is
+    trusted as-is -- the user may deliberately want it overlapping the plot
+    -- so only the named "outside ..." locations get automatic margin.
+    """
+    if leg.bbox_to_anchor is not None:
+        return {
+            "loc": "center",
+            "bbox_to_anchor": tuple(leg.bbox_to_anchor),
+            "bbox_transform": fig.transFigure,
+        }, False
+    kw = dict(_OUTSIDE_LEGEND_LOCS.get(leg.location, {"loc": leg.location}))
+    if leg.location == "outside right" and ax2_present:
+        # leave room for the secondary axis's own ticks/label
+        kw["bbox_to_anchor"] = (1.35, 0.5)
+    return kw, leg.location in _OUTSIDE_LEGEND_LOCS
+
+
 def _apply_despine(ax, theme_axes):
     for char, side in _SPINE_SIDES.items():
         if char in theme_axes.spines and theme_axes.spine_offset:
@@ -474,13 +498,16 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
     if panel.z is not None:
         _apply_axis(ax, panel.z, ax.set_zlabel, ax.set_zscale, ax.set_zlim)
     if panel.title:
-        ax.set_title(panel.title)
+        ax.set_title(panel.title, wrap=True)
 
     handles, labels = ax.get_legend_handles_labels()
     leg = panel.legend
     if leg.show and handles:
-        kw = dict(_OUTSIDE_LEGEND_LOCS.get(leg.location, {"loc": leg.location}))
-        ax.legend(handles, labels, title=leg.title, frameon=leg.frame, **kw)
+        kw, auto_margin = _legend_kwargs(leg, ax2_present=False, fig=ax.figure)
+        legend_artist = ax.legend(
+            handles, labels, title=leg.title, frameon=leg.frame, **kw
+        )
+        legend_artist._mudplot_auto_margin = auto_margin
 
 
 def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
@@ -513,7 +540,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
     if panel.y2 is not None:
         _apply_axis(ax2, panel.y2, ax2.set_ylabel, ax2.set_yscale, ax2.set_ylim)
     if panel.title:
-        ax.set_title(panel.title)
+        ax.set_title(panel.title, wrap=True)
     _apply_despine(ax, theme.axes)
 
     handles, labels = ax.get_legend_handles_labels()
@@ -522,11 +549,13 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
         handles, labels = handles + h2, labels + l2
     leg = panel.legend
     if leg.show and handles:
-        kw = dict(_OUTSIDE_LEGEND_LOCS.get(leg.location, {"loc": leg.location}))
-        if leg.location == "outside right" and ax2 is not None:
-            # leave room for the secondary axis's own ticks/label
-            kw["bbox_to_anchor"] = (1.35, 0.5)
-        ax.legend(handles, labels, title=leg.title, frameon=leg.frame, **kw)
+        kw, auto_margin = _legend_kwargs(
+            leg, ax2_present=ax2 is not None, fig=ax.figure
+        )
+        legend_artist = ax.legend(
+            handles, labels, title=leg.title, frameon=leg.frame, **kw
+        )
+        legend_artist._mudplot_auto_margin = auto_margin
 
 
 def _panel_label(index: int) -> str:
@@ -633,6 +662,55 @@ def _link_shared_axes(axes_grid, rows: int, cols: int, mode: str, axis: str) -> 
                     link(ax, base)
 
 
+def _autofit(fig, pad_px: float = 6.0) -> None:
+    """Precompute layout so text never overlaps or gets silently clipped,
+    while keeping the figure at its exact configured size (needed for TeX
+    column-width placement -- see ``mudplot.tex``).
+
+    Two passes, using matplotlib's own accurate text-measurement renderer
+    (the same role a browser's font engine plays for web text layout):
+
+    1. Reserve canvas space for any *named* "outside ..." legend (not an
+       explicit/dragged ``bbox_to_anchor``, which is trusted as-is) by
+       shrinking the constrained-layout engine's working rectangle --
+       constrained_layout still does its own tick-label-aware spacing
+       *inside* that smaller rectangle, so this doesn't reimplement that.
+    2. Panel titles/suptitle already wrap (``wrap=True``) at the figure
+       width via matplotlib's native text layout; this only needs to ask
+       for a redraw after step 1 changes that width.
+    """
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    fig_w, fig_h = fig.bbox.width, fig.bbox.height
+
+    left, bottom, right, top = 0.0, 0.0, 1.0, 1.0
+    changed = False
+    for ax in fig.axes:
+        legend = ax.get_legend()
+        if legend is None or not getattr(legend, "_mudplot_auto_margin", False):
+            continue
+        bb = legend.get_window_extent(renderer).transformed(fig.transFigure.inverted())
+        if bb.x1 > 1:
+            right = min(right, 1 - (bb.x1 - 1) - pad_px / fig_w)
+            changed = True
+        if bb.x0 < 0:
+            left = max(left, -bb.x0 + pad_px / fig_w)
+            changed = True
+        if bb.y1 > 1:
+            top = min(top, 1 - (bb.y1 - 1) - pad_px / fig_h)
+            changed = True
+        if bb.y0 < 0:
+            bottom = max(bottom, -bb.y0 + pad_px / fig_h)
+            changed = True
+
+    if changed and fig.get_layout_engine() is not None:
+        fig.get_layout_engine().set(rect=(left, bottom, right - left, top - bottom))
+
+    # Re-draw so wrapped titles measure against the (possibly now smaller)
+    # available width; harmless no-op if nothing changed above.
+    fig.canvas.draw()
+
+
 def render(spec: FigureSpec):
     """Build and return a matplotlib Figure for ``spec``.
 
@@ -658,7 +736,18 @@ def render(spec: FigureSpec):
         # Built with fig.add_subplot() (one call per panel) rather than
         # plt.subplots(), which can't give individual panels their own
         # projection (needed for 3-D panels mixed with 2-D ones).
-        fig = plt.figure(figsize=tuple(spec.size), dpi=spec.dpi)
+        #
+        # constrained_layout (+ _autofit below) gives precise, overlap-free
+        # spacing for 2-D panels, but matplotlib's 3-D Axes don't support it
+        # well (e.g. the z-axis label routinely gets clipped) -- fall back
+        # to the older tight_layout() pass for any figure containing a 3-D
+        # panel rather than regress that case.
+        has_3d = any(p.projection == "3d" for p in spec.panels)
+        fig = plt.figure(
+            figsize=tuple(spec.size),
+            dpi=spec.dpi,
+            layout=None if has_3d else "constrained",
+        )
         try:
             gs = fig.add_gridspec(rows, cols, **gridspec_kw)
             axes_grid = [[None] * cols for _ in range(rows)]
@@ -680,8 +769,11 @@ def render(spec: FigureSpec):
                 _apply_panel_label(ax, spec, panel, i)
 
             if spec.suptitle:
-                fig.suptitle(spec.suptitle)
-            fig.tight_layout()
+                fig.suptitle(spec.suptitle, wrap=True)
+            if has_3d:
+                fig.tight_layout()
+            else:
+                _autofit(fig)
         except Exception:
             plt.close(fig)
             raise

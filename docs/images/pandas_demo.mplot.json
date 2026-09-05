@@ -425,6 +425,7 @@
       "title": "Response trajectories",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "lower right",
@@ -481,6 +482,7 @@
       "title": "Shared colour scale",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": false,
         "title": null,
         "location": "best",
@@ -537,6 +539,7 @@
       "title": "Distribution across sampled times",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "best",
@@ -593,6 +596,7 @@
       "title": "Gaussian KDE",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": false,
         "title": null,
         "location": "best",

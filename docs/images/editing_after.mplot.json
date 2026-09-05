@@ -193,6 +193,7 @@
       "title": "After editing: aligned categories",
       "label": null,
       "legend": {
+        "bbox_to_anchor": null,
         "show": true,
         "title": null,
         "location": "upper left",

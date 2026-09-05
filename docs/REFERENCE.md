@@ -252,6 +252,7 @@ Every mutation is one of these — send as
 | `location` | `str` | False | `'best'` |
 | `frame` | `bool` | False | `False` |
 | `panel` | `int` | False | `0` |
+| `bbox_to_anchor` | `list[float] or None` | False | `None` |
 
 ### `SetLimits`
 

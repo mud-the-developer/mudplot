@@ -131,10 +131,13 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetLimits(axis=axis, lo=lo, hi=hi, panel=pi):
             _ensure_panel(s, pi)
             getattr(s.panels[pi], axis).limits = [lo, hi]
-        case A.SetLegend(show=show, title=title, location=loc, frame=fr, panel=pi):
+        case A.SetLegend(
+            show=show, title=title, location=loc, frame=fr, panel=pi, bbox_to_anchor=bta
+        ):
             _ensure_panel(s, pi)
             leg = s.panels[pi].legend
             leg.show, leg.title, leg.location, leg.frame = show, title, loc, fr
+            leg.bbox_to_anchor = list(bta) if bta is not None else None
         case A.SetSuptitle(text=text):
             s.suptitle = text
         case A.SetPanelLabel(label=label, panel=pi):

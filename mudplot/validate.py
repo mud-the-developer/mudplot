@@ -215,6 +215,12 @@ def validate(spec: FigureSpec) -> list[str]:
             issues.append(
                 f"{where_axis}: unknown legend location {panel.legend.location!r}"
             )
+        bta = panel.legend.bbox_to_anchor
+        if bta is not None and (len(bta) != 2 or not all(_finite(v) for v in bta)):
+            issues.append(
+                f"{where_axis}: legend bbox_to_anchor must be [x, y] finite numbers, "
+                f"got {bta!r}"
+            )
         if panel.projection not in _PROJECTIONS:
             issues.append(
                 f"{where_axis}: invalid projection {panel.projection!r}; "

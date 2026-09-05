@@ -219,6 +219,9 @@ class AxisSpec(SpecBase):
 
 @dataclass
 class LegendSpec(SpecBase):
+    # Explicit [x, y] figure-fraction override (0..1), e.g. from dragging the
+    # legend in the interactive editor. None -> use ``location`` as usual.
+    bbox_to_anchor: list[float] | None = None
     show: bool = True
     title: str | None = None
     location: str = "best"
