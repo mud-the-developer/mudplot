@@ -24,6 +24,8 @@ dist/
 *.jpg
 *.pdf
 !src/SciencePlots/examples/figures/*.jpg
+!docs/images/*.png
+!docs/images/*.pdf
 dashboard/site_build/
 
 # caches

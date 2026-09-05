@@ -1,0 +1,207 @@
+{
+  "version": "0.1",
+  "size": [
+    5,
+    3.5
+  ],
+  "dpi": 150,
+  "theme": {
+    "name": "boxed",
+    "font": {
+      "family": "sans-serif",
+      "size": 10.0,
+      "title_size": 11.0,
+      "label_size": 10.0,
+      "tick_size": 8.5,
+      "use_tex": false
+    },
+    "axes": {
+      "line_width": 0.8,
+      "spines": "LRTB",
+      "spine_offset": 0.0
+    },
+    "grid": {
+      "show": false,
+      "axis": "both",
+      "line_width": 0.5,
+      "alpha": 0.5
+    },
+    "ticks": {
+      "direction": "in",
+      "major_size": 3.0,
+      "minor_size": 1.5,
+      "width": 0.8,
+      "minor_visible": false,
+      "top": true,
+      "right": true
+    },
+    "palette": {
+      "kind": "qualitative",
+      "preset": null,
+      "lightness": 65.0,
+      "chroma": 55.0,
+      "hue_start": 20.0,
+      "cvd_safe": true
+    },
+    "redundant_encoding": true,
+    "markers": [
+      "o",
+      "s",
+      "^",
+      "D",
+      "v",
+      "P",
+      "X",
+      "*"
+    ],
+    "line_styles": [
+      "-",
+      "--",
+      "-.",
+      ":"
+    ],
+    "hatches": [
+      "",
+      "//",
+      "xx",
+      "..",
+      "\\\\",
+      "oo"
+    ]
+  },
+  "data": {
+    "columns": {
+      "order_a": [
+        "Control",
+        "Low dose",
+        "High dose"
+      ],
+      "order_b": [
+        "High dose",
+        "Control",
+        "Low dose"
+      ],
+      "mean_a": [
+        1.0,
+        1.25,
+        1.5
+      ],
+      "mean_b": [
+        1.8,
+        1.1,
+        1.5
+      ],
+      "err_a": [
+        0.04,
+        0.06,
+        0.08
+      ],
+      "err_b": [
+        0.09,
+        0.05,
+        0.07
+      ]
+    },
+    "matrices": {}
+  },
+  "suptitle": "",
+  "auto_label_panels": false,
+  "width_ratios": null,
+  "height_ratios": null,
+  "panels": [
+    {
+      "layers": [
+        {
+          "type": "errorbar",
+          "x": "order_a",
+          "y": "mean_a",
+          "group": null,
+          "label": "Experiment A",
+          "color": null,
+          "line_width": null,
+          "line_style": null,
+          "marker": "o",
+          "marker_size": 6,
+          "alpha": 1.0,
+          "yerr": "err_a",
+          "xerr": null,
+          "capsize": 3,
+          "y2": null,
+          "value": null,
+          "text": null,
+          "at": null,
+          "to": null,
+          "bins": 20,
+          "density": false,
+          "c": null,
+          "cmap_kind": "sequential",
+          "colorbar": false,
+          "clabel": null,
+          "matrix": null,
+          "levels": null,
+          "axis": "y",
+          "z": null
+        },
+        {
+          "type": "errorbar",
+          "x": "order_b",
+          "y": "mean_b",
+          "group": null,
+          "label": "Experiment B",
+          "color": null,
+          "line_width": null,
+          "line_style": null,
+          "marker": "s",
+          "marker_size": 6,
+          "alpha": 1.0,
+          "yerr": "err_b",
+          "xerr": null,
+          "capsize": 3,
+          "y2": null,
+          "value": null,
+          "text": null,
+          "at": null,
+          "to": null,
+          "bins": 20,
+          "density": false,
+          "c": null,
+          "cmap_kind": "sequential",
+          "colorbar": false,
+          "clabel": null,
+          "matrix": null,
+          "levels": null,
+          "axis": "y",
+          "z": null
+        }
+      ],
+      "x": {
+        "label": "",
+        "scale": "linear",
+        "limits": null
+      },
+      "y": {
+        "label": "Response (a.u.)",
+        "scale": "linear",
+        "limits": [
+          0.9,
+          2.0
+        ]
+      },
+      "y2": null,
+      "z": null,
+      "projection": "2d",
+      "title": "After editing: aligned categories",
+      "label": null,
+      "legend": {
+        "show": true,
+        "title": null,
+        "location": "upper left",
+        "frame": false
+      }
+    }
+  ],
+  "layout": null,
+  "share_x": "none",
+  "share_y": "none",
+  "journal": null
+}

@@ -10,7 +10,14 @@
 
 - **같은 명도(L\* 고정)** → 흑백 인쇄/명암에서 공정
 - **최대 대조** → 색상 간 지각 색차(CIEDE2000)의 최솟값을 최대화
-- **색맹 안전** → protanopia/deuteranopia 시뮬레이션을 포함한 최악 케이스 최적화
+- **색맹 고려** → 일반 시각 + protanopia/deuteranopia 시뮬레이션의 최악 대조를
+  최적화(`Palette.report()`로 직접 측정한 값이며, 인증된 접근성 기준은 아님);
+  아래 [검증된 명칭 팔레트](docs/DEMO.md#4-colour-palette-presets-measured-not-assumed)
+  참고
+- **흑백 인쇄 안전** → 그룹화된 bar/box/violin 도 기본적으로 해칭 패턴을 함께
+  사용해, 색상이 비슷해져도 막대이 구별됩니다 —
+  [흑백 인쇄 데모](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
+  참고
 
 ## 아키텍처: Spec 중심 + 순수 reducer (functional core / imperative shell)
 
@@ -89,6 +96,16 @@ uv venv && uv pip install -e ".[dev]"
 | 색상 엔진 | `color/*` | numpy |
 | 렌더 effect | `render` `tex_preview` | numpy + matplotlib |
 
+## 실제 렌더링 데모
+
+![pandas 합성 데이터를 mudplot으로 렌더링한 line, scatter, violin, KDE figure](docs/images/pandas_demo.png)
+
+`python -m scripts.render_docs_demo`로 생성한 실제 출력입니다.
+고정 난수 시드의 **합성 데이터**이며 실험 결과가 아닙니다.
+**[데모 갤러리](docs/DEMO.md)**에서 수정 전후 이미지, heatmap·3D,
+PDF·편집 가능한 JSON과 실행·검증 방법을 확인할 수 있습니다.
+데모에는 `mudplot[render]` 외에 pandas가 필요합니다.
+
 ## 사용 예
 
 ### 직관적 fluent 빌더
@@ -104,6 +121,11 @@ import mudplot as mp
     .palette("qualitative", hue_start=30)
     .save("fig.pdf"))
 ```
+
+`save()`는 지정한 figure 크기를 유지합니다. 내용에 맞게 잘라내려면
+`save("fig.pdf", tight=True)`를 사용하세요. 반환된 Matplotlib figure는 열린
+상태이므로 사용 후 `plt.close(fig)`로 닫습니다. `Plot.spec`과 `Store.state`는
+독립적인 스냅샷입니다. 직접 변경하지 말고 빌더 메서드나 action으로 수정하세요.
 
 ### 지원하는 플롯 종류
 
@@ -197,10 +219,20 @@ mp.plot(conn, query="SELECT x, y FROM t")     # DB-API 연결 + 쿼리 (sqlite �
 ### 팔레트 직접 사용
 
 ```python
-pal = mp.color_palette(5, "qualitative")   # 등명도·최대대조·색맹안전
+pal = mp.color_palette(5, "qualitative")   # 등명도·최대대조
 print(pal.hex, pal.min_delta_e())
 print(pal.report())      # {'cvd_safe': True, 'grayscale_safe': ..., 'note': ...}
 cmap = mp.color_palette(256, "sequential").to_cmap()
+
+# 이름 붙은 검증된 팔레트(명시된 카테고리 수까지 적색맹·녹색맹·진짜 흑백에서
+# 안전함을 측정함; mp.capabilities()["palette_presets"] 참고):
+pal = mp.color_palette(6, "qualitative", preset="paper")   # 또는 "vivid" / "soft"
+p = mp.plot(data).line("x", "y", group="g").palette(preset="paper")
+
+# bar/box/violin 도 기본적으로 그룹마다 해칭 패턴을 함께 사용해(ThemeSpec.hatches),
+# 색상 개수와 상관없이 흑백 인쇄에서도 그룹이 구별됩니다.
+p2 = mp.plot(data).bar("category", "value", group="g")  # 색상 + 해칭
+p3 = p2.encoding(redundant_encoding=False)               # 색상만
 ```
 
 ### 대시보드 (사람이 보는 문서 + 디자인 갤러리)
