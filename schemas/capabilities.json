@@ -499,6 +499,26 @@
         "default": null
       }
     ],
+    "SetLayerAt": [
+      {
+        "name": "layer_index",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "at",
+        "type": "list[float]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
     "SetLayout": [
       {
         "name": "rows",
@@ -747,6 +767,20 @@
       {
         "name": "text",
         "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetTitlePosition": [
+      {
+        "name": "position",
+        "type": "list[float] or None",
         "required": true,
         "default": null
       },

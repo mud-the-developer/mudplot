@@ -125,6 +125,67 @@ def test_3d_figure_still_renders_without_clipped_axis_labels():
     plt.close(fig)
 
 
+def test_title_position_moves_title_without_affecting_default_case():
+    p = mp.plot({"x": [1, 2], "y": [3, 4]}).line("x", "y").labels(title="Hello")
+    fig = p.render()
+    assert fig.axes[0].title.get_text() == "Hello"
+    plt.close(fig)
+
+    p2 = p.title_position([0.1, 0.85])
+    fig2 = p2.render()
+    texts = [t for t in fig2.axes[0].texts if t.get_text() == "Hello"]
+    assert len(texts) == 1
+    assert texts[0].get_position() == pytest.approx((0.1, 0.85))
+    assert fig2.axes[0].title.get_text() == ""  # real ax.set_title() unused now
+    plt.close(fig2)
+
+
+def test_title_position_none_restores_default():
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line("x", "y")
+        .labels(title="Hello")
+        .title_position([0.1, 0.85])
+        .title_position(None)
+    )
+    fig = p.render()
+    assert fig.axes[0].title.get_text() == "Hello"
+    plt.close(fig)
+
+
+def test_invalid_title_position_caught_by_validate():
+    p = mp.plot({"x": [1], "y": [2]}).line("x", "y").title_position([0.1])
+    assert any("title_position" in i for i in mp.validate(p.spec))
+
+
+def test_set_layer_at_repositions_text_and_annotate_layers():
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .size(5, 4)
+        .line("x", "y")
+        .text("note", at=[1, 1])
+        .annotate("peak", at=[1, 2], to=[2, 3])
+    )
+    moved = p.set_layer_at(1, [5, 5]).set_layer_at(2, [6, 6])
+    assert moved.spec.panels[0].layers[1].at == [5, 5]
+    assert moved.spec.panels[0].layers[2].at == [6, 6]
+    assert mp.validate(moved.spec) == []
+    fig = moved.render()
+    plt.close(fig)
+
+
+def test_set_layer_at_rejects_non_text_layer():
+    p = mp.plot({"x": [1, 2], "y": [3, 4]}).line("x", "y")
+    with pytest.raises(ValueError, match="only 'text'/'annotate' layers"):
+        p.set_layer_at(0, [1, 1])
+
+
+def test_set_layer_at_rejects_out_of_range_index():
+    p = mp.plot({"x": [1, 2], "y": [3, 4]}).line("x", "y")
+    with pytest.raises(ValueError, match="out of range"):
+        p.set_layer_at(9, [1, 1])
+
+
 def test_mixed_2d_3d_figure_still_shares_2d_axes_after_layout_change():
     p = mp.plot({"x": [1, 2], "y": [3, 4], "z": [5, 6]}).layout(1, 3)
     p.line("x", "y").line("x", "y", panel=1)

@@ -125,6 +125,9 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetTitle(text=text, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].title = text
+        case A.SetTitlePosition(position=pos, panel=pi):
+            _ensure_panel(s, pi)
+            s.panels[pi].title_position = list(pos) if pos is not None else None
         case A.SetScale(axis=axis, scale=scale, panel=pi):
             _ensure_panel(s, pi)
             getattr(s.panels[pi], axis).scale = scale
@@ -168,6 +171,21 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
                 layer.clabel = label
         case A.SetMatrix(name=name, values=values):
             s.data.matrices[name] = [list(row) for row in values]
+        case A.SetLayerAt(layer_index=li, at=at, panel=pi):
+            _ensure_panel(s, pi)
+            n_layers = len(s.panels[pi].layers)
+            if not (0 <= li < n_layers):
+                raise ValueError(
+                    f"SetLayerAt: layer_index {li} out of range for panel "
+                    f"{pi} ({n_layers} layer(s))"
+                )
+            layer = s.panels[pi].layers[li]
+            if layer.type not in ("text", "annotate"):
+                raise ValueError(
+                    f"SetLayerAt: layer {li} is a {layer.type!r} layer; "
+                    "only 'text'/'annotate' layers have a repositionable 'at'"
+                )
+            layer.at = list(at)
         case _:
             raise TypeError(f"unknown action: {action!r}")
 

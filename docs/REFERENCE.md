@@ -234,6 +234,14 @@ Every mutation is one of these — send as
 |---|---|---|---|
 | `name` | `str or None` | True | `None` |
 
+### `SetLayerAt`
+
+| field | type | required | default |
+|---|---|---|---|
+| `layer_index` | `int` | True | `None` |
+| `at` | `list[float]` | True | `None` |
+| `panel` | `int` | False | `0` |
+
 ### `SetLayout`
 
 | field | type | required | default |
@@ -345,6 +353,13 @@ Every mutation is one of these — send as
 | field | type | required | default |
 |---|---|---|---|
 | `text` | `str` | True | `None` |
+| `panel` | `int` | False | `0` |
+
+### `SetTitlePosition`
+
+| field | type | required | default |
+|---|---|---|---|
+| `position` | `list[float] or None` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `SetZAxis`

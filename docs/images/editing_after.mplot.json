@@ -191,6 +191,7 @@
       "z": null,
       "projection": "2d",
       "title": "After editing: aligned categories",
+      "title_position": null,
       "label": null,
       "legend": {
         "bbox_to_anchor": null,

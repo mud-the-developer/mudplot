@@ -338,6 +338,20 @@
           "type": "string",
           "default": ""
         },
+        "title_position": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "label": {
           "anyOf": [
             {

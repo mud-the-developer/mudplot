@@ -28,6 +28,7 @@ __all__ = [
     "SetFont",
     "SetGridStyle",
     "SetJournal",
+    "SetLayerAt",
     "SetLayout",
     "SetLegend",
     "SetLimits",
@@ -43,6 +44,7 @@ __all__ = [
     "SetTheme",
     "SetTicksStyle",
     "SetTitle",
+    "SetTitlePosition",
     "SetZAxis",
     "action_from_dict",
     "action_to_dict",
@@ -190,6 +192,28 @@ class SetTitle:
 
 
 @dataclass(frozen=True)
+class SetTitlePosition:
+    # Explicit [x, y] axes-fraction override; None restores the default
+    # (centred above the axes).
+    position: list[float] | None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetLayerAt:
+    """Reposition a ``text``/``annotate`` layer's anchor point (data coords).
+
+    Used by the interactive editor's draggable annotation handles; equally
+    usable by an agent that wants to nudge a callout without rebuilding the
+    whole layer.
+    """
+
+    layer_index: int
+    at: list[float]
+    panel: int = 0
+
+
+@dataclass(frozen=True)
 class SetScale:
     axis: str  # "x" | "y"
     scale: str  # "linear" | "log"
@@ -262,6 +286,8 @@ Action = (
     | SetZAxis
     | SetColorbar
     | SetMatrix
+    | SetTitlePosition
+    | SetLayerAt
 )
 
 # --------------------------------------------------------------------------
@@ -297,6 +323,8 @@ _ACTION_CLASSES = (
     SetZAxis,
     SetColorbar,
     SetMatrix,
+    SetTitlePosition,
+    SetLayerAt,
 )
 ACTION_REGISTRY: dict[str, type] = {cls.__name__: cls for cls in _ACTION_CLASSES}
 

@@ -503,6 +503,13 @@ class Plot:
         """Remove the layer at ``layer_index`` from ``panel`` (0-indexed)."""
         return self.dispatch(A.RemoveLayer(layer_index, panel=panel))
 
+    def set_layer_at(
+        self, layer_index: int, at: list[float], *, panel: int = 0
+    ) -> Plot:
+        """Reposition a ``text``/``annotate`` layer's anchor (data coords),
+        e.g. after dragging it in the interactive editor."""
+        return self.dispatch(A.SetLayerAt(layer_index, at, panel=panel))
+
     # -- multi-panel --------------------------------------------------------
     def layout(
         self,
@@ -544,6 +551,12 @@ class Plot:
         if title is not None:
             self.dispatch(A.SetTitle(title, panel=panel))
         return self
+
+    def title_position(self, position: list[float] | None, *, panel: int = 0) -> Plot:
+        """Pin the panel title to an exact ``[x, y]`` axes-fraction spot
+        (e.g. after dragging it in the interactive editor). ``None``
+        restores matplotlib's default (centred above the axes)."""
+        return self.dispatch(A.SetTitlePosition(position, panel=panel))
 
     def xscale(self, scale: str, *, panel: int = 0) -> Plot:
         return self.dispatch(A.SetScale("x", scale, panel=panel))

@@ -359,17 +359,23 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
             alpha=layer.alpha,
         )
     elif layer.type == "text":
-        target.text(
+        artist = target.text(
             layer.at[0], layer.at[1], layer.text or "", color=color, alpha=layer.alpha
         )
+        # Data-coordinate text confuses constrained_layout's space-reservation
+        # solve (its position isn't known until the axes limits are, which
+        # are themselves part of what's being solved) -- exclude it, same as
+        # matplotlib's own docs recommend for in-axes annotations.
+        artist.set_in_layout(False)
     elif layer.type == "annotate":
-        target.annotate(
+        artist = target.annotate(
             layer.text or "",
             xy=tuple(layer.to or layer.at),
             xytext=tuple(layer.at),
             color=color,
             arrowprops={"arrowstyle": "->", "color": color} if layer.to else None,
         )
+        artist.set_in_layout(False)
     else:
         raise ValueError(f"unknown layer type: {layer.type!r}")
 
@@ -478,6 +484,29 @@ def _legend_kwargs(leg, *, ax2_present: bool, fig) -> dict:
     return kw, leg.location in _OUTSIDE_LEGEND_LOCS
 
 
+def _apply_title(ax, panel: PanelSpec) -> None:
+    if not panel.title:
+        return
+    if panel.title_position is not None:
+        # A real ax.set_title() is specially managed by constrained_layout
+        # (which recomputes its y-offset transform on every draw, silently
+        # discarding any manual set_position()); a plain axes-fraction
+        # text artist isn't, so a drag/explicit override uses that instead.
+        import matplotlib.pyplot as plt
+
+        fontsize = plt.rcParams["axes.titlesize"]
+        artist = ax.text(
+            *panel.title_position,
+            panel.title,
+            transform=ax.transAxes,
+            fontsize=fontsize,
+            wrap=True,
+        )
+        artist.set_in_layout(False)
+    else:
+        ax.set_title(panel.title, wrap=True)
+
+
 def _apply_despine(ax, theme_axes):
     for char, side in _SPINE_SIDES.items():
         if char in theme_axes.spines and theme_axes.spine_offset:
@@ -497,8 +526,7 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
     if panel.z is not None:
         _apply_axis(ax, panel.z, ax.set_zlabel, ax.set_zscale, ax.set_zlim)
-    if panel.title:
-        ax.set_title(panel.title, wrap=True)
+    _apply_title(ax, panel)
 
     handles, labels = ax.get_legend_handles_labels()
     leg = panel.legend
@@ -539,8 +567,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
     if panel.y2 is not None:
         _apply_axis(ax2, panel.y2, ax2.set_ylabel, ax2.set_yscale, ax2.set_ylim)
-    if panel.title:
-        ax.set_title(panel.title, wrap=True)
+    _apply_title(ax, panel)
     _apply_despine(ax, theme.axes)
 
     handles, labels = ax.get_legend_handles_labels()

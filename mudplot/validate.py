@@ -221,6 +221,12 @@ def validate(spec: FigureSpec) -> list[str]:
                 f"{where_axis}: legend bbox_to_anchor must be [x, y] finite numbers, "
                 f"got {bta!r}"
             )
+        tp = panel.title_position
+        if tp is not None and (len(tp) != 2 or not all(_finite(v) for v in tp)):
+            issues.append(
+                f"{where_axis}: title_position must be [x, y] finite numbers, "
+                f"got {tp!r}"
+            )
         if panel.projection not in _PROJECTIONS:
             issues.append(
                 f"{where_axis}: invalid projection {panel.projection!r}; "
