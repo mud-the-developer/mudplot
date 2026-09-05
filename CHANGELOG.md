@@ -4,6 +4,59 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.1.0] - 2026-09-05
+
+First tagged release: the pure spec/reducer/store engine, the LCH colour
+engine, the Matplotlib renderer (21 layer types), TeX-aware preview, the
+fluent + agent-facing APIs, the CLI, and the human-facing dashboard, plus
+three stability-hardening passes and named colour-palette presets. See
+`docs/DEMO.md` for a reproducible, pandas-driven demo of the actual output.
+
+### Colour: named palette presets + black & white print safety
+- Added three named, pre-verified `qualitative` palette presets
+  (`mudplot.capabilities()["palette_presets"]`): `paper` (default, safe up to
+  6 categories), `vivid` (higher chroma, safe up to 6), `soft` (lower chroma
+  for large-area fills, safe up to 5). "Safe" = measured via
+  `Palette.report()` (worst-case ΔE00 ≥ 8 across normal + protanopia/
+  deuteranopia simulation, min CIE L* gap ≥ 3 in true relative-luminance
+  greyscale), not an assumed or certified guarantee — see
+  `tests/test_palette_presets.py`. Use via `.palette(preset="paper")` or
+  `mp.color_palette(n, preset="paper")`.
+- `ThemeSpec.hatches`: bar/box/violin fills now also cycle a hatch pattern
+  per group by default (alongside the existing marker/line-style cycle for
+  line/scatter), so grouped fills stay distinguishable in black & white
+  print/photocopy regardless of how similar the underlying greys are.
+  Disable via `.encoding(redundant_encoding=False)`.
+- `docs/DEMO.md` §4/§5: palette presets previewed under normal/CVD/true
+  greyscale vision, plus a grouped bar chart converted pixel-by-pixel to
+  true relative-luminance greyscale to demonstrate hatches remain readable
+  after printing (not a mockup).
+- Softened the top-level README colour claims from "colourblind-safe" to
+  "colourblind-aware" / measured, to match what is actually verified.
+
+### Stabilization: data fidelity and editing
+- Categorical x positions now use Matplotlib's shared category registry across
+  layers, secondary axes and shared panels instead of independent mappings.
+- Grouped 2-D/3-D continuous scatter uses a single normalization and colorbar.
+- 3-D panels honor axis scales/limits, legend placement and panel labels;
+  mixed-projection figures retain sharing between their 2-D panels.
+- Palette size accounts for all independent series and pie slices per panel.
+- Store state/history/return values/listener notifications are isolated
+  snapshots, and reducer results no longer alias mutable action payloads.
+  Change store state through actions rather than mutating `plot.spec`.
+- `save()` now preserves the configured physical size by default, including
+  with ambient Matplotlib tight-crop settings. Use `save(path, tight=True)`
+  (or `mp.save(spec, path, tight=True)`) for the previous cropped output.
+- TeX preview avoids cropping/rescaling the embedded figure; context-free
+  preview returns the actual vector figure rather than a rasterized copy.
+- Failed render/save operations close their figures; successful calls still
+  return an open figure owned by the caller.
+- Validate figure geometry, ratios, all axis scales/limits and empty encoding
+  cycles; reject negative/non-integer panel indices and invalid layout actions.
+- Regression coverage: `tests/test_stabilization.py`.
+
 ### Added
 - **Colour engine**: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH conversions (numpy-only);
   CIE76/CIEDE2000 colour difference (validated against Sharma et al. 2005);
@@ -83,7 +136,7 @@ All notable changes to this project are documented here.
 See `DESIGN.md` §4c2 and `tests/test_bugfixes.py` for full details on each
 of the above.
 
-## [Unreleased] (continued): expanded plot coverage + 2 more bugs
+### Expanded plot coverage + 2 more bugs
 
 ### Added
 - **3-D plots**: `scatter3d`, `line3d`, `surface`, `wireframe`. A panel

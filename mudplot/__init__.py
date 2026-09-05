@@ -25,7 +25,7 @@ from .store import Store
 from .tex import TEX_PRESETS, TexContext, figsize_for
 from .validate import assert_valid, validate
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"
 
 # -- effect layer: needs numpy / matplotlib (lazy via PEP 562) -------------
 #

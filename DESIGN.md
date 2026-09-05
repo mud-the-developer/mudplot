@@ -450,6 +450,23 @@ tests/
       `contour`/`contourf`, `pie` (21 layer types total); 2 more bugs
       found/fixed (pie legend duplication, the render.py→_render.py
       rename), see §4f and §4c2 "Follow-up audit #2"
+- [x] M12b: stability hardening pass #3 — 7 more real bugs found/fixed
+      (categorical positions disagreeing across layers/twins/shared panels,
+      grouped continuous scatter using independent colour normalizations,
+      3-D panels ignoring axis scale/limits/legend/labels, palette-size
+      under-counting independent series and pie slices, `Store` leaking
+      mutable state through its return values/history/listeners, `save()`
+      silently cropping the configured figure size); geometry/axis
+      validation hardened; regression coverage in `tests/test_stabilization.py`.
+- [x] M12c: three named, pre-verified qualitative palette presets
+      (`paper`/`vivid`/`soft`, `mudplot.capabilities()["palette_presets"]`)
+      each measured (not assumed) CVD-safe + true-greyscale-safe up to a
+      documented category count; bar/box/violin fills also cycle a hatch
+      pattern per group by default so grouped fills stay distinguishable
+      after black & white printing regardless of colour count. See
+      `docs/DEMO.md` §4/§5 for a real, pixel-converted B&W-print
+      demonstration (not a mockup) and `tests/test_palette_presets.py`.
+- [x] **v0.1.0 released** (first tagged release).
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

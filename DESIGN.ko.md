@@ -318,7 +318,29 @@ tests/
       `docs/REFERENCE.md`, CI 동기화 검증) + `python -m mudplot docs`
 - [x] M11: 사람용 dashboard (별도 패키지) — 엔진 자기소개 기반 문서+디자인
       갤러리 정적 사이트 생성기 (`python -m dashboard`)
-- [ ] M12: Rust askama+tokio+htmx 에디터 (별도 크레이트)
+- [x] M11b: 안정성 하드닝 #1 — 실제 버그 10건 발견/수정, 크로스모듈
+      일관성 테스트 추가
+- [x] M11c: 로컬 인터랙티브 에디터 프로토타입 (`python -m dashboard
+      serve`), fluent API와 동일한 Store/action/reducer 사용
+- [x] M11d: 안정성 하드닝 #2 — 버그 3건 추가 발견/수정
+- [x] M12: 매트플롯립/seaborn 수준 레이어 확장 — 3D
+      (`scatter3d`/`line3d`/`surface`/`wireframe`), `violin`, `kde`,
+      `contour`/`contourf`, `pie` (총 21개 레이어 타입); 버그 2건 추가
+      발견/수정
+- [x] M12b: 안정성 하드닝 #3 — 범주형 좌표가 레이어·보조축·공유패널
+      간에 서로 달랐던 문제, 그룹화된 연속값 scatter가 독립적인 색상
+      정규화를 사용하던 문제, 3D 패널이 축 스케일·범위·범례·레이블을
+      무시하던 문제, `Store`가 반환값/이력/리스너를 통해 가변 상태를
+      유출하던 문제, `save()`가 지정 크기를 무시하고 자동 크롭하던 등
+      실제 버그 7건 발견/수정; 축/기하 검증 강화;
+      `tests/test_stabilization.py`에 회귀 테스트 추가
+- [x] M12c: 이름 붙은 검증된 qualitative 팔레트 프리셋 3종
+      (`paper`/`vivid`/`soft`) — 각각 명시된 카테고리 수까지 CVD·진짜 흑백
+      안전을 직접 측정; bar/box/violin도 기본적으로 그룹마다 해칭 패턴을
+      함께 사용해 흑백 인쇄에서도 구별됨. `docs/DEMO.md` §4/§5에 실제
+      픽셀 변환 기반 흑백 인쇄 증거 이미지 수록
+- [x] **v0.1.0 릴리스** (첫 태그 릴리스)
+- [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준
 

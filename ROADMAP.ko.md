@@ -61,6 +61,8 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 ## 5. 패키징/릴리스
 
 - 실제 PyPI 배포 워크플로 (태그 트리거, trusted publishing)
-- 버전 정책 결정 (아직 0.0.1)
+- 버전 정책: 이번 릴리스로 `0.1.0` 적용. pre-1.0이라도 `FigureSpec`
+  호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
+  안정성에 의존).
 - `pyproject.toml`의 `[project.urls]`는 이제 실제 저장소를 가리킴
   (https://github.com/mud-the-developer/mudplot)

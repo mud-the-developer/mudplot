@@ -1,0 +1,63 @@
+name: Release
+
+# Triggered by pushing a version tag (e.g. `v0.1.0`). Builds the sdist +
+# wheel and publishes to PyPI via trusted publishing (no stored token) --
+# see https://docs.pypi.org/trusted-publishers/ to register this repo/
+# workflow as a trusted publisher on the PyPI project *before* the first
+# tag push, or this job's publish step will fail with a 403.
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Install project (with dev extras)
+        run: uv sync --extra dev
+      - name: Full test suite
+        run: uv run pytest -q
+      - name: Schema/docs export is in sync
+        run: uv run python scripts/check_schema_sync.py
+      - name: Build sdist + wheel
+        run: uv build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write # required for PyPI trusted publishing
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+
+  github-release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

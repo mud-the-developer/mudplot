@@ -137,10 +137,10 @@ exercised through it, a reasonable first slice:
   tag-triggered release workflow (`on: push: tags: ['v*']`) using
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
   needed) once the API is stable enough for a real `0.1.0`.
-- **Versioning**: still `0.0.1`; decide on a semver policy (this is a
+- **Versioning**: `0.1.0` as of this release; semver policy: this is a
   young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
-  should probably bump the minor version even pre-1.0, since Rust/agent
-  consumers depend on schema stability).
+  bump the minor version even pre-1.0, since Rust/agent consumers depend on
+  schema stability.
 - `pyproject.toml`'s `[project.urls]` now point at the real repository
   (`https://github.com/mud-the-developer/mudplot`); keep the `Changelog`/
   `Roadmap` links in sync if these files ever move.
