@@ -12,18 +12,21 @@ English by default (per project convention).
 
 from __future__ import annotations
 
+import functools
 import io
 import json
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
+import mudplot as mp
 from mudplot import actions as A
 from mudplot.spec import LayerSpec
 from mudplot.store import Store
 from mudplot.validate import assert_valid
 
-from .editor_view import render_page
+from .editor_view import render_docs_page, render_page
+from .markdown_lite import markdown_to_html
 from .samples import sample_columns
 
 __all__ = ["EditorSession", "make_server", "serve"]
@@ -93,7 +96,15 @@ class EditorSession:
 
 
 # -- form field -> Action translation --------------------------------------
-def _build_action(action_type: str, fields: dict):
+@functools.lru_cache(maxsize=1)
+def _docs_page() -> str:
+    """The engine reference as a full HTML page (cached: static per process,
+    like the rest of ``mudplot.capabilities()``-derived content).
+    """
+    return render_docs_page(markdown_to_html(mp.reference_markdown()))
+
+
+def _build_action(action_type: str, fields: dict, spec=None):
     if action_type == "load_sample":
         return A.SetData(sample_columns(fields["name"]))
     if action_type == "set_theme":
@@ -123,6 +134,22 @@ def _build_action(action_type: str, fields: dict):
         return A.SetSuptitle(fields.get("text", ""))
     if action_type == "set_size":
         return A.SetSize(float(fields["width"]), float(fields["height"]))
+    if action_type in ("set_legend_position", "reset_legend_position"):
+        panel = int(fields.get("panel", 0))
+        cur = spec.panels[panel].legend
+        bbox = (
+            None
+            if action_type == "reset_legend_position"
+            else [float(fields["x"]), float(fields["y"])]
+        )
+        return A.SetLegend(
+            show=cur.show,
+            title=cur.title,
+            location=cur.location,
+            frame=cur.frame,
+            panel=panel,
+            bbox_to_anchor=bbox,
+        )
     raise ValueError(f"unknown editor action type {action_type!r}")
 
 
@@ -163,6 +190,8 @@ class _Handler(BaseHTTPRequestHandler):
                     session.store.state, session.action_log(), error=session.error
                 )
             self._send_html(page)
+        elif path == "/docs":
+            self._send_html(_docs_page())
         elif path == "/fig.png":
             with session.lock:
                 png = session.render_png()
@@ -193,7 +222,7 @@ class _Handler(BaseHTTPRequestHandler):
             action_type = fields.pop("type", "")
             with session.lock:
                 try:
-                    action = _build_action(action_type, fields)
+                    action = _build_action(action_type, fields, session.store.state)
                     session.dispatch_safe(action)
                 except Exception as e:
                     session.error = f"{type(e).__name__}: {e}"

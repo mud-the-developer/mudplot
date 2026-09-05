@@ -152,6 +152,47 @@ fig = (mp.plot(data).line("voltage", "current", group="order")
          .preview(tex="ieee", caption="Figure 1. ..."))
 ```
 
+### 실제 figure를 1단/2단 컬럼 폭에 맞추기
+
+`.tex_size(...)`는 `.preview()`와 같은 컬럼폭·폰트 크기 계산을, 미리보기가
+아니라 실제로 `.render()`/`.save()`하는 figure에 적용합니다. 긴 제목이나
+바깥쪽 범례도 이 크기에서 겹치거나 잘리지 않도록 자동으로 배치됩니다
+(아래 "레이아웃" 참고).
+
+```python
+p.tex_size("ieee", columns=1)    # 한 컬럼 폭
+p.tex_size("nature", columns=2)  # 전체 텍스트 폭 (2단 논문의 figure*)
+```
+
+### 레이아웃: 지정한 크기 그대로, 텍스트가 잘리거나 겹치지 않게
+
+`render()`/`save()`는 내용에 맞춰 figure를 자르거나 다시 늘리지 않습니다 —
+`.size()`나 `.tex_size()`로 지정한 물리적 크기가 그대로 유지되며, 이는 TeX
+배치에서 중요합니다. 대신 figure를 반환하기 전에 다음을 수행합니다.
+
+- figure 폭을 넘는 제목/suptitle을 자동 줄바꿈(matplotlib의 실제 렌더러로
+  측정한 네이티브 텍스트 줄바꿈이며, 직접 계산한 추정치가 아님)
+- 이름이 붙은 `"outside ..."` 범례 위치를 위한 캔버스 여백을 정확히
+  확보해, 플롯 영역과 겹치거나 가장자리에서 잘리지 않게 함
+
+명시적으로 지정한 `bbox_to_anchor=[x, y]`(아래 참고)는 그대로 신뢰하며
+자동 조정하지 않습니다 — 플롯 위에 겹치는 배치를 의도했을 수도 있기
+때문입니다. 이 과정은 모두 matplotlib 자체의 레이아웃 엔진과 텍스트 측정
+렌더러를 사용하며(직접 만든 레이아웃 시스템 없음), 이미 잘 맞는
+figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면 폰트 크기는
+지정한 그대로입니다. matplotlib의 constrained layout이 3D Axes를 잘
+지원하지 않아 3D 패널은 당분간 `tight_layout()`으로 대체됩니다.
+
+### 범례를 정확한 위치에 놓기
+
+```python
+p.legend(bbox_to_anchor=[0.8, 0.5])  # figure 비율 [x, y], location을 덮어씀
+p.legend(location="upper left")      # bbox_to_anchor=None으로 이름 위치 복원
+```
+
+인터랙티브 에디터의 드래그 가능한 범례 핸들도 이 기능을 사용합니다
+(`dashboard/README.md` 참고).
+
 ### AI 에이전트용 (JSON만으로 전체 조작)
 
 엔진은 기계 친화적으로 설계돼 있어, 에이전트가 탐색→생성→렌더를 전부

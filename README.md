@@ -196,6 +196,49 @@ fig = (mp.plot(data).line("voltage", "current", group="order")
          .preview(tex="ieee", caption="Figure 1. ..."))
 ```
 
+### Sizing the actual figure for a one- or two-column layout
+
+`.tex_size(...)` applies the same column-width/font sizing as `.preview()`,
+but to the figure you actually `.render()`/`.save()` — not just a mock
+preview. Every layer (long titles, outside legends) is then laid out to fit
+that exact size without clipping or overlap (see "Layout" below).
+
+```python
+p.tex_size("ieee", columns=1)   # a single column's width
+p.tex_size("nature", columns=2) # spans the full text width (figure*)
+```
+
+### Layout: no clipped or overlapping text, at the exact configured size
+
+`render()`/`save()` never crop or rescale the figure to fit its content —
+the physical size you set (directly, via `.size()`, or via `.tex_size()`) is
+what you get, which matters for TeX placement. Instead, before returning the
+figure it:
+
+- wraps titles/suptitle that would otherwise overflow the figure width
+  (matplotlib's native text wrapping, measured against the real renderer —
+  not a hand-rolled estimate);
+- reserves exact canvas space for a named `"outside ..."` legend location so
+  it's fully visible, never overlapping the axes or clipped at the edge.
+
+An explicit `bbox_to_anchor=[x, y]` (see below) is trusted as-is and isn't
+auto-adjusted, since overlapping the plot may be a deliberate placement
+choice. This uses matplotlib's own layout engine and text-measurement
+renderer throughout (no custom layout system) and is a no-op for figures
+that already fit — font sizes stay exactly as configured unless something
+would otherwise be clipped. 3-D panels fall back to `tight_layout()` for now
+since matplotlib's constrained layout doesn't support 3-D Axes well.
+
+### Placing the legend at an exact spot
+
+```python
+p.legend(bbox_to_anchor=[0.8, 0.5])  # figure-fraction [x, y], overrides location
+p.legend(location="upper left")      # bbox_to_anchor=None restores named locations
+```
+
+This is also what the interactive editor's draggable legend handle uses
+(see `dashboard/README.md`).
+
 ### For AI agents (drive everything via JSON)
 
 The engine is designed to be machine-friendly: an agent can explore, build,

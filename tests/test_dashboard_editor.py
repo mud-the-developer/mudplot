@@ -21,11 +21,11 @@ matplotlib.use("Agg")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from dashboard.editor_server import EditorSession, make_server
-from dashboard.editor_view import render_page
+from dashboard.editor_server import EditorSession, _build_action, make_server
+from dashboard.editor_view import render_docs_page, render_page
 from dashboard.samples import SAMPLES, sample_columns
 from mudplot import actions as A
-from mudplot.spec import FigureSpec
+from mudplot.spec import FigureSpec, LegendSpec
 from mudplot.store import Store
 
 # --------------------------------------------------------------------------
@@ -100,6 +100,37 @@ def test_render_page_shows_no_layers_hint_when_empty():
     assert "(no layers yet)" in html
 
 
+def test_render_page_has_editor_tab_active_and_links_docs():
+    html = render_page(FigureSpec(), [])
+    assert 'class="navtab active" href="/"' in html
+    assert 'href="/docs"' in html
+
+
+def test_render_docs_page_has_docs_tab_active_and_links_editor():
+    html = render_docs_page("<h2>hello</h2>")
+    assert 'class="navtab active" href="/docs"' in html
+    assert 'href="/">Editor' in html
+    assert "<h2>hello</h2>" in html
+
+
+def test_render_page_no_legend_handle_without_explicit_position():
+    spec = FigureSpec()
+    spec.data.columns = {"x": [1, 2], "y": [3, 4]}
+    html = render_page(spec, [])
+    assert 'id="legend-handle"' not in html
+
+
+def test_render_page_shows_legend_handle_at_explicit_position():
+    spec = FigureSpec()
+    spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.25, 0.75])
+    html = render_page(spec, [])
+    assert 'id="legend-handle"' in html
+    assert 'data-x="0.25"' in html
+    assert 'data-y="0.75"' in html
+    assert "left:25%" in html
+    assert "top:25%" in html  # CSS top is flipped: (1 - 0.75) * 100
+
+
 def test_samples_are_valid_columns():
     for name in SAMPLES:
         cols = sample_columns(name)
@@ -110,6 +141,35 @@ def test_samples_are_valid_columns():
 def test_sample_columns_unknown_raises():
     with pytest.raises(ValueError, match="unknown sample"):
         sample_columns("does-not-exist")
+
+
+def test_build_action_set_legend_position_preserves_other_legend_fields():
+    spec = FigureSpec()
+    spec.panels[0].legend = LegendSpec(
+        title="series", location="upper left", frame=True
+    )
+    action = _build_action(
+        "set_legend_position", {"x": "0.3", "y": "0.4", "panel": "0"}, spec
+    )
+    assert action == A.SetLegend(
+        show=True,
+        title="series",
+        location="upper left",
+        frame=True,
+        panel=0,
+        bbox_to_anchor=[0.3, 0.4],
+    )
+
+
+def test_build_action_reset_legend_position_clears_bbox_only():
+    spec = FigureSpec()
+    spec.panels[0].legend = LegendSpec(
+        title="series", bbox_to_anchor=[0.3, 0.4], location="upper left"
+    )
+    action = _build_action("reset_legend_position", {"panel": "0"}, spec)
+    assert action.bbox_to_anchor is None
+    assert action.title == "series"
+    assert action.location == "upper left"
 
 
 # --------------------------------------------------------------------------
@@ -289,6 +349,45 @@ def test_raw_json_action(running_server):
     with urllib.request.urlopen(running_server + "/spec.json") as r:
         spec = json.loads(r.read())
     assert spec["panels"][0]["title"] == "raw-title"
+
+
+def test_docs_route_serves_engine_reference(running_server):
+    with urllib.request.urlopen(running_server + "/docs") as r:
+        assert r.status == 200
+        body = r.read().decode()
+    assert "mudplot" in body
+    assert "Layers" in body  # from mp.reference_markdown()
+    assert 'class="navtab active" href="/docs"' in body
+
+
+def test_legend_drag_then_reset_via_http(running_server):
+    _post(running_server + "/action", {"type": "load_sample", "name": "sine"})
+    _post(
+        running_server + "/action",
+        {
+            "type": "add_layer",
+            "layer_type": "line",
+            "x": "x",
+            "y": "y",
+            "group": "series",
+        },
+    )
+    _post(
+        running_server + "/action",
+        {"type": "set_legend_position", "x": "0.2", "y": "0.9", "panel": "0"},
+    )
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        spec = json.loads(r.read())
+    assert spec["panels"][0]["legend"]["bbox_to_anchor"] == [0.2, 0.9]
+    with urllib.request.urlopen(running_server + "/") as r:
+        assert b'id="legend-handle"' in r.read()
+
+    _post(running_server + "/action", {"type": "reset_legend_position", "panel": "0"})
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        spec = json.loads(r.read())
+    assert spec["panels"][0]["legend"]["bbox_to_anchor"] is None
+    with urllib.request.urlopen(running_server + "/") as r:
+        assert b'id="legend-handle"' not in r.read()
 
 
 def test_invalid_action_does_not_crash_server(running_server):

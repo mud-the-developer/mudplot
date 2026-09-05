@@ -37,6 +37,11 @@ python -m dashboard serve            # http://127.0.0.1:8765/
 python -m dashboard serve --port 9000 --host 0.0.0.0
 ```
 
+The running editor has two tabs (top nav): **Editor** and **Docs** — the
+same engine reference as the static site's, served live from
+`mp.reference_markdown()` so it can't drift from the running engine, without
+needing a separate `dashboard build` process.
+
 - `editor_server.py` / `editor_view.py` — a deliberately dependency-light
   local editor: Python's stdlib `http.server` (no web framework) plus
   `mudplot[render]`. Every click/form submit builds a real `Action` and
@@ -50,6 +55,12 @@ python -m dashboard serve --port 9000 --host 0.0.0.0
   shown as a banner instead of crashing the server.
 - Export the current state as `.mplot.json` (`/spec.json`) or a PNG
   (`/fig.png`).
+- **Drag the legend directly on the preview**: "Enable drag positioning" in
+  the Legend position panel adds a ✥ handle over the figure — drag it with
+  the mouse, or click it and use the arrow keys (Shift for a bigger step).
+  Each drop/press dispatches `SetLegend(bbox_to_anchor=[x, y])` (figure-
+  fraction coordinates), the same action `.legend(bbox_to_anchor=...)` uses
+  from the fluent API. "Reset" clears it back to a named `location`.
 - This is intentionally a *thin* UI: `editor_view.py` has no I/O (pure HTML
   string building, unit-testable on its own), and `editor_server.py` is
   just wiring around the engine's `Store`.

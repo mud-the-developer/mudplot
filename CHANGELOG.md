@@ -4,7 +4,32 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
-(nothing yet)
+### TeX column sizing, overlap-free layout, draggable legends, docs/editor tabs
+- `Plot.tex_size(preset, columns=1|2)`: size the *actual* figure (not just
+  `.preview()`) to a TeX document's single-column width or full text width
+  (for a double-column-spanning figure), matching the same column/font
+  metrics `.preview(tex=...)` already used.
+- `render()`/`save()` now precompute layout so text never overlaps or gets
+  silently clipped, while still preserving the exact configured physical
+  size (needed for TeX placement): titles/suptitle wrap natively at the
+  figure width instead of overflowing it, and canvas space is reserved for
+  any named `"outside ..."` legend location so it's never cut off. Uses
+  matplotlib's own constrained-layout engine and text-measurement renderer
+  throughout -- no custom layout system, and a no-op when nothing would
+  otherwise be clipped. 3-D panels keep the previous `tight_layout()`
+  fallback (matplotlib's constrained layout doesn't support 3-D Axes well).
+- `LegendSpec.bbox_to_anchor` / `.legend(bbox_to_anchor=[x, y])`: pin a
+  legend to an exact figure-fraction position, overriding `location`.
+  Trusted as-is (not auto-adjusted) since an explicit position may
+  deliberately overlap the plot.
+- Dashboard editor: a ✥ handle to drag the legend directly on the preview
+  (mouse drag, or click + arrow keys), dispatching the same
+  `SetLegend(bbox_to_anchor=...)` action as the fluent API. Also split into
+  **Editor**/**Docs** tabs within the one running server (`/docs` serves
+  the live engine reference), instead of needing the separate static
+  `dashboard build` for documentation.
+- Regression coverage: `tests/test_layout.py`, additions to
+  `tests/test_dashboard_editor.py`.
 
 ## [0.1.0] - 2026-09-05
 

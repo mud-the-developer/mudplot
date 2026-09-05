@@ -18,7 +18,7 @@ from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
 from .samples import SAMPLES
 
-__all__ = ["render_page"]
+__all__ = ["render_docs_page", "render_page"]
 
 _PALETTE_KINDS = ("qualitative", "sequential", "diverging")
 _LAYER_TYPES = ("line", "scatter", "bar")
@@ -60,7 +60,101 @@ figure img { max-width: 100%; border: 1px solid #eee; border-radius: 6px;
              padding: .3rem 0; border-bottom: 1px solid #eee; font-size: .82rem; }
 .layer-row form { margin: 0; }
 .layer-row button { margin-top: 0; padding: .25rem .6rem; }
+.preview-wrap { position: relative; display: inline-block; max-width: 100%; }
+.preview-wrap img { display: block; max-width: 100%; }
+.legend-handle { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px;
+       border-radius: 50%; background: #1a1a1a; color: white; display: flex;
+       align-items: center; justify-content: center; cursor: grab;
+       font-size: 12px; user-select: none; box-shadow: 0 0 0 2px white; }
+.legend-handle:focus { outline: 2px solid #0a5; }
+nav.tabs { margin-top: .6rem; }
+nav.tabs .navtab { color: #ccc; text-decoration: none; font-size: .85rem;
+       margin-right: 1.2rem; padding-bottom: .2rem; }
+nav.tabs .navtab.active { color: white; border-bottom: 2px solid #0a5; }
+.docs { max-width: 880px; margin: 0 auto; padding: 1.2rem 1.4rem; background: white;
+       border-radius: 8px; }
+.docs h1, .docs h2, .docs h3 { color: #222; }
+.docs table { border-collapse: collapse; width: 100%; margin: .75rem 0 1.25rem; }
+.docs th, .docs td { border: 1px solid #ddd; padding: .4rem .6rem; text-align: left;
+       font-size: .88em; }
 """
+
+_LEGEND_DRAG_SCRIPT = """
+<script>
+(function () {
+  var handle = document.getElementById("legend-handle");
+  if (!handle) return;
+  var wrap = handle.parentElement;
+  var panel = handle.dataset.panel;
+
+  function post(x, y) {
+    var body = "type=set_legend_position&panel=" + panel +
+      "&x=" + x.toFixed(4) + "&y=" + y.toFixed(4);
+    fetch("/action", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body,
+    }).then(function () { location.reload(); });
+  }
+
+  function setStyle(xFrac, yFrac) {
+    handle.style.left = (xFrac * 100) + "%";
+    handle.style.top = ((1 - yFrac) * 100) + "%";
+  }
+
+  var current = { x: parseFloat(handle.dataset.x), y: parseFloat(handle.dataset.y) };
+
+  handle.addEventListener("mousedown", function (ev) {
+    ev.preventDefault();
+    handle.focus();
+    var rect = wrap.getBoundingClientRect();
+    function onMove(mv) {
+      var xFrac = Math.min(1, Math.max(0, (mv.clientX - rect.left) / rect.width));
+      var yFrac = Math.min(1, Math.max(0, 1 - (mv.clientY - rect.top) / rect.height));
+      current = { x: xFrac, y: yFrac };
+      setStyle(xFrac, yFrac);
+    }
+    function onUp() {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseup", onUp);
+      post(current.x, current.y);
+    }
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", onUp);
+  });
+
+  handle.addEventListener("keydown", function (ev) {
+    var step = ev.shiftKey ? 0.06 : 0.02;
+    var dx = 0, dy = 0;
+    if (ev.key === "ArrowLeft") dx = -step;
+    else if (ev.key === "ArrowRight") dx = step;
+    else if (ev.key === "ArrowUp") dy = step;
+    else if (ev.key === "ArrowDown") dy = -step;
+    else return;
+    ev.preventDefault();
+    current = {
+      x: Math.min(1, Math.max(0, current.x + dx)),
+      y: Math.min(1, Math.max(0, current.y + dy)),
+    };
+    setStyle(current.x, current.y);
+    post(current.x, current.y);
+  });
+})();
+</script>
+"""
+
+
+def _nav_html(active: str) -> str:
+    def tab(href: str, label: str, key: str) -> str:
+        cls = " active" if key == active else ""
+        return f'<a class="navtab{cls}" href="{href}">{label}</a>'
+
+    return (
+        '<nav class="tabs">'
+        + tab("/", "Editor", "editor")
+        + tab("/docs", "Docs", "docs")
+        + "</nav>"
+    )
 
 
 def _esc(s) -> str:
@@ -193,6 +287,30 @@ def _figure_panel(spec: FigureSpec) -> str:
     return f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}</div>'
 
 
+def _legend_position_panel(spec: FigureSpec) -> str:
+    leg = spec.panels[0].legend if spec.panels else None
+    active = leg is not None and leg.bbox_to_anchor is not None
+    enable = _post_form(
+        "/action",
+        {"type": "set_legend_position", "x": "0.8", "y": "0.5", "panel": "0"},
+        "",
+        "Enable drag positioning",
+    )
+    reset = _post_form(
+        "/action", {"type": "reset_legend_position", "panel": "0"}, "", "Reset"
+    )
+    hint = (
+        "Drag the \u2725 handle on the preview, or click it and use the arrow keys."
+        if active
+        else "Places the legend at an exact spot instead of a named location."
+    )
+    return (
+        '<div class="panel"><h2>Legend position</h2>'
+        f"{enable}{reset if active else ''}"
+        f'<div class="hint">{hint}</div></div>'
+    )
+
+
 def _history_panel() -> str:
     buttons = (
         '<form method="post" action="/undo" style="display:inline">'
@@ -252,13 +370,28 @@ def render_page(
         + _layer_panel(spec)
         + _layers_panel(spec)
         + _figure_panel(spec)
+        + _legend_position_panel(spec)
         + _history_panel()
         + _advanced_panel()
         + _export_panel()
     )
+    leg = spec.panels[0].legend if spec.panels else None
+    handle_html = ""
+    drag_script = ""
+    if leg is not None and leg.bbox_to_anchor is not None:
+        hx, hy = leg.bbox_to_anchor
+        handle_html = (
+            '<div id="legend-handle" class="legend-handle" tabindex="0" '
+            f'data-panel="0" data-x="{hx:g}" data-y="{hy:g}" '
+            f'style="left:{hx * 100:g}%; top:{(1 - hy) * 100:g}%" '
+            'title="Drag, or click and use arrow keys">\u2725</div>'
+        )
+        drag_script = _LEGEND_DRAG_SCRIPT
     right = (
         f'<div class="panel"><h2>Preview</h2>'
-        f'<figure><img src="/fig.png{image_query}" alt="figure preview"></figure>'
+        f'<figure><div class="preview-wrap">'
+        f'<img src="/fig.png{image_query}" alt="figure preview">'
+        f"{handle_html}</div></figure>"
         "</div>"
         f'<div class="panel"><h2>Action log</h2>{_action_log_html(action_log)}</div>'
     )
@@ -274,10 +407,38 @@ def render_page(
   <h1>mudplot editor</h1>
   <div class="sub">A thin UI over the same Store/actions/reducer the fluent
   API and any future Rust editor use — nothing here holds its own state.</div>
+  {_nav_html("editor")}
 </header>
 <main>
   <div>{error_html}{left}</div>
   <div>{right}</div>
+</main>
+{drag_script}
+</body>
+</html>"""
+
+
+def render_docs_page(body_html: str) -> str:
+    """Wrap the engine reference (already-rendered HTML body) in the same
+    page shell/nav as the editor, as a separate tab rather than a separate
+    process/command.
+    """
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>mudplot docs</title>
+<style>{_STYLE}</style>
+</head>
+<body>
+<header>
+  <h1>mudplot editor</h1>
+  <div class="sub">Engine reference, generated live from
+  <code>mudplot.reference_markdown()</code> — never hand-written, never stale.</div>
+  {_nav_html("docs")}
+</header>
+<main style="display:block">
+  <div class="docs">{body_html}</div>
 </main>
 </body>
 </html>"""
