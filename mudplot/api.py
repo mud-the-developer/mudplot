@@ -639,10 +639,11 @@ class Plot:
 
         return render(self.spec)
 
-    def save(self, path: str):
+    def save(self, path: str, *, tight: bool = False):
+        """Save at the configured size; ``tight=True`` crops to content instead."""
         from ._render import save
 
-        return save(self.spec, path)
+        return save(self.spec, path, tight=tight)
 
     def preview(self, tex: str | None = None, **kw):
         """Preview the plot; if ``tex`` names a TeX context, use WYSIWYG sizing."""
@@ -685,12 +686,25 @@ def apply(actions, spec: FigureSpec | None = None) -> FigureSpec:
     return reduce_all(spec if spec is not None else FigureSpec(), parsed)
 
 
-def color_palette(n: int, kind: str = "qualitative", **params) -> Palette:
-    """Generate a palette (thin wrapper over :mod:`mudplot.color.palette`)."""
+def color_palette(
+    n: int, kind: str = "qualitative", *, preset: str | None = None, **params
+) -> Palette:
+    """Generate a palette (thin wrapper over :mod:`mudplot.color.palette`).
+
+    ``preset`` (``qualitative`` only) selects a named, pre-verified parameter
+    set (see ``mudplot.capabilities()["palette_presets"]``); it overrides
+    ``lightness``/``chroma``/``hue_start``/``lightness_jitter`` in ``params``.
+    """
     from .color import palette as _palette
 
     if kind == "qualitative":
+        if preset is not None:
+            return _palette.preset_qualitative(preset, n, **params)
         return _palette.qualitative(n, **params)
+    if preset is not None:
+        raise ValueError(
+            f"preset is only supported for kind='qualitative', got {kind!r}"
+        )
     if kind == "sequential":
         return _palette.sequential(n, **params)
     if kind == "diverging":

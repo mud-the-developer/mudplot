@@ -19,10 +19,12 @@ __all__ = ["reduce", "reduce_all"]
 
 # SetEncoding may only touch these ThemeSpec fields (not font/axes/grid/
 # ticks/palette/name, which each already have a dedicated action).
-_ENCODING_FIELDS = {"redundant_encoding", "markers", "line_styles"}
+_ENCODING_FIELDS = {"redundant_encoding", "markers", "line_styles", "hatches"}
 
 
 def _ensure_panel(spec: FigureSpec, index: int) -> None:
+    if type(index) is not int or index < 0:
+        raise ValueError("panel index must be a non-negative integer")
     while len(spec.panels) <= index:
         spec.panels.append(PanelSpec())
 
@@ -48,6 +50,7 @@ def _safe_replace(obj, params: dict, action_name: str):
 def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
     """Return a new FigureSpec resulting from applying ``action`` to ``state``."""
     s = copy.deepcopy(state)
+    action = copy.deepcopy(action)
 
     match action:
         case A.SetSize(width=w, height=h):
@@ -97,6 +100,8 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.AddPanel():
             s.panels.append(PanelSpec())
         case A.SetLayout(rows=r, cols=c, width_ratios=wr, height_ratios=hr):
+            if any(type(v) is not int or v <= 0 for v in (r, c)):
+                raise ValueError("layout rows and cols must be positive integers")
             s.layout = [r, c]
             s.width_ratios = list(wr) if wr else None
             s.height_ratios = list(hr) if hr else None

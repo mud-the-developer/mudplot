@@ -150,17 +150,15 @@ def tex_preview(
 
     # Render the actual figure to an image buffer at its true size.
     fig = render(sized)
-    buf = _io.BytesIO()
-    fig.savefig(buf, format="png", dpi=sized.dpi, bbox_inches="tight")
-    plt.close(fig)
-    buf.seek(0)
-    img = plt.imread(buf)
-
     if not show_context:
-        out, ax = plt.subplots(figsize=tuple(sized.size), dpi=150)
-        ax.imshow(img)
-        ax.axis("off")
-        return out
+        return fig
+    try:
+        with _io.BytesIO() as buf, plt.rc_context({"savefig.bbox": None}):
+            fig.savefig(buf, format="png", dpi=sized.dpi, bbox_inches=None)
+            buf.seek(0)
+            img = plt.imread(buf)
+    finally:
+        plt.close(fig)
 
     # Build the mock column: column width in inches + side margins.
     col_w = (ctx.textwidth_pt if full_width else ctx.columnwidth_pt) / PT_PER_INCH
@@ -195,6 +193,9 @@ def tex_preview(
     )
 
     out, ax = plt.subplots(figsize=(page_w, total_h), dpi=150)
+    # Data coordinates are inches; default subplot margins would shrink
+    # the entire preview (including the supposedly true-size figure).
+    out.subplots_adjust(left=0, right=1, bottom=0, top=1)
     ax.set_xlim(0, page_w)
     ax.set_ylim(0, total_h)
     ax.invert_yaxis()
@@ -247,5 +248,7 @@ def tex_preview(
         f"(col {ctx.columnwidth_pt:.0f}pt, {ctx.fontsize_pt:.0f}pt, "
         f"frac {fraction:g})",
         fontsize=9,
+        y=0.98,
+        va="top",
     )
     return out

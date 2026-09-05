@@ -7,7 +7,10 @@ uses this to fail fast with a helpful message instead of a raw ``KeyError``.
 
 from __future__ import annotations
 
-from .capabilities import LAYER_TYPES
+import math
+from numbers import Real
+
+from .capabilities import LAYER_TYPES, PALETTE_PRESETS
 from .spec import FigureSpec
 
 __all__ = ["assert_valid", "validate"]
@@ -104,10 +107,57 @@ def _check_point(layer, field_name: str, where: str, issues: list[str]) -> None:
         issues.append(f"{where}: {field_name!r} must be [x, y] (length 2), got {val!r}")
 
 
+def _finite(value) -> bool:
+    return (
+        isinstance(value, Real) and not isinstance(value, bool) and math.isfinite(value)
+    )
+
+
+def _check_axis(axis, where: str, issues: list[str]) -> None:
+    if axis is None:
+        return
+    if axis.scale not in _AXIS_SCALES:
+        issues.append(f"{where}: invalid scale {axis.scale!r}")
+    if axis.limits is not None:
+        limits = axis.limits
+        if (
+            not isinstance(limits, (list, tuple))
+            or len(limits) != 2
+            or not all(_finite(v) for v in limits)
+            or limits[0] == limits[1]
+        ):
+            issues.append(f"{where}: limits must contain two distinct finite numbers")
+        elif axis.scale == "log" and any(v <= 0 for v in limits):
+            issues.append(f"{where}: log limits must be positive")
+
+
 def validate(spec: FigureSpec) -> list[str]:
     """Return a list of problems found in ``spec`` (empty = valid)."""
     issues: list[str] = []
     cols = spec.data.columns
+
+    if (
+        not isinstance(spec.size, (list, tuple))
+        or len(spec.size) != 2
+        or not all(_finite(v) and v > 0 for v in spec.size)
+    ):
+        issues.append("size must contain two positive finite numbers")
+    if not _finite(spec.dpi) or spec.dpi <= 0:
+        issues.append("dpi must be a positive finite number")
+    if spec.theme.redundant_encoding and (
+        not spec.theme.markers or not spec.theme.line_styles or not spec.theme.hatches
+    ):
+        issues.append(
+            "redundant encoding requires non-empty markers, line_styles and hatches"
+        )
+    if (
+        spec.theme.palette.preset is not None
+        and spec.theme.palette.preset not in PALETTE_PRESETS
+    ):
+        issues.append(
+            f"unknown palette preset {spec.theme.palette.preset!r}; "
+            f"choose from {sorted(PALETTE_PRESETS)}"
+        )
 
     if not spec.panels:
         issues.append("figure has no panels (spec.panels is empty)")
@@ -131,28 +181,36 @@ def validate(spec: FigureSpec) -> list[str]:
     _check_data_integrity(spec, issues)
 
     n_panels = len(spec.panels)
-    if spec.layout:
-        rows, colsn = spec.layout
-        if rows * colsn < n_panels:
-            issues.append(
-                f"layout {rows}x{colsn} has {rows * colsn} slots but there are "
-                f"{n_panels} panels"
-            )
-        if spec.width_ratios and len(spec.width_ratios) != colsn:
-            issues.append(
-                f"width_ratios has {len(spec.width_ratios)} entries, expected {colsn}"
-            )
-        if spec.height_ratios and len(spec.height_ratios) != rows:
-            issues.append(
-                f"height_ratios has {len(spec.height_ratios)} entries, expected {rows}"
-            )
+    rows, colsn = 1, n_panels
+    if spec.layout is not None:
+        if (
+            not isinstance(spec.layout, (list, tuple))
+            or len(spec.layout) != 2
+            or any(type(v) is not int or v <= 0 for v in spec.layout)
+        ):
+            issues.append("layout must contain two positive integers")
+        else:
+            rows, colsn = spec.layout
+            if rows * colsn < n_panels:
+                issues.append(
+                    f"layout {rows}x{colsn} has {rows * colsn} slots but there are "
+                    f"{n_panels} panels"
+                )
+    for name, expected in (("width_ratios", colsn), ("height_ratios", rows)):
+        ratios = getattr(spec, name)
+        if ratios is not None and (
+            not isinstance(ratios, (list, tuple))
+            or len(ratios) != expected
+            or not all(_finite(v) and v > 0 for v in ratios)
+        ):
+            issues.append(f"{name} must contain {expected} positive finite entries")
 
     for pi, panel in enumerate(spec.panels):
         where_axis = f"panel {pi}"
-        if panel.x.scale not in _AXIS_SCALES:
-            issues.append(f"{where_axis}: invalid x scale {panel.x.scale!r}")
-        if panel.y.scale not in _AXIS_SCALES:
-            issues.append(f"{where_axis}: invalid y scale {panel.y.scale!r}")
+        for name in ("x", "y", "y2", "z"):
+            _check_axis(getattr(panel, name), f"{where_axis} {name}", issues)
+        if panel.projection == "3d" and panel.y2 is not None:
+            issues.append(f"{where_axis}: secondary y-axis is not supported in 3-D")
         if panel.legend.location not in _LEGEND_LOCS:
             issues.append(
                 f"{where_axis}: unknown legend location {panel.legend.location!r}"
@@ -233,7 +291,7 @@ def validate(spec: FigureSpec) -> list[str]:
                 _check_point(layer, "at", where, issues)
                 _check_point(layer, "to", where, issues)
 
-            if not (0.0 <= layer.alpha <= 1.0):
+            if not _finite(layer.alpha) or not (0.0 <= layer.alpha <= 1.0):
                 issues.append(f"{where}: alpha {layer.alpha!r} must be in [0, 1]")
 
     return issues

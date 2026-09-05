@@ -27,7 +27,7 @@ class Store:
         # dispatch() at all -- breaking the no-hidden-mutable-state guarantee
         # the rest of the engine (and its docs) rely on.
         self._initial = copy.deepcopy(state) if state is not None else FigureSpec()
-        self._state = self._initial
+        self._state = copy.deepcopy(self._initial)
         self._reducer = reducer
         self._listeners: list[Listener] = []
         self._history: list[Action] = []
@@ -35,50 +35,52 @@ class Store:
 
     @property
     def state(self) -> FigureSpec:
-        return self._state
+        """An isolated snapshot; use actions to change the store."""
+        return copy.deepcopy(self._state)
 
     @property
     def history(self) -> list[Action]:
         """Actions dispatched so far (in order). Enables replay / undo."""
-        return list(self._history)
+        return copy.deepcopy(self._history)
 
     def dispatch(self, action: Action) -> FigureSpec:
+        action = copy.deepcopy(action)
         self._state = self._reducer(self._state, action)
-        self._history.append(action)
+        self._history.append(copy.deepcopy(action))
         self._redo_stack.clear()
-        for cb in self._listeners:
-            cb(self._state, action)
-        return self._state
+        for cb in tuple(self._listeners):
+            cb(self.state, copy.deepcopy(action))
+        return self.state
 
     def _replay(self) -> None:
-        self._state = self._initial
+        self._state = copy.deepcopy(self._initial)
         for action in self._history:
             self._state = self._reducer(self._state, action)
 
     def undo(self) -> FigureSpec:
         """Revert the last dispatched action by replaying from the start."""
         if not self._history:
-            return self._state
+            return self.state
         self._redo_stack.append(self._history.pop())
         self._replay()
-        for cb in self._listeners:
-            cb(self._state, None)
-        return self._state
+        for cb in tuple(self._listeners):
+            cb(self.state, None)
+        return self.state
 
     def redo(self) -> FigureSpec:
         """Re-apply the most recently undone action."""
         if not self._redo_stack:
-            return self._state
+            return self.state
         self._history.append(self._redo_stack.pop())
         self._replay()
-        for cb in self._listeners:
-            cb(self._state, None)
-        return self._state
+        for cb in tuple(self._listeners):
+            cb(self.state, None)
+        return self.state
 
     def dispatch_all(self, actions: Iterable[Action]) -> FigureSpec:
         for action in actions:
             self.dispatch(action)
-        return self._state
+        return self.state
 
     def subscribe(self, listener: Listener) -> Callable[[], None]:
         self._listeners.append(listener)

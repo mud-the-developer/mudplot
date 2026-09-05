@@ -48,29 +48,22 @@ def _col(data_cols, name):
     return np.asarray(data_cols[name], dtype=float)
 
 
-def _x_values(data_cols, name):
+def _x_values(ax, data_cols, name):
     """x-column values as plot-ready numeric positions.
 
-    Numeric columns pass through unchanged. Categorical columns (e.g. bar
-    chart categories like "control"/"treatment") can't be coerced to float
-    -- rather than crashing, they're mapped to evenly-spaced positions
-    0..n-1 (in first-seen order) so bar/line/scatter/etc. can still plot
-    them; the caller is responsible for applying the returned labels as
-    tick labels.
+    Numeric columns pass through unchanged. Categorical columns are mapped
+    to evenly-spaced positions in first-seen order with automatic tick labels.
 
-    Returns ``(positions, labels)`` where ``labels`` is ``None`` for
-    already-numeric columns, or the ordered list of unique category
-    strings otherwise.
+    Use Matplotlib's category registry so layers, twins and shared axes
+    agree on the position of each category.
     """
     raw = data_cols[name]
     try:
-        return np.asarray(raw, dtype=float), None
+        return np.asarray(raw, dtype=float)
     except (ValueError, TypeError):
         str_values = [str(v) for v in raw]
-        labels = _unique_stable(str_values)
-        position_of = {label: i for i, label in enumerate(labels)}
-        positions = np.array([position_of[v] for v in str_values], dtype=float)
-        return positions, labels
+        ax.xaxis.update_units(str_values)
+        return np.asarray(ax.convert_xunits(str_values), dtype=float)
 
 
 def _series_masks(data_cols, layer: LayerSpec):
@@ -92,6 +85,14 @@ def _continuous_cmap(kind: str):
     return pal.to_cmap()
 
 
+def _color_norm(data_cols, layer):
+    from matplotlib.colors import Normalize
+
+    norm = Normalize()
+    norm.autoscale(np.ma.masked_invalid(_col(data_cols, layer.c)))
+    return norm
+
+
 def _target_axes(ax, ax2, layer: LayerSpec):
     return ax2 if (layer.axis == "y2" and ax2 is not None) else ax
 
@@ -107,10 +108,15 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
     style_cycle = (
         itertools.cycle(theme.line_styles) if use_redundant else itertools.repeat("-")
     )
+    hatch_cycle = (
+        itertools.cycle(theme.hatches) if use_redundant else itertools.repeat(None)
+    )
     target = _target_axes(ax, ax2, layer)
     n_series = len(masks)
 
-    x_all, x_labels = _x_values(data_cols, layer.x)
+    x_all = _x_values(target, data_cols, layer.x)
+    norm = _color_norm(data_cols, layer) if layer.c is not None else None
+    sc = None
 
     for series_i, (label, mask) in enumerate(masks):
         x = x_all[mask]
@@ -138,13 +144,12 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                     y,
                     c=values,
                     cmap=_continuous_cmap(layer.cmap_kind),
+                    norm=norm,
                     label=label,
                     s=(layer.marker_size or 6) ** 2,
                     marker=marker or "o",
                     alpha=layer.alpha,
                 )
-                if layer.colorbar:
-                    target.figure.colorbar(sc, ax=target, label=layer.clabel or "")
             else:
                 color = layer.color or next(color_iter)
                 target.scatter(
@@ -158,6 +163,7 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 )
         elif layer.type == "bar":
             color = layer.color or next(color_iter)
+            hatch = next(hatch_cycle)
             if n_series > 1:
                 # Dodge grouped bars side-by-side instead of stacking them
                 # on top of each other at identical x positions -- plain
@@ -173,6 +179,7 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                     width=bar_w * 0.92,
                     label=label,
                     color=color,
+                    hatch=hatch,
                     alpha=layer.alpha,
                 )
             else:
@@ -207,7 +214,8 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 linewidth=0,
             )
 
-    return target, x_labels
+    if sc is not None and layer.colorbar:
+        target.figure.colorbar(sc, ax=target, label=layer.clabel or "")
 
 
 def _gaussian_kde(values: np.ndarray, n_points: int = 200):
@@ -229,8 +237,16 @@ def _gaussian_kde(values: np.ndarray, n_points: int = 200):
     return grid, density
 
 
-def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
+def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
     masks = list(_series_masks(data_cols, layer))
+    # Same rationale as the marker/line-style cycle in _draw_series_layer:
+    # a hatch pattern per series keeps grouped fills (bar-like area charts)
+    # distinguishable in black & white print or full achromatopsia, where
+    # colour alone (even equal-lightness colour) carries no information.
+    use_redundant = theme.redundant_encoding and len(masks) > 1
+    hatch_cycle = (
+        itertools.cycle(theme.hatches) if use_redundant else itertools.repeat(None)
+    )
     if layer.type == "hist":
         for label, mask in masks:
             values = _col(data_cols, layer.x)[mask]
@@ -240,6 +256,7 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
                 density=layer.density,
                 label=label,
                 color=layer.color or next(color_iter),
+                hatch=next(hatch_cycle),
                 alpha=layer.alpha if layer.alpha < 1 else 0.6,
             )
     elif layer.type == "box":
@@ -251,6 +268,7 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
             bp = ax.boxplot(values, labels=labels, patch_artist=True)
         for patch in bp["boxes"]:
             patch.set_facecolor(layer.color or next(color_iter))
+            patch.set_hatch(next(hatch_cycle))
             patch.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
     elif layer.type == "violin":
         values = [_col(data_cols, layer.x)[mask] for _label, mask in masks]
@@ -259,6 +277,7 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter):
         parts = ax.violinplot(values, positions=positions, showmedians=True)
         for body in parts["bodies"]:
             body.set_facecolor(layer.color or next(color_iter))
+            body.set_hatch(next(hatch_cycle))
             body.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
         ax.set_xticks(list(positions))
         ax.set_xticklabels(labels)
@@ -359,6 +378,8 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
     data_cols = spec.data.columns
     if layer.type in ("scatter3d", "line3d"):
         masks = list(_series_masks(data_cols, layer))
+        norm = _color_norm(data_cols, layer) if layer.c is not None else None
+        sc = None
         for label, mask in masks:
             x = _col(data_cols, layer.x)[mask]
             y = _col(data_cols, layer.y)[mask]
@@ -372,13 +393,12 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                         z,
                         c=values,
                         cmap=_continuous_cmap(layer.cmap_kind),
+                        norm=norm,
                         label=label,
                         s=(layer.marker_size or 6) ** 2,
                         marker=layer.marker or "o",
                         alpha=layer.alpha,
                     )
-                    if layer.colorbar:
-                        ax.figure.colorbar(sc, ax=ax, label=layer.clabel or "")
                 else:
                     color = layer.color or next(color_iter)
                     ax.scatter(
@@ -404,6 +424,8 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                     marker=layer.marker,
                     alpha=layer.alpha,
                 )
+        if sc is not None and layer.colorbar:
+            ax.figure.colorbar(sc, ax=ax, label=layer.clabel or "")
     elif layer.type in ("surface", "wireframe"):
         matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
         ny, nx = matrix.shape
@@ -425,8 +447,9 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
 
 def _apply_axis(ax, axis_spec, set_label, set_scale, set_limits):
     set_label(axis_spec.label)
-    if axis_spec.scale == "log":
-        set_scale("log")
+    # Setting even the existing linear scale resets categorical tick locators.
+    if axis_spec.scale != "linear":
+        set_scale(axis_spec.scale)
     if axis_spec.limits:
         set_limits(axis_spec.limits)
 
@@ -441,24 +464,23 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
     import matplotlib.pyplot as plt
 
     prop = plt.rcParams["axes.prop_cycle"].by_key().get("color", ["C0"])
-    color_iter = iter(prop * 100)
+    color_iter = itertools.cycle(prop)
 
     for layer in panel.layers:
         _draw_3d_layer(ax, spec, layer, color_iter)
 
-    ax.set_xlabel(panel.x.label)
-    ax.set_ylabel(panel.y.label)
+    _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
+    _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
     if panel.z is not None:
-        ax.set_zlabel(panel.z.label)
-        if panel.z.limits:
-            ax.set_zlim(panel.z.limits)
+        _apply_axis(ax, panel.z, ax.set_zlabel, ax.set_zscale, ax.set_zlim)
     if panel.title:
         ax.set_title(panel.title)
 
     handles, labels = ax.get_legend_handles_labels()
     leg = panel.legend
     if leg.show and handles:
-        ax.legend(handles, labels, title=leg.title, frameon=leg.frame)
+        kw = dict(_OUTSIDE_LEGEND_LOCS.get(leg.location, {"loc": leg.location}))
+        ax.legend(handles, labels, title=leg.title, frameon=leg.frame, **kw)
 
 
 def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
@@ -469,36 +491,22 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
         return
 
     prop = plt.rcParams["axes.prop_cycle"].by_key().get("color", ["C0"])
-    color_iter = iter(prop * 100)  # cycle enough colours
+    color_iter = itertools.cycle(prop)
     theme = spec.theme
 
     ax2 = ax.twinx() if panel.y2 is not None else None
 
-    # Categorical x columns (e.g. bar-chart categories) get mapped to
-    # numeric positions by _draw_series_layer; remember the first set of
-    # labels seen per target axes so we can apply them as tick labels once,
-    # after every layer has been drawn.
-    categorical_ticks: dict[int, tuple] = {}
-
     for layer in panel.layers:
         if layer.type in _SERIES_TYPES:
-            target, x_labels = _draw_series_layer(
-                ax, ax2, spec.data.columns, layer, color_iter, theme
-            )
-            if x_labels is not None and id(target) not in categorical_ticks:
-                categorical_ticks[id(target)] = (target, x_labels)
+            _draw_series_layer(ax, ax2, spec.data.columns, layer, color_iter, theme)
         elif layer.type in _DIST_TYPES:
-            _draw_dist_layer(ax, spec.data.columns, layer, color_iter)
+            _draw_dist_layer(ax, spec.data.columns, layer, color_iter, theme)
         elif layer.type in _MATRIX_TYPES:
             _draw_matrix_layer(ax, spec, layer)
         elif layer.type in _STANDALONE_TYPES:
             _draw_pie_layer(ax, spec.data.columns, layer, color_iter)
         else:
             _draw_marker_layer(ax, ax2, layer, color_iter)
-
-    for target, x_labels in categorical_ticks.values():
-        target.set_xticks(range(len(x_labels)))
-        target.set_xticklabels(x_labels)
 
     _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
@@ -548,7 +556,8 @@ def _apply_panel_label(ax, spec: FigureSpec, panel: PanelSpec, index: int):
         # labels visually consistent with the (possibly journal-overridden)
         # panel titles instead of silently ignoring the override.
         fontsize = plt.rcParams.get("axes.titlesize", spec.theme.font.title_size)
-        ax.text(
+        text = ax.text2D if panel.projection == "3d" else ax.text
+        text(
             -0.12,
             1.05,
             f"{label})",
@@ -569,11 +578,19 @@ def _grid_shape(spec: FigureSpec) -> tuple[int, int]:
 def _count_colors(spec: FigureSpec) -> int:
     counts = []
     for p in spec.panels:
+        count = 0
         for lyr in p.layers:
-            if lyr.group and lyr.group in spec.data.columns:
-                counts.append(len(_unique_stable(spec.data.columns[lyr.group])))
+            if lyr.color or lyr.type in _MATRIX_TYPES | {"surface"}:
+                continue
+            if lyr.type in {"scatter", "scatter3d"} and lyr.c is not None:
+                continue
+            if lyr.type == "pie":
+                count += len(spec.data.columns[lyr.y])
+            elif lyr.group and lyr.group in spec.data.columns:
+                count += len(_unique_stable(spec.data.columns[lyr.group]))
             else:
-                counts.append(1)
+                count += 1
+        counts.append(count)
     return max(counts, default=1)
 
 
@@ -642,35 +659,54 @@ def render(spec: FigureSpec):
         # plt.subplots(), which can't give individual panels their own
         # projection (needed for 3-D panels mixed with 2-D ones).
         fig = plt.figure(figsize=tuple(spec.size), dpi=spec.dpi)
-        gs = fig.add_gridspec(rows, cols, **gridspec_kw)
-        axes_grid = [[None] * cols for _ in range(rows)]
-        panel_axes = []
-        for i, panel in enumerate(spec.panels):
-            r, c = divmod(i, cols)
-            projection = "3d" if panel.projection == "3d" else None
-            ax = fig.add_subplot(gs[r, c], projection=projection)
-            axes_grid[r][c] = ax
-            panel_axes.append(ax)
+        try:
+            gs = fig.add_gridspec(rows, cols, **gridspec_kw)
+            axes_grid = [[None] * cols for _ in range(rows)]
+            panel_axes = []
+            for i, panel in enumerate(spec.panels):
+                r, c = divmod(i, cols)
+                projection = "3d" if panel.projection == "3d" else None
+                ax = fig.add_subplot(gs[r, c], projection=projection)
+                if projection is None:
+                    axes_grid[r][c] = ax
+                panel_axes.append(ax)
 
-        # Axis sharing only makes sense between 2-D panels.
-        if not any(p.projection == "3d" for p in spec.panels):
+            # Share the 2-D subset, even when other panels are 3-D.
             _link_shared_axes(axes_grid, rows, cols, spec.share_x, "x")
             _link_shared_axes(axes_grid, rows, cols, spec.share_y, "y")
 
-        for i, (ax, panel) in enumerate(zip(panel_axes, spec.panels, strict=False)):
-            _draw_panel(ax, spec, panel)
-            _apply_panel_label(ax, spec, panel, i)
+            for i, (ax, panel) in enumerate(zip(panel_axes, spec.panels, strict=False)):
+                _draw_panel(ax, spec, panel)
+                _apply_panel_label(ax, spec, panel, i)
 
-        if spec.suptitle:
-            fig.suptitle(spec.suptitle)
-        fig.tight_layout()
+            if spec.suptitle:
+                fig.suptitle(spec.suptitle)
+            fig.tight_layout()
+        except Exception:
+            plt.close(fig)
+            raise
     return fig
 
 
-def save(spec: FigureSpec, path: str):
-    """Render ``spec`` and write it to ``path`` (format from extension)."""
+def save(spec: FigureSpec, path: str, *, tight: bool = False):
+    """Save at the exact spec size; ``tight=True`` opts into content cropping.
+
+    Returns an open Figure, owned by the caller, on success.
+    """
+    import matplotlib.pyplot as plt
+
     fig = render(spec)
-    # rcParams' savefig.bbox="tight" only applies inside the rc_context used
-    # during rendering, so pass it explicitly here too.
-    fig.savefig(path, dpi=spec.dpi, bbox_inches="tight", pad_inches=0.05)
+    try:
+        # Explicitly disable ambient cropping too: bbox_inches=None alone
+        # falls back to the caller's savefig.bbox rcParam.
+        with plt.rc_context({"savefig.bbox": None}):
+            fig.savefig(
+                path,
+                dpi=spec.dpi,
+                bbox_inches="tight" if tight else None,
+                pad_inches=0.05,
+            )
+    except Exception:
+        plt.close(fig)
+        raise
     return fig
