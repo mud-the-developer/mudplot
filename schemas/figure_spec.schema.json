@@ -137,6 +137,12 @@
           "items": {
             "type": "string"
           }
+        },
+        "hatches": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -246,6 +252,17 @@
         "kind": {
           "type": "string",
           "default": "qualitative"
+        },
+        "preset": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         },
         "lightness": {
           "type": "number",

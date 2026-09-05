@@ -111,10 +111,20 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 
 ## Palettes
 
-LCH-based, colourblind-safe by default. Kinds: `qualitative`, `sequential`, `diverging`.
+LCH-based. Kinds: `qualitative`, `sequential`, `diverging`.
 
-- `qualitative`: equal(-ish) lightness, maximum hue contrast, worst-case ΔE00 across normal + CVD vision maximised. A small `lightness_jitter` (default 6) keeps greyscale/print distinguishable.
+- `qualitative`: equal(-ish) lightness, maximum hue contrast, worst-case ΔE00 across normal vision + protan/deutan CVD simulation maximised. A `lightness_jitter` (default 6) keeps true greyscale/B&W print distinguishable; see `Palette.report()` for measured safety, not an assumed guarantee.
 - `sequential` / `diverging`: perceptually-uniform ramps, gamut-clipped.
+
+### Named presets (`.palette(preset="...")`)
+
+Pre-tuned `qualitative` parameter sets, each measured (not assumed) CVD-safe (worst-case ΔE00 ≥ 8) and true-greyscale-safe (min L* gap ≥ 3) up to `max_verified_n` categories — see `tests/test_palette_presets.py`. Beyond that count, more colours are still generated but safety is no longer verified; pair with `.encoding(hatches=[...])` for bar/box/violin fills, which stays distinguishable in B&W print regardless of colour count.
+
+| preset | max verified n | description |
+|---|---|---|
+| `paper` | 6 | Balanced default; safe for up to 6 categories. |
+| `soft` | 5 | Muted/pastel; safe for up to 5 categories. |
+| `vivid` | 6 | More saturated; safe for up to 6 categories. |
 
 ## Themes
 

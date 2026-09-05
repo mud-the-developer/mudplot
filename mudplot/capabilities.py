@@ -13,7 +13,7 @@ from dataclasses import MISSING, fields
 from . import actions as _actions
 from .theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
-__all__ = ["LAYER_TYPES", "PALETTE_KINDS", "capabilities"]
+__all__ = ["LAYER_TYPES", "PALETTE_KINDS", "PALETTE_PRESETS", "capabilities"]
 
 # Per-layer field guidance (what an agent should provide for each layer type).
 LAYER_TYPES: dict[str, dict[str, list[str]]] = {
@@ -179,6 +179,50 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
 
 PALETTE_KINDS = ["qualitative", "sequential", "diverging"]
 
+# Named, pre-verified qualitative presets (see mudplot.color.palette for the
+# generator that consumes these). Kept here, not in mudplot.color.palette,
+# so this plain data stays reachable without importing numpy -- capabilities()
+# is part of the dependency-free pure core (see tests/test_no_deps.py).
+PALETTE_PRESETS: dict[str, dict] = {
+    # General-purpose default: verified CVD-safe + true-greyscale-safe for
+    # n=3..6 categories (see tests/test_palette_presets.py).
+    "paper": {
+        "params": {
+            "lightness": 60.0,
+            "chroma": 58.0,
+            "hue_start": 270.0,
+            "lightness_jitter": 18.0,
+        },
+        "max_verified_n": 6,
+        "description": "Balanced default; safe for up to 6 categories.",
+    },
+    # Higher chroma for slides/posters; also verified for n=3..6.
+    "vivid": {
+        "params": {
+            "lightness": 68.0,
+            "chroma": 52.0,
+            "hue_start": 315.0,
+            "lightness_jitter": 18.0,
+        },
+        "max_verified_n": 6,
+        "description": "More saturated; safe for up to 6 categories.",
+    },
+    # Lower-chroma, lighter set for large-area fills (bar/heatmap
+    # backgrounds) where full saturation is visually too heavy; only
+    # verified safe up to n=5 -- combine with .encoding(hatches=[...]) or
+    # more categories.
+    "soft": {
+        "params": {
+            "lightness": 68.0,
+            "chroma": 36.0,
+            "hue_start": 280.0,
+            "lightness_jitter": 18.0,
+        },
+        "max_verified_n": 5,
+        "description": "Muted/pastel; safe for up to 5 categories.",
+    },
+}
+
 
 def _default_of(f):
     if f.default is not MISSING:
@@ -225,6 +269,7 @@ def capabilities() -> dict:
         "themes": list(AVAILABLE_THEMES),
         "journals": list(AVAILABLE_JOURNALS),
         "palettes": PALETTE_KINDS,
+        "palette_presets": PALETTE_PRESETS,
         "tex_presets": {
             name: {
                 "columnwidth_pt": ctx.columnwidth_pt,

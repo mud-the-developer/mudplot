@@ -116,6 +116,10 @@ class TicksSpec(SpecBase):
 @dataclass
 class PaletteSpec(SpecBase):
     kind: str = "qualitative"  # qualitative | sequential | diverging
+    # A named, pre-verified preset (see mudplot.color.palette.PALETTE_PRESETS)
+    # fully determines lightness/chroma/hue_start/lightness_jitter below,
+    # overriding those four fields; leave None to set them individually.
+    preset: str | None = None
     lightness: float = 65.0
     chroma: float = 55.0
     hue_start: float = 20.0
@@ -138,6 +142,12 @@ class ThemeSpec(SpecBase):
         default_factory=lambda: ["o", "s", "^", "D", "v", "P", "X", "*"]
     )
     line_styles: list[str] = field(default_factory=lambda: ["-", "--", "-.", ":"])
+    # hatch patterns cycled per series for area fills (bar/box/violin), same
+    # purpose as markers/line_styles: keep grouped series distinguishable
+    # without relying on colour (black & white print, full achromatopsia).
+    hatches: list[str] = field(
+        default_factory=lambda: ["", "//", "xx", "..", "\\\\", "oo"]
+    )
 
 
 # --------------------------------------------------------------------------

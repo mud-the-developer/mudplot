@@ -57,16 +57,31 @@ def _themes_section(caps: dict) -> str:
 def _palettes_section(caps: dict) -> str:
     lines = ["## Palettes\n"]
     lines.append(
-        "LCH-based, colourblind-safe by default. Kinds: "
-        + ", ".join(f"`{k}`" for k in caps["palettes"])
-        + ".\n"
+        "LCH-based. Kinds: " + ", ".join(f"`{k}`" for k in caps["palettes"]) + ".\n"
     )
     lines.append(
         "- `qualitative`: equal(-ish) lightness, maximum hue contrast, "
-        "worst-case ΔE00 across normal + CVD vision maximised. A small "
-        "`lightness_jitter` (default 6) keeps greyscale/print distinguishable.\n"
+        "worst-case ΔE00 across normal vision + protan/deutan CVD "
+        "simulation maximised. A `lightness_jitter` (default 6) keeps true "
+        "greyscale/B&W print distinguishable; see `Palette.report()` for "
+        "measured safety, not an assumed guarantee.\n"
         "- `sequential` / `diverging`: perceptually-uniform ramps, gamut-clipped.\n"
     )
+    lines.append('### Named presets (`.palette(preset="...")`)\n')
+    lines.append(
+        "Pre-tuned `qualitative` parameter sets, each measured (not assumed) "
+        "CVD-safe (worst-case ΔE00 ≥ 8) and true-greyscale-safe (min L* gap "
+        "≥ 3) up to `max_verified_n` categories — see "
+        "`tests/test_palette_presets.py`. Beyond that count, more colours are "
+        "still generated but safety is no longer verified; pair with "
+        "`.encoding(hatches=[...])` for bar/box/violin fills, which stays "
+        "distinguishable in B&W print regardless of colour count.\n"
+    )
+    lines.append("| preset | max verified n | description |")
+    lines.append("|---|---|---|")
+    for name, p in sorted(caps["palette_presets"].items()):
+        lines.append(f"| `{name}` | {p['max_verified_n']} | {p['description']} |")
+    lines.append("")
     return "\n".join(lines)
 
 

@@ -165,13 +165,16 @@ def _palette_rc(p: PaletteSpec, n: int = 10) -> dict:
     from .color import palette as P
 
     if p.kind == "qualitative":
-        pal = P.qualitative(
-            max(n, 1),
-            lightness=p.lightness,
-            chroma=p.chroma,
-            hue_start=p.hue_start,
-            cvd_safe=p.cvd_safe,
-        )
+        if p.preset is not None:
+            pal = P.preset_qualitative(p.preset, max(n, 1), cvd_safe=p.cvd_safe)
+        else:
+            pal = P.qualitative(
+                max(n, 1),
+                lightness=p.lightness,
+                chroma=p.chroma,
+                hue_start=p.hue_start,
+                cvd_safe=p.cvd_safe,
+            )
     elif p.kind == "sequential":
         pal = P.sequential(max(n, 2))
     elif p.kind == "diverging":

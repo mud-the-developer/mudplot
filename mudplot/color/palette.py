@@ -17,11 +17,19 @@ from dataclasses import dataclass, field
 
 import numpy as np
 
+from ..capabilities import PALETTE_PRESETS
 from . import convert as cv
 from . import cvd
 from .distance import delta_e2000
 
-__all__ = ["Palette", "diverging", "qualitative", "sequential"]
+__all__ = [
+    "PALETTE_PRESETS",
+    "Palette",
+    "diverging",
+    "preset_qualitative",
+    "qualitative",
+    "sequential",
+]
 
 
 @dataclass
@@ -263,6 +271,29 @@ def qualitative(
         },
     )
     return pal
+
+
+# --------------------------------------------------------------------------
+# Named, pre-verified qualitative presets
+# --------------------------------------------------------------------------
+# The preset data itself lives in ``mudplot.capabilities`` (plain dict, no
+# numpy) so the dependency-free pure core can describe available presets
+# without importing this (numpy-dependent) module -- see PALETTE_PRESETS
+# there for the actual lightness/chroma/hue_start/lightness_jitter values
+# and each preset's verified-safe category count.
+def preset_qualitative(name: str, n: int, **overrides) -> Palette:
+    """A named, pre-verified qualitative palette (see ``PALETTE_PRESETS``).
+
+    ``overrides`` may pass through any other ``qualitative()`` keyword (e.g.
+    ``cvd_safe=False``); the preset's own lightness/chroma/hue_start/
+    lightness_jitter take precedence unless also present in ``overrides``.
+    """
+    if name not in PALETTE_PRESETS:
+        raise ValueError(
+            f"unknown palette preset {name!r}; choose from {sorted(PALETTE_PRESETS)}"
+        )
+    params = {**PALETTE_PRESETS[name]["params"], **overrides}
+    return qualitative(n, **params)
 
 
 # --------------------------------------------------------------------------

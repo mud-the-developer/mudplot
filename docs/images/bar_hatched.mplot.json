@@ -1,0 +1,176 @@
+{
+  "version": "0.1",
+  "size": [
+    5,
+    3.5
+  ],
+  "dpi": 150,
+  "theme": {
+    "name": "paper",
+    "font": {
+      "family": "sans-serif",
+      "size": 10.0,
+      "title_size": 11.0,
+      "label_size": 10.0,
+      "tick_size": 8.5,
+      "use_tex": false
+    },
+    "axes": {
+      "line_width": 0.8,
+      "spines": "LB",
+      "spine_offset": 0.0
+    },
+    "grid": {
+      "show": false,
+      "axis": "both",
+      "line_width": 0.5,
+      "alpha": 0.5
+    },
+    "ticks": {
+      "direction": "out",
+      "major_size": 3.0,
+      "minor_size": 1.5,
+      "width": 0.8,
+      "minor_visible": false,
+      "top": false,
+      "right": false
+    },
+    "palette": {
+      "kind": "qualitative",
+      "preset": "paper",
+      "lightness": 65.0,
+      "chroma": 55.0,
+      "hue_start": 20.0,
+      "cvd_safe": true
+    },
+    "redundant_encoding": true,
+    "markers": [
+      "o",
+      "s",
+      "^",
+      "D",
+      "v",
+      "P",
+      "X",
+      "*"
+    ],
+    "line_styles": [
+      "-",
+      "--",
+      "-.",
+      ":"
+    ],
+    "hatches": [
+      "",
+      "//",
+      "xx",
+      "..",
+      "\\\\",
+      "oo"
+    ]
+  },
+  "data": {
+    "columns": {
+      "dose": [
+        "Control",
+        "Low",
+        "High",
+        "Control",
+        "Low",
+        "High",
+        "Control",
+        "Low",
+        "High"
+      ],
+      "response": [
+        1.0,
+        1.6,
+        2.1,
+        0.9,
+        1.9,
+        2.6,
+        1.1,
+        1.4,
+        1.8
+      ],
+      "cell_line": [
+        "HEK293",
+        "HEK293",
+        "HEK293",
+        "HeLa",
+        "HeLa",
+        "HeLa",
+        "CHO",
+        "CHO",
+        "CHO"
+      ]
+    },
+    "matrices": {}
+  },
+  "suptitle": "",
+  "auto_label_panels": false,
+  "width_ratios": null,
+  "height_ratios": null,
+  "panels": [
+    {
+      "layers": [
+        {
+          "type": "bar",
+          "x": "dose",
+          "y": "response",
+          "group": "cell_line",
+          "label": null,
+          "color": null,
+          "line_width": null,
+          "line_style": null,
+          "marker": null,
+          "marker_size": null,
+          "alpha": 1.0,
+          "yerr": null,
+          "xerr": null,
+          "capsize": null,
+          "y2": null,
+          "value": null,
+          "text": null,
+          "at": null,
+          "to": null,
+          "bins": 20,
+          "density": false,
+          "c": null,
+          "cmap_kind": "sequential",
+          "colorbar": false,
+          "clabel": null,
+          "matrix": null,
+          "levels": null,
+          "axis": "y",
+          "z": null
+        }
+      ],
+      "x": {
+        "label": "",
+        "scale": "linear",
+        "limits": null
+      },
+      "y": {
+        "label": "Response (a.u.)",
+        "scale": "linear",
+        "limits": null
+      },
+      "y2": null,
+      "z": null,
+      "projection": "2d",
+      "title": "Grouped bars: colour + hatch encoding",
+      "label": null,
+      "legend": {
+        "show": true,
+        "title": "Cell line",
+        "location": "best",
+        "frame": false
+      }
+    }
+  ],
+  "layout": null,
+  "share_x": "none",
+  "share_y": "none",
+  "journal": null
+}
