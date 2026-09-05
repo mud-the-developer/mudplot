@@ -122,7 +122,10 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
         .legend(title="series")
         .labels(title="redundant encoding: colour + marker + dash")
     )
-    p.save(str(gallery_dir / "redundant_encoding.png"))
+    # tight=True: these are illustrative web-gallery images, not journal
+    # figures -- physical inch size doesn't matter here, but content (e.g.
+    # this title) shouldn't get silently clipped at the default exact size.
+    p.save(str(gallery_dir / "redundant_encoding.png"), tight=True)
     items.append(
         (
             "redundant_encoding.png",
@@ -168,7 +171,7 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
         .legend(location="outside right")
         .axes_style(spine_offset=6)
     )
-    p3.save(str(gallery_dir / "secondary_axis.png"))
+    p3.save(str(gallery_dir / "secondary_axis.png"), tight=True)
     items.append(
         (
             "secondary_axis.png",
@@ -184,7 +187,7 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
         .heatmap("m", clabel="value", cmap_kind="diverging")
         .labels(title="LCH diverging heatmap")
     )
-    p4.save(str(gallery_dir / "heatmap.png"))
+    p4.save(str(gallery_dir / "heatmap.png"), tight=True)
     items.append(
         (
             "heatmap.png",
