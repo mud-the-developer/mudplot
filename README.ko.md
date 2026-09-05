@@ -41,36 +41,62 @@
 
 ## 상태
 
-초기 개발 중. 아키텍처/과거 마일스톤은 [`DESIGN.md`](DESIGN.md), 출시된 것은
-[`CHANGELOG.md`](CHANGELOG.md), 구상법 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
+**v0.2.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
+[`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
+다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-- [x] 색 변환 엔진 (sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH), numpy 전용
-- [x] 색차 (CIE76, CIEDE2000) — Sharma 2005 검증값 통과
-- [x] 색맹 시뮬레이션 (Machado 2009)
-- [x] 팔레트 생성기 (qualitative / sequential / diverging) + preview
-- [x] 선언적 Spec 모델 + JSON 왕복 + 렌더러 + fluent 빌더
-- [x] 순수 reducer + action + store (effect 분리)
-- [x] TeX-aware WYSIWYG 미리보기 (article/ieee/revtex/nature/acm)
-- [x] 레이어 확장: line/scatter/bar/errorbar/band/hline/vline/text/annotate + 멀티패널
-- [x] 순수 코러 의존성 0 (numpy/matplotlib은 effect 전용 extras)
-- [x] ruff lint 규칙 + CI 준비
-- [x] 다양한 입력 형식 (dict/records/DataFrame/numpy/pyarrow/SQL)
-- [x] AI 에이전트 친화 인터페이스 (capabilities/json_schema/apply/action_log)
-- [x] 안정성 하드닝 패스: 실제 버그 10건 발견/수정 + 회귀 테스트 잠금
-      (저널 크기 미적용, 패널레이블 폰트 불일치, TeX 미리보기 크기 2배 부풀림,
-      SetData의 matrices 삭제, 문자열 리스트 글자 조각화, O(n^2) 성능/팔레트
-      중복색, Store 상태 오염, CLI traceback, y2축 라우팅 불일치, 겹치는
-      grouped bar) — 자세한 내용은 `DESIGN.md` §4c2, `tests/test_bugfixes.py`
-- [x] 레이어 추가: histogram/boxplot/heatmap, 연속값 컬러매핑 scatter+colorbar
-- [x] 논문용 마무리: suptitle, 패널 자동 레이블(a/b/c), width/height ratios
-- [x] 렌더 커버리지: 보조 y축(twin), 공유축(sharex/sharey), despine(spine offset), 외부 범례
-- [x] 디자인 품질: 색상+마커+선스타일 이중 인코딩, 팔레트 lightness_jitter로 그레이스케일 안전성, `Palette.report()`
-- [x] 순수 spec 검증(`validate`/`assert_valid`) + 렌더링 전 자동 검증
-- [x] `Store.undo()`/`redo()`
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`)
-- [x] JSON 스키마/능력/문서 export 파일 + CI 동기화 검증 (`schemas/`, `docs/`)
-- [x] 사람용 dashboard: 엔진 자기소개 기반 문서 + 디자인 갤러리 정적 사이트 (`python -m dashboard`)
-- [ ] Rust 인터랙티브 에디터 (별도 크레이트, 추후)
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 테스트 322개 통과:**
+
+- [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
+      색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
+      sequential/diverging 팔레트 생성기 + preview
+- [x] **이름 붙은 검증된 qualitative 팔레트 프리셋 3종** (`paper`/`vivid`/
+      `soft`) — 명시된 카테고리 수까지 CVD·진짜 흑백 안전성을 직접 측정;
+      bar/box/violin도 기본적으로 그룹마다 해칭 패턴을 함께 사용해 색상
+      개수와 무관하게 흑백 인쇄에서 구별됨
+- [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 순수 reducer +
+      action + store (`Store.undo()`/`redo()`) — render/io/preview 등
+      effect는 가장자리로 분리
+- [x] 렌더러: 레이어 21종(line/scatter/bar/errorbar/band/hline/vline/text/
+      annotate/hist/box/violin/kde/heatmap/contour/contourf/pie/scatter3d/
+      line3d/surface/wireframe), 멀티패널 레이아웃, 보조 y축, 공유축,
+      despine, 외부 범례, 연속값 컬러매핑 + colorbar
+- [x] **TeX 대응 크기 지정과 겹치지 않는 레이아웃**: `.tex_size(preset,
+      columns=1|2)`로 실제 figure를 문서 컬럼폭/전체 텍스트폭에 맞춤;
+      `render()`가 넘치는 제목을 자동 줄바꿈하고 외부 범례를 위한 캔버스
+      여백을 자동 확보(matplotlib 자체 레이아웃 엔진 + 텍스트 측정
+      렌더러 사용, 직접 만든 레이아웃 시스템 없음)해 지정한 물리적
+      크기를 유지하면서도 텍스트가 잘리거나 겹치지 않음 — TeX WYSIWYG
+      `.preview()`(article/ieee/revtex/nature/acm)의 기반이기도 함
+- [x] **정확한 위치 지정**: 범례(`.legend(bbox_to_anchor=...)`), 패널
+      제목(`.title_position(...)`), `text`/`annotate` 레이어
+      (`.set_layer_at(...)`)를 정확한 위치에 고정 — 인터랙티브 에디터의
+      드래그 핸들도 이 기능을 사용
+- [x] 순수 코어 의존성 0(numpy/matplotlib은 effect 전용 extras); 다양한
+      입력 형식(dict/records/DataFrame/numpy/pyarrow/SQL) 지원; AI
+      에이전트 친화 인터페이스(`capabilities()`/`json_schema()`/
+      `apply()`/`action_log`); 렌더링 전 자동 실행되는 순수
+      `validate()`/`assert_valid()`
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`);
+      JSON 스키마/capabilities/docs export 파일 + CI 동기화 검증
+- [x] 안정성 하드닝 3회, 실제 버그 약 20건 발견/수정 후 회귀 테스트로
+      잠금 (저널 크기 미적용, Store 상태 외부 변형 유출, 범주형 좌표가
+      레이어·패널 간 불일치, `save()`가 지정 크기를 무시하고 자동 크롭
+      등) — 자세한 내용은 `DESIGN.md` §4c2,
+      `tests/test_bugfixes.py`/`tests/test_stabilization.py`
+
+**대시보드 (`dashboard/`, 별도 패키지) — 사람용, 프로토타입 수준:**
+
+- [x] 엔진 자기소개 기반 문서 + 디자인 갤러리 정적 사이트
+      (`python -m dashboard build`)
+- [x] 로컬 인터랙티브 에디터(`python -m dashboard serve`) — fluent API와
+      동일한 Store/action/reducer 사용. 한 서버 안에 **Editor**/**Docs**
+      탭, htmx 부분 갱신(전체 리로드 없음; vendoring, 0BSD, 새 Python
+      의존성 없음), 미리보기 위에서 범례·제목·주석을 마우스나 화살표
+      키로 직접 드래그하는 핸들
+- [ ] 에디터 UI의 나머지 레이어 타입·멀티패널 컨트롤·spec 업로드 —
+      `ROADMAP.md` §2 참고
+- [ ] Rust 인터랙티브 에디터 (별도 크레이트) — `ROADMAP.md` §3 참고
 
 ## 설치
 

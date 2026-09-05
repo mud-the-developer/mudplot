@@ -46,49 +46,69 @@ Effects (render/io/preview) are pushed to the edges.
 
 ## Status
 
-Early development. See [`DESIGN.md`](DESIGN.md) for architecture and past
-milestones, [`CHANGELOG.md`](CHANGELOG.md) for what's shipped, and
-[`ROADMAP.md`](ROADMAP.md) for concrete next steps.
+**v0.2.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
+architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
+version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
+steps (more layer types, dashboard editor gaps, the Rust editor).
 
-- [x] Colour conversion engine (sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH), numpy-only
-- [x] Colour difference (CIE76, CIEDE2000) — passes Sharma 2005 reference values
-- [x] Colour-vision-deficiency simulation (Machado 2009)
-- [x] Palette generators (qualitative / sequential / diverging) + preview
-- [x] Declarative spec model + JSON round-trip + renderer + fluent builder
-- [x] Pure reducer + actions + store (effects separated)
-- [x] TeX-aware WYSIWYG preview (article/ieee/revtex/nature/acm)
-- [x] Layer coverage: line/scatter/bar/errorbar/band/hline/vline/text/annotate/
-      hist/box/heatmap/violin/kde/pie/contour/contourf + multi-panel layouts
-- [x] 3-D plots: scatter3d/line3d/surface/wireframe, mixable with 2-D panels
-      in the same figure
-- [x] Zero dependencies in the pure core (numpy/matplotlib are effect-only extras)
-- [x] ruff lint rules + CI
-- [x] Broad input-format support (dict/records/DataFrame/numpy/pyarrow/SQL)
-- [x] AI-agent-friendly interface (capabilities/json_schema/apply/action_log)
-- [x] Stability hardening pass: 10 real bugs found, fixed, and locked in with
-      regression tests (journal size not applied, panel-label font mismatch,
-      TeX preview size ~2x inflation, `SetData` wiping `matrices`, string
-      lists shredded character-by-character, O(n²) palette perf/duplicate
-      colours, `Store` state leaking external mutations, raw CLI tracebacks,
-      inconsistent secondary-axis routing, overlapping grouped bars) — see
-      `DESIGN.md` §4c2 and `tests/test_bugfixes.py`
-- [x] More layers: histogram/boxplot/heatmap, continuous colour-mapped
-      scatter+colorbar
-- [x] Paper-ready finishing touches: suptitle, auto panel labels (a/b/c),
-      width/height ratios
-- [x] Render coverage: secondary y-axis (twin), shared axes
-      (sharex/sharey), despine (spine offset), outside legends
-- [x] Design quality: colour+marker+line-style redundant encoding, palette
-      `lightness_jitter` for greyscale safety, `Palette.report()`
-- [x] Pure spec validation (`validate`/`assert_valid`) + automatic
-      pre-render checks
-- [x] `Store.undo()`/`redo()`
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`)
-- [x] JSON schema/capabilities/docs export files + CI sync checks
-      (`schemas/`, `docs/`)
-- [x] Human-facing dashboard: a static docs+gallery site generated straight
-      from the engine's own introspection (`python -m dashboard`)
-- [ ] Rust interactive editor (separate crate, later)
+**Engine (`mudplot/`) — usable now, 322 tests passing:**
+
+- [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
+      CIEDE2000 colour difference (Sharma 2005 reference values); Machado
+      2009 colour-vision-deficiency simulation; qualitative/sequential/
+      diverging palette generators + preview
+- [x] **Three named, pre-verified qualitative palette presets**
+      (`paper`/`vivid`/`soft`) — measured (not assumed) CVD-safe and
+      true-greyscale-safe up to a documented category count; bar/box/violin
+      fills cycle a hatch pattern per group by default so they stay
+      distinguishable in black & white print regardless of colour count
+- [x] Declarative spec model (`FigureSpec`) + lossless JSON round-trip +
+      pure reducer + actions + store (`Store.undo()`/`redo()`) — effects
+      (render/io/preview) kept at the edges
+- [x] Renderer: 21 layer types (line/scatter/bar/errorbar/band/hline/vline/
+      text/annotate/hist/box/violin/kde/heatmap/contour/contourf/pie/
+      scatter3d/line3d/surface/wireframe), multi-panel layouts, secondary
+      y-axis, shared axes, despine, outside legends, continuous colour
+      mapping + colorbar
+- [x] **TeX-ready sizing and overlap-free layout**: `.tex_size(preset,
+      columns=1|2)` sizes the actual figure to a document column/full text
+      width; `render()` wraps overflowing titles and reserves canvas space
+      for outside legends automatically (matplotlib's own layout engine +
+      text-measurement renderer, no custom layout system) so figures stay
+      at their exact configured physical size without clipped/overlapping
+      text — also the basis of the TeX-aware WYSIWYG `.preview()`
+      (article/ieee/revtex/nature/acm)
+- [x] **Exact-position placement**: pin the legend
+      (`.legend(bbox_to_anchor=...)`), a panel title (`.title_position(...)`),
+      or a `text`/`annotate` layer (`.set_layer_at(...)`) to an exact spot —
+      also what the interactive editor's drag handles dispatch
+- [x] Zero dependencies in the pure core (numpy/matplotlib are effect-only
+      extras); broad input-format support (dict/records/DataFrame/numpy/
+      pyarrow/SQL); AI-agent-friendly interface (`capabilities()`/
+      `json_schema()`/`apply()`/`action_log`); pure `validate()`/
+      `assert_valid()` run automatically before rendering
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`);
+      JSON schema/capabilities/docs export files + CI sync checks
+- [x] Three stability-hardening passes, ~20 real bugs found/fixed and
+      locked in with regression tests (journal size not applied, `Store`
+      state leaking external mutations, categorical axis positions
+      disagreeing across layers/panels, `save()` silently cropping the
+      configured size, and more) — see `DESIGN.md` §4c2 and
+      `tests/test_bugfixes.py`/`tests/test_stabilization.py`
+
+**Dashboard (`dashboard/`, separate package) — human-facing, prototype-grade:**
+
+- [x] Static docs + design-gallery site generated straight from the
+      engine's own introspection (`python -m dashboard build`)
+- [x] Local interactive editor (`python -m dashboard serve`) driving the
+      exact same Store/actions/reducer as the fluent API — **Editor**/
+      **Docs** tabs in one running server, htmx partial-page updates (no
+      full reloads; vendored, 0BSD, no new Python dependency), and
+      draggable handles to reposition the legend/title/annotations
+      directly on the preview (mouse or arrow keys)
+- [ ] Remaining layer types, multi-panel controls, and spec-file upload in
+      the editor UI — see `ROADMAP.md` §2
+- [ ] Rust interactive editor (separate crate) — see `ROADMAP.md` §3
 
 ## Installation
 

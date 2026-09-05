@@ -479,6 +479,7 @@ tests/
       title/annotations directly on the preview (mouse or arrow keys), a
       visual redesign, and Editor/Docs tabs sharing one running server.
       See `tests/test_layout.py`, `tests/test_dashboard_editor.py`.
+- [x] **v0.2.0 released.**
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

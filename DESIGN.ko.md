@@ -352,6 +352,7 @@ tests/
       범례·제목·주석을 직접 드래그하는 핸들, 시각적 리디자인, 한
       서버 안의 Editor/Docs 탭을 추가. `tests/test_layout.py`,
       `tests/test_dashboard_editor.py` 참고.
+- [x] **v0.2.0 릴리스.**
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

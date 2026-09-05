@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.2.0] - 2026-09-05
+
+TeX-ready figure sizing/layout, position-anywhere legends/titles/
+annotations, and a substantially more usable interactive editor (htmx
+partial updates, drag-to-position, visual redesign). 322 tests passing.
+
 ### TeX column sizing, overlap-free layout, draggable legends, docs/editor tabs
 - `Plot.tex_size(preset, columns=1|2)`: size the *actual* figure (not just
   `.preview()`) to a TeX document's single-column width or full text width

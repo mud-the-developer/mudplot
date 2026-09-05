@@ -162,7 +162,7 @@ colours themselves compress to similar greys — see
   patterns, verified both before and after true-greyscale conversion.
 
 검증 환경: pandas **3.0.5**, Matplotlib **3.11.1**.
-전체 테스트 **278개 통과**, 건너뛴 테스트 없음. Ruff 검사도 통과했습니다.
+전체 테스트 **322개 통과**, 건너뛴 테스트 없음. Ruff 검사도 통과했습니다.
 PNG를 직접 열어 패널 배치, 축·범례·colorbar의 잘림과 겹침도 확인했습니다.
 이는 이 환경과 데모에 대한 확인이며, 모든 pandas dtype이나 저널 규정에 대한
 검증을 의미하지 않습니다. 논문 제출용 크기·폰트·단위는 별도로 확인하세요.
