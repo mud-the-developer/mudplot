@@ -44,26 +44,35 @@ needing a separate `dashboard build` process.
 
 - `editor_server.py` / `editor_view.py` — a deliberately dependency-light
   local editor: Python's stdlib `http.server` (no web framework) plus
-  `mudplot[render]`. Every click/form submit builds a real `Action` and
-  dispatches it through the *exact same* `Store`/reducer the fluent API
+  `mudplot[render]`, plus one vendored, dependency-free JS file
+  (`dashboard/static/htmx.min.js`, [htmx](https://htmx.org), 0BSD licensed)
+  for partial-page updates. Every click/form submit builds a real `Action`
+  and dispatches it through the *exact same* `Store`/reducer the fluent API
   uses — there is no separate editor-only state model.
-- Load sample data, tweak theme/journal/palette, add layers, edit the
+- Load sample data, tweak theme/journal/palette, add layers (including
+  `text`/`annotate` via a dedicated "Add text / annotation" form), edit the
   suptitle/size, undo/redo, or drop in a raw JSON action (the same shape an
-  AI agent would send via `mp.apply([...])`) — the live preview
-  (`/fig.png`) and the action log update after every change.
+  AI agent would send via `mp.apply([...])`) — the preview, layer list, and
+  action log update **in place** after every change (an htmx partial swap
+  of `#app-body`, not a full page navigation).
 - Errors (bad theme name, missing column, invalid spec) are caught and
   shown as a banner instead of crashing the server.
 - Export the current state as `.mplot.json` (`/spec.json`) or a PNG
   (`/fig.png`).
-- **Drag the legend directly on the preview**: "Enable drag positioning" in
-  the Legend position panel adds a ✥ handle over the figure — drag it with
-  the mouse, or click it and use the arrow keys (Shift for a bigger step).
-  Each drop/press dispatches `SetLegend(bbox_to_anchor=[x, y])` (figure-
-  fraction coordinates), the same action `.legend(bbox_to_anchor=...)` uses
-  from the fluent API. "Reset" clears it back to a named `location`.
+- **Drag directly on the preview**: the Position panel's "Enable" buttons
+  add a coloured handle over the figure for the **legend** (blue ✥) and
+  **panel title** (purple T); any `text`/`annotate` layer gets a handle
+  (green •) automatically. Drag with the mouse, or click a handle and use
+  the arrow keys (Shift for a bigger step). These dispatch
+  `SetLegend(bbox_to_anchor=...)`, `SetTitlePosition(...)`, and
+  `SetLayerAt(...)` respectively — the same actions
+  `.legend(bbox_to_anchor=...)`/`.title_position(...)`/`.set_layer_at(...)`
+  use from the fluent API. "Reset" restores the named `location`/default.
 - This is intentionally a *thin* UI: `editor_view.py` has no I/O (pure HTML
   string building, unit-testable on its own), and `editor_server.py` is
-  just wiring around the engine's `Store`.
+  just wiring around the engine's `Store` (plus caching the last render's
+  PNG bytes and a bit of layout info the drag handles need — see
+  `EditorSession.refresh()`).
 
 ## Engine APIs it reuses
 

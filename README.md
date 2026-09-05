@@ -229,15 +229,17 @@ that already fit — font sizes stay exactly as configured unless something
 would otherwise be clipped. 3-D panels fall back to `tight_layout()` for now
 since matplotlib's constrained layout doesn't support 3-D Axes well.
 
-### Placing the legend at an exact spot
+### Placing the legend, title, or an annotation at an exact spot
 
 ```python
-p.legend(bbox_to_anchor=[0.8, 0.5])  # figure-fraction [x, y], overrides location
-p.legend(location="upper left")      # bbox_to_anchor=None restores named locations
+p.legend(bbox_to_anchor=[0.8, 0.5])   # figure-fraction [x, y], overrides location
+p.legend(location="upper left")       # bbox_to_anchor=None restores named locations
+p.title_position([0.1, 0.85])         # axes-fraction [x, y]; None restores default
+p.set_layer_at(layer_index, [3, 0.5]) # move a text/annotate layer (data coords)
 ```
 
-This is also what the interactive editor's draggable legend handle uses
-(see `dashboard/README.md`).
+This is also what the interactive editor's draggable handles use (mouse or
+arrow keys, right on the preview) — see `dashboard/README.md`.
 
 ### For AI agents (drive everything via JSON)
 

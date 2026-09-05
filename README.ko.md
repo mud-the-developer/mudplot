@@ -183,15 +183,17 @@ figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면
 지정한 그대로입니다. matplotlib의 constrained layout이 3D Axes를 잘
 지원하지 않아 3D 패널은 당분간 `tight_layout()`으로 대체됩니다.
 
-### 범례를 정확한 위치에 놓기
+### 범례·제목·주석을 정확한 위치에 놓기
 
 ```python
-p.legend(bbox_to_anchor=[0.8, 0.5])  # figure 비율 [x, y], location을 덮어씀
-p.legend(location="upper left")      # bbox_to_anchor=None으로 이름 위치 복원
+p.legend(bbox_to_anchor=[0.8, 0.5])    # figure 비율 [x, y], location을 덮어씀
+p.legend(location="upper left")        # bbox_to_anchor=None으로 이름 위치 복원
+p.title_position([0.1, 0.85])          # axes 비율 [x, y]; None이면 기본값 복원
+p.set_layer_at(layer_index, [3, 0.5])  # text/annotate 레이어 위치 이동(데이터 좌표)
 ```
 
-인터랙티브 에디터의 드래그 가능한 범례 핸들도 이 기능을 사용합니다
-(`dashboard/README.md` 참고).
+인터랙티브 에디터의 드래그 가능한 핸들(마우스 또는 화살표 키, 미리보기 위에서
+직접)도 이 기능을 사용합니다 (`dashboard/README.md` 참고).
 
 ### AI 에이전트용 (JSON만으로 전체 조작)
 

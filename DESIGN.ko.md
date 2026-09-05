@@ -340,6 +340,18 @@ tests/
       함께 사용해 흑백 인쇄에서도 구별됨. `docs/DEMO.md` §4/§5에 실제
       픽셀 변환 기반 흑백 인쇄 증거 이미지 수록
 - [x] **v0.1.0 릴리스** (첫 태그 릴리스)
+- [x] M12d: TeX 1단/2단 컬럼 크기 지정(`Plot.tex_size()`); matplotlib
+      자체 constrained-layout 엔진과 텍스트 측정 렌더러를 이용한 겹침
+      방지 레이아웃 패스(`_autofit`) -- 넘치는 제목/suptitle 자동
+      줄바꿈, 이름 붙은 "outside ..." 범례를 위한 캔버스 여백 확보,
+      직접 만든 레이아웃 시스템 없음, 잘릴 우려가 없으면 아무 변화도
+      없음. 범례/제목/주석을 정확한 위치에 고정하는
+      `LegendSpec.bbox_to_anchor`/`PanelSpec.title_position`/
+      `SetLayerAt`. 대시보드 에디터에는 htmx 부분 갱신(vendoring,
+      0BSD, 새 Python 의존성 없음), 미리보기 위에서 마우스/화살표 키로
+      범례·제목·주석을 직접 드래그하는 핸들, 시각적 리디자인, 한
+      서버 안의 Editor/Docs 탭을 추가. `tests/test_layout.py`,
+      `tests/test_dashboard_editor.py` 참고.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

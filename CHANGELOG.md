@@ -31,6 +31,36 @@ All notable changes to this project are documented here.
 - Regression coverage: `tests/test_layout.py`, additions to
   `tests/test_dashboard_editor.py`.
 
+### Dashboard editor: htmx partial updates, title/annotation dragging, redesign
+- Converted the editor's full-page-reload-per-action UX to htmx partial
+  swaps: every form/drag now updates the preview, layer list, and action
+  log in place. Vendored `htmx.min.js` (0BSD licensed, `dashboard/static/`)
+  -- no new Python dependency, plain form-post fallback still works for
+  non-JS clients (`HX-Request` header detection).
+- `PanelSpec.title_position` / `.title_position([x, y])`: pin a panel
+  title to an exact axes-fraction spot (bypasses matplotlib's title-
+  specific y-offset transform, which otherwise silently discards a
+  repositioned y under constrained_layout -- draws a plain axes-fraction
+  text artist instead once a position is set).
+- `SetLayerAt` action / `.set_layer_at(layer_index, at)`: reposition a
+  `text`/`annotate` layer's anchor (data coordinates) -- also usable by an
+  agent, not just the editor.
+- Dashboard editor: draggable handles for the legend (blue), panel title
+  (purple), and any `text`/`annotate` layer (green, one per layer,
+  automatic) directly on the preview -- mouse drag or click + arrow keys.
+  A dedicated "Add text / annotation" form. New `EditorSession.refresh()`
+  caches one render's PNG + layout info (panel bbox/limits/scale) so
+  `/fig.png` and the drag handles' placement can't disagree.
+- Visual redesign: consistent spacing/typography/colour system, card
+  shadows, a checkerboard preview background (so a white figure is visibly
+  bounded), clearer button/error/log styling.
+- `text`/`annotate` layers are now excluded from constrained_layout's
+  space-reservation solve (`Artist.set_in_layout(False)`) -- their data-
+  coordinate position isn't known until axes limits are, which previously
+  produced spurious "constrained_layout not applied" warnings.
+- Regression coverage: additions to `tests/test_layout.py` and
+  `tests/test_dashboard_editor.py` (23 new tests).
+
 ## [0.1.0] - 2026-09-05
 
 First tagged release: the pure spec/reducer/store engine, the LCH colour

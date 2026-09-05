@@ -61,9 +61,9 @@ Each addition should follow the same checklist the last two batches did:
 
 ## 2. Dashboard / editor completeness
 
-The editor prototype (`python -m dashboard serve`) currently only exposes
-`line`/`scatter`/`bar` in its "Add layer" form, while the engine supports
-21 types. Concrete gaps:
+The editor prototype (`python -m dashboard serve`) currently exposes
+`line`/`scatter`/`bar` plus `text`/`annotate` in its "Add layer" forms,
+while the engine supports 21 types. Concrete gaps:
 
 - **Expose the remaining layer types** in the editor UI (at minimum a
   generic "advanced" form that lets you pick any registered layer type and
@@ -72,15 +72,21 @@ The editor prototype (`python -m dashboard serve`) currently only exposes
   pick up any *future* layer type with zero UI changes).
 - **Multi-panel layout controls**: `.layout(rows, cols)`, panel selection
   for "add layer"/"remove layer", and a `.projection3d()` toggle per panel.
+  The new draggable title/legend/annotation handles are also currently
+  panel-0-only; extending them to whichever panel is selected is a natural
+  follow-on once multi-panel controls exist.
 - **Load a spec from a file** (currently only export/download links exist;
   there's no upload/"open" counterpart).
-- **Panel-level controls**: axis labels/scales/limits, legend
-  location/title, secondary y-axis setup — currently only figure-level
-  (theme/journal/palette/suptitle/size) and a flat "add layer" exist.
-- Once the above feel solid, consider replacing the current full-page-
-  reload-per-action UX with an htmx-style partial swap (still Python/
-  stdlib on the backend; htmx itself is just a `<script>` tag, no new
-  Python dependency) — good practice run before the real Rust+htmx editor.
+- **Panel-level controls**: axis labels/scales/limits, secondary y-axis
+  setup — currently only figure-level (theme/journal/palette/suptitle/
+  size), legend/title position, and a flat "add layer" exist.
+- **(done)** Replaced the full-page-reload-per-action UX with htmx partial
+  swaps (`dashboard/static/htmx.min.js`, vendored, 0BSD, no Python
+  dependency) — good practice run before the real Rust+htmx editor.
+- **(done)** Drag-to-position for the legend, panel title, and any
+  `text`/`annotate` layer directly on the preview (mouse or arrow keys).
+- **(done)** Editor/Docs tabs within the one running server (`/docs`),
+  reusing the same engine-reference renderer as the static site.
 
 ## 3. Rust interactive editor (M13)
 

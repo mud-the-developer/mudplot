@@ -25,7 +25,7 @@ from dashboard.editor_server import EditorSession, _build_action, make_server
 from dashboard.editor_view import render_docs_page, render_page
 from dashboard.samples import SAMPLES, sample_columns
 from mudplot import actions as A
-from mudplot.spec import FigureSpec, LegendSpec
+from mudplot.spec import FigureSpec, LayerSpec, LegendSpec
 from mudplot.store import Store
 
 # --------------------------------------------------------------------------
@@ -117,18 +117,90 @@ def test_render_page_no_legend_handle_without_explicit_position():
     spec = FigureSpec()
     spec.data.columns = {"x": [1, 2], "y": [3, 4]}
     html = render_page(spec, [])
-    assert 'id="legend-handle"' not in html
+    assert 'class="drag-handle legend"' not in html
 
 
 def test_render_page_shows_legend_handle_at_explicit_position():
     spec = FigureSpec()
     spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.25, 0.75])
     html = render_page(spec, [])
-    assert 'id="legend-handle"' in html
-    assert 'data-x="0.25"' in html
-    assert 'data-y="0.75"' in html
+    assert 'class="drag-handle legend"' in html
+    assert 'data-imgx="0.25"' in html
+    assert 'data-imgy="0.75"' in html
     assert "left:25%" in html
     assert "top:25%" in html  # CSS top is flipped: (1 - 0.75) * 100
+
+
+def test_render_page_legend_handle_needs_no_layout_info():
+    # unlike title/text-layer handles, the legend is figure-fraction and
+    # doesn't depend on the panel-0 axes bbox being known.
+    spec = FigureSpec()
+    spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.1, 0.1])
+    html = render_page(spec, [], layout={})
+    assert 'class="drag-handle legend"' in html
+
+
+def test_render_page_title_handle_needs_panel_bbox_from_layout():
+    from mudplot.spec import PanelSpec
+
+    spec = FigureSpec()
+    spec.panels[0] = PanelSpec(title="Hi", title_position=[0.5, 0.9])
+    assert 'class="drag-handle title"' not in render_page(spec, [], layout={})
+    html = render_page(
+        spec, [], layout={"panel_bbox": [0.1, 0.1, 0.9, 0.9], "is_3d": False}
+    )
+    assert 'class="drag-handle title"' in html
+    # axes-fraction 0.5 -> figure-fraction 0.1 + 0.5*(0.9-0.1) = 0.5
+    assert 'data-imgx="0.5"' in html
+
+
+def test_render_page_no_title_handle_without_title_text():
+    from mudplot.spec import PanelSpec
+
+    spec = FigureSpec()
+    spec.panels[0] = PanelSpec(title="", title_position=[0.5, 0.9])
+    html = render_page(
+        spec, [], layout={"panel_bbox": [0.1, 0.1, 0.9, 0.9], "is_3d": False}
+    )
+    assert 'class="drag-handle title"' not in html
+
+
+def test_render_page_layer_at_handle_uses_data_coordinate_mapping():
+    from mudplot.spec import LayerSpec as LS
+    from mudplot.spec import PanelSpec
+
+    spec = FigureSpec()
+    spec.data.columns = {"x": [0, 1], "y": [0, 1]}
+    spec.panels[0] = PanelSpec(layers=[LS(type="text", text="n", at=[5.0, 0.0])])
+    layout = {
+        "is_3d": False,
+        "panel_bbox": [0.0, 0.0, 1.0, 1.0],
+        "xlim": [0.0, 10.0],
+        "ylim": [-1.0, 1.0],
+        "xscale": "linear",
+        "yscale": "linear",
+        "text_layers": [{"index": 0, "type": "text", "at": [5.0, 0.0]}],
+    }
+    html = render_page(spec, [], layout)
+    assert 'class="drag-handle layer-at"' in html
+    assert 'data-imgx="0.5"' in html  # (5-0)/(10-0)
+    assert 'data-imgy="0.5"' in html  # (0-(-1))/(1-(-1))
+    assert 'data-field2="layer_index=0"' in html
+
+
+def test_render_page_no_handles_for_3d_layout():
+    from mudplot.spec import LegendSpec as LG
+    from mudplot.spec import PanelSpec
+
+    spec = FigureSpec()
+    spec.panels[0] = PanelSpec(
+        title="Hi", title_position=[0.5, 0.9], legend=LG(bbox_to_anchor=[0.1, 0.1])
+    )
+    html = render_page(spec, [], layout={"is_3d": True})
+    # legend still draggable (figure-fraction, independent of the axes)...
+    assert 'class="drag-handle legend"' in html
+    # ...but title needs the (unavailable, for 3-D) axes bbox
+    assert 'class="drag-handle title"' not in html
 
 
 def test_samples_are_valid_columns():
@@ -192,18 +264,51 @@ def test_session_dispatch_safe_clears_error_on_success():
     assert session.error is None
 
 
-def test_session_render_png_returns_bytes_for_empty_figure():
+def test_session_png_cached_after_construction():
     session = EditorSession()
-    png = session.render_png()
-    assert png[:8] == b"\x89PNG\r\n\x1a\n"
+    assert session.png[:8] == b"\x89PNG\r\n\x1a\n"
 
 
-def test_session_render_png_shows_placeholder_on_invalid_spec():
+def test_session_refresh_shows_placeholder_on_invalid_spec():
     session = EditorSession()
     session.store = Store(FigureSpec(panels=[]))  # invalid: no panels
-    png = session.render_png()
-    assert png[:8] == b"\x89PNG\r\n\x1a\n"
+    session.refresh()
+    assert session.png[:8] == b"\x89PNG\r\n\x1a\n"
     assert session.error is not None
+    assert session.layout == {}
+
+
+def test_session_layout_reflects_panel_bbox_and_limits_after_dispatch():
+    session = EditorSession()
+    session.dispatch_safe(A.SetData({"x": [1, 2, 3], "y": [1, 4, 9]}))
+    session.dispatch_safe(
+        A.AddLayer(LayerSpec(type="line", x="x", y="y")),
+    )
+    assert session.error is None
+    assert session.layout["is_3d"] is False
+    assert len(session.layout["panel_bbox"]) == 4
+    assert session.layout["xlim"][0] < 1 and session.layout["xlim"][1] > 3
+    assert session.layout["text_layers"] == []
+
+
+def test_session_layout_lists_text_and_annotate_layers():
+    session = EditorSession()
+    session.dispatch_safe(A.SetData({"x": [1, 2], "y": [1, 2]}))
+    session.dispatch_safe(A.AddLayer(LayerSpec(type="line", x="x", y="y")))
+    session.dispatch_safe(A.AddLayer(LayerSpec(type="text", text="n", at=[1.5, 1.5])))
+    assert session.layout["text_layers"] == [
+        {"index": 1, "type": "text", "at": [1.5, 1.5]}
+    ]
+
+
+def test_session_layout_empty_for_3d_panel():
+    from mudplot.spec import PanelSpec
+
+    session = EditorSession()
+    session.store = Store(FigureSpec(panels=[PanelSpec(projection="3d")]))
+    session.dispatch_safe(A.SetData({"x": [1], "y": [1], "z": [1]}))
+    session.dispatch_safe(A.AddLayer(LayerSpec(type="line3d", x="x", y="y", z="z")))
+    assert session.layout == {"is_3d": True}
 
 
 # --------------------------------------------------------------------------
@@ -380,14 +485,14 @@ def test_legend_drag_then_reset_via_http(running_server):
         spec = json.loads(r.read())
     assert spec["panels"][0]["legend"]["bbox_to_anchor"] == [0.2, 0.9]
     with urllib.request.urlopen(running_server + "/") as r:
-        assert b'id="legend-handle"' in r.read()
+        assert b'class="drag-handle legend"' in r.read()
 
     _post(running_server + "/action", {"type": "reset_legend_position", "panel": "0"})
     with urllib.request.urlopen(running_server + "/spec.json") as r:
         spec = json.loads(r.read())
     assert spec["panels"][0]["legend"]["bbox_to_anchor"] is None
     with urllib.request.urlopen(running_server + "/") as r:
-        assert b'id="legend-handle"' not in r.read()
+        assert b'class="drag-handle legend"' not in r.read()
 
 
 def test_invalid_action_does_not_crash_server(running_server):
@@ -400,6 +505,121 @@ def test_invalid_action_does_not_crash_server(running_server):
 
 def test_malformed_raw_json_does_not_crash_server(running_server):
     status = _post(running_server + "/action/raw", {"json": "not json"})
+    assert status == 200
+    with urllib.request.urlopen(running_server + "/") as r:
+        assert b'class="error"' in r.read()
+
+
+# --------------------------------------------------------------------------
+# htmx: fragment responses (no redirect) + title/text-layer drag handles
+# --------------------------------------------------------------------------
+
+
+def _hx_post(url: str, fields: dict) -> bytes:
+    data = urlencode(fields).encode()
+    req = urllib.request.Request(
+        url, data=data, method="POST", headers={"HX-Request": "true"}
+    )
+    with urllib.request.urlopen(req) as r:
+        assert r.status == 200
+        body = r.read()
+    assert body.startswith(b'<div id="app-body">')  # a fragment, not a full page
+    return body
+
+
+def test_htmx_request_gets_fragment_not_redirect(running_server):
+    body = _hx_post(running_server + "/action", {"type": "set_suptitle", "text": "hi"})
+    assert b"<!doctype html>" not in body
+    assert b"hi" in body
+
+
+def test_htmx_undo_redo_reset_return_fragments(running_server):
+    _hx_post(running_server + "/action", {"type": "set_suptitle", "text": "v1"})
+    body = _hx_post(running_server + "/undo", {})
+    assert b"<!doctype html>" not in body
+    _hx_post(running_server + "/redo", {})
+    body = _hx_post(running_server + "/reset", {})
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        assert json.loads(r.read())["suptitle"] == ""
+
+
+def test_static_htmx_js_is_served(running_server):
+    with urllib.request.urlopen(running_server + "/static/htmx.min.js") as r:
+        assert r.status == 200
+        assert r.headers.get("Content-Type") == "application/javascript"
+        assert len(r.read()) > 1000
+
+
+def test_title_position_drag_handle_appears_and_moves_title_via_http(running_server):
+    _post(running_server + "/action", {"type": "load_sample", "name": "sine"})
+    _post(
+        running_server + "/action",
+        {"type": "add_layer", "layer_type": "line", "x": "x", "y": "y", "group": ""},
+    )
+    payload = json.dumps({"type": "SetTitle", "text": "Hello", "panel": 0})
+    _post(running_server + "/action/raw", {"json": payload})
+    body = _hx_post(
+        running_server + "/action",
+        {"type": "set_title_position", "x": "0.5", "y": "0.9", "panel": "0"},
+    ).decode()
+    assert 'class="drag-handle title"' in body
+    assert 'data-bbox="[' in body
+
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        spec = json.loads(r.read())
+    assert spec["panels"][0]["title_position"] == [0.5, 0.9]
+
+    _post(running_server + "/action", {"type": "reset_title_position", "panel": "0"})
+    with urllib.request.urlopen(running_server + "/") as r:
+        assert b'class="drag-handle title"' not in r.read()
+
+
+def test_annotation_layer_gets_a_draggable_handle_with_data_coords(running_server):
+    _post(running_server + "/action", {"type": "load_sample", "name": "sine"})
+    _post(
+        running_server + "/action",
+        {"type": "add_layer", "layer_type": "line", "x": "x", "y": "y", "group": ""},
+    )
+    body = _hx_post(
+        running_server + "/action",
+        {
+            "type": "add_layer",
+            "layer_type": "text",
+            "text": "note",
+            "x": "3",
+            "y": "0.5",
+        },
+    ).decode()
+    assert 'class="drag-handle layer-at"' in body
+    assert 'data-xlim="[' in body
+    assert 'data-field2="layer_index=1"' in body
+
+    _hx_post(
+        running_server + "/action",
+        {
+            "type": "set_layer_at",
+            "panel": "0",
+            "layer_index": "1",
+            "x": "5",
+            "y": "0.2",
+        },
+    )
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        spec = json.loads(r.read())
+    assert spec["panels"][0]["layers"][1]["at"] == [5.0, 0.2]
+
+
+def test_set_layer_at_out_of_range_shows_error_not_crash(running_server):
+    status = _post(
+        running_server + "/action",
+        {
+            "type": "set_layer_at",
+            "panel": "0",
+            "layer_index": "9",
+            "x": "1",
+            "y": "1",
+        },
+    )
     assert status == 200
     with urllib.request.urlopen(running_server + "/") as r:
         assert b'class="error"' in r.read()

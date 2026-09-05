@@ -30,6 +30,11 @@ def main() -> int:
             assert r.status == 200
         with urllib.request.urlopen(f"http://127.0.0.1:{port}/fig.png") as r:
             assert r.status == 200
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/docs") as r:
+            assert r.status == 200
+        with urllib.request.urlopen(f"http://127.0.0.1:{port}/static/htmx.min.js") as r:
+            assert r.status == 200
+            assert len(r.read()) > 1000
     finally:
         server.shutdown()
     print("editor smoke test OK")

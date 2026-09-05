@@ -467,6 +467,18 @@ tests/
       `docs/DEMO.md` §4/§5 for a real, pixel-converted B&W-print
       demonstration (not a mockup) and `tests/test_palette_presets.py`.
 - [x] **v0.1.0 released** (first tagged release).
+- [x] M12d: TeX single/double-column figure sizing (`Plot.tex_size()`);
+      overlap-free layout pass (`_autofit`) using matplotlib's own
+      constrained-layout engine and text-measurement renderer -- wraps
+      overflowing titles/suptitle, reserves canvas space for named
+      "outside ..." legends, no custom layout system, no-op when nothing
+      would clip. `LegendSpec.bbox_to_anchor` / `PanelSpec.title_position`
+      / `SetLayerAt` for pinning a legend/title/annotation to an exact
+      spot. Dashboard editor gained: htmx partial-page updates (vendored,
+      0BSD, no new Python dependency), draggable handles for the legend/
+      title/annotations directly on the preview (mouse or arrow keys), a
+      visual redesign, and Editor/Docs tabs sharing one running server.
+      See `tests/test_layout.py`, `tests/test_dashboard_editor.py`.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond
