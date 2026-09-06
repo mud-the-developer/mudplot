@@ -10,6 +10,7 @@ Skipped unless Playwright and a Chrome install are both present; CI runs the
 rest of the suite regardless.
 """
 
+import contextlib
 import json
 import threading
 import time
@@ -98,18 +99,43 @@ def _wait_until(read, ok, timeout: float = 10.0):
     raise AssertionError(f"condition never held; last value: {value!r}")
 
 
-def _enable(page, label: str):
-    """Turn on an explicit position for "Legend"/"Title" via its button."""
-    group = page.get_by_role("group", name=f"{label} position")
-    group.get_by_role("button", name="Enable").click()
+def _enable(page, label: str, url: str, done):
+    """Turn on an explicit position for "Legend"/"Title" via its button.
+
+    Retries: a click landing in the moment a swap replaces the button hits a
+    detached node, so the request is never sent and nothing happens. Waiting
+    for network idle first makes that rare, not impossible, and it is the
+    test's problem rather than the app's -- a person clicks a button they
+    can see, then waits for the screen.
+    """
+    deadline = time.time() + 30
+    while time.time() < deadline:
+        group = page.get_by_role("group", name=f"{label} position")
+        # button may vanish mid-swap; re-resolve and try again
+        with contextlib.suppress(Exception):
+            group.get_by_role("button", name="Enable").click(timeout=5000)
+        _settle(page)
+        try:
+            if done(_spec(url)):
+                return
+        except (IndexError, KeyError, TypeError):
+            pass
+    raise AssertionError(f"{label} position never turned on")
+
+
+def _legend_set(index: int):
+    return lambda spec: spec["panels"][index]["legend"]["bbox_to_anchor"] is not None
+
+
+def _title_pos_set(index: int):
+    return lambda spec: spec["panels"][index]["title_position"] is not None
 
 
 def test_dragging_the_legend_moves_it_and_persists(editor):
     page, url = editor
-    _enable(page, "Legend")
+    _enable(page, "Legend", url, _legend_set(0))
     handle = page.locator(".drag-handle.legend")
     handle.wait_for()
-    _settle(page)
     before = handle.bounding_box()
 
     page.mouse.move(before["x"] + 10, before["y"] + 10)
@@ -135,7 +161,7 @@ def test_arrow_keys_nudge_the_title(editor):
     page.get_by_label("Panel title").fill("Nudge me")
     page.get_by_label("Panel title").press("Enter")
     _settle(page)
-    _enable(page, "Title")
+    _enable(page, "Title", url, _title_pos_set(0))
     handle = page.locator(".drag-handle.title")
     handle.wait_for()
 
@@ -209,9 +235,8 @@ def test_a_burst_of_nudges_is_not_dropped(editor):
     mid-swap used to vanish -- exactly what holding an arrow key does.
     """
     page, url = editor
-    _enable(page, "Legend")
+    _enable(page, "Legend", url, _legend_set(0))
     page.locator(".drag-handle.legend").wait_for()
-    _settle(page)
     start = _spec(url)["panels"][0]["legend"]["bbox_to_anchor"]
 
     page.locator(".drag-handle.legend").click()
@@ -267,9 +292,8 @@ def test_editing_targets_the_selected_panel(editor):
     _settle(page)
 
     # a dragged legend must land on the selected panel too
-    _enable(page, "Legend")
+    _enable(page, "Legend", url, _legend_set(1))
     page.locator(".drag-handle.legend").wait_for()
-    _settle(page)
     handle = page.locator(".drag-handle.legend").bounding_box()
     page.mouse.move(handle["x"] + 10, handle["y"] + 10)
     page.mouse.down()
