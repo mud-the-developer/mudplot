@@ -354,6 +354,8 @@ Every mutation is one of these — send as
 |---|---|---|---|
 | `text` | `str` | True | `None` |
 | `panel` | `int` | False | `0` |
+| `citation` | `str or None` | False | `None` |
+| `href` | `str or None` | False | `None` |
 
 ### `SetTitlePosition`
 

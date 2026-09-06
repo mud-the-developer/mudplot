@@ -209,6 +209,49 @@ figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면
 지정한 그대로입니다. matplotlib의 constrained layout이 3D Axes를 잘
 지원하지 않아 3D 패널은 당분간 `tight_layout()`으로 대체됩니다.
 
+### 그림 안에 citation과 링크 넣기 (LaTeX 연동)
+
+범례 항목이나 패널 제목에 BibTeX 키와 URL을 붙일 수 있습니다. 이미지에 번호를
+굽지 않고 **논문이 컴파일 시점에 해석**하므로, 그림 안의 `[1]`이 References의
+`[1]`과 정확히 같은 번호가 됩니다.
+
+```python
+(mp.plot(data)
+    .line("x", "y", label="RANSAC",
+          citation="fischler1981",             # BibTeX 키
+          href="https://doi.org/10.1145/358669.358692")
+    .labels(title="Robust fitting")
+    .title_reference(citation="hartley2003")
+    .tex_size("ieee", columns=1)
+    .save("fig.pgf"))                          # .pgf -> LaTeX 네이티브 내보내기
+```
+
+```latex
+\input{preamble.tex}   % 또는 mudplot.PREAMBLE 내용을 한 번 붙여넣기
+\begin{figure}\centering
+  \input{fig.pgf}
+  \caption{Errors of two estimators.}
+\end{figure}
+```
+
+내보낸 파일은 `\cite{...}`가 아니라 `\figcite{fischler1981}`를 남깁니다.
+그림 인용을 무엇으로 처리할지 **문서가 결정**하게 하기 위해서입니다:
+
+```latex
+\providecommand{\figcite}[1]{\cite{#1}}   % mudplot.PREAMBLE; \citep, \autocite 등으로 교체 가능
+```
+
+같은 spec이라도 백엔드별로 처리가 다릅니다:
+
+| 형식 | citation | href |
+|---|---|---|
+| `.pgf` | `\figcite{key}` — 논문 bibliography가 번호 부여 | hyperref로 `\href{url}{...}` |
+| `.svg` | 생략 (해석할 대상이 없음) | 텍스트가 클릭 가능한 링크 |
+| `.png`/`.pdf` | 생략 | 생략 |
+
+이 값들은 LaTeX 소스에 그대로 치환되므로, `validate()`가 중괄호·백슬래시를
+거부합니다.
+
 ### 범례·제목·주석을 정확한 위치에 놓기
 
 ```python

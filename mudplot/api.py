@@ -552,6 +552,22 @@ class Plot:
             self.dispatch(A.SetTitle(title, panel=panel))
         return self
 
+    def title_reference(
+        self, *, citation: str | None = None, href: str | None = None, panel: int = 0
+    ) -> Plot:
+        """Attach a BibTeX key and/or URL to the panel title.
+
+        Rendered per output format: plain text in raster output, a clickable
+        link in SVG, and real ``\\figcite{key}`` / ``\\href{url}{...}`` macros
+        in a ``.pgf`` export, so the paper's own bibliography and hyperref
+        resolve them (see :data:`mudplot.PREAMBLE`).
+        """
+        panel_spec = self.spec.panels[panel] if panel < len(self.spec.panels) else None
+        title = panel_spec.title if panel_spec else ""
+        return self.dispatch(
+            A.SetTitle(title, panel=panel, citation=citation, href=href)
+        )
+
     def title_position(self, position: list[float] | None, *, panel: int = 0) -> Plot:
         """Pin the panel title to an exact ``[x, y]`` axes-fraction spot
         (e.g. after dragging it in the interactive editor). ``None``

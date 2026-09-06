@@ -189,6 +189,10 @@ class SetAxisLabel:
 class SetTitle:
     text: str
     panel: int = 0
+    # Optional reference metadata for the title (BibTeX key / URL); see
+    # LayerSpec.citation for how each output format renders it.
+    citation: str | None = None
+    href: str | None = None
 
 
 @dataclass(frozen=True)

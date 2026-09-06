@@ -4,7 +4,35 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
-(nothing yet)
+### LaTeX-native citations and links inside a figure
+- `LayerSpec.citation`/`href` (legend entries) and `PanelSpec.title_citation`/
+  `title_href` (via `.title_reference(...)`): attach a BibTeX key and/or URL
+  to figure text. Nothing is baked into the image -- the document resolves
+  it, so a figure's `[1]` is the same `[1]` as in its References list.
+- `.pgf` export (`save("fig.pgf")`): emits `\figcite{key}` and
+  `\href{url}{...}`. Deliberately `\figcite`, not `\cite`, so the paper
+  decides what a figure citation means (`\cite`/`\citep`/`\autocite`/
+  nothing) -- `mudplot.PREAMBLE` provides the default mapping.
+- Backend-dependent by design: PGF gets real macros, SVG turns the text into
+  a clickable link, raster output stays plain.
+- Metadata is substituted into LaTeX source verbatim, so `validate()`
+  rejects braces/backslashes/newlines in these fields (a trust boundary:
+  the user's document compiles the result).
+- Verified end to end against a real TeX installation: a generated .pgf
+  compiles with pdflatex+bibtex, and the citation numbers in the figure
+  match the paper's bibliography (`tests/test_references.py` covers the
+  export contract; the compile check was manual).
+- The markers used to survive pgf's text escaping are kept short on purpose:
+  they sit in the text matplotlib measures during layout, and an embedded
+  full URL collapsed the axes to zero size. Locked in with a test that
+  fails on the layout warning.
+
+### Editor
+- Canvas-first layout, direct title/axis-label editing, PDF/SVG export, and
+  preserved scroll/collapse state across htmx swaps.
+- Fixed: the htmx fragment carried its own `#app-body` wrapper while every
+  swap targeted `#app-body` with `innerHTML`, so each edit nested another
+  copy.
 
 ## [0.2.0] - 2026-09-05
 

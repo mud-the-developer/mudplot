@@ -6,7 +6,10 @@ matplotlib-specific logic lives here; the spec itself stays backend-agnostic.
 
 from __future__ import annotations
 
+import contextlib
+import contextvars
 import itertools
+import re
 
 import numpy as np
 
@@ -26,6 +29,98 @@ _MATRIX_TYPES = {"heatmap", "contour", "contourf"}
 _3D_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
 # layer types with their own standalone drawing logic
 _STANDALONE_TYPES = {"pie"}
+
+# -- reference metadata (citation / href) ----------------------------------
+#
+# A figure's legend entries and title can carry a BibTeX key and/or a URL.
+# How that renders depends on the output format, so the active format is a
+# render-time context rather than part of the (backend-agnostic) spec:
+#
+#   raster (png/pdf/...) -> plain text, references dropped
+#   svg                  -> the text becomes a clickable link (href only)
+#   pgf                  -> real \figcite{key} / \href{url}{...} macros, so
+#                           the *paper's* bibliography and hyperref resolve
+#                           them at compile time (see mudplot.tex.PREAMBLE)
+#
+# PGF text is escaped by matplotlib's pgf backend, so macros can't be
+# emitted directly: mark them with sentinels here and substitute the real
+# macros in the saved .pgf afterwards (see _substitute_pgf_references).
+_FMT: contextvars.ContextVar[str] = contextvars.ContextVar("mudplot_fmt", default="")
+# Markers must stay *short*: they sit in the text matplotlib measures while
+# laying the figure out, so embedding a full URL there blows up the legend
+# box (and can collapse the axes to zero size). Each marker is a small index
+# into a per-render table instead, and its width stands in for the "[12]"
+# the citation eventually renders as.
+_REFS: contextvars.ContextVar[list | None] = contextvars.ContextVar(
+    "mudplot_refs", default=None
+)
+# (guillemets: present in the standard fonts, so no missing-glyph warning
+# and a realistic width during layout, and left alone by pgf escaping.)
+_MARK_OPEN, _MARK_CLOSE = "\u00ab", "\u00bb"
+_PGF_REF_RE = re.compile(_MARK_OPEN + r"(\d+)" + _MARK_CLOSE)
+
+
+@contextlib.contextmanager
+def _render_format(fmt: str):
+    fmt_token, refs_token = _FMT.set(fmt), _REFS.set([])
+    try:
+        yield
+    finally:
+        _FMT.reset(fmt_token)
+        _REFS.reset(refs_token)
+
+
+def _mark(kind: str, value: str) -> str:
+    refs = _REFS.get()
+    refs.append((kind, value))
+    return f"{_MARK_OPEN}{len(refs) - 1}{_MARK_CLOSE}"
+
+
+def _decorate(text, citation: str | None, href: str | None) -> str:
+    """Annotate ``text`` with reference metadata for the active format."""
+    if text is None or _FMT.get() != "pgf" or not (citation or href):
+        return text
+    if href:
+        text = f"{_mark('href', href)}{text}{_mark('/href', '')}"
+    if citation:
+        text = f"{text}{_mark('cite', citation)}"
+    return text
+
+
+def _set_url(artist, href: str | None) -> None:
+    """Make an artist clickable (SVG only -- other backends ignore urls)."""
+    if href and _FMT.get() == "svg":
+        artist.set_url(href)
+
+
+def _link_legend_texts(legend_artist, panel: PanelSpec) -> None:
+    """Point each legend entry's text at its layer's href (SVG only)."""
+    if legend_artist is None or _FMT.get() != "svg":
+        return
+    by_label = {
+        layer.label: layer.href for layer in panel.layers if layer.label and layer.href
+    }
+    for text in legend_artist.get_texts():
+        _set_url(text, by_label.get(text.get_text()))
+
+
+def _substitute_pgf_references(text: str, refs: list) -> str:
+    """Replace the sentinels left by ``_decorate`` with real LaTeX macros.
+
+    Runs on the saved .pgf source, after matplotlib's pgf backend has
+    escaped the surrounding (plain) text.
+    """
+
+    def repl(m: re.Match) -> str:
+        kind, value = refs[int(m.group(1))]
+        if kind == "cite":
+            return f"~\\figcite{{{value}}}"
+        if kind == "href":
+            return f"\\href{{{value}}}{{"
+        return "}"
+
+    return _PGF_REF_RE.sub(repl, text)
+
 
 _OUTSIDE_LEGEND_LOCS = {
     "outside right": {"loc": "center left", "bbox_to_anchor": (1.02, 0.5)},
@@ -70,7 +165,10 @@ def _series_masks(data_cols, layer: LayerSpec):
     """Yield (label, boolean-mask) for a layer, splitting by ``group``."""
     n = len(data_cols[layer.x])
     if layer.group is None:
-        yield (layer.label, np.ones(n, dtype=bool))
+        yield (
+            _decorate(layer.label, layer.citation, layer.href),
+            np.ones(n, dtype=bool),
+        )
         return
     g = np.asarray(data_cols[layer.group])
     for key in _unique_stable(g):
@@ -487,6 +585,7 @@ def _legend_kwargs(leg, *, ax2_present: bool, fig) -> dict:
 def _apply_title(ax, panel: PanelSpec) -> None:
     if not panel.title:
         return
+    title_text = _decorate(panel.title, panel.title_citation, panel.title_href)
     if panel.title_position is not None:
         # A real ax.set_title() is specially managed by constrained_layout
         # (which recomputes its y-offset transform on every draw, silently
@@ -497,14 +596,15 @@ def _apply_title(ax, panel: PanelSpec) -> None:
         fontsize = plt.rcParams["axes.titlesize"]
         artist = ax.text(
             *panel.title_position,
-            panel.title,
+            title_text,
             transform=ax.transAxes,
             fontsize=fontsize,
             wrap=True,
         )
         artist.set_in_layout(False)
     else:
-        ax.set_title(panel.title, wrap=True)
+        artist = ax.set_title(title_text, wrap=True)
+    _set_url(artist, panel.title_href)
 
 
 def _apply_despine(ax, theme_axes):
@@ -536,6 +636,7 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
             handles, labels, title=leg.title, frameon=leg.frame, **kw
         )
         legend_artist._mudplot_auto_margin = auto_margin
+        _link_legend_texts(legend_artist, panel)
 
 
 def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
@@ -583,6 +684,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
             handles, labels, title=leg.title, frameon=leg.frame, **kw
         )
         legend_artist._mudplot_auto_margin = auto_margin
+        _link_legend_texts(legend_artist, panel)
 
 
 def _panel_label(index: int) -> str:
@@ -738,8 +840,13 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
     fig.canvas.draw()
 
 
-def render(spec: FigureSpec):
+def render(spec: FigureSpec, *, fmt: str = ""):
     """Build and return a matplotlib Figure for ``spec``.
+
+    ``fmt`` is the output format the figure is destined for ("svg", "pgf",
+    ...), which only affects how layer/title reference metadata
+    (``citation``/``href``) is rendered; ``save()`` sets it from the file
+    extension.
 
     Raises ``ValueError`` (with all issues listed) if ``spec`` is invalid —
     see :mod:`mudplot.validate`.
@@ -752,7 +859,7 @@ def render(spec: FigureSpec):
         spec.theme, spec.journal, n_colors=max(_count_colors(spec), 3)
     )
 
-    with plt.rc_context(rc):
+    with plt.rc_context(rc), _render_format(fmt):
         rows, cols = _grid_shape(spec)
         gridspec_kw = {}
         if spec.width_ratios:
@@ -801,6 +908,9 @@ def render(spec: FigureSpec):
                 fig.tight_layout()
             else:
                 _autofit(fig)
+            # Reference table for this figure's markers, needed after the
+            # render context exits (see save()'s .pgf post-processing).
+            fig._mudplot_refs = list(_REFS.get() or [])
         except Exception:
             plt.close(fig)
             raise
@@ -810,11 +920,18 @@ def render(spec: FigureSpec):
 def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """Save at the exact spec size; ``tight=True`` opts into content cropping.
 
+    The extension picks the backend, including ``.pgf`` for LaTeX-native
+    export (where ``citation``/``href`` metadata becomes real \\figcite /
+    \\href macros -- see :data:`mudplot.tex.PREAMBLE`).
+
     Returns an open Figure, owned by the caller, on success.
     """
+    import pathlib
+
     import matplotlib.pyplot as plt
 
-    fig = render(spec)
+    fmt = pathlib.Path(path).suffix.lstrip(".").lower()
+    fig = render(spec, fmt=fmt)
     try:
         # Explicitly disable ambient cropping too: bbox_inches=None alone
         # falls back to the caller's savefig.bbox rcParam.
@@ -828,4 +945,12 @@ def save(spec: FigureSpec, path: str, *, tight: bool = False):
     except Exception:
         plt.close(fig)
         raise
+    if fmt == "pgf":
+        p = pathlib.Path(path)
+        p.write_text(
+            _substitute_pgf_references(
+                p.read_text(encoding="utf-8"), getattr(fig, "_mudplot_refs", [])
+            ),
+            encoding="utf-8",
+        )
     return fig

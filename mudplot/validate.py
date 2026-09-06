@@ -113,6 +113,30 @@ def _finite(value) -> bool:
     )
 
 
+# Reference metadata is substituted verbatim into a .pgf export, which the
+# user's LaTeX then compiles -- so these are a trust boundary, not just a
+# formatting concern: an unbalanced brace or a stray backslash would inject
+# arbitrary markup into their document (and break the build at best).
+_TEX_UNSAFE = set("{}\\%$#&~^_\n\r")
+
+
+def _check_reference(
+    citation: str | None, href: str | None, where: str, issues: list[str]
+) -> None:
+    for field_name, value in (("citation", citation), ("href", href)):
+        if value is None:
+            continue
+        if not isinstance(value, str) or not value.strip():
+            issues.append(f"{where}: {field_name} must be a non-empty string")
+            continue
+        bad = sorted(_TEX_UNSAFE & set(value))
+        if bad:
+            issues.append(
+                f"{where}: {field_name} may not contain {''.join(bad)!r} "
+                "(it is substituted into LaTeX source verbatim)"
+            )
+
+
 def _check_axis(axis, where: str, issues: list[str]) -> None:
     if axis is None:
         return
@@ -207,6 +231,13 @@ def validate(spec: FigureSpec) -> list[str]:
 
     for pi, panel in enumerate(spec.panels):
         where_axis = f"panel {pi}"
+        _check_reference(
+            panel.title_citation, panel.title_href, f"{where_axis} title", issues
+        )
+        for li, layer in enumerate(panel.layers):
+            _check_reference(
+                layer.citation, layer.href, f"{where_axis} layer {li}", issues
+            )
         for name in ("x", "y", "y2", "z"):
             _check_axis(getattr(panel, name), f"{where_axis} {name}", issues)
         if panel.projection == "3d" and panel.y2 is not None:

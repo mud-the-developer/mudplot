@@ -775,6 +775,18 @@
         "type": "int",
         "required": false,
         "default": 0
+      },
+      {
+        "name": "citation",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "href",
+        "type": "str or None",
+        "required": false,
+        "default": null
       }
     ],
     "SetTitlePosition": [

@@ -15,7 +15,25 @@ from . import actions as A
 from .reducer import reduce_all
 from .spec import FigureSpec
 
-__all__ = ["TEX_PRESETS", "TexContext", "apply_tex", "figsize_for", "tex_preview"]
+__all__ = [
+    "PREAMBLE",
+    "TEX_PRESETS",
+    "TexContext",
+    "apply_tex",
+    "figsize_for",
+    "tex_preview",
+]
+
+# Paste into the preamble of the document that \input's a .pgf export.
+#
+# A PGF figure carrying reference metadata emits \figcite{key} rather than
+# \cite{key} directly, so the *document* decides what a figure citation
+# means (\cite, \citep, \autocite, a footnote, or nothing at all when the
+# figure is reused somewhere without a bibliography).
+PREAMBLE = r"""% mudplot: resolve figure citations/links against this document
+\providecommand{\figcite}[1]{\cite{#1}}
+\usepackage{hyperref}  % only needed if a figure uses href metadata
+"""
 
 # LaTeX point: 1 pt = 1/72.27 inch (matplotlib's "point" is 1/72 -> keep this
 # conversion explicit and separate).

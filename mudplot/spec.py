@@ -172,6 +172,11 @@ class LayerSpec(SpecBase):
     y: str = ""  # column name
     group: str | None = None  # column to split into series (hue)
     label: str | None = None
+    # Reference metadata for the legend entry (see mudplot.tex.PREAMBLE).
+    # Backend-dependent: plain text in raster output, a clickable link in
+    # SVG, and real \figcite/\href macros in PGF export.
+    citation: str | None = None  # BibTeX key, e.g. "fischler1981"
+    href: str | None = None  # URL, e.g. a DOI or arXiv link
     color: str | None = None  # explicit hex override
     line_width: float | None = None
     line_style: str | None = None  # "-", "--", ":", "-."
@@ -241,6 +246,10 @@ class PanelSpec(SpecBase):
     # dragging it in the interactive editor). None -> matplotlib's default
     # (centred above the axes).
     title_position: list[float] | None = None
+    # Reference metadata for the panel title (same backend rules as
+    # LayerSpec.citation/href).
+    title_citation: str | None = None
+    title_href: str | None = None
     label: str | None = None  # explicit panel tag, e.g. "a"; None -> auto
     legend: LegendSpec = field(default_factory=LegendSpec)
 

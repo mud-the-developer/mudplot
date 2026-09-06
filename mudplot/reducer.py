@@ -122,9 +122,11 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetAxisLabel(axis=axis, text=text, panel=pi):
             _ensure_panel(s, pi)
             getattr(s.panels[pi], axis).label = text
-        case A.SetTitle(text=text, panel=pi):
+        case A.SetTitle(text=text, panel=pi, citation=cite, href=href):
             _ensure_panel(s, pi)
             s.panels[pi].title = text
+            s.panels[pi].title_citation = cite
+            s.panels[pi].title_href = href
         case A.SetTitlePosition(position=pos, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].title_position = list(pos) if pos is not None else None

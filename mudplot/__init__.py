@@ -22,7 +22,7 @@ from .reducer import reduce, reduce_all
 from .schema import json_schema
 from .spec import FigureSpec
 from .store import Store
-from .tex import TEX_PRESETS, TexContext, figsize_for
+from .tex import PREAMBLE, TEX_PRESETS, TexContext, figsize_for
 from .validate import assert_valid, validate
 
 __version__ = "0.2.0"
@@ -79,6 +79,7 @@ def __dir__():
 
 
 __all__ = [
+    "PREAMBLE",
     "TEX_PRESETS",
     "FigureSpec",
     "Plot",

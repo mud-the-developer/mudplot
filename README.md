@@ -249,6 +249,49 @@ that already fit — font sizes stay exactly as configured unless something
 would otherwise be clipped. 3-D panels fall back to `tight_layout()` for now
 since matplotlib's constrained layout doesn't support 3-D Axes well.
 
+### Citations and links inside the figure (LaTeX-native)
+
+A legend entry or panel title can carry a BibTeX key and/or a URL. Nothing
+is baked into the image: the *paper* resolves it at compile time, so the
+number in the figure is the same `[1]` as in its References list.
+
+```python
+(mp.plot(data)
+    .line("x", "y", label="RANSAC",
+          citation="fischler1981",             # BibTeX key
+          href="https://doi.org/10.1145/358669.358692")
+    .labels(title="Robust fitting")
+    .title_reference(citation="hartley2003")
+    .tex_size("ieee", columns=1)
+    .save("fig.pgf"))                          # .pgf -> LaTeX-native export
+```
+
+```latex
+\input{preamble.tex}   % or paste mudplot.PREAMBLE once
+\begin{figure}\centering
+  \input{fig.pgf}
+  \caption{Errors of two estimators.}
+\end{figure}
+```
+
+The export emits `\figcite{fischler1981}`, not `\cite{...}` directly, so the
+document decides what a figure citation means:
+
+```latex
+\providecommand{\figcite}[1]{\cite{#1}}   % mudplot.PREAMBLE; \citep, \autocite, ...
+```
+
+Each backend does what it can with the same spec:
+
+| format | citation | href |
+|---|---|---|
+| `.pgf` | `\figcite{key}` — numbered by the paper's bibliography | `\href{url}{...}` via hyperref |
+| `.svg` | dropped (nothing to resolve against) | the text becomes a clickable link |
+| `.png`/`.pdf` | dropped | dropped |
+
+Metadata is substituted into LaTeX source verbatim, so `validate()` rejects
+braces/backslashes in these two fields.
+
 ### Placing the legend, title, or an annotation at an exact spot
 
 ```python
