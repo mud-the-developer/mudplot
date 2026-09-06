@@ -211,3 +211,72 @@ def test_a_burst_of_nudges_is_not_dropped(editor):
     )
     # 8 x 0.02 = 0.16 of travel; allow for coalescing, not for losing most
     assert moved[0] < start[0] - 0.1
+
+
+def test_editing_targets_the_selected_panel(editor):
+    """With more than one panel, the side controls and the drag handles must
+    follow the selection instead of always editing panel 0.
+    """
+    page, url = editor
+    page.get_by_label("Columns").fill("2")
+    page.get_by_role("button", name="Set grid").click()
+    page.get_by_role("group", name="Active panel").wait_for()
+
+    # panel 1 (the second) is empty until selected and given a layer
+    page.get_by_role("group", name="Active panel").get_by_role(
+        "button", name="2"
+    ).click()
+    page.wait_for_timeout(300)
+    page.get_by_label("Panel title").fill("Second panel")
+    page.get_by_label("Panel title").press("Enter")
+
+    panels = _wait_until(
+        lambda: _spec(url)["panels"],
+        lambda ps: len(ps) > 1 and ps[1]["title"] == "Second panel",
+    )
+    assert panels[0]["title"] == ""  # panel 0 untouched
+
+    # a new layer goes to the selected panel: the add-layer form carries no
+    # panel field, so this exercises the server-side default
+    page.get_by_label("x column").fill("x")
+    page.get_by_label("y column").fill("y")
+    page.get_by_role("button", name="Add layer").click()
+    panels = _wait_until(
+        lambda: _spec(url)["panels"],
+        lambda ps: len(ps[1]["layers"]) == 1,
+    )
+    assert len(panels[0]["layers"]) == 1  # still just the original line
+
+    # a dragged legend must land on the selected panel too
+    _enable(page, "Legend")
+    page.locator(".drag-handle.legend").wait_for()
+    handle = page.locator(".drag-handle.legend").bounding_box()
+    page.mouse.move(handle["x"] + 10, handle["y"] + 10)
+    page.mouse.down()
+    page.mouse.move(handle["x"] + 60, handle["y"] + 40, steps=5)
+    page.mouse.up()
+    panels = _wait_until(
+        lambda: _spec(url)["panels"],
+        lambda ps: ps[1]["legend"]["bbox_to_anchor"] is not None,
+    )
+    assert panels[0]["legend"]["bbox_to_anchor"] is None
+
+
+def test_citation_metadata_can_be_entered_in_the_ui(editor):
+    page, url = editor
+    # scoped to the add-layer form: the title fields have the same labels
+    form = page.locator("form", has=page.get_by_role("button", name="Add layer"))
+    form.get_by_label("x column").fill("x")
+    form.get_by_label("y column").fill("y")
+    form.get_by_label("Legend label", exact=False).fill("RANSAC")
+    form.get_by_label("Citation key", exact=False).fill("fischler1981")
+    form.get_by_label("Link", exact=False).fill("https://doi.org/10.1145/358669")
+    form.get_by_role("button", name="Add layer").click()
+
+    layers = _wait_until(
+        lambda: _spec(url)["panels"][0]["layers"],
+        lambda ls: any(ly["citation"] == "fischler1981" for ly in ls),
+    )
+    added = next(ly for ly in layers if ly["citation"] == "fischler1981")
+    assert added["label"] == "RANSAC"
+    assert added["href"] == "https://doi.org/10.1145/358669"

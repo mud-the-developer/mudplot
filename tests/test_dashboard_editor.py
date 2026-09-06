@@ -356,7 +356,7 @@ def test_session_layout_empty_for_3d_panel():
     session.store = Store(FigureSpec(panels=[PanelSpec(projection="3d")]))
     session.dispatch_safe(A.SetData({"x": [1], "y": [1], "z": [1]}))
     session.dispatch_safe(A.AddLayer(LayerSpec(type="line3d", x="x", y="y", z="z")))
-    assert session.layout == {"is_3d": True}
+    assert session.layout == {"is_3d": True, "panel": 0}
 
 
 # --------------------------------------------------------------------------

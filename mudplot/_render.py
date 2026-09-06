@@ -892,6 +892,12 @@ def render(spec: FigureSpec, *, fmt: str = ""):
                 ax = fig.add_subplot(gs[r, c], projection=projection)
                 if projection is None:
                     axes_grid[r][c] = ax
+                # Which panel this Axes came from. fig.axes also collects
+                # twin/colorbar axes created later, so position in that list
+                # is not the panel index -- tools that map a rendered Axes
+                # back to its spec (e.g. the editor's drag handles) need
+                # this rather than guessing.
+                ax._mudplot_panel = i
                 panel_axes.append(ax)
 
             # Share the 2-D subset, even when other panels are 3-D.

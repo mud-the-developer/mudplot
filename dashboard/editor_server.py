@@ -53,7 +53,25 @@ class EditorSession:
         self.lock = threading.Lock()
         self.png: bytes = b""
         self.layout: dict = {}
+        # Which panel the side controls edit and the drag handles belong to.
+        # UI state, not figure state, so it lives here rather than in the
+        # spec (the spec must stay exactly what a script would produce).
+        self.active_panel = 0
         self.refresh()
+
+    def select_panel(self, index: int) -> None:
+        n = len(self.store.state.panels)
+        if not 0 <= index < max(n, 1):
+            raise IndexError(f"no panel {index} (figure has {n})")
+        self.active_panel = index
+        self.refresh()
+
+    def _clamp_panel(self) -> int:
+        """Keep the selection valid when the layout shrinks under it."""
+        n = len(self.store.state.panels)
+        if self.active_panel >= n:
+            self.active_panel = max(n - 1, 0)
+        return self.active_panel
 
     def action_log(self) -> list[dict]:
         return [A.action_to_dict(a) for a in self.store.history]
@@ -136,14 +154,20 @@ class EditorSession:
             plt.close(fig)
         return buf.getvalue()
 
-    @staticmethod
-    def _extract_layout(spec, fig) -> dict:
+    def _extract_layout(self, spec, fig) -> dict:
         if not spec.panels or not fig.axes:
             return {}
-        panel = spec.panels[0]
-        ax = fig.axes[0]
+        index = self._clamp_panel()
+        # Not fig.axes[index]: twin (y2) and colorbar axes land in that list
+        # too, so it stops matching panel order after the first one.
+        ax = next(
+            (a for a in fig.axes if getattr(a, "_mudplot_panel", None) == index), None
+        )
+        if ax is None:
+            return {}
+        panel = spec.panels[index]
         if panel.projection == "3d":
-            return {"is_3d": True}
+            return {"is_3d": True, "panel": index}
         bbox = ax.get_position()
         text_layers = [
             {"index": i, "type": layer.type, "at": list(layer.at)}
@@ -152,6 +176,7 @@ class EditorSession:
         ]
         return {
             "is_3d": False,
+            "panel": index,
             "panel_bbox": [bbox.x0, bbox.y0, bbox.x1, bbox.y1],
             "xlim": list(ax.get_xlim()),
             "ylim": list(ax.get_ylim()),
@@ -207,21 +232,47 @@ def _build_action(action_type: str, fields: dict, spec=None):
         )
     if action_type == "add_layer":
         layer_type = fields["layer_type"]
+        panel = int(fields.get("panel", 0))
         if layer_type in ("text", "annotate"):
             at = [float(fields["x"]), float(fields["y"])]
             return A.AddLayer(
-                LayerSpec(type=layer_type, text=fields.get("text", ""), at=at)
+                LayerSpec(
+                    type=layer_type,
+                    text=fields.get("text", ""),
+                    at=at,
+                    citation=fields.get("citation") or None,
+                    href=fields.get("href") or None,
+                ),
+                panel=panel,
             )
         group = fields.get("group") or None
         return A.AddLayer(
-            LayerSpec(type=layer_type, x=fields["x"], y=fields["y"], group=group)
+            LayerSpec(
+                type=layer_type,
+                x=fields["x"],
+                y=fields["y"],
+                group=group,
+                label=fields.get("label") or None,
+                citation=fields.get("citation") or None,
+                href=fields.get("href") or None,
+            ),
+            panel=panel,
         )
     if action_type == "remove_layer":
-        return A.RemoveLayer(int(fields["layer_index"]))
+        return A.RemoveLayer(
+            int(fields["layer_index"]), panel=int(fields.get("panel", 0))
+        )
+    if action_type == "set_layout":
+        return A.SetLayout(int(fields["rows"]), int(fields["cols"]))
     if action_type == "set_suptitle":
         return A.SetSuptitle(fields.get("text", ""))
     if action_type == "set_title":
-        return A.SetTitle(fields.get("text", ""), panel=int(fields.get("panel", 0)))
+        return A.SetTitle(
+            fields.get("text", ""),
+            panel=int(fields.get("panel", 0)),
+            citation=fields.get("citation") or None,
+            href=fields.get("href") or None,
+        )
     if action_type == "set_axis_label":
         return A.SetAxisLabel(
             fields["axis"], fields.get("text", ""), panel=int(fields.get("panel", 0))
@@ -309,6 +360,7 @@ class _Handler(BaseHTTPRequestHandler):
                 session.action_log(),
                 session.layout,
                 error=session.error,
+                active_panel=session._clamp_panel(),
             )
             self._send_html(fragment)
         else:
@@ -324,6 +376,7 @@ class _Handler(BaseHTTPRequestHandler):
                     session.action_log(),
                     session.layout,
                     error=session.error,
+                    active_panel=session._clamp_panel(),
                 )
             self._send_html(page)
         elif path == "/docs":
@@ -360,6 +413,9 @@ class _Handler(BaseHTTPRequestHandler):
             action_type = fields.pop("type", "")
             with session.lock:
                 try:
+                    # Panel-scoped actions default to the selected panel, so
+                    # every control doesn't have to carry it explicitly.
+                    fields.setdefault("panel", str(session.active_panel))
                     action = _build_action(action_type, fields, session.store.state)
                     session.dispatch_safe(action)
                 except Exception as e:
@@ -382,6 +438,14 @@ class _Handler(BaseHTTPRequestHandler):
         elif path == "/redo":
             with session.lock:
                 session.redo()
+                self._respond_after_action(session)
+        elif path == "/select-panel":
+            fields = _parse_form(body)
+            with session.lock:
+                try:
+                    session.select_panel(int(fields.get("panel", 0)))
+                except Exception as e:
+                    session.error = f"{type(e).__name__}: {e}"
                 self._respond_after_action(session)
         elif path == "/reset":
             with session.lock:

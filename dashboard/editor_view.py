@@ -114,6 +114,8 @@ figure { margin: 0; text-align: center; }
 .layer-row button { margin-top: 0; padding: .2rem .55rem; font-size: .75rem; }
 .layer-row code { background: #f0f1f3; padding: .05rem .35rem; border-radius: 4px; }
 .btn-row { display: flex; gap: .5rem; flex-wrap: wrap; }
+.panel-btn { min-width: 2.2rem; }
+.panel-btn.active { background: var(--accent); color: var(--accent-ink); }
 .btn-row form { margin: 0; }
 .drag-handle { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px;
        border-radius: 50%; display: flex; align-items: center; justify-content: center;
@@ -426,6 +428,41 @@ def _palette_panel(spec: FigureSpec) -> str:
     return f'<div class="panel"><h2>Palette</h2>{form}</div>'
 
 
+def _panels_panel(spec: FigureSpec, active: int) -> str:
+    """Grid size, plus which panel every other control edits."""
+    # layout=None means "1 x n_panels" (the renderer's own default), so show
+    # what will actually be drawn rather than a blank field.
+    rows, cols = spec.layout or [1, max(len(spec.panels), 1)]
+    size_body = (
+        '<div class="row"><div>'
+        + _field("Rows", f'<input type="number" min="1" name="rows" value="{rows}">')
+        + "</div><div>"
+        + _field("Columns", f'<input type="number" min="1" name="cols" value="{cols}">')
+        + "</div></div>"
+    )
+    layout_form = _hx_form("/action", {"type": "set_layout"}, size_body, "Set grid")
+
+    n = len(spec.panels)
+    if n <= 1:
+        picker = '<div class="hint">One panel. Add rows/columns to split it.</div>'
+    else:
+        buttons = "".join(
+            _hx_form("/select-panel", {"panel": i}, "", f"{i + 1}").replace(
+                "<button",
+                '<button aria-pressed="true" class="panel-btn active"'
+                if i == active
+                else '<button aria-pressed="false" class="panel-btn secondary"',
+            )
+            for i in range(n)
+        )
+        picker = (
+            '<div role="group" aria-label="Active panel">'
+            '<span class="field-label">Editing panel</span>'
+            f'<div class="btn-row">{buttons}</div></div>'
+        )
+    return f'<div class="panel"><h2>Panels</h2>{layout_form}{picker}</div>'
+
+
 def _layer_panel(spec: FigureSpec) -> str:
     type_select = _select("layer_type", _SERIES_LAYER_TYPES, "line")
     dl = _column_datalist(spec, "cols")
@@ -437,12 +474,29 @@ def _layer_panel(spec: FigureSpec) -> str:
             "group column (optional)",
             '<input name="group" list="cols" placeholder="">',
         )
+        + _field("Legend label (optional)", '<input name="label" placeholder="">')
+        + _reference_fields()
         + f"{dl}"
         f'<div class="hint">Available columns: '
         f"{', '.join(spec.data.columns) or '(none — load sample data first)'}</div>"
     )
     form = _hx_form("/action", {"type": "add_layer"}, body, "Add layer")
     return f'<div class="panel"><h2>Add layer</h2>{form}</div>'
+
+
+def _reference_fields() -> str:
+    """Citation/link metadata, rendered per output format (see mudplot.PREAMBLE)."""
+    return (
+        _field(
+            "Citation key (optional)",
+            '<input name="citation" placeholder="fischler1981">',
+        )
+        + _field(
+            "Link (optional)", '<input name="href" placeholder="https://doi.org/...">'
+        )
+        + '<div class="hint">PGF export turns these into \\figcite{}/\\href{} for '
+        "the paper to resolve; SVG makes a clickable link; PNG/PDF ignore them.</div>"
+    )
 
 
 def _annotation_panel() -> str:
@@ -462,8 +516,8 @@ def _annotation_panel() -> str:
     return f'<div class="panel"><h2>Add text / annotation</h2>{form}</div>'
 
 
-def _layers_panel(spec: FigureSpec) -> str:
-    layers = spec.panels[0].layers if spec.panels else []
+def _layers_panel(spec: FigureSpec, active: int) -> str:
+    layers = spec.panels[active].layers if spec.panels else []
     if not layers:
         rows = '<div class="hint">(no layers yet)</div>'
     else:
@@ -509,52 +563,67 @@ def _figure_panel(spec: FigureSpec) -> str:
     return f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}</div>'
 
 
-def _labels_panel(spec: FigureSpec) -> str:
+def _labels_panel(spec: FigureSpec, active: int) -> str:
     if not spec.panels:
         return ""
-    panel = spec.panels[0]
+    panel = spec.panels[active]
     forms = []
     for key, label, value in (
         ("title", "Panel title", panel.title),
         ("x", "X-axis label", panel.x.label),
         ("y", "Y-axis label", panel.y.label),
     ):
-        fields = {"type": "set_title", "panel": 0}
+        fields = {"type": "set_title", "panel": active}
         if key != "title":
             fields.update(type="set_axis_label", axis=key)
         body = _field(label, f'<input name="text" value="{_esc(value)}">')
+        if key == "title":
+            body += _reference_fields_prefilled(panel)
         forms.append(_hx_form("/action", fields, body, "Apply"))
     return (
         '<div class="panel"><h2>Titles &amp; axes</h2>'
-        '<p class="hint">Editing panel 1. Empty text clears a label.</p>'
+        f'<p class="hint">Editing panel {active + 1}. Empty text clears a label.</p>'
         + "".join(forms)
         + "</div>"
     )
 
 
-def _position_panel(spec: FigureSpec) -> str:
+def _reference_fields_prefilled(panel) -> str:
+    return _field(
+        "Citation key (optional)",
+        f'<input name="citation" value="{_esc(panel.title_citation or "")}">',
+    ) + _field(
+        "Link (optional)",
+        f'<input name="href" value="{_esc(panel.title_href or "")}">',
+    )
+
+
+def _position_panel(spec: FigureSpec, active: int) -> str:
     """Drag-to-position toggles for the legend and the panel title."""
-    panel = spec.panels[0] if spec.panels else None
+    panel = spec.panels[active] if spec.panels else None
     leg_active = panel is not None and panel.legend.bbox_to_anchor is not None
     title_active = panel is not None and panel.title_position is not None
 
-    def row(label: str, kind: str, active: bool, default_xy=(0.8, 0.5)) -> str:
+    def row(label: str, kind: str, is_set: bool, default_xy=(0.8, 0.5)) -> str:
         enable = _hx_form(
             "/action",
             {
                 "type": f"set_{kind}_position",
                 "x": f"{default_xy[0]:g}",
                 "y": f"{default_xy[1]:g}",
-                "panel": "0",
+                "panel": active,
             },
             "",
-            "Enable" if not active else "Re-centre",
+            "Enable" if not is_set else "Re-centre",
         ).replace("<button", '<button class="secondary"')
         reset = (
             _hx_form(
-                "/action", {"type": f"reset_{kind}_position", "panel": "0"}, "", "Reset"
+                "/action",
+                {"type": f"reset_{kind}_position", "panel": active},
+                "",
+                "Reset",
             )
-            if active
+            if is_set
             else ""
         )
         # a group of buttons, not one control: labelled as a group rather
@@ -669,14 +738,14 @@ def _drag_handle_html(
     )
 
 
-def _preview_handles_html(spec: FigureSpec, layout: dict) -> str:
+def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
     """Draggable overlay handles for the legend, title, and any text/
     annotate layers -- positioned using the layout info from the last
     render (panel bbox / xlim / ylim / scale), see EditorSession.refresh().
     """
     if not spec.panels:
         return ""
-    panel = spec.panels[0]
+    panel = spec.panels[active]
     handles = []
 
     leg = panel.legend
@@ -689,7 +758,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict) -> str:
                 img_x=hx,
                 img_y=hy,
                 extra_data={"space": "figure", "post-url": "/action"},
-                fields={"type": "set_legend_position", "panel": "0"},
+                fields={"type": "set_legend_position", "panel": active},
             )
         )
 
@@ -710,7 +779,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict) -> str:
                     "bbox": json.dumps(layout["panel_bbox"]),
                     "post-url": "/action",
                 },
-                fields={"type": "set_title_position", "panel": "0"},
+                fields={"type": "set_title_position", "panel": active},
             )
         )
 
@@ -737,7 +806,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict) -> str:
                     },
                     fields={
                         "type": "set_layer_at",
-                        "panel": "0",
+                        "panel": active,
                         "layer_index": entry["index"],
                     },
                 )
@@ -751,31 +820,38 @@ def render_app_body(
     layout: dict | None = None,
     *,
     error: str | None = None,
+    active_panel: int = 0,
 ) -> str:
     """The inner ``#app-body`` content: everything htmx swaps after an
     action, and what ``render_page`` embeds for the first load.
+
+    ``active_panel`` is which panel the side controls edit; it is editor
+    state, not figure state, so it is passed in rather than read off the
+    spec.
     """
     layout = layout or {}
+    active = min(active_panel, max(len(spec.panels) - 1, 0))
     error_html = f'<div class="error">{_esc(error)}</div>' if error else ""
     left = (
         '<details data-key="samples"><summary>Start from a sample</summary>'
         + _samples_panel()
         + "</details>"
         + _figure_panel(spec)
-        + _labels_panel(spec)
+        + _panels_panel(spec, active)
+        + _labels_panel(spec, active)
         + _theme_panel(spec)
         + _palette_panel(spec)
         + _layer_panel(spec)
         + _annotation_panel()
-        + _layers_panel(spec)
-        + _position_panel(spec)
+        + _layers_panel(spec, active)
+        + _position_panel(spec, active)
         + _history_panel()
         + '<details data-key="advanced"><summary>Advanced · JSON actions</summary>'
         + _advanced_panel()
         + "</details>"
         + _export_panel()
     )
-    handles_html = _preview_handles_html(spec, layout)
+    handles_html = _preview_handles_html(spec, layout, active)
     right = (
         '<div class="panel"><h2>Preview</h2><figure><div class="preview-wrap">'
         '<img src="/fig.png" alt="figure preview">'
@@ -797,9 +873,12 @@ def render_page(
     layout: dict | None = None,
     *,
     error: str | None = None,
+    active_panel: int = 0,
 ) -> str:
     """Render the full editor page (used for the initial ``GET /`` only)."""
-    body = render_app_body(spec, action_log, layout, error=error)
+    body = render_app_body(
+        spec, action_log, layout, error=error, active_panel=active_panel
+    )
     return f"""<!doctype html>
 <html lang="en">
 <head>
