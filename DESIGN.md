@@ -480,6 +480,12 @@ tests/
       visual redesign, and Editor/Docs tabs sharing one running server.
       See `tests/test_layout.py`, `tests/test_dashboard_editor.py`.
 - [x] **v0.2.0 released.**
+- [x] M12e: LaTeX-native reference metadata (LayerSpec.citation/href,
+      PanelSpec.title_citation/title_href) with per-backend rendering and
+      .pgf export; editor reworked into a canvas-first, multi-panel tool
+      with open/export; first real-browser (Playwright) test coverage,
+      which found three bugs invisible to HTML-level assertions.
+- [x] **v0.3.0 released.**
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

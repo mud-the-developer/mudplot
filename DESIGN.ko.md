@@ -353,6 +353,12 @@ tests/
       서버 안의 Editor/Docs 탭을 추가. `tests/test_layout.py`,
       `tests/test_dashboard_editor.py` 참고.
 - [x] **v0.2.0 릴리스.**
+- [x] M12e: LaTeX 네이티브 참조 메타데이터(LayerSpec.citation/href,
+      PanelSpec.title_citation/title_href), 백엔드별 렌더링과 .pgf
+      내보내기. 에디터를 캔버스 중심 멀티패널 도구로 재구성(열기/내보내기),
+      첫 실제 브라우저(Playwright) 테스트 도입 — HTML 검사로는 보이지 않던
+      버그 3건 발견.
+- [x] **v0.3.0 릴리스.**
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

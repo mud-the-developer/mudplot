@@ -319,6 +319,19 @@ _DRAG_SCRIPT = """
     });
   });
   document.querySelectorAll(".drag-handle").forEach(wireHandle);
+
+  // Read a chosen .mplot.json into the form's textarea, so the upload is a
+  // plain form post and the server needs no multipart parsing.
+  document.body.addEventListener("change", function (ev) {
+    var input = ev.target;
+    if (!input || input.id !== "spec-file" || !input.files.length) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var box = document.getElementById("spec-json");
+      if (box) box.value = reader.result;
+    };
+    reader.readAsText(input.files[0]);
+  });
 })();
 </script>
 """
@@ -672,6 +685,26 @@ def _advanced_panel() -> str:
     return f'<div class="panel"><h2>Advanced</h2>{form}</div>'
 
 
+def _open_panel() -> str:
+    """Open a saved .mplot.json (the same file the Export card writes)."""
+    body = (
+        _field(
+            "Spec file",
+            '<input type="file" accept=".json,.mplot.json,application/json" '
+            'id="spec-file">',
+        )
+        + '<textarea name="json" id="spec-json" placeholder="...or paste the '
+        'spec JSON here"></textarea>'
+    )
+    form = _hx_form("/open", {}, body, "Open figure")
+    return (
+        '<div class="panel"><h2>Open</h2>'
+        + form
+        + '<div class="hint">Replaces the current figure. Undo history starts '
+        "fresh, so export first if the current one matters.</div></div>"
+    )
+
+
 def _export_panel() -> str:
     links = "".join(
         f'<a href="{href}" download="{name}">'
@@ -852,6 +885,9 @@ def render_app_body(
         + _advanced_panel()
         + "</details>"
         + _export_panel()
+        + '<details data-key="open"><summary>Open a saved figure</summary>'
+        + _open_panel()
+        + "</details>"
     )
     handles_html = _preview_handles_html(spec, layout, active)
     right = (

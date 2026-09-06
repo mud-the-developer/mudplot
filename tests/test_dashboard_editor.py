@@ -688,3 +688,26 @@ def test_set_layer_at_out_of_range_shows_error_not_crash(running_server):
     assert status == 200
     with urllib.request.urlopen(running_server + "/") as r:
         assert b'class="error"' in r.read()
+
+
+def test_open_spec_replaces_the_figure(running_server):
+    spec = FigureSpec()
+    spec.data.columns = {"a": [1, 2, 3], "b": [3, 2, 1]}
+    spec.panels[0].layers.append(LayerSpec(type="line", x="a", y="b"))
+    spec.suptitle = "opened"
+    _post(running_server + "/open", {"json": json.dumps(spec.to_dict())})
+    with urllib.request.urlopen(running_server + "/spec.json") as r:
+        loaded = json.loads(r.read())
+    assert loaded["suptitle"] == "opened"
+    assert loaded["panels"][0]["layers"][0]["x"] == "a"
+
+
+def test_open_invalid_spec_reports_error_and_keeps_current_figure(running_server):
+    _post(running_server + "/action", {"type": "set_suptitle", "text": "keep me"})
+    for payload in ("not json at all", json.dumps({"panels": [{"layers": [{}]}]})):
+        _post(running_server + "/open", {"json": payload})
+        with urllib.request.urlopen(running_server + "/") as r:
+            page = r.read().decode()
+        assert 'class="error"' in page
+        with urllib.request.urlopen(running_server + "/spec.json") as r:
+            assert json.loads(r.read())["suptitle"] == "keep me"

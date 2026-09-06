@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.3.0] - 2026-09-06
+
+LaTeX-native citations/links in figure text, a genuinely usable editor
+(multi-panel, drag-to-position, open/export), and the first real-browser
+test coverage -- which found three bugs the HTML-level tests could not see.
+345 tests passing.
+
 ### LaTeX-native citations and links inside a figure
 - `LayerSpec.citation`/`href` (legend entries) and `PanelSpec.title_citation`/
   `title_href` (via `.title_reference(...)`): attach a BibTeX key and/or URL
@@ -28,11 +37,41 @@ All notable changes to this project are documented here.
   fails on the layout warning.
 
 ### Editor
-- Canvas-first layout, direct title/axis-label editing, PDF/SVG export, and
-  preserved scroll/collapse state across htmx swaps.
+- Canvas-first layout: the figure is a large sticky workspace, controls sit
+  in an independently scrolling inspector, secondary sections collapse.
+  Single column below 800px.
+- **Multi-panel editing**: set the grid, then pick which panel every control
+  edits. Titles/axes, layer list, position toggles and all three drag
+  handles follow the selection; panel-scoped actions default to it
+  server-side. The selection is session state, never written to the spec.
+- Direct editing of panel title and x/y axis labels, plus legend-label,
+  citation and link fields -- no more raw JSON for ordinary edits.
+- **Open** a saved `.mplot.json` (validated first, so a bad file reports the
+  problem instead of wedging the editor) and **export** PDF/SVG at the exact
+  configured size, not just the preview PNG.
 - Fixed: the htmx fragment carried its own `#app-body` wrapper while every
   swap targeted `#app-body` with `innerHTML`, so each edit nested another
   copy.
+- Fixed (found by the new browser tests): arrow-key nudging never worked --
+  clicking a handle to focus it counted as an edit, which swapped in a new
+  overlay and stole that focus; scroll restore ran before layout and was
+  clamped away; form labels were never bound to their inputs, so every field
+  was unlabelled for screen readers.
+- Nudges are coalesced, so holding an arrow key produces one action instead
+  of one per keypress.
+
+### Renderer
+- Each Axes records `ax._mudplot_panel`. `fig.axes` also collects twin (y2)
+  and colorbar axes, so its order stops matching panel order after the first
+  panel -- anything mapping a rendered Axes back to its spec needs this.
+
+### Testing
+- `tests/test_editor_browser.py`: real Chrome via Playwright (optional
+  `browser` extra; skipped when absent) covering drag, keyboard nudge,
+  multi-panel targeting, open-from-file, and swap behaviour.
+- `tests/test_references.py`: the exported `.pgf` is compiled by tectonic
+  and the resulting PDF read back, so "the citation resolves against the
+  paper's bibliography" is checked rather than asserted.
 
 ## [0.2.0] - 2026-09-05
 

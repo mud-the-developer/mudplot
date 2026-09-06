@@ -24,7 +24,7 @@ from urllib.parse import parse_qs, urlparse
 
 import mudplot as mp
 from mudplot import actions as A
-from mudplot.spec import LayerSpec
+from mudplot.spec import FigureSpec, LayerSpec
 from mudplot.store import Store
 from mudplot.validate import assert_valid
 
@@ -100,6 +100,21 @@ class EditorSession:
 
     def reset(self) -> None:
         self.store = Store()
+        self.active_panel = 0
+        self.error = None
+        self.refresh()
+
+    def load_spec(self, text: str) -> None:
+        """Open a saved .mplot.json, replacing the current figure.
+
+        Validated before it is accepted, so a malformed file leaves the
+        session untouched and reports the problem instead of wedging the
+        editor on a spec it cannot render.
+        """
+        spec = FigureSpec.from_dict(json.loads(text))
+        assert_valid(spec)
+        self.store = Store(spec)
+        self.active_panel = 0
         self.error = None
         self.refresh()
 
@@ -438,6 +453,14 @@ class _Handler(BaseHTTPRequestHandler):
         elif path == "/redo":
             with session.lock:
                 session.redo()
+                self._respond_after_action(session)
+        elif path == "/open":
+            fields = _parse_form(body)
+            with session.lock:
+                try:
+                    session.load_spec(fields.get("json", ""))
+                except Exception as e:
+                    session.error = f"{type(e).__name__}: {e}"
                 self._respond_after_action(session)
         elif path == "/select-panel":
             fields = _parse_form(body)

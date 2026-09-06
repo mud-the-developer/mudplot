@@ -325,3 +325,23 @@ def test_citation_metadata_can_be_entered_in_the_ui(editor):
     added = next(ly for ly in layers if ly["citation"] == "fischler1981")
     assert added["label"] == "RANSAC"
     assert added["href"] == "https://doi.org/10.1145/358669"
+
+
+def test_opening_a_spec_file_from_the_picker(editor, tmp_path):
+    """The file input is read client-side into the form's textarea, so this
+    path only exists in the browser.
+    """
+    page, url = editor
+    saved = json.loads(urllib.request.urlopen(url + "/spec.json").read())
+    saved["suptitle"] = "from a file"
+    path = tmp_path / "figure.mplot.json"
+    path.write_text(json.dumps(saved), encoding="utf-8")
+
+    page.locator("details[data-key='open'] summary").click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => (document.getElementById('spec-json') || {}).value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure").click()
+
+    _wait_until(lambda: _spec(url)["suptitle"], lambda t: t == "from a file")

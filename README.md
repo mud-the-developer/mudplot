@@ -46,12 +46,12 @@ Effects (render/io/preview) are pushed to the edges.
 
 ## Status
 
-**v0.2.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
+**v0.3.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
 architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, dashboard editor gaps, the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 322 tests passing:**
+**Engine (`mudplot/`) — usable now, 345 tests passing:**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -82,6 +82,11 @@ steps (more layer types, dashboard editor gaps, the Rust editor).
       (`.legend(bbox_to_anchor=...)`), a panel title (`.title_position(...)`),
       or a `text`/`annotate` layer (`.set_layer_at(...)`) to an exact spot —
       also what the interactive editor's drag handles dispatch
+- [x] **LaTeX-native references**: attach a BibTeX key and/or URL to a legend
+      entry or panel title; `.pgf` export emits `\figcite{}`/`\href{}` for
+      the paper's own bibliography and hyperref to resolve, SVG gets a
+      clickable link, raster stays plain (verified by compiling a real paper
+      with tectonic and reading the numbers back out of the PDF)
 - [x] Zero dependencies in the pure core (numpy/matplotlib are effect-only
       extras); broad input-format support (dict/records/DataFrame/numpy/
       pyarrow/SQL); AI-agent-friendly interface (`capabilities()`/
@@ -106,8 +111,13 @@ steps (more layer types, dashboard editor gaps, the Rust editor).
       full reloads; vendored, 0BSD, no new Python dependency), and
       draggable handles to reposition the legend/title/annotations
       directly on the preview (mouse or arrow keys)
-- [ ] Remaining layer types, multi-panel controls, and spec-file upload in
-      the editor UI — see `ROADMAP.md` §2
+- [x] Canvas-first layout, multi-panel editing (grid + per-panel controls),
+      direct title/axis/citation editing, open a saved `.mplot.json`, and
+      export PDF/SVG at the exact configured size
+- [x] Real-browser test coverage (Playwright, optional `browser` extra) for
+      the drag/keyboard/multi-panel paths that HTML-level tests can't see
+- [ ] Remaining layer types in the editor UI, and replacing the
+      full-body swap with targeted updates — see `ROADMAP.md` §2
 - [ ] Rust interactive editor (separate crate) — see `ROADMAP.md` §3
 
 ## Installation

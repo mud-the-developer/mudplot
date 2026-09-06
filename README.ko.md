@@ -41,11 +41,11 @@
 
 ## 상태
 
-**v0.2.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
+**v0.3.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 테스트 322개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 테스트 345개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -72,6 +72,11 @@
       제목(`.title_position(...)`), `text`/`annotate` 레이어
       (`.set_layer_at(...)`)를 정확한 위치에 고정 — 인터랙티브 에디터의
       드래그 핸들도 이 기능을 사용
+- [x] **LaTeX 네이티브 참조**: 범례 항목이나 패널 제목에 BibTeX 키·URL을
+      연결. `.pgf` 내보내기는 `\figcite{}`/`\href{}`를 남겨 논문의
+      bibliography·hyperref가 해석하고, SVG는 클릭 가능한 링크, 래스터는
+      일반 텍스트로 처리(tectonic으로 실제 논문을 컴파일해 PDF에서 번호를
+      다시 읽어 검증)
 - [x] 순수 코어 의존성 0(numpy/matplotlib은 effect 전용 extras); 다양한
       입력 형식(dict/records/DataFrame/numpy/pyarrow/SQL) 지원; AI
       에이전트 친화 인터페이스(`capabilities()`/`json_schema()`/
@@ -94,7 +99,12 @@
       탭, htmx 부분 갱신(전체 리로드 없음; vendoring, 0BSD, 새 Python
       의존성 없음), 미리보기 위에서 범례·제목·주석을 마우스나 화살표
       키로 직접 드래그하는 핸들
-- [ ] 에디터 UI의 나머지 레이어 타입·멀티패널 컨트롤·spec 업로드 —
+- [x] 캔버스 중심 레이아웃, 멀티패널 편집(격자 + 패널별 컨트롤), 제목·축·
+      citation 직접 편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로
+      PDF/SVG 내보내기
+- [x] 실제 브라우저 테스트(Playwright, 선택적 `browser` extra) — HTML
+      검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
+- [ ] 에디터 UI의 나머지 레이어 타입, 전체 body 스왑을 부분 갱신으로 교체 —
       `ROADMAP.md` §2 참고
 - [ ] Rust 인터랙티브 에디터 (별도 크레이트) — `ROADMAP.md` §3 참고
 
