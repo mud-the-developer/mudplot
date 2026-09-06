@@ -10,6 +10,7 @@ import matplotlib
 matplotlib.use("Agg")
 
 import shutil
+import subprocess
 import warnings
 
 import matplotlib.pyplot as plt
@@ -106,3 +107,82 @@ def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch):
     monkeypatch.setattr("shutil.which", lambda _: None)
     with pytest.raises(RuntimeError, match="needs a TeX installation"):
         mp.save(_plot().spec, str(tmp_path / "fig.pgf"))
+
+
+needs_tectonic = pytest.mark.skipif(
+    shutil.which("tectonic") is None or shutil.which("gs") is None,
+    reason="needs tectonic (compile) and ghostscript (read the result back)",
+)
+
+PAPER_TEX = r"""\documentclass[10pt]{article}
+\usepackage{pgf}
+\input{preamble.tex}
+\begin{document}
+Robust estimation is standard practice.
+\begin{figure}\centering
+\input{fig.pgf}
+\caption{Errors of two estimators.}
+\end{figure}
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
+"""
+
+REFS_BIB = """@article{fischler1981, title={Random sample consensus},
+  author={Fischler, M and Bolles, R}, journal={CACM}, year={1981}}
+@book{hartley2003, title={Multiple View Geometry},
+  author={Hartley, R and Zisserman, A}, year={2003}}
+"""
+
+
+@needs_tex
+@needs_tectonic
+def test_exported_pgf_compiles_into_a_real_paper(tmp_path):
+    """The end-to-end claim: a .pgf figure's citations resolve against the
+    *document's* bibliography, producing real numbers in the final PDF.
+
+    Generating the .pgf needs a TeX engine (matplotlib measures text with
+    it); compiling the paper is done with tectonic, which fetches whatever
+    packages it needs on its own.
+    """
+    plt.close(mp.save(_plot().spec, str(tmp_path / "fig.pgf")))
+    (tmp_path / "preamble.tex").write_text(mp.PREAMBLE, encoding="utf-8")
+    (tmp_path / "paper.tex").write_text(PAPER_TEX, encoding="utf-8")
+    (tmp_path / "refs.bib").write_text(REFS_BIB, encoding="utf-8")
+
+    proc = subprocess.run(
+        ["tectonic", "--keep-intermediates", "--print", "paper.tex"],
+        cwd=tmp_path,
+        capture_output=True,
+        text=True,
+        timeout=600,
+    )
+    assert proc.returncode == 0, proc.stderr[-3000:]
+    assert "Citation" not in proc.stderr or "undefined" not in proc.stderr
+
+    text = _pdf_text(tmp_path / "paper.pdf")
+    # the numbers inside the figure are assigned by the document, and are the
+    # same ones its References list uses
+    assert "RANSAC [1]" in text
+    assert "Robust fitting [2]" in text
+    assert "[1] M Fischler" in text and "[2] R Hartley" in text
+
+
+def _pdf_text(pdf) -> str:
+    """Text of a compiled PDF, whitespace-normalised (ghostscript ships with
+    every TeX install, so no extra tooling)."""
+    proc = subprocess.run(
+        [
+            "gs",
+            "-q",
+            "-dNOPAUSE",
+            "-dBATCH",
+            "-sDEVICE=txtwrite",
+            "-sOutputFile=-",
+            str(pdf),
+        ],
+        capture_output=True,
+        text=True,
+        timeout=120,
+    )
+    return " ".join(proc.stdout.split())
