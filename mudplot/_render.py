@@ -917,6 +917,25 @@ def render(spec: FigureSpec, *, fmt: str = ""):
     return fig
 
 
+def _require_texsystem() -> None:
+    """PGF export shells out to a real TeX engine (matplotlib measures text
+    with it), so fail with an actionable message rather than the backend's
+    bare FileNotFoundError deep in a savefig call.
+    """
+    import shutil
+
+    import matplotlib as mpl
+
+    texsystem = mpl.rcParams["pgf.texsystem"]
+    if shutil.which(texsystem) is None:
+        raise RuntimeError(
+            f".pgf export needs a TeX installation: {texsystem!r} was not found "
+            "on PATH. Install TeX Live/MacTeX, or point "
+            "matplotlib.rcParams['pgf.texsystem'] at an available engine "
+            "(e.g. 'pdflatex'). Other formats (.pdf/.svg/.png) need no TeX."
+        )
+
+
 def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """Save at the exact spec size; ``tight=True`` opts into content cropping.
 
@@ -931,6 +950,8 @@ def save(spec: FigureSpec, path: str, *, tight: bool = False):
     import matplotlib.pyplot as plt
 
     fmt = pathlib.Path(path).suffix.lstrip(".").lower()
+    if fmt == "pgf":
+        _require_texsystem()
     fig = render(spec, fmt=fmt)
     try:
         # Explicitly disable ambient cropping too: bbox_inches=None alone

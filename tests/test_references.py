@@ -9,6 +9,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 
+import shutil
 import warnings
 
 import matplotlib.pyplot as plt
@@ -16,6 +17,13 @@ import mudplot as mp
 import pytest
 
 DOI = "https://doi.org/10.1145/358669.358692"
+
+# matplotlib's pgf backend measures text by running a real TeX engine, so
+# .pgf export (unlike every other format) needs one installed.
+needs_tex = pytest.mark.skipif(
+    shutil.which(matplotlib.rcParams["pgf.texsystem"]) is None,
+    reason="no TeX installation for .pgf export",
+)
 
 
 def _plot():
@@ -33,6 +41,7 @@ def _save(tmp_path, name):
     return path.read_text(encoding="utf-8")
 
 
+@needs_tex
 def test_pgf_export_emits_figcite_and_href_macros(tmp_path):
     pgf = _save(tmp_path, "fig.pgf")
     # the paper's own \figcite/\href, not a baked-in citation number
@@ -62,6 +71,7 @@ def test_raster_export_keeps_labels_plain(tmp_path):
     assert labels == ["RANSAC"]
 
 
+@needs_tex
 def test_references_do_not_disturb_layout(tmp_path):
     """The markers sit in the text matplotlib measures while laying out, so
     an over-long one silently wrecks the figure (a full URL collapsed the
@@ -90,3 +100,9 @@ def test_tex_unsafe_reference_metadata_is_rejected():
     assert any("citation" in i for i in issues)
     with pytest.raises(ValueError):
         mp.render(p.spec)
+
+
+def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch):
+    monkeypatch.setattr("shutil.which", lambda _: None)
+    with pytest.raises(RuntimeError, match="needs a TeX installation"):
+        mp.save(_plot().spec, str(tmp_path / "fig.pgf"))
