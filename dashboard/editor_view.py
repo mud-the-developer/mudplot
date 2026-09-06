@@ -372,7 +372,8 @@ def _hx_form(action: str, hidden: dict, body: str, button: str = "Apply") -> str
         for k, v in hidden.items()
     )
     return (
-        f'<form hx-post="{_esc(action)}" hx-target="#app-body" hx-swap="{_SWAP}">'
+        f'<form hx-post="{_esc(action)}" hx-target="#app-body" '
+        f'hx-swap="{_SWAP}">'
         f"{hidden_inputs}{body}"
         f'<button type="submit">{_esc(button)}</button>'
         "</form>"
@@ -648,7 +649,8 @@ def _position_panel(spec: FigureSpec, active: int) -> str:
 def _history_panel() -> str:
     def btn(action: str, label: str) -> str:
         return (
-            f'<form hx-post="{action}" hx-target="#app-body" hx-swap="{_SWAP}">'
+            f'<form hx-post="{action}" hx-target="#app-body" '
+            f'hx-swap="{_SWAP}">'
             f'<button type="submit" class="secondary">{label}</button></form>'
         )
 

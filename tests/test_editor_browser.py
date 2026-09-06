@@ -75,6 +75,17 @@ def _spec(url: str) -> dict:
         return json.loads(r.read())
 
 
+def _settle(page):
+    """Wait until no editor request is in flight.
+
+    Every action re-renders the whole app body, so a control clicked while
+    an earlier swap is still on the wire belongs to a DOM that is about to
+    be replaced. A user doesn't hit that (they wait for the screen), but a
+    test driving clicks back to back does.
+    """
+    page.wait_for_load_state("networkidle")
+
+
 def _wait_until(read, ok, timeout: float = 10.0):
     """Poll ``read()`` until ``ok(value)``, then return the value."""
     deadline = time.time() + timeout
@@ -98,6 +109,7 @@ def test_dragging_the_legend_moves_it_and_persists(editor):
     _enable(page, "Legend")
     handle = page.locator(".drag-handle.legend")
     handle.wait_for()
+    _settle(page)
     before = handle.bounding_box()
 
     page.mouse.move(before["x"] + 10, before["y"] + 10)
@@ -122,6 +134,7 @@ def test_arrow_keys_nudge_the_title(editor):
     page, url = editor
     page.get_by_label("Panel title").fill("Nudge me")
     page.get_by_label("Panel title").press("Enter")
+    _settle(page)
     _enable(page, "Title")
     handle = page.locator(".drag-handle.title")
     handle.wait_for()
@@ -198,6 +211,7 @@ def test_a_burst_of_nudges_is_not_dropped(editor):
     page, url = editor
     _enable(page, "Legend")
     page.locator(".drag-handle.legend").wait_for()
+    _settle(page)
     start = _spec(url)["panels"][0]["legend"]["bbox_to_anchor"]
 
     page.locator(".drag-handle.legend").click()
@@ -221,6 +235,7 @@ def test_editing_targets_the_selected_panel(editor):
     page.get_by_label("Columns").fill("2")
     page.get_by_role("button", name="Set grid").click()
     page.get_by_role("group", name="Active panel").wait_for()
+    _settle(page)
 
     # panel 1 (the second) is empty until selected and given a layer
     page.get_by_role("group", name="Active panel").get_by_role(
@@ -229,6 +244,7 @@ def test_editing_targets_the_selected_panel(editor):
     # wait for the swap to actually land: the forms rendered for the previous
     # selection still carry the old panel number, so typing too early edits it
     page.get_by_text("Editing panel 2").wait_for()
+    _settle(page)
     page.get_by_label("Panel title").fill("Second panel")
     page.get_by_label("Panel title").press("Enter")
 
@@ -248,10 +264,12 @@ def test_editing_targets_the_selected_panel(editor):
         lambda ps: len(ps[1]["layers"]) == 1,
     )
     assert len(panels[0]["layers"]) == 1  # still just the original line
+    _settle(page)
 
     # a dragged legend must land on the selected panel too
     _enable(page, "Legend")
     page.locator(".drag-handle.legend").wait_for()
+    _settle(page)
     handle = page.locator(".drag-handle.legend").bounding_box()
     page.mouse.move(handle["x"] + 10, handle["y"] + 10)
     page.mouse.down()
@@ -274,6 +292,7 @@ def test_citation_metadata_can_be_entered_in_the_ui(editor):
     form.get_by_label("Citation key", exact=False).fill("fischler1981")
     form.get_by_label("Link", exact=False).fill("https://doi.org/10.1145/358669")
     form.get_by_role("button", name="Add layer").click()
+    _settle(page)
 
     layers = _wait_until(
         lambda: _spec(url)["panels"][0]["layers"],
