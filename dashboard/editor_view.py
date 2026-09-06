@@ -213,20 +213,38 @@ _DRAG_SCRIPT = """
       ev.preventDefault();
       handle.focus();
       var rect = wrap.getBoundingClientRect();
+      var moved = false;
       function onMove(mv) {
         var fx = Math.min(1, Math.max(0, (mv.clientX - rect.left) / rect.width));
         var fy = Math.min(1, Math.max(0, 1 - (mv.clientY - rect.top) / rect.height));
+        moved = true;
         current = { x: fx, y: fy };
         place(fx, fy);
       }
       function onUp() {
         document.removeEventListener("mousemove", onMove);
         document.removeEventListener("mouseup", onUp);
-        post(toValue(current.x, current.y));
+        // A plain click (focusing the handle to use the arrow keys) is not
+        // an edit: posting here would append a no-op action to the history
+        // and swap in a new overlay, stealing the focus the click just set.
+        if (moved) post(toValue(current.x, current.y));
       }
       document.addEventListener("mousemove", onMove);
       document.addEventListener("mouseup", onUp);
     });
+
+    // Each post swaps in a fresh overlay, destroying this handle mid-press.
+    // Holding an arrow key (or any burst faster than a round trip) would
+    // otherwise drop every keypress that lands during a swap, so move the
+    // handle immediately and coalesce the posts.
+    var pending = null;
+    function postSoon(value) {
+      if (pending) clearTimeout(pending);
+      pending = setTimeout(function () {
+        pending = null;
+        post(value);
+      }, 180);
+    }
 
     handle.addEventListener("keydown", function (ev) {
       var step = ev.shiftKey ? 0.06 : 0.02;
@@ -242,7 +260,7 @@ _DRAG_SCRIPT = """
         y: Math.min(1, Math.max(0, current.y + dy)),
       };
       place(current.x, current.y);
-      post(toValue(current.x, current.y));
+      postSoon(toValue(current.x, current.y));
     });
   }
 

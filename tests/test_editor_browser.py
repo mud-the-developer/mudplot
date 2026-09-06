@@ -75,6 +75,18 @@ def _spec(url: str) -> dict:
         return json.loads(r.read())
 
 
+def _wait_until(read, ok, timeout: float = 10.0):
+    """Poll ``read()`` until ``ok(value)``, then return the value."""
+    deadline = time.time() + timeout
+    value = read()
+    while time.time() < deadline:
+        value = read()
+        if ok(value):
+            return value
+        time.sleep(0.1)
+    raise AssertionError(f"condition never held; last value: {value!r}")
+
+
 def _enable(page, label: str):
     """Turn on an explicit position for "Legend"/"Title" via its button."""
     group = page.get_by_role("group", name=f"{label} position")
@@ -118,8 +130,13 @@ def test_arrow_keys_nudge_the_title(editor):
     handle.click()
     for _ in range(3):
         page.keyboard.press("ArrowRight")
-        page.wait_for_timeout(250)
-    moved = _spec(url)["panels"][0]["title_position"]
+
+    # posts are coalesced, so poll for the committed value rather than
+    # assuming one round trip per keypress
+    moved = _wait_until(
+        lambda: _spec(url)["panels"][0]["title_position"],
+        lambda pos: pos[0] > start[0] + 0.01,
+    )
     assert moved[0] > start[0]
     assert moved[1] == pytest.approx(start[1], abs=1e-6)
 
@@ -172,3 +189,25 @@ def test_a_render_error_is_shown_without_losing_the_previous_figure(editor):
     assert "nonsense" in page.locator(".error").inner_text()
     # the preview still shows the last good render rather than disappearing
     assert page.locator(".preview-wrap img").is_visible()
+
+
+def test_a_burst_of_nudges_is_not_dropped(editor):
+    """Each committed nudge swaps in a new overlay, so keypresses landing
+    mid-swap used to vanish -- exactly what holding an arrow key does.
+    """
+    page, url = editor
+    _enable(page, "Legend")
+    page.locator(".drag-handle.legend").wait_for()
+    start = _spec(url)["panels"][0]["legend"]["bbox_to_anchor"]
+
+    page.locator(".drag-handle.legend").click()
+    for _ in range(8):
+        page.keyboard.press("ArrowLeft")
+        page.wait_for_timeout(30)
+
+    moved = _wait_until(
+        lambda: _spec(url)["panels"][0]["legend"]["bbox_to_anchor"],
+        lambda pos: pos[0] < start[0] - 0.1,
+    )
+    # 8 x 0.02 = 0.16 of travel; allow for coalescing, not for losing most
+    assert moved[0] < start[0] - 0.1
