@@ -27,6 +27,9 @@ __all__ = ["render_app_body", "render_docs_page", "render_page"]
 
 _PALETTE_KINDS = ("qualitative", "sequential", "diverging")
 _SERIES_LAYER_TYPES = ("line", "scatter", "bar", "errorbar", "band")
+# focus-scroll:false: htmx otherwise scrolls the refocused element into
+# view after a swap, yanking the sidebar away from where the user was.
+_SWAP = "innerHTML focus-scroll:false"
 
 _STYLE = """
 :root {
@@ -69,8 +72,9 @@ details summary:focus-visible { outline: 2px solid var(--accent); }
          box-shadow: 0 1px 2px rgba(16,24,40,.04); }
 .panel h2 { font-size: .82rem; margin: 0 0 .6rem; color: #374151;
             text-transform: uppercase; letter-spacing: .04em; font-weight: 700; }
-label { display: block; font-size: .78rem; color: var(--muted); margin: .55rem 0 .2rem;
-        font-weight: 500; }
+label, .field-label { display: block; font-size: .78rem; color: var(--muted);
+        margin: .55rem 0 .2rem; font-weight: 500; }
+label > input, label > select, label > textarea { margin-top: .2rem; }
 input, select, textarea { width: 100%; box-sizing: border-box; padding: .4rem .55rem;
        border: 1px solid #d1d5db; border-radius: 6px; font-size: .85rem;
        background: white; color: var(--text); }
@@ -191,7 +195,8 @@ _DRAG_SCRIPT = """
         }
       }
       htmx.ajax("POST", handle.dataset.postUrl, {
-        source: handle, target: "#app-body", swap: "innerHTML", values: values,
+        source: handle, target: "#app-body", values: values,
+        swap: "innerHTML focus-scroll:false",
       });
     }
 
@@ -253,19 +258,45 @@ _DRAG_SCRIPT = """
       open[d.dataset.key] = d.open;
     });
     var inspector = document.querySelector(".inspector");
-    state = { open: open, scroll: inspector ? inspector.scrollTop : 0 };
+    // Each nudge dispatches an edit that replaces the overlay, so without
+    // remembering which handle had focus, arrow keys move a handle exactly
+    // once and then go nowhere.
+    var active = document.activeElement;
+    state = {
+      open: open,
+      scroll: inspector ? inspector.scrollTop : 0,
+      handle: active && active.dataset ? active.dataset.handleId : null,
+    };
   });
   document.body.addEventListener("htmx:afterSwap", function () {
     document.querySelectorAll(".drag-handle").forEach(wireHandle);
-    if (state) {
+  });
+  // Restoring scroll has to wait for layout: right after the swap the new
+  // content hasn't been laid out yet, so assigning scrollTop gets clamped
+  // to the (still short) scroll height and the sidebar jumps anyway.
+  document.body.addEventListener("htmx:afterSettle", function () {
+    if (!state) return;
+    requestAnimationFrame(function () {
       document.querySelectorAll("details[data-key]").forEach(function (d) {
         var was = state.open[d.dataset.key];
         if (was !== undefined) d.open = was;
       });
       var inspector = document.querySelector(".inspector");
-      if (inspector) inspector.scrollTop = state.scroll;
+      if (inspector) {
+        // Force a reflow first: re-opening the <details> above changes the
+        // scroll height, and without this the assignment is clamped against
+        // the stale (collapsed) height, losing the position anyway.
+        void inspector.scrollHeight;
+        inspector.scrollTop = state.scroll;
+      }
+      if (state.handle) {
+        var again = document.querySelector(
+          '.drag-handle[data-handle-id="' + state.handle + '"]'
+        );
+        if (again) again.focus({ preventScroll: true });
+      }
       state = null;
-    }
+    });
   });
   document.querySelectorAll(".drag-handle").forEach(wireHandle);
 })();
@@ -305,13 +336,23 @@ def _column_datalist(spec: FigureSpec, list_id: str) -> str:
     return f'<datalist id="{list_id}">{opts}</datalist>'
 
 
+def _field(label: str, control: str) -> str:
+    """A label bound to its control.
+
+    Nesting gives the association implicitly, so there are no ids to keep
+    unique across fragments that get swapped in and out -- without it a
+    screen reader (and any assistive tech) reads an unlabelled input.
+    """
+    return f"<label>{label}{control}</label>"
+
+
 def _hx_form(action: str, hidden: dict, body: str, button: str = "Apply") -> str:
     hidden_inputs = "".join(
         f'<input type="hidden" name="{_esc(k)}" value="{_esc(v)}">'
         for k, v in hidden.items()
     )
     return (
-        f'<form hx-post="{_esc(action)}" hx-target="#app-body" hx-swap="innerHTML">'
+        f'<form hx-post="{_esc(action)}" hx-target="#app-body" hx-swap="{_SWAP}">'
         f"{hidden_inputs}{body}"
         f'<button type="submit">{_esc(button)}</button>'
         "</form>"
@@ -334,12 +375,12 @@ def _samples_panel() -> str:
 def _theme_panel(spec: FigureSpec) -> str:
     theme_select = _select("name", AVAILABLE_THEMES, spec.theme.name)
     theme_form = _hx_form(
-        "/action", {"type": "set_theme"}, f"<label>Theme</label>{theme_select}"
+        "/action", {"type": "set_theme"}, _field("Theme", theme_select)
     )
     journal_opts = ("none", *AVAILABLE_JOURNALS)
     journal_select = _select("name", journal_opts, spec.journal or "none")
     journal_form = _hx_form(
-        "/action", {"type": "set_journal"}, f"<label>Journal</label>{journal_select}"
+        "/action", {"type": "set_journal"}, _field("Journal", journal_select)
     )
     body = theme_form + journal_form
     return f'<div class="panel"><h2>Theme &amp; journal</h2>{body}</div>'
@@ -349,13 +390,19 @@ def _palette_panel(spec: FigureSpec) -> str:
     p = spec.theme.palette
     kind_select = _select("kind", _PALETTE_KINDS, p.kind)
     body = (
-        f"<label>Kind</label>{kind_select}"
-        f'<label>Hue start</label><input type="number" name="hue_start" '
-        f'value="{p.hue_start:g}" step="1">'
-        f'<label>Chroma</label><input type="number" name="chroma" '
-        f'value="{p.chroma:g}" step="1">'
-        f'<label>Lightness</label><input type="number" name="lightness" '
-        f'value="{p.lightness:g}" step="1">'
+        _field("Kind", kind_select)
+        + _field(
+            "Hue start",
+            f'<input type="number" name="hue_start" value="{p.hue_start:g}" step="1">',
+        )
+        + _field(
+            "Chroma",
+            f'<input type="number" name="chroma" value="{p.chroma:g}" step="1">',
+        )
+        + _field(
+            "Lightness",
+            f'<input type="number" name="lightness" value="{p.lightness:g}" step="1">',
+        )
     )
     form = _hx_form("/action", {"type": "set_palette"}, body)
     return f'<div class="panel"><h2>Palette</h2>{form}</div>'
@@ -365,12 +412,14 @@ def _layer_panel(spec: FigureSpec) -> str:
     type_select = _select("layer_type", _SERIES_LAYER_TYPES, "line")
     dl = _column_datalist(spec, "cols")
     body = (
-        f"<label>Layer type</label>{type_select}"
-        f'<label>x column</label><input name="x" list="cols" placeholder="x">'
-        f'<label>y column</label><input name="y" list="cols" placeholder="y">'
-        f"<label>group column (optional)</label>"
-        f'<input name="group" list="cols" placeholder="">'
-        f"{dl}"
+        _field("Layer type", type_select)
+        + _field("x column", '<input name="x" list="cols" placeholder="x">')
+        + _field("y column", '<input name="y" list="cols" placeholder="y">')
+        + _field(
+            "group column (optional)",
+            '<input name="group" list="cols" placeholder="">',
+        )
+        + f"{dl}"
         f'<div class="hint">Available columns: '
         f"{', '.join(spec.data.columns) or '(none — load sample data first)'}</div>"
     )
@@ -380,15 +429,14 @@ def _layer_panel(spec: FigureSpec) -> str:
 
 def _annotation_panel() -> str:
     body = (
-        "<label>Kind</label>"
-        + _select("layer_type", ("text", "annotate"), "text")
-        + '<label>Text</label><input name="text" placeholder="label">'
+        _field("Kind", _select("layer_type", ("text", "annotate"), "text"))
+        + _field("Text", '<input name="text" placeholder="label">')
         + '<div class="row">'
-        + "<div><label>x</label>"
-        + '<input type="number" step="any" name="x" value="0"></div>'
-        + "<div><label>y</label>"
-        + '<input type="number" step="any" name="y" value="0"></div>'
-        + "</div>"
+        + "<div>"
+        + _field("x", '<input type="number" step="any" name="x" value="0">')
+        + "</div><div>"
+        + _field("y", '<input type="number" step="any" name="y" value="0">')
+        + "</div></div>"
         + '<div class="hint">Data coordinates -- drag it into place afterwards on '
         + "the preview.</div>"
     )
@@ -424,15 +472,20 @@ def _layers_panel(spec: FigureSpec) -> str:
 
 
 def _figure_panel(spec: FigureSpec) -> str:
-    body = f'<label>Suptitle</label><input name="text" value="{_esc(spec.suptitle)}">'
+    body = _field("Suptitle", f'<input name="text" value="{_esc(spec.suptitle)}">')
     suptitle_form = _hx_form("/action", {"type": "set_suptitle"}, body, "Set suptitle")
     size_body = (
-        '<div class="row">'
-        f'<div><label>Width (in)</label><input type="number" step="0.1" '
-        f'name="width" value="{spec.size[0]:g}"></div>'
-        f'<div><label>Height (in)</label><input type="number" step="0.1" '
-        f'name="height" value="{spec.size[1]:g}"></div>'
-        "</div>"
+        '<div class="row"><div>'
+        + _field(
+            "Width (in)",
+            f'<input type="number" step="0.1" name="width" value="{spec.size[0]:g}">',
+        )
+        + "</div><div>"
+        + _field(
+            "Height (in)",
+            f'<input type="number" step="0.1" name="height" value="{spec.size[1]:g}">',
+        )
+        + "</div></div>"
     )
     size_form = _hx_form("/action", {"type": "set_size"}, size_body, "Set size")
     return f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}</div>'
@@ -451,10 +504,7 @@ def _labels_panel(spec: FigureSpec) -> str:
         fields = {"type": "set_title", "panel": 0}
         if key != "title":
             fields.update(type="set_axis_label", axis=key)
-        body = (
-            f'<label for="label-{key}">{label}</label>'
-            f'<input id="label-{key}" name="text" value="{_esc(value)}">'
-        )
+        body = _field(label, f'<input name="text" value="{_esc(value)}">')
         forms.append(_hx_form("/action", fields, body, "Apply"))
     return (
         '<div class="panel"><h2>Titles &amp; axes</h2>'
@@ -489,7 +539,13 @@ def _position_panel(spec: FigureSpec) -> str:
             if active
             else ""
         )
-        return f'<label>{label}</label><div class="btn-row">{enable}{reset}</div>'
+        # a group of buttons, not one control: labelled as a group rather
+        # than with a <label>, which must point at a single form element
+        return (
+            f'<div role="group" aria-label="{_esc(label)} position">'
+            f'<span class="field-label">{label}</span>'
+            f'<div class="btn-row">{enable}{reset}</div></div>'
+        )
 
     body = row("Legend", "legend", leg_active) + row(
         "Title", "title", title_active, default_xy=(0.5, 0.9)
@@ -505,7 +561,7 @@ def _position_panel(spec: FigureSpec) -> str:
 def _history_panel() -> str:
     def btn(action: str, label: str) -> str:
         return (
-            f'<form hx-post="{action}" hx-target="#app-body" hx-swap="innerHTML">'
+            f'<form hx-post="{action}" hx-target="#app-body" hx-swap="{_SWAP}">'
             f'<button type="submit" class="secondary">{label}</button></form>'
         )
 
@@ -519,10 +575,9 @@ def _advanced_panel() -> str:
     example = (
         "{&quot;type&quot;: &quot;SetTitle&quot;, &quot;text&quot;: &quot;t&quot;}"
     )
-    body = (
-        "<label>Raw JSON action (agent-facing) &mdash; e.g. "
-        f"<code>{example}</code></label>"
-        '<textarea name="json"></textarea>'
+    body = _field(
+        f"Raw JSON action (agent-facing) &mdash; e.g. <code>{example}</code>",
+        '<textarea name="json"></textarea>',
     )
     form = _hx_form("/action/raw", {}, body, "Dispatch JSON action")
     return f'<div class="panel"><h2>Advanced</h2>{form}</div>'
@@ -583,8 +638,12 @@ def _drag_handle_html(
         f'data-field{i}="{_esc(k)}={_esc(v)}"'
         for i, (k, v) in enumerate(fields.items())
     )
+    # Stable across swaps, so keyboard focus can be restored onto the same
+    # handle after the edit it just dispatched replaced the whole overlay.
+    handle_id = f"{kind}:{fields.get('layer_index', '')}:{fields.get('panel', 0)}"
     return (
         f'<div class="drag-handle {kind}" tabindex="0" '
+        f'data-handle-id="{_esc(handle_id)}" '
         f'data-imgx="{img_x:g}" data-imgy="{img_y:g}" '
         f'style="left:{img_x * 100:g}%; top:{(1 - img_y) * 100:g}%" '
         f"{data_attrs} {field_attrs} "

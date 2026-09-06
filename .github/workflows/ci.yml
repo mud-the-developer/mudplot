@@ -18,7 +18,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache-dependency-glob: "uv.lock"
       - name: Install project (with dev extras)
-        run: uv sync --extra dev
+        run: uv sync --extra dev --extra browser
+      - name: Install Chromium for the browser tests
+        run: uv run playwright install --with-deps chromium
       - name: Ruff lint
         run: uv run ruff check .
       - name: Ruff format check
