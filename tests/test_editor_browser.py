@@ -226,7 +226,9 @@ def test_editing_targets_the_selected_panel(editor):
     page.get_by_role("group", name="Active panel").get_by_role(
         "button", name="2"
     ).click()
-    page.wait_for_timeout(300)
+    # wait for the swap to actually land: the forms rendered for the previous
+    # selection still carry the old panel number, so typing too early edits it
+    page.get_by_text("Editing panel 2").wait_for()
     page.get_by_label("Panel title").fill("Second panel")
     page.get_by_label("Panel title").press("Enter")
 
