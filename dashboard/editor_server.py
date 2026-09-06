@@ -113,6 +113,29 @@ class EditorSession:
         plt.close(fig)
         self.png = buf.getvalue()
 
+    def export(self, fmt: str) -> bytes:
+        """Render the current spec to a vector format at its exact configured
+        size -- the whole point of the engine, so the editor must not only
+        hand out the screen-resolution PNG preview.
+        """
+        if fmt not in ("pdf", "svg"):
+            raise ValueError(f"unsupported export format {fmt!r}")
+        import matplotlib
+
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from mudplot._render import render
+
+        spec = self.store.state
+        assert_valid(spec)
+        fig = render(spec)
+        try:
+            buf = io.BytesIO()
+            fig.savefig(buf, format=fmt)
+        finally:
+            plt.close(fig)
+        return buf.getvalue()
+
     @staticmethod
     def _extract_layout(spec, fig) -> dict:
         if not spec.panels or not fig.axes:
@@ -197,6 +220,12 @@ def _build_action(action_type: str, fields: dict, spec=None):
         return A.RemoveLayer(int(fields["layer_index"]))
     if action_type == "set_suptitle":
         return A.SetSuptitle(fields.get("text", ""))
+    if action_type == "set_title":
+        return A.SetTitle(fields.get("text", ""), panel=int(fields.get("panel", 0)))
+    if action_type == "set_axis_label":
+        return A.SetAxisLabel(
+            fields["axis"], fields.get("text", ""), panel=int(fields.get("panel", 0))
+        )
     if action_type == "set_size":
         return A.SetSize(float(fields["width"]), float(fields["height"]))
     if action_type in ("set_legend_position", "reset_legend_position"):
@@ -305,6 +334,16 @@ class _Handler(BaseHTTPRequestHandler):
             with session.lock:
                 png = session.png
             self._send_bytes(png, "image/png", no_store=True)
+        elif path in ("/fig.pdf", "/fig.svg"):
+            fmt = path.rsplit(".", 1)[1]
+            with session.lock:
+                try:
+                    data = session.export(fmt)
+                except Exception as e:
+                    self.send_error(400, f"{type(e).__name__}: {e}")
+                    return
+            ctype = "application/pdf" if fmt == "pdf" else "image/svg+xml"
+            self._send_bytes(data, ctype, no_store=True)
         elif path == "/spec.json":
             with session.lock:
                 text = json.dumps(session.store.state.to_dict(), indent=2)

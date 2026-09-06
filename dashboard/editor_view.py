@@ -44,8 +44,26 @@ header { padding: .8rem 1.4rem; background: #14161a; color: white;
 header h1 { margin: 0; font-size: 1.05rem; font-weight: 600; }
 header .sub { color: #9aa1ad; font-size: .8rem; flex: 1 1 auto; }
 main { padding: 1rem; }
-#app-body { display: grid; grid-template-columns: 340px 1fr; gap: 1rem;
+#app-body { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: 1rem;
        align-items: start; }
+.inspector { height: calc(100dvh - 100px); overflow: auto; padding-right: .5rem; }
+.workspace { min-width: 0; position: sticky; top: 1rem; }
+.workspace > .panel:first-child { min-height: 65vh; background: #e9edf3;
+       background-image: radial-gradient(#cbd2dc 1px, transparent 1px);
+       background-size: 16px 16px; padding: 1.5rem; }
+.workspace figure { display: grid; place-items: center; min-height: 55vh; }
+.workspace .preview-wrap { box-shadow: 0 12px 40px #18243a20; }
+details summary { cursor: pointer; font-size: .85rem; font-weight: 600;
+       padding: .7rem 0; color: var(--text); }
+details summary:focus-visible { outline: 2px solid var(--accent); }
+@media (max-width: 800px) {
+  #app-body { grid-template-columns: minmax(0, 1fr); }
+  .workspace { grid-row: 1; position: static; }
+  .inspector { height: auto; overflow: visible; }
+  .workspace > .panel:first-child { min-height: 0; padding: .5rem; }
+  .workspace figure { min-height: 0; }
+  header .sub { display: none; }
+}
 .panel { background: var(--panel); border: 1px solid var(--border);
          border-radius: var(--radius); padding: .9rem 1rem; margin-bottom: .85rem;
          box-shadow: 0 1px 2px rgba(16,24,40,.04); }
@@ -223,8 +241,31 @@ _DRAG_SCRIPT = """
     });
   }
 
+  // A swap replaces the whole inspector, so <details> collapse and the
+  // sidebar jumps to the top after every edit. Snapshot both just before
+  // the swap and restore them right after.
+  // (keyed by data-key, not summary text: the history section's label
+  // contains a live action count, so its text changes on every swap.)
+  var state = null;
+  document.body.addEventListener("htmx:beforeSwap", function () {
+    var open = {};
+    document.querySelectorAll("details[data-key]").forEach(function (d) {
+      open[d.dataset.key] = d.open;
+    });
+    var inspector = document.querySelector(".inspector");
+    state = { open: open, scroll: inspector ? inspector.scrollTop : 0 };
+  });
   document.body.addEventListener("htmx:afterSwap", function () {
     document.querySelectorAll(".drag-handle").forEach(wireHandle);
+    if (state) {
+      document.querySelectorAll("details[data-key]").forEach(function (d) {
+        var was = state.open[d.dataset.key];
+        if (was !== undefined) d.open = was;
+      });
+      var inspector = document.querySelector(".inspector");
+      if (inspector) inspector.scrollTop = state.scroll;
+      state = null;
+    }
   });
   document.querySelectorAll(".drag-handle").forEach(wireHandle);
 })();
@@ -397,6 +438,32 @@ def _figure_panel(spec: FigureSpec) -> str:
     return f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}</div>'
 
 
+def _labels_panel(spec: FigureSpec) -> str:
+    if not spec.panels:
+        return ""
+    panel = spec.panels[0]
+    forms = []
+    for key, label, value in (
+        ("title", "Panel title", panel.title),
+        ("x", "X-axis label", panel.x.label),
+        ("y", "Y-axis label", panel.y.label),
+    ):
+        fields = {"type": "set_title", "panel": 0}
+        if key != "title":
+            fields.update(type="set_axis_label", axis=key)
+        body = (
+            f'<label for="label-{key}">{label}</label>'
+            f'<input id="label-{key}" name="text" value="{_esc(value)}">'
+        )
+        forms.append(_hx_form("/action", fields, body, "Apply"))
+    return (
+        '<div class="panel"><h2>Titles &amp; axes</h2>'
+        '<p class="hint">Editing panel 1. Empty text clears a label.</p>'
+        + "".join(forms)
+        + "</div>"
+    )
+
+
 def _position_panel(spec: FigureSpec) -> str:
     """Drag-to-position toggles for the legend and the panel title."""
     panel = spec.panels[0] if spec.panels else None
@@ -462,13 +529,22 @@ def _advanced_panel() -> str:
 
 
 def _export_panel() -> str:
-    spec_btn = '<button type="button" class="secondary">Download spec (.json)</button>'
-    png_btn = '<button type="button" class="secondary">Download PNG</button>'
+    links = "".join(
+        f'<a href="{href}" download="{name}">'
+        f'<button type="button" class="secondary">{label}</button></a>'
+        for href, name, label in (
+            ("/fig.pdf", "figure.pdf", "PDF (vector)"),
+            ("/fig.svg", "figure.svg", "SVG (vector)"),
+            ("/fig.png", "figure.png", "PNG"),
+            ("/spec.json", "figure.mplot.json", "Spec (.json)"),
+        )
+    )
     return (
-        '<div class="panel"><h2>Export</h2><div class="btn-row">'
-        f'<a href="/spec.json" download="figure.mplot.json">{spec_btn}</a>'
-        f'<a href="/fig.png" download="figure.png">{png_btn}</a>'
-        "</div></div>"
+        '<div class="panel"><h2>Export</h2>'
+        f'<div class="btn-row">{links}</div>'
+        '<div class="hint">PDF/SVG are rendered at the exact configured '
+        "figure size for TeX placement; the PNG is the preview raster.</div>"
+        "</div>"
     )
 
 
@@ -605,16 +681,21 @@ def render_app_body(
     layout = layout or {}
     error_html = f'<div class="error">{_esc(error)}</div>' if error else ""
     left = (
-        _samples_panel()
+        '<details data-key="samples"><summary>Start from a sample</summary>'
+        + _samples_panel()
+        + "</details>"
+        + _figure_panel(spec)
+        + _labels_panel(spec)
         + _theme_panel(spec)
         + _palette_panel(spec)
         + _layer_panel(spec)
         + _annotation_panel()
         + _layers_panel(spec)
-        + _figure_panel(spec)
         + _position_panel(spec)
         + _history_panel()
+        + '<details data-key="advanced"><summary>Advanced · JSON actions</summary>'
         + _advanced_panel()
+        + "</details>"
         + _export_panel()
     )
     handles_html = _preview_handles_html(spec, layout)
@@ -622,9 +703,15 @@ def render_app_body(
         '<div class="panel"><h2>Preview</h2><figure><div class="preview-wrap">'
         '<img src="/fig.png" alt="figure preview">'
         f"{handles_html}</div></figure></div>"
-        f'<div class="panel"><h2>Action log</h2>{_action_log_html(action_log)}</div>'
+        '<details class="panel" data-key="history"><summary>Action history · '
+        f"{len(action_log)} actions</summary>"
+        f"{_action_log_html(action_log)}</details>"
     )
-    return f'<div id="app-body"><div>{error_html}{left}</div><div>{right}</div></div>'
+    return (
+        '<aside class="inspector" aria-label="Figure properties">'
+        f"{error_html}{left}</aside>"
+        f'<section class="workspace" aria-label="Figure canvas">{right}</section>'
+    )
 
 
 def render_page(
@@ -640,6 +727,7 @@ def render_page(
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mudplot editor</title>
 <script src="/static/htmx.min.js"></script>
 <style>{_STYLE}</style>
@@ -647,11 +735,10 @@ def render_page(
 <body>
 <header>
   <h1>mudplot editor</h1>
-  <div class="sub">A thin UI over the same Store/actions/reducer the fluent
-  API and any future Rust editor use — nothing here holds its own state.</div>
+  <div class="sub">Figure studio · Edit, refine, export</div>
   {_nav_html("editor")}
 </header>
-<main>{body}</main>
+<main><div id="app-body">{body}</div></main>
 {_DRAG_SCRIPT}
 </body>
 </html>"""

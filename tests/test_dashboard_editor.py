@@ -22,7 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from dashboard.editor_server import EditorSession, _build_action, make_server
-from dashboard.editor_view import render_docs_page, render_page
+from dashboard.editor_view import render_app_body, render_docs_page, render_page
 from dashboard.samples import SAMPLES, sample_columns
 from mudplot import actions as A
 from mudplot.spec import FigureSpec, LayerSpec, LegendSpec
@@ -31,6 +31,52 @@ from mudplot.store import Store
 # --------------------------------------------------------------------------
 # pure view-layer tests
 # --------------------------------------------------------------------------
+
+
+def test_label_controls_preserve_position_and_allow_clearing():
+    store = Store()
+    store.dispatch(A.SetTitlePosition([0.2, 0.8]))
+    for kind, fields in (
+        ("set_title", {"text": 'Title <&"'}),
+        ("set_axis_label", {"axis": "x", "text": "Time (s)"}),
+        ("set_axis_label", {"axis": "y", "text": "Amplitude"}),
+    ):
+        store.dispatch(_build_action(kind, fields, store.state))
+    panel = store.state.panels[0]
+    assert panel.title_position == [0.2, 0.8]
+    assert panel.x.label == "Time (s)"
+    assert panel.y.label == "Amplitude"
+    page = render_page(store.state, [])
+    assert "Title &lt;&amp;&quot;" in page
+    assert 'for="label-x"' in page
+    store.dispatch(_build_action("set_title", {}, store.state))
+    assert store.state.panels[0].title == ""
+
+
+def test_vector_export_uses_configured_size_and_rejects_bad_format():
+    session = EditorSession()
+    session.dispatch_safe(A.SetData({"x": [1, 2, 3], "y": [1, 4, 9]}))
+    session.dispatch_safe(A.AddLayer(LayerSpec(type="line", x="x", y="y")))
+    session.dispatch_safe(A.SetSize(4.0, 3.0))
+    assert session.error is None
+    assert session.export("pdf").startswith(b"%PDF")
+    svg = session.export("svg").decode()
+    assert "<svg" in svg
+    # exact configured physical size, not a cropped/expanded one
+    assert 'width="288pt"' in svg and 'height="216pt"' in svg
+    with pytest.raises(ValueError):
+        session.export("jpeg")
+
+
+def test_collapsible_sections_are_keyed_for_state_restore():
+    # The swap handler restores <details> by data-key, so every collapsible
+    # section must carry one (summary text alone is unstable: the history
+    # label embeds a live action count).
+    body = render_app_body(FigureSpec(), [])
+    assert body.count("<details") == body.count("data-key=")
+    page = render_page(FigureSpec(), [])
+    for key in ("samples", "advanced", "history"):
+        assert f'data-key="{key}"' in page
 
 
 def test_render_page_contains_core_sections():
@@ -45,7 +91,7 @@ def test_render_page_contains_core_sections():
         "Advanced",
         "Export",
         "Preview",
-        "Action log",
+        "Action history",
     ):
         assert text in html
 
@@ -412,6 +458,22 @@ def test_undo_redo_via_http(running_server):
         assert json.loads(r.read())["suptitle"] == "v2"
 
 
+def test_vector_export_routes_serve_downloadable_files(running_server):
+    _post(running_server + "/action", {"type": "load_sample", "name": "sine"})
+    _post(
+        running_server + "/action",
+        {"type": "add_layer", "layer_type": "line", "x": "x", "y": "y", "group": ""},
+    )
+    for path, ctype, magic in (
+        ("/fig.pdf", "application/pdf", b"%PDF"),
+        ("/fig.svg", "image/svg+xml", b"<?xml"),
+    ):
+        with urllib.request.urlopen(running_server + path) as r:
+            assert r.status == 200
+            assert r.headers["Content-Type"] == ctype
+            assert r.read().startswith(magic)
+
+
 def test_add_then_remove_layer_via_http(running_server):
     _post(running_server + "/action", {"type": "load_sample", "name": "sine"})
     _post(
@@ -523,7 +585,8 @@ def _hx_post(url: str, fields: dict) -> bytes:
     with urllib.request.urlopen(req) as r:
         assert r.status == 200
         body = r.read()
-    assert body.startswith(b'<div id="app-body">')  # a fragment, not a full page
+    assert body.startswith(b'<aside class="inspector"')
+    assert b'id="app-body"' not in body  # innerHTML must not nest the target
     return body
 
 
