@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### DOI/URL resolver: arXiv-only `.bib` entries now resolve to a real link
+
 - `mp.resolve_reference_href(fields)`: offline (no network access) DOI/
   arXiv-id/URL normalisation, extracted from `ReferenceCatalog` into its
   own documented, directly-usable function. Tries, in order: a `doi`
