@@ -1141,7 +1141,9 @@ https://example.org/paper_v2?x=1&y=2#section_3
       `citation_measure_text` 옵션) 구현됨: `FigureSpec.reference_measure_text` /
       `.reference_style(measure_text=...)`. 단, 패널 제목은 wrap=True와의
       상호작용 문제로 농히지 않음 (범례는 legend만).
-- [ ] JSON Schema compatibility test
+- [x] JSON Schema compatibility test — `jsonschema` dev의존성 + 
+      `tests/test_json_schema_compat.py` (메타스키마 검증, 실제 spec 다수가
+      스키마를 통과, 잘못된 타입이 실제로 거부되는지 확인)
 - [ ] Hypothesis-based serialization/reducer tests
 - [ ] journal profile registry 정리
 

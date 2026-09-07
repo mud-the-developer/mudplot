@@ -4,6 +4,30 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### JSON Schema compatibility test
+- New dev dependency: `jsonschema` (used only by tests, not the pure
+  engine). `mp.json_schema()`'s existing sync guard (`test_schema_export.py`)
+  only checked that the checked-in file matches a fresh regeneration
+  byte-for-byte and that it superficially "looks like" a JSON Schema
+  (has `$schema`, a `title`, ...) -- it never actually ran a real JSON
+  Schema validator against it, so a schema that was technically malformed,
+  or too permissive to catch real mistakes, could still pass every
+  existing check.
+- New `tests/test_json_schema_compat.py`: the schema itself is checked
+  against the Draft 2020-12 meta-schema (`Draft202012Validator.check_schema`);
+  a range of real specs (grouped references, multi-panel + secondary axis,
+  matrix/heatmap, 3-D, the bare default) are round-tripped through
+  `.to_dict()` and validated against the exported schema; and a couple of
+  deliberately-wrong instances (wrong field type) are confirmed to actually
+  get rejected, not silently accepted -- proving the schema is a real
+  constraint an external (Rust/serde, form-generator) consumer could rely
+  on, not just documentation-shaped JSON.
+- Documents one real, existing gap found this way (not a bug -- a
+  deliberate scope boundary made explicit): `LayerSpec`'s fields all carry
+  defaults, so nothing is "required" at the *schema* level for e.g. a
+  `line` layer's `x`/`y` -- that's mudplot's own semantic `validate()`'s
+  job, not the JSON Schema's.
+
 ### Citation measurement policy (P0-3)
 
 - WYSIWYG layout for a citation is only exact for compact/numeric styles
