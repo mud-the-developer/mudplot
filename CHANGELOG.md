@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### FigureSpec version/migration policy
+
 - Package version (`mudplot.__version__`) and spec version (`SPEC_VERSION`,
   the on-disk `.mplot.json` contract) are now formally independent: not
   every release changes the serialized shape, and `SPEC_VERSION` is the one
