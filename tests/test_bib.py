@@ -124,3 +124,90 @@ def test_empty_bib_text_gives_an_empty_catalog():
     cat = mp.ReferenceCatalog.from_bib_text("")
     assert len(cat) == 0
     assert list(cat) == []
+
+
+# -- DOI/arXiv/URL resolution (resolve_reference_href) ----------------------
+
+
+def test_bare_doi_resolves_to_doi_dot_org():
+    assert mp.resolve_reference_href({"doi": "10.1145/358669.358692"}) == (
+        "https://doi.org/10.1145/358669.358692"
+    )
+
+
+def test_doi_prefixed_with_doi_colon_is_normalised():
+    assert mp.resolve_reference_href({"doi": "doi:10.1145/358669.358692"}) == (
+        "https://doi.org/10.1145/358669.358692"
+    )
+
+
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "https://doi.org/10.1145/358669.358692",
+        "https://dx.doi.org/10.1145/358669.358692",
+        "http://doi.org/10.1145/358669.358692",
+    ],
+)
+def test_a_doi_field_that_is_already_a_full_url_is_normalised_the_same_way(raw):
+    assert mp.resolve_reference_href({"doi": raw}) == (
+        "https://doi.org/10.1145/358669.358692"
+    )
+
+
+def test_arxiv_eprint_with_archiveprefix_resolves_to_arxiv_abs():
+    """The shape arXiv's own 'export bibtex' feature produces -- and,
+    critically, has no doi/url field at all, an extremely common case for
+    ML/CS papers that a naive doi-or-url-only resolver would miss entirely.
+    """
+    fields = {"eprint": "2301.00001", "archiveprefix": "arXiv"}
+    assert mp.resolve_reference_href(fields) == "https://arxiv.org/abs/2301.00001"
+
+
+def test_arxiv_eprinttype_field_name_variant_is_also_recognised():
+    fields = {"eprint": "2301.00001", "eprinttype": "arXiv"}
+    assert mp.resolve_reference_href(fields) == "https://arxiv.org/abs/2301.00001"
+
+
+def test_eprint_without_an_arxiv_archiveprefix_is_not_treated_as_arxiv():
+    fields = {"eprint": "2301.00001", "archiveprefix": "something-else"}
+    assert mp.resolve_reference_href(fields) is None
+
+
+def test_doi_takes_priority_over_arxiv_when_both_are_present():
+    fields = {"doi": "10.1/x", "eprint": "1234.5678", "archiveprefix": "arXiv"}
+    assert mp.resolve_reference_href(fields) == "https://doi.org/10.1/x"
+
+
+def test_arxiv_takes_priority_over_a_plain_url_field():
+    fields = {
+        "eprint": "2301.00001",
+        "archiveprefix": "arXiv",
+        "url": "https://example.org/mirror",
+    }
+    assert mp.resolve_reference_href(fields) == "https://arxiv.org/abs/2301.00001"
+
+
+def test_plain_url_is_the_last_resort():
+    assert mp.resolve_reference_href({"url": "https://example.org/paper"}) == (
+        "https://example.org/paper"
+    )
+
+
+def test_no_doi_arxiv_or_url_resolves_to_none():
+    assert mp.resolve_reference_href({"title": "no link fields at all"}) is None
+    assert mp.resolve_reference_href({}) is None
+
+
+def test_arxiv_only_bib_entry_gets_a_working_href_end_to_end():
+    """Regression: this exact shape (title + eprint + archivePrefix, no
+    doi/url) previously resolved to href=None via ReferenceCatalog, since
+    the original doi-or-url-only fallback never looked at eprint at all.
+    """
+    cat = mp.ReferenceCatalog.from_bib_text(
+        "@misc{smith2023, title={A Great Paper}, "
+        "eprint={2301.00001}, archivePrefix={arXiv}, primaryClass={cs.CV}}"
+    )
+    ref = cat["smith2023"]
+    assert ref.citation == "smith2023"
+    assert ref.href == "https://arxiv.org/abs/2301.00001"

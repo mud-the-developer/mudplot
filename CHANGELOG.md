@@ -4,6 +4,29 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### DOI/URL resolver: arXiv-only `.bib` entries now resolve to a real link
+- `mp.resolve_reference_href(fields)`: offline (no network access) DOI/
+  arXiv-id/URL normalisation, extracted from `ReferenceCatalog` into its
+  own documented, directly-usable function. Tries, in order: a `doi`
+  field (bare, `doi:`-prefixed, or a full `doi.org`/`dx.doi.org` URL --
+  all normalised to the same `https://doi.org/...` form); an arXiv id
+  (`eprint` + `archiveprefix`/`eprinttype` == `"arxiv"`, the shape arXiv's
+  own "export bibtex" feature produces) resolved to
+  `https://arxiv.org/abs/...`; then a plain `url` field; `None` if none of
+  those are present.
+- Fixes a real gap in `ReferenceCatalog` (not just an added feature): an
+  arXiv-only entry -- extremely common for ML/CS papers, `eprint` +
+  `archiveprefix` and *no* `doi`/`url` field at all -- previously resolved
+  to `href=None` silently, since the original doi-or-url-only fallback
+  never looked at `eprint`. `ReferenceCatalog.__getitem__` now uses
+  `resolve_reference_href` internally, so existing `.bib` files with
+  arXiv-only entries start producing real links with no code changes.
+- Regression coverage: 13 new tests in `tests/test_bib.py` (bare/prefixed/
+  full-URL DOI forms all normalise identically, arXiv id resolution via
+  both field-name variants, priority order when multiple are present, no
+  link when none are present, and the exact arXiv-only-entry regression
+  end-to-end through `ReferenceCatalog`).
+
 ### `.bib` integration: `ReferenceCatalog` (P2-1)
 
 - `mp.ReferenceCatalog.from_bib(path)` / `.from_bib_text(text)`: a minimal,

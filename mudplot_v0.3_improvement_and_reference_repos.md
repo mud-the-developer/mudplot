@@ -1165,7 +1165,10 @@ https://example.org/paper_v2?x=1&y=2#section_3
 - [x] `.bib` → `ReferenceCatalog` — `mp.ReferenceCatalog.from_bib()`/
       `.from_bib_text()`, 의존성 없는 최소 BibTeX 파서. `catalog[key]` →
       `ReferenceSpec`(doi→href 자동 해결, 없으면 url 폴백).
-- [ ] DOI/URL resolver
+- [x] DOI/URL resolver — `mp.resolve_reference_href()`: doi(맨/"doi:"/전체 URL) →
+      doi.org, arXiv id(eprint+archiveprefix) → arxiv.org, url 폴백. 네트워크
+      호출 없음(순수 문자열 정규화만). arXiv-only .bib 항목이 실제로
+      `href=None`이되던 기존 개그을 `ReferenceCatalog`에서 함께 고침
 - [ ] figure lint / publication preflight
 - [ ] richer journal profiles
 - [ ] release/nightly TeX engine matrix

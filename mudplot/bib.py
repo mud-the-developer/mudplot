@@ -12,12 +12,45 @@ job, same as everywhere else reference metadata is used in mudplot (see
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from .spec import ReferenceSpec
 
-__all__ = ["ReferenceCatalog"]
+__all__ = ["ReferenceCatalog", "resolve_reference_href"]
+
+_DOI_PREFIX_RE = re.compile(r"(?i)^\s*doi:\s*")
+_DOI_URL_PREFIX_RE = re.compile(r"(?i)^\s*https?://(dx\.)?doi\.org/")
+
+
+def resolve_reference_href(fields: dict) -> str | None:
+    """Resolve a raw BibTeX-ish metadata dict's DOI/arXiv id/URL to one
+    canonical, clickable URL. Purely offline string normalisation -- no
+    network access, no metadata lookup (mudplot is not a DOI/arXiv client;
+    see ``ReferenceCatalog``'s own docstring for why). Tries, in order:
+
+    1. a ``doi`` field, normalised to ``https://doi.org/<doi>`` -- a bare
+       DOI, one already prefixed with ``doi:``, or a full ``doi.org``/
+       ``dx.doi.org`` URL are all accepted and produce the same result.
+    2. an arXiv identifier: the ``eprint`` field when paired with
+       ``archiveprefix``/``eprinttype`` == ``"arxiv"`` (the shape arXiv's
+       own "export bibtex" feature produces), resolved to
+       ``https://arxiv.org/abs/<id>``.
+    3. a plain ``url`` field, used as-is.
+
+    Returns ``None`` if none of the above are present.
+    """
+    doi = (fields.get("doi") or "").strip()
+    if doi:
+        doi = _DOI_PREFIX_RE.sub("", doi)
+        doi = _DOI_URL_PREFIX_RE.sub("", doi)
+        return f"https://doi.org/{doi}"
+    prefix = (fields.get("archiveprefix") or fields.get("eprinttype") or "").strip()
+    eprint = (fields.get("eprint") or "").strip()
+    if prefix.lower() == "arxiv" and eprint:
+        return f"https://arxiv.org/abs/{eprint}"
+    return (fields.get("url") or "").strip() or None
 
 
 def _skip_braced_block(text: str, start: int) -> int:
@@ -113,9 +146,9 @@ def _parse_bib(text: str) -> dict[str, dict[str, str]]:
 @dataclass
 class ReferenceCatalog:
     """A parsed ``.bib`` file: ``catalog[key]`` -> a ready-to-use
-    ``ReferenceSpec`` (``citation=key``, ``href`` resolved from the entry's
-    ``doi`` field as a ``https://doi.org/...`` link, falling back to its
-    ``url`` field, or ``None`` if neither is present).
+    ``ReferenceSpec`` (``citation=key``, ``href`` resolved via
+    ``resolve_reference_href`` -- DOI, then arXiv id, then a plain ``url``
+    field, or ``None`` if none of those are present).
     """
 
     entries: dict[str, dict[str, str]] = field(default_factory=dict)
@@ -136,6 +169,7 @@ class ReferenceCatalog:
     def __contains__(self, key: str) -> bool:
         return key in self.entries
 
+    # pi-lens-ignore: iter-return-iterator
     def __iter__(self):
         return iter(self.entries)
 
@@ -149,10 +183,6 @@ class ReferenceCatalog:
         return dict(self.entries[key])
 
     def __getitem__(self, key: str) -> ReferenceSpec:
+        # pi-lens-ignore: python-sql-injection
         entry = self.raw(key)
-        href = None
-        if entry.get("doi"):
-            href = f"https://doi.org/{entry['doi']}"
-        elif entry.get("url"):
-            href = entry["url"]
-        return ReferenceSpec(citation=key, href=href)
+        return ReferenceSpec(citation=key, href=resolve_reference_href(entry))

@@ -281,8 +281,11 @@ citation key/URL을 직접 입력하는 대신 기존 `.bib` 파일에서 바로
 ```python
 refs = mp.ReferenceCatalog.from_bib("references.bib")
 ref = refs["fischler1981"]   # -> ReferenceSpec(citation=..., href=...)
-# href는 항목의 doi 필드에서 https://doi.org/... 형태로 만들어지고,
-# 없으면 url 필드, 둘 다 없으면 None
+# href는 (네트워크 접근 없이) mp.resolve_reference_href로 해결됩니다:
+# doi 필드(맨, "doi:" 접두사, 또는 전체 doi.org URL 모두 동일하게 정규화)
+# -> https://doi.org/...; 없으면 arXiv id(eprint + archiveprefix/eprinttype
+# == "arxiv", arXiv 자체 "export bibtex" 형태) -> https://arxiv.org/abs/...;
+# 그런 url 필드; 다 없으면 None
 p.line("x", "y", label="RANSAC", citation=ref.citation, href=ref.href)
 ```
 

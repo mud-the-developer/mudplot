@@ -323,8 +323,11 @@ bibliography manager):
 ```python
 refs = mp.ReferenceCatalog.from_bib("references.bib")
 ref = refs["fischler1981"]   # -> ReferenceSpec(citation=..., href=...)
-# href is resolved from the entry's doi field (as https://doi.org/...),
-# falling back to its url field, or None if neither is present
+# href is resolved (offline, no network access) via mp.resolve_reference_href:
+# a doi field (bare, "doi:"-prefixed, or a full doi.org URL -- all normalised
+# the same way) -> https://doi.org/...; else an arXiv id (eprint +
+# archiveprefix/eprinttype == "arxiv", the shape arXiv's own "export bibtex"
+# produces) -> https://arxiv.org/abs/...; else a plain url field; else None.
 p.line("x", "y", label="RANSAC", citation=ref.citation, href=ref.href)
 ```
 

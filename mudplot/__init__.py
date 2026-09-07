@@ -15,7 +15,7 @@ from typing import TYPE_CHECKING
 from . import actions
 from .actions import action_from_dict, action_to_dict
 from .api import Plot, apply, color_palette, plot
-from .bib import ReferenceCatalog
+from .bib import ReferenceCatalog, resolve_reference_href
 from .capabilities import capabilities
 from .docs import reference_markdown
 from .io import from_json, load_spec, save_spec, to_json
@@ -108,6 +108,7 @@ __all__ = [
     "reduce_all",
     "reference_markdown",
     "render",
+    "resolve_reference_href",
     "save",
     "save_spec",
     "tex_preview",
