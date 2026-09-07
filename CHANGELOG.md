@@ -4,6 +4,27 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### FigureSpec version/migration policy
+- Package version (`mudplot.__version__`) and spec version (`SPEC_VERSION`,
+  the on-disk `.mplot.json` contract) are now formally independent: not
+  every release changes the serialized shape, and `SPEC_VERSION` is the one
+  a Rust/agent consumer, or a saved file, actually needs to check
+  compatibility against. Documented in `mudplot/spec.py`.
+- `FigureSpec.from_dict()` (and therefore `from_json`/`load_spec`/
+  `Plot.from_json`, every deserialisation path) now checks the saved
+  `version` field: an older *known* version gets upgraded through a new
+  `MIGRATIONS` registry (empty for now -- nothing predates `"0.1"` yet);
+  an unrecognised version (older with no migration, or newer than this
+  mudplot understands) now raises a clear `ValueError` instead of silently
+  loading with whatever fields happen to match. `validate()` catches the
+  same problem for a `FigureSpec` built directly (bypassing `from_dict`)
+  with a mismatched `version`.
+- New CLI subcommand: `mudplot migrate old.mplot.json -o new.mplot.json`
+  (upgrades and rewrites a saved spec; a no-op write if it's already
+  current).
+- Regression coverage: 4 new tests in `tests/test_spec_roundtrip.py`, a new
+  `tests/test_cli_migrate.py` (4 tests).
+
 ### Reference metadata: grouped series, saner citation/URL validation
 
 - `ReferenceSpec` (`mp.Reference`/`mp.ReferenceSpec`): the citation/href pair

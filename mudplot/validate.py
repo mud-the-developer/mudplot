@@ -191,8 +191,18 @@ def _check_axis(axis, where: str, issues: list[str]) -> None:
 
 def validate(spec: FigureSpec) -> list[str]:
     """Return a list of problems found in ``spec`` (empty = valid)."""
+    from .spec import SPEC_VERSION
+
     issues: list[str] = []
     cols = spec.data.columns
+
+    if spec.version != SPEC_VERSION:
+        issues.append(
+            f"unknown spec version {spec.version!r}; this mudplot understands "
+            f"{SPEC_VERSION!r} (a spec built via FigureSpec.from_dict()/from_json() "
+            "would have been migrated or rejected already -- this one was "
+            "constructed directly with a mismatched version)"
+        )
 
     if (
         not isinstance(spec.size, (list, tuple))

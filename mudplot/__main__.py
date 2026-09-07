@@ -6,9 +6,11 @@ Subcommands:
     mudplot docs [--out FILE]          print/write the Markdown reference docs
     mudplot validate SPEC.json         validate a saved spec, print issues
     mudplot render SPEC.json OUT.png   render a saved spec to an image/PDF
+    mudplot migrate SPEC.json -o OUT   upgrade an old spec to the current version
 
-``capabilities``, ``schema``, ``docs`` and ``validate`` need only the pure
-core. ``render`` needs the ``[render]`` extra (numpy + matplotlib).
+``capabilities``, ``schema``, ``docs``, ``validate`` and ``migrate`` need
+only the pure core. ``render`` needs the ``[render]`` extra (numpy +
+matplotlib).
 """
 
 from __future__ import annotations
@@ -77,6 +79,20 @@ def _cmd_render(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_migrate(args: argparse.Namespace) -> int:
+    from .io import load_spec, save_spec
+    from .spec import SPEC_VERSION
+
+    # load_spec() already upgrades an older "version" via
+    # FigureSpec.from_dict() -> migrate_spec_dict(); this command exists to
+    # write the upgraded spec back out (an unknown/future version still
+    # raises, same one-line error as any other command).
+    spec = load_spec(args.spec)
+    save_spec(spec, args.out)
+    print(f"wrote {args.out} (spec version {SPEC_VERSION})", file=sys.stderr)
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="mudplot", description=__doc__)
     sub = p.add_subparsers(dest="command", required=True)
@@ -100,6 +116,13 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("spec", help="path to a .mplot.json file")
     sp.add_argument("out", help="output path (.png/.pdf/.svg)")
     sp.set_defaults(func=_cmd_render)
+
+    sp = sub.add_parser(
+        "migrate", help="upgrade a saved spec to the current SPEC_VERSION"
+    )
+    sp.add_argument("spec", help="path to a .mplot.json file")
+    sp.add_argument("-o", "--out", required=True, help="output path")
+    sp.set_defaults(func=_cmd_migrate)
 
     return p
 

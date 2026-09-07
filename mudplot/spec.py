@@ -12,12 +12,54 @@ from __future__ import annotations
 
 import types
 import typing
+from collections.abc import Callable
 from dataclasses import dataclass, field, fields, is_dataclass
 from typing import Any, Union, get_args, get_origin
 
 _UNION_ORIGINS = (Union, types.UnionType)
 
+# The *package* version (``mudplot.__version__``) and the *spec* version
+# below are independent numbers: not every release changes what a
+# FigureSpec looks like on disk, and SPEC_VERSION is the one a Rust/agent
+# consumer, or a saved ``.mplot.json``, actually needs to check
+# compatibility against. Bump it only for changes to the *serialized*
+# shape that an old loader could misinterpret (a field renamed/removed/
+# repurposed) -- a new optional field with a safe default (like
+# LayerSpec.references) does not need a bump, since old and new loaders
+# both handle its absence the same way.
 SPEC_VERSION = "0.1"
+
+# A migration is a plain dict -> dict function (bumping the "version" key
+# itself), keyed by the version it upgrades *from* -- kept dict->dict
+# rather than dataclass->dataclass so the same table stays meaningful to
+# a future non-Python (e.g. Rust/serde) implementation reading the same
+# file format. Empty until SPEC_VERSION's first bump actually needs one.
+MIGRATIONS: dict[str, Callable[[dict], dict]] = {}
+
+
+def migrate_spec_dict(data: dict) -> dict:
+    """Upgrade a saved spec dict to the current ``SPEC_VERSION``.
+
+    Both an unrecognized *older* version (no migration registered for it)
+    and any *newer* version than this mudplot understands fail loudly here
+    rather than silently misinterpreting/dropping fields later.
+    """
+    version = data.get("version", SPEC_VERSION)
+    seen = set()
+    while version != SPEC_VERSION:
+        if version in seen:
+            raise ValueError(f"circular spec migration detected at version {version!r}")
+        seen.add(version)
+        migrate = MIGRATIONS.get(version)
+        if migrate is None:
+            raise ValueError(
+                f"don't know how to load spec version {version!r} "
+                f"(this mudplot understands {SPEC_VERSION!r}); "
+                "upgrade mudplot, or migrate the file by hand"
+            )
+        data = migrate(data)
+        version = data.get("version", SPEC_VERSION)
+    return data
 
 
 # --------------------------------------------------------------------------
@@ -291,3 +333,13 @@ class FigureSpec(SpecBase):
     share_x: str = "none"  # "none" | "all" | "row" | "col"
     share_y: str = "none"  # "none" | "all" | "row" | "col"
     journal: str | None = None  # nature | ieee | None
+
+    @classmethod
+    def from_dict(cls, data: dict) -> FigureSpec:
+        """Like ``SpecBase.from_dict``, but upgrades an older on-disk
+        ``version`` first (see ``migrate_spec_dict``). This is the one
+        entry point (``.mplot.json`` load, ``Plot.from_json``, the
+        dashboard editor's "open a spec" action) that ever sees a spec's
+        raw ``version`` field, since nested sub-specs don't carry one.
+        """
+        return typing.cast("FigureSpec", super().from_dict(migrate_spec_dict(data)))

@@ -1,6 +1,7 @@
 import mudplot as mp
+import pytest
 from mudplot import io
-from mudplot.spec import FigureSpec, LayerSpec
+from mudplot.spec import SPEC_VERSION, FigureSpec, LayerSpec, migrate_spec_dict
 
 
 def _demo_plot():
@@ -43,6 +44,31 @@ def test_save_load_file(tmp_path):
     io.save_spec(p.spec, path)
     loaded = io.load_spec(path)
     assert loaded.to_dict() == p.spec.to_dict()
+
+
+def test_current_version_round_trips_unchanged():
+    d = FigureSpec().to_dict()
+    assert migrate_spec_dict(d) is d
+
+
+def test_missing_version_field_defaults_to_current():
+    d = FigureSpec().to_dict()
+    del d["version"]
+    restored = FigureSpec.from_dict(d)
+    assert restored.version == SPEC_VERSION
+
+
+def test_unknown_future_version_is_rejected_not_silently_loaded():
+    d = FigureSpec().to_dict()
+    d["version"] = "99.0"
+    with pytest.raises(ValueError, match=r"99\.0"):
+        FigureSpec.from_dict(d)
+
+
+def test_directly_constructed_bad_version_fails_validate():
+    spec = FigureSpec(version="99.0")
+    issues = mp.validate(spec)
+    assert any("spec version" in i for i in issues)
 
 
 def test_builder_mutates_spec_only():

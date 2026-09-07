@@ -1132,7 +1132,9 @@ https://example.org/paper_v2?x=1&y=2#section_3
 ## v0.4 — schema/reference stabilization
 
 - [x] `ReferenceSpec` — P0-1과 함께 도입 (`mp.Reference`/`mp.ReferenceSpec`)
-- [ ] FigureSpec migration policy
+- [x] FigureSpec migration policy — `SPEC_VERSION` vs package version 문서화,
+      `MIGRATIONS` 레지스트리 + `migrate_spec_dict()`, 알 수 없는 버전 거부,
+      `validate()`에서도 검사, `mudplot migrate` CLI
 - [x] backend capability registry — `mp.capabilities()["backends"]`
       (png/pdf/svg/pgf 별 citations/hyperlinks/vector/requires_tex)
 - [ ] citation measurement policy
