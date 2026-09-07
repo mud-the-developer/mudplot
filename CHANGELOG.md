@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Hypothesis-based property tests
+
 - New dev dependency: `hypothesis` (test-only). New
   `tests/test_property_based.py` widens several existing example-based
   guarantees into properties checked against a much larger randomised
