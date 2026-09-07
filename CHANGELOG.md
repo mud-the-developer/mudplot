@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### `.bib` integration: `ReferenceCatalog` (P2-1)
+
 - `mp.ReferenceCatalog.from_bib(path)` / `.from_bib_text(text)`: a minimal,
   dependency-free reader for the common subset of BibTeX entry syntax real
   `.bib` files use (nested `{...}` field values, both quoting styles,

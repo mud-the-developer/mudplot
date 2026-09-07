@@ -248,7 +248,9 @@ seaborn(`style="whitegrid"` 문자열)·matplotlib(`rcParams['axes.linewidth']`
   theme.ticks.direction = "in"
   theme.palette.kind = "qualitative"   # 팔레트도 테마 일부
   ```
+
 - **fluent 빌더**: 메서드 이름이 곧 의미. 각 호출은 Spec을 수정할 뿐.
+
   ```python
   (mp.plot(df)
       .line(x="voltage", y="current", group="order")
@@ -256,6 +258,7 @@ seaborn(`style="whitegrid"` 문자열)·matplotlib(`rcParams['axes.linewidth']`
       .theme("paper").journal("nature")
       .save("fig.pdf"))
   ```
+
 - **발견 가능성**: 모든 옵션은 dataclass 필드 → IDE 자동완성/문서/JSON 스키마로
   그대로 노출. Rust 폼도 같은 스키마에서 자동 생성 가능.
 - **합리적 기본값**: 논문 프리셋(paper/nature/ieee)만 골라도 바로 쓸 만하게.

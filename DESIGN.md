@@ -221,7 +221,7 @@ regression tests in `tests/test_bugfixes.py`):
 
 ### Follow-up audit (found while answering "what plot types are supported?")
 
-11. **`capabilities()` under-reported real functionality**: `bar`/
+ 1. **`capabilities()` under-reported real functionality**: `bar`/
     `errorbar`/`band`/`hline`/`vline`/`text`/`annotate` all correctly
     support `axis="y2"` routing in `render.py`/`validate.py`, but
     `LAYER_TYPES` only listed `axis` as a field for `line`/`scatter`. An
@@ -230,7 +230,7 @@ regression tests in `tests/test_bugfixes.py`):
     cross-module consistency test
     (`tests/test_capabilities_consistency.py`) that pins `LAYER_TYPES`,
     `LayerSpec`'s real fields, and `render`/`validate`'s type sets together.
-12. **Categorical x-axis values crashed every series layer.** `_col()`
+ 2. **Categorical x-axis values crashed every series layer.** `_col()`
     forced `dtype=float` unconditionally, so an extremely common case for a
     bar chart — string category labels like `["control", "treatment"]` on
     x — failed with "could not convert string to float" instead of working
@@ -238,7 +238,7 @@ regression tests in `tests/test_bugfixes.py`):
     would. Fixed: non-numeric x columns are now mapped to evenly-spaced
     positions with the original strings applied as tick labels, for
     line/scatter/bar/errorbar/band alike (numeric x is unaffected).
-13. **The lazy top-level API (`mp.render`, `mp.save`) broke after the
+ 3. **The lazy top-level API (`mp.render`, `mp.save`) broke after the
     first call in a process.** `mudplot/__init__.py`'s PEP 562
     `__getattr__` resolved these via `importlib.import_module("mudplot.render")`,
     but importing a submodule has the side effect of binding it onto the
@@ -260,7 +260,8 @@ regression tests in `tests/test_bugfixes.py`):
 
 ### Follow-up audit #2 (found while expanding plot coverage to 3-D/violin/kde/pie/contour)
 
-14. **The bug #13 fix above was still incomplete.** Patching `__getattr__`
+ 1. **The lazy-top-level-API fix from the previous audit pass was still
+    incomplete.** Patching `__getattr__`
     only helps when resolution actually goes through it; an ordinary
     `from .render import save` *anywhere else* in the codebase (e.g.
     `Plot.save()`) triggers the exact same submodule/parent-binding side
@@ -274,7 +275,7 @@ regression tests in `tests/test_bugfixes.py`):
     collides with the public `mp.render` attribute at all. (General lesson
     kept as a comment in `__init__.py`: a `_LAZY` key must never equal the
     last component of its own backing submodule's dotted name.)
-15. **Pie charts drew a duplicate, overlapping legend on top of their own
+ 2. **Pie charts drew a duplicate, overlapping legend on top of their own
     on-wedge labels.** `ax.pie(..., labels=...)` also registers each wedge
     as a legend handle (so callers can draw a separate legend instead of
     on-wedge labels if they prefer), which collided with mudplot's generic
@@ -348,6 +349,7 @@ Removes the non-intuitive aspects of seaborn (`style="whitegrid"` strings)
 and matplotlib (`rcParams['axes.linewidth']` dotted strings).
 
 - **Structured, typed themes**: grouped attributes instead of string keys.
+
   ```python
   theme = mp.Theme.paper()
   theme.font.size = 10          # not rcParams['font.size']
@@ -356,8 +358,10 @@ and matplotlib (`rcParams['axes.linewidth']` dotted strings).
   theme.ticks.direction = "in"
   theme.palette.kind = "qualitative"   # the palette is part of the theme too
   ```
+
 - **Fluent builder**: method names carry their meaning; each call just
   updates the spec.
+
   ```python
   (mp.plot(df)
       .line(x="voltage", y="current", group="order")
@@ -365,6 +369,7 @@ and matplotlib (`rcParams['axes.linewidth']` dotted strings).
       .theme("paper").journal("nature")
       .save("fig.pdf"))
   ```
+
 - **Discoverability**: every option is a dataclass field → exposed directly
   through IDE autocomplete, docs, and the JSON Schema. A Rust form could be
   auto-generated from the same schema.
