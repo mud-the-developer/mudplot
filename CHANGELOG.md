@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Journal profile registry cleanup (P2-3)
+
 - Two registries have always independently covered a "journal": `theme.
   AVAILABLE_JOURNALS`/`journal_overrides` (a style -- fonts/linewidths/
   default figure size, applied via `.journal(name)`) and `tex.TEX_PRESETS`
