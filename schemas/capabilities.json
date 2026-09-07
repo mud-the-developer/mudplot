@@ -327,6 +327,32 @@
       "description": "Muted/pastel; safe for up to 5 categories."
     }
   },
+  "backends": {
+    "png": {
+      "vector": false,
+      "citations": false,
+      "hyperlinks": false,
+      "requires_tex": false
+    },
+    "pdf": {
+      "vector": true,
+      "citations": false,
+      "hyperlinks": false,
+      "requires_tex": false
+    },
+    "svg": {
+      "vector": true,
+      "citations": false,
+      "hyperlinks": true,
+      "requires_tex": false
+    },
+    "pgf": {
+      "vector": true,
+      "citations": true,
+      "hyperlinks": true,
+      "requires_tex": true
+    }
+  },
   "tex_presets": {
     "article": {
       "columnwidth_pt": 345.0,

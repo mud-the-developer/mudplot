@@ -4,7 +4,31 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
-(nothing yet)
+### Reference metadata: grouped series, saner citation/URL validation
+- `ReferenceSpec` (`mp.Reference`/`mp.ReferenceSpec`): the citation/href pair
+  used to live only on `LayerSpec`/title fields; now also the type of
+  `LayerSpec.references`, a `{group_value: ReferenceSpec}` dict for
+  attaching a *different* citation/href to each series of a `group=`-ed
+  layer (previously impossible -- every series in a group shared one
+  `label`/`citation`/`href` at most, so e.g. `group="method"` with RANSAC/
+  J-Linkage/PEARL series couldn't cite a different paper per method). Wired
+  through PGF `\figcite`/`\href` decoration and SVG per-legend-entry links,
+  the same as the existing ungrouped case; a group value absent from
+  `references` gets no decoration (no silent fallback to a shared citation).
+- Citation/href validation split into separate rules instead of one shared
+  TeX-unsafe-character blocklist: a citation is only ever used as a
+  `\figcite{KEY}` lookup argument (never typeset), so ordinary BibTeX-key
+  punctuation (`_`, `:`, `-`) is now allowed -- previously `fischler_1981`
+  or `han:v2v_2019` were rejected outright. `href` becomes a
+  `\href{URL}{...}` argument, which hyperref itself reads with special
+  URL-safe catcodes (like `\url`), so query strings/fragments (`_`, `&`,
+  `#`, `%`, `~`) are now allowed there too. Brace/backslash/control
+  characters (the actual macro-injection risk) are still rejected in both.
+- `mp.capabilities()["backends"]`: which of `citations`/`hyperlinks`/
+  `vector`/`requires_tex` each output format (`png`/`pdf`/`svg`/`pgf`)
+  actually preserves, so an agent/editor can show e.g. "citations are only
+  kept in PGF export" instead of that being implicit renderer behaviour.
+- Regression coverage: 14 new tests in `tests/test_references.py`.
 
 ## [0.3.0] - 2026-09-06
 

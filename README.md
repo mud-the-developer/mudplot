@@ -3,8 +3,9 @@
 *[한국어 문서 / Korean docs: README.ko.md](README.ko.md)*
 
 A Python plotting library for scientific papers, built on Matplotlib. It
-provides **perceptually uniform, colourblind-safe** colour palettes and
-styles.
+provides **perceptually uniform, colourblind-aware** colour palettes and
+styles (measured via `Palette.report()`, not a certified accessibility
+guarantee -- see below).
 
 At its core is an **LCH (CIELAB polar coordinates) colour engine**:
 

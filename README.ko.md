@@ -3,8 +3,9 @@
 *[English docs: README.md](README.md)*
 
 논문용 그래프를 위한 Python 플롯 라이브러리. Matplotlib 위에서
-**지각적으로 균일하고(perceptually uniform), 적녹 색맹 안전한(colorblind-safe)**
-색상 팔레트와 스타일을 제공합니다.
+**지각적으로 균일하고(perceptually uniform), 색맹을 고려한(colorblind-aware)**
+색상 팔레트와 스타일을 제공합니다(`Palette.report()`로 직접 측정한 값이며,
+인증된 접근성 기준은 아님 — 아래 참고).
 
 핵심은 **LCH(CIELAB 극좌표) 기반 색상 엔진**입니다.
 

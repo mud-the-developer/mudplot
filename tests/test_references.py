@@ -36,15 +36,33 @@ def _plot():
     )
 
 
-def _save(tmp_path, name):
+def _grouped_plot():
+    return mp.plot(
+        {
+            "snr": [1, 2, 3, 1, 2, 3],
+            "bler": [0.9, 0.5, 0.1, 0.8, 0.4, 0.2],
+            "method": ["RANSAC"] * 3 + ["J-Linkage"] * 3,
+        }
+    ).line(
+        "snr",
+        "bler",
+        group="method",
+        references={
+            "RANSAC": mp.Reference(citation="fischler_1981", href=DOI),
+            "J-Linkage": mp.Reference(citation="toldo_2008"),
+        },
+    )
+
+
+def _save(make_plot, tmp_path, name):
     path = tmp_path / name
-    plt.close(mp.save(_plot().spec, str(path)))
+    plt.close(mp.save(make_plot().spec, str(path)))
     return path.read_text(encoding="utf-8")
 
 
 @needs_tex
 def test_pgf_export_emits_figcite_and_href_macros(tmp_path):
-    pgf = _save(tmp_path, "fig.pgf")
+    pgf = _save(_plot, tmp_path, "fig.pgf")
     # the paper's own \figcite/\href, not a baked-in citation number
     assert "\\figcite{fischler1981}" in pgf
     assert "\\figcite{hartley2003}" in pgf
@@ -55,7 +73,7 @@ def test_pgf_export_emits_figcite_and_href_macros(tmp_path):
 
 
 def test_svg_export_makes_the_legend_entry_a_link(tmp_path):
-    svg = _save(tmp_path, "fig.svg")
+    svg = _save(_plot, tmp_path, "fig.svg")
     assert DOI in svg
     # SVG has no bibliography to resolve a citation key against, so the key
     # must not be dumped into the visible text
@@ -66,7 +84,9 @@ def test_raster_export_keeps_labels_plain(tmp_path):
     spec = _plot().spec
     fig = mp.save(spec, str(tmp_path / "fig.png"))
     try:
-        labels = [t.get_text() for t in fig.axes[0].get_legend().get_texts()]
+        legend = fig.axes[0].get_legend()
+        assert legend is not None
+        labels = [t.get_text() for t in legend.get_texts()]
     finally:
         plt.close(fig)
     assert labels == ["RANSAC"]
@@ -81,6 +101,13 @@ def test_references_do_not_disturb_layout(tmp_path):
     with warnings.catch_warnings():
         warnings.simplefilter("error", UserWarning)
         plt.close(mp.save(_plot().spec, str(tmp_path / "fig.pgf")))
+
+
+@needs_tex
+def test_grouped_references_do_not_disturb_layout(tmp_path):
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", UserWarning)
+        plt.close(mp.save(_grouped_plot().spec, str(tmp_path / "fig.pgf")))
 
 
 def test_reference_metadata_round_trips_through_json():
@@ -101,6 +128,97 @@ def test_tex_unsafe_reference_metadata_is_rejected():
     assert any("citation" in i for i in issues)
     with pytest.raises(ValueError):
         mp.render(p.spec)
+
+
+def test_grouped_reference_round_trips_through_json():
+    p = _grouped_plot()
+    restored = mp.Plot.from_json(p.to_json())
+    refs = restored.spec.panels[0].layers[0].references
+    assert refs is not None
+    assert refs["RANSAC"].citation == "fischler_1981"
+    assert refs["RANSAC"].href == DOI
+    assert refs["J-Linkage"].citation == "toldo_2008"
+    assert refs["J-Linkage"].href is None
+    assert restored.to_json() == p.to_json()
+
+
+def test_group_without_a_references_entry_gets_no_decoration():
+    # J-Linkage has a citation but no href -> its legend text is plain
+    p = _grouped_plot()
+    fig = mp.render(p.spec)
+    try:
+        legend = fig.axes[0].get_legend()
+        assert legend is not None
+        labels = [t.get_text() for t in legend.get_texts()]
+    finally:
+        plt.close(fig)
+    assert labels == ["RANSAC", "J-Linkage"]
+
+
+@pytest.mark.parametrize(
+    "citation", ["fischler_1981", "han:v2v_2019", "smith-2025-ai", "deepmimo_v3"]
+)
+def test_realistic_bibtex_keys_pass_validation(citation):
+    # underscore/colon/dash are ordinary BibTeX-key characters; only
+    # macro-injection-risk characters (braces, backslash, ...) are unsafe
+    p = mp.plot({"x": [1], "y": [1]}).line("x", "y", citation=citation)
+    assert mp.validate(p.spec) == []
+
+
+@pytest.mark.parametrize(
+    "href",
+    [
+        "https://example.org/paper_v2?x=1&format=pdf#section_2",
+        "https://doi.org/10.1145/358669.358692",
+        "https://example.org/a%20b?q=1~2",
+    ],
+)
+def test_realistic_urls_with_query_fragment_pass_validation(href):
+    # hyperref reads \href{URL}{...}'s URL argument with special catcodes
+    # (like \url), so ordinary URL punctuation renders correctly as-is
+    p = mp.plot({"x": [1], "y": [1]}).line("x", "y", href=href)
+    assert mp.validate(p.spec) == []
+
+
+@needs_tex
+def test_url_with_query_and_fragment_compiles_as_href(tmp_path):
+    href = "https://example.org/paper_v2?x=1&format=pdf#section_2"
+
+    def make():
+        return mp.plot({"x": [1], "y": [1]}).line("x", "y", label="L", href=href)
+
+    pgf = _save(make, tmp_path, "fig.pgf")
+    assert f"\\href{{{href}}}{{" in pgf
+
+
+def test_brace_and_backslash_are_still_rejected_in_citation_and_href():
+    p = mp.plot({"x": [1], "y": [1]}).line(
+        "x", "y", citation="a} \\input{x", href="http://x/{y}"
+    )
+    issues = mp.validate(p.spec)
+    assert any("citation" in i for i in issues)
+    assert any("href" in i for i in issues)
+
+
+def test_grouped_reference_entries_are_validated_too():
+    p = mp.plot({"x": [1, 2], "y": [1, 2], "g": ["a", "b"]}).line(
+        "x", "y", group="g", references={"a": mp.Reference(citation="a}bad")}
+    )
+    issues = mp.validate(p.spec)
+    assert any("reference['a']" in i for i in issues)
+
+
+def test_backend_capabilities_are_exposed():
+    caps = mp.capabilities()["backends"]
+    assert caps["pgf"] == {
+        "vector": True,
+        "citations": True,
+        "hyperlinks": True,
+        "requires_tex": True,
+    }
+    assert caps["png"]["citations"] is False
+    assert caps["svg"]["hyperlinks"] is True
+    assert caps["svg"]["citations"] is False
 
 
 def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch):

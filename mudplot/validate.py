@@ -117,24 +117,58 @@ def _finite(value) -> bool:
 # user's LaTeX then compiles -- so these are a trust boundary, not just a
 # formatting concern: an unbalanced brace or a stray backslash would inject
 # arbitrary markup into their document (and break the build at best).
-_TEX_UNSAFE = set("{}\\%$#&~^_\n\r")
+#
+# citation and href get different rules because they land in different
+# places: a citation is only ever used as a \figcite{KEY} *argument*, which
+# LaTeX uses purely for lookup (never typeset), so ordinary BibTeX-key
+# characters like "_"/":"/"-" are fine -- only characters that could break
+# out of that argument (braces/backslash/macro-prefix chars) are unsafe.
+# href becomes a \href{URL}{...} argument, which hyperref itself reads with
+# special "URL-safe" catcodes (the same trick \url uses), so ordinary URL
+# punctuation ("_", "&", "#", "%", "?", "~") is fine there too -- only
+# braces/backslash (which would break hyperref's own argument scanning) and
+# control characters are unsafe.
+_CITATION_UNSAFE = set("{}\\%$#&~^\n\r\t")
+_HREF_UNSAFE = set("{}\\\n\r\t")
+
+
+def _check_ref_field(
+    field_name: str,
+    value: str | None,
+    unsafe: set,
+    why: str,
+    where: str,
+    issues: list[str],
+) -> None:
+    if value is None:
+        return
+    if not isinstance(value, str) or not value.strip():
+        issues.append(f"{where}: {field_name} must be a non-empty string")
+        return
+    bad = sorted(unsafe & set(value))
+    if bad:
+        issues.append(f"{where}: {field_name} may not contain {''.join(bad)!r} ({why})")
 
 
 def _check_reference(
     citation: str | None, href: str | None, where: str, issues: list[str]
 ) -> None:
-    for field_name, value in (("citation", citation), ("href", href)):
-        if value is None:
-            continue
-        if not isinstance(value, str) or not value.strip():
-            issues.append(f"{where}: {field_name} must be a non-empty string")
-            continue
-        bad = sorted(_TEX_UNSAFE & set(value))
-        if bad:
-            issues.append(
-                f"{where}: {field_name} may not contain {''.join(bad)!r} "
-                "(it is substituted into LaTeX source verbatim)"
-            )
+    _check_ref_field(
+        "citation",
+        citation,
+        _CITATION_UNSAFE,
+        "it is used as a BibTeX/\\figcite key argument",
+        where,
+        issues,
+    )
+    _check_ref_field(
+        "href",
+        href,
+        _HREF_UNSAFE,
+        "it is substituted into a LaTeX \\href{...} argument verbatim",
+        where,
+        issues,
+    )
 
 
 def _check_axis(axis, where: str, issues: list[str]) -> None:
@@ -238,6 +272,14 @@ def validate(spec: FigureSpec) -> list[str]:
             _check_reference(
                 layer.citation, layer.href, f"{where_axis} layer {li}", issues
             )
+            if layer.references:
+                for key, ref in layer.references.items():
+                    _check_reference(
+                        ref.citation,
+                        ref.href,
+                        f"{where_axis} layer {li} reference[{key!r}]",
+                        issues,
+                    )
         for name in ("x", "y", "y2", "z"):
             _check_axis(getattr(panel, name), f"{where_axis} {name}", issues)
         if panel.projection == "3d" and panel.y2 is not None:

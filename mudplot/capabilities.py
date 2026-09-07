@@ -13,7 +13,13 @@ from dataclasses import MISSING, fields
 from . import actions as _actions
 from .theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
-__all__ = ["LAYER_TYPES", "PALETTE_KINDS", "PALETTE_PRESETS", "capabilities"]
+__all__ = [
+    "BACKEND_CAPABILITIES",
+    "LAYER_TYPES",
+    "PALETTE_KINDS",
+    "PALETTE_PRESETS",
+    "capabilities",
+]
 
 # Per-layer field guidance (what an agent should provide for each layer type).
 LAYER_TYPES: dict[str, dict[str, list[str]]] = {
@@ -259,6 +265,40 @@ def action_vocabulary() -> dict[str, list[dict]]:
     }
 
 
+# What each output format actually preserves. Reference metadata
+# (citation/href) is backend-dependent -- raster formats can only show
+# plain text, SVG can make an entry a clickable link, and PGF emits real
+# \figcite{...}/\href{...}{...} macros the *document* resolves at TeX-compile
+# time. Exposed so an agent/editor can warn e.g. "citations are only kept in
+# PGF export" instead of that being implicit renderer behaviour.
+BACKEND_CAPABILITIES = {
+    "png": {
+        "vector": False,
+        "citations": False,
+        "hyperlinks": False,
+        "requires_tex": False,
+    },
+    "pdf": {
+        "vector": True,
+        "citations": False,
+        "hyperlinks": False,
+        "requires_tex": False,
+    },
+    "svg": {
+        "vector": True,
+        "citations": False,
+        "hyperlinks": True,
+        "requires_tex": False,
+    },
+    "pgf": {
+        "vector": True,
+        "citations": True,
+        "hyperlinks": True,
+        "requires_tex": True,
+    },
+}
+
+
 def capabilities() -> dict:
     """Return a machine-readable summary of the engine's capabilities."""
     from .tex import TEX_PRESETS
@@ -270,6 +310,7 @@ def capabilities() -> dict:
         "journals": list(AVAILABLE_JOURNALS),
         "palettes": PALETTE_KINDS,
         "palette_presets": PALETTE_PRESETS,
+        "backends": BACKEND_CAPABILITIES,
         "tex_presets": {
             name: {
                 "columnwidth_pt": ctx.columnwidth_pt,

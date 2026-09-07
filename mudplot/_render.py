@@ -94,12 +94,24 @@ def _set_url(artist, href: str | None) -> None:
 
 
 def _link_legend_texts(legend_artist, panel: PanelSpec) -> None:
-    """Point each legend entry's text at its layer's href (SVG only)."""
+    """Point each legend entry's text at its href (SVG only).
+
+    Ungrouped layers key by their (single) label; grouped layers key by
+    each series' group value via ``layer.references`` (see
+    ``ReferenceSpec``), since the group value *is* the legend text for
+    each of that layer's series.
+    """
     if legend_artist is None or _FMT.get() != "svg":
         return
-    by_label = {
-        layer.label: layer.href for layer in panel.layers if layer.label and layer.href
-    }
+    by_label: dict[str, str] = {}
+    for layer in panel.layers:
+        if layer.group is None:
+            if layer.label and layer.href:
+                by_label[layer.label] = layer.href
+        elif layer.references:
+            for key, ref in layer.references.items():
+                if ref.href:
+                    by_label[key] = ref.href
     for text in legend_artist.get_texts():
         _set_url(text, by_label.get(text.get_text()))
 
@@ -171,8 +183,13 @@ def _series_masks(data_cols, layer: LayerSpec):
         )
         return
     g = np.asarray(data_cols[layer.group])
+    refs = layer.references or {}
     for key in _unique_stable(g):
-        yield (str(key), g == key)
+        key_s = str(key)
+        ref = refs.get(key_s)
+        citation = ref.citation if ref else None
+        href = ref.href if ref else None
+        yield (_decorate(key_s, citation, href), g == key)
 
 
 def _continuous_cmap(kind: str):

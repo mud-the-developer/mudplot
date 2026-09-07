@@ -70,7 +70,9 @@ def _from_dict(cls, data: Any):
         seq = [_from_dict(item_t, v) for v in data]
         return tuple(seq) if origin is tuple else seq
     if origin is dict:
-        return dict(data)
+        args = get_args(cls)
+        val_t = args[1] if len(args) == 2 else Any
+        return {k: _from_dict(val_t, v) for k, v in data.items()}
     return data
 
 
@@ -163,6 +165,20 @@ class DataSpec(SpecBase):
 
 
 @dataclass
+class ReferenceSpec(SpecBase):
+    """Citation/link metadata for one legend entry, title, etc.
+
+    Backend-dependent: plain text in raster output, a clickable link in
+    SVG, and real \\figcite/\\href macros in PGF export (see
+    ``mudplot.tex.PREAMBLE``). See ``LayerSpec.references`` for attaching
+    a different one to each series of a ``group``-ed layer.
+    """
+
+    citation: str | None = None  # BibTeX key, e.g. "fischler_1981"
+    href: str | None = None  # URL, e.g. a DOI or arXiv link
+
+
+@dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
     # | hist | box | heatmap | violin | kde | pie | contour | contourf
@@ -177,6 +193,11 @@ class LayerSpec(SpecBase):
     # SVG, and real \figcite/\href macros in PGF export.
     citation: str | None = None  # BibTeX key, e.g. "fischler1981"
     href: str | None = None  # URL, e.g. a DOI or arXiv link
+    # Per-group override of the above, keyed by the group value (as a
+    # string), e.g. {"RANSAC": ReferenceSpec(citation="fischler_1981")} for
+    # a layer with group="method". Only meaningful together with ``group``;
+    # a group value missing from this dict gets no reference decoration.
+    references: dict[str, ReferenceSpec] | None = None
     color: str | None = None  # explicit hex override
     line_width: float | None = None
     line_style: str | None = None  # "-", "--", ":", "-."

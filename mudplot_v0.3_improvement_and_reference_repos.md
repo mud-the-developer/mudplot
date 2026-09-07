@@ -1102,12 +1102,22 @@ ReferenceSpec(
 
 ### 반드시 처리
 
-- [ ] grouped series별 citation/href
-- [ ] citation key에서 `_` 등 정상 identifier 허용
-- [ ] URL escaping 재설계
-- [ ] SVG grouped hyperlink support
-- [ ] README의 colourblind claim / current status sync
-- [ ] reference edge-case regression tests
+- [x] grouped series별 citation/href — `LayerSpec.references: dict[str, ReferenceSpec]`,
+      PGF `\figcite`/`\href` + SVG per-entry link 모두 적용
+- [x] citation key에서 `_` 등 정상 identifier 허용 — citation/href 각각 다른
+      unsafe-set으로 분리 (citation: `_`/`:`/`-` 허용, href: URL 특수문자 허용)
+- [x] URL escaping 재설계 — hyperref의 `\href{URL}{...}` 자체 catcode 처리에
+      의존, 백슬래시/중괄호만 차단
+- [x] SVG grouped hyperlink support — `_link_legend_texts`가 group별
+      `references` 동적으로 매핑
+- [x] README의 colourblind claim / current status sync — "colourblind-safe" →
+      "colourblind-aware"(en/ko 모두)
+- [x] reference edge-case regression tests — `tests/test_references.py`에 14개 추가
+      (grouped round-trip, 대부분 미데코레이션 group, 실제 BibTeX key/URL 패턴,
+      brace/backslash 여전히 차단, backend capability 노출)
+
+> 위 6개 항목 완료 (v0.4.0 예정 커밋, 미리 보네이 없음). 아래는 아직
+> 다루지 않은 항목들.
 
 ### 테스트 예시
 
@@ -1121,9 +1131,10 @@ https://example.org/paper_v2?x=1&y=2#section_3
 
 ## v0.4 — schema/reference stabilization
 
-- [ ] `ReferenceSpec`
+- [x] `ReferenceSpec` — P0-1과 함께 도입 (`mp.Reference`/`mp.ReferenceSpec`)
 - [ ] FigureSpec migration policy
-- [ ] backend capability registry
+- [x] backend capability registry — `mp.capabilities()["backends"]`
+      (png/pdf/svg/pgf 별 citations/hyperlinks/vector/requires_tex)
 - [ ] citation measurement policy
 - [ ] JSON Schema compatibility test
 - [ ] Hypothesis-based serialization/reducer tests

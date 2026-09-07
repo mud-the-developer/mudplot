@@ -20,10 +20,12 @@ from .docs import reference_markdown
 from .io import from_json, load_spec, save_spec, to_json
 from .reducer import reduce, reduce_all
 from .schema import json_schema
-from .spec import FigureSpec
+from .spec import FigureSpec, ReferenceSpec
 from .store import Store
 from .tex import PREAMBLE, TEX_PRESETS, TexContext, figsize_for
 from .validate import assert_valid, validate
+
+Reference = ReferenceSpec  # short alias for fluent-API/agent ergonomics
 
 __version__ = "0.3.0"
 
@@ -83,6 +85,8 @@ __all__ = [
     "TEX_PRESETS",
     "FigureSpec",
     "Plot",
+    "Reference",
+    "ReferenceSpec",
     "Store",
     "TexContext",
     "action_from_dict",

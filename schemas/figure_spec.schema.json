@@ -449,6 +449,17 @@
           ],
           "default": null
         },
+        "references": {
+          "anyOf": [
+            {
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "color": {
           "anyOf": [
             {
