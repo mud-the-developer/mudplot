@@ -134,6 +134,8 @@ Available presets: paper, paper-grid, minimal, boxed.
 
 - **nature**: default figure size [3.5, 2.625], base font 7pt
 - **ieee**: default figure size [3.3, 2.5], base font 8pt
+- **acm**: default figure size [3.33, 2.5], base font 9pt
+- **revtex**: default figure size [3.4, 2.5], base font 8pt
 
 ## TeX presets (WYSIWYG sizing)
 

@@ -158,13 +158,28 @@ def apply_tex(
 def _resolve_ctx(tex) -> TexContext:
     if isinstance(tex, TexContext):
         return tex
+    if hasattr(tex, "columnwidth_pt") and hasattr(tex, "textwidth_pt"):
+        try:
+            return TexContext(
+                name=str(getattr(tex, "name", "custom")),
+                columnwidth_pt=float(tex.columnwidth_pt),
+                textwidth_pt=float(tex.textwidth_pt),
+                fontsize_pt=float(getattr(tex, "base_font_pt", 10.0)),
+                columns=int(getattr(tex, "columns", 1)),
+                family=str(getattr(tex, "font_family", "serif")),
+            )
+        except (ValueError, TypeError) as e:
+            raise TypeError(f"invalid journal profile object: {e}") from e
     if isinstance(tex, str):
         if tex not in TEX_PRESETS:
             raise ValueError(
                 f"unknown TeX preset {tex!r}; choose from {list(TEX_PRESETS)}"
             )
         return TEX_PRESETS[tex]
-    raise TypeError("tex must be a preset name or a TexContext")
+    raise TypeError(
+        "tex must be a preset name, TexContext, or JournalProfile, "
+        f"got {type(tex).__name__}"
+    )
 
 
 def tex_preview(

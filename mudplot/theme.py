@@ -8,6 +8,8 @@ non-intuitive layer contained.
 
 from __future__ import annotations
 
+from dataclasses import dataclass, field
+
 from .spec import (
     AxesSpec,
     FontSpec,
@@ -18,7 +20,12 @@ from .spec import (
 )
 
 __all__ = [
+    "AVAILABLE_JOURNALS",
+    "AVAILABLE_THEMES",
+    "JOURNAL_PROFILES",
     "JOURNAL_SIZES",
+    "JournalProfile",
+    "get_journal_profile",
     "journal_overrides",
     "spec_to_rcparams",
     "theme_preset",
@@ -55,6 +62,140 @@ AVAILABLE_THEMES = ("paper", "paper-grid", "minimal", "boxed")
 
 
 # --------------------------------------------------------------------------
+# Publication constraint profiles (P2-3)
+# --------------------------------------------------------------------------
+@dataclass(frozen=True)
+class JournalProfile:
+    """Publication-constraint and style profile for a journal.
+
+    Pairs a style (fonts, linewidths, default figure size) with target TeX
+    geometry (column/text widths) and publication preflight rules (minimum
+    font size, recommended raster DPI, grayscale policy) into one coherent
+    profile.
+    """
+
+    name: str
+    columnwidth_pt: float
+    textwidth_pt: float
+    columns: int = 2
+    font_family: str = "serif"
+    base_font_pt: float = 8.0
+    tick_font_pt: float = 7.0
+    min_font_pt: float = 6.0
+    line_width_pt: float = 0.5
+    figure_size_in: list[float] = field(default_factory=lambda: [3.3, 2.5])
+    recommended_dpi: int = 300
+    max_legend_entries: int = 8
+    grayscale_policy: str = "redundant"
+
+    def to_dict(self) -> dict:
+        return {
+            "figure_size_in": list(self.figure_size_in),
+            "base_font_pt": self.base_font_pt,
+            "tick_font_pt": self.tick_font_pt,
+            "min_font_pt": self.min_font_pt,
+            "line_width_pt": self.line_width_pt,
+            "columnwidth_pt": self.columnwidth_pt,
+            "textwidth_pt": self.textwidth_pt,
+            "columns": self.columns,
+            "font_family": self.font_family,
+            "recommended_dpi": self.recommended_dpi,
+            "max_legend_entries": self.max_legend_entries,
+            "grayscale_policy": self.grayscale_policy,
+        }
+
+
+JOURNAL_PROFILES: dict[str, JournalProfile] = {
+    "nature": JournalProfile(
+        name="nature",
+        columnwidth_pt=250.38425196850392,  # 88 mm
+        textwidth_pt=512.1496062992127,  # 180 mm
+        columns=2,
+        font_family="sans-serif",
+        base_font_pt=7.0,
+        tick_font_pt=6.0,
+        min_font_pt=5.0,
+        line_width_pt=0.5,
+        figure_size_in=[3.5, 2.625],
+        recommended_dpi=300,
+        max_legend_entries=8,
+        grayscale_policy="redundant",
+    ),
+    "ieee": JournalProfile(
+        name="ieee",
+        columnwidth_pt=252.0,
+        textwidth_pt=516.0,
+        columns=2,
+        font_family="serif",
+        base_font_pt=8.0,
+        tick_font_pt=7.0,
+        min_font_pt=6.0,
+        line_width_pt=0.5,
+        figure_size_in=[3.3, 2.5],
+        recommended_dpi=300,
+        max_legend_entries=8,
+        grayscale_policy="redundant",
+    ),
+    "acm": JournalProfile(
+        name="acm",
+        columnwidth_pt=241.0,
+        textwidth_pt=506.0,
+        columns=2,
+        font_family="serif",
+        base_font_pt=9.0,
+        tick_font_pt=8.0,
+        min_font_pt=6.0,
+        line_width_pt=0.5,
+        figure_size_in=[3.33, 2.5],
+        recommended_dpi=300,
+        max_legend_entries=8,
+        grayscale_policy="redundant",
+    ),
+    "revtex": JournalProfile(
+        name="revtex",
+        columnwidth_pt=246.0,
+        textwidth_pt=510.0,
+        columns=2,
+        font_family="serif",
+        base_font_pt=8.0,
+        tick_font_pt=7.0,
+        min_font_pt=6.0,
+        line_width_pt=0.5,
+        figure_size_in=[3.4, 2.5],
+        recommended_dpi=300,
+        max_legend_entries=8,
+        grayscale_policy="redundant",
+    ),
+}
+
+
+def get_journal_profile(name: str | JournalProfile) -> JournalProfile:
+    """Return the :class:`JournalProfile` for a named journal preset."""
+    if isinstance(name, JournalProfile):
+        return name
+    if not isinstance(name, str):
+        raise TypeError(
+            f"journal must be a name or JournalProfile, got {type(name).__name__}"
+        )
+    prof = JOURNAL_PROFILES.get(name.lower())
+    if prof is None:
+        raise ValueError(
+            f"unknown journal profile {name!r}; choose from {sorted(JOURNAL_PROFILES)}"
+        )
+    return prof
+
+
+AVAILABLE_JOURNALS = tuple(JOURNAL_PROFILES)
+
+# Default figure size (inches) per journal. Applied to the *spec* itself
+# (by the ``SetJournal`` reducer case), not via rcParams — see the note on
+# ``journal_overrides`` above for why.
+JOURNAL_SIZES: dict[str, list[float]] = {
+    name: prof.figure_size_in for name, prof in JOURNAL_PROFILES.items()
+}
+
+
+# --------------------------------------------------------------------------
 # Journal overrides (applied on top of a theme's rcParams)
 # --------------------------------------------------------------------------
 def journal_overrides(journal: str | None) -> dict:
@@ -67,19 +208,16 @@ def journal_overrides(journal: str | None) -> dict:
     applied (through the spec, not rcParams).
 
     This registry (a *style*: fonts/linewidths/default figure size, applied
-    via ``.journal(name)``) is maintained independently from
-    ``mudplot.tex.TEX_PRESETS`` (a TeX document class's *column geometry*,
-    applied via ``.tex_size(name, ...)``/``.preview(tex=name)``) -- they
-    overlap for a name that is both a journal and a well-known LaTeX class
-    ("nature"/"ieee" are in both; "article"/"revtex"/"acm" are TeX-only,
-    generic document classes with no house style). See
-    ``mudplot.capabilities()["journal_profiles"]`` for the two merged, and
-    ``tests/test_journal_profiles.py`` for the contract that every name here
-    also has a ``TEX_PRESETS`` entry.
+    via ``.journal(name)``) is unified with ``mudplot.tex.TEX_PRESETS`` (a
+    TeX document class's *column geometry*, applied via
+    ``.tex_size(name, ...)``/``.preview(tex=name)``) via
+    ``JOURNAL_PROFILES``. See ``mudplot.capabilities()["journal_profiles"]``
+    for the machine-readable summary.
     """
     if journal is None:
         return {}
-    if journal == "nature":
+    j = journal.lower()
+    if j == "nature":
         return {
             "font.family": "sans-serif",
             "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
@@ -91,7 +229,31 @@ def journal_overrides(journal: str | None) -> dict:
             "legend.fontsize": 6,
             "axes.linewidth": 0.5,
         }
-    if journal == "ieee":
+    if j == "ieee":
+        return {
+            "font.family": "serif",
+            "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
+            "font.size": 8,
+            "axes.labelsize": 8,
+            "axes.titlesize": 9,
+            "xtick.labelsize": 7,
+            "ytick.labelsize": 7,
+            "legend.fontsize": 7,
+            "axes.linewidth": 0.5,
+        }
+    if j == "acm":
+        return {
+            "font.family": "serif",
+            "font.serif": ["Linux Libertine", "Times New Roman", "DejaVu Serif"],
+            "font.size": 9,
+            "axes.labelsize": 9,
+            "axes.titlesize": 10,
+            "xtick.labelsize": 8,
+            "ytick.labelsize": 8,
+            "legend.fontsize": 8,
+            "axes.linewidth": 0.5,
+        }
+    if j == "revtex":
         return {
             "font.family": "serif",
             "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
@@ -104,17 +266,6 @@ def journal_overrides(journal: str | None) -> dict:
             "axes.linewidth": 0.5,
         }
     raise ValueError(f"unknown journal preset: {journal!r}")
-
-
-AVAILABLE_JOURNALS = ("nature", "ieee")
-
-# Default figure size (inches) per journal. Applied to the *spec* itself
-# (by the ``SetJournal`` reducer case), not via rcParams — see the note on
-# ``journal_overrides`` above for why.
-JOURNAL_SIZES: dict[str, list[float]] = {
-    "nature": [3.5, 2.625],
-    "ieee": [3.3, 2.5],
-}
 
 
 # --------------------------------------------------------------------------

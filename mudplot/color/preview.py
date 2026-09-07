@@ -26,6 +26,7 @@ def preview(pal: Palette, ax=None, show_cvd: bool = True):
     Returns the matplotlib Axes.
     """
     import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
 
     rows = _ROWS if show_cvd else _ROWS[:1]
     n = len(pal)
@@ -42,9 +43,7 @@ def preview(pal: Palette, ax=None, show_cvd: bool = True):
             colours = cvd.simulate(pal.srgb, t, 1.0)
         y = len(rows) - 1 - r
         for i in range(n):
-            ax.add_patch(
-                plt.Rectangle((i, y), 1, 0.9, facecolor=np.clip(colours[i], 0, 1))
-            )
+            ax.add_patch(Rectangle((i, y), 1, 0.9, facecolor=np.clip(colours[i], 0, 1)))
         ax.text(-0.15, y + 0.45, label, ha="right", va="center", fontsize=9)
 
     ax.set_xlim(-0.02, n)

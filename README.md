@@ -359,7 +359,8 @@ configured size — as non-blocking findings to review, not hard failures:
 report = p.lint(journal="ieee")
 print(report)
 # ✓ width fits ieee single column (3.49in <= 3.49in)
-# ✓ all text >= 5pt
+# ✓ dpi (300) meets ieee recommendation (300 DPI)
+# ✓ all text >= 6pt
 # ⚠ palette does not pass the measured CVD-safety threshold for 9 series -- see Palette.report()
 # ⚠ palette colours become ambiguous in true greyscale
 # ✓ grouped series have redundant marker/line-style/hatch encoding
@@ -370,13 +371,38 @@ print(report)
 report.ok   # False only if an error-level finding exists (e.g. doesn't fit the page)
 ```
 
-Checks: page-width fit for a named journal (`mp.capabilities()["tex_presets"]`),
-minimum text size (`min_font_pt=`, default 5), palette CVD/greyscale safety
-(reusing `Palette.report()`), redundant encoding for grouped series, marker/
-line-style cycle exhaustion, legend size (`max_legend_entries=`, default 8),
-and reference-metadata validity. `mp.lint_figure(spec, ...)` is the
+Checks: page-width fit and raster DPI against the named journal's profile,
+minimum text size, palette CVD/greyscale safety (reusing `Palette.report()`),
+redundant encoding for grouped series, marker/line-style cycle exhaustion,
+legend size, and reference-metadata validity. Thresholds default to the
+journal's own profile (see below) and can be overridden per call
+(`min_font_pt=`, `max_legend_entries=`). Omitting `journal=` picks it up from
+`.journal(...)` if you already set it. `mp.lint_figure(spec, ...)` is the
 pure/agent-facing equivalent, needing only the `color` extra (numpy) — no
 matplotlib required, since nothing is actually rendered.
+
+### Journal profiles (publication constraints, not just a style sheet)
+
+Each supported journal is one `JournalProfile` bundling its *style* (fonts,
+line widths, conventional figure size), its *TeX geometry* (column/text
+width, column count), and its *preflight constraints* (minimum font size,
+recommended raster DPI, legend budget, greyscale policy) — so `.journal()`,
+`.tex_size()`, and `.lint()` all agree on one definition instead of three
+separate lookups:
+
+```python
+mp.AVAILABLE_JOURNALS          # ('nature', 'ieee', 'acm', 'revtex')
+prof = mp.get_journal_profile("acm")
+prof.columnwidth_pt            # 241.0
+prof.min_font_pt               # 6.0
+prof.recommended_dpi           # 300
+
+# a profile object works anywhere a journal name does
+p.journal(prof).tex_size(prof, columns=1).lint(journal=prof)
+```
+
+`mp.capabilities()["journal_profiles"]` exposes all of it as plain JSON for
+agents.
 
 ### For AI agents (drive everything via JSON)
 

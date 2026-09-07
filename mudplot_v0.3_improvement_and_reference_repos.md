@@ -1173,7 +1173,13 @@ https://example.org/paper_v2?x=1&y=2#section_3
       `mp.lint_figure()`: 페이지폭 맞춤, 최소 글자 크기, 팔레트 CVD/흑백
       안전성, 이중 인코딩, 마커/선스타일 사이클 소진, 범례 크기, 참고문헌
       유효성을 ok/warning/error로 보고
-- [ ] richer journal profiles
+- [x] richer journal profiles — `JournalProfile` 단일 dataclass로 스타일(font/
+      linewidth/기본 크기) + TeX 기하학(column/text width) + preflight 제약
+      (min_font_pt / recommended_dpi / max_legend_entries / grayscale_policy)를
+      통합. `mp.JOURNAL_PROFILES`, `mp.get_journal_profile()`. 지원 저널 2개→4개
+      (nature/ieee/**acm**/**revtex**). `AVAILABLE_JOURNALS`/`JOURNAL_SIZES`는
+      이제 `JOURNAL_PROFILES`에서 파생(단일 진상 원천). `.lint()`은
+      `spec.journal`을 자동 감지하고 DPI 검사를 추가
 - [ ] release/nightly TeX engine matrix
 
 ---

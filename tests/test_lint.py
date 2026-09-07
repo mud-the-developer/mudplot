@@ -190,3 +190,39 @@ def test_report_is_iterable_and_sized():
 def test_lint_figure_top_level_function_matches_the_fluent_method():
     p = mp.plot({"x": [1], "y": [1]}).line("x", "y")
     assert mp.lint_figure(p.spec).ok == p.lint().ok
+
+
+def test_lint_auto_detects_journal_from_spec():
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line("x", "y")
+        .journal("ieee")
+        .tex_size("ieee", columns=1)
+    )
+    # caller passes no journal= kwarg -> picks up spec.journal == "ieee"
+    report = p.lint()
+    assert report.ok
+    assert any("ieee single column" in m for m in _messages(report))
+    assert any("meets ieee recommendation" in m for m in _messages(report))
+
+
+def test_lint_flags_low_dpi_for_journal():
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line("x", "y")
+        .journal("nature")
+        .dispatch(mp.actions.SetDpi(150))
+    )
+    report = p.lint()
+    assert any(
+        i.level == "warning" and "below nature's recommended 300 DPI" in i.message
+        for i in report
+    )
+
+
+def test_lint_accepts_journal_profile_instance_directly():
+    prof = mp.get_journal_profile("acm")
+    p = mp.plot({"x": [1], "y": [1]}).line("x", "y").tex_size("acm", columns=1)
+    report = p.lint(journal=prof)
+    assert report.ok
+    assert any("acm single column" in m for m in _messages(report))

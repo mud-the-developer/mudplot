@@ -317,7 +317,8 @@ p.set_layer_at(layer_index, [3, 0.5])  # text/annotate 레이어 위치 이동(�
 report = p.lint(journal="ieee")
 print(report)
 # ✓ width fits ieee single column (3.49in <= 3.49in)
-# ✓ all text >= 5pt
+# ✓ dpi (300) meets ieee recommendation (300 DPI)
+# ✓ all text >= 6pt
 # ⚠ palette does not pass the measured CVD-safety threshold for 9 series -- see Palette.report()
 # ⚠ palette colours become ambiguous in true greyscale
 # ✓ grouped series have redundant marker/line-style/hatch encoding
@@ -328,12 +329,35 @@ print(report)
 report.ok   # error 레벨 항목이 있을 때만 False (예: 페이지에 안 맞는 크기)
 ```
 
-검사 항목: 지정한 journal의 페이지 폭 맞는지(`mp.capabilities()["tex_presets"]`),
-최소 글자 크기(`min_font_pt=`, 기본 5), 팔레트 CVD/흑백 안전성(`Palette.report()`
-재사용), 그룹화된 시리즈의 이중 인코딩, 마커/선스타일 사이클 소진, 범례 크기
-(`max_legend_entries=`, 기본 8), 참고문헌 메타데이터 유효성. `mp.lint_figure(spec, ...)`는
+검사 항목: 지정한 journal 프로필에 대한 페이지 폭·러스턼 DPI, 최소 글자 크기,
+팔레트 CVD/흑백 안전성(`Palette.report()` 재사용), 그룹화된 시리즈의 이중
+인코딩, 마커/선스타일 사이클 소진, 범례 크기, 참고문헌 메타데이터 유효성.
+기준값은 해당 journal 프로필(아래 참고)을 기본으로 사용하고 호출당 덮어쓸 수
+있습니다(`min_font_pt=`, `max_legend_entries=`). `journal=`을 생략하면 이미
+`.journal(...)`로 지정한 것을 자동으로 사용합니다. `mp.lint_figure(spec, ...)`는
 순수/에이전트용 동일 함수입니다 — 실제로 렌더링하지 않으므로 matplotlib 없이 `color`
 extra(numpy)만 있으면 됩니다.
+
+### Journal 프로필 (스타일 시트가 아닌 출판 제약 모음)
+
+지원하는 각 저널은 하나의 `JournalProfile`로, **스타일**(폰트, 선 광태, 관례적
+그림 크기) + **TeX 기하학**(커럼/텍스트 폭, 단 수) + **preflight 제약**(최소 글자
+크기, 권장 러스턼 DPI, 범례 수 상한, 흑백 정책)을 함께 보유합니다. 따라서
+`.journal()`, `.tex_size()`, `.lint()`이 서로 따로 찾는 게 아니라 하나의 정의를
+공유합니다:
+
+```python
+mp.AVAILABLE_JOURNALS          # ('nature', 'ieee', 'acm', 'revtex')
+prof = mp.get_journal_profile("acm")
+prof.columnwidth_pt            # 241.0
+prof.min_font_pt               # 6.0
+prof.recommended_dpi           # 300
+
+# 저널 이름을 넣는 자리엔 프로필 객체도 그대로 들어감
+p.journal(prof).tex_size(prof, columns=1).lint(journal=prof)
+```
+
+`mp.capabilities()["journal_profiles"]`에서 에이전트용 JSON으로 전부 노출됩니다.
 
 ### AI 에이전트용 (JSON만으로 전체 조작)
 

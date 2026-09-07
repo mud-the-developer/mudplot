@@ -17,6 +17,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from .spec import FigureSpec
+from .theme import JOURNAL_PROFILES, JournalProfile
 
 __all__ = ["LintIssue", "LintReport", "lint_figure"]
 
@@ -83,37 +84,47 @@ def _max_group_size(spec: FigureSpec) -> int:
     return max(sizes)
 
 
-def _check_geometry(spec: FigureSpec, journal: str | None, issues: list) -> None:
-    if journal is None:
+def _check_geometry(
+    spec: FigureSpec,
+    profile: JournalProfile | None,
+    journal_name: str | None,
+    issues: list,
+) -> None:
+    if journal_name is None and profile is None:
         return
     from .tex import PT_PER_INCH, TEX_PRESETS
 
-    ctx = TEX_PRESETS.get(journal)
-    if ctx is None:
-        issues.append(
-            LintIssue(
-                "warning",
-                f"no known TeX column geometry for journal {journal!r} "
-                f"(known: {sorted(TEX_PRESETS)}) -- skipping width check",
+    name = profile.name if profile else journal_name
+    col_pt = profile.columnwidth_pt if profile else None
+    text_pt = profile.textwidth_pt if profile else None
+    if col_pt is None or text_pt is None:
+        ctx = TEX_PRESETS.get(journal_name) if journal_name else None
+        if ctx is None:
+            issues.append(
+                LintIssue(
+                    "warning",
+                    f"no known TeX column geometry for journal {journal_name!r} "
+                    f"(known: {sorted(TEX_PRESETS)}) -- skipping width check",
+                )
             )
-        )
-        return
+            return
+        col_pt, text_pt = ctx.columnwidth_pt, ctx.textwidth_pt
+
     width_in = spec.size[0]
-    col_in = ctx.columnwidth_pt / PT_PER_INCH
-    full_in = ctx.textwidth_pt / PT_PER_INCH
+    col_in = col_pt / PT_PER_INCH
+    full_in = text_pt / PT_PER_INCH
     if width_in <= col_in + 1e-9:
         issues.append(
             LintIssue(
                 "ok",
-                f"width fits {journal} single column "
-                f"({width_in:.2f}in <= {col_in:.2f}in)",
+                f"width fits {name} single column ({width_in:.2f}in <= {col_in:.2f}in)",
             )
         )
     elif width_in <= full_in + 1e-9:
         issues.append(
             LintIssue(
                 "ok",
-                f"width fits {journal} full text width "
+                f"width fits {name} full text width "
                 f"({width_in:.2f}in <= {full_in:.2f}in), spans both columns",
             )
         )
@@ -121,8 +132,29 @@ def _check_geometry(spec: FigureSpec, journal: str | None, issues: list) -> None
         issues.append(
             LintIssue(
                 "error",
-                f"width {width_in:.2f}in exceeds {journal}'s full text width "
+                f"width {width_in:.2f}in exceeds {name}'s full text width "
                 f"({full_in:.2f}in)",
+            )
+        )
+
+
+def _check_dpi(spec: FigureSpec, profile: JournalProfile | None, issues: list) -> None:
+    if profile is None:
+        return
+    if spec.dpi < profile.recommended_dpi:
+        issues.append(
+            LintIssue(
+                "warning",
+                f"dpi ({spec.dpi}) is below {profile.name}'s recommended "
+                f"{profile.recommended_dpi} DPI for raster submission",
+            )
+        )
+    else:
+        issues.append(
+            LintIssue(
+                "ok",
+                f"dpi ({spec.dpi}) meets {profile.name} recommendation "
+                f"({profile.recommended_dpi} DPI)",
             )
         )
 
@@ -261,9 +293,9 @@ def _check_references(spec: FigureSpec, issues: list) -> None:
 def lint_figure(
     spec: FigureSpec,
     *,
-    journal: str | None = None,
-    min_font_pt: float = 5.0,
-    max_legend_entries: int = 8,
+    journal: str | JournalProfile | None = None,
+    min_font_pt: float | None = None,
+    max_legend_entries: int | None = None,
 ) -> LintReport:
     """Run a publication-preflight pass over ``spec``.
 
@@ -275,16 +307,41 @@ def lint_figure(
     issue was found (e.g. the figure doesn't fit the named journal's page,
     or a reference field is malformed).
 
-    ``journal`` names a preset from ``mp.capabilities()["tex_presets"]``
-    (e.g. ``"ieee"``, ``"nature"``) to check the figure's configured
-    physical size against; omit it to skip that one check.
+    ``journal`` names a preset from ``mp.JOURNAL_PROFILES`` (e.g. ``"ieee"``,
+    ``"nature"``, ``"acm"``, ``"revtex"``) or passes a :class:`~mudplot.JournalProfile`
+    to check the figure's configured physical size, DPI, and font limits
+    against; omit it to auto-detect from ``spec.journal`` (if set) or skip
+    journal-specific checks.
     """
+    target = journal if journal is not None else spec.journal
+    if isinstance(target, JournalProfile):
+        profile: JournalProfile | None = target
+        journal_name: str | None = target.name
+    elif isinstance(target, str):
+        journal_name = target
+        profile = JOURNAL_PROFILES.get(target.lower())
+    else:
+        profile = None
+        journal_name = None
+
+    effective_min_font = (
+        min_font_pt
+        if min_font_pt is not None
+        else (profile.min_font_pt if profile else 5.0)
+    )
+    effective_max_legend = (
+        max_legend_entries
+        if max_legend_entries is not None
+        else (profile.max_legend_entries if profile else 8)
+    )
+
     issues: list[LintIssue] = []
-    _check_geometry(spec, journal, issues)
-    _check_font_sizes(spec, min_font_pt, issues)
+    _check_geometry(spec, profile, journal_name, issues)
+    _check_dpi(spec, profile, issues)
+    _check_font_sizes(spec, effective_min_font, issues)
     _check_palette(spec, issues)
     _check_redundant_encoding(spec, issues)
     _check_marker_style_repetition(spec, issues)
-    _check_legend_size(spec, max_legend_entries, issues)
+    _check_legend_size(spec, effective_max_legend, issues)
     _check_references(spec, issues)
     return LintReport(tuple(issues))

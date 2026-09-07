@@ -288,7 +288,9 @@
   ],
   "journals": [
     "nature",
-    "ieee"
+    "ieee",
+    "acm",
+    "revtex"
   ],
   "palettes": [
     "qualitative",
@@ -391,24 +393,68 @@
         3.5,
         2.625
       ],
-      "base_font_pt": 7,
-      "tick_font_pt": 6,
+      "base_font_pt": 7.0,
+      "tick_font_pt": 6.0,
+      "min_font_pt": 5.0,
       "line_width_pt": 0.5,
       "columnwidth_pt": 250.38425196850392,
       "textwidth_pt": 512.1496062992127,
-      "columns": 2
+      "columns": 2,
+      "font_family": "sans-serif",
+      "recommended_dpi": 300,
+      "max_legend_entries": 8,
+      "grayscale_policy": "redundant"
     },
     "ieee": {
       "figure_size_in": [
         3.3,
         2.5
       ],
-      "base_font_pt": 8,
-      "tick_font_pt": 7,
+      "base_font_pt": 8.0,
+      "tick_font_pt": 7.0,
+      "min_font_pt": 6.0,
       "line_width_pt": 0.5,
       "columnwidth_pt": 252.0,
       "textwidth_pt": 516.0,
-      "columns": 2
+      "columns": 2,
+      "font_family": "serif",
+      "recommended_dpi": 300,
+      "max_legend_entries": 8,
+      "grayscale_policy": "redundant"
+    },
+    "acm": {
+      "figure_size_in": [
+        3.33,
+        2.5
+      ],
+      "base_font_pt": 9.0,
+      "tick_font_pt": 8.0,
+      "min_font_pt": 6.0,
+      "line_width_pt": 0.5,
+      "columnwidth_pt": 241.0,
+      "textwidth_pt": 506.0,
+      "columns": 2,
+      "font_family": "serif",
+      "recommended_dpi": 300,
+      "max_legend_entries": 8,
+      "grayscale_policy": "redundant"
+    },
+    "revtex": {
+      "figure_size_in": [
+        3.4,
+        2.5
+      ],
+      "base_font_pt": 8.0,
+      "tick_font_pt": 7.0,
+      "min_font_pt": 6.0,
+      "line_width_pt": 0.5,
+      "columnwidth_pt": 246.0,
+      "textwidth_pt": 510.0,
+      "columns": 2,
+      "font_family": "serif",
+      "recommended_dpi": 300,
+      "max_legend_entries": 8,
+      "grayscale_policy": "redundant"
     }
   },
   "actions": {

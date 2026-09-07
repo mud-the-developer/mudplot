@@ -4,6 +4,30 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Richer journal profiles (P2-3)
+
+- `JournalProfile` (`mp.JournalProfile`, `mp.get_journal_profile(name)`,
+  `mp.JOURNAL_PROFILES`): consolidated publication constraint and style
+  profile pairing style (fonts, linewidths, default figure size) with
+  TeX column geometry (columnwidth, textwidth, columns) and preflight
+  rules (minimum font size, recommended raster DPI, max legend entries,
+  and grayscale policy) in one typed dataclass.
+- Expanded `AVAILABLE_JOURNALS` from 2 to 4: `nature`, `ieee`, `acm`,
+  and `revtex` now all have both full journal styling (fonts/linewidths/
+  default size via `.journal()`) and matching TeX column geometry
+  (via `.tex_size()`).
+- `AVAILABLE_JOURNALS` and `JOURNAL_SIZES` are now derived directly from
+  `JOURNAL_PROFILES` (single source of truth).
+- `p.lint()` automatically uses `spec.journal` when set (no need to repeat
+  `journal="ieee"` if you already called `.journal("ieee")`).
+- `p.lint()`, `p.journal()`, and `p.tex_size()` all accept a
+  `JournalProfile` object directly (or its string name).
+- `p.lint()` gained raster submission DPI verification (`_check_dpi`):
+  warns when a figure's `spec.dpi` is below the journal's recommended
+  DPI (e.g. 300 for Nature/IEEE).
+- Regression coverage: 6 new tests across `tests/test_journal_profiles.py`
+  and `tests/test_lint.py`.
+
 ### Figure lint / publication preflight (P2-4)
 
 - `p.lint(journal=None, *, min_font_pt=5.0, max_legend_entries=8)` /

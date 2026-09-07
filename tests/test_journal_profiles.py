@@ -60,3 +60,44 @@ def test_journal_and_tex_size_compose_to_a_coherent_figure():
         import matplotlib.pyplot as plt
 
         plt.close(fig)
+
+
+def test_get_journal_profile_returns_typed_profile_and_rejects_unknown():
+    import pytest
+
+    prof = mp.get_journal_profile("ieee")
+    assert isinstance(prof, mp.JournalProfile)
+    assert prof.name == "ieee"
+    assert prof.columns == 2
+    assert prof.recommended_dpi == 300
+    assert prof.min_font_pt == 6.0
+    # case-insensitive
+    assert mp.get_journal_profile("IEEE") == prof
+    # accepts a JournalProfile directly (idempotent)
+    assert mp.get_journal_profile(prof) is prof
+
+    with pytest.raises(ValueError, match="unknown journal profile"):
+        mp.get_journal_profile("unknown_xyz")
+
+
+def test_fluent_builder_accepts_journal_profile_instance_directly():
+    prof = mp.get_journal_profile("nature")
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line("x", "y")
+        .journal(prof)
+        .tex_size(prof, columns=1)
+    )
+    assert p.spec.journal == "nature"
+    report = p.lint()
+    assert report.ok
+    assert any("nature single column" in m for m in [i.message for i in report])
+
+
+def test_journal_profile_to_dict_has_richer_fields():
+    for prof in mp.JOURNAL_PROFILES.values():
+        d = prof.to_dict()
+        assert d["min_font_pt"] > 0
+        assert d["recommended_dpi"] >= 300
+        assert d["max_legend_entries"] >= 6
+        assert d["grayscale_policy"] in ("redundant", "none")

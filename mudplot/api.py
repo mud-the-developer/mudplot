@@ -17,6 +17,7 @@ from .store import Store
 
 if TYPE_CHECKING:
     from .color.palette import Palette
+    from .theme import JournalProfile
 
 __all__ = ["Plot", "apply", "color_palette", "plot"]
 
@@ -636,14 +637,18 @@ class Plot:
         """
         return self.dispatch(A.SetTheme(name))
 
-    def journal(self, name: str | None) -> Plot:
+    def journal(self, name) -> Plot:
         """Apply a journal preset (fonts + conventional figure size).
+
+        ``name`` can be a string (e.g. ``"nature"``, ``"ieee"``, ``"acm"``,
+        ``"revtex"``) or a :class:`~mudplot.JournalProfile`.
 
         Like ``.theme(...)``, this sets values outright rather than merging;
         call it before other size/font customisation if you want your own
         values to stick.
         """
-        return self.dispatch(A.SetJournal(name))
+        jname = getattr(name, "name", name)
+        return self.dispatch(A.SetJournal(jname))
 
     def palette(self, kind: str | None = None, **params) -> Plot:
         return self.dispatch(A.SetPalette(kind=kind, params=params))
@@ -738,7 +743,7 @@ class Plot:
 
         return tex_preview(self.spec, tex, **kw)
 
-    def lint(self, *, journal: str | None = None, **kw):
+    def lint(self, *, journal: str | JournalProfile | None = None, **kw):
         """Publication-preflight checks (see ``mudplot.lint_figure``):
         page-width fit for a named ``journal``, minimum text size, palette
         CVD/greyscale safety, redundant encoding, legend size, and

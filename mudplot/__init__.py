@@ -25,6 +25,14 @@ from .schema import json_schema
 from .spec import FigureSpec, ReferenceSpec
 from .store import Store
 from .tex import PREAMBLE, TEX_PRESETS, TexContext, figsize_for
+from .theme import (
+    AVAILABLE_JOURNALS,
+    AVAILABLE_THEMES,
+    JOURNAL_PROFILES,
+    JOURNAL_SIZES,
+    JournalProfile,
+    get_journal_profile,
+)
 from .validate import assert_valid, validate
 
 Reference = ReferenceSpec  # short alias for fluent-API/agent ergonomics
@@ -83,9 +91,14 @@ def __dir__():
 
 
 __all__ = [
+    "AVAILABLE_JOURNALS",
+    "AVAILABLE_THEMES",
+    "JOURNAL_PROFILES",
+    "JOURNAL_SIZES",
     "PREAMBLE",
     "TEX_PRESETS",
     "FigureSpec",
+    "JournalProfile",
     "LintIssue",
     "LintReport",
     "Plot",
@@ -104,6 +117,7 @@ __all__ = [
     "color_palette",
     "figsize_for",
     "from_json",
+    "get_journal_profile",
     "json_schema",
     "lint_figure",
     "load_spec",
