@@ -15,6 +15,7 @@ kde, heatmap, contour, contourf, pie, hline, vline, text, annotate,
 scatter3d, line3d, surface, wireframe.
 
 다음 후보 (논문에서의 유용성 순):
+
 - **regplot**: scatter + 회귀선(선형/다항, numpy.polyfit) + 신뢰구간
 - **stripplot/swarmplot**: 카테고리형 산점도 (seaborn 스타일)
 - **stackplot**: 누적 영역 그래프 (다른 레이어와 달리 전체 시리즈를 한
@@ -52,6 +53,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 미뤄둔
 작업. 이제 액션 25종, 레이어 21종이 실전 검증됐으니 착수 가능:
+
 1. 새 크레이트, `serde`로 `schemas/figure_spec.schema.json` 미러링
 2. `axum` + `askama`로 `dashboard/editor_server.py`의 라우트 재구현
 3. 1단계는 Python `render()`를 subprocess/HTTP로 호출, 2단계(선택)는
@@ -62,7 +64,10 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 
 - mypy/pyright 정적 타입 검사 (아직 안 함 — py.typed는 배포했지만 자체
   타입 정확성은 외부 검증 안 됨)
-- hypothesis 기반 속성 테스트 (색상 엔진 왕복, validate/reduce 불변식)
+- **(완료)** hypothesis 기반 속성 테스트 -- reduce()의 state/action 불변성,
+  citation/href validator (`tests/test_property_based.py`). 아직 안 한 것:
+  색상 엔진(convert.py 왕복, distance.py 지표 성질) -- 같은 방식의 자연스러운
+  다음 확장
 - CONTRIBUTING.md
 - DESIGN.md가 길어졌으니 ARCHITECTURE.md로 분리 검토
 
@@ -75,8 +80,8 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
   GitHub에도 `pypi` environment를 만든 뒤 `release.yml`에 `publish` job을
   다시 추가할 것 -- 한 번 시도했으나 publisher 미등록으로
   `invalid-publisher` 오류로 실패함.
-- 버전 정책: 현재 `0.3.0`. pre-1.0이라도 `FigureSpec`
+- 버전 정책: 현재 `0.4.0`. pre-1.0이라도 `FigureSpec`
   호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
   안정성에 의존).
 - `pyproject.toml`의 `[project.urls]`는 이제 실제 저장소를 가리킴
-  (https://github.com/mud-the-developer/mudplot)
+  (<https://github.com/mud-the-developer/mudplot>)

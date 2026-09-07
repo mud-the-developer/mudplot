@@ -120,6 +120,9 @@
           "y": "response",
           "group": "cell_line",
           "label": null,
+          "citation": null,
+          "href": null,
+          "references": null,
           "color": null,
           "line_width": null,
           "line_style": null,
@@ -161,6 +164,8 @@
       "projection": "2d",
       "title": "Grouped bars: colour + hatch encoding",
       "title_position": null,
+      "title_citation": null,
+      "title_href": null,
       "label": null,
       "legend": {
         "bbox_to_anchor": null,
@@ -174,5 +179,6 @@
   "layout": null,
   "share_x": "none",
   "share_y": "none",
-  "journal": null
+  "journal": null,
+  "reference_measure_text": null
 }

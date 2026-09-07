@@ -45,6 +45,7 @@ papers:
   observations — a cheap, useful companion to `kde`/`hist`.
 
 Each addition should follow the same checklist the last two batches did:
+
 1. `LayerSpec` fields (reuse existing ones where the semantics line up).
 2. `capabilities.LAYER_TYPES` entry (required/optional fields).
 3. `render.py` drawing function + type-dispatch set membership.
@@ -121,11 +122,11 @@ exercised through it, a reasonable first slice:
   can type-check against mudplot) but the library's own type-correctness
   hasn't been externally verified with a type checker, only informally
   via consistent type hints.
-- **Property-based testing** (e.g. `hypothesis`) for the colour engine
-  (`convert.py` round-trips, `distance.py` metric properties) and for
-  `validate()`/`reduce()` (e.g. "any sequence of valid actions produces a
-  spec that passes `validate()`" as a property, if that invariant is
-  meant to hold).
+- **(done)** Property-based testing (`hypothesis`) for `reduce()`
+  (state/action immutability, JSON round-trip of its output) and the
+  citation/href validator (`tests/test_property_based.py`). Not yet
+  covered: the colour engine (`convert.py` round-trips, `distance.py`
+  metric properties) -- a natural next slice of the same approach.
 - **`CONTRIBUTING.md`**: contribution guidelines, dev setup
   (`uv sync --extra dev`), the "regenerate schemas" step, and the testing
   philosophy (one regression test per bug, cross-module consistency tests
@@ -143,12 +144,12 @@ exercised through it, a reasonable first slice:
 - **Actual PyPI publish**: deliberately deferred. Register this repo as a
   trusted publisher on the PyPI project (project name `mudplot`, workflow
   `release.yml`, environment `pypi`; see
-  https://docs.pypi.org/trusted-publishers/), create a matching `pypi`
+  <https://docs.pypi.org/trusted-publishers/>), create a matching `pypi`
   GitHub environment, then re-add a `publish` job to `release.yml` using
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
   needed) -- attempted once already and failed with `invalid-publisher`
   since no publisher was registered yet.
-- **Versioning**: `0.3.0` as of this release; semver policy: this is a
+- **Versioning**: `0.4.0` as of this release; semver policy: this is a
   young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
   bump the minor version even pre-1.0, since Rust/agent consumers depend on
   schema stability.

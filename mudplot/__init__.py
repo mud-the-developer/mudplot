@@ -27,7 +27,7 @@ from .validate import assert_valid, validate
 
 Reference = ReferenceSpec  # short alias for fluent-API/agent ergonomics
 
-__version__ = "0.3.0"
+__version__ = "0.4.0"
 
 # -- effect layer: needs numpy / matplotlib (lazy via PEP 562) -------------
 #

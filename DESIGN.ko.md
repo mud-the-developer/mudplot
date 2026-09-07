@@ -359,6 +359,16 @@ tests/
       첫 실제 브라우저(Playwright) 테스트 도입 — HTML 검사로는 보이지 않던
       버그 3건 발견.
 - [x] **v0.3.0 릴리스.**
+- [x] M12f: 레퍼런스 시스템 안정화 -- group별 citation/link
+      (`LayerSpec.references`/`ReferenceSpec`), citation/href 문자 안전성
+      validator 개선, `FigureSpec` 버전/마이그레이션 정책(`MIGRATIONS`
+      레지스트리, `mudplot migrate` CLI), PGF 레이아웃용 citation 측정
+      정책(`reference_style`), 실제 JSON Schema validator 기반 호환성
+      테스트, reducer 순수성 검증 Hypothesis property 테스트, theme/TeX
+      preset 레지스트리를 통합한 `journal_profiles` 뷰. `tests/
+      test_references.py`, `tests/test_property_based.py`, `tests/
+      test_journal_profiles.py` 참고.
+- [x] **v0.4.0 릴리스.**
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

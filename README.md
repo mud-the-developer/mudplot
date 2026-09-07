@@ -47,12 +47,12 @@ Effects (render/io/preview) are pushed to the edges.
 
 ## Status
 
-**v0.3.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
+**v0.4.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
 architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, dashboard editor gaps, the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 345 tests passing:**
+**Engine (`mudplot/`) — usable now, 395 tests passing:**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado

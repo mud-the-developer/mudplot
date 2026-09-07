@@ -4,6 +4,18 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.4.0] - 2026-09-07
+
+A reference-system stabilization release: grouped-series citations/links,
+a saner citation/URL validator, a documented FigureSpec version/migration
+policy (+ `mudplot migrate` CLI), a citation-measurement policy for PGF
+layout, a real JSON-Schema-validator compatibility test, Hypothesis-based
+property tests for reducer purity, and a cross-referenced journal-profile
+view. This closes every item in `mudplot_v0.3_improvement_and_reference_
+repos.md`'s v0.4 checklist. 395 tests passing.
+
 ### Journal profile registry cleanup (P2-3)
 
 - Two registries have always independently covered a "journal": `theme.

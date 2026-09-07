@@ -486,6 +486,17 @@ tests/
       with open/export; first real-browser (Playwright) test coverage,
       which found three bugs invisible to HTML-level assertions.
 - [x] **v0.3.0 released.**
+- [x] M12f: reference-system stabilization -- grouped-series citations/
+      links (`LayerSpec.references`/`ReferenceSpec`), a saner citation/
+      href character-safety validator, `FigureSpec` version/migration
+      policy (`MIGRATIONS` registry, `mudplot migrate` CLI), a citation-
+      measurement policy for PGF layout (`reference_style`), a real
+      JSON-Schema-validator compatibility test suite, Hypothesis-based
+      property tests for reducer purity, and a cross-referenced
+      `journal_profiles` view consolidating the theme/TeX-preset
+      registries. See `tests/test_references.py`,
+      `tests/test_property_based.py`, `tests/test_journal_profiles.py`.
+- [x] **v0.4.0 released.**
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond
