@@ -140,7 +140,7 @@ uv venv && uv pip install -e ".[dev]"
 ### Dependency layers
 
 | layer | modules | dependencies |
-|---|---|---|
+| --- | --- | --- |
 | pure engine | `spec` `actions` `reducer` `store` `io` `tex` (sizing) | **none** |
 | colour engine | `color/*` | numpy |
 | render effect | `render` `tex_preview` | numpy + matplotlib |
@@ -180,7 +180,7 @@ snapshots: edit through builder methods/actions, not by mutating these snapshots
 ### Supported plot types
 
 | category | types | notes |
-|---|---|---|
+| --- | --- | --- |
 | basic | `line`, `scatter`, `bar`, `errorbar`, `band` | `group=` for multiple series; bars auto-dodge when grouped; categorical or numeric x |
 | distributions | `hist`, `box`, `violin`, `kde` | `kde` uses a small numpy-only Gaussian KDE (no scipy dependency) |
 | 2-D fields | `heatmap`, `contour`, `contourf` | share a matrix registered via `.matrix(name, values)`; use the same LCH colormaps as the palettes |
@@ -295,7 +295,7 @@ document decides what a figure citation means:
 Each backend does what it can with the same spec:
 
 | format | citation | href |
-|---|---|---|
+| --- | --- | --- |
 | `.pgf` | `\figcite{key}` — numbered by the paper's bibliography | `\href{url}{...}` via hyperref |
 | `.svg` | dropped (nothing to resolve against) | the text becomes a clickable link |
 | `.png`/`.pdf` | dropped | dropped |

@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Reference metadata: grouped series, saner citation/URL validation
+
 - `ReferenceSpec` (`mp.Reference`/`mp.ReferenceSpec`): the citation/href pair
   used to live only on `LayerSpec`/title fields; now also the type of
   `LayerSpec.references`, a `{group_value: ReferenceSpec}` dict for
@@ -38,6 +39,7 @@ test coverage -- which found three bugs the HTML-level tests could not see.
 345 tests passing.
 
 ### LaTeX-native citations and links inside a figure
+
 - `LayerSpec.citation`/`href` (legend entries) and `PanelSpec.title_citation`/
   `title_href` (via `.title_reference(...)`): attach a BibTeX key and/or URL
   to figure text. Nothing is baked into the image -- the document resolves
@@ -61,6 +63,7 @@ test coverage -- which found three bugs the HTML-level tests could not see.
   fails on the layout warning.
 
 ### Editor
+
 - Canvas-first layout: the figure is a large sticky workspace, controls sit
   in an independently scrolling inspector, secondary sections collapse.
   Single column below 800px.
@@ -85,11 +88,13 @@ test coverage -- which found three bugs the HTML-level tests could not see.
   of one per keypress.
 
 ### Renderer
+
 - Each Axes records `ax._mudplot_panel`. `fig.axes` also collects twin (y2)
   and colorbar axes, so its order stops matching panel order after the first
   panel -- anything mapping a rendered Axes back to its spec needs this.
 
 ### Testing
+
 - `tests/test_editor_browser.py`: real Chrome via Playwright (optional
   `browser` extra; skipped when absent) covering drag, keyboard nudge,
   multi-panel targeting, open-from-file, and swap behaviour.
@@ -104,6 +109,7 @@ annotations, and a substantially more usable interactive editor (htmx
 partial updates, drag-to-position, visual redesign). 322 tests passing.
 
 ### TeX column sizing, overlap-free layout, draggable legends, docs/editor tabs
+
 - `Plot.tex_size(preset, columns=1|2)`: size the *actual* figure (not just
   `.preview()`) to a TeX document's single-column width or full text width
   (for a double-column-spanning figure), matching the same column/font
@@ -131,6 +137,7 @@ partial updates, drag-to-position, visual redesign). 322 tests passing.
   `tests/test_dashboard_editor.py`.
 
 ### Dashboard editor: htmx partial updates, title/annotation dragging, redesign
+
 - Converted the editor's full-page-reload-per-action UX to htmx partial
   swaps: every form/drag now updates the preview, layer list, and action
   log in place. Vendored `htmx.min.js` (0BSD licensed, `dashboard/static/`)
@@ -169,6 +176,7 @@ three stability-hardening passes and named colour-palette presets. See
 `docs/DEMO.md` for a reproducible, pandas-driven demo of the actual output.
 
 ### Colour: named palette presets + black & white print safety
+
 - Added three named, pre-verified `qualitative` palette presets
   (`mudplot.capabilities()["palette_presets"]`): `paper` (default, safe up to
   6 categories), `vivid` (higher chroma, safe up to 6), `soft` (lower chroma
@@ -191,6 +199,7 @@ three stability-hardening passes and named colour-palette presets. See
   "colourblind-aware" / measured, to match what is actually verified.
 
 ### Stabilization: data fidelity and editing
+
 - Categorical x positions now use Matplotlib's shared category registry across
   layers, secondary axes and shared panels instead of independent mappings.
 - Grouped 2-D/3-D continuous scatter uses a single normalization and colorbar.
@@ -212,6 +221,7 @@ three stability-hardening passes and named colour-palette presets. See
 - Regression coverage: `tests/test_stabilization.py`.
 
 ### Added
+
 - **Colour engine**: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH conversions (numpy-only);
   CIE76/CIEDE2000 colour difference (validated against Sharma et al. 2005);
   Machado et al. (2009) colour-vision-deficiency simulation
@@ -248,6 +258,7 @@ three stability-hardening passes and named colour-palette presets. See
   Korean translations kept alongside (`*.ko.md`).
 
 ### Fixed (stability hardening pass)
+
 - `.journal(...)` didn't actually change the figure size (a dead rcParams
   entry was shadowed by an explicit `figsize=`); now applied directly to
   the spec.
@@ -293,6 +304,7 @@ of the above.
 ### Expanded plot coverage + 2 more bugs
 
 ### Added
+
 - **3-D plots**: `scatter3d`, `line3d`, `surface`, `wireframe`. A panel
   opts in via `.projection3d()`; 2-D and 3-D panels can coexist in the same
   multi-panel figure. `render()` was restructured to build axes with
@@ -310,6 +322,7 @@ of the above.
   where it makes sense.
 
 ### Fixed
+
 - **Pie charts silently drew a duplicate, overlapping legend.**
   `ax.pie(..., labels=...)` also registers each wedge as a legend handle
   (so `ax.legend()` can be called separately), which collided with

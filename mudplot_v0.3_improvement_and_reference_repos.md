@@ -730,7 +730,7 @@ report = p.lint(journal="ieee")
 ## 6.1 Matplotlib
 
 **Repository**  
-https://github.com/matplotlib/matplotlib
+<https://github.com/matplotlib/matplotlib>
 
 ### 특히 볼 부분
 
@@ -760,7 +760,7 @@ mudplot은 Matplotlib 위에 있으므로 backend-specific behavior를 직접 �
 ## 6.2 tikzplotlib
 
 **Repository**  
-https://github.com/nschloe/tikzplotlib
+<https://github.com/nschloe/tikzplotlib>
 
 ### 특히 볼 부분
 
@@ -786,7 +786,7 @@ Matplotlib의 모든 artist를 완벽하게 PGFPlots로 변환하는 문제 자�
 ## 6.3 PGFPlots
 
 **Repository**  
-https://github.com/pgf-tikz/pgfplots
+<https://github.com/pgf-tikz/pgfplots>
 
 ### 참고할 부분
 
@@ -807,7 +807,7 @@ https://github.com/pgf-tikz/pgfplots
 ## 6.4 Vega-Lite
 
 **Repository**  
-https://github.com/vega/vega-lite
+<https://github.com/vega/vega-lite>
 
 ### mudplot에서 참고할 점
 
@@ -842,7 +842,7 @@ layout
 ## 6.5 Altair
 
 **Repository**  
-https://github.com/vega/altair
+<https://github.com/vega/altair>
 
 ### 특히 볼 부분
 
@@ -867,7 +867,7 @@ https://github.com/vega/altair
 ## 6.6 SciencePlots
 
 **Repository**  
-https://github.com/garrettj403/SciencePlots
+<https://github.com/garrettj403/SciencePlots>
 
 ### 참고할 부분
 
@@ -888,7 +888,7 @@ mudplot은 이를 `JournalProfile` 형태로 더 구조화할 수 있다.
 ## 6.7 Colorcet
 
 **Repository**  
-https://github.com/holoviz/colorcet
+<https://github.com/holoviz/colorcet>
 
 ### 참고할 부분
 
@@ -917,7 +917,7 @@ mudplot의 LCH engine은 이미 독자적인 강점이 있으므로 Colorcet을 
 ## 6.8 Colorspacious
 
 **Repository**  
-https://github.com/njsmith/colorspacious
+<https://github.com/njsmith/colorspacious>
 
 ### 참고할 부분
 
@@ -937,7 +937,7 @@ mudplot color engine의 결과를 독립 구현과 cross-check하는 **reference
 ## 6.9 Hypothesis
 
 **Repository**  
-https://github.com/HypothesisWorks/hypothesis
+<https://github.com/HypothesisWorks/hypothesis>
 
 ### mudplot에서 가장 추천하는 활용
 
@@ -981,7 +981,7 @@ mudplot의 현재 test philosophy와 매우 잘 맞는다.
 ## 6.10 Playwright Python
 
 **Repository**  
-https://github.com/microsoft/playwright-python
+<https://github.com/microsoft/playwright-python>
 
 ### mudplot에서 참고할 점
 
@@ -1006,7 +1006,7 @@ DOM-level test만으로는 focus, scroll, actual layout 문제를 계속 놓칠 
 ## 6.11 python-jsonschema
 
 **Repository**  
-https://github.com/python-jsonschema/jsonschema
+<https://github.com/python-jsonschema/jsonschema>
 
 ### mudplot에서 참고할 점
 
@@ -1026,7 +1026,7 @@ mudplot이 현재 자체 lightweight validator를 유지하더라도 **외부 co
 # 7. Repository별 “무엇을 가져올지” 요약
 
 | Repository | mudplot에서 참고할 핵심 | 우선순위 |
-|---|---|---:|
+| --- | --- | ---: |
 | matplotlib/matplotlib | PGF/SVG/PDF backend와 text measurement | ★★★★★ |
 | vega/vega-lite | declarative spec / schema architecture | ★★★★★ |
 | vega/altair | Python API ↔ schema / validation | ★★★★★ |
@@ -1298,17 +1298,17 @@ PGFPlots export는 매력적이지만 사실상 두 번째 renderer를 만드는
 
 # 13. 검토에 사용한 주요 링크
 
-- mudplot: https://github.com/mud-the-developer/mudplot
-- mudplot changelog: https://raw.githubusercontent.com/mud-the-developer/mudplot/main/CHANGELOG.md
-- Matplotlib: https://github.com/matplotlib/matplotlib
-- Matplotlib PGF backend: https://github.com/matplotlib/matplotlib/blob/main/lib/matplotlib/backends/backend_pgf.py
-- SciencePlots: https://github.com/garrettj403/SciencePlots
-- tikzplotlib: https://github.com/nschloe/tikzplotlib
-- PGFPlots: https://github.com/pgf-tikz/pgfplots
-- Vega-Lite: https://github.com/vega/vega-lite
-- Altair: https://github.com/vega/altair
-- Colorcet: https://github.com/holoviz/colorcet
-- Colorspacious: https://github.com/njsmith/colorspacious
-- Hypothesis: https://github.com/HypothesisWorks/hypothesis
-- Playwright Python: https://github.com/microsoft/playwright-python
-- jsonschema: https://github.com/python-jsonschema/jsonschema
+- mudplot: <https://github.com/mud-the-developer/mudplot>
+- mudplot changelog: <https://raw.githubusercontent.com/mud-the-developer/mudplot/main/CHANGELOG.md>
+- Matplotlib: <https://github.com/matplotlib/matplotlib>
+- Matplotlib PGF backend: <https://github.com/matplotlib/matplotlib/blob/main/lib/matplotlib/backends/backend_pgf.py>
+- SciencePlots: <https://github.com/garrettj403/SciencePlots>
+- tikzplotlib: <https://github.com/nschloe/tikzplotlib>
+- PGFPlots: <https://github.com/pgf-tikz/pgfplots>
+- Vega-Lite: <https://github.com/vega/vega-lite>
+- Altair: <https://github.com/vega/altair>
+- Colorcet: <https://github.com/holoviz/colorcet>
+- Colorspacious: <https://github.com/njsmith/colorspacious>
+- Hypothesis: <https://github.com/HypothesisWorks/hypothesis>
+- Playwright Python: <https://github.com/microsoft/playwright-python>
+- jsonschema: <https://github.com/python-jsonschema/jsonschema>

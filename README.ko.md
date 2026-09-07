@@ -128,7 +128,7 @@ uv venv && uv pip install -e ".[dev]"
 ### 의존성 계층
 
 | 계층 | 모듈 | 의존성 |
-|---|---|---|
+| --- | --- | --- |
 | 순수 엔진 | `spec` `actions` `reducer` `store` `io` `tex`(크기) | **없음** |
 | 색상 엔진 | `color/*` | numpy |
 | 렌더 effect | `render` `tex_preview` | numpy + matplotlib |
@@ -255,7 +255,7 @@ figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면
 같은 spec이라도 백엔드별로 처리가 다릅니다:
 
 | 형식 | citation | href |
-|---|---|---|
+| --- | --- | --- |
 | `.pgf` | `\figcite{key}` — 논문 bibliography가 번호 부여 | hyperref로 `\href{url}{...}` |
 | `.svg` | 생략 (해석할 대상이 없음) | 텍스트가 클릭 가능한 링크 |
 | `.png`/`.pdf` | 생략 | 생략 |
