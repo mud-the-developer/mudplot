@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Figure lint / publication preflight (P2-4)
+
 - `p.lint(journal=None, *, min_font_pt=5.0, max_legend_entries=8)` /
   `mp.lint_figure(spec, ...)`: publication-quality *heuristics* distinct
   from `validate()`'s structural correctness -- does this actually work
