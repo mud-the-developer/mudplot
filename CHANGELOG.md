@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### Citation measurement policy (P0-3)
+
 - WYSIWYG layout for a citation is only exact for compact/numeric styles
   (e.g. `"[12]"`): matplotlib lays a figure out *before* the document's own
   bibliography resolves `\figcite{key}`, so it has no way to know the real
