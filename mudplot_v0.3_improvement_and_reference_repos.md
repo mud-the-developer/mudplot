@@ -1144,7 +1144,9 @@ https://example.org/paper_v2?x=1&y=2#section_3
 - [x] JSON Schema compatibility test — `jsonschema` dev의존성 +
       `tests/test_json_schema_compat.py` (메타스키마 검증, 실제 spec 다수가
       스키마를 통과, 잘못된 타입이 실제로 거부되는지 확인)
-- [ ] Hypothesis-based serialization/reducer tests
+- [x] Hypothesis-based serialization/reducer tests — `tests/test_property_based.py`:
+      reducer가 state/action을 절대 변형하지 않음, migration 멒등성, citation/href
+      문자 안전성이 고정 예시 목록이 아닌 속성으로 검증됨
 - [ ] journal profile registry 정리
 
 ---

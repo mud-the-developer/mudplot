@@ -4,6 +4,36 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Hypothesis-based property tests
+- New dev dependency: `hypothesis` (test-only). New
+  `tests/test_property_based.py` widens several existing example-based
+  guarantees into properties checked against a much larger randomised
+  input space:
+  - **reducer purity**: `reduce(state, action)` never mutates its `state`
+    or `action` arguments, and its output is always still
+    JSON-round-trippable -- checked over a curated slice of the action
+    vocabulary (the single-field actions whose validity doesn't depend on
+    other spec state) with Hypothesis-generated parameters, not just the
+    handful of hand-picked actions the existing tests happen to dispatch.
+  - **migration idempotency**: `migrate_spec_dict()` is a true no-op on
+    any spec already at the current `SPEC_VERSION`, across many different
+    resulting specs (not just the default one).
+  - **citation/href character safety, as a property instead of a fixed
+    example list**: any string built only from characters outside both
+    unsafe sets always passes validation; any string containing at least
+    one unsafe character always gets rejected -- restates P0-2's own rule
+    generatively, so a future change to either unsafe-character set is
+    checked against arbitrary strings, not just the four hand-picked
+    examples in `test_references.py`.
+  - a wider **JSON round-trip** over random figure-level settings (size,
+    dpi, suptitle text including arbitrary/unicode content, theme).
+  - Found one real edge case worth naming explicitly while writing this:
+    a whitespace-only citation/href (e.g. `" "`) is *safe* under the
+    character-safety rule but still correctly rejected by the separate
+    "must be non-empty after stripping" check -- the property test filters
+    for this so it verifies the character-safety rule specifically,
+    without a false failure attributed to the wrong check.
+
 ### JSON Schema compatibility test
 
 - New dev dependency: `jsonschema` (used only by tests, not the pure

@@ -43,7 +43,7 @@ mudplot = "mudplot.__main__:main"
 color = ["numpy>=1.23"]                       # colour engine (LCH, CVD, palettes)
 render = ["numpy>=1.23", "matplotlib>=3.6"]   # matplotlib rendering + TeX preview
 all = ["mudplot[render]"]
-dev = ["mudplot[render]", "pytest>=7", "ruff>=0.6", "jsonschema>=4"]
+dev = ["mudplot[render]", "pytest>=7", "ruff>=0.6", "jsonschema>=4", "hypothesis>=6"]
 # Real-browser tests for the dashboard editor (tests/test_editor_browser.py).
 # Separate from `dev` because it also needs a browser binary installed
 # (`playwright install chromium`); the suite skips those tests without it.
