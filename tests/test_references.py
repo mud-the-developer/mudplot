@@ -257,6 +257,7 @@ def test_reference_style_measure_text_widens_the_measured_legend():
     assert styled_width > default_width
 
 
+@needs_tex
 def test_reference_style_measure_text_never_leaks_into_pgf_output(tmp_path):
     measure_text = "(Fischler and Bolles, 1981)"
     p = _plot().reference_style(measure_text=measure_text)
@@ -286,6 +287,7 @@ def test_reference_style_round_trips_through_json():
     assert restored.spec.reference_measure_text == "(Author, Year)"
 
 
+@needs_tex
 def test_measure_text_does_not_widen_a_wrapping_title_citation(tmp_path):
     """Regression: a long title (wrap=True) can split across several .pgf
     text blocks, so a measurement filler applied there can end up separated
