@@ -738,6 +738,17 @@ class Plot:
 
         return tex_preview(self.spec, tex, **kw)
 
+    def lint(self, *, journal: str | None = None, **kw):
+        """Publication-preflight checks (see ``mudplot.lint_figure``):
+        page-width fit for a named ``journal``, minimum text size, palette
+        CVD/greyscale safety, redundant encoding, legend size, and
+        reference-metadata validity. Returns a ``LintReport`` of
+        ok/warning/error findings -- print it, or check ``report.ok``.
+        """
+        from ._lint import lint_figure
+
+        return lint_figure(self.spec, journal=journal, **kw)
+
     def to_json(self, **kw) -> str:
         from .io import to_json
 

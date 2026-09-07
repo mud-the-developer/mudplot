@@ -4,6 +4,33 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Figure lint / publication preflight (P2-4)
+- `p.lint(journal=None, *, min_font_pt=5.0, max_legend_entries=8)` /
+  `mp.lint_figure(spec, ...)`: publication-quality *heuristics* distinct
+  from `validate()`'s structural correctness -- does this actually work
+  as a readable, greyscale/CVD-safe paper figure at its configured size,
+  as a mix of `ok`/`warning`/`error` findings for an author to review
+  rather than an all-or-nothing raise.
+- Checks: page-width fit against a named journal's real TeX column
+  geometry (`mp.capabilities()["tex_presets"]`); minimum text size across
+  body/label/title/tick fonts; palette CVD-safety and true-greyscale
+  safety (reusing `Palette.report()`, with the exact same palette
+  construction `render()` itself uses, so a finding never disagrees with
+  what's actually drawn); redundant marker/line-style/hatch encoding for
+  grouped series; marker/line-style cycle-length exhaustion (more grouped
+  series than distinct markers -- some become indistinguishable once
+  colour is removed); legend entry count; and citation/href metadata
+  validity (surfaced from `validate()`'s own reference checks).
+  `report.ok` is `False` only when an `error`-level finding exists (an
+  oversized figure, malformed reference metadata) -- everything else is a
+  judgement call to review, not a hard failure.
+- `mudplot/_lint.py` needs nothing beyond the stdlib to *import* (stays
+  part of the pure engine's zero-dependency promise); only actually
+  *running* the palette check needs the colour engine (numpy), imported
+  lazily inside that one check -- verified in a fresh subprocess, the
+  same pattern `tests/test_no_deps.py` uses for the rest of the pure core.
+- Regression coverage: 22 new tests in `tests/test_lint.py`.
+
 ### DOI/URL resolver: arXiv-only `.bib` entries now resolve to a real link
 
 - `mp.resolve_reference_href(fields)`: offline (no network access) DOI/

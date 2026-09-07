@@ -348,6 +348,36 @@ p.set_layer_at(layer_index, [3, 0.5]) # move a text/annotate layer (data coords)
 This is also what the interactive editor's draggable handles use (mouse or
 arrow keys, right on the preview) — see `dashboard/README.md`.
 
+### Figure lint / publication preflight
+
+`validate()` only checks structural correctness ("is `axis='y2'` legal
+here"); `.lint()` checks publication-quality *heuristics* instead — does
+this actually work as a readable, greyscale/CVD-safe paper figure at its
+configured size — as non-blocking findings to review, not hard failures:
+
+```python
+report = p.lint(journal="ieee")
+print(report)
+# ✓ width fits ieee single column (3.49in <= 3.49in)
+# ✓ all text >= 5pt
+# ⚠ palette does not pass the measured CVD-safety threshold for 9 series -- see Palette.report()
+# ⚠ palette colours become ambiguous in true greyscale
+# ✓ grouped series have redundant marker/line-style/hatch encoding
+# ⚠ 9 series in one group exceeds the marker/line-style cycle length (4) -- ...
+# ⚠ legend contains 9 entries (> 8) -- consider splitting into panels or using direct labelling
+# ✓ citation/href metadata is well-formed
+
+report.ok   # False only if an error-level finding exists (e.g. doesn't fit the page)
+```
+
+Checks: page-width fit for a named journal (`mp.capabilities()["tex_presets"]`),
+minimum text size (`min_font_pt=`, default 5), palette CVD/greyscale safety
+(reusing `Palette.report()`), redundant encoding for grouped series, marker/
+line-style cycle exhaustion, legend size (`max_legend_entries=`, default 8),
+and reference-metadata validity. `mp.lint_figure(spec, ...)` is the
+pure/agent-facing equivalent, needing only the `color` extra (numpy) — no
+matplotlib required, since nothing is actually rendered.
+
 ### For AI agents (drive everything via JSON)
 
 The engine is designed to be machine-friendly: an agent can explore, build,

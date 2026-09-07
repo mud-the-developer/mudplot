@@ -1169,7 +1169,10 @@ https://example.org/paper_v2?x=1&y=2#section_3
       doi.org, arXiv id(eprint+archiveprefix) → arxiv.org, url 폴백. 네트워크
       호출 없음(순수 문자열 정규화만). arXiv-only .bib 항목이 실제로
       `href=None`이되던 기존 개그을 `ReferenceCatalog`에서 함께 고침
-- [ ] figure lint / publication preflight
+- [x] figure lint / publication preflight — `p.lint(journal=...)` /
+      `mp.lint_figure()`: 페이지폭 맞춤, 최소 글자 크기, 팔레트 CVD/흑백
+      안전성, 이중 인코딩, 마커/선스타일 사이클 소진, 범례 크기, 참고문헌
+      유효성을 ok/warning/error로 보고
 - [ ] richer journal profiles
 - [ ] release/nightly TeX engine matrix
 

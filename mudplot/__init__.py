@@ -13,6 +13,7 @@ from typing import TYPE_CHECKING
 
 # -- pure engine: zero third-party dependencies (eager) --------------------
 from . import actions
+from ._lint import LintIssue, LintReport, lint_figure
 from .actions import action_from_dict, action_to_dict
 from .api import Plot, apply, color_palette, plot
 from .bib import ReferenceCatalog, resolve_reference_href
@@ -85,6 +86,8 @@ __all__ = [
     "PREAMBLE",
     "TEX_PRESETS",
     "FigureSpec",
+    "LintIssue",
+    "LintReport",
     "Plot",
     "Reference",
     "ReferenceCatalog",
@@ -102,6 +105,7 @@ __all__ = [
     "figsize_for",
     "from_json",
     "json_schema",
+    "lint_figure",
     "load_spec",
     "plot",
     "reduce",

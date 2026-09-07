@@ -306,6 +306,35 @@ p.set_layer_at(layer_index, [3, 0.5])  # text/annotate 레이어 위치 이동(�
 인터랙티브 에디터의 드래그 가능한 핸들(마우스 또는 화살표 키, 미리보기 위에서
 직접)도 이 기능을 사용합니다 (`dashboard/README.md` 참고).
 
+### Figure lint / 출판 preflight
+
+`validate()`는 구조적 올바름만 검사합니다("이 레이어에 `axis='y2'`가 허용되는가").
+`.lint()`는 대신 실제 출판용 품질 휴리스틱을 검사합니다 — 지정된 크기에서 실제로
+흑백·색맹 안전하고 읽기 쉬운 논문용 그림이 맞는지. 강제 실패가 아니라 검토할 항목을
+알려주는 방식입니다:
+
+```python
+report = p.lint(journal="ieee")
+print(report)
+# ✓ width fits ieee single column (3.49in <= 3.49in)
+# ✓ all text >= 5pt
+# ⚠ palette does not pass the measured CVD-safety threshold for 9 series -- see Palette.report()
+# ⚠ palette colours become ambiguous in true greyscale
+# ✓ grouped series have redundant marker/line-style/hatch encoding
+# ⚠ 9 series in one group exceeds the marker/line-style cycle length (4) -- ...
+# ⚠ legend contains 9 entries (> 8) -- consider splitting into panels or using direct labelling
+# ✓ citation/href metadata is well-formed
+
+report.ok   # error 레벨 항목이 있을 때만 False (예: 페이지에 안 맞는 크기)
+```
+
+검사 항목: 지정한 journal의 페이지 폭 맞는지(`mp.capabilities()["tex_presets"]`),
+최소 글자 크기(`min_font_pt=`, 기본 5), 팔레트 CVD/흑백 안전성(`Palette.report()`
+재사용), 그룹화된 시리즈의 이중 인코딩, 마커/선스타일 사이클 소진, 범례 크기
+(`max_legend_entries=`, 기본 8), 참고문헌 메타데이터 유효성. `mp.lint_figure(spec, ...)`는
+순수/에이전트용 동일 함수입니다 — 실제로 렌더링하지 않으므로 matplotlib 없이 `color`
+extra(numpy)만 있으면 됩니다.
+
 ### AI 에이전트용 (JSON만으로 전체 조작)
 
 엔진은 기계 친화적으로 설계돼 있어, 에이전트가 탐색→생성→렌더를 전부
