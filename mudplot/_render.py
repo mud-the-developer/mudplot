@@ -54,6 +54,16 @@ _FMT: contextvars.ContextVar[str] = contextvars.ContextVar("mudplot_fmt", defaul
 _REFS: contextvars.ContextVar[list | None] = contextvars.ContextVar(
     "mudplot_refs", default=None
 )
+# WYSIWYG layout for a citation is only exact for compact/numeric styles
+# (e.g. "[12]"): the marker above stands in for that by default. Set
+# FigureSpec.reference_measure_text to a representative example of your
+# actual citation style (e.g. "(Fischler and Bolles, 1981)") to measure
+# against *that* width instead -- see mudplot_v0.3_improvement_and_
+# reference_repos.md P0-3. The text is stripped back out at PGF
+# substitution time (see _substitute_pgf_references) and never emitted.
+_REF_MEASURE: contextvars.ContextVar[str] = contextvars.ContextVar(
+    "mudplot_ref_measure", default=""
+)
 # (guillemets: present in the standard fonts, so no missing-glyph warning
 # and a realistic width during layout, and left alone by pgf escaping.)
 _MARK_OPEN, _MARK_CLOSE = "\u00ab", "\u00bb"
@@ -61,29 +71,50 @@ _PGF_REF_RE = re.compile(_MARK_OPEN + r"(\d+)" + _MARK_CLOSE)
 
 
 @contextlib.contextmanager
-def _render_format(fmt: str):
-    fmt_token, refs_token = _FMT.set(fmt), _REFS.set([])
+def _render_format(fmt: str, measure_text: str = ""):
+    fmt_token = _FMT.set(fmt)
+    refs_token = _REFS.set([])
+    measure_token = _REF_MEASURE.set(measure_text)
     try:
         yield
     finally:
         _FMT.reset(fmt_token)
         _REFS.reset(refs_token)
+        _REF_MEASURE.reset(measure_token)
 
 
-def _mark(kind: str, value: str) -> str:
+def _mark(kind: str, value: str, *, widen: bool = False) -> str:
     refs = _REFS.get()
     refs.append((kind, value))
-    return f"{_MARK_OPEN}{len(refs) - 1}{_MARK_CLOSE}"
+    idx = len(refs) - 1
+    # Only a citation's *rendered* width is uncertain (an href's URL never
+    # appears in the visible text -- only the label it wraps does), so only
+    # "cite" markers ever ask for the optional measurement filler -- and
+    # only where the caller says it's safe to (see _decorate's ``widen``).
+    measure = _REF_MEASURE.get() if widen else ""
+    prefix = f" {measure}" if measure else ""
+    return f"{prefix}{_MARK_OPEN}{idx}{_MARK_CLOSE}"
 
 
-def _decorate(text, citation: str | None, href: str | None) -> str:
-    """Annotate ``text`` with reference metadata for the active format."""
+def _decorate(
+    text, citation: str | None, href: str | None, *, widen: bool = True
+) -> str:
+    """Annotate ``text`` with reference metadata for the active format.
+
+    ``widen=True`` (legend entries) applies ``reference_measure_text`` as a
+    same-line measurement filler (see ``_mark``). Panel titles pass
+    ``widen=False``: a title can wrap (``wrap=True``) across multiple lines,
+    which can split the filler and its sentinel into separate .pgf text
+    blocks -- breaking the plain-text match that strips the filler back out
+    (and leaking it into the final output). Legend entries don't wrap, so
+    they stay contiguous.
+    """
     if text is None or _FMT.get() != "pgf" or not (citation or href):
         return text
     if href:
         text = f"{_mark('href', href)}{text}{_mark('/href', '')}"
     if citation:
-        text = f"{text}{_mark('cite', citation)}"
+        text = f"{text}{_mark('cite', citation, widen=widen)}"
     return text
 
 
@@ -116,12 +147,18 @@ def _link_legend_texts(legend_artist, panel: PanelSpec) -> None:
         _set_url(text, by_label.get(text.get_text()))
 
 
-def _substitute_pgf_references(text: str, refs: list) -> str:
+def _substitute_pgf_references(text: str, refs: list, measure_text: str = "") -> str:
     """Replace the sentinels left by ``_decorate`` with real LaTeX macros.
 
     Runs on the saved .pgf source, after matplotlib's pgf backend has
-    escaped the surrounding (plain) text.
+    escaped the surrounding (plain) text. A citation sentinel may be
+    preceded by a measurement filler (see ``_mark``/``_REF_MEASURE``),
+    which this strips out along with the sentinel itself -- it exists only
+    to give matplotlib's layout pass a realistic width to measure against
+    and must never reach the final output.
     """
+    filler_re = re.escape(f" {measure_text}") if measure_text else ""
+    pattern = re.compile(f"(?:{filler_re})?{_MARK_OPEN}(\\d+){_MARK_CLOSE}")
 
     def repl(m: re.Match) -> str:
         kind, value = refs[int(m.group(1))]
@@ -131,7 +168,7 @@ def _substitute_pgf_references(text: str, refs: list) -> str:
             return f"\\href{{{value}}}{{"
         return "}"
 
-    return _PGF_REF_RE.sub(repl, text)
+    return pattern.sub(repl, text)
 
 
 _OUTSIDE_LEGEND_LOCS = {
@@ -602,7 +639,9 @@ def _legend_kwargs(leg, *, ax2_present: bool, fig) -> dict:
 def _apply_title(ax, panel: PanelSpec) -> None:
     if not panel.title:
         return
-    title_text = _decorate(panel.title, panel.title_citation, panel.title_href)
+    title_text = _decorate(
+        panel.title, panel.title_citation, panel.title_href, widen=False
+    )
     if panel.title_position is not None:
         # A real ax.set_title() is specially managed by constrained_layout
         # (which recomputes its y-offset transform on every draw, silently
@@ -876,7 +915,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
         spec.theme, spec.journal, n_colors=max(_count_colors(spec), 3)
     )
 
-    with plt.rc_context(rc), _render_format(fmt):
+    with plt.rc_context(rc), _render_format(fmt, spec.reference_measure_text or ""):
         rows, cols = _grid_shape(spec)
         gridspec_kw = {}
         if spec.width_ratios:
@@ -934,6 +973,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
             # Reference table for this figure's markers, needed after the
             # render context exits (see save()'s .pgf post-processing).
             fig._mudplot_refs = list(_REFS.get() or [])
+            fig._mudplot_ref_measure = spec.reference_measure_text or ""
         except Exception:
             plt.close(fig)
             raise
@@ -993,7 +1033,9 @@ def save(spec: FigureSpec, path: str, *, tight: bool = False):
         p = pathlib.Path(path)
         p.write_text(
             _substitute_pgf_references(
-                p.read_text(encoding="utf-8"), getattr(fig, "_mudplot_refs", [])
+                p.read_text(encoding="utf-8"),
+                getattr(fig, "_mudplot_refs", []),
+                getattr(fig, "_mudplot_ref_measure", ""),
             ),
             encoding="utf-8",
         )

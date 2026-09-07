@@ -27,12 +27,12 @@ def _layers_section(caps: dict) -> str:
 
 def _actions_section(caps: dict) -> str:
     lines = ["## Actions (JSON action vocabulary)\n"]
-    lines.append("Every mutation is one of these — send as ")
+    lines.append("Every mutation is one of these — send as")
     lines.append('`{"type": "<Name>", ...}` to `mp.apply([...])`.\n')
     for name, field_list in sorted(caps["actions"].items()):
         lines.append(f"### `{name}`\n")
         lines.append("| field | type | required | default |")
-        lines.append("|---|---|---|---|")
+        lines.append("| --- | --- | --- | --- |")
         for f in field_list:
             lines.append(
                 f"| `{f['name']}` | `{f['type']}` | {f['required']} | "
@@ -78,7 +78,7 @@ def _palettes_section(caps: dict) -> str:
         "distinguishable in B&W print regardless of colour count.\n"
     )
     lines.append("| preset | max verified n | description |")
-    lines.append("|---|---|---|")
+    lines.append("| --- | --- | --- |")
     for name, p in sorted(caps["palette_presets"].items()):
         lines.append(f"| `{name}` | {p['max_verified_n']} | {p['description']} |")
     lines.append("")
@@ -88,7 +88,7 @@ def _palettes_section(caps: dict) -> str:
 def _tex_section(caps: dict) -> str:
     lines = ["## TeX presets (WYSIWYG sizing)\n"]
     lines.append("| preset | columnwidth (pt) | textwidth (pt) | font (pt) | cols |")
-    lines.append("|---|---|---|---|---|")
+    lines.append("| --- | --- | --- | --- | --- |")
     for name, p in sorted(caps["tex_presets"].items()):
         lines.append(
             f"| `{name}` | {p['columnwidth_pt']} | {p['textwidth_pt']} | "

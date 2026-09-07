@@ -333,6 +333,15 @@ class FigureSpec(SpecBase):
     share_x: str = "none"  # "none" | "all" | "row" | "col"
     share_y: str = "none"  # "none" | "all" | "row" | "col"
     journal: str | None = None  # nature | ieee | None
+    # WYSIWYG layout for a citation is only exact for compact/numeric styles
+    # (e.g. "[12]"): matplotlib lays out the figure *before* the document's
+    # own bibliography resolves \figcite{key}, so it has no way to know the
+    # real rendered width of e.g. an author-year citation ("(Fischler and
+    # Bolles, 1981)") ahead of time. Set this to a representative example of
+    # your citation style (e.g. "(Fischler and Bolles, 1981)") to make PGF
+    # export measure legend/title layout against *that* width instead of the
+    # compact default -- purely a measurement aid, never emitted to output.
+    reference_measure_text: str | None = None
 
     @classmethod
     def from_dict(cls, data: dict) -> FigureSpec:

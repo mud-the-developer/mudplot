@@ -97,6 +97,17 @@
         }
       ],
       "default": null
+    },
+    "reference_measure_text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "$defs": {

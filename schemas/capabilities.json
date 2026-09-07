@@ -691,6 +691,14 @@
         "default": 0
       }
     ],
+    "SetReferenceMeasureText": [
+      {
+        "name": "text",
+        "type": "str or None",
+        "required": true,
+        "default": null
+      }
+    ],
     "SetScale": [
       {
         "name": "axis",

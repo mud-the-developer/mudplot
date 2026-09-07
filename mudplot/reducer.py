@@ -145,6 +145,8 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             leg.bbox_to_anchor = list(bta) if bta is not None else None
         case A.SetSuptitle(text=text):
             s.suptitle = text
+        case A.SetReferenceMeasureText(text=text):
+            s.reference_measure_text = text
         case A.SetPanelLabel(label=label, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].label = label

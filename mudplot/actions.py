@@ -36,6 +36,7 @@ __all__ = [
     "SetPalette",
     "SetPanelLabel",
     "SetProjection",
+    "SetReferenceMeasureText",
     "SetScale",
     "SetSecondaryAxis",
     "SetShare",
@@ -250,6 +251,13 @@ class SetSuptitle:
 
 
 @dataclass(frozen=True)
+class SetReferenceMeasureText:
+    # See FigureSpec.reference_measure_text -- None restores the compact
+    # default measurement.
+    text: str | None
+
+
+@dataclass(frozen=True)
 class SetPanelLabel:
     label: str | None
     panel: int = 0
@@ -277,6 +285,7 @@ Action = (
     | SetScale
     | SetLimits
     | SetLegend
+    | SetReferenceMeasureText
     | SetSuptitle
     | SetPanelLabel
     | SetAutoLabel
@@ -314,6 +323,7 @@ _ACTION_CLASSES = (
     SetScale,
     SetLimits,
     SetLegend,
+    SetReferenceMeasureText,
     SetSuptitle,
     SetPanelLabel,
     SetAutoLabel,

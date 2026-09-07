@@ -1137,7 +1137,10 @@ https://example.org/paper_v2?x=1&y=2#section_3
       `validate()`에서도 검사, `mudplot migrate` CLI
 - [x] backend capability registry — `mp.capabilities()["backends"]`
       (png/pdf/svg/pgf 별 citations/hyperlinks/vector/requires_tex)
-- [ ] citation measurement policy
+- [x] citation measurement policy — P0-3의 단기 권장안(가이드 범위 문서화 +
+      `citation_measure_text` 옵션) 구현됨: `FigureSpec.reference_measure_text` /
+      `.reference_style(measure_text=...)`. 단, 패널 제목은 wrap=True와의
+      상호작용 문제로 농히지 않음 (범례는 legend만).
 - [ ] JSON Schema compatibility test
 - [ ] Hypothesis-based serialization/reducer tests
 - [ ] journal profile registry 정리

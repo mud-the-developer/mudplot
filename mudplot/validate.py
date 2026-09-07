@@ -227,6 +227,22 @@ def validate(spec: FigureSpec) -> list[str]:
             f"choose from {sorted(PALETTE_PRESETS)}"
         )
 
+    if spec.reference_measure_text is not None:
+        if not spec.reference_measure_text.strip():
+            issues.append("reference_measure_text must be a non-empty string")
+        else:
+            # Stripped back out (with its exact spelling) at PGF-substitution
+            # time via a plain-text match against the saved .pgf -- which
+            # only works if matplotlib's pgf backend wrote it back out
+            # unescaped. Reuse the citation charset (same escaping risk).
+            bad = sorted(_CITATION_UNSAFE & set(spec.reference_measure_text))
+            if bad:
+                issues.append(
+                    f"reference_measure_text may not contain {''.join(bad)!r} "
+                    "(matplotlib's PGF backend would escape it, breaking the "
+                    "plain-text match used to strip it back out)"
+                )
+
     if not spec.panels:
         issues.append("figure has no panels (spec.panels is empty)")
 

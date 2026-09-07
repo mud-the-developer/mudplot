@@ -227,6 +227,82 @@ def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch):
         mp.save(_plot().spec, str(tmp_path / "fig.pgf"))
 
 
+# -- citation measurement policy (P0-3) --------------------------------------
+#
+# matplotlib lays a figure out *before* the document's own bibliography
+# resolves \figcite{key}, so a compact numeric citation ("[12]") and an
+# author-year one ("(Fischler and Bolles, 1981)") are measured identically
+# by default -- WYSIWYG is only exact for the compact case.
+# reference_style(measure_text=...) opts into measuring against a realistic
+# example of the actual style instead.
+
+
+def _legend_width(p):
+    fig = mp.render(p.spec, fmt="pgf")
+    try:
+        fig.canvas.draw()
+        legend = fig.axes[0].get_legend()
+        assert legend is not None
+        return legend.get_window_extent().width
+    finally:
+        plt.close(fig)
+
+
+def test_reference_style_measure_text_widens_the_measured_legend():
+    base = _plot()
+    default_width = _legend_width(base)
+    styled_width = _legend_width(
+        base.reference_style(measure_text="(Fischler and Bolles, 1981)")
+    )
+    assert styled_width > default_width
+
+
+def test_reference_style_measure_text_never_leaks_into_pgf_output(tmp_path):
+    measure_text = "(Fischler and Bolles, 1981)"
+    p = _plot().reference_style(measure_text=measure_text)
+    assert mp.validate(p.spec) == []
+    pgf = _save(lambda: p, tmp_path, "fig.pgf")
+    assert "\\figcite{fischler1981}" in pgf
+    assert "Fischler and Bolles" not in pgf
+    assert "\u00ab" not in pgf and "\u00bb" not in pgf
+
+
+def test_reference_style_none_restores_the_compact_default():
+    p = _plot().reference_style(measure_text="(long author-year style)")
+    restored = p.reference_style(measure_text=None)
+    assert restored.spec.reference_measure_text is None
+    assert _legend_width(restored) == _legend_width(_plot())
+
+
+def test_reference_style_measure_text_rejects_pgf_escaped_characters():
+    p = _plot().reference_style(measure_text="a}bad\\input{x")
+    issues = mp.validate(p.spec)
+    assert any("reference_measure_text" in i for i in issues)
+
+
+def test_reference_style_round_trips_through_json():
+    p = _plot().reference_style(measure_text="(Author, Year)")
+    restored = mp.Plot.from_json(p.to_json())
+    assert restored.spec.reference_measure_text == "(Author, Year)"
+
+
+def test_measure_text_does_not_widen_a_wrapping_title_citation(tmp_path):
+    """Regression: a long title (wrap=True) can split across several .pgf
+    text blocks, so a measurement filler applied there can end up separated
+    from its sentinel -- which would leak it into the final output instead
+    of being stripped. ``_plot()`` already has both a legend citation and a
+    ``.title_reference(citation="hartley2003")``; this is the one that
+    previously broke when reference_style's filler wasn't title-scoped.
+    """
+    measure_text = "(Fischler and Bolles, 1981)"
+    p = _plot().reference_style(measure_text=measure_text)
+    pgf = _save(lambda: p, tmp_path, "fig.pgf")
+    assert "\\figcite{fischler1981}" in pgf
+    assert "\\figcite{hartley2003}" in pgf
+    assert measure_text not in pgf
+    assert "Fischler and Bolles" not in pgf
+
+
 needs_tectonic = pytest.mark.skipif(
     shutil.which("tectonic") is None or shutil.which("gs") is None,
     reason="needs tectonic (compile) and ghostscript (read the result back)",

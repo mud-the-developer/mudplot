@@ -574,6 +574,20 @@ class Plot:
         restores matplotlib's default (centred above the axes)."""
         return self.dispatch(A.SetTitlePosition(position, panel=panel))
 
+    def reference_style(self, *, measure_text: str | None = None) -> Plot:
+        """Control how PGF export *measures* a citation for layout purposes.
+
+        WYSIWYG layout for a citation is only exact for compact/numeric
+        styles (e.g. ``"[12]"``): matplotlib lays out the figure before the
+        document's own bibliography resolves ``\\figcite{key}``, so it has
+        no way to know the real rendered width of e.g. an author-year
+        citation (``"(Fischler and Bolles, 1981)"``) ahead of time. Pass a
+        representative example of your citation style to measure against
+        that width instead of the compact default; the text itself is never
+        emitted to output. ``None`` restores the compact default.
+        """
+        return self.dispatch(A.SetReferenceMeasureText(measure_text))
+
     def xscale(self, scale: str, *, panel: int = 0) -> Plot:
         return self.dispatch(A.SetScale("x", scale, panel=panel))
 

@@ -4,6 +4,37 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Citation measurement policy (P0-3)
+- WYSIWYG layout for a citation is only exact for compact/numeric styles
+  (e.g. `"[12]"`): matplotlib lays a figure out *before* the document's own
+  bibliography resolves `\figcite{key}`, so it has no way to know the real
+  rendered width of e.g. an author-year citation (`"(Fischler and Bolles,
+  1981)"`) ahead of time. This guarantee scope is now documented explicitly
+  (`FigureSpec.reference_measure_text`, `Plot.reference_style()`).
+- `.reference_style(measure_text="(Fischler and Bolles, 1981)")`: measure
+  PGF legend citations against a representative example of your actual
+  citation style instead of the compact default, so `_autofit()`/legend
+  sizing predicts the final compiled width more accurately. The text is
+  stripped back out at PGF-substitution time and never emitted to output;
+  rejects characters matplotlib's PGF backend would escape (which would
+  break that strip-back-out).
+- Deliberately **panel-title citations don't widen** even when
+  `reference_measure_text` is set: a title can wrap (`wrap=True`) across
+  multiple lines, which can split the measurement filler from its sentinel
+  into separate .pgf text blocks -- silently leaking the filler text into
+  the final output instead of being stripped. Found by testing this
+  feature against the existing two-citation demo spec (legend + title),
+  not by inspection.
+- Regression coverage: 6 new tests in `tests/test_references.py`
+  (measured width actually widens, filler never leaks into output inc. the
+  title-wrap case that broke first, `None` restores the compact default,
+  PGF-unsafe characters rejected, JSON round-trip).
+- Also fixed: `mudplot/docs.py`'s Markdown table dividers were an
+  inconsistent mix of `|---|` and (accidentally, via editor auto-format)
+  `| --- |` styles across sections, which could make a freshly generated
+  `docs/REFERENCE.md` disagree with itself byte-for-byte depending on which
+  tool last touched it. Standardised on `| --- |` everywhere.
+
 ### FigureSpec version/migration policy
 
 - Package version (`mudplot.__version__`) and spec version (`SPEC_VERSION`,

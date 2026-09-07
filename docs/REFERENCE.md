@@ -121,7 +121,7 @@ LCH-based. Kinds: `qualitative`, `sequential`, `diverging`.
 Pre-tuned `qualitative` parameter sets, each measured (not assumed) CVD-safe (worst-case ΔE00 ≥ 8) and true-greyscale-safe (min L* gap ≥ 3) up to `max_verified_n` categories — see `tests/test_palette_presets.py`. Beyond that count, more colours are still generated but safety is no longer verified; pair with `.encoding(hatches=[...])` for bar/box/violin fills, which stays distinguishable in B&W print regardless of colour count.
 
 | preset | max verified n | description |
-|---|---|---|
+| --- | --- | --- |
 | `paper` | 6 | Balanced default; safe for up to 6 categories. |
 | `soft` | 5 | Muted/pastel; safe for up to 5 categories. |
 | `vivid` | 6 | More saturated; safe for up to 6 categories. |
@@ -138,7 +138,7 @@ Available presets: paper, paper-grid, minimal, boxed.
 ## TeX presets (WYSIWYG sizing)
 
 | preset | columnwidth (pt) | textwidth (pt) | font (pt) | cols |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | `acm` | 241.0 | 506.0 | 9.0 | 2 |
 | `article` | 345.0 | 345.0 | 10.0 | 1 |
 | `ieee` | 252.0 | 516.0 | 10.0 | 2 |
@@ -147,44 +147,44 @@ Available presets: paper, paper-grid, minimal, boxed.
 
 ## Actions (JSON action vocabulary)
 
-Every mutation is one of these — send as 
+Every mutation is one of these — send as
 `{"type": "<Name>", ...}` to `mp.apply([...])`.
 
 ### `AddLayer`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `layer` | `LayerSpec` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `AddPanel`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 
 ### `RemoveLayer`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `layer_index` | `int` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `SetAutoLabel`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `enabled` | `bool` | False | `True` |
 
 ### `SetAxesStyle`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `params` | `dict` | False | `{}` |
 
 ### `SetAxisLabel`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `axis` | `str` | True | `None` |
 | `text` | `str` | True | `None` |
 | `panel` | `int` | False | `0` |
@@ -192,7 +192,7 @@ Every mutation is one of these — send as
 ### `SetColorbar`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `layer_index` | `int` | True | `None` |
 | `show` | `bool` | False | `True` |
 | `label` | `str or None` | False | `None` |
@@ -201,43 +201,43 @@ Every mutation is one of these — send as
 ### `SetData`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `columns` | `dict` | True | `None` |
 
 ### `SetDpi`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `dpi` | `int` | True | `None` |
 
 ### `SetEncoding`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `params` | `dict` | False | `{}` |
 
 ### `SetFont`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `params` | `dict` | False | `{}` |
 
 ### `SetGridStyle`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `params` | `dict` | False | `{}` |
 
 ### `SetJournal`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `name` | `str or None` | True | `None` |
 
 ### `SetLayerAt`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `layer_index` | `int` | True | `None` |
 | `at` | `list[float]` | True | `None` |
 | `panel` | `int` | False | `0` |
@@ -245,7 +245,7 @@ Every mutation is one of these — send as
 ### `SetLayout`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `rows` | `int` | True | `None` |
 | `cols` | `int` | True | `None` |
 | `width_ratios` | `list[float] or None` | False | `None` |
@@ -254,7 +254,7 @@ Every mutation is one of these — send as
 ### `SetLegend`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `show` | `bool` | False | `True` |
 | `title` | `str or None` | False | `None` |
 | `location` | `str` | False | `'best'` |
@@ -265,7 +265,7 @@ Every mutation is one of these — send as
 ### `SetLimits`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `axis` | `str` | True | `None` |
 | `lo` | `float` | True | `None` |
 | `hi` | `float` | True | `None` |
@@ -274,35 +274,41 @@ Every mutation is one of these — send as
 ### `SetMatrix`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `name` | `str` | True | `None` |
 | `values` | `list` | True | `None` |
 
 ### `SetPalette`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `kind` | `str or None` | False | `None` |
 | `params` | `dict` | False | `{}` |
 
 ### `SetPanelLabel`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `label` | `str or None` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `SetProjection`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `projection` | `str` | True | `None` |
 | `panel` | `int` | False | `0` |
+
+### `SetReferenceMeasureText`
+
+| field | type | required | default |
+| --- | --- | --- | --- |
+| `text` | `str or None` | True | `None` |
 
 ### `SetScale`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `axis` | `str` | True | `None` |
 | `scale` | `str` | True | `None` |
 | `panel` | `int` | False | `0` |
@@ -310,7 +316,7 @@ Every mutation is one of these — send as
 ### `SetSecondaryAxis`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `label` | `str` | False | `''` |
 | `scale` | `str` | False | `'linear'` |
 | `limits` | `list[float] or None` | False | `None` |
@@ -319,39 +325,39 @@ Every mutation is one of these — send as
 ### `SetShare`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `x` | `str or None` | False | `None` |
 | `y` | `str or None` | False | `None` |
 
 ### `SetSize`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `width` | `float` | True | `None` |
 | `height` | `float` | True | `None` |
 
 ### `SetSuptitle`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `text` | `str` | True | `None` |
 
 ### `SetTheme`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `name` | `str` | True | `None` |
 
 ### `SetTicksStyle`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `params` | `dict` | False | `{}` |
 
 ### `SetTitle`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `text` | `str` | True | `None` |
 | `panel` | `int` | False | `0` |
 | `citation` | `str or None` | False | `None` |
@@ -360,14 +366,14 @@ Every mutation is one of these — send as
 ### `SetTitlePosition`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `position` | `list[float] or None` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `SetZAxis`
 
 | field | type | required | default |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | `label` | `str` | False | `''` |
 | `scale` | `str` | False | `'linear'` |
 | `limits` | `list[float] or None` | False | `None` |
