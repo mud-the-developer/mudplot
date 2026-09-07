@@ -5,6 +5,7 @@ All notable changes to this project are documented here.
 ## [Unreleased]
 
 ### JSON Schema compatibility test
+
 - New dev dependency: `jsonschema` (used only by tests, not the pure
   engine). `mp.json_schema()`'s existing sync guard (`test_schema_export.py`)
   only checked that the checked-in file matches a fresh regeneration
