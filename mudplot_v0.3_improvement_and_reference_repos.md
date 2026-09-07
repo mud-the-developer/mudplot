@@ -1147,7 +1147,16 @@ https://example.org/paper_v2?x=1&y=2#section_3
 - [x] Hypothesis-based serialization/reducer tests — `tests/test_property_based.py`:
       reducer가 state/action을 절대 변형하지 않음, migration 멒등성, citation/href
       문자 안전성이 고정 예시 목록이 아닌 속성으로 검증됨
-- [ ] journal profile registry 정리
+- [x] journal profile registry 정리 — 전체 `JournalProfile`(DPI/formats/grayscale
+      포함) 통합까지는 가지 않고(P2, 장기 과제), 대신 지금 있는 두 개의 독립된
+      registry(`theme.AVAILABLE_JOURNALS`/`journal_overrides` 스타일 및 `tex.
+      TEX_PRESETS` 기하학)가 서로 드리프트되지 않도록 교차 참조 문서화 +
+      `capabilities()["journal_profiles"]` 병합 뷰 + 일관성 테스트
+      (`tests/test_journal_profiles.py`) 추가
+
+> 위 6개 항목 모두 완료. 남은 것은 v0.5(`.bib` → `ReferenceCatalog`,
+> DOI/URL resolver, figure lint/preflight, journal profile 확장, TeX 엔진
+> 매트릭스)과 P2 장기 아이디어들.
 
 ---
 

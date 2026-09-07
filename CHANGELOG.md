@@ -4,6 +4,36 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Journal profile registry cleanup (P2-3)
+- Two registries have always independently covered a "journal": `theme.
+  AVAILABLE_JOURNALS`/`journal_overrides` (a style -- fonts/linewidths/
+  default figure size, applied via `.journal(name)`) and `tex.TEX_PRESETS`
+  (a TeX document class's column geometry, applied via `.tex_size(name,
+  ...)`/`.preview(tex=name)`). They overlap only for a name that's both a
+  journal *and* a well-known LaTeX class ("nature"/"ieee" are in both;
+  "article"/"revtex"/"acm" are generic document classes with no house
+  style, so TeX-only) -- this distinction previously existed only in the
+  maintainer's head, with no cross-reference between the two modules and
+  no test guarding against them silently drifting apart.
+- `mp.capabilities()["journal_profiles"]`: the two merged for every name
+  that has both (figure size, base/tick font, line width, column/text
+  width, columns), so an agent building a coherent "IEEE-style figure"
+  doesn't have to separately cross-reference the `"journals"` and
+  `"tex_presets"` sections and guess whether they're meant to compose.
+- `mudplot/theme.py`/`mudplot/tex.py` docstrings now cross-reference each
+  other and `journal_profiles` explicitly.
+- New `tests/test_journal_profiles.py`: every `AVAILABLE_JOURNALS` name
+  has a matching `TEX_PRESETS` entry (so `.tex_size(name)` never fails for
+  a name `.journal(name)` accepts) and a `JOURNAL_SIZES` entry;
+  `journal_profiles` matches the underlying registries field-for-field;
+  and an end-to-end check that `.journal(name).tex_size(name)` composes
+  into one valid, renderable figure for every journal.
+- Also fixed (found while cross-referencing these modules): `mudplot/
+  tex.py`'s WYSIWYG mock-page preview used `plt.Rectangle`, which
+  matplotlib re-exports at runtime but isn't in `pyplot`'s public type
+  surface -- switched to importing `Rectangle` from `matplotlib.patches`
+  directly (its actual home), no behaviour change.
+
 ### Hypothesis-based property tests
 
 - New dev dependency: `hypothesis` (test-only). New

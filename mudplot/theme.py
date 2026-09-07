@@ -65,6 +65,17 @@ def journal_overrides(journal: str | None) -> dict:
     silently shadow a rcParams-only size override. See ``JOURNAL_SIZES`` /
     ``mudplot.actions.SetJournal`` for how the default size is actually
     applied (through the spec, not rcParams).
+
+    This registry (a *style*: fonts/linewidths/default figure size, applied
+    via ``.journal(name)``) is maintained independently from
+    ``mudplot.tex.TEX_PRESETS`` (a TeX document class's *column geometry*,
+    applied via ``.tex_size(name, ...)``/``.preview(tex=name)``) -- they
+    overlap for a name that is both a journal and a well-known LaTeX class
+    ("nature"/"ieee" are in both; "article"/"revtex"/"acm" are TeX-only,
+    generic document classes with no house style). See
+    ``mudplot.capabilities()["journal_profiles"]`` for the two merged, and
+    ``tests/test_journal_profiles.py`` for the contract that every name here
+    also has a ``TEX_PRESETS`` entry.
     """
     if journal is None:
         return {}

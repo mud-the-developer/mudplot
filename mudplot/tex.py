@@ -58,6 +58,16 @@ def _mm(pt_mm: float) -> float:
 
 
 # Common document classes. Widths are typical defaults; users can override.
+#
+# This registry (a TeX document class's *column geometry*, applied via
+# ``.tex_size(name, ...)``/``.preview(tex=name)``) is maintained
+# independently from ``mudplot.theme.AVAILABLE_JOURNALS``/
+# ``journal_overrides`` (a journal's *style*: fonts/linewidths/default
+# figure size, applied via ``.journal(name)``) -- they overlap for a name
+# that is both a journal and a well-known LaTeX class ("nature"/"ieee" are
+# in both; "article"/"revtex"/"acm" here are generic document classes with
+# no house style, so they're TeX-only). See
+# ``mudplot.capabilities()["journal_profiles"]`` for the two merged.
 TEX_PRESETS: dict[str, TexContext] = {
     # article, 10pt, default geometry (~345pt text width, single column)
     "article": TexContext("article", 345.0, 345.0, 10.0, columns=1),
@@ -178,6 +188,7 @@ def tex_preview(
     import io as _io
 
     import matplotlib.pyplot as plt
+    from matplotlib.patches import Rectangle
 
     from ._render import render
 
@@ -244,16 +255,14 @@ def tex_preview(
     ax.axis("off")
     # page background
     ax.add_patch(
-        plt.Rectangle(
-            (0, 0), page_w, total_h, facecolor="white", edgecolor="#cccccc", lw=1
-        )
+        Rectangle((0, 0), page_w, total_h, facecolor="white", edgecolor="#cccccc", lw=1)
     )
 
     def body_lines(y, n, indent_last=False):
         for i in range(n):
             w = col_w * (0.55 if (indent_last and i == n - 1) else 1.0)
             ax.add_patch(
-                plt.Rectangle(
+                Rectangle(
                     (margin, y), w, line_h * 0.35, facecolor="#d9d9d9", edgecolor="none"
                 )
             )

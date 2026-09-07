@@ -299,6 +299,41 @@ BACKEND_CAPABILITIES = {
 }
 
 
+def _journal_profiles() -> dict:
+    """Merged view of a journal name that has *both* a style (``.journal()``,
+    ``theme.AVAILABLE_JOURNALS``/``journal_overrides()``) and a known TeX
+    document geometry (``.tex_size()``, ``tex.TEX_PRESETS``) -- these are
+    two independently-maintained registries for two different concerns (a
+    theme's rcParams vs. a document class's column widths), which happen to
+    overlap for names that are both a journal *and* a well-known LaTeX
+    class. Combined here so an agent doesn't have to separately cross-
+    reference "journals" and "tex_presets" to build a coherent look for one
+    named journal. A ``tex_presets`` name with no matching journal theme
+    (e.g. "article"/"revtex"/"acm" -- generic document classes, not house
+    styles) is intentionally *not* included here; see each section on its
+    own for the full list either registry supports independently.
+    """
+    from .tex import TEX_PRESETS
+    from .theme import JOURNAL_SIZES, journal_overrides
+
+    profiles = {}
+    for name in AVAILABLE_JOURNALS:
+        ctx = TEX_PRESETS.get(name)
+        if ctx is None:
+            continue
+        rc = journal_overrides(name)
+        profiles[name] = {
+            "figure_size_in": JOURNAL_SIZES.get(name),
+            "base_font_pt": rc.get("font.size"),
+            "tick_font_pt": rc.get("xtick.labelsize"),
+            "line_width_pt": rc.get("axes.linewidth"),
+            "columnwidth_pt": ctx.columnwidth_pt,
+            "textwidth_pt": ctx.textwidth_pt,
+            "columns": ctx.columns,
+        }
+    return profiles
+
+
 def capabilities() -> dict:
     """Return a machine-readable summary of the engine's capabilities."""
     from .tex import TEX_PRESETS
@@ -320,6 +355,7 @@ def capabilities() -> dict:
             }
             for name, ctx in TEX_PRESETS.items()
         },
+        "journal_profiles": _journal_profiles(),
         "actions": action_vocabulary(),
     }
 

@@ -385,6 +385,32 @@
       "columns": 2
     }
   },
+  "journal_profiles": {
+    "nature": {
+      "figure_size_in": [
+        3.5,
+        2.625
+      ],
+      "base_font_pt": 7,
+      "tick_font_pt": 6,
+      "line_width_pt": 0.5,
+      "columnwidth_pt": 250.38425196850392,
+      "textwidth_pt": 512.1496062992127,
+      "columns": 2
+    },
+    "ieee": {
+      "figure_size_in": [
+        3.3,
+        2.5
+      ],
+      "base_font_pt": 8,
+      "tick_font_pt": 7,
+      "line_width_pt": 0.5,
+      "columnwidth_pt": 252.0,
+      "textwidth_pt": 516.0,
+      "columns": 2
+    }
+  },
   "actions": {
     "AddLayer": [
       {
