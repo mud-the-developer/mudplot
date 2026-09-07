@@ -1162,7 +1162,9 @@ https://example.org/paper_v2?x=1&y=2#section_3
 
 ## v0.5 — paper workflow 확장
 
-- [ ] `.bib` → `ReferenceCatalog`
+- [x] `.bib` → `ReferenceCatalog` — `mp.ReferenceCatalog.from_bib()`/
+      `.from_bib_text()`, 의존성 없는 최소 BibTeX 파서. `catalog[key]` →
+      `ReferenceSpec`(doi→href 자동 해결, 없으면 url 폴백).
 - [ ] DOI/URL resolver
 - [ ] figure lint / publication preflight
 - [ ] richer journal profiles

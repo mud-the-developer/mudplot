@@ -4,7 +4,31 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
-(nothing yet)
+### `.bib` integration: `ReferenceCatalog` (P2-1)
+- `mp.ReferenceCatalog.from_bib(path)` / `.from_bib_text(text)`: a minimal,
+  dependency-free reader for the common subset of BibTeX entry syntax real
+  `.bib` files use (nested `{...}` field values, both quoting styles,
+  unquoted numeric fields like `year = 1981`, `@comment`/`@string`/
+  `@preamble` blocks correctly skipped rather than mistaken for real
+  entries). Not a bibliography manager -- no cross-reference resolution,
+  no `@string` macro expansion, no formatted-citation rendering (that's
+  the *document*'s job, same as everywhere else reference metadata is
+  used in mudplot).
+- `catalog[key]` resolves straight to a ready-to-use `ReferenceSpec`:
+  `citation=key`, `href` from the entry's `doi` field (as a
+  `https://doi.org/...` link), falling back to its `url` field, or `None`
+  if neither is present. `catalog.raw(key)` exposes every parsed field
+  (title/author/year/...) for anything beyond citation/href, e.g. a
+  paper-metadata preview in an editor. A missing key raises a `KeyError`
+  naming the keys that *are* available.
+- Plugs directly into the existing `citation=`/`href=` kwargs and the
+  grouped-series `references=` dict (v0.4) -- no new layer-level API
+  needed.
+- Regression coverage: 12 new tests in `tests/test_bib.py` (multiple
+  entries, comment/string blocks not mistaken for entries, DOI-vs-URL
+  fallback, no-link entries, nested braces in a field value preserved,
+  multiline values whitespace-collapsed, missing-key error, reading a
+  real file by both `Path` and `str`, composing with the fluent API).
 
 ## [0.4.0] - 2026-09-07
 

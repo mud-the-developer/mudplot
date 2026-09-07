@@ -15,6 +15,7 @@ from typing import TYPE_CHECKING
 from . import actions
 from .actions import action_from_dict, action_to_dict
 from .api import Plot, apply, color_palette, plot
+from .bib import ReferenceCatalog
 from .capabilities import capabilities
 from .docs import reference_markdown
 from .io import from_json, load_spec, save_spec, to_json
@@ -86,6 +87,7 @@ __all__ = [
     "FigureSpec",
     "Plot",
     "Reference",
+    "ReferenceCatalog",
     "ReferenceSpec",
     "Store",
     "TexContext",

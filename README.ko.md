@@ -261,7 +261,35 @@ figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면
 | `.png`/`.pdf` | 생략 | 생략 |
 
 이 값들은 LaTeX 소스에 그대로 치환되므로, `validate()`가 중괄호·백슬래시를
-거부합니다.
+거부합니다(일반적인 BibTeX 키/URL 문자인 `_`/`:`/`-`/`&`/`#`/`%`는 허용).
+
+`group=`으로 묶인 레이어는 `references=`(`{group값: mp.Reference(...)}` 딕셔너리)로
+시리즈별로 다른 논문을 인용할 수 있습니다. 딕셔너리에 없는 group 값은 인용/링크가
+붙지 않습니다:
+
+```python
+(mp.plot(data).line("snr", "bler", group="method", references={
+    "RANSAC": mp.Reference(citation="fischler1981", href="https://doi.org/..."),
+    "J-Linkage": mp.Reference(citation="toldo2008"),
+}))
+```
+
+citation key/URL을 직접 입력하는 대신 기존 `.bib` 파일에서 바로 가져올 수도
+있습니다. `mp.ReferenceCatalog`는 실제 `.bib` 파일이 쓰는 흔한 BibTeX 문법을
+읽는 최소한의(의존성 없는) 리더입니다 — 완전한 참고문헌 관리자는 아닙니다:
+
+```python
+refs = mp.ReferenceCatalog.from_bib("references.bib")
+ref = refs["fischler1981"]   # -> ReferenceSpec(citation=..., href=...)
+# href는 항목의 doi 필드에서 https://doi.org/... 형태로 만들어지고,
+# 없으면 url 필드, 둘 다 없으면 None
+p.line("x", "y", label="RANSAC", citation=ref.citation, href=ref.href)
+```
+
+PGF 레이아웃은 기본적으로 간결한 숫자 인용 스타일(`"[12]"`)을 기준으로
+측정됩니다. 저자-연도 등 더 긴 스타일을 쓴다면
+`.reference_style(measure_text="(Author, Year)")`를 지정해 범례 크기가
+실제 컴파일 결과 폭에 더 가깝게 예측되도록 하세요.
 
 ### 범례·제목·주석을 정확한 위치에 놓기
 

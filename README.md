@@ -301,7 +301,37 @@ Each backend does what it can with the same spec:
 | `.png`/`.pdf` | dropped | dropped |
 
 Metadata is substituted into LaTeX source verbatim, so `validate()` rejects
-braces/backslashes in these two fields.
+braces/backslashes in these two fields (ordinary BibTeX-key/URL punctuation
+like `_`/`:`/`-`/`&`/`#`/`%` is fine).
+
+A `group=`-ed layer can cite a *different* paper per series via
+`references=` (a `{group_value: mp.Reference(...)}` dict); a group value
+not in the dict gets no citation/link:
+
+```python
+(mp.plot(data).line("snr", "bler", group="method", references={
+    "RANSAC": mp.Reference(citation="fischler1981", href="https://doi.org/..."),
+    "J-Linkage": mp.Reference(citation="toldo2008"),
+}))
+```
+
+Pull citation/href straight out of an existing `.bib` file instead of typing
+keys/URLs by hand with `mp.ReferenceCatalog` (a minimal, dependency-free
+reader for the common BibTeX subset real `.bib` files use -- not a full
+bibliography manager):
+
+```python
+refs = mp.ReferenceCatalog.from_bib("references.bib")
+ref = refs["fischler1981"]   # -> ReferenceSpec(citation=..., href=...)
+# href is resolved from the entry's doi field (as https://doi.org/...),
+# falling back to its url field, or None if neither is present
+p.line("x", "y", label="RANSAC", citation=ref.citation, href=ref.href)
+```
+
+By default, PGF layout is measured against a compact numeric citation style
+(`"[12]"`); pass `.reference_style(measure_text="(Author, Year)")` if your
+bibliography style is longer (e.g. author-year), so legend sizing predicts
+the final compiled width instead of assuming the compact default.
 
 ### Placing the legend, title, or an annotation at an exact spot
 
