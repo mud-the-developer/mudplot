@@ -438,9 +438,27 @@ def test_exported_pgf_compiles_into_a_real_paper(tmp_path, engine, bibtool):
     assert f"[1] {author1}" in text and f"[2] {author2}" in text
 
 
+# LuaLaTeX (and, with some font setups, XeLaTeX) shapes text through real
+# OpenType font features, so a common ligature like "fi" can come back from
+# the compiled PDF as one Unicode ligature glyph (ﬁ) instead of the two
+# separate letters -- observed on a from-scratch Ubuntu TeX Live install,
+# not reproduced with this project's other TeX installs, so it's a font/
+# platform difference in *how* "fi" is encoded in the output, not a
+# citation-resolution discrepancy (the actual claim this test makes).
+_LIGATURES = {
+    "\ufb00": "ff",
+    "\ufb01": "fi",
+    "\ufb02": "fl",
+    "\ufb03": "ffi",
+    "\ufb04": "ffl",
+}
+
+
 def _pdf_text(pdf) -> str:
     """Text of a compiled PDF, whitespace-normalised (ghostscript ships with
-    every TeX install, so no extra tooling)."""
+    every TeX install, so no extra tooling) and with common ligatures
+    expanded back to plain ASCII letters (see ``_LIGATURES``).
+    """
     proc = subprocess.run(
         [
             "gs",
@@ -455,4 +473,7 @@ def _pdf_text(pdf) -> str:
         text=True,
         timeout=120,
     )
-    return " ".join(proc.stdout.split())
+    text = proc.stdout
+    for ligature, expanded in _LIGATURES.items():
+        text = text.replace(ligature, expanded)
+    return " ".join(text.split())

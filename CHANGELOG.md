@@ -34,7 +34,19 @@ All notable changes to this project are documented here.
   `pdflatex`+BibTeX, `lualatex`+BibTeX, `lualatex`+biblatex/biber (a
   second paper template using `\usepackage{biblatex}`/`\printbibliography`
   for the last one). Each combination skips independently if its tools
-  aren't installed, exactly like the existing `needs_tex` pattern.
+  aren't installed, exactly like the existing `needs_tex` pattern. Also
+  found on a real from-scratch Ubuntu TeX Live install (not reproduced on
+  any other machine/CI setup this project has used): LuaLaTeX's real
+  OpenType font shaping can render a common ligature like "fi" back out of
+  the compiled PDF as one Unicode ligature glyph instead of two separate
+  letters -- a font/platform detail in *how* text is encoded, not a
+  citation-resolution discrepancy, so `_pdf_text()` now expands the
+  standard Latin ligatures (`ff`/`fi`/`fl`/`ffi`/`ffl`) back to plain
+  ASCII before any assertion runs. Also discovered (not a bug): biblatex's
+  default numeric style abbreviates a given name without a following space
+  (`"MFischler"`) unlike classic BibTeX's `plain.bst` (`"M Fischler"`) --
+  a real typographic difference between the two bibliography conventions,
+  accounted for in the assertion rather than papered over.
 - New `.github/workflows/tex-matrix.yml`: installs a fuller TeX Live
   (`pdflatex`, `lualatex`, classic BibTeX, biblatex/biber) and runs just
   this parametrised test, on a nightly schedule, on a release tag push, or
