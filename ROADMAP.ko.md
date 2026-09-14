@@ -65,9 +65,8 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 - mypy/pyright 정적 타입 검사 (아직 안 함 — py.typed는 배포했지만 자체
   타입 정확성은 외부 검증 안 됨)
 - **(완료)** hypothesis 기반 속성 테스트 -- reduce()의 state/action 불변성,
-  citation/href validator (`tests/test_property_based.py`). 아직 안 한 것:
-  색상 엔진(convert.py 왕복, distance.py 지표 성질) -- 같은 방식의 자연스러운
-  다음 확장
+  citation/href validator, 색상 엔진(convert.py 왕복·8-bit hex 보존,
+  distance.py 지표 성질)을 `tests/test_property_based.py`에서 검증
 - CONTRIBUTING.md
 - DESIGN.md가 길어졌으니 ARCHITECTURE.md로 분리 검토
 

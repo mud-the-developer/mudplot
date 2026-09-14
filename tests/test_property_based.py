@@ -1,8 +1,8 @@
 """Property-based tests (Hypothesis) for the invariants the docstrings and
 prose already claim: reducer purity/immutability, JSON round-tripping,
-spec-version migration idempotency, and the citation/href character-safety
-rule. Complements the example-based tests elsewhere with a much wider,
-randomised input space -- exactly the areas
+spec-version migration idempotency, citation/href character safety, and colour
+conversion/distance properties. Complements the example-based tests elsewhere
+with a much wider, randomised input space -- exactly the areas
 mudplot_v0.3_improvement_and_reference_repos.md calls out as a good fit for
 this (FigureSpec/reducer round-trip, reducer immutability, URL escaping,
 malformed input).
@@ -12,17 +12,29 @@ import copy
 import string
 
 import mudplot as mp
+import numpy as np
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 from mudplot import actions as A
+from mudplot.color import convert as color_convert
+from mudplot.color import distance as color_distance
 from mudplot.reducer import reduce
 from mudplot.spec import FigureSpec, migrate_spec_dict
 from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 from mudplot.validate import _CITATION_UNSAFE, _HREF_UNSAFE
 
-_finite_float = st.floats(allow_nan=False, allow_infinity=False)
 _positive_float = st.floats(
     min_value=1e-3, max_value=1e6, allow_nan=False, allow_infinity=False
+)
+_unit_channel = st.floats(
+    min_value=0.0, max_value=1.0, allow_nan=False, allow_infinity=False
+)
+_unit_rgb = st.tuples(_unit_channel, _unit_channel, _unit_channel)
+_lab = st.tuples(
+    st.floats(min_value=0.0, max_value=100.0, allow_nan=False, allow_infinity=False),
+    st.floats(min_value=-128.0, max_value=127.0, allow_nan=False, allow_infinity=False),
+    st.floats(min_value=-128.0, max_value=127.0, allow_nan=False, allow_infinity=False),
 )
 
 # A curated slice of the action vocabulary: simple, single-field actions
@@ -173,3 +185,73 @@ def test_builder_json_round_trip_over_random_figure_level_settings(
     )
     restored = mp.Plot.from_json(p.to_json())
     assert restored.spec.to_dict() == p.spec.to_dict()
+
+
+@given(rgb=_unit_rgb)
+@settings(max_examples=200)
+def test_colour_space_round_trips_preserve_any_in_gamut_srgb(rgb):
+    rgb = np.asarray(rgb)
+    np.testing.assert_allclose(
+        color_convert.linear_to_srgb(color_convert.srgb_to_linear(rgb)),
+        rgb,
+        atol=1e-12,
+    )
+    np.testing.assert_allclose(
+        color_convert.lab_to_srgb(color_convert.srgb_to_lab(rgb)),
+        rgb,
+        atol=1e-10,
+    )
+    np.testing.assert_allclose(
+        color_convert.lch_to_srgb(color_convert.srgb_to_lch(rgb)),
+        rgb,
+        atol=1e-10,
+    )
+
+
+@given(lab=_lab)
+@settings(max_examples=200)
+def test_lab_xyz_and_lch_round_trips_preserve_any_realistic_lab(lab):
+    lab = np.asarray(lab)
+    np.testing.assert_allclose(
+        color_convert.xyz_to_lab(color_convert.lab_to_xyz(lab)),
+        lab,
+        atol=1e-10,
+    )
+    np.testing.assert_allclose(
+        color_convert.lch_to_lab(color_convert.lab_to_lch(lab)),
+        lab,
+        atol=1e-10,
+    )
+
+
+@given(st.tuples(*(st.integers(0, 255) for _ in range(3))))
+def test_hex_round_trip_preserves_every_generated_8_bit_colour(channels):
+    value = "#" + "".join(f"{channel:02X}" for channel in channels)
+    assert color_convert.srgb_to_hex(color_convert.hex_to_srgb(value)) == value
+
+
+@given(a=_lab, b=_lab, c=_lab)
+@settings(max_examples=200)
+def test_delta_e76_obeys_metric_properties(a, b, c):
+    a, b, c = np.asarray(a), np.asarray(b), np.asarray(c)
+    ab = float(color_distance.delta_e76(a, b))
+    assert ab >= 0.0
+    assert ab == pytest.approx(float(color_distance.delta_e76(b, a)), abs=1e-12)
+    assert float(color_distance.delta_e76(a, a)) == pytest.approx(0.0, abs=1e-12)
+    assert (
+        ab
+        <= float(color_distance.delta_e76(a, c))
+        + float(color_distance.delta_e76(c, b))
+        + 1e-12
+    )
+
+
+@given(a=_lab, b=_lab)
+@settings(max_examples=200)
+def test_delta_e2000_is_finite_nonnegative_symmetric_and_zero_at_identity(a, b):
+    a, b = np.asarray(a), np.asarray(b)
+    ab = float(color_distance.delta_e2000(a, b))
+    assert np.isfinite(ab)
+    assert ab >= 0.0
+    assert ab == pytest.approx(float(color_distance.delta_e2000(b, a)), abs=1e-12)
+    assert float(color_distance.delta_e2000(a, a)) == pytest.approx(0.0, abs=1e-12)

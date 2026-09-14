@@ -123,10 +123,10 @@ exercised through it, a reasonable first slice:
   hasn't been externally verified with a type checker, only informally
   via consistent type hints.
 - **(done)** Property-based testing (`hypothesis`) for `reduce()`
-  (state/action immutability, JSON round-trip of its output) and the
-  citation/href validator (`tests/test_property_based.py`). Not yet
-  covered: the colour engine (`convert.py` round-trips, `distance.py`
-  metric properties) -- a natural next slice of the same approach.
+  (state/action immutability, JSON round-trip of its output), the
+  citation/href validator, and the colour engine (`convert.py` round-trips,
+  8-bit hex identity, and `distance.py` metric properties), all in
+  `tests/test_property_based.py`.
 - **`CONTRIBUTING.md`**: contribution guidelines, dev setup
   (`uv sync --extra dev`), the "regenerate schemas" step, and the testing
   philosophy (one regression test per bug, cross-module consistency tests

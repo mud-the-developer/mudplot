@@ -4,7 +4,16 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
-(nothing yet)
+### Quality
+
+- Hardened citation/href validation to reject every ASCII control character,
+  including NUL and DEL, rather than only newline/tab characters.
+- Added regression coverage for duplicate-label citations, disabling
+  `\figcite`, math/CJK labels with references, unknown future spec fields,
+  and secondary-y-axis plus colorbar layout.
+- Extended Hypothesis coverage to the colour engine: sRGB/linear/Lab/LCh and
+  Lab/XYZ round-trips, 8-bit hex identity, CIE76 metric properties, and
+  CIEDE2000 identity/symmetry/non-negativity.
 
 ## [0.5.0] - 2026-09-14
 
