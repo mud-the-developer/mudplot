@@ -64,10 +64,19 @@ _REFS: contextvars.ContextVar[list | None] = contextvars.ContextVar(
 _REF_MEASURE: contextvars.ContextVar[str] = contextvars.ContextVar(
     "mudplot_ref_measure", default=""
 )
-# (guillemets: present in the standard fonts, so no missing-glyph warning
-# and a realistic width during layout, and left alone by pgf escaping.)
-_MARK_OPEN, _MARK_CLOSE = "\u00ab", "\u00bb"
-_PGF_REF_RE = re.compile(_MARK_OPEN + r"(\d+)" + _MARK_CLOSE)
+# Plain ASCII (backtick/straight-quote), not guillemets: the previous
+# choice («/») rendered fine under xelatex/lualatex (native Unicode text),
+# but every real TeX install this was ever actually tested against also
+# happened to default matplotlib's pgf.texsystem to one of those two --
+# pdflatex's default OT1 font encoding has no guillemet glyph at all
+# ("Command \guillemetleft unavailable in encoding OT1"), which a CI run
+# exercising pdflatex for the first time caught immediately. Backtick/quote
+# are plain 7-bit ASCII: present, unescaped, and require no fontenc/inputenc
+# setup under OT1, T1, or full Unicode alike -- and, like the guillemets
+# before them, aren't one of LaTeX's catcode-special characters, so pgf's
+# own text escaping leaves them alone.
+_MARK_OPEN, _MARK_CLOSE = "`", "'"
+_PGF_REF_RE = re.compile(re.escape(_MARK_OPEN) + r"(\d+)" + re.escape(_MARK_CLOSE))
 
 
 @contextlib.contextmanager

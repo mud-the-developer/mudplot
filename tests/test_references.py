@@ -305,11 +305,6 @@ def test_measure_text_does_not_widen_a_wrapping_title_citation(tmp_path):
     assert "Fischler and Bolles" not in pgf
 
 
-needs_tectonic = pytest.mark.skipif(
-    shutil.which("tectonic") is None or shutil.which("gs") is None,
-    reason="needs tectonic (compile) and ghostscript (read the result back)",
-)
-
 PAPER_TEX = r"""\documentclass[10pt]{article}
 \usepackage{pgf}
 \input{preamble.tex}
@@ -331,37 +326,116 @@ REFS_BIB = """@article{fischler1981, title={Random sample consensus},
 """
 
 
-@needs_tex
-@needs_tectonic
-def test_exported_pgf_compiles_into_a_real_paper(tmp_path):
-    """The end-to-end claim: a .pgf figure's citations resolve against the
-    *document's* bibliography, producing real numbers in the final PDF.
+PAPER_TEX_BIBLATEX = r"""\documentclass[10pt]{article}
+\usepackage{pgf}
+\usepackage[backend=biber,style=numeric]{biblatex}
+\addbibresource{refs.bib}
+\input{preamble.tex}
+\begin{document}
+Robust estimation is standard practice.
+\begin{figure}\centering
+\input{fig.pgf}
+\caption{Errors of two estimators.}
+\end{figure}
+\printbibliography
+\end{document}
+"""
 
-    Generating the .pgf needs a TeX engine (matplotlib measures text with
-    it); compiling the paper is done with tectonic, which fetches whatever
-    packages it needs on its own.
+
+# The doc's own P1-5 guidance: a single (fast, self-contained) engine on
+# every commit is enough day to day -- tectonic fetches whatever packages it
+# needs on its own, so it's the only combination that ever runs in the main
+# CI workflow (see `_missing` below). The other three (real TeX Live engines
+# x classic BibTeX vs. modern biblatex/biber) are real, valuable coverage --
+# they've caught engine-specific regressions in other TeX-adjacent tools
+# before -- but installing a full TeX Live is too slow to justify on every
+# push; they're wired up here so a nightly/release workflow *can* run them
+# (see .github/workflows/tex-matrix.yml) and simply skip (via `_missing`)
+# anywhere those engines aren't installed, exactly like `needs_tex` already
+# does for the base .pgf-export tests above.
+_TEX_MATRIX = [
+    pytest.param("tectonic", "tectonic", id="tectonic"),
+    pytest.param("pdflatex", "bibtex", id="pdflatex+bibtex"),
+    pytest.param("lualatex", "bibtex", id="lualatex+bibtex"),
+    pytest.param("lualatex", "biber", id="lualatex+biblatex"),
+]
+
+
+def _missing(engine: str, bibtool: str) -> list[str]:
+    tools = ["tectonic"] if engine == "tectonic" else [engine, bibtool]
+    return [t for t in (*tools, "gs") if shutil.which(t) is None]
+
+
+def _run(cmd: list[str], cwd) -> subprocess.CompletedProcess:
+    return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=300)
+
+
+def _compile_paper(tmp_path, engine: str, bibtool: str) -> None:
+    """Run whichever engine/bibliography-tool pass sequence ``paper.tex``
+    actually needs -- each combination has its own real-world compile
+    sequence (classic BibTeX interleaves one bibtex pass; biblatex/biber
+    needs its own pass instead; tectonic resolves everything in one call).
     """
+    if engine == "tectonic":
+        proc = subprocess.run(
+            ["tectonic", "--keep-intermediates", "--print", "paper.tex"],
+            cwd=tmp_path,
+            capture_output=True,
+            text=True,
+            timeout=600,
+        )
+        assert proc.returncode == 0, proc.stderr[-3000:]
+        assert "Citation" not in proc.stderr or "undefined" not in proc.stderr
+        return
+    passes = [
+        [engine, "-interaction=nonstopmode", "paper.tex"],
+        [bibtool, "paper"],
+        [engine, "-interaction=nonstopmode", "paper.tex"],
+        [engine, "-interaction=nonstopmode", "paper.tex"],
+    ]
+    for cmd in passes:
+        proc = _run(cmd, tmp_path)
+        assert proc.returncode == 0, f"{' '.join(cmd)}:\n{proc.stdout[-3000:]}"
+
+
+@needs_tex
+@pytest.mark.parametrize("engine,bibtool", _TEX_MATRIX)
+def test_exported_pgf_compiles_into_a_real_paper(tmp_path, engine, bibtool):
+    """The end-to-end claim: a .pgf figure's citations resolve against the
+    *document's* bibliography, producing real numbers in the final PDF --
+    across both bibliography conventions (classic BibTeX and biblatex/
+    biber) and multiple TeX engines, not just whichever one happens to be
+    installed on a given machine.
+
+    Generating the .pgf needs *a* TeX engine (matplotlib measures text with
+    it, via ``needs_tex``/``mpl.rcParams["pgf.texsystem"]``) -- independent
+    of which engine/bibliography tool then compiles the final paper.
+    """
+    missing = _missing(engine, bibtool)
+    if missing:
+        pytest.skip(f"needs {missing} for {engine}+{bibtool}")
+
     plt.close(mp.save(_plot().spec, str(tmp_path / "fig.pgf")))
     (tmp_path / "preamble.tex").write_text(mp.PREAMBLE, encoding="utf-8")
-    (tmp_path / "paper.tex").write_text(PAPER_TEX, encoding="utf-8")
     (tmp_path / "refs.bib").write_text(REFS_BIB, encoding="utf-8")
+    template = PAPER_TEX_BIBLATEX if bibtool == "biber" else PAPER_TEX
+    (tmp_path / "paper.tex").write_text(template, encoding="utf-8")
 
-    proc = subprocess.run(
-        ["tectonic", "--keep-intermediates", "--print", "paper.tex"],
-        cwd=tmp_path,
-        capture_output=True,
-        text=True,
-        timeout=600,
-    )
-    assert proc.returncode == 0, proc.stderr[-3000:]
-    assert "Citation" not in proc.stderr or "undefined" not in proc.stderr
+    _compile_paper(tmp_path, engine, bibtool)
 
     text = _pdf_text(tmp_path / "paper.pdf")
     # the numbers inside the figure are assigned by the document, and are the
     # same ones its References list uses
     assert "RANSAC [1]" in text
     assert "Robust fitting [2]" in text
-    assert "[1] M Fischler" in text and "[2] R Hartley" in text
+    # biblatex's default numeric style abbreviates a given name without a
+    # following space ("MFischler"), unlike classic BibTeX's plain.bst
+    # ("M Fischler") -- a real, expected typographic difference between the
+    # two bibliography conventions, not a citation-resolution discrepancy.
+    author1, author2 = (
+        ("MFischler", "RHartley") if bibtool == "biber" else ("M Fischler", "R Hartley")
+    )
+    assert f"[1] {author1}" in text and f"[2] {author2}" in text
 
 
 def _pdf_text(pdf) -> str:

@@ -1180,7 +1180,16 @@ https://example.org/paper_v2?x=1&y=2#section_3
       (nature/ieee/**acm**/**revtex**). `AVAILABLE_JOURNALS`/`JOURNAL_SIZES`는
       이제 `JOURNAL_PROFILES`에서 파생(단일 소스, single source of truth). `.lint()`은
       `spec.journal`을 자동 감지하고 DPI 검사를 추가
-- [ ] release/nightly TeX engine matrix
+- [x] release/nightly TeX engine matrix — `.github/workflows/tex-matrix.yml`
+      (nightly + release tag + 수동): pdflatex+bibtex, lualatex+bibtex,
+      lualatex+biblatex/biber. PR/every-push CI는 tectonic만(문서 권장대로).
+      만들고 실제로 돌려보니 pdflatex/OT1에서 guillemet sentinel이 깨지는
+      실제 버그를 발견(모든 기존 테스트가 xelatex에만 의존해서 지금까지 CI에서
+      한 번도 실행된 적 없었음) → backtick/quote로 교체
+
+> 위 5개 항목 모두 완료 — v0.5 체크리스트 종료. 남은 것은 P2 장기 아이디어들
+> (`.bib` → `ReferenceCatalog`의 더 높은 단계인 DOI 메타데이터 자동 조회,
+> PGFPlots 백엔드 등)과 문서 상단의 "하지 않는 것이 좋은 것" 목록뿐.
 
 ---
 

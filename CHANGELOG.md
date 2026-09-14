@@ -4,6 +4,55 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Release/nightly TeX engine matrix (P1-5)
+
+- Every push/PR already compiled a real paper with Tectonic (self-
+  contained, fetches its own packages) -- but this had silently never
+  actually run in CI at all, since CI never installed *any* TeX engine
+  and `needs_tex` (matplotlib's own pgf-measurement prerequisite) always
+  skipped the whole file first. Fixed: CI now installs `pdflatex`
+  (`texlive-latex-base`/`-recommended`/`-pictures`, a comparatively small
+  slice of TeX Live) and a pinned `tectonic` release, so the full
+  citation/`.pgf` test suite -- not just this one test -- finally runs on
+  every push.
+- `tests/conftest.py`: matplotlib's pgf backend defaults to `xelatex`,
+  whose Ubuntu package drags in nearly a full `texlive-latex-extra` tree
+  for no benefit here. Since matplotlib accepts `pdflatex`/`lualatex` for
+  this rcParam equally well, a small collection-time check now prefers
+  whichever of the three is actually installed -- this only ever widens
+  which environments the `needs_tex`-marked tests can run in.
+- Found by actually exercising `pdflatex` for the first time (every prior
+  test run, local or CI, had happened to default to `xelatex`): the PGF
+  reference-marker sentinel used Unicode guillemets («/»), which don't
+  exist under `pdflatex`'s default OT1 font encoding (`Command
+  \guillemetleft unavailable in encoding OT1`) -- a real, previously-
+  latent bug this work surfaced, not a hypothetical one. Switched to plain
+  ASCII (backtick/straight-quote), present and unescaped under OT1/T1/
+  Unicode alike.
+- `tests/test_references.py::test_exported_pgf_compiles_into_a_real_paper`
+  is now parametrised across the doc's suggested matrix: `tectonic`,
+  `pdflatex`+BibTeX, `lualatex`+BibTeX, `lualatex`+biblatex/biber (a
+  second paper template using `\usepackage{biblatex}`/`\printbibliography`
+  for the last one). Each combination skips independently if its tools
+  aren't installed, exactly like the existing `needs_tex` pattern.
+- New `.github/workflows/tex-matrix.yml`: installs a fuller TeX Live
+  (`pdflatex`, `lualatex`, classic BibTeX, biblatex/biber) and runs just
+  this parametrised test, on a nightly schedule, on a release tag push, or
+  on manual request -- too slow to justify on every commit, per the doc's
+  own "PR: Tectonic smoke test / nightly+release: the fuller matrix"
+  split. Both new/modified workflow files pin `actions/checkout`/
+  `astral-sh/setup-uv` to a commit SHA (not just a mutable tag), declare
+  minimal `permissions: contents: read`, disable `astral-sh/setup-uv`'s
+  cache (unneeded for a once-daily job, removes a cache-poisoning attack
+  surface), and fetch `tectonic` from a pinned GitHub release tarball
+  rather than piping the project's own install script into a shell.
+- Verified all four matrix combinations pass locally (this machine has
+  every engine installed), and separately verified the *exact* CI-post-
+  change environment (only `pdflatex`+`tectonic`+`ghostscript` on `PATH`,
+  `lualatex`/`xelatex`/`biber` absent) by running the full suite under a
+  restricted `PATH` -- 29 passed, 2 skipped (the two `lualatex`
+  combinations, correctly, since `ci.yml` doesn't install it).
+
 ### Richer journal profiles (P2-3)
 
 - `JournalProfile` (`mp.JournalProfile`, `mp.get_journal_profile(name)`,

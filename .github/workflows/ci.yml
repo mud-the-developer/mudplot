@@ -11,9 +11,9 @@ jobs:
       matrix:
         python-version: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
         with:
           python-version: ${{ matrix.python-version }}
           cache-dependency-glob: "uv.lock"
@@ -21,6 +21,30 @@ jobs:
         run: uv sync --extra dev --extra browser
       - name: Install Chromium for the browser tests
         run: uv run playwright install --with-deps chromium
+      - name: Install pdflatex + tectonic (TeX engines for the .pgf-export
+          reference tests; see tex-matrix.yml for the fuller
+          pdflatex/lualatex/biber matrix, nightly/release-only)
+        # pdflatex (texlive-latex-base/-recommended/-pictures) is matplotlib's
+        # pgf.texsystem for the base .pgf-export tests (tests/conftest.py
+        # picks it over the xelatex default, since xelatex's Ubuntu package
+        # drags in nearly a full texlive-latex-extra tree for no benefit
+        # here); tectonic is a pinned release tarball fetched directly from
+        # GitHub over HTTPS, not the project's own "curl | sh" one-liner
+        # installer, to avoid piping a remote script straight into a shell
+        # (at the cost of bumping TECTONIC_VERSION by hand occasionally).
+        env:
+          TECTONIC_VERSION: "0.15.0"
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-base texlive-latex-recommended texlive-pictures \
+            ghostscript
+          curl -fsSL -o tectonic.tar.gz \
+            "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          tar xzf tectonic.tar.gz
+          sudo mv tectonic /usr/local/bin/
+          rm tectonic.tar.gz
+          tectonic --version
       - name: Ruff lint
         run: uv run ruff check .
       - name: Ruff format check
