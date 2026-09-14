@@ -16,6 +16,7 @@ import warnings
 import matplotlib.pyplot as plt
 import mudplot as mp
 import pytest
+from mudplot._render import _substitute_pgf_references
 
 DOI = "https://doi.org/10.1145/358669.358692"
 
@@ -78,6 +79,11 @@ def test_svg_export_makes_the_legend_entry_a_link(tmp_path):
     # SVG has no bibliography to resolve a citation key against, so the key
     # must not be dumped into the visible text
     assert "fischler1981" not in svg
+
+
+def test_unknown_pgf_reference_marker_is_left_unchanged():
+    text = "before `99' after"
+    assert _substitute_pgf_references(text, [("cite", "known")]) == text
 
 
 def test_raster_export_keeps_labels_plain(tmp_path):

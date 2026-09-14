@@ -43,7 +43,15 @@ mudplot = "mudplot.__main__:main"
 color = ["numpy>=1.23"]                       # colour engine (LCH, CVD, palettes)
 render = ["numpy>=1.23", "matplotlib>=3.6"]   # matplotlib rendering + TeX preview
 all = ["mudplot[render]"]
-dev = ["mudplot[render]", "pytest>=7", "ruff>=0.6", "jsonschema>=4", "hypothesis>=6"]
+dev = [
+    "mudplot[render]",
+    "pytest>=7",
+    "ruff>=0.6",
+    "pyright>=1.1.390",
+    "pandas>=2",
+    "jsonschema>=4",
+    "hypothesis>=6",
+]
 # Real-browser tests for the dashboard editor (tests/test_editor_browser.py).
 # Separate from `dev` because it also needs a browser binary installed
 # (`playwright install chromium`); the suite skips those tests without it.
@@ -76,6 +84,13 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["E402"]  # matplotlib.use('Agg') before imports in tests
+
+[tool.pyright]
+include = ["mudplot", "dashboard", "scripts"]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+venvPath = "."
+venv = ".venv"
 
 [tool.pytest.ini_options]
 addopts = "-ra"

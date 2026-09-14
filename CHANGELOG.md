@@ -6,6 +6,14 @@ All notable changes to this project are documented here.
 
 ### Quality
 
+- Added a zero-error `pyright` check for `mudplot/`, the dashboard, and
+  maintenance scripts to the dev environment and both CI Python jobs,
+  targeting the supported Python 3.10 language level. Findings were fixed
+  with explicit optional narrowing, accurate return types, checked form
+  parsing, and type-safe handling of dynamic Matplotlib metadata.
+- Declared the docs generator's existing pandas requirement as a dev
+  dependency, so `uv sync --extra dev` now creates a complete environment for
+  regenerating demos instead of relying on an undeclared local install.
 - Hardened citation/href validation to reject every ASCII control character,
   including NUL and DEL, rather than only newline/tab characters.
 - Added regression coverage for duplicate-label citations, disabling

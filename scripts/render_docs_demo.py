@@ -13,7 +13,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import mudplot as mp
 import numpy as np
-import pandas as pd
+import pandas as pd  # provided by the dev extra used to regenerate docs
+from matplotlib.container import ErrorbarContainer
+from mpl_toolkits.mplot3d import Axes3D
 from mudplot import actions as A
 
 OUT = Path(__file__).resolve().parents[1] / "docs" / "images"
@@ -41,7 +43,10 @@ def export(plot, name):
     assert rebuilt.spec.to_dict() == plot.spec.to_dict()
     (OUT / f"{name}.mplot.json").write_text(plot.to_json(), encoding="utf-8")
     fig = plot.save(OUT / f"{name}.png")
-    expected = tuple(int(v * plot.spec.dpi) for v in plot.spec.size[::-1])
+    expected = (
+        round(plot.spec.size[1] * plot.spec.dpi),
+        round(plot.spec.size[0] * plot.spec.dpi),
+    )
     assert plt.imread(OUT / f"{name}.png").shape[:2] == expected
     plt.close(plot.save(OUT / f"{name}.pdf"))
     print(f"OK {name}: {expected[1]} x {expected[0]} px; JSON round-trip; PDF")
@@ -106,8 +111,11 @@ def main():
     scatter = fig.axes[1].collections
     assert len(scatter) == 3
     assert all(s.norm is scatter[0].norm for s in scatter)
-    assert scatter[0].get_clim() == (20, 48)
-    np.testing.assert_allclose(fig.axes[0].lines[0].get_ydata(), data.response[:24])
+    np.testing.assert_allclose(scatter[0].get_clim(), [20, 48])
+    np.testing.assert_allclose(
+        np.asarray(fig.axes[0].lines[0].get_ydata(), dtype=float),
+        data.response[:24].to_numpy(),
+    )
     plt.close(fig)
 
     categories = pd.DataFrame(
@@ -157,9 +165,9 @@ def main():
     p.store.undo()
     assert p.to_json() == edited and edited != before
     fig = export(p, "editing_after")
-    np.testing.assert_array_equal(
-        fig.axes[0].containers[1].lines[0].get_xdata(), [2, 0, 1]
-    )
+    errorbars = fig.axes[0].containers[1]
+    assert isinstance(errorbars, ErrorbarContainer)
+    np.testing.assert_array_equal(errorbars.lines[0].get_xdata(), [2, 0, 1])
     assert [t.get_text() for t in fig.axes[0].get_xticklabels()] == [
         "Control",
         "Low dose",
@@ -187,9 +195,11 @@ def main():
         .zlabel("Amplitude", limits=[-1, 1], panel=1)
     )
     fig = export(p, "fields_demo")
-    assert fig.axes[1].get_xlim() == (0, 23)
-    assert fig.axes[1].get_zlim() == (-1, 1)
-    assert fig.axes[1].texts[0].get_text() == "b)"
+    field_3d = fig.axes[1]
+    assert isinstance(field_3d, Axes3D)
+    np.testing.assert_allclose(field_3d.get_xlim(), [0, 23])
+    np.testing.assert_allclose(field_3d.get_zlim(), [-1, 1])
+    assert field_3d.texts[0].get_text() == "b)"
     plt.close(fig)
 
     # -- palette safety: named preset under normal/CVD/true-greyscale vision --
@@ -203,7 +213,7 @@ def main():
         pal = P.preset_qualitative(name, n)
         preview(pal, ax=ax)
         report = pal.report()
-        assert report["cvd_safe"] and report["grayscale_safe"], (name, report)
+        assert report["cvd_safe"] and report["grayscale_safe"]
     fig.tight_layout()
     fig.savefig(OUT / "palette_presets.png", dpi=150)
     plt.close(fig)

@@ -8,7 +8,7 @@ fluent API today and by a Rust/htmx editor later.
 from __future__ import annotations
 
 import typing
-from dataclasses import dataclass, field, fields, is_dataclass
+from dataclasses import dataclass, field, fields
 
 from .spec import LayerSpec
 
@@ -348,7 +348,7 @@ def action_to_dict(action) -> dict:
     out: dict = {"type": type(action).__name__}
     for f in fields(action):
         val = getattr(action, f.name)
-        if is_dataclass(val) and not isinstance(val, type):
+        if isinstance(val, LayerSpec):
             val = val.to_dict()
         out[f.name] = val
     return out
@@ -374,8 +374,8 @@ def action_from_dict(data: dict):
     kwargs = {}
     for k, v in d.items():
         tp = hints.get(k)
-        if isinstance(tp, type) and is_dataclass(tp) and hasattr(tp, "from_dict"):
-            kwargs[k] = tp.from_dict(v)
+        if tp is LayerSpec:
+            kwargs[k] = LayerSpec.from_dict(v)
         else:
             kwargs[k] = v
     return cls(**kwargs)

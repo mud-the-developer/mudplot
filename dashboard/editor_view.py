@@ -797,6 +797,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
             )
         )
 
+    bx0, by0, bx1, by1 = 0.0, 0.0, 1.0, 1.0
     has_bbox = not layout.get("is_3d") and "panel_bbox" in layout
     if has_bbox:
         bx0, by0, bx1, by1 = layout["panel_bbox"]
@@ -827,8 +828,8 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
                 _drag_handle_html(
                     kind="layer-at",
                     symbol="\u2022",
-                    img_x=_data_to_img_frac(ax_v, *xlim, xscale, bx0, bx1),
-                    img_y=_data_to_img_frac(ay_v, *ylim, yscale, by0, by1),
+                    img_x=_data_to_img_frac(ax_v, xlim[0], xlim[1], xscale, bx0, bx1),
+                    img_y=_data_to_img_frac(ay_v, ylim[0], ylim[1], yscale, by0, by1),
                     extra_data={
                         "space": "axes",
                         "data": "1",

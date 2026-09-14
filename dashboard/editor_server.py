@@ -111,8 +111,11 @@ class EditorSession:
         session untouched and reports the problem instead of wedging the
         editor on a spec it cannot render.
         """
-        spec = FigureSpec.from_dict(json.loads(text))
-        assert_valid(spec)
+        try:
+            spec = FigureSpec.from_dict(json.loads(text))
+            assert_valid(spec)
+        except Exception as e:
+            raise ValueError(f"invalid figure spec: {e}") from e
         self.store = Store(spec)
         self.active_panel = 0
         self.error = None
@@ -228,7 +231,22 @@ def _docs_page() -> str:
     return render_docs_page(markdown_to_html(mp.reference_markdown()))
 
 
-def _build_action(action_type: str, fields: dict, spec=None):
+def _float_field(fields: dict, name: str) -> float:
+    try:
+        return float(fields[name])
+    except (KeyError, TypeError, ValueError) as e:
+        raise ValueError(f"{name} must be a number") from e
+
+
+def _int_field(fields: dict, name: str, default=None) -> int:
+    try:
+        value = fields[name] if default is None else fields.get(name, default)
+        return int(value)
+    except (KeyError, TypeError, ValueError) as e:
+        raise ValueError(f"{name} must be an integer") from e
+
+
+def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
     if action_type == "load_sample":
         return A.SetData(sample_columns(fields["name"]))
     if action_type == "set_theme":
@@ -240,16 +258,16 @@ def _build_action(action_type: str, fields: dict, spec=None):
         return A.SetPalette(
             kind=fields.get("kind"),
             params={
-                "hue_start": float(fields["hue_start"]),
-                "chroma": float(fields["chroma"]),
-                "lightness": float(fields["lightness"]),
+                "hue_start": _float_field(fields, "hue_start"),
+                "chroma": _float_field(fields, "chroma"),
+                "lightness": _float_field(fields, "lightness"),
             },
         )
     if action_type == "add_layer":
         layer_type = fields["layer_type"]
-        panel = int(fields.get("panel", 0))
+        panel = _int_field(fields, "panel", 0)
         if layer_type in ("text", "annotate"):
-            at = [float(fields["x"]), float(fields["y"])]
+            at = [_float_field(fields, "x"), _float_field(fields, "y")]
             return A.AddLayer(
                 LayerSpec(
                     type=layer_type,
@@ -275,32 +293,35 @@ def _build_action(action_type: str, fields: dict, spec=None):
         )
     if action_type == "remove_layer":
         return A.RemoveLayer(
-            int(fields["layer_index"]), panel=int(fields.get("panel", 0))
+            _int_field(fields, "layer_index"),
+            panel=_int_field(fields, "panel", 0),
         )
     if action_type == "set_layout":
-        return A.SetLayout(int(fields["rows"]), int(fields["cols"]))
+        return A.SetLayout(_int_field(fields, "rows"), _int_field(fields, "cols"))
     if action_type == "set_suptitle":
         return A.SetSuptitle(fields.get("text", ""))
     if action_type == "set_title":
         return A.SetTitle(
             fields.get("text", ""),
-            panel=int(fields.get("panel", 0)),
+            panel=_int_field(fields, "panel", 0),
             citation=fields.get("citation") or None,
             href=fields.get("href") or None,
         )
     if action_type == "set_axis_label":
         return A.SetAxisLabel(
-            fields["axis"], fields.get("text", ""), panel=int(fields.get("panel", 0))
+            fields["axis"],
+            fields.get("text", ""),
+            panel=_int_field(fields, "panel", 0),
         )
     if action_type == "set_size":
-        return A.SetSize(float(fields["width"]), float(fields["height"]))
+        return A.SetSize(_float_field(fields, "width"), _float_field(fields, "height"))
     if action_type in ("set_legend_position", "reset_legend_position"):
-        panel = int(fields.get("panel", 0))
+        panel = _int_field(fields, "panel", 0)
         cur = spec.panels[panel].legend
         bbox = (
             None
             if action_type == "reset_legend_position"
-            else [float(fields["x"]), float(fields["y"])]
+            else [_float_field(fields, "x"), _float_field(fields, "y")]
         )
         return A.SetLegend(
             show=cur.show,
@@ -311,18 +332,18 @@ def _build_action(action_type: str, fields: dict, spec=None):
             bbox_to_anchor=bbox,
         )
     if action_type in ("set_title_position", "reset_title_position"):
-        panel = int(fields.get("panel", 0))
+        panel = _int_field(fields, "panel", 0)
         position = (
             None
             if action_type == "reset_title_position"
-            else [float(fields["x"]), float(fields["y"])]
+            else [_float_field(fields, "x"), _float_field(fields, "y")]
         )
         return A.SetTitlePosition(position, panel=panel)
     if action_type == "set_layer_at":
         return A.SetLayerAt(
-            int(fields["layer_index"]),
-            [float(fields["x"]), float(fields["y"])],
-            panel=int(fields.get("panel", 0)),
+            _int_field(fields, "layer_index"),
+            [_float_field(fields, "x"), _float_field(fields, "y")],
+            panel=_int_field(fields, "panel", 0),
         )
     raise ValueError(f"unknown editor action type {action_type!r}")
 
@@ -335,7 +356,7 @@ def _parse_form(body: bytes) -> dict:
 class _Handler(BaseHTTPRequestHandler):
     session: EditorSession  # set by make_server()
 
-    def log_message(self, fmt, *args) -> None:  # quieter test/dev output
+    def log_message(self, format: str, *args) -> None:  # quieter test/dev output
         pass
 
     def _send_html(self, body: str, status: int = 200) -> None:
@@ -361,7 +382,12 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _read_body(self) -> bytes:
-        length = int(self.headers.get("Content-Length", 0))
+        try:
+            length = int(self.headers.get("Content-Length", 0))
+        except (TypeError, ValueError) as e:
+            raise ValueError("Content-Length must be an integer") from e
+        if length < 0:
+            raise ValueError("Content-Length must not be negative")
         return self.rfile.read(length) if length else b""
 
     def _respond_after_action(self, session: EditorSession) -> None:
@@ -422,9 +448,12 @@ class _Handler(BaseHTTPRequestHandler):
     def do_POST(self) -> None:
         path = urlparse(self.path).path
         session = self.session
-        body = self._read_body()
+        try:
+            fields = _parse_form(self._read_body())
+        except (UnicodeDecodeError, ValueError) as e:
+            self.send_error(400, str(e))
+            return
         if path == "/action":
-            fields = _parse_form(body)
             action_type = fields.pop("type", "")
             with session.lock:
                 try:
@@ -437,7 +466,6 @@ class _Handler(BaseHTTPRequestHandler):
                     session.error = f"{type(e).__name__}: {e}"
                 self._respond_after_action(session)
         elif path == "/action/raw":
-            fields = _parse_form(body)
             with session.lock:
                 try:
                     data = json.loads(fields.get("json", "{}"))
@@ -455,7 +483,6 @@ class _Handler(BaseHTTPRequestHandler):
                 session.redo()
                 self._respond_after_action(session)
         elif path == "/open":
-            fields = _parse_form(body)
             with session.lock:
                 try:
                     session.load_spec(fields.get("json", ""))
@@ -463,10 +490,9 @@ class _Handler(BaseHTTPRequestHandler):
                     session.error = f"{type(e).__name__}: {e}"
                 self._respond_after_action(session)
         elif path == "/select-panel":
-            fields = _parse_form(body)
             with session.lock:
                 try:
-                    session.select_panel(int(fields.get("panel", 0)))
+                    session.select_panel(_int_field(fields, "panel", 0))
                 except Exception as e:
                     session.error = f"{type(e).__name__}: {e}"
                 self._respond_after_action(session)

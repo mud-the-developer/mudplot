@@ -49,6 +49,8 @@ jobs:
         run: uv run ruff check .
       - name: Ruff format check
         run: uv run ruff format --check mudplot tests dashboard
+      - name: Pyright
+        run: uv run pyright
       - name: Pytest
         run: uv run pytest -q
       - name: Schema/docs export is in sync (drift guard for Rust + humans)

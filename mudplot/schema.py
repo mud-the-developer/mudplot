@@ -49,7 +49,7 @@ def _schema_for(tp, defs: dict):
     if origin is dict:
         return {"type": "object"}
 
-    if is_dataclass(tp):
+    if isinstance(tp, type) and is_dataclass(tp):
         name = tp.__name__
         if name not in defs:
             defs[name] = {}  # placeholder to break recursion

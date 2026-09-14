@@ -98,7 +98,7 @@ def _strip_optional(tp):
 def _from_dict(cls, data: Any):
     if data is None:
         return None
-    if is_dataclass(cls):
+    if isinstance(cls, type) and is_dataclass(cls):
         hints = typing.get_type_hints(cls)
         kwargs = {}
         for f in fields(cls):

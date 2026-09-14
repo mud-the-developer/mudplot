@@ -10,6 +10,7 @@ import contextlib
 import contextvars
 import itertools
 import re
+from typing import Any, cast
 
 import numpy as np
 
@@ -51,7 +52,7 @@ _FMT: contextvars.ContextVar[str] = contextvars.ContextVar("mudplot_fmt", defaul
 # box (and can collapse the axes to zero size). Each marker is a small index
 # into a per-render table instead, and its width stands in for the "[12]"
 # the citation eventually renders as.
-_REFS: contextvars.ContextVar[list | None] = contextvars.ContextVar(
+_REFS: contextvars.ContextVar[list[tuple[str, str]] | None] = contextvars.ContextVar(
     "mudplot_refs", default=None
 )
 # WYSIWYG layout for a citation is only exact for compact/numeric styles
@@ -94,6 +95,7 @@ def _render_format(fmt: str, measure_text: str = ""):
 
 def _mark(kind: str, value: str, *, widen: bool = False) -> str:
     refs = _REFS.get()
+    assert refs is not None
     refs.append((kind, value))
     idx = len(refs) - 1
     # Only a citation's *rendered* width is uncertain (an href's URL never
@@ -106,8 +108,12 @@ def _mark(kind: str, value: str, *, widen: bool = False) -> str:
 
 
 def _decorate(
-    text, citation: str | None, href: str | None, *, widen: bool = True
-) -> str:
+    text: str | None,
+    citation: str | None,
+    href: str | None,
+    *,
+    widen: bool = True,
+) -> str | None:
     """Annotate ``text`` with reference metadata for the active format.
 
     ``widen=True`` (legend entries) applies ``reference_measure_text`` as a
@@ -156,7 +162,9 @@ def _link_legend_texts(legend_artist, panel: PanelSpec) -> None:
         _set_url(text, by_label.get(text.get_text()))
 
 
-def _substitute_pgf_references(text: str, refs: list, measure_text: str = "") -> str:
+def _substitute_pgf_references(
+    text: str, refs: list[tuple[str, str]], measure_text: str = ""
+) -> str:
     """Replace the sentinels left by ``_decorate`` with real LaTeX macros.
 
     Runs on the saved .pgf source, after matplotlib's pgf backend has
@@ -170,7 +178,13 @@ def _substitute_pgf_references(text: str, refs: list, measure_text: str = "") ->
     pattern = re.compile(f"(?:{filler_re})?{_MARK_OPEN}(\\d+){_MARK_CLOSE}")
 
     def repl(m: re.Match) -> str:
-        kind, value = refs[int(m.group(1))]
+        try:
+            index = int(m.group(1))
+        except ValueError:
+            return m.group(0)
+        if index >= len(refs):
+            return m.group(0)
+        kind, value = refs[index]
         if kind == "cite":
             return f"~\\figcite{{{value}}}"
         if kind == "href":
@@ -458,6 +472,7 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
 
 
 def _draw_matrix_layer(ax, spec: FigureSpec, layer: LayerSpec):
+    assert layer.matrix is not None
     matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
     cmap = _continuous_cmap(layer.cmap_kind)
     if layer.type == "heatmap":
@@ -520,6 +535,7 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
             alpha=layer.alpha,
         )
     elif layer.type == "text":
+        assert layer.at is not None
         artist = target.text(
             layer.at[0], layer.at[1], layer.text or "", color=color, alpha=layer.alpha
         )
@@ -529,6 +545,7 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
         # matplotlib's own docs recommend for in-axes annotations.
         artist.set_in_layout(False)
     elif layer.type == "annotate":
+        assert layer.at is not None
         artist = target.annotate(
             layer.text or "",
             xy=tuple(layer.to or layer.at),
@@ -594,6 +611,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
         if sc is not None and layer.colorbar:
             ax.figure.colorbar(sc, ax=ax, label=layer.clabel or "")
     elif layer.type in ("surface", "wireframe"):
+        assert layer.matrix is not None
         matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
         ny, nx = matrix.shape
         xs, ys = np.meshgrid(np.arange(nx), np.arange(ny))
@@ -621,7 +639,7 @@ def _apply_axis(ax, axis_spec, set_label, set_scale, set_limits):
         set_limits(axis_spec.limits)
 
 
-def _legend_kwargs(leg, *, ax2_present: bool, fig) -> dict:
+def _legend_kwargs(leg, *, ax2_present: bool, fig) -> tuple[dict, bool]:
     """Build ax.legend() placement kwargs, honouring a dragged/explicit
     ``bbox_to_anchor`` override in figure-fraction coordinates (independent
     of the axes' own position, so it stays put if the axes later resize).
@@ -732,6 +750,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
     _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
     if panel.y2 is not None:
+        assert ax2 is not None
         _apply_axis(ax2, panel.y2, ax2.set_ylabel, ax2.set_yscale, ax2.set_ylim)
     _apply_title(ax, panel)
     _apply_despine(ax, theme.axes)
@@ -949,7 +968,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
         )
         try:
             gs = fig.add_gridspec(rows, cols, **gridspec_kw)
-            axes_grid = [[None] * cols for _ in range(rows)]
+            axes_grid: list[list[object | None]] = [[None] * cols for _ in range(rows)]
             panel_axes = []
             for i, panel in enumerate(spec.panels):
                 r, c = divmod(i, cols)
@@ -962,7 +981,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
                 # is not the panel index -- tools that map a rendered Axes
                 # back to its spec (e.g. the editor's drag handles) need
                 # this rather than guessing.
-                ax._mudplot_panel = i
+                cast(Any, ax)._mudplot_panel = i
                 panel_axes.append(ax)
 
             # Share the 2-D subset, even when other panels are 3-D.
@@ -981,8 +1000,8 @@ def render(spec: FigureSpec, *, fmt: str = ""):
                 _autofit(fig)
             # Reference table for this figure's markers, needed after the
             # render context exits (see save()'s .pgf post-processing).
-            fig._mudplot_refs = list(_REFS.get() or [])
-            fig._mudplot_ref_measure = spec.reference_measure_text or ""
+            cast(Any, fig)._mudplot_refs = list(_REFS.get() or [])
+            cast(Any, fig)._mudplot_ref_measure = spec.reference_measure_text or ""
         except Exception:
             plt.close(fig)
             raise

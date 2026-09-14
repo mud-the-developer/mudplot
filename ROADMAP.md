@@ -117,11 +117,10 @@ exercised through it, a reasonable first slice:
 
 ## 4. Quality / tooling
 
-- **Static type checking**: run `mypy` or `pyright` over `mudplot/` and
-  fix what it finds. Not done yet; `py.typed` is shipped (so *consumers*
-  can type-check against mudplot) but the library's own type-correctness
-  hasn't been externally verified with a type checker, only informally
-  via consistent type hints.
+- **(done)** Static type checking: `pyright` runs over `mudplot/`, the
+  dashboard, and maintenance scripts in CI against the Python 3.10 language
+  level. `py.typed` remains packaged so consumers can check their own use of
+  mudplot too.
 - **(done)** Property-based testing (`hypothesis`) for `reduce()`
   (state/action immutability, JSON round-trip of its output), the
   citation/href validator, and the colour engine (`convert.py` round-trips,

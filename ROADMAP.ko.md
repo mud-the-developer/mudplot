@@ -62,8 +62,9 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 
 ## 4. 품질/도구
 
-- mypy/pyright 정적 타입 검사 (아직 안 함 — py.typed는 배포했지만 자체
-  타입 정확성은 외부 검증 안 됨)
+- **(완료)** pyright 정적 타입 검사 — Python 3.10 언어 수준으로
+  `mudplot/`, 대시보드, 유지관리 스크립트를 CI에서 검사하며 소비자용
+  `py.typed`도 계속 배포
 - **(완료)** hypothesis 기반 속성 테스트 -- reduce()의 state/action 불변성,
   citation/href validator, 색상 엔진(convert.py 왕복·8-bit hex 보존,
   distance.py 지표 성질)을 `tests/test_property_based.py`에서 검증

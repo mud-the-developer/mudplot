@@ -4,6 +4,7 @@ Split into pure view-layer unit tests (no server) and integration tests that
 spin up a real (ephemeral-port) HTTP server via ``make_server()``.
 """
 
+import http.client
 import json
 import sys
 import threading
@@ -11,7 +12,7 @@ import time
 import urllib.error
 import urllib.request
 from pathlib import Path
-from urllib.parse import urlencode
+from urllib.parse import urlencode, urlparse
 
 import matplotlib
 import pytest
@@ -287,6 +288,7 @@ def test_build_action_reset_legend_position_clears_bbox_only():
         title="series", bbox_to_anchor=[0.3, 0.4], location="upper left"
     )
     action = _build_action("reset_legend_position", {"panel": "0"}, spec)
+    assert isinstance(action, A.SetLegend)
     assert action.bbox_to_anchor is None
     assert action.title == "series"
     assert action.location == "upper left"
@@ -295,6 +297,11 @@ def test_build_action_reset_legend_position_clears_bbox_only():
 # --------------------------------------------------------------------------
 # EditorSession (no HTTP)
 # --------------------------------------------------------------------------
+
+
+def test_build_action_reports_invalid_numeric_field():
+    with pytest.raises(ValueError, match="width must be a number"):
+        _build_action("set_size", {"width": "wide", "height": "2"}, FigureSpec())
 
 
 def test_session_dispatch_safe_records_error_without_raising():
@@ -392,6 +399,18 @@ def test_get_unknown_path_is_404(running_server):
     with pytest.raises(urllib.error.HTTPError) as exc:
         urllib.request.urlopen(running_server + "/nope")
     assert exc.value.code == 404
+
+
+def test_invalid_content_length_returns_400(running_server):
+    parsed = urlparse(running_server)
+    connection = http.client.HTTPConnection(parsed.hostname, parsed.port)
+    try:
+        connection.putrequest("POST", "/action")
+        connection.putheader("Content-Length", "invalid")
+        connection.endheaders()
+        assert connection.getresponse().status == 400
+    finally:
+        connection.close()
 
 
 def test_load_sample_then_add_layer_then_render(running_server):

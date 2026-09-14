@@ -13,6 +13,7 @@ Design principles
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -84,10 +85,10 @@ class Palette:
         greyscale print or for full achromatopsia, even if hues differ."""
         L = self.lch[:, 0]
         if len(L) < 2:
-            return float("inf")
+            return math.inf
         diffs = np.abs(L[:, None] - L[None, :])
         np.fill_diagonal(diffs, np.inf)
-        return float(diffs.min())
+        return diffs.min().item()
 
     def report(self, cvd_types=("protan", "deutan")) -> dict:
         """A human-readable distinguishability report for this palette."""
@@ -118,7 +119,7 @@ class Palette:
 def _max_chroma(L: float, H: float, c_hi: float = 150.0, tol: float = 0.05) -> float:
     """Largest chroma at (L, H) that stays inside the sRGB gamut."""
     lo, hi = 0.0, c_hi
-    if cv.in_gamut(cv.lch_to_srgb(np.array([L, lo, H]))).item() is False:
+    if not cv.in_gamut(cv.lch_to_srgb(np.array([L, lo, H]))).item():
         return 0.0
     while hi - lo > tol:
         mid = 0.5 * (lo + hi)
@@ -148,14 +149,14 @@ def _min_pairwise_worstcase(srgb: np.ndarray, cvd_types) -> float:
     """
     n = len(srgb)
     if n < 2:
-        return float("inf")
+        return math.inf
     labs = _cvd_labs(srgb, cvd_types)
     best = np.full((n, n), np.inf)
     for lab in labs:
         d = delta_e2000(lab[:, None, :], lab[None, :, :])
         best = np.minimum(best, d)
     np.fill_diagonal(best, np.inf)
-    return float(best.min())
+    return best.min().item()
 
 
 # --------------------------------------------------------------------------
@@ -227,7 +228,7 @@ def qualitative(
     mindist = dmat[0].copy()
     while len(selected) < n:
         mindist[selected] = -np.inf
-        nxt = int(np.argmax(mindist))
+        nxt = np.argmax(mindist).item()
         selected.append(nxt)
         mindist = np.minimum(mindist, dmat[nxt])
 
@@ -324,8 +325,10 @@ def sequential(
     if reverse:
         srgb = srgb[::-1]
         lch = lch[::-1]
+    raw_hex = cv.srgb_to_hex(srgb)
+    hex_values: list[str] = [raw_hex] if isinstance(raw_hex, str) else raw_hex
     return Palette(
-        hex=list(cv.srgb_to_hex(srgb)) if n > 1 else [cv.srgb_to_hex(srgb[0])],
+        hex=hex_values,
         srgb=srgb,
         lch=lch,
         kind="sequential",
