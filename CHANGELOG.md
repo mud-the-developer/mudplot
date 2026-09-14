@@ -14,6 +14,9 @@ All notable changes to this project are documented here.
 - Declared the docs generator's existing pandas requirement as a dev
   dependency, so `uv sync --extra dev` now creates a complete environment for
   regenerating demos instead of relying on an undeclared local install.
+- Added concise English/Korean contribution guides covering setup, checks,
+  architecture boundaries, schema regeneration, and testing/documentation
+  conventions; README development commands now use `uv sync` consistently.
 - Hardened citation/href validation to reject every ASCII control character,
   including NUL and DEL, rather than only newline/tab characters.
 - Added regression coverage for duplicate-label citations, disabling

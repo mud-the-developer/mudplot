@@ -134,8 +134,11 @@ pip install "mudplot[render]"
 Development:
 
 ```bash
-uv venv && uv pip install -e ".[dev]"
+uv sync --extra dev
 ```
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for checks, browser/TeX setup, and
+schema regeneration.
 
 ### Dependency layers
 

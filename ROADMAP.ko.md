@@ -68,7 +68,9 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 - **(완료)** hypothesis 기반 속성 테스트 -- reduce()의 state/action 불변성,
   citation/href validator, 색상 엔진(convert.py 왕복·8-bit hex 보존,
   distance.py 지표 성질)을 `tests/test_property_based.py`에서 검증
-- CONTRIBUTING.md
+- **(완료)** `CONTRIBUTING.md` / `CONTRIBUTING.ko.md` — 개발 환경,
+  PR 전 검사, 브라우저/TeX 선택 설정, 스키마 재생성, 의존성 경계,
+  테스트·문서 관례
 - DESIGN.md가 길어졌으니 ARCHITECTURE.md로 분리 검토
 
 ## 5. 패키징/릴리스

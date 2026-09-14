@@ -126,10 +126,9 @@ exercised through it, a reasonable first slice:
   citation/href validator, and the colour engine (`convert.py` round-trips,
   8-bit hex identity, and `distance.py` metric properties), all in
   `tests/test_property_based.py`.
-- **`CONTRIBUTING.md`**: contribution guidelines, dev setup
-  (`uv sync --extra dev`), the "regenerate schemas" step, and the testing
-  philosophy (one regression test per bug, cross-module consistency tests
-  for anything with more than one source of truth).
+- **(done)** `CONTRIBUTING.md` / `CONTRIBUTING.ko.md`: development setup,
+  pre-PR checks, optional browser/TeX setup, schema regeneration, dependency
+  boundaries, and the testing/documentation conventions.
 - Consider whether `DESIGN.md` (now fairly long, spanning original
   architecture + two rounds of bug-audit narrative) should be split: a
   leaner `ARCHITECTURE.md` for the design itself, with the bug-audit

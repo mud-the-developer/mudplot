@@ -122,8 +122,11 @@ pip install "mudplot[render]"
 개발:
 
 ```bash
-uv venv && uv pip install -e ".[dev]"
+uv sync --extra dev
 ```
+
+검사 명령, 브라우저/TeX 설정, 스키마 재생성 방법은
+[`CONTRIBUTING.ko.md`](CONTRIBUTING.ko.md)를 참고하세요.
 
 ### 의존성 계층
 
