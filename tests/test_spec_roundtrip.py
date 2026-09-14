@@ -71,6 +71,15 @@ def test_directly_constructed_bad_version_fails_validate():
     assert any("spec version" in i for i in issues)
 
 
+def test_unknown_future_fields_ignored_without_crashing():
+    d = FigureSpec().to_dict()
+    d["some_unrecognized_future_feature"] = {"nested": True}
+    d["panels"][0]["future_panel_knob"] = 42
+    restored = FigureSpec.from_dict(d)
+    assert restored.version == SPEC_VERSION
+    assert mp.validate(restored) == []
+
+
 def test_builder_mutates_spec_only():
     # every builder call should be reflected in the spec (single source of truth)
     p = mp.plot({"a": [1], "b": [2]}).line("a", "b").xscale("log").ylim(0, 10)

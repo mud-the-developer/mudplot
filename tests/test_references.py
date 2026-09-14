@@ -305,6 +305,119 @@ def test_measure_text_does_not_widen_a_wrapping_title_citation(tmp_path):
     assert "Fischler and Bolles" not in pgf
 
 
+@needs_tex
+def test_duplicate_visible_labels_with_distinct_citations_both_survive(
+    tmp_path,
+):
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line("x", "y", label="Model", citation="citeA")
+        .scatter("x", "y", label="Model", citation="citeB")
+    )
+    pgf = _save(lambda: p, tmp_path, "fig.pgf")
+    assert "\\figcite{citeA}" in pgf
+    assert "\\figcite{citeB}" in pgf
+
+
+@pytest.mark.parametrize("bad_char", ["\x00", "\x07", "\x1b", "\x1f", "\x7f"])
+def test_control_characters_rejected_in_citation_and_href(bad_char):
+    p = mp.plot({"x": [1], "y": [1]}).line(
+        "x", "y", citation=f"key{bad_char}", href=f"https://x.org/{bad_char}"
+    )
+    issues = mp.validate(p.spec)
+    assert any("citation" in i for i in issues)
+    assert any("href" in i for i in issues)
+
+
+def test_cjk_title_and_legend_with_citation_renders_svg_and_png(tmp_path):
+    p = (
+        mp.plot({"x": [1, 2, 3], "y": [1, 4, 9]})
+        .line("x", "y", label="강건 추정", citation="fischler1981", href=DOI)
+        .labels(title="수렴성 분석")
+        .title_reference(citation="hartley2003")
+    )
+    # Filter the expected UserWarning from DejaVu Sans missing Hangul glyphs
+    # when saving PNG (SVG writes unicode text directly).
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message="Glyph .* missing from font")
+        svg = _save(lambda: p, tmp_path, "fig.svg")
+        assert "강건 추정" in svg
+        assert DOI in svg
+        png_path = tmp_path / "fig.png"
+        plt.close(mp.save(p.spec, str(png_path)))
+        assert png_path.exists()
+
+
+@needs_tex
+def test_citation_macro_can_be_disabled_in_document(tmp_path):
+    missing = _missing("tectonic", "tectonic")
+    if missing:
+        pytest.skip(f"needs {missing}")
+    p = mp.plot({"x": [1, 2], "y": [3, 4]}).line(
+        "x", "y", label="RANSAC", citation="fischler1981"
+    )
+    plt.close(mp.save(p.spec, str(tmp_path / "fig.pgf")))
+    (tmp_path / "preamble.tex").write_text(r"""
+\providecommand{\figcite}[1]{}
+\usepackage{hyperref}
+""")
+    (tmp_path / "paper.tex").write_text(r"""
+\documentclass{article}
+\usepackage{pgf}
+\input{preamble.tex}
+\begin{document}
+Test document without bibliography numbers.
+\begin{figure}\centering
+\input{fig.pgf}
+\caption{No citations.}
+\end{figure}
+\end{document}
+""")
+    _compile_paper(tmp_path, "tectonic", "tectonic")
+    text = _pdf_text(tmp_path / "paper.pdf")
+    assert "RANSAC" in text
+    assert "[1]" not in text
+
+
+@needs_tex
+def test_math_expressions_with_citations_compile_cleanly(tmp_path):
+    missing = _missing("tectonic", "tectonic")
+    if missing:
+        pytest.skip(f"needs {missing}")
+    p = (
+        mp.plot({"x": [1, 2], "y": [3, 4]})
+        .line(
+            "x",
+            "y",
+            label=r"Estimator $\hat{\theta}$",
+            citation="fischler1981",
+        )
+        .labels(title=r"Convergence of $\mathcal{L}(\theta)$")
+        .title_reference(citation="hartley2003")
+    )
+    plt.close(mp.save(p.spec, str(tmp_path / "fig.pgf")))
+    (tmp_path / "preamble.tex").write_text(mp.PREAMBLE)
+    (tmp_path / "refs.bib").write_text(REFS_BIB)
+    (tmp_path / "paper.tex").write_text(r"""
+\documentclass{article}
+\usepackage{pgf,amsmath,amssymb}
+\input{preamble.tex}
+\begin{document}
+\begin{figure}\centering
+\input{fig.pgf}
+\caption{Math with citations.}
+\end{figure}
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}
+""")
+    _compile_paper(tmp_path, "tectonic", "tectonic")
+    text = _pdf_text(tmp_path / "paper.pdf")
+    assert "Estimator" in text
+    assert "Convergence" in text
+    assert "[1]" in text and "[2]" in text
+
+
 PAPER_TEX = r"""\documentclass[10pt]{article}
 \usepackage{pgf}
 \input{preamble.tex}

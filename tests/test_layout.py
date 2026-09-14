@@ -54,7 +54,8 @@ def test_outside_legend_no_longer_clips_at_exact_column_width():
     fig = p.render()
     fig.canvas.draw()
     legend = fig.axes[0].get_legend()
-    bb = legend.get_window_extent(fig.canvas.get_renderer())
+    assert legend is not None
+    bb = legend.get_window_extent()
     bb = bb.transformed(fig.transFigure.inverted())
     assert bb.x0 >= 0 and bb.x1 <= 1.001
     assert bb.y0 >= 0 and bb.y1 <= 1.001
@@ -71,7 +72,7 @@ def test_long_title_wraps_instead_of_clipping_at_exact_column_width():
     fig = p.render()
     fig.canvas.draw()
     title = fig.axes[0].title
-    bb = title.get_window_extent(fig.canvas.get_renderer())
+    bb = title.get_window_extent()
     # matplotlib's native wrap (not a custom shrink) keeps the *rendered*
     # bbox within the figure; get_text() still returns the original
     # unwrapped string, wrapping only happens at draw time.
@@ -89,7 +90,8 @@ def test_dragged_legend_bbox_to_anchor_is_respected_exactly():
     fig = p.render()
     fig.canvas.draw()
     legend = fig.axes[0].get_legend()
-    bb = legend.get_window_extent(fig.canvas.get_renderer())
+    assert legend is not None
+    bb = legend.get_window_extent()
     bb = bb.transformed(fig.transFigure.inverted())
     cx, cy = (bb.x0 + bb.x1) / 2, (bb.y0 + bb.y1) / 2
     assert cx == pytest.approx(0.2, abs=0.01)
@@ -193,3 +195,28 @@ def test_mixed_2d_3d_figure_still_shares_2d_axes_after_layout_change():
     ax, other, three_d = p.render().axes
     assert ax.get_shared_x_axes().joined(ax, other)
     assert not ax.get_shared_x_axes().joined(ax, three_d)
+
+
+def test_secondary_yaxis_and_colorbar_render_cleanly_together():
+    data = {
+        "x": [1, 2, 3],
+        "y": [10, 20, 30],
+        "y2": [100, 200, 300],
+        "c": [1.0, 2.0, 3.0],
+    }
+    p = (
+        mp.plot(data)
+        .scatter("x", "y", c="c", colorbar=True, clabel="Scale")
+        .secondary_yaxis("Secondary Y")
+        .line("x", "y2", axis="y2", label="Y2 series")
+    )
+    assert mp.validate(p.spec) == []
+    fig = p.render()
+    try:
+        # primary ax, secondary ax (twin), colorbar ax
+        assert len(fig.axes) == 3
+        labels = [ax.get_ylabel() for ax in fig.axes]
+        assert "Secondary Y" in labels
+        assert "Scale" in labels
+    finally:
+        plt.close(fig)

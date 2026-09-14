@@ -128,8 +128,9 @@ def _finite(value) -> bool:
 # punctuation ("_", "&", "#", "%", "?", "~") is fine there too -- only
 # braces/backslash (which would break hyperref's own argument scanning) and
 # control characters are unsafe.
-_CITATION_UNSAFE = set("{}\\%$#&~^\n\r\t")
-_HREF_UNSAFE = set("{}\\\n\r\t")
+_CONTROL_CHARS = {chr(i) for i in range(32)} | {"\x7f"}
+_CITATION_UNSAFE = set("{}\\%$#&~^") | _CONTROL_CHARS
+_HREF_UNSAFE = set("{}\\") | _CONTROL_CHARS
 
 
 def _check_ref_field(
