@@ -372,6 +372,24 @@ tests/
       test_references.py`, `tests/test_property_based.py`, `tests/
       test_journal_profiles.py` 참고.
 - [x] **v0.4.0 릴리스.**
+- [x] M12g: 논문 작업 흐름 -- `mp.ReferenceCatalog.from_bib()`가 `.bib` 파일에서
+      citation/href 메타데이터를 직접 읽음(의존성 없는 최소 BibTeX 서브셋
+      파서); `mp.resolve_reference_href()`가 DOI(맨/"doi:" 접두사/전체
+      URL)·arXiv id·일반 URL을 정규 링크로 해결 -- ML/CS 논문에 흔한
+      arXiv-only 항목이 이전엔 링크 없이 처리되던 실제 결함을 고침;
+      `p.lint(journal=...)`/`mp.lint_figure()` -- 페이지폭 적합성, 최소
+      글자 크기, 팔레트 CVD/흑백 안전성, 이중 인코딩, 마커/선스타일 사이클
+      소진, 범례 크기, 참고문헌 유효성을 ok/warning/error로 보고하는
+      출판 전 점검(구조적 정확성만 보는 `validate()`와는 다름); 스타일/TeX
+      기하학/preflight 제약이 따로 등록되어 있던 세 가지를 하나로 묶는
+      `JournalProfile`(nature/ieee → +acm/+revtex로 지원 저널 2배 확대);
+      실제 다중 엔진/다중 참고문헌 도구 TeX 컴파일 매트릭스
+      (`tests/test_references.py`, `.github/workflows/tex-matrix.yml`) --
+      실제로 처음 돌려보고서야 발견한, 기존 테스트가 전부 놓치고 있던
+      pdflatex/OT1 인코딩 버그(citation 마커 sentinel을 유니코드 길러멧
+      대신 순수 ASCII 백틱/따옴표로 교체해 수정). `tests/test_bib.py`,
+      `tests/test_lint.py`, `tests/test_journal_profiles.py` 참고.
+- [x] **v0.5.0 릴리스.**
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

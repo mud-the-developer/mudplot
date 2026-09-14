@@ -502,6 +502,29 @@ tests/
       registries. See `tests/test_references.py`,
       `tests/test_property_based.py`, `tests/test_journal_profiles.py`.
 - [x] **v0.4.0 released.**
+- [x] M12g: paper workflow -- `mp.ReferenceCatalog.from_bib()` reads
+      citation/href metadata straight from a `.bib` file (a minimal,
+      dependency-free BibTeX subset parser); `mp.resolve_reference_href()`
+      resolves a DOI (bare/`doi:`-prefixed/full-URL)/arXiv id/plain URL to
+      a canonical link, fixing a real gap where arXiv-only entries
+      (extremely common for ML/CS papers) previously resolved to no link
+      at all; `p.lint(journal=...)`/`mp.lint_figure()` -- publication-
+      preflight heuristics (page-width fit, minimum font size, palette
+      CVD/greyscale safety, redundant encoding, marker/style-cycle
+      exhaustion, legend size, reference validity) as ok/warning/error
+      findings, distinct from `validate()`'s structural correctness;
+      `JournalProfile` unifies a journal's style/TeX-geometry/preflight
+      constraints that were three separately-registered concerns, and
+      doubles journal coverage (nature/ieee → +acm/+revtex); a real
+      multi-engine/multi-bibliography-tool TeX compile matrix
+      (`tests/test_references.py`, `.github/workflows/tex-matrix.yml`)
+      which, by actually running for the first time, found a real
+      pdflatex/OT1 encoding bug in the citation-marker sentinel every
+      prior test run (local or CI) had missed entirely (fixed: plain
+      ASCII backtick/quote instead of Unicode guillemets). See
+      `tests/test_bib.py`, `tests/test_lint.py`,
+      `tests/test_journal_profiles.py`.
+- [x] **v0.5.0 released.**
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

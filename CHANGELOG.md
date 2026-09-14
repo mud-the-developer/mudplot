@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+(nothing yet)
+
+## [0.5.0] - 2026-09-14
+
+A "paper workflow" release: pull citation/href metadata straight from a
+`.bib` file (`ReferenceCatalog`) with an offline DOI/arXiv/URL resolver,
+publication-preflight linting (`p.lint(journal=...)`) against a richer,
+unified `JournalProfile` (2 journals → 4: nature/ieee/acm/revtex), and a
+real multi-engine/multi-bibliography-tool TeX compile matrix -- which, by
+actually running for the first time, found and fixed a real pdflatex/OT1
+encoding bug in the citation-marker sentinel that every prior test run
+(local or CI) had missed entirely. This closes every item in
+`mudplot_v0.3_improvement_and_reference_repos.md`'s v0.5 checklist.
+451 tests passing.
+
 ### Release/nightly TeX engine matrix (P1-5)
 
 - Every push/PR already compiled a real paper with Tectonic (self-
