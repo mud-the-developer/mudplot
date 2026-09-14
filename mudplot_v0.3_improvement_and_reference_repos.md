@@ -1116,7 +1116,7 @@ ReferenceSpec(
       (grouped round-trip, 대부분 미데코레이션 group, 실제 BibTeX key/URL 패턴,
       brace/backslash 여전히 차단, backend capability 노출)
 
-> 위 6개 항목 완료 (v0.4.0 예정 커밋, 미리 보네이 없음). 아래는 아직
+> 위 6개 항목 완료 (v0.4.0 예정 커밋, 아직 릴리스 전). 아래는 아직
 > 다루지 않은 항목들.
 
 ### 테스트 예시
@@ -1140,7 +1140,7 @@ https://example.org/paper_v2?x=1&y=2#section_3
 - [x] citation measurement policy — P0-3의 단기 권장안(가이드 범위 문서화 +
       `citation_measure_text` 옵션) 구현됨: `FigureSpec.reference_measure_text` /
       `.reference_style(measure_text=...)`. 단, 패널 제목은 wrap=True와의
-      상호작용 문제로 농히지 않음 (범례는 legend만).
+      상호작용 문제로 적용하지 않음 (범례에만 적용).
 - [x] JSON Schema compatibility test — `jsonschema` dev의존성 +
       `tests/test_json_schema_compat.py` (메타스키마 검증, 실제 spec 다수가
       스키마를 통과, 잘못된 타입이 실제로 거부되는지 확인)
@@ -1168,7 +1168,7 @@ https://example.org/paper_v2?x=1&y=2#section_3
 - [x] DOI/URL resolver — `mp.resolve_reference_href()`: doi(맨/"doi:"/전체 URL) →
       doi.org, arXiv id(eprint+archiveprefix) → arxiv.org, url 폴백. 네트워크
       호출 없음(순수 문자열 정규화만). arXiv-only .bib 항목이 실제로
-      `href=None`이되던 기존 개그을 `ReferenceCatalog`에서 함께 고침
+      `href=None`이되던 기존 버그를 `ReferenceCatalog`에서 함께 고침
 - [x] figure lint / publication preflight — `p.lint(journal=...)` /
       `mp.lint_figure()`: 페이지폭 맞춤, 최소 글자 크기, 팔레트 CVD/흑백
       안전성, 이중 인코딩, 마커/선스타일 사이클 소진, 범례 크기, 참고문헌
@@ -1178,7 +1178,7 @@ https://example.org/paper_v2?x=1&y=2#section_3
       (min_font_pt / recommended_dpi / max_legend_entries / grayscale_policy)를
       통합. `mp.JOURNAL_PROFILES`, `mp.get_journal_profile()`. 지원 저널 2개→4개
       (nature/ieee/**acm**/**revtex**). `AVAILABLE_JOURNALS`/`JOURNAL_SIZES`는
-      이제 `JOURNAL_PROFILES`에서 파생(단일 진상 원천). `.lint()`은
+      이제 `JOURNAL_PROFILES`에서 파생(단일 소스, single source of truth). `.lint()`은
       `spec.journal`을 자동 감지하고 DPI 검사를 추가
 - [ ] release/nightly TeX engine matrix
 

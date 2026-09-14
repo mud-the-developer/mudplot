@@ -16,7 +16,7 @@
   아래 [검증된 명칭 팔레트](docs/DEMO.md#4-colour-palette-presets-measured-not-assumed)
   참고
 - **흑백 인쇄 안전** → 그룹화된 bar/box/violin 도 기본적으로 해칭 패턴을 함께
-  사용해, 색상이 비슷해져도 막대이 구별됩니다 —
+  사용해, 색상이 비슷해져도 막대가 구별됩니다 —
   [흑백 인쇄 데모](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
   참고
 
@@ -183,7 +183,7 @@ fig = p2.render()
 ### TeX WYSIWYG 미리보기
 
 ```python
-# 논문 컴럼폭·폰트에 맞춘 실제 크기 미리보기 (모의 본문 컬럼 + 캐션)
+# 논문 컬럼폭·폰트에 맞춘 실제 크기 미리보기 (모의 본문 컬럼 + 캐션)
 fig = (mp.plot(data).line("voltage", "current", group="order")
          .labels(x="Voltage (mV)", y="Current")
          .preview(tex="ieee", caption="Figure 1. ..."))
@@ -329,7 +329,7 @@ print(report)
 report.ok   # error 레벨 항목이 있을 때만 False (예: 페이지에 안 맞는 크기)
 ```
 
-검사 항목: 지정한 journal 프로필에 대한 페이지 폭·러스턼 DPI, 최소 글자 크기,
+검사 항목: 지정한 journal 프로필에 대한 페이지 폭·래스터 DPI, 최소 글자 크기,
 팔레트 CVD/흑백 안전성(`Palette.report()` 재사용), 그룹화된 시리즈의 이중
 인코딩, 마커/선스타일 사이클 소진, 범례 크기, 참고문헌 메타데이터 유효성.
 기준값은 해당 journal 프로필(아래 참고)을 기본으로 사용하고 호출당 덮어쓸 수
@@ -340,9 +340,9 @@ extra(numpy)만 있으면 됩니다.
 
 ### Journal 프로필 (스타일 시트가 아닌 출판 제약 모음)
 
-지원하는 각 저널은 하나의 `JournalProfile`로, **스타일**(폰트, 선 광태, 관례적
-그림 크기) + **TeX 기하학**(커럼/텍스트 폭, 단 수) + **preflight 제약**(최소 글자
-크기, 권장 러스턼 DPI, 범례 수 상한, 흑백 정책)을 함께 보유합니다. 따라서
+지원하는 각 저널은 하나의 `JournalProfile`로, **스타일**(폰트, 선 굵기, 관례적
+그림 크기) + **TeX 기하학**(컬럼/텍스트 폭, 단 수) + **preflight 제약**(최소 글자
+크기, 권장 래스터 DPI, 범례 수 상한, 흑백 정책)을 함께 보유합니다. 따라서
 `.journal()`, `.tex_size()`, `.lint()`이 서로 따로 찾는 게 아니라 하나의 정의를
 공유합니다:
 
@@ -408,7 +408,7 @@ spec = store.state          # 순수하게 누적된 상태
 
 ### 지원하는 입력 데이터 형식
 
-`mp.plot(data)`는 다음을 모두 자동 인식 (순수 코러라 numpy/pandas를
+`mp.plot(data)`는 다음을 모두 자동 인식 (순수 코어라 numpy/pandas를
 직접 import하지 않고 덕 타이핑으로 처리):
 
 ```python
@@ -444,14 +444,14 @@ p3 = p2.encoding(redundant_encoding=False)               # 색상만
 
 ### 대시보드 (사람이 보는 문서 + 디자인 갤러리)
 
-엔진과 도입 `dashboard/`는 별도 패키지다 (엔진 → 대시보드 단방향 의존).
+엔진과는 별도인 `dashboard/` 패키지다 (엔진 → 대시보드 단방향 의존).
 대시보드는 엔진의 `capabilities()`/`reference_markdown()`과 렌더러를 그대로
-재사용해 **문서와 실제 그림이 항상 엔진과 일쉱되는** 정적 사이트만다.
+재사용해 **문서와 실제 그림이 항상 엔진과 일치하는** 정적 사이트를 만든다.
 
 ```bash
 python -m dashboard --out dashboard/site_build
 # dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리(팔레트 안전성,
-# 이중 인코딩, TeX 미리보기, 보조축, 히트랫 둥)
+# 이중 인코딩, TeX 미리보기, 보조축, 히트맵 등)
 ```
 
 ## 개발

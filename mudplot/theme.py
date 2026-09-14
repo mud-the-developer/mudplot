@@ -78,7 +78,9 @@ class JournalProfile:
     columnwidth_pt: float
     textwidth_pt: float
     columns: int = 2
-    font_family: str = "serif"
+    font_family: str = "serif"  # matplotlib "font.family" value
+    # Fallback names for that family (matplotlib "font.serif"/"font.sans-serif")
+    font_names: tuple[str, ...] = ("Times New Roman", "Times", "DejaVu Serif")
     base_font_pt: float = 8.0
     tick_font_pt: float = 7.0
     min_font_pt: float = 6.0
@@ -110,61 +112,40 @@ JOURNAL_PROFILES: dict[str, JournalProfile] = {
         name="nature",
         columnwidth_pt=250.38425196850392,  # 88 mm
         textwidth_pt=512.1496062992127,  # 180 mm
-        columns=2,
         font_family="sans-serif",
+        font_names=("Arial", "Helvetica", "DejaVu Sans"),
         base_font_pt=7.0,
         tick_font_pt=6.0,
         min_font_pt=5.0,
-        line_width_pt=0.5,
         figure_size_in=[3.5, 2.625],
-        recommended_dpi=300,
-        max_legend_entries=8,
-        grayscale_policy="redundant",
     ),
     "ieee": JournalProfile(
         name="ieee",
         columnwidth_pt=252.0,
         textwidth_pt=516.0,
-        columns=2,
-        font_family="serif",
         base_font_pt=8.0,
         tick_font_pt=7.0,
         min_font_pt=6.0,
-        line_width_pt=0.5,
         figure_size_in=[3.3, 2.5],
-        recommended_dpi=300,
-        max_legend_entries=8,
-        grayscale_policy="redundant",
     ),
     "acm": JournalProfile(
         name="acm",
         columnwidth_pt=241.0,
         textwidth_pt=506.0,
-        columns=2,
-        font_family="serif",
+        font_names=("Linux Libertine", "Times New Roman", "DejaVu Serif"),
         base_font_pt=9.0,
         tick_font_pt=8.0,
         min_font_pt=6.0,
-        line_width_pt=0.5,
         figure_size_in=[3.33, 2.5],
-        recommended_dpi=300,
-        max_legend_entries=8,
-        grayscale_policy="redundant",
     ),
     "revtex": JournalProfile(
         name="revtex",
         columnwidth_pt=246.0,
         textwidth_pt=510.0,
-        columns=2,
-        font_family="serif",
         base_font_pt=8.0,
         tick_font_pt=7.0,
         min_font_pt=6.0,
-        line_width_pt=0.5,
         figure_size_in=[3.4, 2.5],
-        recommended_dpi=300,
-        max_legend_entries=8,
-        grayscale_policy="redundant",
     ),
 }
 
@@ -216,56 +197,19 @@ def journal_overrides(journal: str | None) -> dict:
     """
     if journal is None:
         return {}
-    j = journal.lower()
-    if j == "nature":
-        return {
-            "font.family": "sans-serif",
-            "font.sans-serif": ["Arial", "Helvetica", "DejaVu Sans"],
-            "font.size": 7,
-            "axes.labelsize": 7,
-            "axes.titlesize": 8,
-            "xtick.labelsize": 6,
-            "ytick.labelsize": 6,
-            "legend.fontsize": 6,
-            "axes.linewidth": 0.5,
-        }
-    if j == "ieee":
-        return {
-            "font.family": "serif",
-            "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-            "font.size": 8,
-            "axes.labelsize": 8,
-            "axes.titlesize": 9,
-            "xtick.labelsize": 7,
-            "ytick.labelsize": 7,
-            "legend.fontsize": 7,
-            "axes.linewidth": 0.5,
-        }
-    if j == "acm":
-        return {
-            "font.family": "serif",
-            "font.serif": ["Linux Libertine", "Times New Roman", "DejaVu Serif"],
-            "font.size": 9,
-            "axes.labelsize": 9,
-            "axes.titlesize": 10,
-            "xtick.labelsize": 8,
-            "ytick.labelsize": 8,
-            "legend.fontsize": 8,
-            "axes.linewidth": 0.5,
-        }
-    if j == "revtex":
-        return {
-            "font.family": "serif",
-            "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-            "font.size": 8,
-            "axes.labelsize": 8,
-            "axes.titlesize": 9,
-            "xtick.labelsize": 7,
-            "ytick.labelsize": 7,
-            "legend.fontsize": 7,
-            "axes.linewidth": 0.5,
-        }
-    raise ValueError(f"unknown journal preset: {journal!r}")
+    prof = get_journal_profile(journal)
+    family_key = "font.serif" if prof.font_family == "serif" else "font.sans-serif"
+    return {
+        "font.family": prof.font_family,
+        family_key: list(prof.font_names),
+        "font.size": prof.base_font_pt,
+        "axes.labelsize": prof.base_font_pt,
+        "axes.titlesize": prof.base_font_pt + 1,  # a touch larger than body text
+        "xtick.labelsize": prof.tick_font_pt,
+        "ytick.labelsize": prof.tick_font_pt,
+        "legend.fontsize": prof.tick_font_pt,
+        "axes.linewidth": prof.line_width_pt,
+    }
 
 
 # --------------------------------------------------------------------------

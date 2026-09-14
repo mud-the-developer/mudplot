@@ -9,7 +9,6 @@ audiences. Pure and dependency-free; used by the CLI (``mudplot docs``) and by
 from __future__ import annotations
 
 from .capabilities import capabilities
-from .theme import JOURNAL_SIZES, journal_overrides
 
 __all__ = ["reference_markdown"]
 
@@ -45,11 +44,10 @@ def _actions_section(caps: dict) -> str:
 def _themes_section(caps: dict) -> str:
     lines = ["## Themes\n", f"Available presets: {', '.join(caps['themes'])}.\n"]
     lines.append("## Journals\n")
-    for name in caps["journals"]:
-        rc = journal_overrides(name)
-        size = JOURNAL_SIZES.get(name)
-        fs = rc.get("font.size")
-        lines.append(f"- **{name}**: default figure size {size}, base font {fs}pt")
+    for name, prof in sorted(caps["journal_profiles"].items()):
+        size = prof["figure_size_in"]
+        fs = prof["base_font_pt"]
+        lines.append(f"- **{name}**: default figure size {size}, base font {fs:g}pt")
     lines.append("")
     return "\n".join(lines)
 

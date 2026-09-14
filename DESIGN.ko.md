@@ -307,7 +307,7 @@ tests/
 - [x] M6b: Theme 프리셋 + TeX-aware WYSIWYG 미리보기
 - [x] M7: 레이어 확장(line/scatter/bar/errorbar/band/hline/vline/text/
       annotate) + 멀티패널 레이아웃
-- [x] M7b: 순수 코러 의존성 0 분리 + ruff lint
+- [x] M7b: 순수 코어 의존성 0 분리 + ruff lint
 - [x] M8: JSON 스키마/능력 export (`schemas/`) + CI 동기화 검증 (Rust 대비)
 - [x] M8b: 순수 spec 검증(`validate`/`assert_valid`), 렌더 전 자동 호출
 - [x] M8c: CLI (`python -m mudplot capabilities|schema|validate|render`)
