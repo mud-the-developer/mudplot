@@ -131,6 +131,23 @@ def _title_pos_set(index: int):
     return lambda spec: spec["panels"][index]["title_position"] is not None
 
 
+def test_any_layer_form_adds_registered_layer_through_htmx(editor):
+    page, url = editor
+    page.locator('details[data-key="all-layers"] > summary').click()
+    form = page.locator('form:has(input[name="type"][value="add_layer_json"])')
+    form.locator('select[name="layer_type"]').select_option("hline")
+    form.locator('textarea[name="layer_json"]').fill(
+        json.dumps({"value": 0.5, "label": "Threshold"})
+    )
+    form.get_by_role("button", name="Add layer").click()
+    _settle(page)
+    spec = _wait_until(
+        lambda: _spec(url),
+        lambda value: value["panels"][0]["layers"][-1]["type"] == "hline",
+    )
+    assert spec["panels"][0]["layers"][-1]["value"] == 0.5
+
+
 def test_dragging_the_legend_moves_it_and_persists(editor):
     page, url = editor
     _enable(page, "Legend", url, _legend_set(0))

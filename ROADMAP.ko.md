@@ -32,15 +32,16 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 2. 대시보드/에디터 완성도
 
-- 에디터의 "Add layer" 폼이 지금 line/scatter/bar + text/annotate만 노출
-  (엔진은 21종 지원) — `mp.capabilities()` 기반으로 범용 폼 만들면 향후
-  신규 타입도 UI 변경 없이 자동 반영됨
-- 멀티패널 레이아웃 조작 (`.layout()`, 패널별 add/remove, projection3d
-  토글). 새로 추가된 제목/범례/주석 드래그 핸들도 현재 패널 0 전용이라
-  멀티패널 컨트롤이 생기면 선택된 패널로 확장하는 게 자연스러운 다음
-  단계
-- 파일에서 spec 불러오기 (지금은 내보내기만 있음)
-- 패널별 축 라벨/스케일/범위, 보조축 설정 UI (범례/제목 위치는 완료)
+- **(완료)** `capabilities.LAYER_TYPES` 기반 범용 advanced 폼으로 등록된
+  레이어 21종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
+  안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
+- **(완료)** 멀티패널 격자, 활성 패널 선택, 패널별 add/remove/edit,
+  2-D/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
+- **(완료)** 저장된 `.mplot.json` 열기. 잘못된 spec은 기존 그림을
+  유지하면서 오류 표시
+- **(완료)** 패널별 title/reference, x/y 라벨·scale·고정/자동 limits,
+  보조 y축 활성화·설정·제거, 3-D z축, projection, 드래그 위치 설정.
+  invalid 결과는 editor history에 들어가기 전에 거부
 - **(완료)** 전체 페이지 리로드 방식을 htmx 부분 갱신으로 전환
   (`dashboard/static/htmx.min.js`, 0BSD 라이선스로 vendoring, 새 Python
   의존성 없음) — 진짜 Rust+htmx 에디터 전 연습

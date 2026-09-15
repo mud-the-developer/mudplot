@@ -52,7 +52,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, dashboard editor gaps, the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 451 tests passing:**
+**Engine (`mudplot/`) — usable now, 504 non-browser tests passing (+10 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -112,13 +112,15 @@ steps (more layer types, dashboard editor gaps, the Rust editor).
       full reloads; vendored, 0BSD, no new Python dependency), and
       draggable handles to reposition the legend/title/annotations
       directly on the preview (mouse or arrow keys)
-- [x] Canvas-first layout, multi-panel editing (grid + per-panel controls),
-      direct title/axis/citation editing, open a saved `.mplot.json`, and
-      export PDF/SVG at the exact configured size
+- [x] Canvas-first layout, multi-panel editing (grid + active panel), direct
+      title/reference and x/y/z axis editing (scale, fixed/automatic limits,
+      secondary y-axis, 2-D/3-D projection), open a saved `.mplot.json`, and
+      export exact-size PDF/SVG
 - [x] Real-browser test coverage (Playwright, optional `browser` extra) for
       the drag/keyboard/multi-panel paths that HTML-level tests can't see
-- [ ] Remaining layer types in the editor UI, and replacing the
-      full-body swap with targeted updates — see `ROADMAP.md` §2
+- [x] All 21 registered layer types exposed through a capabilities-driven
+      advanced form; checked JSON fields automatically follow future registry
+      additions. htmx updates the app fragment without a full-page reload.
 - [ ] Rust interactive editor (separate crate) — see `ROADMAP.md` §3
 
 ## Installation

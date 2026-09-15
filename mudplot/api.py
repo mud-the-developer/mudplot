@@ -595,10 +595,16 @@ class Plot:
     def yscale(self, scale: str, *, panel: int = 0) -> Plot:
         return self.dispatch(A.SetScale("y", scale, panel=panel))
 
-    def xlim(self, lo: float, hi: float, *, panel: int = 0) -> Plot:
+    def xlim(
+        self, lo: float | None = None, hi: float | None = None, *, panel: int = 0
+    ) -> Plot:
+        """Set x bounds; omit both values to restore automatic limits."""
         return self.dispatch(A.SetLimits("x", lo, hi, panel=panel))
 
-    def ylim(self, lo: float, hi: float, *, panel: int = 0) -> Plot:
+    def ylim(
+        self, lo: float | None = None, hi: float | None = None, *, panel: int = 0
+    ) -> Plot:
+        """Set y bounds; omit both values to restore automatic limits."""
         return self.dispatch(A.SetLimits("y", lo, hi, panel=panel))
 
     def legend(
@@ -678,12 +684,13 @@ class Plot:
 
     def secondary_yaxis(
         self,
-        label: str = "",
+        label: str | None = "",
         *,
         scale: str = "linear",
         limits: list[float] | None = None,
         panel: int = 0,
     ) -> Plot:
+        """Configure y2; pass ``None`` as the label to remove it."""
         return self.dispatch(
             A.SetSecondaryAxis(label=label, scale=scale, limits=limits, panel=panel)
         )

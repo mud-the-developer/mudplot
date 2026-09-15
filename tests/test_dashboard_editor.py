@@ -26,6 +26,7 @@ from dashboard.editor_server import EditorSession, _build_action, make_server
 from dashboard.editor_view import render_app_body, render_docs_page, render_page
 from dashboard.samples import SAMPLES, sample_columns
 from mudplot import actions as A
+from mudplot.capabilities import LAYER_TYPES
 from mudplot.spec import FigureSpec, LayerSpec, LegendSpec
 from mudplot.store import Store
 
@@ -97,6 +98,13 @@ def test_render_page_contains_core_sections():
         "Action history",
     ):
         assert text in html
+
+
+def test_any_layer_form_is_driven_by_every_registered_layer_type():
+    page = render_page(FigureSpec(), [])
+    assert 'name="layer_json"' in page
+    for layer_type in LAYER_TYPES:
+        assert f'<option value="{layer_type}">' in page
 
 
 def test_render_page_shows_error_banner():
@@ -264,6 +272,49 @@ def test_sample_columns_unknown_raises():
         sample_columns("does-not-exist")
 
 
+def test_projection_control_targets_the_selected_panel():
+    spec = FigureSpec()
+    action = _build_action("set_projection", {"projection": "3d", "panel": "0"}, spec)
+    assert action == A.SetProjection("3d", panel=0)
+    assert 'name="projection"' in render_page(spec, [])
+
+
+def test_axis_controls_build_scale_limits_secondary_and_z_actions():
+    spec = FigureSpec()
+    assert _build_action(
+        "set_scale", {"axis": "x", "scale": "log", "panel": "0"}, spec
+    ) == A.SetScale("x", "log", panel=0)
+    assert _build_action(
+        "set_limits", {"axis": "y", "lo": "-1", "hi": "2", "panel": "0"}, spec
+    ) == A.SetLimits("y", -1.0, 2.0, panel=0)
+    assert _build_action(
+        "set_limits", {"axis": "y", "lo": "", "hi": "", "panel": "0"}, spec
+    ) == A.SetLimits("y", None, None, panel=0)
+    assert _build_action(
+        "set_secondary_axis",
+        {"label": "Y2", "scale": "log", "lo": "1", "hi": "10"},
+        spec,
+    ) == A.SetSecondaryAxis("Y2", "log", [1.0, 10.0], panel=0)
+    assert _build_action("clear_secondary_axis", {}, spec) == A.SetSecondaryAxis(
+        None, panel=0
+    )
+    assert _build_action(
+        "set_z_axis",
+        {"label": "Z", "scale": "linear", "lo": "", "hi": ""},
+        spec,
+    ) == A.SetZAxis("Z", "linear", None, panel=0)
+
+
+def test_axis_controls_render_for_2d_and_z_controls_render_only_for_3d():
+    spec = FigureSpec()
+    page_2d = render_page(spec, [])
+    assert "Axis scales &amp; limits" in page_2d
+    assert 'value="set_secondary_axis"' in page_2d
+    assert 'value="set_z_axis"' not in page_2d
+    spec.panels[0].projection = "3d"
+    assert 'value="set_z_axis"' in render_page(spec, [])
+
+
 def test_build_action_set_legend_position_preserves_other_legend_fields():
     spec = FigureSpec()
     spec.panels[0].legend = LegendSpec(
@@ -299,9 +350,59 @@ def test_build_action_reset_legend_position_clears_bbox_only():
 # --------------------------------------------------------------------------
 
 
+_REQUIRED_LAYER_VALUE = {
+    "x": "x",
+    "y": "y",
+    "y2": "y2",
+    "z": "z",
+    "value": 0.0,
+    "text": "note",
+    "at": [0.0, 0.0],
+    "matrix": "matrix",
+}
+
+
+@pytest.mark.parametrize("layer_type", sorted(LAYER_TYPES))
+def test_build_action_accepts_every_registered_layer_type_as_json(layer_type):
+    values = {
+        name: _REQUIRED_LAYER_VALUE[name]
+        for name in LAYER_TYPES[layer_type]["required"]
+    }
+    action = _build_action(
+        "add_layer_json",
+        {"layer_type": layer_type, "layer_json": json.dumps(values)},
+        FigureSpec(),
+    )
+    assert isinstance(action, A.AddLayer)
+    assert action.layer.type == layer_type
+    for name, value in values.items():
+        assert getattr(action.layer, name) == value
+
+
+def test_build_action_rejects_unknown_json_layer_field():
+    with pytest.raises(ValueError, match="unknown LayerSpec field"):
+        _build_action(
+            "add_layer_json",
+            {
+                "layer_type": "line",
+                "layer_json": json.dumps({"x": "x", "y": "y", "typo": 1}),
+            },
+            FigureSpec(),
+        )
+
+
 def test_build_action_reports_invalid_numeric_field():
     with pytest.raises(ValueError, match="width must be a number"):
         _build_action("set_size", {"width": "wide", "height": "2"}, FigureSpec())
+
+
+def test_session_dispatch_safe_rejects_invalid_result_without_mutating_store():
+    session = EditorSession()
+    before = session.store.state.to_dict()
+    session.dispatch_safe(A.AddLayer(LayerSpec(type="line", x="missing", y="y")))
+    assert session.error is not None
+    assert session.store.state.to_dict() == before
+    assert session.store.history == []
 
 
 def test_session_dispatch_safe_records_error_without_raising():
@@ -411,6 +512,24 @@ def test_invalid_content_length_returns_400(running_server):
         assert connection.getresponse().status == 400
     finally:
         connection.close()
+
+
+def test_add_any_layer_form_dispatches_valid_layer(running_server):
+    assert (
+        _post(
+            running_server + "/action",
+            {
+                "type": "add_layer_json",
+                "layer_type": "hline",
+                "layer_json": json.dumps({"value": 0.5, "label": "Threshold"}),
+            },
+        )
+        == 200
+    )
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        layer = json.loads(response.read())["panels"][0]["layers"][0]
+    assert layer["type"] == "hline"
+    assert layer["value"] == 0.5
 
 
 def test_load_sample_then_add_layer_then_render(running_server):

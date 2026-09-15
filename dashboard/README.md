@@ -49,16 +49,19 @@ needing a separate `dashboard build` process.
   for partial-page updates. Every click/form submit builds a real `Action`
   and dispatches it through the *exact same* `Store`/reducer the fluent API
   uses — there is no separate editor-only state model.
-- Load sample data, tweak theme/journal/palette, add layers (including
-  `text`/`annotate` via a dedicated "Add text / annotation" form), edit the
-  suptitle/size, undo/redo, or drop in a raw JSON action (the same shape an
-  AI agent would send via `mp.apply([...])`) — the preview, layer list, and
-  action log update **in place** after every change (an htmx partial swap
-  of `#app-body`, not a full page navigation).
-- Errors (bad theme name, missing column, invalid spec) are caught and
-  shown as a banner instead of crashing the server.
-- Export the current state as `.mplot.json` (`/spec.json`) or a PNG
-  (`/fig.png`).
+- Load sample data; tweak theme/journal/palette; edit the grid, active panel,
+  2-D/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
+  labels, references, suptitle, and size; add common
+  series/annotations through quick forms or **any of the 21 registered layer
+  types** through a capabilities-driven checked-JSON form; undo/redo; or send
+  a raw JSON action (the same shape an AI agent uses). The preview, layer
+  list, and action log update **in place** after every change (an htmx partial
+  swap of `#app-body`, not a full page navigation).
+- Errors (bad theme name, missing column, malformed JSON, invalid spec) are
+  caught before committing the action and shown as a banner instead of
+  crashing the server or corrupting editor history.
+- Open a saved `.mplot.json`; export the current state as `.mplot.json`, PNG,
+  exact-size PDF, or SVG.
 - **Drag directly on the preview**: the Position panel's "Enable" buttons
   add a coloured handle over the figure for the **legend** (blue ✥) and
   **panel title** (purple T); any `text`/`annotate` layer gets a handle

@@ -1,6 +1,8 @@
 import copy
+from typing import cast
 
 import mudplot as mp
+import pytest
 from mudplot import actions as A
 from mudplot.reducer import reduce, reduce_all
 from mudplot.spec import FigureSpec, LayerSpec
@@ -49,11 +51,33 @@ def test_add_panel_extends():
     assert len(s.panels) == 2
 
 
-def test_unknown_action_raises():
-    import pytest
+def test_limits_can_return_to_automatic():
+    fixed = reduce(FigureSpec(), A.SetLimits("x", 1.0, 2.0))
+    assert fixed.panels[0].x.limits == [1.0, 2.0]
+    automatic = reduce(fixed, A.SetLimits("x", None, None))
+    assert automatic.panels[0].x.limits is None
+    with pytest.raises(ValueError, match="both lo and hi"):
+        reduce(fixed, A.SetLimits("x", 1.0, None))
 
+
+def test_secondary_axis_can_be_removed():
+    configured = reduce(FigureSpec(), A.SetSecondaryAxis("Y2", scale="log"))
+    assert configured.panels[0].y2 is not None
+    cleared = reduce(configured, A.SetSecondaryAxis(None))
+    assert cleared.panels[0].y2 is None
+
+
+def test_switching_back_to_2d_clears_z_axis_configuration():
+    spec = reduce(FigureSpec(), A.SetProjection("3d"))
+    spec = reduce(spec, A.SetZAxis("Z", limits=[0, 1]))
+    spec = reduce(spec, A.SetProjection("2d"))
+    assert spec.panels[0].projection == "2d"
+    assert spec.panels[0].z is None
+
+
+def test_unknown_action_raises():
     with pytest.raises(TypeError):
-        reduce(FigureSpec(), object())
+        reduce(FigureSpec(), cast(A.Action, object()))
 
 
 def test_store_dispatch_and_subscribe():
@@ -65,6 +89,22 @@ def test_store_dispatch_and_subscribe():
     assert seen == ["SetSize", "SetTitle"]
     assert store.state.size == [4, 3]
     assert store.state.panels[0].title == "hi"
+
+
+def test_builder_can_restore_automatic_limits_and_remove_secondary_axis():
+    p = (
+        mp.plot()
+        .xlim(0, 1)
+        .ylim(-1, 1)
+        .secondary_yaxis("Y2")
+        .xlim()
+        .ylim()
+        .secondary_yaxis(None)
+    )
+    panel = p.spec.panels[0]
+    assert panel.x.limits is None
+    assert panel.y.limits is None
+    assert panel.y2 is None
 
 
 def test_builder_uses_reducer_path():

@@ -119,7 +119,7 @@ class SetShare:
 
 @dataclass(frozen=True)
 class SetSecondaryAxis:
-    label: str = ""
+    label: str | None = ""
     scale: str = "linear"
     limits: list[float] | None = None
     panel: int = 0
@@ -228,8 +228,8 @@ class SetScale:
 @dataclass(frozen=True)
 class SetLimits:
     axis: str  # "x" | "y"
-    lo: float
-    hi: float
+    lo: float | None  # None/None restores automatic limits
+    hi: float | None
     panel: int = 0
 
 

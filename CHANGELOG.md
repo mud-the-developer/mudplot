@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Dashboard
+
+- Added a capabilities-driven advanced layer form covering all 21 registered
+  layer types. It documents each type's required/optional fields, accepts the
+  remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
+  fields, and missing requirements before mutating editor state.
+- Completed panel controls: per-panel 2-D/3-D projection; x/y scales and
+  fixed/automatic limits; secondary-y-axis enable/configure/remove; and 3-D
+  z-axis setup. `SetLimits(None, None)` now restores automatic limits and
+  `SetSecondaryAxis(None)` removes y2, preserving the same action semantics
+  for editor, agent, and Python consumers.
+- Dashboard dispatch now validates the prospective spec before committing an
+  action, so invalid edits leave both state and history untouched instead of
+  wedging the preview.
+
 ### Quality
 
 - Added a zero-error `pyright` check for `mudplot/`, the dashboard, and

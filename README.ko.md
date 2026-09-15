@@ -46,7 +46,7 @@
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 테스트 451개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 504개 + 실제 브라우저 테스트 10개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -100,13 +100,14 @@
       탭, htmx 부분 갱신(전체 리로드 없음; vendoring, 0BSD, 새 Python
       의존성 없음), 미리보기 위에서 범례·제목·주석을 마우스나 화살표
       키로 직접 드래그하는 핸들
-- [x] 캔버스 중심 레이아웃, 멀티패널 편집(격자 + 패널별 컨트롤), 제목·축·
-      citation 직접 편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로
-      PDF/SVG 내보내기
+- [x] 캔버스 중심 레이아웃, 멀티패널 편집(격자 + 활성 패널), 제목·reference,
+      x/y/z축(scale, 고정/자동 limits, 보조 y축, 2-D/3-D projection) 직접
+      편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로 PDF/SVG 내보내기
 - [x] 실제 브라우저 테스트(Playwright, 선택적 `browser` extra) — HTML
       검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
-- [ ] 에디터 UI의 나머지 레이어 타입, 전체 body 스왑을 부분 갱신으로 교체 —
-      `ROADMAP.md` §2 참고
+- [x] capabilities 기반 advanced 폼으로 등록된 레이어 21종 모두 지원;
+      향후 registry 추가도 자동 반영. htmx로 전체 페이지 reload 없이 app
+      fragment만 갱신
 - [ ] Rust 인터랙티브 에디터 (별도 크레이트) — `ROADMAP.md` §3 참고
 
 ## 설치

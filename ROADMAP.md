@@ -66,21 +66,20 @@ The editor prototype (`python -m dashboard serve`) currently exposes
 `line`/`scatter`/`bar` plus `text`/`annotate` in its "Add layer" forms,
 while the engine supports 21 types. Concrete gaps:
 
-- **Expose the remaining layer types** in the editor UI (at minimum a
-  generic "advanced" form that lets you pick any registered layer type and
-  fill in its fields, driven by `mp.capabilities()` rather than a
-  hand-maintained dropdown — this would also make the editor automatically
-  pick up any *future* layer type with zero UI changes).
-- **Multi-panel layout controls**: `.layout(rows, cols)`, panel selection
-  for "add layer"/"remove layer", and a `.projection3d()` toggle per panel.
-  The new draggable title/legend/annotation handles are also currently
-  panel-0-only; extending them to whichever panel is selected is a natural
-  follow-on once multi-panel controls exist.
-- **Load a spec from a file** (currently only export/download links exist;
-  there's no upload/"open" counterpart).
-- **Panel-level controls**: axis labels/scales/limits, secondary y-axis
-  setup — currently only figure-level (theme/journal/palette/suptitle/
-  size), legend/title position, and a flat "add layer" exist.
+- **(done)** Exposed every registered layer type through a generic advanced
+  form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
+  `LayerSpec` JSON fields, shows required/optional fields for all 21 types,
+  rejects typos/missing required fields, and automatically picks up future
+  registry entries without another hand-maintained dropdown.
+- **(done)** Multi-panel layout controls: grid size, active-panel selection
+  for add/remove/edit operations, per-panel 2-D/3-D projection, and draggable
+  title/legend/annotation handles scoped to the selected panel.
+- **(done)** Open a saved `.mplot.json`; malformed/invalid specs leave the
+  current figure untouched and report an editor error.
+- **(done)** Panel-level controls: title/reference, x/y labels, scales,
+  fixed/automatic limits, secondary-y-axis enable/configure/remove, 3-D z-axis
+  setup, projection, and draggable positions. Invalid prospective states are
+  rejected before they can enter editor history.
 - **(done)** Replaced the full-page-reload-per-action UX with htmx partial
   swaps (`dashboard/static/htmx.min.js`, vendored, 0BSD, no Python
   dependency) — good practice run before the real Rust+htmx editor.

@@ -18,12 +18,15 @@ import functools
 import io
 import json
 import threading
+from dataclasses import fields as dataclass_fields
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 import mudplot as mp
 from mudplot import actions as A
+from mudplot.capabilities import LAYER_TYPES
+from mudplot.reducer import reduce
 from mudplot.spec import FigureSpec, LayerSpec
 from mudplot.store import Store
 from mudplot.validate import assert_valid
@@ -78,12 +81,12 @@ class EditorSession:
 
     def dispatch_safe(self, action) -> None:
         try:
+            assert_valid(reduce(self.store.state, action))
             self.store.dispatch(action)
         except Exception as e:
-            # Dispatch itself failed (e.g. bad action fields) -- the store's
-            # state is untouched, so there's nothing new to render; refresh()
-            # would just re-render the same (still valid) spec and silently
-            # clear this error again.
+            # Parsing/reducing/validating failed -- the store is untouched, so
+            # refresh() would only redraw the same valid spec and clear the
+            # useful error banner again.
             self.error = f"{type(e).__name__}: {e}"
             return
         self.refresh()
@@ -246,6 +249,45 @@ def _int_field(fields: dict, name: str, default=None) -> int:
         raise ValueError(f"{name} must be an integer") from e
 
 
+def _limits_fields(fields: dict) -> list[float] | None:
+    lo, hi = fields.get("lo"), fields.get("hi")
+    if lo in (None, "") and hi in (None, ""):
+        return None
+    if lo in (None, "") or hi in (None, ""):
+        raise ValueError("both lower and upper limits are required")
+    return [_float_field(fields, "lo"), _float_field(fields, "hi")]
+
+
+def _layer_from_json(fields: dict) -> LayerSpec:
+    layer_type = fields.get("layer_type", "")
+    if layer_type not in LAYER_TYPES:
+        raise ValueError(
+            f"unknown layer type {layer_type!r}; valid: {sorted(LAYER_TYPES)}"
+        )
+    try:
+        values = json.loads(fields.get("layer_json", "{}"))
+    except (TypeError, json.JSONDecodeError) as e:
+        raise ValueError(f"layer fields must be valid JSON: {e}") from e
+    if not isinstance(values, dict):
+        raise ValueError("layer fields must be a JSON object")
+
+    allowed = {f.name for f in dataclass_fields(LayerSpec)}
+    unknown = set(values) - allowed
+    if unknown:
+        raise ValueError(f"unknown LayerSpec field(s): {sorted(unknown)}")
+    missing = [
+        name
+        for name in LAYER_TYPES[layer_type]["required"]
+        if name not in values or values[name] is None or values[name] == ""
+    ]
+    if missing:
+        raise ValueError(f"{layer_type} requires field(s): {', '.join(missing)}")
+    layer = LayerSpec.from_dict({**values, "type": layer_type})
+    if not isinstance(layer, LayerSpec):  # defensive: generic SpecBase return
+        raise TypeError("layer fields did not produce a LayerSpec")
+    return layer
+
+
 def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
     if action_type == "load_sample":
         return A.SetData(sample_columns(fields["name"]))
@@ -262,6 +304,10 @@ def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
                 "chroma": _float_field(fields, "chroma"),
                 "lightness": _float_field(fields, "lightness"),
             },
+        )
+    if action_type == "add_layer_json":
+        return A.AddLayer(
+            _layer_from_json(fields), panel=_int_field(fields, "panel", 0)
         )
     if action_type == "add_layer":
         layer_type = fields["layer_type"]
@@ -298,6 +344,11 @@ def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
         )
     if action_type == "set_layout":
         return A.SetLayout(_int_field(fields, "rows"), _int_field(fields, "cols"))
+    if action_type == "set_projection":
+        return A.SetProjection(
+            fields.get("projection", "2d"),
+            panel=_int_field(fields, "panel", 0),
+        )
     if action_type == "set_suptitle":
         return A.SetSuptitle(fields.get("text", ""))
     if action_type == "set_title":
@@ -311,6 +362,32 @@ def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
         return A.SetAxisLabel(
             fields["axis"],
             fields.get("text", ""),
+            panel=_int_field(fields, "panel", 0),
+        )
+    if action_type == "set_scale":
+        return A.SetScale(
+            fields["axis"],
+            fields.get("scale", "linear"),
+            panel=_int_field(fields, "panel", 0),
+        )
+    if action_type == "set_limits":
+        limits = _limits_fields(fields)
+        lo, hi = limits if limits is not None else (None, None)
+        return A.SetLimits(fields["axis"], lo, hi, panel=_int_field(fields, "panel", 0))
+    if action_type == "set_secondary_axis":
+        return A.SetSecondaryAxis(
+            label=fields.get("label", ""),
+            scale=fields.get("scale", "linear"),
+            limits=_limits_fields(fields),
+            panel=_int_field(fields, "panel", 0),
+        )
+    if action_type == "clear_secondary_axis":
+        return A.SetSecondaryAxis(label=None, panel=_int_field(fields, "panel", 0))
+    if action_type == "set_z_axis":
+        return A.SetZAxis(
+            label=fields.get("label", ""),
+            scale=fields.get("scale", "linear"),
+            limits=_limits_fields(fields),
             panel=_int_field(fields, "panel", 0),
         )
     if action_type == "set_size":

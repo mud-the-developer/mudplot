@@ -390,6 +390,12 @@ tests/
       대신 순수 ASCII 백틱/따옴표로 교체해 수정). `tests/test_bib.py`,
       `tests/test_lint.py`, `tests/test_journal_profiles.py` 참고.
 - [x] **v0.5.0 릴리스.**
+- [x] M12h: v0.5 이후 완성도 보강 — 색 변환/거리 Hypothesis 속성 테스트,
+      engine/dashboard/scripts Pyright 0-error CI, 재현 가능한 dev 환경과
+      영문·한글 기여 가이드. 대시보드는 capability registry의 모든 레이어를
+      노출하고 action 결과를 commit 전에 검증하며, 멀티패널 projection과
+      x/y/z/보조축 설정을 완성. 현재 app-fragment htmx swap은 의도적으로
+      단순하게 유지하며 실제 latency가 측정될 때만 더 세분화.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

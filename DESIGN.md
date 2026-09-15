@@ -525,6 +525,14 @@ tests/
       `tests/test_bib.py`, `tests/test_lint.py`,
       `tests/test_journal_profiles.py`.
 - [x] **v0.5.0 released.**
+- [x] M12h: post-v0.5 completeness — Hypothesis properties for colour
+      conversion/distance, zero-error Pyright CI for engine/dashboard/scripts,
+      reproducible dev setup and bilingual contribution guides; dashboard
+      now exposes all registered layer types from the capability registry,
+      validates prospective actions before commit, and completes multi-panel
+      projection/x/y/z/secondary-axis controls. The current app-fragment htmx
+      swap remains deliberately simple; split it further only if profiling
+      shows a real latency problem.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

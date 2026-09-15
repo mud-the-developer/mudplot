@@ -135,7 +135,13 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             getattr(s.panels[pi], axis).scale = scale
         case A.SetLimits(axis=axis, lo=lo, hi=hi, panel=pi):
             _ensure_panel(s, pi)
-            getattr(s.panels[pi], axis).limits = [lo, hi]
+            if lo is None and hi is None:
+                limits = None
+            elif lo is None or hi is None:
+                raise ValueError("SetLimits requires both lo and hi, or neither")
+            else:
+                limits = [lo, hi]
+            getattr(s.panels[pi], axis).limits = limits
         case A.SetLegend(
             show=show, title=title, location=loc, frame=fr, panel=pi, bbox_to_anchor=bta
         ):
@@ -154,10 +160,16 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             s.auto_label_panels = enabled
         case A.SetSecondaryAxis(label=label, scale=scale, limits=limits, panel=pi):
             _ensure_panel(s, pi)
-            s.panels[pi].y2 = AxisSpec(label=label, scale=scale, limits=limits)
+            s.panels[pi].y2 = (
+                None
+                if label is None
+                else AxisSpec(label=label, scale=scale, limits=limits)
+            )
         case A.SetProjection(projection=proj, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].projection = proj
+            if proj == "2d":
+                s.panels[pi].z = None
         case A.SetZAxis(label=label, scale=scale, limits=limits, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].z = AxisSpec(label=label, scale=scale, limits=limits)

@@ -18,6 +18,7 @@ import html
 import json
 import math
 
+from mudplot.capabilities import LAYER_TYPES
 from mudplot.spec import FigureSpec
 from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
@@ -455,6 +456,19 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
         + "</div></div>"
     )
     layout_form = _hx_form("/action", {"type": "set_layout"}, size_body, "Set grid")
+    projection_form = _hx_form(
+        "/action",
+        {"type": "set_projection"},
+        _field(
+            "Active panel projection",
+            _select(
+                "projection",
+                ("2d", "3d"),
+                spec.panels[active].projection if spec.panels else "2d",
+            ),
+        ),
+        "Set projection",
+    )
 
     n = len(spec.panels)
     if n <= 1:
@@ -474,7 +488,10 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
             '<span class="field-label">Editing panel</span>'
             f'<div class="btn-row">{buttons}</div></div>'
         )
-    return f'<div class="panel"><h2>Panels</h2>{layout_form}{picker}</div>'
+    return (
+        f'<div class="panel"><h2>Panels</h2>{layout_form}{picker}'
+        f"{projection_form}</div>"
+    )
 
 
 def _layer_panel(spec: FigureSpec) -> str:
@@ -528,6 +545,40 @@ def _annotation_panel() -> str:
     )
     form = _hx_form("/action", {"type": "add_layer"}, body, "Add annotation")
     return f'<div class="panel"><h2>Add text / annotation</h2>{form}</div>'
+
+
+def _all_layers_panel() -> str:
+    options = "".join(
+        f'<option value="{_esc(name)}">{_esc(name)} — required: '
+        f"{_esc(', '.join(meta['required']) or 'none')}</option>"
+        for name, meta in LAYER_TYPES.items()
+    )
+    field_reference = "".join(
+        '<div class="layer-field-reference">'
+        f"<code>{_esc(name)}</code><br>"
+        f"required: {_esc(', '.join(meta['required']) or 'none')}<br>"
+        f"optional: {_esc(', '.join(meta['optional']) or 'none')}"
+        "</div>"
+        for name, meta in LAYER_TYPES.items()
+    )
+    body = (
+        _field("Layer type", f'<select name="layer_type">{options}</select>')
+        + _field(
+            "Layer fields (JSON object)",
+            '<textarea name="layer_json" spellcheck="false">'
+            "{\n  &quot;x&quot;: &quot;x&quot;,\n  &quot;y&quot;: &quot;y&quot;\n}"
+            "</textarea>",
+        )
+        + '<div class="hint">The selected type is authoritative. Any '
+        "<code>LayerSpec</code> field is accepted, including citation/href and "
+        "array-valued at/to/levels/bins. Invalid or unknown fields are rejected."
+        "</div>"
+        + '<details data-key="layer-fields"><summary>Fields by layer type</summary>'
+        + field_reference
+        + "</details>"
+    )
+    form = _hx_form("/action", {"type": "add_layer_json"}, body, "Add layer")
+    return f'<div class="panel"><h2>Any layer · advanced</h2>{form}</div>'
 
 
 def _layers_panel(spec: FigureSpec, active: int) -> str:
@@ -597,6 +648,106 @@ def _labels_panel(spec: FigureSpec, active: int) -> str:
     return (
         '<div class="panel"><h2>Titles &amp; axes</h2>'
         f'<p class="hint">Editing panel {active + 1}. Empty text clears a label.</p>'
+        + "".join(forms)
+        + "</div>"
+    )
+
+
+def _axis_controls_panel(spec: FigureSpec, active: int) -> str:
+    if not spec.panels:
+        return ""
+    panel = spec.panels[active]
+
+    def limits_inputs(axis) -> str:
+        lo, hi = axis.limits if axis is not None and axis.limits else ("", "")
+        return (
+            '<div class="row"><div>'
+            + _field(
+                "Lower limit",
+                f'<input type="number" step="any" name="lo" value="{_esc(lo)}">',
+            )
+            + "</div><div>"
+            + _field(
+                "Upper limit",
+                f'<input type="number" step="any" name="hi" value="{_esc(hi)}">',
+            )
+            + "</div></div>"
+        )
+
+    forms = []
+    for name, axis in (("x", panel.x), ("y", panel.y)):
+        forms.append(f'<div class="field-label">{name.upper()} axis</div>')
+        forms.append(
+            _hx_form(
+                "/action",
+                {"type": "set_scale", "axis": name},
+                _field("Scale", _select("scale", ("linear", "log"), axis.scale)),
+                "Apply scale",
+            )
+        )
+        forms.append(
+            _hx_form(
+                "/action",
+                {"type": "set_limits", "axis": name},
+                limits_inputs(axis),
+                "Apply limits",
+            )
+        )
+
+    secondary = panel.y2
+    secondary_label = secondary.label if secondary else ""
+    secondary_scale = secondary.scale if secondary else "linear"
+    secondary_body = (
+        _field(
+            "Label",
+            f'<input name="label" value="{_esc(secondary_label)}">',
+        )
+        + _field(
+            "Scale",
+            _select("scale", ("linear", "log"), secondary_scale),
+        )
+        + limits_inputs(secondary)
+    )
+    forms.append('<div class="field-label">Secondary Y axis</div>')
+    forms.append(
+        _hx_form(
+            "/action",
+            {"type": "set_secondary_axis"},
+            secondary_body,
+            "Apply secondary axis" if secondary else "Enable secondary axis",
+        )
+    )
+    if secondary is not None:
+        forms.append(
+            _hx_form(
+                "/action",
+                {"type": "clear_secondary_axis"},
+                "",
+                "Remove secondary axis",
+            )
+        )
+
+    if panel.projection == "3d":
+        z_axis = panel.z
+        z_label = z_axis.label if z_axis else ""
+        z_scale = z_axis.scale if z_axis else "linear"
+        z_body = (
+            _field(
+                "Label",
+                f'<input name="label" value="{_esc(z_label)}">',
+            )
+            + _field(
+                "Scale",
+                _select("scale", ("linear", "log"), z_scale),
+            )
+            + limits_inputs(z_axis)
+        )
+        forms.append('<div class="field-label">Z axis</div>')
+        forms.append(_hx_form("/action", {"type": "set_z_axis"}, z_body))
+
+    return (
+        '<div class="panel"><h2>Axis scales &amp; limits</h2>'
+        '<p class="hint">Leave both limits blank for automatic limits.</p>'
         + "".join(forms)
         + "</div>"
     )
@@ -875,10 +1026,14 @@ def render_app_body(
         + _figure_panel(spec)
         + _panels_panel(spec, active)
         + _labels_panel(spec, active)
+        + _axis_controls_panel(spec, active)
         + _theme_panel(spec)
         + _palette_panel(spec)
         + _layer_panel(spec)
         + _annotation_panel()
+        + '<details data-key="all-layers"><summary>Add any layer</summary>'
+        + _all_layers_panel()
+        + "</details>"
         + _layers_panel(spec, active)
         + _position_panel(spec, active)
         + _history_panel()

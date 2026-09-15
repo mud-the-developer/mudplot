@@ -269,8 +269,8 @@ Every mutation is one of these — send as
 | field | type | required | default |
 | --- | --- | --- | --- |
 | `axis` | `str` | True | `None` |
-| `lo` | `float` | True | `None` |
-| `hi` | `float` | True | `None` |
+| `lo` | `float or None` | True | `None` |
+| `hi` | `float or None` | True | `None` |
 | `panel` | `int` | False | `0` |
 
 ### `SetMatrix`
@@ -319,7 +319,7 @@ Every mutation is one of these — send as
 
 | field | type | required | default |
 | --- | --- | --- | --- |
-| `label` | `str` | False | `''` |
+| `label` | `str or None` | False | `''` |
 | `scale` | `str` | False | `'linear'` |
 | `limits` | `list[float] or None` | False | `None` |
 | `panel` | `int` | False | `0` |

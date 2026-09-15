@@ -26,6 +26,25 @@ def test_action_roundtrip_simple():
     assert A.action_to_dict(a) == {"type": "SetSize", "width": 4, "height": 3}
 
 
+def test_action_roundtrip_supports_clearing_axis_limits_and_secondary_axis():
+    limits = A.action_from_dict(
+        {"type": "SetLimits", "axis": "x", "lo": None, "hi": None, "panel": 0}
+    )
+    secondary = A.action_from_dict(
+        {
+            "type": "SetSecondaryAxis",
+            "label": None,
+            "scale": "linear",
+            "limits": None,
+            "panel": 0,
+        }
+    )
+    assert limits == A.SetLimits("x", None, None)
+    assert secondary == A.SetSecondaryAxis(None)
+    assert A.action_to_dict(limits)["lo"] is None
+    assert A.action_to_dict(secondary)["label"] is None
+
+
 def test_action_roundtrip_nested_layer():
     d = {"type": "AddLayer", "layer": {"type": "line", "x": "a", "y": "b"}, "panel": 0}
     a = A.action_from_dict(d)
