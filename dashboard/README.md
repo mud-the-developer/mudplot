@@ -52,7 +52,7 @@ needing a separate `dashboard build` process.
 - Load sample data; tweak theme/journal/palette; edit the grid, active panel,
   2-D/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
   labels, references, suptitle, and size; add common
-  series/annotations through quick forms or **any of the 24 registered layer
+  series/annotations through quick forms or **any of the 25 registered layer
   types** through a capabilities-driven checked-JSON form; undo/redo; or send
   a raw JSON action (the same shape an AI agent uses). The preview, layer
   list, and action log update **in place** after every change (an htmx partial

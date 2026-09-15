@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added long-form `stackplot` as the 25th layer type. It uses native
+  Matplotlib stacked areas over existing `x`/`y`/`group` data, rejects
+  per-group x-order mismatches and non-finite stack values before rendering,
+  supports y2/references/styles, and cycles hatches for grayscale output.
 - Added deterministic `stripplot` as the 24th layer type. It supports
   categorical/numeric x values, bounded horizontal jitter, grouping,
   references, secondary-y routing, and redundant markers; a fixed local RNG
@@ -27,7 +31,7 @@ All notable changes to this project are documented here.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 24 registered
+- Added a capabilities-driven advanced layer form covering all 25 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.

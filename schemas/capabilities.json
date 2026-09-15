@@ -73,6 +73,20 @@
         "axis"
       ]
     },
+    "stackplot": {
+      "required": [
+        "x",
+        "y",
+        "group"
+      ],
+      "optional": [
+        "color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "axis"
+      ]
+    },
     "bar": {
       "required": [
         "x",

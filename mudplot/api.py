@@ -177,6 +177,23 @@ class Plot:
             )
         )
 
+    def stackplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Stack long-form ``y`` series grouped by ``group`` over shared ``x``."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(type="stackplot", x=x, y=y, group=group, **style),
+                panel=panel,
+            )
+        )
+
     def heatmap(
         self,
         matrix: str,

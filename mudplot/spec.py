@@ -223,8 +223,8 @@ class ReferenceSpec(SpecBase):
 @dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
-    # | hist | box | heatmap | violin | kde | rug | regplot | stripplot | pie
-    # | contour | contourf | scatter3d | line3d | surface | wireframe
+    # | hist | box | heatmap | violin | kde | rug | regplot | stripplot
+    # | stackplot | pie | contour | contourf | scatter3d | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name

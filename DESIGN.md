@@ -545,6 +545,9 @@ tests/
       total), reusing the series renderer, palette, grouping, references,
       y2 routing, and redundant marker cycle. Swarm collision-packing remains
       deferred until overlap is a measured need.
+- [x] M12l: long-form native `stackplot` (25 layer types total), with shared
+      ordered-x validation, finite stack-value checks, y2/reference support,
+      and per-stack hatches for grayscale-safe area encoding.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

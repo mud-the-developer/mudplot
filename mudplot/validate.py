@@ -43,6 +43,7 @@ _AXIS_ROUTABLE_TYPES = {
     "regplot",
     "scatter",
     "stripplot",
+    "stackplot",
     "bar",
     "errorbar",
     "band",
@@ -119,34 +120,41 @@ def _finite(value) -> bool:
         return False
 
 
+def _stable_group_indices(values) -> list[tuple[object, list[int]]]:
+    # ponytail: equality grouping is O(n²) for all-unique keys; index hashable
+    # keys if validation of very large grouped layers becomes a bottleneck.
+    groups: list[tuple[object, list[int]]] = []
+    for index, key in enumerate(values):
+        for existing, indices in groups:
+            if key == existing:
+                indices.append(index)
+                break
+        else:
+            groups.append((key, [index]))
+    return groups
+
+
 def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
     """Check each fitted group before NumPy reaches its linear-algebra path."""
     x_values = cols[layer.x]
     y_values = cols[layer.y]
-    group_values = (
-        cols[layer.group] if layer.group is not None else [None] * len(x_values)
-    )
-    if len(x_values) != len(y_values) or len(group_values) != len(x_values):
+    if len(x_values) != len(y_values):
         return  # _check_data_integrity reports the shared-table mismatch
-    # ponytail: equality grouping is O(n²) for all-unique keys; index hashable
-    # keys if validation of very large grouped regressions becomes a bottleneck.
-    groups: list[tuple[object, list[tuple[object, object]]]] = (
-        [(None, [])] if layer.group is None else []
-    )
-    for x, y, key in zip(x_values, y_values, group_values, strict=True):
-        for existing, pairs in groups:
-            if key == existing:
-                pairs.append((x, y))
-                break
-        else:
-            groups.append((key, [(x, y)]))
+    if layer.group is None:
+        groups = [(None, list(range(len(x_values))))]
+    else:
+        group_values = cols[layer.group]
+        if len(group_values) != len(x_values):
+            return
+        groups = _stable_group_indices(group_values)
 
     if not groups:
         issues.append(f"{where}: regression requires observations")
         return
 
-    for key, pairs in groups:
+    for key, indices in groups:
         suffix = f" group {key!r}" if layer.group is not None else ""
+        pairs = [(x_values[i], y_values[i]) for i in indices]
         if any(not _finite(value) for pair in pairs for value in pair):
             issues.append(f"{where}{suffix}: regression values must be finite numbers")
             continue
@@ -165,6 +173,28 @@ def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
             issues.append(
                 f"{where}{suffix}: degree {layer.degree} regression requires at "
                 f"least {parameters} distinct x values"
+            )
+
+
+def _check_stackplot_data(cols, layer, where: str, issues: list[str]) -> None:
+    """Require every stack to provide finite y values on the same x sequence."""
+    x_values = cols[layer.x]
+    y_values = cols[layer.y]
+    group_values = cols[layer.group]
+    if len(x_values) != len(y_values) or len(group_values) != len(x_values):
+        return  # _check_data_integrity reports the shared-table mismatch
+    groups = _stable_group_indices(group_values)
+    if not groups:
+        issues.append(f"{where}: stackplot requires observations")
+        return
+
+    reference_x = [x_values[i] for i in groups[0][1]]
+    for key, indices in groups:
+        if any(not _finite(y_values[i]) for i in indices):
+            issues.append(f"{where} group {key!r}: stack values must be finite numbers")
+        if [x_values[i] for i in indices] != reference_x:
+            issues.append(
+                f"{where} group {key!r}: every stack must use the same x sequence"
             )
 
 
@@ -432,6 +462,15 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
                 )
+
+            if (
+                layer.type == "stackplot"
+                and layer.x in cols
+                and layer.y in cols
+                and isinstance(layer.group, str)
+                and layer.group in cols
+            ):
+                _check_stackplot_data(cols, layer, where, issues)
 
             if layer.type == "stripplot":
                 jitter = 0.15 if layer.jitter is None else layer.jitter

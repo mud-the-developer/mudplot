@@ -355,6 +355,7 @@ _REQUIRED_LAYER_VALUE = {
     "y": "y",
     "y2": "y2",
     "z": "z",
+    "group": "group",
     "value": 0.0,
     "text": "note",
     "at": [0.0, 0.0],

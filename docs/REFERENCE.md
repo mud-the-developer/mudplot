@@ -94,6 +94,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`, `y`, `z`
 - **optional**: `group`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`
 
+### `stackplot`
+
+- **required**: `x`, `y`, `group`
+- **optional**: `color`, `line_width`, `line_style`, `alpha`, `axis`
+
 ### `stripplot`
 
 - **required**: `x`, `y`

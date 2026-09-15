@@ -405,6 +405,8 @@ tests/
 - [x] M12k: 재현 가능한 카테고리/원자료 `stripplot`(총 24종). 기존 series
       renderer의 팔레트·grouping·reference·y2 routing·중복 marker를 재사용.
       swarm 충돌 packing은 overlap 필요가 측정될 때까지 보류.
+- [x] M12l: long-form native `stackplot`(총 25종). 그룹별 ordered x 일치,
+      유한 stack 값 검증, y2/reference, 흑백 구별용 stack별 hatch 지원.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

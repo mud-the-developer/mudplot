@@ -1,5 +1,6 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
-wireframe), violin, kde, rug, regplot, stripplot, pie, contour/contourf.
+wireframe), violin, kde, rug, regplot, stripplot, stackplot, pie,
+contour/contourf.
 """
 
 from typing import Any, cast
@@ -150,6 +151,40 @@ def test_kde_grouped_gives_two_redundantly_styled_curves():
     assert lines[0].get_linestyle() != lines[1].get_linestyle()
 
 
+def test_stackplot_renders_long_form_groups_with_redundant_hatches():
+    data = {
+        "x": [0, 1, 2, 0, 1, 2],
+        "y": [1, 2, 3, 2, 1, 2],
+        "g": ["base"] * 3 + ["top"] * 3,
+    }
+    p = mp.plot(data).stackplot("x", "y", group="g").legend()
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    collections = fig.axes[0].collections
+    assert len(collections) == 2
+    assert collections[0].get_hatch() != collections[1].get_hatch()
+    assert fig.axes[0].get_legend_handles_labels()[1] == ["base", "top"]
+
+
+def test_stackplot_rejects_misaligned_groups_and_nonfinite_values():
+    misaligned = mp.plot(
+        {
+            "x": [0, 1, 0, 2],
+            "y": [1, 2, 3, 4],
+            "g": ["A", "A", "B", "B"],
+        }
+    ).stackplot("x", "y", group="g")
+    nonfinite = mp.plot(
+        {
+            "x": [0, 1, 0, 1],
+            "y": [1, 2, 3, float("nan")],
+            "g": ["A", "A", "B", "B"],
+        }
+    ).stackplot("x", "y", group="g")
+    assert any("same x sequence" in issue for issue in mp.validate(misaligned.spec))
+    assert any("finite numbers" in issue for issue in mp.validate(nonfinite.spec))
+
+
 def test_stripplot_jitter_is_bounded_and_reproducible():
     data = {"category": ["A", "A", "A", "B", "B"], "value": [1, 2, 3, 4, 5]}
     p = mp.plot(data).stripplot("category", "value", jitter=0.1)
@@ -292,6 +327,7 @@ def test_new_types_appear_in_capabilities():
     for t in (
         "regplot",
         "stripplot",
+        "stackplot",
         "scatter3d",
         "line3d",
         "surface",
@@ -311,6 +347,15 @@ def test_new_types_all_pass_validate_when_built_correctly():
     specs = [
         mp.plot(data).regplot("x", "y").spec,
         mp.plot(data).stripplot("cat", "y").spec,
+        mp.plot(
+            {
+                "x": [0, 1, 2, 0, 1, 2],
+                "y": [1, 2, 3, 3, 2, 1],
+                "g": ["A", "A", "A", "B", "B", "B"],
+            }
+        )
+        .stackplot("x", "y", group="g")
+        .spec,
         mp.plot(data).projection3d().scatter3d("x", "y", "z").spec,
         mp.plot(data).projection3d().line3d("x", "y", "z").spec,
         mp.plot({}).matrix("m", _matrix_data()).projection3d().surface("m").spec,

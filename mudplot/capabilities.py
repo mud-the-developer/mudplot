@@ -83,6 +83,10 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "stackplot": {
+        "required": ["x", "y", "group"],
+        "optional": ["color", "line_width", "line_style", "alpha", "axis"],
+    },
     "bar": {
         "required": ["x", "y"],
         "optional": ["label", "color", "alpha", "axis"],

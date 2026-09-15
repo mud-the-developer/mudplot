@@ -9,8 +9,8 @@ within each section. For what's already shipped, see
 
 ## 1. More plot types (matplotlib/seaborn parity, continued)
 
-Currently supported (24 layer types): `line`, `regplot`, `scatter`,
-`stripplot`, `bar`, `errorbar`, `band`, `hist`, `box`, `violin`, `kde`, `rug`, `heatmap`, `contour`,
+Currently supported (25 layer types): `line`, `regplot`, `scatter`,
+`stripplot`, `bar`, `errorbar`, `band`, `stackplot`, `hist`, `box`, `violin`, `kde`, `rug`, `heatmap`, `contour`,
 `contourf`, `pie`, `hline`, `vline`, `text`, `annotate`, `scatter3d`, `line3d`,
 `surface`, `wireframe`.
 
@@ -27,11 +27,10 @@ papers:
 - **`swarmplot`**: pack points to avoid overlap. Defer the substantially more
   complex collision algorithm until stripplot overlap is a demonstrated
   problem rather than shipping a fragile approximation.
-- **`stackplot`**: stacked area chart. Semantically different from every
-  other layer (`ax.stackplot()` wants *all* series at once, not drawn
-  incrementally per group like our other layers), so it needs a bit of
-  special-casing in `_draw_series_layer`/`_draw_dist_layer` rather than
-  reusing the existing per-mask loop directly.
+- **(done) `stackplot`**: native stacked areas from the existing long-form
+  `x`/`y`/`group` contract. Validation requires every group to share the same
+  ordered x sequence and finite values; hatch cycling keeps stacks distinct
+  in grayscale.
 - **`hist2d`/`hexbin`**: 2-D density/count plots for two continuous
   variables — pairs naturally with the existing `heatmap`/`contour`
   colour-mapping infrastructure.
@@ -68,11 +67,11 @@ Each addition should follow the same checklist the last two batches did:
 
 The editor prototype (`python -m dashboard serve`) currently exposes
 `line`/`scatter`/`bar` plus `text`/`annotate` in its "Add layer" forms,
-while the engine supports 24 types. Concrete gaps:
+while the engine supports 25 types. Concrete gaps:
 
 - **(done)** Exposed every registered layer type through a generic advanced
   form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
-  `LayerSpec` JSON fields, shows required/optional fields for all 24 types,
+  `LayerSpec` JSON fields, shows required/optional fields for all 25 types,
   rejects typos/missing required fields, and automatically picks up future
   registry entries without another hand-maintained dropdown.
 - **(done)** Multi-panel layout controls: grid size, active-panel selection
@@ -96,7 +95,7 @@ while the engine supports 24 types. Concrete gaps:
 
 Deferred by design until the Python prototype had exercised the action/
 JSON contract enough to trust it (see `DESIGN.md` §7 for the original
-plan). Now that the prototype has ~25 action types and 24 layer types
+plan). Now that the prototype has ~25 action types and 25 layer types
 exercised through it, a reasonable first slice:
 
 1. New crate (e.g. `mudplot-editor/`, separate from this Python repo, or a

@@ -27,6 +27,7 @@ _SERIES_TYPES = {
     "regplot",
     "scatter",
     "stripplot",
+    "stackplot",
     "bar",
     "errorbar",
     "band",
@@ -326,6 +327,26 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
 
     x_all = _x_values(target, data_cols, layer.x)
     norm = _color_norm(data_cols, layer) if layer.c is not None else None
+    if layer.type == "stackplot":
+        labels = [label for label, _mask in masks]
+        x_groups = [x_all[mask] for _label, mask in masks]
+        y_groups = [_col(data_cols, layer.y)[mask] for _label, mask in masks]
+        colors = [layer.color or next(color_iter) for _label, _mask in masks]
+        collections = target.stackplot(
+            x_groups[0],
+            *y_groups,
+            labels=labels,
+            colors=colors,
+            linewidth=layer.line_width or 0,
+            linestyle=layer.line_style or "solid",
+            alpha=layer.alpha,
+        )
+        if use_redundant:
+            hatches = itertools.cycle(theme.hatches)
+            for collection in collections:
+                collection.set_hatch(next(hatches))
+        return
+
     sc = None
     jitter_rng = np.random.default_rng(0)  # deterministic export/re-render
 
