@@ -38,7 +38,7 @@ scatter3d, line3d, surface, wireframe.
   kde/hist 동반 레이어; 그룹에는 중복 선 스타일도 적용
 
 각 추가는 지난 두 배치와 같은 체크리스트를 따름: LayerSpec 필드 →
-capabilities.LAYER_TYPES → render.py 구현 → validate.py 검사 →
+capabilities.LAYER_TYPES → _render.py 구현 → validate.py 검사 →
 api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스트 확인.
 
 ## 2. 대시보드/에디터 완성도
@@ -63,15 +63,19 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 3. Rust 인터랙티브 에디터 (M13)
 
-Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 미뤄둔
-작업. 이제 액션 25종, 레이어 28종, 패널 projection 3종이 실전 검증됐으니
-착수 가능:
+**1단계 완료** — Python과 함께 versioning하는 `mudplot-editor/` crate:
 
-1. 새 크레이트, `serde`로 `schemas/figure_spec.schema.json` 미러링
-2. `axum` + `askama`로 `dashboard/editor_server.py`의 라우트 재구현
-3. 1단계는 Python `render()`를 subprocess/HTTP로 호출, 2단계(선택)는
-   순수 Rust 렌더러로 교체 (스키마가 고정돼 있어 교체 자유로움)
-4. htmx로 부분 갱신
+- serde가 versioned `FigureSpec`·action envelope를 보존하고 생성
+  schema/reference를 계약으로 사용
+- axum + Askama로 `GET /`, `/fig.png`, `/spec.json`, 공용 vendored htmx와
+  JSON `/action`, htmx `/action/raw`·`/undo`·`/redo`·`/reset` 제공
+- 새 pure-core `mudplot apply`와 기존 `mudplot render` subprocess를 호출해
+  28개 layer의 reducer/validator/renderer 의미를 Rust에 복제하지 않음
+- 인증 없는 로컬 단일 session이며 non-loopback bind 주소를 거부
+
+실사용이 정당화한 뒤에만 capability 기반 visual form, open/vector export,
+원격 사용용 cookie session/auth를 추가. native Rust renderer와 전체 schema
+강타입화는 Rust가 reduction/rendering을 맡을 때만 검토.
 
 ## 4. 품질/도구
 

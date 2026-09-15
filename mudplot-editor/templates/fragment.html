@@ -1,0 +1,26 @@
+<main id="app">
+  {% if has_error %}
+  <p class="error" role="alert">{{ error }}</p>
+  {% endif %}
+  <section class="canvas" aria-label="Figure preview">
+    <img src="/fig.png?v={{ revision }}" alt="Current mudplot figure preview">
+  </section>
+  <section class="controls" aria-label="Editor controls">
+    <h2>JSON action</h2>
+    <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+      <label for="action-json">Action from the mudplot action vocabulary</label>
+      <textarea id="action-json" name="json" rows="5" spellcheck="false">{"type":"SetTitle","text":"Edited from Rust","panel":0}</textarea>
+      <button type="submit">Apply</button>
+    </form>
+    <div class="history">
+      <button hx-post="/undo" hx-target="#app" hx-swap="outerHTML">Undo</button>
+      <button hx-post="/redo" hx-target="#app" hx-swap="outerHTML">Redo</button>
+      <button hx-post="/reset" hx-target="#app" hx-swap="outerHTML">Reset</button>
+    </div>
+    <details>
+      <summary>Current FigureSpec JSON</summary>
+      <pre>{{ spec_json }}</pre>
+    </details>
+    <p class="api"><a href="/spec.json">GET /spec.json</a> · agents may POST an action JSON object to <code>/action</code>.</p>
+  </section>
+</main>

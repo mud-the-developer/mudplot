@@ -54,7 +54,7 @@ Each addition should follow the same checklist the last two batches did:
 
 1. `LayerSpec` fields (reuse existing ones where the semantics line up).
 2. `capabilities.LAYER_TYPES` entry (required/optional fields).
-3. `render.py` drawing function + type-dispatch set membership.
+3. `_render.py` drawing function + type-dispatch set membership.
 4. `validate.py` checks (required fields, column existence, any
    type-specific constraints).
 5. `api.py` builder method.
@@ -96,29 +96,23 @@ while the engine supports 28 types. Concrete gaps:
 
 ## 3. Rust interactive editor (M13)
 
-Deferred by design until the Python prototype had exercised the action/
-JSON contract enough to trust it (see `DESIGN.md` §7 for the original
-plan). Now that the prototype has ~25 action types, 28 layer types, and 3 panel projections
-exercised through it, a reasonable first slice:
+**Phase 1 landed in-repo** as the co-versioned `mudplot-editor/` crate:
 
-1. New crate (e.g. `mudplot-editor/`, separate from this Python repo, or a
-   sibling directory here — decide based on whether Rust and Python stay
-   co-versioned).
-2. `serde` structs mirroring `schemas/figure_spec.schema.json` and the
-   action shapes documented in `docs/REFERENCE.md`'s "Actions" section —
-   these two files are the contract; regenerate/diff them
-   (`scripts/check_schema_sync.py`) whenever the Python side changes.
-3. `axum` (or similar) + `askama` templates mirroring the routes already
-   proven out in `dashboard/editor_server.py`/`editor_view.py`
-   (`GET /`, `GET /fig.png`, `POST /action`, `POST /action/raw`,
-   `POST /undo`/`/redo`/`/reset`, `GET /spec.json`).
-4. Rendering: phase 1 shells out to the Python `render()` (subprocess or a
-   small local HTTP call to a `python -m mudplot render` invocation) so
-   Rust doesn't need its own renderer yet. Phase 2 (optional, later): a
-   native Rust renderer (e.g. `plotters`) behind the same
-   `FigureSpec -> PNG` interface, swappable because the schema is fixed.
-5. htmx for partial-page updates instead of the Python prototype's
-   full-page-reload-per-action approach.
+- serde preserves the versioned `FigureSpec` and action envelopes while the
+  generated schema/reference remain the contract.
+- axum + Askama exposes `GET /`, `/fig.png`, `/spec.json`, and the shared
+  vendored htmx asset; JSON `/action` plus htmx `/action/raw`, `/undo`,
+  `/redo`, and `/reset` mutate one local session atomically.
+- New pure-core `mudplot apply` and existing `mudplot render` subprocesses
+  keep reduction, validation, and rendering semantics in Python instead of
+  duplicating 28-layer behavior in Rust.
+- The crate is intentionally local/single-user and rejects non-loopback bind
+  addresses; it has no authentication.
+
+Next only after phase-1 usage justifies it: capabilities-driven visual forms,
+open/vector export, then cookie-keyed sessions/authentication if remote use is
+actually wanted. A native Rust renderer remains optional; strongly typing all
+schema fields only pays off if Rust takes over reduction or rendering.
 
 ## 4. Quality / tooling
 

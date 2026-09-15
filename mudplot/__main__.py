@@ -6,10 +6,12 @@ Subcommands:
     mudplot docs [--out FILE]          print/write the Markdown reference docs
     mudplot validate SPEC.json         validate a saved spec, print issues
     mudplot render SPEC.json OUT.png   render a saved spec to an image/PDF
+    mudplot apply SPEC.json ACTION.json -o OUT
+                                       apply one validated JSON action
     mudplot migrate SPEC.json -o OUT   upgrade an old spec to the current version
 
-``capabilities``, ``schema``, ``docs``, ``validate`` and ``migrate`` need
-only the pure core. ``render`` needs the ``[render]`` extra (numpy +
+``capabilities``, ``schema``, ``docs``, ``validate``, ``apply`` and
+``migrate`` need only the pure core. ``render`` needs the ``[render]`` extra (numpy +
 matplotlib).
 """
 
@@ -79,6 +81,27 @@ def _cmd_render(args: argparse.Namespace) -> int:
     return 0
 
 
+def _cmd_apply(args: argparse.Namespace) -> int:
+    from pathlib import Path
+
+    from .actions import action_from_dict
+    from .io import load_spec, save_spec
+    from .reducer import reduce
+    from .validate import assert_valid
+
+    try:
+        data = json.loads(Path(args.action).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        raise ValueError(f"invalid action JSON: {e}") from e
+    if not isinstance(data, dict):
+        raise ValueError("action JSON must be an object")
+    spec = reduce(load_spec(args.spec), action_from_dict(data))
+    assert_valid(spec)
+    save_spec(spec, args.out)
+    print(f"wrote {args.out}", file=sys.stderr)
+    return 0
+
+
 def _cmd_migrate(args: argparse.Namespace) -> int:
     from .io import load_spec, save_spec
     from .spec import SPEC_VERSION
@@ -116,6 +139,12 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("spec", help="path to a .mplot.json file")
     sp.add_argument("out", help="output path (.png/.pdf/.svg)")
     sp.set_defaults(func=_cmd_render)
+
+    sp = sub.add_parser("apply", help="apply one JSON action to a saved spec")
+    sp.add_argument("spec", help="input .mplot.json spec")
+    sp.add_argument("action", help="JSON action object")
+    sp.add_argument("-o", "--out", required=True, help="output .mplot.json spec")
+    sp.set_defaults(func=_cmd_apply)
 
     sp = sub.add_parser(
         "migrate", help="upgrade a saved spec to the current SPEC_VERSION"

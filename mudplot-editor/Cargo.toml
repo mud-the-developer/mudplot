@@ -1,0 +1,16 @@
+[package]
+name = "mudplot-editor"
+version = "0.5.0"
+edition = "2024"
+rust-version = "1.88"
+publish = false
+license = "MIT"
+description = "Local Rust/htmx editor for mudplot FigureSpec JSON"
+
+[dependencies]
+askama = "0.16"
+axum = "0.8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tempfile = "3"
+tokio = { version = "1", features = ["macros", "net", "rt-multi-thread"] }

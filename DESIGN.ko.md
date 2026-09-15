@@ -53,19 +53,19 @@ CIELCh (L, C, H)
 
 ## 4. 핵심 아키텍처: Spec 중심 (선언적·직렬화 가능)
 
-두 요구사항 — (a) 직관적 API, (b) 미래의 Rust(askama+tokio+htmx)
+두 요구사항 — (a) 직관적 API, (b) Rust(Askama+tokio+htmx)
 인터랙티브 편집/저장 — 은 하나의 결정으로 수렴한다:
 
-> **그림의 모든 상태를 JSON/TOML로 직렬화 가능한 선언적 `FigureSpec`으로
+> **그림의 모든 상태를 JSON으로 직렬화 가능한 선언적 `FigureSpec`으로
 > 표현하고, 이를 유일한 단일 소스(single source of truth)로 삼는다.**
 
-```
-   [ Python 빌더 API ]                    [ Rust 웹 에디터 (미래) ]
+```text
+   [ Python 빌더 API ]                    [ Rust 웹 에디터 ]
    mp.plot(df).line(...)                  askama 폼 + htmx
          │  (생성/수정)                          │ (편집)
          ▼                                        ▼
    ┌─────────────────────────────────────────────────────┐
-   │   FigureSpec  (dataclass ⇆ JSON/TOML, 언어 중립)      │  ← 저장 파일 = .mplot.json
+   │   FigureSpec  (dataclass ⇆ JSON, 언어 중립)           │  ← 저장 파일 = .mplot.json
    └─────────────────────────────────────────────────────┘
          │  (렌더)                                 │ (렌더 요청)
          ▼                                        ▼
@@ -74,17 +74,17 @@ CIELCh (L, C, H)
 ```
 
 - Spec은 **plain data**만 담는다(로직 X). enum은 문자열, 색은 hex/파라미터.
-- 렌더러(`render.py`)는 Spec을 받아 matplotlib Figure를 만드는 순수 함수.
+- 렌더러(`_render.py`)는 effect 경계에서 같은 Spec을 같은 Figure로 렌더.
 - 빌더 API(`api.py`)는 Spec을 **직관적으로 조립**하는 fluent 레이어일 뿐,
   내부적으로는 항상 Spec을 갱신한다 → GUI에서 편집하든 코드로 짜든 동일.
 - 저장 포맷 `.mplot.json` (+선택적 데이터 인라인/참조). Rust는 이 스키마만
-  알면 되고, 초기엔 렌더링을 Python 프로세스에 위임(subprocess/HTTP).
+  알면 되고, 1단계 reduction/rendering은 Python CLI subprocess에 위임.
 
 ## 4b. 상태 관리: 순수 reducer + effect 분리 (functional core / imperative shell)
 
 Spec을 단순히 변이(mutate)하지 않고, **상태 전이를 순수 함수로**
-모델링한다 (Elm/Redux 스타일). 이것이 미래 Rust 에디터와도 그대로 맞는다:
-에디터는 action을 보내고, 동일한 reducer가 새 상태를 만들고, effect가
+모델링한다 (Elm/Redux 스타일). 현재 Rust 에디터도 이 구조를 그대로 쓴다:
+Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 effect가
 그린다.
 
 ```
@@ -275,25 +275,30 @@ mudplot/                 # 순수 엔진 (UI 의존 없음)
   reducer.py             # reduce(state, action) -> state (순수)
   store.py               # imperative shell 드라이버 (dispatch/subscribe)
   theme.py               # ThemeSpec 프리셋 & rcParams 매핑
-  render.py              # effect: Spec -> matplotlib Figure
+  _render.py             # effect: Spec -> matplotlib Figure
   tex.py                 # TeX-aware 크기/미리보기 (effect)
   io.py                  # effect: spec <-> json (.mplot.json)
   api.py                 # fluent 빌더 (action dispatch 설탕)
-dashboard/               # 별도 패키지: 인터랙티브 UI (추후)
+dashboard/               # Python 문서/editor prototype
+mudplot-editor/          # 함께 versioning하는 Rust/htmx 로컬 editor
 tests/
   test_convert.py test_distance_cvd.py test_palette.py
   test_spec_roundtrip.py test_render.py test_reducer.py test_tex.py
 ```
 
-## 7. Rust 인터랙티브 에디터 로드맵 (미래)
+## 7. Rust 인터랙티브 에디터
 
-- 저장 포맷 `.mplot.json`을 Rust `serde`로 역직렬화 (동일 스키마).
-- askama 템플릿으로 Spec 필드 → HTML 폼 렌더. htmx로 필드 변경 시
-  부분 POST → 서버가 Spec 갱신 → 재렌더 이미지 조각만 교체.
-- 렌더링: 1단계는 Python 렌더러를 tokio에서 subprocess/HTTP로 호출.
-  2단계(선택)는 순수 Rust 렌더러(plotters 등)로 대체 가능하나, 스키마가
-  고정돼 있으므로 백엔드 교체가 자유롭다.
-- **핵심**: Python과 Rust가 오직 `FigureSpec` JSON 스키마로만 소통.
+M13 1단계는 함께 versioning하는 `mudplot-editor/` crate에 있다. serde는
+versioned `FigureSpec`/action envelope와 flattened field를 보존하고, Python
+pure-core `mudplot apply`가 유일한 reducer/validator로 남아 28개 layer의
+의미를 Rust에 다시 구현하지 않는다. PNG는 기존 `mudplot render` CLI가
+만든다. axum은 atomic 로컬 session을 관리하고 Askama는 JSON action과
+undo/redo/reset용 htmx fragment를 렌더한다.
+
+경계는 의도적이다. Python과 Rust는 내부 object가 아닌 JSON으로 합의한다.
+Rust가 reduction/rendering을 맡을 때만 전체 generated struct가 가치 있다.
+native backend(plotters 등), visual-form parity, import/export, 인증된
+multi-user session은 선택적 후속 단계이며 현재 무인증 서버는 loopback에서만 쓴다.
 
 ## 8. 개발 순서 (마일스톤)
 
@@ -420,7 +425,10 @@ tests/
 - [x] M12p: capability 기반 column 계약으로 unsupported 필드와 잘못된
       optional column 이름을 렌더 전에 거부. grouped-bar metadata 누락도
       수정하고 정확한 계약 테스트로 고정.
-- [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
+- [x] M13a: 함께 versioning하는 Rust axum+Askama+tokio+htmx editor 1단계 —
+      serde spec/action envelope, atomic 로컬 history, agent/htmx route,
+      Python `apply`/`render` subprocess bridge. 전체 visual form/import/
+      vector export/multi-user/native rendering은 보류.
 
 ## 9. 검증 기준
 

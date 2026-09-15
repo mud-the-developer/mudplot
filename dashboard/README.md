@@ -79,9 +79,8 @@ needing a separate `dashboard build` process.
 
 ## Engine APIs it reuses
 
-Once an interactive editor exists (see the roadmap below), it won't have
-its own state logic — it will reuse the engine's **action / reducer /
-store** directly. UI event → `Action` → `store.dispatch` → new
+The Python editor does not have its own state logic — it reuses the engine's
+**action / reducer / store** directly. UI event → `Action` → `store.dispatch` → new
 `FigureSpec` → `render`/`tex_preview` refreshes the screen.
 
 ```python
@@ -93,14 +92,14 @@ store.dispatch(A.SetTheme("paper"))
 store.dispatch(A.SetPalette(kind="qualitative", params={"hue_start": 30}))
 ```
 
-This structure carries over directly to a future Rust
-(askama+tokio+htmx) editor: the UI sends the same actions (as JSON), the
-same reducer semantics update the `FigureSpec`, and it gets re-rendered.
+The Rust (Askama+tokio+htmx) phase-1 editor now uses the same structure: its
+UI sends JSON actions through `mudplot apply`, preserving the Python reducer
+semantics before `mudplot render` refreshes the image.
 
 ## Roadmap
 
 1. **(done)** static docs+gallery site (`python -m dashboard build`)
 2. **(done)** a Python prototype interactive editor (`python -m dashboard serve`),
    reusing the same Store
-3. A Rust (askama+tokio+htmx) editor — a separate crate, sharing the same
-   JSON action/schema contract
+3. **(phase 1 done)** the co-versioned `mudplot-editor/` Rust crate, sharing
+   the JSON action/schema contract through the Python CLI

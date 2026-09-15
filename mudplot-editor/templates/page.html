@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>mudplot Rust editor</title>
+  <script src="/static/htmx.min.js"></script>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, sans-serif; }
+    body { margin: 0; background: #f4f1e9; color: #1d2528; }
+    header { padding: 1rem 1.5rem; border-bottom: 1px solid #c8c2b5; }
+    header h1 { margin: 0; font-size: 1.25rem; }
+    #app { display: grid; grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); gap: 1rem; padding: 1rem; }
+    .canvas, .controls { background: white; border: 1px solid #c8c2b5; border-radius: .4rem; padding: 1rem; }
+    .canvas img { display: block; width: 100%; height: auto; }
+    .controls h2 { margin-top: 0; }
+    label { display: block; margin-bottom: .4rem; font-weight: 600; }
+    textarea { box-sizing: border-box; width: 100%; font: .85rem ui-monospace, monospace; }
+    button { margin: .6rem .35rem 0 0; padding: .45rem .8rem; cursor: pointer; }
+    .error { grid-column: 1 / -1; margin: 0; padding: .7rem; border-left: .3rem solid #a52a2a; background: #fff0f0; }
+    pre { max-height: 24rem; overflow: auto; padding: .7rem; background: #f6f6f6; font-size: .75rem; }
+    .api { font-size: .85rem; }
+    @media (max-width: 48rem) { #app { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header><h1>mudplot Rust editor · phase 1</h1></header>
+  {% include "fragment.html" %}
+</body>
+</html>

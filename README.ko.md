@@ -38,7 +38,8 @@
 
 - fluent 빌더는 **action을 dispatch하는 설탕** — `Store`가 reducer 구동.
 - `mudplot/` 엔진은 UI 의존 없음. `dashboard/`는 별도 패키지(추후).
-- Python과 미래 Rust GUI가 오직 같은 action/JSON 스키마로 소통.
+- Python과 Rust editor는 같은 action/JSON schema로만 소통하며, 1단계는
+  reducer/validator/renderer를 Python CLI에 위임.
 
 ## 상태
 
@@ -46,7 +47,7 @@
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 534개 + 실제 브라우저 테스트 11개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 538개 + 실제 브라우저 테스트 11개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -84,7 +85,7 @@
       에이전트 친화 인터페이스(`capabilities()`/`json_schema()`/
       `apply()`/`action_log`); 렌더링 전 자동 실행되는 순수
       `validate()`/`assert_valid()`
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`);
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
       JSON 스키마/capabilities/docs export 파일 + CI 동기화 검증
 - [x] 안정성 하드닝 3회, 실제 버그 약 20건 발견/수정 후 회귀 테스트로
       잠금 (저널 크기 미적용, Store 상태 외부 변형 유출, 범주형 좌표가
@@ -109,7 +110,12 @@
 - [x] capabilities 기반 advanced 폼으로 등록된 레이어 28종 모두 지원;
       향후 registry 추가도 자동 반영. htmx로 전체 페이지 reload 없이 app
       fragment만 갱신
-- [ ] Rust 인터랙티브 에디터 (별도 크레이트) — `ROADMAP.md` §3 참고
+**Rust editor (`mudplot-editor/`, M13 1단계):**
+
+- [x] 함께 versioning하는 axum + Askama + htmx 로컬 서버. serde
+      `FigureSpec`/action envelope, atomic action 적용, PNG cache,
+      undo/redo/reset, agent JSON route, Python CLI bridge 지원. 자세한 내용은
+      [`mudplot-editor/README.ko.md`](mudplot-editor/README.ko.md).
 
 ## 설치
 
@@ -179,7 +185,7 @@ import mudplot as mp
 interval이 아닌 **평균 fit의 정규근사 구간**이며 기본값은 비활성입니다.
 항상 최신 목록은 `mp.capabilities()` 또는 영어 README.md의 표를 참고.
 
-### Spec 저장/불러오기 (미래 Rust 에디터와 동일 포맷)
+### Spec 저장/불러오기 (Rust editor와 동일한 포맷)
 
 ```python
 p = mp.plot(data).line("x", "y")
@@ -400,6 +406,7 @@ python -m mudplot capabilities                    # 엔진 능력 JSON 출력
 python -m mudplot schema --out s.json              # FigureSpec JSON Schema 저장
 python -m mudplot validate fig.mplot.json          # 저장된 spec 검증
 python -m mudplot render fig.mplot.json out.pdf    # 렌더
+python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 
 ### 순수 reducer / store 직접 사용
@@ -458,9 +465,19 @@ p3 = p2.encoding(redundant_encoding=False)               # 색상만
 
 ```bash
 python -m dashboard --out dashboard/site_build
-# dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리(팔레트 안전성,
-# 이중 인코딩, TeX 미리보기, 보조축, 히트맵 등)
+# dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리
 ```
+
+### Rust editor (로컬 M13 1단계)
+
+```bash
+MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
+  cargo run --manifest-path mudplot-editor/Cargo.toml
+```
+
+Python action/reducer 의미를 복제하지 않고 같은 계약을 호출한다. 인증 없는
+서버는 non-loopback bind를 거부한다. 범위와 route는
+[`mudplot-editor/README.ko.md`](mudplot-editor/README.ko.md) 참고.
 
 ## 개발
 

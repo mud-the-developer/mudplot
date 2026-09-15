@@ -45,14 +45,30 @@ All notable changes to this project are documented here.
 - Grouped KDE curves now cycle redundant line styles as well as colours, so
   they remain distinguishable in grayscale.
 
+### Rust editor
+
+- Added the co-versioned `mudplot-editor/` M13 phase-1 crate: axum + Askama +
+  tokio + the existing vendored htmx serve one atomic local session with
+  cached PNG, undo/redo/reset, a raw htmx action form, and an agent-facing JSON
+  action route. serde preserves versioned spec/action envelopes while Python
+  remains the only reducer, validator, and renderer.
+- Added the pure-core `python -m mudplot apply SPEC ACTION -o OUT` bridge.
+  Actions are reduced and the resulting spec validated before output; failures
+  leave no output file. Rust then calls the existing `render` CLI, so layer
+  semantics are not duplicated across languages.
+- Added Cargo format/Clippy/test and real Rust→Python→HTTP/htmx smoke coverage
+  to CI. The phase-1 server is unauthenticated and documented as loopback-only;
+  visual-form parity, import/vector export, multi-user state, and native Rust
+  rendering remain deferred.
+
 ### Dashboard
 
 - Added a capabilities-driven advanced layer form covering all 28 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.
-- Completed panel controls: per-panel Cartesian/polar/3-D projection; x/y scales and
-  fixed/automatic limits; secondary-y-axis enable/configure/remove; and 3-D
+- Completed panel controls: per-panel Cartesian/polar/3-D projection; x/y
+  scales and fixed/automatic limits; secondary-y-axis enable/configure/remove; and 3-D
   z-axis setup. `SetLimits(None, None)` now restores automatic limits and
   `SetSecondaryAxis(None)` removes y2, preserving the same action semantics
   for editor, agent, and Python consumers.

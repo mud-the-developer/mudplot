@@ -31,6 +31,7 @@ dashboard/site_build/
 # caches
 .pytest_cache/
 .ruff_cache/
+mudplot-editor/target/
 
 # reference repos (not part of the mudplot package; own git histories)
 src/SciencePlots/

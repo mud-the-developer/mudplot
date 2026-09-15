@@ -42,8 +42,8 @@ Effects (render/io/preview) are pushed to the edges.
   drives the reducer underneath.
 - The `mudplot/` engine has no UI dependency. `dashboard/` is a separate
   package (see below).
-- Python and a future Rust GUI would only ever need to agree on the same
-  action/JSON schema.
+- Python and the Rust editor agree only on the same action/JSON schema; phase
+  1 delegates reduction/validation/rendering to the Python CLI.
 
 ## Status
 
@@ -52,7 +52,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 534 non-browser tests passing (+11 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 538 non-browser tests passing (+11 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -94,7 +94,7 @@ steps (more layer types, quality work, and the Rust editor).
       pyarrow/SQL); AI-agent-friendly interface (`capabilities()`/
       `json_schema()`/`apply()`/`action_log`); pure `validate()`/
       `assert_valid()` run automatically before rendering
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|render`);
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
       JSON schema/capabilities/docs export files + CI sync checks
 - [x] Three stability-hardening passes, ~20 real bugs found/fixed and
       locked in with regression tests (journal size not applied, `Store`
@@ -122,7 +122,12 @@ steps (more layer types, quality work, and the Rust editor).
 - [x] All 28 registered layer types exposed through a capabilities-driven
       advanced form; checked JSON fields automatically follow future registry
       additions. htmx updates the app fragment without a full-page reload.
-- [ ] Rust interactive editor (separate crate) — see `ROADMAP.md` §3
+**Rust editor (`mudplot-editor/`, M13 phase 1):**
+
+- [x] Co-versioned axum + Askama + htmx local server with serde
+      `FigureSpec`/action envelopes, atomic action application, cached PNG,
+      undo/redo/reset, agent JSON routes, and a Python CLI bridge. See
+      [`mudplot-editor/README.md`](mudplot-editor/README.md).
 
 ## Installation
 
@@ -220,7 +225,7 @@ exact, always-up-to-date field list per type).
     .heatmap("field").contour("field", levels=8))
 ```
 
-### Save/load a spec (same format a future Rust editor would use)
+### Save/load a spec (the same format used by the Rust editor)
 
 ```python
 p = mp.plot(data).line("x", "y")
@@ -450,6 +455,7 @@ python -m mudplot capabilities                    # print engine capabilities as
 python -m mudplot schema --out s.json              # save the FigureSpec JSON Schema
 python -m mudplot validate fig.mplot.json          # validate a saved spec
 python -m mudplot render fig.mplot.json out.pdf    # render
+python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 
 ### Using the pure reducer / store directly
@@ -515,6 +521,17 @@ python -m dashboard --out dashboard/site_build
 # engine's capabilities plus a design gallery (palette safety, redundant
 # encoding, TeX preview, secondary axes, heatmaps, etc.)
 ```
+
+### Rust editor (local M13 phase 1)
+
+```bash
+MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
+  cargo run --manifest-path mudplot-editor/Cargo.toml
+```
+
+It shares the Python action/reducer contract instead of duplicating its
+semantics. Its unauthenticated server rejects non-loopback binds; scope and
+routes are documented in [`mudplot-editor/README.md`](mudplot-editor/README.md).
 
 ## Development
 

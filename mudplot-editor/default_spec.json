@@ -1,0 +1,25 @@
+{
+  "version": "0.1",
+  "size": [5.0, 3.5],
+  "dpi": 150,
+  "data": {
+    "columns": {
+      "x": [0, 1, 2, 3],
+      "y": [0, 1, 0.5, 1.5]
+    }
+  },
+  "panels": [
+    {
+      "title": "mudplot Rust editor",
+      "layers": [
+        {
+          "type": "line",
+          "x": "x",
+          "y": "y",
+          "label": "sample"
+        }
+      ],
+      "legend": {"show": true}
+    }
+  ]
+}

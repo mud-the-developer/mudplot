@@ -61,20 +61,20 @@ CIELCh (L, C, H)
 
 ## 4. Core architecture: spec-centric (declarative, serialisable)
 
-Two requirements — (a) an intuitive API, (b) future Rust
-(askama+tokio+htmx) interactive editing/saving — converge on a single
+Two requirements — (a) an intuitive API, (b) Rust
+(Askama+tokio+htmx) interactive editing/saving — converge on a single
 decision:
 
 > **Represent all figure state as a declarative `FigureSpec` that can be
-> serialised to JSON/TOML, and treat it as the single source of truth.**
+> serialised to JSON, and treat it as the single source of truth.**
 
-```
-   [ Python builder API ]                 [ Rust web editor (future) ]
+```text
+   [ Python builder API ]                 [ Rust web editor ]
    mp.plot(df).line(...)                  askama forms + htmx
          │  (create/modify)                      │ (edit)
          ▼                                        ▼
    ┌─────────────────────────────────────────────────────┐
-   │   FigureSpec  (dataclass ⇆ JSON/TOML, language-neutral) │ ← saved as .mplot.json
+   │   FigureSpec  (dataclass ⇆ JSON, language-neutral)      │ ← saved as .mplot.json
    └─────────────────────────────────────────────────────┘
          │  (render)                               │ (render request)
          ▼                                        ▼
@@ -84,21 +84,20 @@ decision:
 
 - The spec holds **plain data only** (no logic). Enums are strings, colours
   are hex/parameters.
-- The renderer (`render.py`) is a pure function that turns a spec into a
-  matplotlib Figure.
+- The renderer (`_render.py`) deterministically turns a spec into a
+  matplotlib Figure at the effect boundary.
 - The builder API (`api.py`) is just a fluent layer that **assembles the
   spec intuitively** — internally it always updates the spec, so editing via
   a GUI or writing code produces identical results.
 - On-disk format: `.mplot.json` (+ optionally inline/referenced data). Rust
-  only needs to know this schema; initially rendering is delegated to a
-  Python process (subprocess/HTTP).
+  only needs this schema; phase 1 delegates reduction and rendering to the
+  Python CLI subprocess.
 
 ## 4b. State management: pure reducer + effects at the edges (functional core / imperative shell)
 
 Rather than simply mutating the spec, state transitions are modelled as
-**pure functions** (Elm/Redux style). This maps directly onto a future Rust
-editor: the editor sends actions, the same reducer produces new state, and
-effects do the drawing.
+**pure functions** (Elm/Redux style). This maps directly onto the Rust editor: it sends actions through the Python
+CLI, the same reducer produces new state, and effects do the drawing.
 
 ```
    Action (pure data)                 State (FigureSpec)
@@ -223,7 +222,7 @@ regression tests in `tests/test_bugfixes.py`):
 
  1. **`capabilities()` under-reported real functionality**: `bar`/
     `errorbar`/`band`/`hline`/`vline`/`text`/`annotate` all correctly
-    support `axis="y2"` routing in `render.py`/`validate.py`, but
+    support `axis="y2"` routing in `_render.py`/`validate.py`, but
     `LAYER_TYPES` only listed `axis` as a field for `line`/`scatter`. An
     agent trusting `capabilities()` to plan a figure would never have
     discovered this actually worked. Fixed, and locked in with a
@@ -339,7 +338,7 @@ set:
 All of the above are registered the same way as any other layer: in
 `capabilities.LAYER_TYPES` (so agents discover them), `validate.py` (so
 misuse — e.g. a 3-D-only type on a 2-D panel — gets a clear message
-instead of a matplotlib traceback), and `render.py`'s type-dispatch sets.
+instead of a matplotlib traceback), and `_render.py`'s type-dispatch sets.
 `tests/test_capabilities_consistency.py` cross-checks all three stay in
 sync automatically.
 
@@ -388,28 +387,31 @@ mudplot/                 # pure engine (no UI dependency)
   reducer.py             # reduce(state, action) -> state (pure)
   store.py               # imperative-shell driver (dispatch/subscribe)
   theme.py               # ThemeSpec presets & rcParams mapping
-  render.py              # effect: Spec -> matplotlib Figure
+  _render.py             # effect: Spec -> matplotlib Figure
   tex.py                 # TeX-aware sizing/preview (effect)
   io.py                  # effect: spec <-> json (.mplot.json)
   api.py                 # fluent builder (sugar for dispatching actions)
-dashboard/               # separate package: interactive UI (future)
+dashboard/               # Python docs/editor prototype
+mudplot-editor/          # co-versioned Rust/htmx local editor
 tests/
   test_convert.py test_distance_cvd.py test_palette.py
   test_spec_roundtrip.py test_render.py test_reducer.py test_tex.py
 ```
 
-## 7. Rust interactive editor roadmap (future)
+## 7. Rust interactive editor
 
-- Deserialise the `.mplot.json` format with Rust `serde` (the same schema).
-- Render Spec fields → an HTML form via askama templates. htmx sends a
-  partial POST on field change → the server updates the Spec → only the
-  re-rendered image fragment is swapped in.
-- Rendering: phase 1 calls the Python renderer from tokio via subprocess/
-  HTTP. Phase 2 (optional) could replace it with a pure-Rust renderer (e.g.
-  `plotters`), which is possible precisely because the schema is fixed and
-  the backend is swappable.
-- **Key point**: Python and Rust only ever need to agree on the
-  `FigureSpec` JSON schema.
+M13 phase 1 lives in the co-versioned `mudplot-editor/` crate. serde models
+only the stable versioned `FigureSpec`/action envelopes and preserves their
+flattened fields; Python remains the sole reducer/validator through the pure-
+core `mudplot apply` CLI, avoiding a second 28-layer semantics implementation.
+The existing `mudplot render` CLI supplies PNGs. axum owns one atomic local
+session and Askama renders htmx fragments for JSON actions and undo/redo/reset.
+
+This boundary is deliberate: Python and Rust agree on JSON, not internal
+objects. Full generated Rust structs become worthwhile only if reduction or
+rendering moves to Rust. A native backend (for example `plotters`), visual-form
+parity, imports/exports, and authenticated multi-user sessions remain optional
+later phases; the current unauthenticated server stays on loopback.
 
 ## 8. Milestones
 
@@ -564,7 +566,10 @@ tests/
 - [x] M12p: capability-driven column contracts reject unsupported fields and
       malformed optional column names before rendering; grouped-bar metadata
       now matches its implemented behavior, guarded by an exact contract test.
-- [ ] M13: Rust askama+tokio+htmx editor (separate crate)
+- [x] M13a: co-versioned Rust axum+Askama+tokio+htmx editor phase 1 — serde
+      spec/action envelopes, atomic local history, agent/htmx routes, and
+      Python `apply`/`render` subprocess bridge. Full visual-form parity,
+      import/vector export, multi-user state, and native rendering are deferred.
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond
 this list.

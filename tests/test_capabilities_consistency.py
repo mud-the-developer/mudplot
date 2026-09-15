@@ -10,8 +10,12 @@ real fields, and validate's routable-type set) together so they can't drift
 apart silently again.
 """
 
+import json
+import re
 from dataclasses import fields as dc_fields
+from pathlib import Path
 
+import mudplot as mp
 from mudplot._render import (
     _3D_TYPES,
     _DIST_TYPES,
@@ -20,7 +24,7 @@ from mudplot._render import (
     _STANDALONE_TYPES,
 )
 from mudplot.capabilities import LAYER_TYPES
-from mudplot.spec import LayerSpec
+from mudplot.spec import SPEC_VERSION, FigureSpec, LayerSpec
 from mudplot.validate import _AXIS_ROUTABLE_TYPES
 
 _LAYERSPEC_FIELDS = {f.name for f in dc_fields(LayerSpec)} - {"type"}
@@ -84,6 +88,20 @@ def test_group_field_advertised_exactly_for_groupable_types():
     for layer_type, spec in LAYER_TYPES.items():
         fields = set(spec["required"] + spec["optional"])
         assert ("group" in fields) == (layer_type in groupable), layer_type
+
+
+def test_rust_editor_versions_and_default_spec_follow_python_contract():
+    root = Path(__file__).parent.parent
+    cargo = (root / "mudplot-editor" / "Cargo.toml").read_text(encoding="utf-8")
+    version = re.search(r'^version = "([^"]+)"', cargo, re.MULTILINE)
+    assert version and version.group(1) == mp.__version__
+
+    raw = json.loads(
+        (root / "mudplot-editor" / "default_spec.json").read_text(encoding="utf-8")
+    )
+    spec = FigureSpec.from_dict(raw)
+    assert spec.version == SPEC_VERSION
+    assert mp.validate(spec) == []
 
 
 def test_axis_field_advertised_exactly_for_routable_types():

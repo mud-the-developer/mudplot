@@ -53,7 +53,7 @@ README.md 참고.
 
 ## 재사용하는 엔진 API
 
-인터랙티브 편집기가 생기면(다음 섹션) 자체 상태 로직을 두지 않고, 엔진의
+Python 인터랙티브 편집기는 자체 상태 로직을 두지 않고 엔진의
 **action / reducer / store**를 그대로 쓴다. UI 이벤트 → `Action` →
 `store.dispatch` → 새 `FigureSpec` → `render`/`tex_preview` 로 화면 갱신.
 
@@ -66,12 +66,13 @@ store.dispatch(A.SetTheme("paper"))
 store.dispatch(A.SetPalette(kind="qualitative", params={"hue_start": 30}))
 ```
 
-이 구조는 그대로 미래의 Rust(askama+tokio+htmx) 에디터로 이식된다:
-UI가 같은 action(JSON)을 보내고, 동일한 reducer 의미론으로 `FigureSpec`을
-갱신한 뒤 재렌더한다.
+Rust(Askama+tokio+htmx) 1단계 editor도 같은 구조를 사용한다. UI가
+`mudplot apply`로 JSON action을 보내 Python reducer 의미론을 유지하고,
+`mudplot render`로 이미지를 갱신한다.
 
 ## 로드맵
 
 1. **(완료)** 정적 문서+갤러리 사이트 (`python -m dashboard build`)
 2. **(완료)** Python 프로토타입 인터랙티브 편집기 (`python -m dashboard serve`)
-3. Rust(askama+tokio+htmx) 에디터 — 별도 크레이트, 동일 JSON 액션/스키마 계약
+3. **(1단계 완료)** 함께 versioning하는 `mudplot-editor/` Rust crate —
+   Python CLI를 통해 동일 JSON action/schema 계약 공유
