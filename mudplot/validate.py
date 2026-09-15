@@ -40,6 +40,7 @@ _DRAWSTYLES = {"default", "steps", "steps-pre", "steps-mid", "steps-post"}
 # secondary y-axis); hist/box/heatmap always draw on the primary axes only.
 _AXIS_ROUTABLE_TYPES = {
     "line",
+    "regplot",
     "scatter",
     "bar",
     "errorbar",
@@ -109,9 +110,61 @@ def _check_point(layer, field_name: str, where: str, issues: list[str]) -> None:
 
 
 def _finite(value) -> bool:
-    return (
-        isinstance(value, Real) and not isinstance(value, bool) and math.isfinite(value)
+    if not isinstance(value, Real) or isinstance(value, bool):
+        return False
+    try:
+        return math.isfinite(value)
+    except OverflowError:
+        return False
+
+
+def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
+    """Check each fitted group before NumPy reaches its linear-algebra path."""
+    x_values = cols[layer.x]
+    y_values = cols[layer.y]
+    group_values = (
+        cols[layer.group] if layer.group is not None else [None] * len(x_values)
     )
+    if len(x_values) != len(y_values) or len(group_values) != len(x_values):
+        return  # _check_data_integrity reports the shared-table mismatch
+    # ponytail: equality grouping is O(n²) for all-unique keys; index hashable
+    # keys if validation of very large grouped regressions becomes a bottleneck.
+    groups: list[tuple[object, list[tuple[object, object]]]] = (
+        [(None, [])] if layer.group is None else []
+    )
+    for x, y, key in zip(x_values, y_values, group_values, strict=True):
+        for existing, pairs in groups:
+            if key == existing:
+                pairs.append((x, y))
+                break
+        else:
+            groups.append((key, [(x, y)]))
+
+    if not groups:
+        issues.append(f"{where}: regression requires observations")
+        return
+
+    for key, pairs in groups:
+        suffix = f" group {key!r}" if layer.group is not None else ""
+        if any(not _finite(value) for pair in pairs for value in pair):
+            issues.append(f"{where}{suffix}: regression values must be finite numbers")
+            continue
+        distinct_x: list[object] = []
+        for x, _y in pairs:
+            if not any(x == seen for seen in distinct_x):
+                distinct_x.append(x)
+        parameters = layer.degree + 1
+        minimum = parameters + (layer.confidence is not None)
+        if len(pairs) < minimum:
+            issues.append(
+                f"{where}{suffix}: degree {layer.degree} regression requires at "
+                f"least {minimum} observations"
+            )
+        if len(distinct_x) < parameters:
+            issues.append(
+                f"{where}{suffix}: degree {layer.degree} regression requires at "
+                f"least {parameters} distinct x values"
+            )
 
 
 # Reference metadata is substituted verbatim into a .pgf export, which the
@@ -378,6 +431,24 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
                 )
+
+            if layer.type == "regplot":
+                if type(layer.degree) is not int or not (1 <= layer.degree <= 10):
+                    issues.append(f"{where}: degree must be an integer from 1 to 10")
+                if layer.confidence is not None and (
+                    not _finite(layer.confidence) or not (0 < layer.confidence < 100)
+                ):
+                    issues.append(
+                        f"{where}: confidence must be between 0 and 100, or None"
+                    )
+                if (
+                    layer.x in cols
+                    and layer.y in cols
+                    and (layer.group is None or layer.group in cols)
+                    and type(layer.degree) is int
+                    and 1 <= layer.degree <= 10
+                ):
+                    _check_regression_data(cols, layer, where, issues)
 
             if layer.drawstyle not in _DRAWSTYLES:
                 issues.append(

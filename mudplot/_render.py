@@ -10,6 +10,7 @@ import contextlib
 import contextvars
 import itertools
 import re
+from statistics import NormalDist
 from typing import Any, cast
 
 import numpy as np
@@ -21,7 +22,7 @@ from .validate import assert_valid
 __all__ = ["render", "save"]
 
 # layer types that draw one or more x/y series (and support ``group``)
-_SERIES_TYPES = {"line", "scatter", "bar", "errorbar", "band"}
+_SERIES_TYPES = {"line", "regplot", "scatter", "bar", "errorbar", "band"}
 # layer types that draw a distribution of a single column (support ``group``)
 _DIST_TYPES = {"hist", "box", "violin", "kde", "rug"}
 # layer types that draw a 2-D matrix
@@ -272,6 +273,32 @@ def _target_axes(ax, ax2, layer: LayerSpec):
     return ax2 if (layer.axis == "y2" and ax2 is not None) else ax
 
 
+def _regression_fit(x, y, degree: int, confidence: float | None):
+    """Return a numerically scaled polynomial fit and optional mean-fit CI."""
+    try:
+        x = np.asarray(x, dtype=float)
+        y = np.asarray(y, dtype=float)
+        center = float(x.mean())
+        scale = float(np.ptp(x)) / 2
+        x_scaled = (x - center) / scale
+        grid = np.linspace(float(x.min()), float(x.max()), 200)
+        grid_scaled = (grid - center) / scale
+
+        if confidence is None:
+            coefficients = np.polyfit(x_scaled, y, degree)
+            return grid, np.polyval(coefficients, grid_scaled), None
+
+        coefficients, covariance = np.polyfit(x_scaled, y, degree, cov=True)
+        fitted = np.polyval(coefficients, grid_scaled)
+        design = np.vander(grid_scaled, degree + 1)
+        variance = np.einsum("ij,jk,ik->i", design, covariance, design)
+        critical = NormalDist().inv_cdf(0.5 + confidence / 200)
+        delta = critical * np.sqrt(np.maximum(variance, 0))
+        return grid, fitted, (fitted - delta, fitted + delta)
+    except (TypeError, ValueError, FloatingPointError, np.linalg.LinAlgError) as e:
+        raise ValueError(f"regplot fit failed: {e}") from e
+
+
 def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
     masks = list(_series_masks(data_cols, layer))
     # redundant marker/line-style encoding: only kicks in for *grouped*
@@ -310,6 +337,37 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 drawstyle=layer.drawstyle,
                 marker=marker,
                 markersize=layer.marker_size,
+                alpha=layer.alpha,
+            )
+        elif layer.type == "regplot":
+            color = layer.color or next(color_iter)
+            grid, fitted, interval = _regression_fit(
+                x, y, layer.degree, layer.confidence
+            )
+            if interval is not None:
+                target.fill_between(
+                    grid,
+                    interval[0],
+                    interval[1],
+                    color=color,
+                    alpha=min(layer.alpha, 0.2),
+                    linewidth=0,
+                )
+            target.scatter(
+                x,
+                y,
+                label=label,
+                color=color,
+                s=(layer.marker_size or 6) ** 2,
+                marker=marker or "o",
+                alpha=layer.alpha,
+            )
+            target.plot(
+                grid,
+                fitted,
+                color=color,
+                linewidth=layer.line_width,
+                linestyle=linestyle,
                 alpha=layer.alpha,
             )
         elif layer.type == "scatter":

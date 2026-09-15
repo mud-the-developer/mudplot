@@ -74,6 +74,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`, `y`
 - **optional**: `color`, `alpha`
 
+### `regplot`
+
+- **required**: `x`, `y`
+- **optional**: `degree`, `confidence`, `group`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+
 ### `rug`
 
 - **required**: `x`

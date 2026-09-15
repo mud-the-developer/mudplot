@@ -537,6 +537,10 @@ tests/
       line layer's Matplotlib `drawstyle`, plus an x-axis `rug` layer (22
       layer types total). Grouped KDE/rug output cycles redundant line styles
       for grayscale distinguishability; no new runtime dependency.
+- [x] M12j: `regplot` (23 layer types total) — observations plus a scaled
+      polynomial least-squares fit and optional normal-approximation
+      confidence band for the mean fit. Fit preconditions are checked by the
+      pure validator; NumPy remains effect-only and SciPy was not added.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

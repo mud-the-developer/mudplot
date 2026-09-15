@@ -1,5 +1,5 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
-wireframe), violin, kde, rug, pie, contour/contourf.
+wireframe), violin, kde, rug, regplot, pie, contour/contourf.
 """
 
 from typing import Any, cast
@@ -10,7 +10,7 @@ matplotlib.use("Agg")
 
 import mudplot as mp
 import numpy as np
-from mudplot._render import render
+from mudplot._render import _regression_fit, render
 
 
 def _matrix_data(rows=8, cols=10):
@@ -150,6 +150,52 @@ def test_kde_grouped_gives_two_redundantly_styled_curves():
     assert lines[0].get_linestyle() != lines[1].get_linestyle()
 
 
+def test_regplot_renders_polynomial_fit_and_opt_in_confidence_band():
+    data = {"x": [-2, -1, 0, 1, 2], "y": [4.2, 1.0, 0.1, 1.1, 3.9]}
+    p = mp.plot(data).regplot("x", "y", degree=2, confidence=95)
+    assert mp.validate(p.spec) == []
+    rebuilt = mp.Plot.from_json(p.to_json())
+    layer = rebuilt.spec.panels[0].layers[0]
+    assert (layer.degree, layer.confidence) == (2, 95)
+
+    fig = render(rebuilt.spec)
+    assert len(fig.axes[0].lines) == 1
+    assert np.asarray(fig.axes[0].lines[0].get_xdata()).size == 200
+    assert len(fig.axes[0].collections) == 2  # confidence band + observations
+
+    _grid, fitted, interval = _regression_fit(data["x"], data["y"], 2, 95)
+    assert interval is not None
+    lower, upper = interval
+    assert np.all(lower <= fitted)
+    assert np.all(fitted <= upper)
+    assert np.any(upper > lower)
+
+
+def test_regplot_rejects_unsafe_fit_settings_and_data():
+    data = {"x": [0, 1, 2], "y": [0, 1, 4]}
+    bad_degree = mp.plot(data).regplot("x", "y", degree=0)
+    bad_confidence = mp.plot(data).regplot("x", "y", confidence=100)
+    too_small = mp.plot(data).regplot("x", "y", degree=2, confidence=95)
+    nonnumeric = mp.plot({"x": ["a", "b"], "y": [1, 2]}).regplot("x", "y")
+    empty = mp.plot({"x": [], "y": []}).regplot("x", "y")
+    mismatched = mp.plot({"x": [0, 1], "y": [0]}).regplot("x", "y")
+    grouped = mp.plot({"x": [0, 1, 2], "y": [0, 1, 4], "g": ["A", "A", "B"]}).regplot(
+        "x", "y", group="g"
+    )
+
+    assert any("degree must be" in issue for issue in mp.validate(bad_degree.spec))
+    assert any(
+        "confidence must be" in issue for issue in mp.validate(bad_confidence.spec)
+    )
+    assert any(
+        "at least 4 observations" in issue for issue in mp.validate(too_small.spec)
+    )
+    assert any("finite numbers" in issue for issue in mp.validate(nonnumeric.spec))
+    assert any("at least 2 observations" in issue for issue in mp.validate(empty.spec))
+    assert any("mismatched lengths" in issue for issue in mp.validate(mismatched.spec))
+    assert any("group 'B'" in issue for issue in mp.validate(grouped.spec))
+
+
 def test_rug_marks_each_observation_inside_the_x_axis():
     p = mp.plot({"v": [1, 2, 3]}).rug("v")
     assert mp.validate(p.spec) == []
@@ -221,6 +267,7 @@ def test_contour_missing_matrix_caught_by_validate():
 def test_new_types_appear_in_capabilities():
     caps = mp.capabilities()
     for t in (
+        "regplot",
         "scatter3d",
         "line3d",
         "surface",
@@ -238,6 +285,7 @@ def test_new_types_appear_in_capabilities():
 def test_new_types_all_pass_validate_when_built_correctly():
     data = {"x": [0, 1, 2], "y": [0, 1, 2], "z": [0, 1, 2], "cat": ["a", "b", "c"]}
     specs = [
+        mp.plot(data).regplot("x", "y").spec,
         mp.plot(data).projection3d().scatter3d("x", "y", "z").spec,
         mp.plot(data).projection3d().line3d("x", "y", "z").spec,
         mp.plot({}).matrix("m", _matrix_data()).projection3d().surface("m").spec,

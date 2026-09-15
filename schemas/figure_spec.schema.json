@@ -646,6 +646,21 @@
           "type": "boolean",
           "default": false
         },
+        "degree": {
+          "type": "integer",
+          "default": 1
+        },
+        "confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "c": {
           "anyOf": [
             {

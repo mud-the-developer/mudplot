@@ -399,6 +399,9 @@ tests/
 - [x] M12i: native Matplotlib 기능으로 플롯 폭 확장 — 기존 line의
       `drawstyle` 계단선과 x축 `rug` 레이어(총 22종). 그룹 KDE/rug에는
       흑백 구별용 중복 선 스타일을 적용하고 새 런타임 의존성은 추가하지 않음.
+- [x] M12j: `regplot`(총 23종) — 관측값 + 스케일링한 다항 최소제곱 fit +
+      선택적 평균 fit 정규근사 신뢰구간. 순수 validator가 fit 전제조건을
+      검사하며 NumPy는 effect 전용으로 유지하고 SciPy는 추가하지 않음.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

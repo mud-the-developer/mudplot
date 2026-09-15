@@ -38,6 +38,22 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "regplot": {
+        "required": ["x", "y"],
+        "optional": [
+            "degree",
+            "confidence",
+            "group",
+            "label",
+            "color",
+            "line_width",
+            "line_style",
+            "marker",
+            "marker_size",
+            "alpha",
+            "axis",
+        ],
+    },
     "scatter": {
         "required": ["x", "y"],
         "optional": [

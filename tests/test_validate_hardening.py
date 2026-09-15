@@ -59,6 +59,11 @@ def test_alpha_out_of_range_caught():
     assert any("alpha" in i for i in issues)
 
 
+def test_huge_integer_is_reported_as_nonfinite_instead_of_crashing():
+    p = mp.plot({"x": [1], "y": [2]}).line("x", "y", alpha=10**1000)
+    assert any("alpha" in issue for issue in mp.validate(p.spec))
+
+
 def test_alpha_boundary_values_pass():
     for a in (0.0, 1.0, 0.5):
         p = mp.plot({"x": [1], "y": [2]}).line("x", "y", alpha=a)

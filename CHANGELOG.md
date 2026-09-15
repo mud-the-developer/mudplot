@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added `regplot`: observations plus a numerically scaled linear/polynomial
+  NumPy fit, with an explicit opt-in normal-approximation confidence band for
+  the mean fit. Validation catches invalid degree/CI values, nonnumeric data,
+  insufficient observations, and insufficient distinct x values before
+  NumPy's linear-algebra path; no SciPy dependency was added.
 - Added native Matplotlib step-line support through
   `line(..., drawstyle="steps-post")` (also `steps`, `steps-pre`, and
   `steps-mid`). This remains one `line` layer rather than introducing a
@@ -18,7 +23,7 @@ All notable changes to this project are documented here.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 22 registered
+- Added a capabilities-driven advanced layer form covering all 23 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.
@@ -52,6 +57,8 @@ All notable changes to this project are documented here.
 - Extended Hypothesis coverage to the colour engine: sRGB/linear/Lab/LCh and
   Lab/XYZ round-trips, 8-bit hex identity, CIE76 metric properties, and
   CIEDE2000 identity/symmetry/non-negativity.
+- Validation now reports arbitrarily large integers as non-finite instead of
+  leaking `OverflowError` from the shared `math.isfinite()` helper.
 
 ## [0.5.0] - 2026-09-14
 

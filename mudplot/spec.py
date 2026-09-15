@@ -223,8 +223,8 @@ class ReferenceSpec(SpecBase):
 @dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
-    # | hist | box | heatmap | violin | kde | pie | contour | contourf
-    # | scatter3d | line3d | surface | wireframe
+    # | hist | box | heatmap | violin | kde | rug | regplot | pie | contour
+    # | contourf | scatter3d | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name
@@ -262,6 +262,9 @@ class LayerSpec(SpecBase):
     # histogram
     bins: int | list[float] = 20
     density: bool = False
+    # regression: polynomial degree and optional normal-approximation CI (%)
+    degree: int = 1
+    confidence: float | None = None
     # boxplot: ``x`` is the value column; ``group`` splits into boxes
     # continuous colour mapping (scatter): colour points by column ``c``
     c: str | None = None

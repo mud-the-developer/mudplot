@@ -81,6 +81,40 @@ class Plot:
             )
         )
 
+    def regplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        degree: int = 1,
+        confidence: float | None = None,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Scatter plus a polynomial fit and optional mean-fit confidence band.
+
+        ``confidence`` is a percentage (for example ``95``) using a normal
+        approximation; it is disabled by default rather than implying
+        uncertainty the caller did not request.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="regplot",
+                    x=x,
+                    y=y,
+                    degree=degree,
+                    confidence=confidence,
+                    group=group,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def scatter(
         self,
         x: str,
