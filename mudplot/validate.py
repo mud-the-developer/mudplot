@@ -47,6 +47,7 @@ _AXIS_ROUTABLE_TYPES = {
     "stackplot",
     "hist2d",
     "hexbin",
+    "quiver",
     "bar",
     "errorbar",
     "band",
@@ -55,7 +56,18 @@ _AXIS_ROUTABLE_TYPES = {
     "text",
     "annotate",
 }
-_COLUMN_FIELDS = ("x", "y", "y2", "yerr", "xerr", "group", "c", "z")
+_COLUMN_FIELDS = (
+    "x",
+    "y",
+    "y2",
+    "yerr",
+    "xerr",
+    "group",
+    "c",
+    "u",
+    "v",
+    "z",
+)
 _NO_COLUMN_TYPES = {
     "hline",
     "vline",
@@ -474,6 +486,41 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"(available: {sorted(spec.data.matrices)})"
                 )
 
+            if layer.type == "quiver":
+                if layer.group is not None:
+                    issues.append(f"{where}: group is not supported for quiver")
+                u_name, v_name = layer.u, layer.v
+                if (
+                    layer.x in cols
+                    and layer.y in cols
+                    and isinstance(u_name, str)
+                    and u_name in cols
+                    and isinstance(v_name, str)
+                    and v_name in cols
+                ):
+                    values = [
+                        *cols[layer.x],
+                        *cols[layer.y],
+                        *cols[u_name],
+                        *cols[v_name],
+                    ]
+                    if layer.c is not None and layer.c in cols:
+                        values.extend(cols[layer.c])
+                    if not values:
+                        issues.append(f"{where}: quiver requires observations")
+                    elif any(not _finite(value) for value in values):
+                        issues.append(
+                            f"{where}: x/y/u/v/c values must be finite numbers"
+                        )
+                for name, value in (
+                    ("quiver_scale", layer.quiver_scale),
+                    ("quiver_width", layer.quiver_width),
+                ):
+                    if value is not None and (not _finite(value) or value <= 0):
+                        issues.append(f"{where}: {name} must be positive or None")
+                if layer.colorbar and layer.c is None:
+                    issues.append(f"{where}: colorbar requires a c column")
+
             if layer.type in _BIVARIATE_DENSITY_TYPES:
                 if layer.group is not None:
                     issues.append(
@@ -574,7 +621,7 @@ def validate(spec: FigureSpec) -> list[str]:
                     )
 
             uses_cmap = layer.type in _CMAP_LAYER_TYPES or (
-                layer.type in {"scatter", "scatter3d"} and layer.c is not None
+                layer.type in {"scatter", "scatter3d", "quiver"} and layer.c is not None
             )
             if uses_cmap and layer.cmap_kind not in _CMAP_KINDS:
                 issues.append(f"{where}: invalid cmap_kind {layer.cmap_kind!r}")

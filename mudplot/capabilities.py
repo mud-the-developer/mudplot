@@ -87,6 +87,22 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
         "required": ["x", "y", "group"],
         "optional": ["color", "line_width", "line_style", "alpha", "axis"],
     },
+    "quiver": {
+        "required": ["x", "y", "u", "v"],
+        "optional": [
+            "c",
+            "cmap_kind",
+            "colorbar",
+            "clabel",
+            "label",
+            "color",
+            "line_width",
+            "quiver_scale",
+            "quiver_width",
+            "alpha",
+            "axis",
+        ],
+    },
     "bar": {
         "required": ["x", "y"],
         "optional": ["label", "color", "alpha", "axis"],

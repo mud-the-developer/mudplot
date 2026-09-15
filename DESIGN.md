@@ -553,6 +553,9 @@ tests/
       pure validation covers finite data and bin/grid/count constraints. The
       full Hypothesis run also exposed and fixed the rounded sRGB transfer
       cutoff discontinuity at `0.04045`.
+- [x] M12n: 2-D native `quiver` vector fields (28 layer types total), with
+      numeric x/y/u/v validation, optional continuous colour/colorbar, y2 and
+      references, plus explicit scale/shaft-width calibration knobs.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

@@ -30,6 +30,7 @@ _SERIES_TYPES = {
     "stackplot",
     "hist2d",
     "hexbin",
+    "quiver",
     "bar",
     "errorbar",
     "band",
@@ -352,6 +353,46 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
             )
         if layer.colorbar:
             target.figure.colorbar(image, ax=target, label=layer.clabel or "")
+        return
+
+    if layer.type == "quiver":
+        x = np.asarray(x_all, dtype=float)
+        y = np.asarray(_col(data_cols, layer.y), dtype=float)
+        u = np.asarray(_col(data_cols, layer.u), dtype=float)
+        v = np.asarray(_col(data_cols, layer.v), dtype=float)
+        kwargs: dict[str, Any] = {
+            "angles": "xy",
+            "scale_units": "xy",
+            "scale": layer.quiver_scale,
+            "alpha": layer.alpha,
+            "label": masks[0][0],
+        }
+        if layer.quiver_width is not None:
+            kwargs["width"] = layer.quiver_width
+        if layer.line_width is not None:
+            kwargs["linewidth"] = layer.line_width
+        if layer.c is not None:
+            q = target.quiver(
+                x,
+                y,
+                u,
+                v,
+                _col(data_cols, layer.c),
+                cmap=_continuous_cmap(layer.cmap_kind),
+                norm=norm,
+                **kwargs,
+            )
+            if layer.colorbar:
+                target.figure.colorbar(q, ax=target, label=layer.clabel or "")
+        else:
+            target.quiver(
+                x,
+                y,
+                u,
+                v,
+                color=layer.color or next(color_iter),
+                **kwargs,
+            )
         return
 
     if layer.type == "stackplot":
@@ -973,7 +1014,7 @@ def _count_colors(spec: FigureSpec) -> int:
                 "hexbin",
             }:
                 continue
-            if lyr.type in {"scatter", "scatter3d"} and lyr.c is not None:
+            if lyr.type in {"scatter", "scatter3d", "quiver"} and lyr.c is not None:
                 continue
             if lyr.type == "pie":
                 count += len(spec.data.columns[lyr.y])

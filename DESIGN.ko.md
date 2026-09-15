@@ -411,6 +411,8 @@ tests/
       colormap·colorbar·y2·정확한 layout을 재사용하고 유한 데이터와
       bin/grid/count 제약을 순수 validator에서 검사. 전체 Hypothesis 실행이
       `0.04045`의 반올림 sRGB transfer 경계 불연속도 발견·수정.
+- [x] M12n: 2-D native `quiver` 벡터장(총 28종). numeric x/y/u/v 검증,
+      optional 연속색/colorbar, y2/reference와 물리 scale/width 보정 knob 지원.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

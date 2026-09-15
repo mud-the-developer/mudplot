@@ -224,7 +224,8 @@ class ReferenceSpec(SpecBase):
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
     # | hist | box | heatmap | violin | kde | rug | regplot | stripplot
-    # | stackplot | hist2d | hexbin | pie | contour | contourf | scatter3d
+    # | stackplot | hist2d | hexbin | quiver | pie | contour | contourf
+    # | scatter3d
     # | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
@@ -283,6 +284,11 @@ class LayerSpec(SpecBase):
     levels: int | list[float] | None = None
     # route this layer onto the panel's secondary y-axis
     axis: str = "y"  # "y" | "y2"
+    # vector fields
+    u: str | None = None
+    v: str | None = None
+    quiver_scale: float | None = None
+    quiver_width: float | None = None
     # 3-D layers (scatter3d / line3d): the z column
     z: str | None = None
 

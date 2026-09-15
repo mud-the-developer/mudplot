@@ -256,6 +256,45 @@ class Plot:
             )
         )
 
+    def quiver(
+        self,
+        x: str,
+        y: str,
+        u: str,
+        v: str,
+        *,
+        c: str | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = False,
+        clabel: str | None = None,
+        scale: float | None = None,
+        width: float | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Draw a 2-D vector field from position and component columns."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="quiver",
+                    x=x,
+                    y=y,
+                    u=u,
+                    v=v,
+                    c=c,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    quiver_scale=scale,
+                    quiver_width=width,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def heatmap(
         self,
         matrix: str,

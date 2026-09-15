@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added 2-D `quiver` vector fields as the 28th layer type: numeric x/y/u/v,
+  data-coordinate arrow angles, optional continuous magnitude colour/colorbar,
+  y2/reference support, and explicit scale/width calibration. Validation
+  rejects malformed vectors, grouping, invalid calibration, and orphaned
+  colorbars before Matplotlib; 3-D quiver remains deferred.
 - Added native `hist2d` and `hexbin` count maps (27 layer types total),
   sharing the existing LCH colormaps, colorbar, y2, and layout paths. Core
   validation rejects empty/non-finite data, unsupported grouping, malformed
@@ -35,7 +40,7 @@ All notable changes to this project are documented here.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 27 registered
+- Added a capabilities-driven advanced layer form covering all 28 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.

@@ -52,7 +52,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 524 non-browser tests passing (+10 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 527 non-browser tests passing (+10 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -66,9 +66,9 @@ steps (more layer types, quality work, and the Rust editor).
 - [x] Declarative spec model (`FigureSpec`) + lossless JSON round-trip +
       pure reducer + actions + store (`Store.undo()`/`redo()`) — effects
       (render/io/preview) kept at the edges
-- [x] Renderer: 27 layer types (line/regplot/scatter/stripplot/bar/errorbar/
+- [x] Renderer: 28 layer types (line/regplot/scatter/stripplot/bar/errorbar/
       band/stackplot/hline/vline/text/annotate/hist/box/violin/kde/rug/
-      hist2d/hexbin/heatmap/contour/contourf/pie/
+      hist2d/hexbin/quiver/heatmap/contour/contourf/pie/
       scatter3d/line3d/surface/wireframe), multi-panel layouts, secondary
       y-axis, shared axes, despine, outside legends, continuous colour
       mapping + colorbar
@@ -119,7 +119,7 @@ steps (more layer types, quality work, and the Rust editor).
       export exact-size PDF/SVG
 - [x] Real-browser test coverage (Playwright, optional `browser` extra) for
       the drag/keyboard/multi-panel paths that HTML-level tests can't see
-- [x] All 27 registered layer types exposed through a capabilities-driven
+- [x] All 28 registered layer types exposed through a capabilities-driven
       advanced form; checked JSON fields automatically follow future registry
       additions. htmx updates the app fragment without a full-page reload.
 - [ ] Rust interactive editor (separate crate) — see `ROADMAP.md` §3
@@ -190,6 +190,7 @@ snapshots: edit through builder methods/actions, not by mutating these snapshots
 | basic | `line`, `regplot`, `scatter`, `bar`, `errorbar`, `band`, `stackplot` | `group=` for multiple series; line supports `drawstyle="steps-post"` (and pre/mid/steps); bars auto-dodge when grouped; categorical or numeric x |
 | distributions | `hist`, `box`, `violin`, `kde`, `rug`, `stripplot` | `kde` uses a small numpy-only Gaussian KDE (no scipy dependency); `rug` marks x observations; `stripplot` uses reproducible bounded jitter |
 | 2-D fields | `heatmap`, `contour`, `contourf`, `hist2d`, `hexbin` | share a matrix registered via `.matrix(name, values)`; use the same LCH colormaps as the palettes |
+| vector fields | `quiver` | numeric x/y positions plus u/v components; optional continuous colour and explicit scale/shaft-width controls |
 | 3-D | `scatter3d`, `line3d`, `surface`, `wireframe` | panel needs `.projection3d()` first; mixable with 2-D panels in the same figure |
 | annotations | `hline`, `vline`, `text`, `annotate` | |
 | other | `pie` | |

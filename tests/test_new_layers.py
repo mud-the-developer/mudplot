@@ -1,6 +1,6 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
 wireframe), violin, kde, rug, regplot, stripplot, stackplot, hist2d, hexbin,
-pie, contour/contourf.
+quiver, pie, contour/contourf.
 """
 
 from typing import Any, cast
@@ -335,6 +335,51 @@ def test_bivariate_density_settings_and_data_are_validated():
     assert any("finite numbers" in issue for issue in mp.validate(nonnumeric.spec))
 
 
+def test_quiver_renders_components_and_continuous_colorbar():
+    data = {
+        "x": [0, 1, 0, 1],
+        "y": [0, 0, 1, 1],
+        "u": [1, 0, -1, 0],
+        "v": [0, 1, 0, -1],
+        "speed": [1, 2, 3, 4],
+    }
+    p = mp.plot(data).quiver(
+        "x",
+        "y",
+        "u",
+        "v",
+        c="speed",
+        colorbar=True,
+        clabel="speed",
+        scale=1,
+        width=0.01,
+    )
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    arrows = cast(Any, fig.axes[0].collections[0])
+    assert arrows.U.tolist() == data["u"]
+    assert arrows.V.tolist() == data["v"]
+    assert np.asarray(arrows.get_array()).tolist() == data["speed"]
+    assert fig.axes[1].get_ylabel() == "speed"
+
+
+def test_quiver_rejects_bad_data_scaling_group_and_orphan_colorbar():
+    data = {"x": [0], "y": [0], "u": [1], "v": [1], "g": ["A"]}
+    bad_scale = mp.plot(data).quiver("x", "y", "u", "v", scale=0, width=-1)
+    grouped = mp.plot(data).quiver("x", "y", "u", "v", group="g")
+    orphan = mp.plot(data).quiver("x", "y", "u", "v", colorbar=True)
+    nonnumeric = mp.plot({"x": [0], "y": [0], "u": ["east"], "v": [1]}).quiver(
+        "x", "y", "u", "v"
+    )
+
+    scaling_issues = mp.validate(bad_scale.spec)
+    assert any("quiver_scale" in issue for issue in scaling_issues)
+    assert any("quiver_width" in issue for issue in scaling_issues)
+    assert any("group is not supported" in issue for issue in mp.validate(grouped.spec))
+    assert any("colorbar requires" in issue for issue in mp.validate(orphan.spec))
+    assert any("finite numbers" in issue for issue in mp.validate(nonnumeric.spec))
+
+
 def test_contour_renders():
     p = mp.plot({}).matrix("z", _matrix_data()).contour("z")
     fig = render(p.spec)
@@ -370,6 +415,7 @@ def test_new_types_appear_in_capabilities():
         "stackplot",
         "hist2d",
         "hexbin",
+        "quiver",
         "scatter3d",
         "line3d",
         "surface",
@@ -400,6 +446,9 @@ def test_new_types_all_pass_validate_when_built_correctly():
         .spec,
         mp.plot(data).hist2d("x", "y").spec,
         mp.plot(data).hexbin("x", "y").spec,
+        mp.plot({**data, "u": [1, 1, 1], "v": [0, 0, 0]})
+        .quiver("x", "y", "u", "v")
+        .spec,
         mp.plot(data).projection3d().scatter3d("x", "y", "z").spec,
         mp.plot(data).projection3d().line3d("x", "y", "z").spec,
         mp.plot({}).matrix("m", _matrix_data()).projection3d().surface("m").spec,

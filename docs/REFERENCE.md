@@ -84,6 +84,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`, `y`
 - **optional**: `color`, `alpha`
 
+### `quiver`
+
+- **required**: `x`, `y`, `u`, `v`
+- **optional**: `c`, `cmap_kind`, `colorbar`, `clabel`, `label`, `color`, `line_width`, `quiver_scale`, `quiver_width`, `alpha`, `axis`
+
 ### `regplot`
 
 - **required**: `x`, `y`

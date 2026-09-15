@@ -9,9 +9,9 @@ within each section. For what's already shipped, see
 
 ## 1. More plot types (matplotlib/seaborn parity, continued)
 
-Currently supported (27 layer types): `line`, `regplot`, `scatter`,
+Currently supported (28 layer types): `line`, `regplot`, `scatter`,
 `stripplot`, `bar`, `errorbar`, `band`, `stackplot`, `hist`, `hist2d`,
-`hexbin`, `box`, `violin`, `kde`, `rug`, `heatmap`, `contour`,
+`hexbin`, `quiver`, `box`, `violin`, `kde`, `rug`, `heatmap`, `contour`,
 `contourf`, `pie`, `hline`, `vline`, `text`, `annotate`, `scatter3d`, `line3d`,
 `surface`, `wireframe`.
 
@@ -35,9 +35,10 @@ papers:
 - **(done) `hist2d`/`hexbin`**: native rectangular and hexagonal count maps
   for finite numeric x/y data, sharing the existing LCH colormap, colorbar,
   y2, and exact-layout paths. Bin/grid/count constraints fail validation.
-- **`quiver`**: vector field arrows — common in physics/engineering
-  papers. Needs `u`/`v` (or `u`/`v`/`w` for a 3-D variant) component
-  columns in addition to `x`/`y`.
+- **(done) 2-D `quiver`**: numeric x/y positions plus u/v components, native
+  data-coordinate arrow angles, optional magnitude colouring/colorbar, y2,
+  and explicit scale/width calibration controls. Invalid vectors fail before
+  Matplotlib. A 3-D u/v/w variant remains deferred.
 - **polar plots**: a `projection="polar"` panel option (parallel to the
   existing `"3d"` one), plus whichever of the existing 2-D layer types
   make sense on it (`line`/`scatter`/`bar` mostly do, unchanged).
@@ -68,11 +69,11 @@ Each addition should follow the same checklist the last two batches did:
 
 The editor prototype (`python -m dashboard serve`) currently exposes
 `line`/`scatter`/`bar` plus `text`/`annotate` in its "Add layer" forms,
-while the engine supports 27 types. Concrete gaps:
+while the engine supports 28 types. Concrete gaps:
 
 - **(done)** Exposed every registered layer type through a generic advanced
   form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
-  `LayerSpec` JSON fields, shows required/optional fields for all 27 types,
+  `LayerSpec` JSON fields, shows required/optional fields for all 28 types,
   rejects typos/missing required fields, and automatically picks up future
   registry entries without another hand-maintained dropdown.
 - **(done)** Multi-panel layout controls: grid size, active-panel selection
@@ -96,7 +97,7 @@ while the engine supports 27 types. Concrete gaps:
 
 Deferred by design until the Python prototype had exercised the action/
 JSON contract enough to trust it (see `DESIGN.md` §7 for the original
-plan). Now that the prototype has ~25 action types and 27 layer types
+plan). Now that the prototype has ~25 action types and 28 layer types
 exercised through it, a reasonable first slice:
 
 1. New crate (e.g. `mudplot-editor/`, separate from this Python repo, or a
