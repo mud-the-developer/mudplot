@@ -28,6 +28,8 @@ _SERIES_TYPES = {
     "scatter",
     "stripplot",
     "stackplot",
+    "hist2d",
+    "hexbin",
     "bar",
     "errorbar",
     "band",
@@ -327,6 +329,31 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
 
     x_all = _x_values(target, data_cols, layer.x)
     norm = _color_norm(data_cols, layer) if layer.c is not None else None
+    if layer.type in {"hist2d", "hexbin"}:
+        x = np.asarray(x_all, dtype=float)
+        y = np.asarray(_col(data_cols, layer.y), dtype=float)
+        if layer.type == "hist2d":
+            image = target.hist2d(
+                x,
+                y,
+                bins=layer.bins,
+                density=layer.density,
+                cmap=_continuous_cmap(layer.cmap_kind),
+                alpha=layer.alpha,
+            )[3]
+        else:
+            image = target.hexbin(
+                x,
+                y,
+                gridsize=layer.gridsize,
+                mincnt=layer.mincnt,
+                cmap=_continuous_cmap(layer.cmap_kind),
+                alpha=layer.alpha,
+            )
+        if layer.colorbar:
+            target.figure.colorbar(image, ax=target, label=layer.clabel or "")
+        return
+
     if layer.type == "stackplot":
         labels = [label for label, _mask in masks]
         x_groups = [x_all[mask] for _label, mask in masks]
@@ -940,7 +967,11 @@ def _count_colors(spec: FigureSpec) -> int:
     for p in spec.panels:
         count = 0
         for lyr in p.layers:
-            if lyr.color or lyr.type in _MATRIX_TYPES | {"surface"}:
+            if lyr.color or lyr.type in _MATRIX_TYPES | {
+                "surface",
+                "hist2d",
+                "hexbin",
+            }:
                 continue
             if lyr.type in {"scatter", "scatter3d"} and lyr.c is not None:
                 continue

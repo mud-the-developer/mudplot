@@ -224,7 +224,8 @@ class ReferenceSpec(SpecBase):
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
     # | hist | box | heatmap | violin | kde | rug | regplot | stripplot
-    # | stackplot | pie | contour | contourf | scatter3d | line3d | surface | wireframe
+    # | stackplot | hist2d | hexbin | pie | contour | contourf | scatter3d
+    # | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name
@@ -263,6 +264,9 @@ class LayerSpec(SpecBase):
     # histogram
     bins: int | list[float] = 20
     density: bool = False
+    # bivariate count plots
+    gridsize: int = 30
+    mincnt: int | None = None
     # regression: polynomial degree and optional normal-approximation CI (%)
     degree: int = 1
     confidence: float | None = None

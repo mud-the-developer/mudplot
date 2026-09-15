@@ -8,6 +8,7 @@ uses this to fail fast with a helpful message instead of a raw ``KeyError``.
 from __future__ import annotations
 
 import math
+from itertools import pairwise
 from numbers import Real
 
 from .capabilities import LAYER_TYPES, PALETTE_PRESETS
@@ -44,6 +45,8 @@ _AXIS_ROUTABLE_TYPES = {
     "scatter",
     "stripplot",
     "stackplot",
+    "hist2d",
+    "hexbin",
     "bar",
     "errorbar",
     "band",
@@ -67,7 +70,15 @@ _NO_COLUMN_TYPES = {
 _VALID_SPINE_CHARS = set("LRTB")
 _POINT_TYPES = {"text", "annotate"}  # layers whose ``at``/``to`` is [x, y]
 _MATRIX_LAYER_TYPES = {"heatmap", "contour", "contourf", "surface", "wireframe"}
-_CMAP_LAYER_TYPES = {"heatmap", "contour", "contourf", "surface"}
+_CMAP_LAYER_TYPES = {
+    "heatmap",
+    "contour",
+    "contourf",
+    "surface",
+    "hist2d",
+    "hexbin",
+}
+_BIVARIATE_DENSITY_TYPES = {"hist2d", "hexbin"}
 _PROJECTIONS = {"2d", "3d"}
 # layer types that only make sense on a projection="3d" panel
 _3D_ONLY_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
@@ -462,6 +473,48 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
                 )
+
+            if layer.type in _BIVARIATE_DENSITY_TYPES:
+                if layer.group is not None:
+                    issues.append(
+                        f"{where}: group is not supported for bivariate density layers"
+                    )
+                if layer.x in cols and layer.y in cols:
+                    values = [*cols[layer.x], *cols[layer.y]]
+                    if not values:
+                        issues.append(f"{where}: density plot requires observations")
+                    elif any(not _finite(value) for value in values):
+                        issues.append(f"{where}: x/y values must be finite numbers")
+                if layer.type == "hist2d":
+                    if type(layer.density) is not bool:
+                        issues.append(f"{where}: density must be true or false")
+                    bins = layer.bins
+                    valid_bins = type(bins) is int and bins > 0
+                    if isinstance(bins, list):
+                        if len(bins) == 2:
+                            valid_bins = all(
+                                type(value) is int and value > 0 for value in bins
+                            )
+                        else:
+                            valid_bins = (
+                                len(bins) >= 3
+                                and all(_finite(value) for value in bins)
+                                and all(a < b for a, b in pairwise(bins))
+                            )
+                    if not valid_bins:
+                        issues.append(
+                            f"{where}: bins must be a positive integer, a positive "
+                            "[x, y] integer pair, or increasing finite edges"
+                        )
+                else:
+                    if type(layer.gridsize) is not int or layer.gridsize <= 0:
+                        issues.append(f"{where}: gridsize must be a positive integer")
+                    if layer.mincnt is not None and (
+                        type(layer.mincnt) is not int or layer.mincnt < 0
+                    ):
+                        issues.append(
+                            f"{where}: mincnt must be a nonnegative integer or None"
+                        )
 
             if (
                 layer.type == "stackplot"

@@ -44,10 +44,20 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `matrix`
 - **optional**: `cmap_kind`, `colorbar`, `clabel`, `alpha`
 
+### `hexbin`
+
+- **required**: `x`, `y`
+- **optional**: `gridsize`, `mincnt`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `axis`
+
 ### `hist`
 
 - **required**: `x`
 - **optional**: `bins`, `density`, `group`, `label`, `color`, `alpha`
+
+### `hist2d`
+
+- **required**: `x`, `y`
+- **optional**: `bins`, `density`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `axis`
 
 ### `hline`
 

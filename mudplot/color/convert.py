@@ -62,10 +62,17 @@ def _as_array(x) -> np.ndarray:
 # --------------------------------------------------------------------------
 # sRGB gamma companding
 # --------------------------------------------------------------------------
+# Exact intersection of the linear and power branches. The common rounded
+# pair (0.04045, 0.0031308) has a tiny discontinuity that breaks inverse
+# round-trips when an intervening XYZ/Lab matrix nudges a value across it.
+_SRGB_TRANSFER_CUTOFF = 0.0404482362771082
+_LINEAR_TRANSFER_CUTOFF = 0.00313066844250063
+
+
 def srgb_to_linear(srgb) -> np.ndarray:
     """Undo the sRGB transfer function (gamma decode)."""
     c = _as_array(srgb)
-    return np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+    return np.where(c <= _SRGB_TRANSFER_CUTOFF, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
 
 
 def linear_to_srgb(linear) -> np.ndarray:
@@ -75,7 +82,7 @@ def linear_to_srgb(linear) -> np.ndarray:
     # (out-of-gamut colours) to avoid NaN warnings, then restore the sign.
     safe = np.abs(c)
     encoded = np.sign(c) * (1.055 * np.power(safe, 1 / 2.4) - 0.055)
-    return np.where(np.abs(c) <= 0.0031308, c * 12.92, encoded)
+    return np.where(np.abs(c) <= _LINEAR_TRANSFER_CUTOFF, c * 12.92, encoded)
 
 
 # --------------------------------------------------------------------------

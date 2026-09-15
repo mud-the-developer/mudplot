@@ -31,7 +31,7 @@ python -m dashboard serve   # http://127.0.0.1:8765/
 x/y/z scale·고정/자동 limits·보조 y축, 라벨/reference 등을 폼으로
 조작하면 미리보기가 즉시 갱신되는 로컬 웹
 에디터. 빠른 폼 외에도 `capabilities.LAYER_TYPES` 기반 checked-JSON 폼으로
-등록된 레이어 25종을 모두 추가하고, 저장된 `.mplot.json`을 열거나
+등록된 레이어 27종을 모두 추가하고, 저장된 `.mplot.json`을 열거나
 JSON/PNG/PDF/SVG로 내보낼 수 있습니다. 내부적으로 엔진의 Store/reducer를
 그대로 재사용하므로 별도 상태가 없고, invalid action은 state/history를
 바꾸기 전에 거부됩니다. 폼 제출은 전체 페이지를 다시 불러오지 않고

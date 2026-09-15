@@ -548,6 +548,11 @@ tests/
 - [x] M12l: long-form native `stackplot` (25 layer types total), with shared
       ordered-x validation, finite stack-value checks, y2/reference support,
       and per-stack hatches for grayscale-safe area encoding.
+- [x] M12m: native `hist2d`/`hexbin` bivariate count maps (27 layer types
+      total), reusing LCH colormaps, colorbars, y2 routing, and exact layout;
+      pure validation covers finite data and bin/grid/count constraints. The
+      full Hypothesis run also exposed and fixed the rounded sRGB transfer
+      cutoff discontinuity at `0.04045`.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

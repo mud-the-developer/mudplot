@@ -407,6 +407,10 @@ tests/
       swarm 충돌 packing은 overlap 필요가 측정될 때까지 보류.
 - [x] M12l: long-form native `stackplot`(총 25종). 그룹별 ordered x 일치,
       유한 stack 값 검증, y2/reference, 흑백 구별용 stack별 hatch 지원.
+- [x] M12m: native `hist2d`/`hexbin` 2변량 카운트 맵(총 27종). LCH
+      colormap·colorbar·y2·정확한 layout을 재사용하고 유한 데이터와
+      bin/grid/count 제약을 순수 validator에서 검사. 전체 Hypothesis 실행이
+      `0.04045`의 반올림 sRGB transfer 경계 불연속도 발견·수정.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

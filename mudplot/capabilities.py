@@ -149,6 +149,30 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
         "required": ["x"],
         "optional": ["group", "label", "color", "alpha"],
     },
+    "hist2d": {
+        "required": ["x", "y"],
+        "optional": [
+            "bins",
+            "density",
+            "cmap_kind",
+            "colorbar",
+            "clabel",
+            "alpha",
+            "axis",
+        ],
+    },
+    "hexbin": {
+        "required": ["x", "y"],
+        "optional": [
+            "gridsize",
+            "mincnt",
+            "cmap_kind",
+            "colorbar",
+            "clabel",
+            "alpha",
+            "axis",
+        ],
+    },
     "heatmap": {
         "required": ["matrix"],
         "optional": ["cmap_kind", "colorbar", "clabel", "alpha"],

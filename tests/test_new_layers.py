@@ -1,6 +1,6 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
-wireframe), violin, kde, rug, regplot, stripplot, stackplot, pie,
-contour/contourf.
+wireframe), violin, kde, rug, regplot, stripplot, stackplot, hist2d, hexbin,
+pie, contour/contourf.
 """
 
 from typing import Any, cast
@@ -295,6 +295,46 @@ def test_pie_missing_columns_caught_by_validate():
 # --------------------------------------------------------------------------
 # contour / contourf
 # --------------------------------------------------------------------------
+def test_hist2d_renders_counts_with_lch_colorbar():
+    rng = np.random.default_rng(0)
+    data = {"x": rng.normal(size=100).tolist(), "y": rng.normal(size=100).tolist()}
+    p = mp.plot(data).hist2d("x", "y", bins=8, clabel="count")
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    counts = np.asarray(cast(Any, fig.axes[0].collections[0]).get_array())
+    assert len(fig.axes) == 2
+    assert fig.axes[1].get_ylabel() == "count"
+    assert counts.sum() == 100
+
+
+def test_hexbin_renders_counts_with_lch_colorbar():
+    rng = np.random.default_rng(1)
+    data = {"x": rng.normal(size=80).tolist(), "y": rng.normal(size=80).tolist()}
+    p = mp.plot(data).hexbin("x", "y", gridsize=7, mincnt=1)
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    counts = np.asarray(cast(Any, fig.axes[0].collections[0]).get_array())
+    assert len(fig.axes) == 2
+    assert counts.sum() == 80
+
+
+def test_bivariate_density_settings_and_data_are_validated():
+    data = {"x": [0, 1, 2], "y": [1, 2, 3], "g": ["A", "A", "B"]}
+    bad_bins = mp.plot(data).hist2d("x", "y", bins=[0, 2, 1])
+    bad_density = mp.plot(data).hist2d("x", "y", density=cast(Any, "yes"))
+    bad_grid = mp.plot(data).hexbin("x", "y", gridsize=0, mincnt=-1)
+    grouped = mp.plot(data).hexbin("x", "y", group="g")
+    nonnumeric = mp.plot({"x": ["a"], "y": [1]}).hist2d("x", "y")
+
+    assert any("bins must be" in issue for issue in mp.validate(bad_bins.spec))
+    assert any("density must be" in issue for issue in mp.validate(bad_density.spec))
+    grid_issues = mp.validate(bad_grid.spec)
+    assert any("gridsize" in issue for issue in grid_issues)
+    assert any("mincnt" in issue for issue in grid_issues)
+    assert any("group is not supported" in issue for issue in mp.validate(grouped.spec))
+    assert any("finite numbers" in issue for issue in mp.validate(nonnumeric.spec))
+
+
 def test_contour_renders():
     p = mp.plot({}).matrix("z", _matrix_data()).contour("z")
     fig = render(p.spec)
@@ -328,6 +368,8 @@ def test_new_types_appear_in_capabilities():
         "regplot",
         "stripplot",
         "stackplot",
+        "hist2d",
+        "hexbin",
         "scatter3d",
         "line3d",
         "surface",
@@ -356,6 +398,8 @@ def test_new_types_all_pass_validate_when_built_correctly():
         )
         .stackplot("x", "y", group="g")
         .spec,
+        mp.plot(data).hist2d("x", "y").spec,
+        mp.plot(data).hexbin("x", "y").spec,
         mp.plot(data).projection3d().scatter3d("x", "y", "z").spec,
         mp.plot(data).projection3d().line3d("x", "y", "z").spec,
         mp.plot({}).matrix("m", _matrix_data()).projection3d().surface("m").spec,

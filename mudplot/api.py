@@ -194,6 +194,68 @@ class Plot:
             )
         )
 
+    def hist2d(
+        self,
+        x: str,
+        y: str,
+        *,
+        bins: int | list[float] = 20,
+        density: bool = False,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Bin two numeric columns into a rectangular count/density map."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="hist2d",
+                    x=x,
+                    y=y,
+                    bins=bins,
+                    density=density,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def hexbin(
+        self,
+        x: str,
+        y: str,
+        *,
+        gridsize: int = 30,
+        mincnt: int | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Bin two numeric columns into a native Matplotlib hexagonal map."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="hexbin",
+                    x=x,
+                    y=y,
+                    gridsize=gridsize,
+                    mincnt=mincnt,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def heatmap(
         self,
         matrix: str,

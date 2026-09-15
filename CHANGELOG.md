@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added native `hist2d` and `hexbin` count maps (27 layer types total),
+  sharing the existing LCH colormaps, colorbar, y2, and layout paths. Core
+  validation rejects empty/non-finite data, unsupported grouping, malformed
+  bins, invalid grid sizes, and invalid minimum counts before Matplotlib.
 - Added long-form `stackplot` as the 25th layer type. It uses native
   Matplotlib stacked areas over existing `x`/`y`/`group` data, rejects
   per-group x-order mismatches and non-finite stack values before rendering,
@@ -31,7 +35,7 @@ All notable changes to this project are documented here.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 25 registered
+- Added a capabilities-driven advanced layer form covering all 27 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.
@@ -67,6 +71,10 @@ All notable changes to this project are documented here.
   CIEDE2000 identity/symmetry/non-negativity.
 - Validation now reports arbitrarily large integers as non-finite instead of
   leaking `OverflowError` from the shared `math.isfinite()` helper.
+- The sRGB transfer functions now share the exact linear/power-branch
+  intersection instead of the customary independently rounded cutoff pair.
+  This removes its tiny discontinuity and preserves gamma/Lab/LCh round-trips
+  at and around the `0.04045` boundary; Hypothesis found the failing value.
 
 ## [0.5.0] - 2026-09-14
 

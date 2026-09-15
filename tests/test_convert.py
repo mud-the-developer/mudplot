@@ -17,6 +17,17 @@ def test_roundtrip_srgb_lab():
     assert np.allclose(srgb, back, atol=1e-9)
 
 
+def test_srgb_transfer_roundtrip_at_the_rounded_standard_cutoff():
+    cutoff = 0.04045
+    values = np.array([np.nextafter(cutoff, 0.0), cutoff, np.nextafter(cutoff, 1.0)])
+    rgb = np.column_stack((np.zeros(3), np.zeros(3), values))
+    np.testing.assert_allclose(
+        cv.linear_to_srgb(cv.srgb_to_linear(rgb)), rgb, rtol=0, atol=1e-15
+    )
+    np.testing.assert_allclose(cv.lab_to_srgb(cv.srgb_to_lab(rgb)), rgb, atol=1e-12)
+    np.testing.assert_allclose(cv.lch_to_srgb(cv.srgb_to_lch(rgb)), rgb, atol=1e-12)
+
+
 def test_white_is_L100():
     lab = cv.srgb_to_lab(np.array([1.0, 1.0, 1.0]))
     assert lab[0] == pytest.approx(100.0, abs=1e-4)
@@ -56,7 +67,7 @@ def test_hex_short_form():
 
 
 def test_in_gamut():
-    inside = cv.srgb_to_srgb_identity = np.array([[0.5, 0.5, 0.5], [1.2, 0.0, 0.0]])
+    inside = np.array([[0.5, 0.5, 0.5], [1.2, 0.0, 0.0]])
     mask = cv.in_gamut(inside)
     assert mask.tolist() == [True, False]
 
