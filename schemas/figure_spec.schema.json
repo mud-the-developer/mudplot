@@ -504,6 +504,10 @@
           ],
           "default": null
         },
+        "drawstyle": {
+          "type": "string",
+          "default": "default"
+        },
         "marker": {
           "anyOf": [
             {

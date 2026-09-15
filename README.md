@@ -52,7 +52,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, dashboard editor gaps, the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 504 non-browser tests passing (+10 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 506 non-browser tests passing (+10 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -186,7 +186,7 @@ snapshots: edit through builder methods/actions, not by mutating these snapshots
 
 | category | types | notes |
 | --- | --- | --- |
-| basic | `line`, `scatter`, `bar`, `errorbar`, `band` | `group=` for multiple series; bars auto-dodge when grouped; categorical or numeric x |
+| basic | `line`, `scatter`, `bar`, `errorbar`, `band` | `group=` for multiple series; line supports `drawstyle="steps-post"` (and pre/mid/steps); bars auto-dodge when grouped; categorical or numeric x |
 | distributions | `hist`, `box`, `violin`, `kde` | `kde` uses a small numpy-only Gaussian KDE (no scipy dependency) |
 | 2-D fields | `heatmap`, `contour`, `contourf` | share a matrix registered via `.matrix(name, values)`; use the same LCH colormaps as the palettes |
 | 3-D | `scatter3d`, `line3d`, `surface`, `wireframe` | panel needs `.projection3d()` first; mixable with 2-D panels in the same figure |

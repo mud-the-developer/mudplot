@@ -46,7 +46,7 @@
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 504개 + 실제 브라우저 테스트 10개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 506개 + 실제 브라우저 테스트 10개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -172,8 +172,9 @@ import mudplot as mp
 
 기본(line/scatter/bar/errorbar/band), 분포(hist/box/violin/kde),
 2D 필드(heatmap/contour/contourf), 3D(scatter3d/line3d/surface/wireframe),
-주석(hline/vline/text/annotate), pie. 항상 최신 목록은 `mp.capabilities()`
-또는 영어 README.md의 표를 참고. (신규 기능 문서는 기본 영어로 작성)
+주석(hline/vline/text/annotate), pie. `line(..., drawstyle="steps-post")`
+(`steps`/`steps-pre`/`steps-mid` 포함)으로 계단선을 그릴 수 있습니다. 항상
+최신 목록은 `mp.capabilities()` 또는 영어 README.md의 표를 참고.
 
 ### Spec 저장/불러오기 (미래 Rust 에디터와 동일 포맷)
 

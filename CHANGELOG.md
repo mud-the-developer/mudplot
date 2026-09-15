@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Features
+
+- Added native Matplotlib step-line support through
+  `line(..., drawstyle="steps-post")` (also `steps`, `steps-pre`, and
+  `steps-mid`). This remains one `line` layer rather than introducing a
+  duplicate plot type; invalid drawstyles and drawstyle on non-line layers
+  fail validation.
+
 ### Dashboard
 
 - Added a capabilities-driven advanced layer form covering all 21 registered

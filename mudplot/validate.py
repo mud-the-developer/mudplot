@@ -35,6 +35,7 @@ _LEGEND_LOCS = {
 _SHARE_MODES = {"none", "all", "row", "col"}
 _CMAP_KINDS = {"sequential", "diverging"}
 _LAYER_AXES = {"y", "y2"}
+_DRAWSTYLES = {"default", "steps", "steps-pre", "steps-mid", "steps-post"}
 # layer types whose renderer actually honours ``layer.axis`` (routes to the
 # secondary y-axis); hist/box/heatmap always draw on the primary axes only.
 _AXIS_ROUTABLE_TYPES = {
@@ -377,6 +378,14 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
                 )
+
+            if layer.drawstyle not in _DRAWSTYLES:
+                issues.append(
+                    f"{where}: invalid drawstyle {layer.drawstyle!r}; "
+                    f"valid: {sorted(_DRAWSTYLES)}"
+                )
+            elif layer.type != "line" and layer.drawstyle != "default":
+                issues.append(f"{where}: drawstyle only applies to line layers")
 
             if layer.axis not in _LAYER_AXES:
                 issues.append(f"{where}: invalid axis {layer.axis!r}")

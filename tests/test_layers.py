@@ -66,3 +66,17 @@ def test_new_layer_fields_serialize():
     d = p.spec.panels[0].layers[0].to_dict()
     assert d["yerr"] == "err"
     assert d["capsize"] == 3
+
+
+def test_line_drawstyle_renders_steps_without_a_new_layer_type():
+    p = mp.plot(_xy()).line("x", "y", drawstyle="steps-post")
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    assert fig.axes[0].lines[0].get_drawstyle() == "steps-post"
+
+
+def test_invalid_or_non_line_drawstyle_is_rejected():
+    invalid = mp.plot(_xy()).line("x", "y", drawstyle="zigzag")
+    scatter = mp.plot(_xy()).scatter("x", "y", drawstyle="steps")
+    assert any("invalid drawstyle" in issue for issue in mp.validate(invalid.spec))
+    assert any("only applies to line" in issue for issue in mp.validate(scatter.spec))

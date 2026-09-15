@@ -31,6 +31,7 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "color",
             "line_width",
             "line_style",
+            "drawstyle",
             "marker",
             "marker_size",
             "alpha",

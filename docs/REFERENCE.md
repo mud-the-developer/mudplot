@@ -62,7 +62,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `line`
 
 - **required**: `x`, `y`
-- **optional**: `group`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+- **optional**: `group`, `label`, `color`, `line_width`, `line_style`, `drawstyle`, `marker`, `marker_size`, `alpha`, `axis`
 
 ### `line3d`
 

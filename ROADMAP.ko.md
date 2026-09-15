@@ -23,7 +23,8 @@ scatter3d, line3d, surface, wireframe.
 - **hist2d/hexbin**: 2변량 밀도/카운트
 - **quiver**: 벡터장 화살표 (물리/공학 논문에 흔함)
 - **polar**: `projection="polar"` 패널 옵션
-- **step**: line 레이어의 drawstyle 옵션으로
+- **(완료) step**: 별도 레이어 대신 line의 native Matplotlib `drawstyle`
+  (`default`/`steps`/`steps-pre`/`steps-mid`/`steps-post`) 옵션으로 구현
 - **rug plot**: kde/hist 옆에 관측값 표시하는 작은 눈금
 
 각 추가는 지난 두 배치와 같은 체크리스트를 따름: LayerSpec 필드 →

@@ -307,6 +307,7 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 color=color,
                 linewidth=layer.line_width,
                 linestyle=linestyle,
+                drawstyle=layer.drawstyle,
                 marker=marker,
                 markersize=layer.marker_size,
                 alpha=layer.alpha,

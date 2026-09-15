@@ -38,9 +38,9 @@ papers:
 - **polar plots**: a `projection="polar"` panel option (parallel to the
   existing `"3d"` one), plus whichever of the existing 2-D layer types
   make sense on it (`line`/`scatter`/`bar` mostly do, unchanged).
-- **`step`**: a `drawstyle` option on the existing `line` layer
-  (`"default"`/`"steps"`/`"steps-pre"`/`"steps-mid"`/`"steps-post"`)
-  rather than a whole new layer type.
+- **(done) `step`**: implemented as `drawstyle` on the existing `line` layer
+  (`"default"`/`"steps"`/`"steps-pre"`/`"steps-mid"`/`"steps-post"`), using
+  native Matplotlib rather than adding a duplicate layer type.
 - **rug plot**: small tick marks along an axis showing individual
   observations — a cheap, useful companion to `kde`/`hist`.
 

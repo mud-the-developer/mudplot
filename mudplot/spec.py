@@ -243,6 +243,7 @@ class LayerSpec(SpecBase):
     color: str | None = None  # explicit hex override
     line_width: float | None = None
     line_style: str | None = None  # "-", "--", ":", "-."
+    drawstyle: str = "default"  # default | steps | steps-pre/mid/post (line only)
     marker: str | None = None
     marker_size: float | None = None
     alpha: float = 1.0
