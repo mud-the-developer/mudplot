@@ -396,6 +396,9 @@ tests/
       노출하고 action 결과를 commit 전에 검증하며, 멀티패널 projection과
       x/y/z/보조축 설정을 완성. 현재 app-fragment htmx swap은 의도적으로
       단순하게 유지하며 실제 latency가 측정될 때만 더 세분화.
+- [x] M12i: native Matplotlib 기능으로 플롯 폭 확장 — 기존 line의
+      `drawstyle` 계단선과 x축 `rug` 레이어(총 22종). 그룹 KDE/rug에는
+      흑백 구별용 중복 선 스타일을 적용하고 새 런타임 의존성은 추가하지 않음.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

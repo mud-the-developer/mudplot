@@ -389,6 +389,23 @@ class Plot:
             )
         )
 
+    def rug(
+        self,
+        x: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Mark individual observations from column ``x`` along the x-axis."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(type="rug", x=x, group=group, label=label, **style),
+                panel=panel,
+            )
+        )
+
     def pie(self, labels: str, values: str, *, panel: int = 0, **style) -> Plot:
         """Pie chart: ``labels`` names the category column, ``values`` the sizes."""
         return self.dispatch(

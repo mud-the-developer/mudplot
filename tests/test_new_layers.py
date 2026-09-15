@@ -1,6 +1,8 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
-wireframe), violin, kde, pie, contour/contourf.
+wireframe), violin, kde, rug, pie, contour/contourf.
 """
+
+from typing import Any, cast
 
 import matplotlib
 
@@ -88,7 +90,7 @@ def test_zaxis_set_via_zlabel_builder():
     )
     assert mp.validate(p.spec) == []
     fig = render(p.spec)
-    assert fig.axes[0].get_zlabel() == "Depth"
+    assert cast(Any, fig.axes[0]).get_zlabel() == "Depth"
 
 
 def test_z_axis_without_3d_projection_flagged():
@@ -130,12 +132,12 @@ def test_kde_renders_a_smooth_density_curve():
     p = mp.plot(data).kde("v")
     fig = render(p.spec)
     assert len(fig.axes[0].lines) == 1
-    ydata = fig.axes[0].lines[0].get_ydata()
+    ydata = np.asarray(fig.axes[0].lines[0].get_ydata(), dtype=float)
     assert np.all(ydata >= 0)  # density is non-negative
     assert ydata.max() > 0
 
 
-def test_kde_grouped_gives_two_curves():
+def test_kde_grouped_gives_two_redundantly_styled_curves():
     rng = np.random.default_rng(0)
     data = {
         "v": list(rng.normal(0, 1, 100)) + list(rng.normal(3, 1, 100)),
@@ -143,7 +145,21 @@ def test_kde_grouped_gives_two_curves():
     }
     p = mp.plot(data).kde("v", group="g").legend()
     fig = render(p.spec)
-    assert len(fig.axes[0].lines) == 2
+    lines = fig.axes[0].lines
+    assert len(lines) == 2
+    assert lines[0].get_linestyle() != lines[1].get_linestyle()
+
+
+def test_rug_marks_each_observation_inside_the_x_axis():
+    p = mp.plot({"v": [1, 2, 3]}).rug("v")
+    assert mp.validate(p.spec) == []
+    fig = render(p.spec)
+    segments = cast(Any, fig.axes[0].collections[0]).get_segments()
+    assert [segment[0, 0] for segment in segments] == [1, 2, 3]
+    assert all((segment[:, 1] == [0, 0.04]).all() for segment in segments)
+
+    issues = mp.validate(mp.plot({"v": [1]}).rug("missing").spec)
+    assert any("column 'missing' not found" in issue for issue in issues)
 
 
 # --------------------------------------------------------------------------
@@ -211,6 +227,7 @@ def test_new_types_appear_in_capabilities():
         "wireframe",
         "violin",
         "kde",
+        "rug",
         "pie",
         "contour",
         "contourf",
@@ -227,6 +244,7 @@ def test_new_types_all_pass_validate_when_built_correctly():
         mp.plot({}).matrix("m", _matrix_data()).projection3d().wireframe("m").spec,
         mp.plot(data).violin("x").spec,
         mp.plot(data).kde("x").spec,
+        mp.plot(data).rug("x").spec,
         mp.plot(data).pie("cat", "x").spec,
         mp.plot({}).matrix("m", _matrix_data()).contour("m").spec,
         mp.plot({}).matrix("m", _matrix_data()).contourf("m").spec,

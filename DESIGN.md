@@ -533,6 +533,10 @@ tests/
       projection/x/y/z/secondary-axis controls. The current app-fragment htmx
       swap remains deliberately simple; split it further only if profiling
       shows a real latency problem.
+- [x] M12i: small native plot-breadth additions — step lines via the existing
+      line layer's Matplotlib `drawstyle`, plus an x-axis `rug` layer (22
+      layer types total). Grouped KDE/rug output cycles redundant line styles
+      for grayscale distinguishability; no new runtime dependency.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

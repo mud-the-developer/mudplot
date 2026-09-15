@@ -143,6 +143,17 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "line_style",
         ],
     },
+    "rug": {
+        "required": ["x"],
+        "optional": [
+            "group",
+            "label",
+            "color",
+            "alpha",
+            "line_width",
+            "line_style",
+        ],
+    },
     "pie": {
         "required": ["x", "y"],
         "optional": ["color", "alpha"],

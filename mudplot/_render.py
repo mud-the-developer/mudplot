@@ -23,7 +23,7 @@ __all__ = ["render", "save"]
 # layer types that draw one or more x/y series (and support ``group``)
 _SERIES_TYPES = {"line", "scatter", "bar", "errorbar", "band"}
 # layer types that draw a distribution of a single column (support ``group``)
-_DIST_TYPES = {"hist", "box", "violin", "kde"}
+_DIST_TYPES = {"hist", "box", "violin", "kde", "rug"}
 # layer types that draw a 2-D matrix
 _MATRIX_TYPES = {"heatmap", "contour", "contourf"}
 # layer types only meaningful on a projection="3d" panel
@@ -423,6 +423,9 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
     hatch_cycle = (
         itertools.cycle(theme.hatches) if use_redundant else itertools.repeat(None)
     )
+    style_cycle = (
+        itertools.cycle(theme.line_styles) if use_redundant else itertools.repeat("-")
+    )
     if layer.type == "hist":
         for label, mask in masks:
             values = _col(data_cols, layer.x)[mask]
@@ -467,7 +470,21 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
                 label=label,
                 color=layer.color or next(color_iter),
                 linewidth=layer.line_width,
-                linestyle=layer.line_style or "-",
+                linestyle=layer.line_style or next(style_cycle),
+                alpha=layer.alpha,
+            )
+    elif layer.type == "rug":
+        for label, mask in masks:
+            values = _col(data_cols, layer.x)[mask]
+            ax.vlines(
+                values,
+                0,
+                0.04,
+                transform=ax.get_xaxis_transform(),
+                label=label,
+                colors=layer.color or next(color_iter),
+                linewidths=layer.line_width,
+                linestyles=layer.line_style or next(style_cycle),
                 alpha=layer.alpha,
             )
 

@@ -10,8 +10,8 @@
 
 ## 1. 플롯 종류 더 추가 (matplotlib/seaborn 근접, 계속)
 
-현재 21종 지원: line, scatter, bar, errorbar, band, hist, box, violin,
-kde, heatmap, contour, contourf, pie, hline, vline, text, annotate,
+현재 22종 지원: line, scatter, bar, errorbar, band, hist, box, violin,
+kde, rug, heatmap, contour, contourf, pie, hline, vline, text, annotate,
 scatter3d, line3d, surface, wireframe.
 
 다음 후보 (논문에서의 유용성 순):
@@ -25,7 +25,8 @@ scatter3d, line3d, surface, wireframe.
 - **polar**: `projection="polar"` 패널 옵션
 - **(완료) step**: 별도 레이어 대신 line의 native Matplotlib `drawstyle`
   (`default`/`steps`/`steps-pre`/`steps-mid`/`steps-post`) 옵션으로 구현
-- **rug plot**: kde/hist 옆에 관측값 표시하는 작은 눈금
+- **(완료) rug**: native Matplotlib 눈금으로 x축 관측값을 표시하는
+  kde/hist 동반 레이어; 그룹에는 중복 선 스타일도 적용
 
 각 추가는 지난 두 배치와 같은 체크리스트를 따름: LayerSpec 필드 →
 capabilities.LAYER_TYPES → render.py 구현 → validate.py 검사 →
@@ -34,7 +35,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 ## 2. 대시보드/에디터 완성도
 
 - **(완료)** `capabilities.LAYER_TYPES` 기반 범용 advanced 폼으로 등록된
-  레이어 21종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
+  레이어 22종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
   안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
 - **(완료)** 멀티패널 격자, 활성 패널 선택, 패널별 add/remove/edit,
   2-D/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
@@ -54,7 +55,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 ## 3. Rust 인터랙티브 에디터 (M13)
 
 Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 미뤄둔
-작업. 이제 액션 25종, 레이어 21종이 실전 검증됐으니 착수 가능:
+작업. 이제 액션 25종, 레이어 22종이 실전 검증됐으니 착수 가능:
 
 1. 새 크레이트, `serde`로 `schemas/figure_spec.schema.json` 미러링
 2. `axum` + `askama`로 `dashboard/editor_server.py`의 라우트 재구현

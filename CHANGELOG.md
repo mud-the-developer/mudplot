@@ -11,10 +11,14 @@ All notable changes to this project are documented here.
   `steps-mid`). This remains one `line` layer rather than introducing a
   duplicate plot type; invalid drawstyles and drawstyle on non-line layers
   fail validation.
+- Added an x-axis `rug` layer using native Matplotlib tick collections, with
+  grouping, labels/references, colour, alpha, width, and line-style support.
+- Grouped KDE curves now cycle redundant line styles as well as colours, so
+  they remain distinguishable in grayscale.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 21 registered
+- Added a capabilities-driven advanced layer form covering all 22 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.

@@ -46,7 +46,7 @@
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 506개 + 실제 브라우저 테스트 10개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 508개 + 실제 브라우저 테스트 10개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -58,8 +58,8 @@
 - [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 순수 reducer +
       action + store (`Store.undo()`/`redo()`) — render/io/preview 등
       effect는 가장자리로 분리
-- [x] 렌더러: 레이어 21종(line/scatter/bar/errorbar/band/hline/vline/text/
-      annotate/hist/box/violin/kde/heatmap/contour/contourf/pie/scatter3d/
+- [x] 렌더러: 레이어 22종(line/scatter/bar/errorbar/band/hline/vline/text/
+      annotate/hist/box/violin/kde/rug/heatmap/contour/contourf/pie/scatter3d/
       line3d/surface/wireframe), 멀티패널 레이아웃, 보조 y축, 공유축,
       despine, 외부 범례, 연속값 컬러매핑 + colorbar
 - [x] **TeX 대응 크기 지정과 겹치지 않는 레이아웃**: `.tex_size(preset,
@@ -105,7 +105,7 @@
       편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로 PDF/SVG 내보내기
 - [x] 실제 브라우저 테스트(Playwright, 선택적 `browser` extra) — HTML
       검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
-- [x] capabilities 기반 advanced 폼으로 등록된 레이어 21종 모두 지원;
+- [x] capabilities 기반 advanced 폼으로 등록된 레이어 22종 모두 지원;
       향후 registry 추가도 자동 반영. htmx로 전체 페이지 reload 없이 app
       fragment만 갱신
 - [ ] Rust 인터랙티브 에디터 (별도 크레이트) — `ROADMAP.md` §3 참고
@@ -170,7 +170,7 @@ import mudplot as mp
 
 ### 지원하는 플롯 종류
 
-기본(line/scatter/bar/errorbar/band), 분포(hist/box/violin/kde),
+기본(line/scatter/bar/errorbar/band), 분포(hist/box/violin/kde/rug),
 2D 필드(heatmap/contour/contourf), 3D(scatter3d/line3d/surface/wireframe),
 주석(hline/vline/text/annotate), pie. `line(..., drawstyle="steps-post")`
 (`steps`/`steps-pre`/`steps-mid` 포함)으로 계단선을 그릴 수 있습니다. 항상
