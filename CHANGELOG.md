@@ -87,6 +87,10 @@ All notable changes to this project are documented here.
   intersection instead of the customary independently rounded cutoff pair.
   This removes its tiny discontinuity and preserves gamma/Lab/LCh round-trips
   at and around the `0.04045` boundary; Hypothesis found the failing value.
+- Layer column fields are now checked against the capability contract before
+  rendering: unsupported fields, non-string names, and empty optional names
+  produce clear validation issues instead of ignored settings or `KeyError`.
+  The audit also fixed `bar` capabilities omitting its implemented `group`.
 
 ## [0.5.0] - 2026-09-14
 

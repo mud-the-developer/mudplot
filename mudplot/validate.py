@@ -68,17 +68,6 @@ _COLUMN_FIELDS = (
     "v",
     "z",
 )
-_NO_COLUMN_TYPES = {
-    "hline",
-    "vline",
-    "text",
-    "annotate",
-    "heatmap",
-    "contour",
-    "contourf",
-    "surface",
-    "wireframe",
-}
 _VALID_SPINE_CHARS = set("LRTB")
 _POINT_TYPES = {"text", "annotate"}  # layers whose ``at``/``to`` is [x, y]
 _MATRIX_LAYER_TYPES = {"heatmap", "contour", "contourf", "surface", "wireframe"}
@@ -456,7 +445,7 @@ def validate(spec: FigureSpec) -> list[str]:
             required = LAYER_TYPES[layer.type]["required"]
             for field_name in required:
                 val = getattr(layer, field_name, None)
-                if val in (None, ""):
+                if val is None or (isinstance(val, str) and val == ""):
                     issues.append(f"{where}: missing required field {field_name!r}")
 
             if layer.type in _3D_ONLY_TYPES and panel.projection != "3d":
@@ -474,13 +463,30 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: {layer.type!r} is not supported on a polar panel; "
                     f"supported: {sorted(_POLAR_TYPES)}"
                 )
-            # x/y/y2/yerr/xerr/group/c hold column *names* for series-like
-            # layers; a few layer types don't reference columns at all
-            if layer.type not in _NO_COLUMN_TYPES:
-                for col_field in _COLUMN_FIELDS:
-                    val = getattr(layer, col_field, None)
-                    if val:
-                        _check_column(cols, val, where, issues)
+            # Capabilities are the contract for which LayerSpec column-name
+            # fields each layer actually interprets. Reject ignored fields and
+            # malformed optional names before they become renderer KeyErrors.
+            supported_fields = set(required) | set(LAYER_TYPES[layer.type]["optional"])
+            for col_field in _COLUMN_FIELDS:
+                val = getattr(layer, col_field, None)
+                empty = val is None or (isinstance(val, str) and val == "")
+                if col_field not in supported_fields:
+                    if not empty:
+                        issues.append(
+                            f"{where}: {col_field} is not supported for {layer.type}"
+                        )
+                elif empty:
+                    if col_field not in required and val == "":
+                        issues.append(
+                            f"{where}: {col_field} must be a non-empty column "
+                            "name or None"
+                        )
+                elif not isinstance(val, str):
+                    issues.append(
+                        f"{where}: {col_field} must be a non-empty column name"
+                    )
+                else:
+                    _check_column(cols, val, where, issues)
 
             if (
                 layer.type in _MATRIX_LAYER_TYPES
@@ -492,8 +498,6 @@ def validate(spec: FigureSpec) -> list[str]:
                 )
 
             if layer.type == "quiver":
-                if layer.group is not None:
-                    issues.append(f"{where}: group is not supported for quiver")
                 u_name, v_name = layer.u, layer.v
                 if (
                     layer.x in cols
@@ -527,10 +531,6 @@ def validate(spec: FigureSpec) -> list[str]:
                     issues.append(f"{where}: colorbar requires a c column")
 
             if layer.type in _BIVARIATE_DENSITY_TYPES:
-                if layer.group is not None:
-                    issues.append(
-                        f"{where}: group is not supported for bivariate density layers"
-                    )
                 if layer.x in cols and layer.y in cols:
                     values = [*cols[layer.x], *cols[layer.y]]
                     if not values:

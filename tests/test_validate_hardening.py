@@ -70,6 +70,21 @@ def test_alpha_boundary_values_pass():
         assert mp.validate(p.spec) == []
 
 
+def test_column_contract_rejects_empty_or_ignored_names_without_false_positives():
+    data = {"x": [1, 2], "y": [3, 4], "g": ["A", "B"]}
+    empty_group = mp.plot(data).line("x", "y", group="")
+    empty_color = mp.plot(data).scatter("x", "y", c="")
+    ignored_yerr = mp.plot(data).line("x", "y", yerr="y")
+
+    assert any("group must be" in issue for issue in mp.validate(empty_group.spec))
+    assert any("c must be" in issue for issue in mp.validate(empty_color.spec))
+    assert any(
+        "yerr is not supported" in issue for issue in mp.validate(ignored_yerr.spec)
+    )
+    assert mp.validate(mp.plot(data).hist("x").spec) == []
+    assert mp.validate(mp.plot(data).bar("x", "y", group="g").spec) == []
+
+
 def test_text_at_wrong_length_caught():
     p = mp.plot({}).text("hi", at=[1, 2, 3])
     issues = mp.validate(p.spec)

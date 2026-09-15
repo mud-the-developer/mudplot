@@ -52,7 +52,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 532 non-browser tests passing (+11 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 534 non-browser tests passing (+11 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado

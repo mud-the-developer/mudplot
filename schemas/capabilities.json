@@ -114,6 +114,7 @@
         "y"
       ],
       "optional": [
+        "group",
         "label",
         "color",
         "alpha",

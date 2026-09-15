@@ -84,7 +84,10 @@ Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 �
 - **(완료)** `CONTRIBUTING.md` / `CONTRIBUTING.ko.md` — 개발 환경,
   PR 전 검사, 브라우저/TeX 선택 설정, 스키마 재생성, 의존성 경계,
   테스트·문서 관례
-- DESIGN.md가 길어졌으니 ARCHITECTURE.md로 분리 검토
+- **(완료)** capability 기반 column 계약 — 잘못됐거나 지원하지 않는
+  column 필드를 렌더 전에 거부하고 groupable/routable 집합을 계약 테스트로 고정
+- **(보류)** DESIGN.md 분리 — 현재 목차로 충분하며 탐색/리뷰 비용이 실제로
+  커질 때 audit 이력을 CHANGELOG.md로 이동. 파일 분리 자체는 사용자 가치가 없음
 
 ## 5. 패키징/릴리스
 

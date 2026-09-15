@@ -417,6 +417,9 @@ tests/
       재사용하고 unsupported 레이어·y2를 거부. capability/dashboard/실제
       브라우저가 projection 3종을 노출하며 shared axis는 Cartesian끼리만 연결.
       radial label은 출판 글꼴에서 겹치지 않는 90° ray에 배치.
+- [x] M12p: capability 기반 column 계약으로 unsupported 필드와 잘못된
+      optional column 이름을 렌더 전에 거부. grouped-bar metadata 누락도
+      수정하고 정확한 계약 테스트로 고정.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

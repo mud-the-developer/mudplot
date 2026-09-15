@@ -108,7 +108,7 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
     },
     "bar": {
         "required": ["x", "y"],
-        "optional": ["label", "color", "alpha", "axis"],
+        "optional": ["group", "label", "color", "alpha", "axis"],
     },
     "errorbar": {
         "required": ["x", "y"],

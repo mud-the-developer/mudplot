@@ -17,7 +17,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `bar`
 
 - **required**: `x`, `y`
-- **optional**: `label`, `color`, `alpha`, `axis`
+- **optional**: `group`, `label`, `color`, `alpha`, `axis`
 
 ### `box`
 

@@ -63,6 +63,29 @@ def test_every_renderer_type_is_advertised_in_capabilities():
         )
 
 
+def test_group_field_advertised_exactly_for_groupable_types():
+    groupable = {
+        "line",
+        "regplot",
+        "scatter",
+        "stripplot",
+        "stackplot",
+        "bar",
+        "errorbar",
+        "band",
+        "hist",
+        "box",
+        "violin",
+        "kde",
+        "rug",
+        "scatter3d",
+        "line3d",
+    }
+    for layer_type, spec in LAYER_TYPES.items():
+        fields = set(spec["required"] + spec["optional"])
+        assert ("group" in fields) == (layer_type in groupable), layer_type
+
+
 def test_axis_field_advertised_exactly_for_routable_types():
     """Every type that actually supports axis="y2" routing (per
     validate._AXIS_ROUTABLE_TYPES) must say so in capabilities(), and no

@@ -561,6 +561,9 @@ tests/
       browser paths expose all three projections, mixed grids share axes only
       among Cartesian panels, and radial labels move to a non-overlapping 90°
       ray for publication-sized fonts.
+- [x] M12p: capability-driven column contracts reject unsupported fields and
+      malformed optional column names before rendering; grouped-bar metadata
+      now matches its implemented behavior, guarded by an exact contract test.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

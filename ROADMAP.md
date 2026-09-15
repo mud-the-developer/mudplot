@@ -134,11 +134,12 @@ exercised through it, a reasonable first slice:
 - **(done)** `CONTRIBUTING.md` / `CONTRIBUTING.ko.md`: development setup,
   pre-PR checks, optional browser/TeX setup, schema regeneration, dependency
   boundaries, and the testing/documentation conventions.
-- Consider whether `DESIGN.md` (now fairly long, spanning original
-  architecture + two rounds of bug-audit narrative) should be split: a
-  leaner `ARCHITECTURE.md` for the design itself, with the bug-audit
-  history moved into (or cross-linked from) `CHANGELOG.md` where it
-  arguably belongs longer-term.
+- **(done)** Capability-driven column contracts: validation rejects malformed
+  or unsupported column fields before rendering, and consistency tests pin
+  the exact groupable/routable layer sets.
+- **(deferred)** Splitting `DESIGN.md`: its table of contents is sufficient;
+  move audit history to `CHANGELOG.md` only when navigation or review becomes
+  measurably painful. A file split alone adds churn, not user value.
 
 ## 5. Packaging / release
 
