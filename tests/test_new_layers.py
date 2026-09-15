@@ -1,5 +1,5 @@
 """Tests for the expanded layer coverage: 3-D (scatter3d/line3d/surface/
-wireframe), violin, kde, rug, regplot, pie, contour/contourf.
+wireframe), violin, kde, rug, regplot, stripplot, pie, contour/contourf.
 """
 
 from typing import Any, cast
@@ -150,6 +150,29 @@ def test_kde_grouped_gives_two_redundantly_styled_curves():
     assert lines[0].get_linestyle() != lines[1].get_linestyle()
 
 
+def test_stripplot_jitter_is_bounded_and_reproducible():
+    data = {"category": ["A", "A", "A", "B", "B"], "value": [1, 2, 3, 4, 5]}
+    p = mp.plot(data).stripplot("category", "value", jitter=0.1)
+    assert mp.validate(p.spec) == []
+
+    first_collection = cast(Any, render(p.spec).axes[0].collections[0])
+    second_collection = cast(Any, render(p.spec).axes[0].collections[0])
+    first = np.asarray(first_collection.get_offsets())[:, 0]
+    second = np.asarray(second_collection.get_offsets())[:, 0]
+    centers = np.array([0, 0, 0, 1, 1])
+    assert np.array_equal(first, second)
+    assert np.all(np.abs(first - centers) <= 0.1)
+    assert np.any(first != centers)
+
+
+def test_stripplot_rejects_bad_or_misplaced_jitter():
+    data = {"x": [0, 1], "y": [1, 2]}
+    too_wide = mp.plot(data).stripplot("x", "y", jitter=0.6)
+    wrong_layer = mp.plot(data).line("x", "y", jitter=0.1)
+    assert any("jitter must be" in issue for issue in mp.validate(too_wide.spec))
+    assert any("only applies" in issue for issue in mp.validate(wrong_layer.spec))
+
+
 def test_regplot_renders_polynomial_fit_and_opt_in_confidence_band():
     data = {"x": [-2, -1, 0, 1, 2], "y": [4.2, 1.0, 0.1, 1.1, 3.9]}
     p = mp.plot(data).regplot("x", "y", degree=2, confidence=95)
@@ -268,6 +291,7 @@ def test_new_types_appear_in_capabilities():
     caps = mp.capabilities()
     for t in (
         "regplot",
+        "stripplot",
         "scatter3d",
         "line3d",
         "surface",
@@ -286,6 +310,7 @@ def test_new_types_all_pass_validate_when_built_correctly():
     data = {"x": [0, 1, 2], "y": [0, 1, 2], "z": [0, 1, 2], "cat": ["a", "b", "c"]}
     specs = [
         mp.plot(data).regplot("x", "y").spec,
+        mp.plot(data).stripplot("cat", "y").spec,
         mp.plot(data).projection3d().scatter3d("x", "y", "z").spec,
         mp.plot(data).projection3d().line3d("x", "y", "z").spec,
         mp.plot({}).matrix("m", _matrix_data()).projection3d().surface("m").spec,

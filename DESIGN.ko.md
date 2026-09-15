@@ -402,6 +402,9 @@ tests/
 - [x] M12j: `regplot`(총 23종) — 관측값 + 스케일링한 다항 최소제곱 fit +
       선택적 평균 fit 정규근사 신뢰구간. 순수 validator가 fit 전제조건을
       검사하며 NumPy는 effect 전용으로 유지하고 SciPy는 추가하지 않음.
+- [x] M12k: 재현 가능한 카테고리/원자료 `stripplot`(총 24종). 기존 series
+      renderer의 팔레트·grouping·reference·y2 routing·중복 marker를 재사용.
+      swarm 충돌 packing은 overlap 필요가 측정될 때까지 보류.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

@@ -150,6 +150,33 @@ class Plot:
             )
         )
 
+    def stripplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        jitter: float = 0.15,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Plot raw observations with deterministic horizontal jitter."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="stripplot",
+                    x=x,
+                    y=y,
+                    jitter=jitter,
+                    group=group,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def heatmap(
         self,
         matrix: str,

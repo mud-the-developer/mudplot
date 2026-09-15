@@ -223,8 +223,8 @@ class ReferenceSpec(SpecBase):
 @dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
-    # | hist | box | heatmap | violin | kde | rug | regplot | pie | contour
-    # | contourf | scatter3d | line3d | surface | wireframe
+    # | hist | box | heatmap | violin | kde | rug | regplot | stripplot | pie
+    # | contour | contourf | scatter3d | line3d | surface | wireframe
     type: str = "line"
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name
@@ -246,6 +246,7 @@ class LayerSpec(SpecBase):
     drawstyle: str = "default"  # default | steps | steps-pre/mid/post (line only)
     marker: str | None = None
     marker_size: float | None = None
+    jitter: float | None = None  # stripplot x jitter; None uses 0.15
     alpha: float = 1.0
     # error bars
     yerr: str | None = None  # column of symmetric y errors

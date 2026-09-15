@@ -541,6 +541,10 @@ tests/
       polynomial least-squares fit and optional normal-approximation
       confidence band for the mean fit. Fit preconditions are checked by the
       pure validator; NumPy remains effect-only and SciPy was not added.
+- [x] M12k: deterministic categorical/raw-data `stripplot` (24 layer types
+      total), reusing the series renderer, palette, grouping, references,
+      y2 routing, and redundant marker cycle. Swarm collision-packing remains
+      deferred until overlap is a measured need.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

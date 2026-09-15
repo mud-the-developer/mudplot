@@ -22,7 +22,15 @@ from .validate import assert_valid
 __all__ = ["render", "save"]
 
 # layer types that draw one or more x/y series (and support ``group``)
-_SERIES_TYPES = {"line", "regplot", "scatter", "bar", "errorbar", "band"}
+_SERIES_TYPES = {
+    "line",
+    "regplot",
+    "scatter",
+    "stripplot",
+    "bar",
+    "errorbar",
+    "band",
+}
 # layer types that draw a distribution of a single column (support ``group``)
 _DIST_TYPES = {"hist", "box", "violin", "kde", "rug"}
 # layer types that draw a 2-D matrix
@@ -319,6 +327,7 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
     x_all = _x_values(target, data_cols, layer.x)
     norm = _color_norm(data_cols, layer) if layer.c is not None else None
     sc = None
+    jitter_rng = np.random.default_rng(0)  # deterministic export/re-render
 
     for series_i, (label, mask) in enumerate(masks):
         x = x_all[mask]
@@ -395,6 +404,18 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                     marker=marker or "o",
                     alpha=layer.alpha,
                 )
+        elif layer.type == "stripplot":
+            color = layer.color or next(color_iter)
+            jitter = 0.15 if layer.jitter is None else layer.jitter
+            target.scatter(
+                x + jitter_rng.uniform(-jitter, jitter, size=len(x)),
+                y,
+                label=label,
+                color=color,
+                s=(layer.marker_size or 6) ** 2,
+                marker=marker or "o",
+                alpha=layer.alpha,
+            )
         elif layer.type == "bar":
             color = layer.color or next(color_iter)
             hatch = next(hatch_cycle)

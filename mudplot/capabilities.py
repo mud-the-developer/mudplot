@@ -70,6 +70,19 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "stripplot": {
+        "required": ["x", "y"],
+        "optional": [
+            "jitter",
+            "group",
+            "label",
+            "color",
+            "marker",
+            "marker_size",
+            "alpha",
+            "axis",
+        ],
+    },
     "bar": {
         "required": ["x", "y"],
         "optional": ["label", "color", "alpha", "axis"],

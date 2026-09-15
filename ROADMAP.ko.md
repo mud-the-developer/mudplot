@@ -10,7 +10,7 @@
 
 ## 1. 플롯 종류 더 추가 (matplotlib/seaborn 근접, 계속)
 
-현재 23종 지원: line, regplot, scatter, bar, errorbar, band, hist, box, violin,
+현재 24종 지원: line, regplot, scatter, stripplot, bar, errorbar, band, hist, box, violin,
 kde, rug, heatmap, contour, contourf, pie, hline, vline, text, annotate,
 scatter3d, line3d, surface, wireframe.
 
@@ -18,7 +18,10 @@ scatter3d, line3d, surface, wireframe.
 
 - **(완료) regplot**: scatter + 수치 스케일링한 선형/다항 `numpy.polyfit` +
   명시적으로 요청한 평균 fit 정규근사 신뢰구간; SciPy 의존성 없음
-- **stripplot/swarmplot**: 카테고리형 산점도 (seaborn 스타일)
+- **(완료) stripplot**: 범위 제한·고정 seed의 재현 가능한 수평 jitter,
+  grouping, 중복 marker를 지원하는 카테고리/원자료 산점도
+- **swarmplot**: 충돌 회피 packing이 실제로 필요할 때 추가; 지금은 복잡하고
+  취약한 근사 구현 대신 stripplot 유지
 - **stackplot**: 누적 영역 그래프 (다른 레이어와 달리 전체 시리즈를 한
   번에 넘겨야 해서 별도 처리 필요)
 - **hist2d/hexbin**: 2변량 밀도/카운트
@@ -36,7 +39,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 ## 2. 대시보드/에디터 완성도
 
 - **(완료)** `capabilities.LAYER_TYPES` 기반 범용 advanced 폼으로 등록된
-  레이어 23종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
+  레이어 24종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
   안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
 - **(완료)** 멀티패널 격자, 활성 패널 선택, 패널별 add/remove/edit,
   2-D/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
@@ -56,7 +59,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 ## 3. Rust 인터랙티브 에디터 (M13)
 
 Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 미뤄둔
-작업. 이제 액션 25종, 레이어 23종이 실전 검증됐으니 착수 가능:
+작업. 이제 액션 25종, 레이어 24종이 실전 검증됐으니 착수 가능:
 
 1. 새 크레이트, `serde`로 `schemas/figure_spec.schema.json` 미러링
 2. `axum` + `askama`로 `dashboard/editor_server.py`의 라우트 재구현

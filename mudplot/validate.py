@@ -42,6 +42,7 @@ _AXIS_ROUTABLE_TYPES = {
     "line",
     "regplot",
     "scatter",
+    "stripplot",
     "bar",
     "errorbar",
     "band",
@@ -431,6 +432,13 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
                 )
+
+            if layer.type == "stripplot":
+                jitter = 0.15 if layer.jitter is None else layer.jitter
+                if not _finite(jitter) or not (0 <= jitter <= 0.5):
+                    issues.append(f"{where}: jitter must be between 0 and 0.5")
+            elif layer.jitter is not None:
+                issues.append(f"{where}: jitter only applies to stripplot layers")
 
             if layer.type == "regplot":
                 if type(layer.degree) is not int or not (1 <= layer.degree <= 10):

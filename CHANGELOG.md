@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added deterministic `stripplot` as the 24th layer type. It supports
+  categorical/numeric x values, bounded horizontal jitter, grouping,
+  references, secondary-y routing, and redundant markers; a fixed local RNG
+  keeps point coordinates reproducible across repeated renders without global state.
 - Added `regplot`: observations plus a numerically scaled linear/polynomial
   NumPy fit, with an explicit opt-in normal-approximation confidence band for
   the mean fit. Validation catches invalid degree/CI values, nonnumeric data,
@@ -23,7 +27,7 @@ All notable changes to this project are documented here.
 
 ### Dashboard
 
-- Added a capabilities-driven advanced layer form covering all 23 registered
+- Added a capabilities-driven advanced layer form covering all 24 registered
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.
