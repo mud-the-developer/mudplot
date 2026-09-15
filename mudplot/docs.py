@@ -52,6 +52,11 @@ def _themes_section(caps: dict) -> str:
     return "\n".join(lines)
 
 
+def _projections_section(caps: dict) -> str:
+    values = ", ".join(f"`{name}`" for name in caps["projections"])
+    return f"## Panel projections\n\nAvailable: {values}.\n"
+
+
 def _palettes_section(caps: dict) -> str:
     lines = ["## Palettes\n"]
     lines.append(
@@ -107,6 +112,7 @@ def reference_markdown() -> str:
         _layers_section(caps),
         _palettes_section(caps),
         _themes_section(caps),
+        _projections_section(caps),
         _tex_section(caps),
         _actions_section(caps),
     ]

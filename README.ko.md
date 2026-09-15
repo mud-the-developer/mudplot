@@ -46,7 +46,7 @@
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 527개 + 실제 브라우저 테스트 10개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 532개 + 실제 브라우저 테스트 11개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -102,7 +102,7 @@
       의존성 없음), 미리보기 위에서 범례·제목·주석을 마우스나 화살표
       키로 직접 드래그하는 핸들
 - [x] 캔버스 중심 레이아웃, 멀티패널 편집(격자 + 활성 패널), 제목·reference,
-      x/y/z축(scale, 고정/자동 limits, 보조 y축, 2-D/3-D projection) 직접
+      x/y/z축(scale, 고정/자동 limits, 보조 y축, Cartesian/polar/3-D projection) 직접
       편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로 PDF/SVG 내보내기
 - [x] 실제 브라우저 테스트(Playwright, 선택적 `browser` extra) — HTML
       검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
@@ -172,7 +172,7 @@ import mudplot as mp
 ### 지원하는 플롯 종류
 
 기본(line/regplot/scatter/bar/errorbar/band/stackplot), 분포(hist/box/violin/kde/rug/stripplot),
-2D 필드(heatmap/contour/contourf/hist2d/hexbin), 벡터장(quiver), 3D(scatter3d/line3d/surface/wireframe),
+2D 필드(heatmap/contour/contourf/hist2d/hexbin), 벡터장(quiver), polar line/scatter/bar(`.projection_polar()`), 3D(scatter3d/line3d/surface/wireframe),
 주석(hline/vline/text/annotate), pie. `line(..., drawstyle="steps-post")`
 (`steps`/`steps-pre`/`steps-mid` 포함)으로 계단선을 그릴 수 있습니다.
 `regplot("x", "y", degree=2, confidence=95)`의 신뢰구간은 prediction

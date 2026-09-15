@@ -127,7 +127,7 @@ class SetSecondaryAxis:
 
 @dataclass(frozen=True)
 class SetProjection:
-    projection: str  # "2d" | "3d"
+    projection: str  # "2d" | "polar" | "3d"
     panel: int = 0
 
 

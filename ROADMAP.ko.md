@@ -30,7 +30,8 @@ scatter3d, line3d, surface, wireframe.
   bin/grid/count 설정 검증
 - **(완료) 2-D quiver**: numeric x/y + u/v, data-coordinate 화살표,
   magnitude 색상/colorbar, y2, scale/width 보정 지원. 3-D u/v/w는 보류
-- **polar**: `projection="polar"` 패널 옵션
+- **(완료) polar**: `projection="polar"`/`.projection_polar()`에서 native
+  line/scatter/bar 지원; 그 외 레이어와 y2는 명확히 거부
 - **(완료) step**: 별도 레이어 대신 line의 native Matplotlib `drawstyle`
   (`default`/`steps`/`steps-pre`/`steps-mid`/`steps-post`) 옵션으로 구현
 - **(완료) rug**: native Matplotlib 눈금으로 x축 관측값을 표시하는
@@ -46,7 +47,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   레이어 28종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
   안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
 - **(완료)** 멀티패널 격자, 활성 패널 선택, 패널별 add/remove/edit,
-  2-D/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
+  Cartesian/polar/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
 - **(완료)** 저장된 `.mplot.json` 열기. 잘못된 spec은 기존 그림을
   유지하면서 오류 표시
 - **(완료)** 패널별 title/reference, x/y 라벨·scale·고정/자동 limits,
@@ -63,7 +64,8 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 ## 3. Rust 인터랙티브 에디터 (M13)
 
 Python 프로토타입이 action/JSON 계약을 충분히 검증할 때까지 미뤄둔
-작업. 이제 액션 25종, 레이어 28종이 실전 검증됐으니 착수 가능:
+작업. 이제 액션 25종, 레이어 28종, 패널 projection 3종이 실전 검증됐으니
+착수 가능:
 
 1. 새 크레이트, `serde`로 `schemas/figure_spec.schema.json` 미러링
 2. `axum` + `askama`로 `dashboard/editor_server.py`의 라우트 재구현

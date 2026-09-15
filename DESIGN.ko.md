@@ -226,12 +226,12 @@ mp.save(spec, "fig.pdf")          # effect
 정적 파일이며, CI에서 항상 최신 생성 결과와 diff해 드리프트를 막는다
 (Rust 쪽이 신뢰할 수 있는 단일 스키마 소스).
 
-## 4f. 확장된 플롯 지원 (3D, 분포, 2D 필드, 파이)
+## 4f. 확장된 플롯 지원 (3D/polar, 분포, 2D 필드, 파이)
 
 matplotlib/seaborn급 범위에 가까워지도록 3D(`scatter3d`/`line3d`/`surface`/
 `wireframe`), 분포(`violin`/`kde`), 2D 필드(`contour`/`contourf`), `pie`를
-추가했다. 3D는 패널에 `projection="3d"`를 설정하면 되고, 2D 패널과 한
-그림에 섞어 쓸 수 있다. `kde`는 scipy 없이 numpy로 직접 구현한 가우시안
+추가했다. 패널은 `projection="2d" | "polar" | "3d"`이며 Cartesian,
+polar, 3D를 한 그림에 섞을 수 있고 shared axis는 Cartesian끼리만 연결한다. `kde`는 scipy 없이 numpy로 직접 구현한 가우시안
 커널 밀도 추정이다. 자세한 아키텍처 설명은 영어 DESIGN.md §4f 참고.
 
 ## 5. 직관적 API 원칙
@@ -412,7 +412,11 @@ tests/
       bin/grid/count 제약을 순수 validator에서 검사. 전체 Hypothesis 실행이
       `0.04045`의 반올림 sRGB transfer 경계 불연속도 발견·수정.
 - [x] M12n: 2-D native `quiver` 벡터장(총 28종). numeric x/y/u/v 검증,
-      optional 연속색/colorbar, y2/reference와 물리 scale/width 보정 knob 지원.
+      optional 연속색/colorbar, y2/reference와 명시적 scale/width 보정 knob 지원.
+- [x] M12o: native polar panel(`projection="polar"`). line/scatter/bar를
+      재사용하고 unsupported 레이어·y2를 거부. capability/dashboard/실제
+      브라우저가 projection 3종을 노출하며 shared axis는 Cartesian끼리만 연결.
+      radial label은 출판 글꼴에서 겹치지 않는 90° ray에 배치.
 - [ ] M13: Rust askama+tokio+htmx 에디터 (별도 크레이트)
 
 ## 9. 검증 기준

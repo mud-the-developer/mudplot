@@ -309,23 +309,23 @@ can call `mp.validate(spec)` themselves to self-check before rendering.
 always diffs them against a fresh generation to prevent drift (giving the
 Rust side one trustworthy schema source).
 
-## 4f. Expanded plot coverage (3-D, distributions, 2-D fields, pie)
+## 4f. Expanded plot coverage (3-D/polar, distributions, 2-D fields, pie)
 
 To get closer to matplotlib/seaborn's breadth, the renderer grew a fourth
 family of layers beyond the original "series/distribution/matrix/marker"
 set:
 
 - **3-D** (`scatter3d`, `line3d`, `surface`, `wireframe`): a `PanelSpec`
-  now carries `projection: "2d" | "3d"` and an optional `z: AxisSpec`.
+  now carries `projection: "2d" | "polar" | "3d"` and an optional
+  `z: AxisSpec` for 3-D.
   Because `plt.subplots()` can't give individual panels their own
   projection, `render()` was restructured to build the grid with
   `fig.add_gridspec()` + one `fig.add_subplot(gs[r, c], projection=...)`
-  call per panel, so 2-D and 3-D panels can coexist in one figure.
-  `sharex`/`sharey` ("none"/"all"/"row"/"col") is re-implemented manually
-  via `Axes.sharex`/`sharey` afterwards, since `plt.subplots()`'s
-  convenience keyword isn't available with per-panel projections, and
-  sharing is skipped entirely once any panel in the figure is 3-D (it
-  isn't meaningful there).
+  call per panel, so Cartesian, polar, and 3-D panels can coexist in one
+  figure. `sharex`/`sharey` ("none"/"all"/"row"/"col") is re-implemented
+  manually via `Axes.sharex`/`sharey` afterwards, since `plt.subplots()`'s
+  convenience keyword isn't available with per-panel projections; links
+  apply only among Cartesian 2-D panels.
 - **Distributions**: `violin` (extends the existing box-plot data
   collection) and `kde` (a small numpy-only Gaussian density estimate,
   Scott's rule bandwidth — deliberately not using `scipy.stats.gaussian_kde`
@@ -556,6 +556,11 @@ tests/
 - [x] M12n: 2-D native `quiver` vector fields (28 layer types total), with
       numeric x/y/u/v validation, optional continuous colour/colorbar, y2 and
       references, plus explicit scale/shaft-width calibration knobs.
+- [x] M12o: native polar panels (`projection="polar"`), reusing line/scatter/
+      bar while rejecting unsupported layers and y2; capability/dashboard/
+      browser paths expose all three projections, mixed grids share axes only
+      among Cartesian panels, and radial labels move to a non-overlapping 90°
+      ray for publication-sized fonts.
 - [ ] M13: Rust askama+tokio+htmx editor (separate crate)
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond

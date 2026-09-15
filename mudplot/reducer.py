@@ -168,7 +168,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetProjection(projection=proj, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].projection = proj
-            if proj == "2d":
+            if proj != "3d":
                 s.panels[pi].z = None
         case A.SetZAxis(label=label, scale=scale, limits=limits, panel=pi):
             _ensure_panel(s, pi)

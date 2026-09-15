@@ -39,9 +39,10 @@ papers:
   data-coordinate arrow angles, optional magnitude colouring/colorbar, y2,
   and explicit scale/width calibration controls. Invalid vectors fail before
   Matplotlib. A 3-D u/v/w variant remains deferred.
-- **polar plots**: a `projection="polar"` panel option (parallel to the
-  existing `"3d"` one), plus whichever of the existing 2-D layer types
-  make sense on it (`line`/`scatter`/`bar` mostly do, unchanged).
+- **(done) polar panels**: `projection="polar"` / `.projection_polar()`
+  reuses native `line`/`scatter`/`bar`; other layer types and y2 fail clearly.
+  Polar panels coexist with Cartesian/3-D grids but are excluded from
+  Cartesian shared-axis links.
 - **(done) `step`**: implemented as `drawstyle` on the existing `line` layer
   (`"default"`/`"steps"`/`"steps-pre"`/`"steps-mid"`/`"steps-post"`), using
   native Matplotlib rather than adding a duplicate layer type.
@@ -77,7 +78,7 @@ while the engine supports 28 types. Concrete gaps:
   rejects typos/missing required fields, and automatically picks up future
   registry entries without another hand-maintained dropdown.
 - **(done)** Multi-panel layout controls: grid size, active-panel selection
-  for add/remove/edit operations, per-panel 2-D/3-D projection, and draggable
+  for add/remove/edit operations, per-panel Cartesian/polar/3-D projection, and draggable
   title/legend/annotation handles scoped to the selected panel.
 - **(done)** Open a saved `.mplot.json`; malformed/invalid specs leave the
   current figure untouched and report an editor error.
@@ -97,7 +98,7 @@ while the engine supports 28 types. Concrete gaps:
 
 Deferred by design until the Python prototype had exercised the action/
 JSON contract enough to trust it (see `DESIGN.md` §7 for the original
-plan). Now that the prototype has ~25 action types and 28 layer types
+plan). Now that the prototype has ~25 action types, 28 layer types, and 3 panel projections
 exercised through it, a reasonable first slice:
 
 1. New crate (e.g. `mudplot-editor/`, separate from this Python repo, or a

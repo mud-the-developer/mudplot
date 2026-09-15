@@ -18,10 +18,13 @@ __all__ = [
     "LAYER_TYPES",
     "PALETTE_KINDS",
     "PALETTE_PRESETS",
+    "PROJECTIONS",
     "capabilities",
 ]
 
 # Per-layer field guidance (what an agent should provide for each layer type).
+PROJECTIONS = ("2d", "polar", "3d")
+
 LAYER_TYPES: dict[str, dict[str, list[str]]] = {
     "line": {
         "required": ["x", "y"],
@@ -402,6 +405,7 @@ def capabilities() -> dict:
     return {
         "spec_version": _spec_version(),
         "layers": LAYER_TYPES,
+        "projections": list(PROJECTIONS),
         "themes": list(AVAILABLE_THEMES),
         "journals": list(AVAILABLE_JOURNALS),
         "palettes": PALETTE_KINDS,

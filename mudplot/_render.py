@@ -878,7 +878,7 @@ def _apply_title(ax, panel: PanelSpec) -> None:
 
 def _apply_despine(ax, theme_axes):
     for char, side in _SPINE_SIDES.items():
-        if char in theme_axes.spines and theme_axes.spine_offset:
+        if char in theme_axes.spines and theme_axes.spine_offset and side in ax.spines:
             ax.spines[side].set_position(("outward", theme_axes.spine_offset))
 
 
@@ -1162,8 +1162,10 @@ def render(spec: FigureSpec, *, fmt: str = ""):
             panel_axes = []
             for i, panel in enumerate(spec.panels):
                 r, c = divmod(i, cols)
-                projection = "3d" if panel.projection == "3d" else None
+                projection = None if panel.projection == "2d" else panel.projection
                 ax = fig.add_subplot(gs[r, c], projection=projection)
+                if projection == "polar":
+                    cast(Any, ax).set_rlabel_position(90)
                 if projection is None:
                     axes_grid[r][c] = ax
                 # Which panel this Axes came from. fig.axes also collects

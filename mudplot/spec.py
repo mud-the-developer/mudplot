@@ -318,7 +318,7 @@ class PanelSpec(SpecBase):
     y: AxisSpec = field(default_factory=AxisSpec)
     y2: AxisSpec | None = None  # secondary y-axis; None -> not created
     z: AxisSpec | None = None  # 3-D z-axis config; only used if projection="3d"
-    projection: str = "2d"  # "2d" | "3d"
+    projection: str = "2d"  # "2d" | "polar" | "3d"
     title: str = ""
     # Explicit [x, y] axes-fraction override for the title (e.g. from
     # dragging it in the interactive editor). None -> matplotlib's default

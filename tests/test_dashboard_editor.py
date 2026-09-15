@@ -276,7 +276,9 @@ def test_projection_control_targets_the_selected_panel():
     spec = FigureSpec()
     action = _build_action("set_projection", {"projection": "3d", "panel": "0"}, spec)
     assert action == A.SetProjection("3d", panel=0)
-    assert 'name="projection"' in render_page(spec, [])
+    page = render_page(spec, [])
+    assert 'name="projection"' in page
+    assert '<option value="polar">polar</option>' in page
 
 
 def test_axis_controls_build_scale_limits_secondary_and_z_actions():
@@ -312,7 +314,13 @@ def test_axis_controls_render_for_2d_and_z_controls_render_only_for_3d():
     assert 'value="set_secondary_axis"' in page_2d
     assert 'value="set_z_axis"' not in page_2d
     spec.panels[0].projection = "3d"
-    assert 'value="set_z_axis"' in render_page(spec, [])
+    page_3d = render_page(spec, [])
+    assert 'value="set_z_axis"' in page_3d
+    assert 'value="set_secondary_axis"' not in page_3d
+    spec.panels[0].projection = "polar"
+    page_polar = render_page(spec, [])
+    assert 'value="set_z_axis"' not in page_polar
+    assert 'value="set_secondary_axis"' not in page_polar
 
 
 def test_build_action_set_legend_position_preserves_other_legend_fields():

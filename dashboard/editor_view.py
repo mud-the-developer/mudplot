@@ -18,7 +18,7 @@ import html
 import json
 import math
 
-from mudplot.capabilities import LAYER_TYPES
+from mudplot.capabilities import LAYER_TYPES, PROJECTIONS
 from mudplot.spec import FigureSpec
 from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
@@ -463,7 +463,7 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
             "Active panel projection",
             _select(
                 "projection",
-                ("2d", "3d"),
+                PROJECTIONS,
                 spec.panels[active].projection if spec.panels else "2d",
             ),
         ),
@@ -694,38 +694,39 @@ def _axis_controls_panel(spec: FigureSpec, active: int) -> str:
             )
         )
 
-    secondary = panel.y2
-    secondary_label = secondary.label if secondary else ""
-    secondary_scale = secondary.scale if secondary else "linear"
-    secondary_body = (
-        _field(
-            "Label",
-            f'<input name="label" value="{_esc(secondary_label)}">',
+    if panel.projection == "2d":
+        secondary = panel.y2
+        secondary_label = secondary.label if secondary else ""
+        secondary_scale = secondary.scale if secondary else "linear"
+        secondary_body = (
+            _field(
+                "Label",
+                f'<input name="label" value="{_esc(secondary_label)}">',
+            )
+            + _field(
+                "Scale",
+                _select("scale", ("linear", "log"), secondary_scale),
+            )
+            + limits_inputs(secondary)
         )
-        + _field(
-            "Scale",
-            _select("scale", ("linear", "log"), secondary_scale),
-        )
-        + limits_inputs(secondary)
-    )
-    forms.append('<div class="field-label">Secondary Y axis</div>')
-    forms.append(
-        _hx_form(
-            "/action",
-            {"type": "set_secondary_axis"},
-            secondary_body,
-            "Apply secondary axis" if secondary else "Enable secondary axis",
-        )
-    )
-    if secondary is not None:
+        forms.append('<div class="field-label">Secondary Y axis</div>')
         forms.append(
             _hx_form(
                 "/action",
-                {"type": "clear_secondary_axis"},
-                "",
-                "Remove secondary axis",
+                {"type": "set_secondary_axis"},
+                secondary_body,
+                "Apply secondary axis" if secondary else "Enable secondary axis",
             )
         )
+        if secondary is not None:
+            forms.append(
+                _hx_form(
+                    "/action",
+                    {"type": "clear_secondary_axis"},
+                    "",
+                    "Remove secondary axis",
+                )
+            )
 
     if panel.projection == "3d":
         z_axis = panel.z

@@ -50,7 +50,7 @@ needing a separate `dashboard build` process.
   and dispatches it through the *exact same* `Store`/reducer the fluent API
   uses — there is no separate editor-only state model.
 - Load sample data; tweak theme/journal/palette; edit the grid, active panel,
-  2-D/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
+  Cartesian/polar/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
   labels, references, suptitle, and size; add common
   series/annotations through quick forms or **any of the 28 registered layer
   types** through a capabilities-driven checked-JSON form; undo/redo; or send

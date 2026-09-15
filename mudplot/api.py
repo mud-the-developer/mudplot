@@ -683,6 +683,10 @@ class Plot:
         wireframe layers)."""
         return self.dispatch(A.SetProjection("3d", panel=panel))
 
+    def projection_polar(self, *, panel: int = 0) -> Plot:
+        """Switch a panel to polar coordinates for line/scatter/bar layers."""
+        return self.dispatch(A.SetProjection("polar", panel=panel))
+
     def zlabel(
         self,
         label: str = "",

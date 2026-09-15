@@ -172,6 +172,10 @@ Available presets: paper, paper-grid, minimal, boxed.
 - **nature**: default figure size [3.5, 2.625], base font 7pt
 - **revtex**: default figure size [3.4, 2.5], base font 8pt
 
+## Panel projections
+
+Available: `2d`, `polar`, `3d`.
+
 ## TeX presets (WYSIWYG sizing)
 
 | preset | columnwidth (pt) | textwidth (pt) | font (pt) | cols |

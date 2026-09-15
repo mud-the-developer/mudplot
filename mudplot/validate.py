@@ -11,7 +11,7 @@ import math
 from itertools import pairwise
 from numbers import Real
 
-from .capabilities import LAYER_TYPES, PALETTE_PRESETS
+from .capabilities import LAYER_TYPES, PALETTE_PRESETS, PROJECTIONS
 from .spec import FigureSpec
 
 __all__ = ["assert_valid", "validate"]
@@ -91,7 +91,7 @@ _CMAP_LAYER_TYPES = {
     "hexbin",
 }
 _BIVARIATE_DENSITY_TYPES = {"hist2d", "hexbin"}
-_PROJECTIONS = {"2d", "3d"}
+_POLAR_TYPES = {"line", "scatter", "bar"}
 # layer types that only make sense on a projection="3d" panel
 _3D_ONLY_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
 
@@ -417,8 +417,8 @@ def validate(spec: FigureSpec) -> list[str]:
                     )
         for name in ("x", "y", "y2", "z"):
             _check_axis(getattr(panel, name), f"{where_axis} {name}", issues)
-        if panel.projection == "3d" and panel.y2 is not None:
-            issues.append(f"{where_axis}: secondary y-axis is not supported in 3-D")
+        if panel.projection != "2d" and panel.y2 is not None:
+            issues.append(f"{where_axis}: secondary y-axis requires projection='2d'")
         if panel.legend.location not in _LEGEND_LOCS:
             issues.append(
                 f"{where_axis}: unknown legend location {panel.legend.location!r}"
@@ -435,10 +435,10 @@ def validate(spec: FigureSpec) -> list[str]:
                 f"{where_axis}: title_position must be [x, y] finite numbers, "
                 f"got {tp!r}"
             )
-        if panel.projection not in _PROJECTIONS:
+        if panel.projection not in PROJECTIONS:
             issues.append(
                 f"{where_axis}: invalid projection {panel.projection!r}; "
-                f"valid: {sorted(_PROJECTIONS)}"
+                f"valid: {sorted(PROJECTIONS)}"
             )
         if panel.z is not None and panel.projection != "3d":
             issues.append(
@@ -468,6 +468,11 @@ def validate(spec: FigureSpec) -> list[str]:
                 issues.append(
                     f"{where}: {layer.type!r} is not a 3-D layer type; a "
                     f'"3d" panel only supports {sorted(_3D_ONLY_TYPES)}'
+                )
+            elif panel.projection == "polar" and layer.type not in _POLAR_TYPES:
+                issues.append(
+                    f"{where}: {layer.type!r} is not supported on a polar panel; "
+                    f"supported: {sorted(_POLAR_TYPES)}"
                 )
             # x/y/y2/yerr/xerr/group/c hold column *names* for series-like
             # layers; a few layer types don't reference columns at all

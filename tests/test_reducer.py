@@ -67,11 +67,12 @@ def test_secondary_axis_can_be_removed():
     assert cleared.panels[0].y2 is None
 
 
-def test_switching_back_to_2d_clears_z_axis_configuration():
+@pytest.mark.parametrize("projection", ["2d", "polar"])
+def test_switching_to_a_non_3d_projection_clears_z_axis_configuration(projection):
     spec = reduce(FigureSpec(), A.SetProjection("3d"))
     spec = reduce(spec, A.SetZAxis("Z", limits=[0, 1]))
-    spec = reduce(spec, A.SetProjection("2d"))
-    assert spec.panels[0].projection == "2d"
+    spec = reduce(spec, A.SetProjection(projection))
+    assert spec.panels[0].projection == projection
     assert spec.panels[0].z is None
 
 

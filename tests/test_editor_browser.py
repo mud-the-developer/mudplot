@@ -148,6 +148,24 @@ def test_any_layer_form_adds_registered_layer_through_htmx(editor):
     assert spec["panels"][0]["layers"][-1]["value"] == 0.5
 
 
+def test_polar_projection_switches_through_htmx_and_hides_secondary_axis(editor):
+    page, url = editor
+    form = page.locator('form:has(input[name="type"][value="set_projection"])')
+    form.locator('select[name="projection"]').select_option("polar")
+    form.get_by_role("button", name="Set projection").click()
+    _settle(page)
+
+    spec = _wait_until(
+        lambda: _spec(url),
+        lambda value: value["panels"][0]["projection"] == "polar",
+    )
+    assert spec["panels"][0]["projection"] == "polar"
+    assert (
+        page.locator('form:has(input[name="type"][value="set_secondary_axis"])').count()
+        == 0
+    )
+
+
 def test_dragging_the_legend_moves_it_and_persists(editor):
     page, url = editor
     _enable(page, "Legend", url, _legend_set(0))

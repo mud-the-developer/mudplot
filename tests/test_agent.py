@@ -7,6 +7,7 @@ def test_capabilities_shape():
     caps = mp.capabilities()
     for key in (
         "layers",
+        "projections",
         "themes",
         "journals",
         "palettes",
@@ -15,6 +16,7 @@ def test_capabilities_shape():
         "spec_version",
     ):
         assert key in caps
+    assert caps["projections"] == ["2d", "polar", "3d"]
     assert "line" in caps["layers"]
     assert "x" in caps["layers"]["line"]["required"]
     assert "AddLayer" in caps["actions"]

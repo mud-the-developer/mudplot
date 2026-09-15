@@ -6,6 +6,13 @@ All notable changes to this project are documented here.
 
 ### Features
 
+- Added native polar panels through `.projection_polar()` /
+  `SetProjection("polar")`. Line, scatter, and bar layers work unchanged;
+  unsupported layers and secondary-y axes fail validation. Polar panels can
+  coexist with Cartesian and 3-D panels, remain outside Cartesian shared-axis
+  links, and are exposed through the capability registry and dashboard. Radial
+  labels use a vertical 90° ray to avoid Matplotlib's publication-font overlap
+  at the default 22.5° position.
 - Added 2-D `quiver` vector fields as the 28th layer type: numeric x/y/u/v,
   data-coordinate arrow angles, optional continuous magnitude colour/colorbar,
   y2/reference support, and explicit scale/width calibration. Validation
@@ -44,7 +51,7 @@ All notable changes to this project are documented here.
   layer types. It documents each type's required/optional fields, accepts the
   remaining `LayerSpec` fields as JSON, and rejects malformed JSON, unknown
   fields, and missing requirements before mutating editor state.
-- Completed panel controls: per-panel 2-D/3-D projection; x/y scales and
+- Completed panel controls: per-panel Cartesian/polar/3-D projection; x/y scales and
   fixed/automatic limits; secondary-y-axis enable/configure/remove; and 3-D
   z-axis setup. `SetLimits(None, None)` now restores automatic limits and
   `SetSecondaryAxis(None)` removes y2, preserving the same action semantics

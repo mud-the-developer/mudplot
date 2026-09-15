@@ -27,7 +27,7 @@ open dashboard/site_build/index.html
 python -m dashboard serve   # http://127.0.0.1:8765/
 ```
 
-스타일/팔레트/사이즈, 멀티패널 격자·활성 패널·2-D/3-D projection,
+스타일/팔레트/사이즈, 멀티패널 격자·활성 패널·Cartesian/polar/3-D projection,
 x/y/z scale·고정/자동 limits·보조 y축, 라벨/reference 등을 폼으로
 조작하면 미리보기가 즉시 갱신되는 로컬 웹
 에디터. 빠른 폼 외에도 `capabilities.LAYER_TYPES` 기반 checked-JSON 폼으로

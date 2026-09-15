@@ -119,6 +119,54 @@ def test_mixed_2d_3d_panels_in_one_figure():
 # --------------------------------------------------------------------------
 # violin / kde
 # --------------------------------------------------------------------------
+def test_polar_panel_reuses_native_line_scatter_and_bar_layers():
+    data = {
+        "theta": [0.0, np.pi / 2, np.pi, 3 * np.pi / 2],
+        "radius": [1.0, 2.0, 1.5, 2.5],
+    }
+    p = (
+        mp.plot(data)
+        .projection_polar()
+        .line("theta", "radius")
+        .scatter("theta", "radius")
+        .bar("theta", "radius")
+    )
+    assert mp.validate(p.spec) == []
+    restored = mp.Plot.from_json(p.to_json())
+    assert restored.spec.panels[0].projection == "polar"
+    fig = render(restored.spec)
+    assert fig.axes[0].name == "polar"
+    assert cast(Any, fig.axes[0]).get_rlabel_position() == 90
+    assert len(fig.axes[0].lines) == 1
+    assert len(fig.axes[0].collections) == 1
+    assert len(fig.axes[0].patches) == 4
+
+
+def test_mixed_polar_grid_shares_only_cartesian_axes():
+    data = {"x": [0, 1], "y": [1, 2]}
+    p = (
+        mp.plot(data)
+        .layout(1, 3)
+        .line("x", "y", panel=0)
+        .projection_polar(panel=1)
+        .line("x", "y", panel=1)
+        .line("x", "y", panel=2)
+        .share(x="all")
+    )
+    fig = render(p.spec)
+    siblings = fig.axes[0].get_shared_x_axes()
+    assert siblings.joined(fig.axes[0], fig.axes[2])
+    assert not siblings.joined(fig.axes[0], fig.axes[1])
+
+
+def test_polar_panel_rejects_unsupported_layers_and_secondary_axis():
+    data = {"x": [0, 1], "y": [1, 2]}
+    unsupported = mp.plot(data).projection_polar().hist("y")
+    secondary = mp.plot(data).projection_polar().line("x", "y").secondary_yaxis("Y2")
+    assert any("not supported on a polar" in i for i in mp.validate(unsupported.spec))
+    assert any("requires projection='2d'" in i for i in mp.validate(secondary.spec))
+
+
 def test_violin_renders_and_ticks_labelled():
     data = {"v": [1, 2, 3, 4, 5, 6], "g": ["A", "A", "A", "B", "B", "B"]}
     p = mp.plot(data).violin("v", group="g")
