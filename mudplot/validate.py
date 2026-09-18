@@ -120,8 +120,14 @@ def _check_data_integrity(spec: FigureSpec, issues: list[str]) -> None:
 
 def _check_point(layer, field_name: str, where: str, issues: list[str]) -> None:
     val = getattr(layer, field_name, None)
-    if val is not None and len(val) != 2:
-        issues.append(f"{where}: {field_name!r} must be [x, y] (length 2), got {val!r}")
+    if val is None:
+        return
+    try:
+        valid = len(val) == 2 and all(_finite(value) for value in val)
+    except TypeError:
+        valid = False
+    if not valid:
+        issues.append(f"{where}: {field_name!r} must be [x, y] finite numbers")
 
 
 def _finite(value) -> bool:
@@ -471,6 +477,12 @@ def validate(spec: FigureSpec) -> list[str]:
                 val = getattr(layer, field_name, None)
                 if val is None or (isinstance(val, str) and val == ""):
                     issues.append(f"{where}: missing required field {field_name!r}")
+            if (
+                layer.type in {"hline", "vline"}
+                and layer.value is not None
+                and not _finite(layer.value)
+            ):
+                issues.append(f"{where}: value must be a finite number")
 
             if layer.type in _3D_ONLY_TYPES and panel.projection != "3d":
                 issues.append(

@@ -182,6 +182,7 @@ _USER_ERRORS = (
     RuntimeError,
     ValueError,
     TypeError,
+    OverflowError,
     RecursionError,
 )
 

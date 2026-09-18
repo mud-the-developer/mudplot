@@ -26,6 +26,9 @@ All notable changes to this project are documented here.
   useful instruction.
 - Replaced nested link/button export controls with single native download links
   and updated CLI help to advertise supported PGF output.
+- Report numeric data, coordinates, and style values outside the renderer's
+  floating-point range as clean user errors, without a CLI traceback or output
+  replacement.
 
 ## [0.6.1] - 2026-09-18
 

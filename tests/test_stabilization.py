@@ -282,12 +282,37 @@ def test_tex_context_displays_image_at_true_physical_width(monkeypatch):
     assert width_inches == pytest.approx(mp.figsize_for(mp.TEX_PRESETS["ieee"])[0] / 2)
 
 
-def test_render_and_save_failures_close_their_figures(tmp_path):
+def test_render_and_save_failures_close_their_figures(tmp_path, capsys):
     p = mp.plot({"x": [1], "y": [2]}).line("x", "y", color="not-a-color")
     before = plt.get_fignums()
     with pytest.raises(ValueError):
         p.render()
     assert plt.get_fignums() == before
+
+    huge = 10**1000
+    huge_y = mp.plot({"x": [1], "y": [huge]}).line("x", "y")
+    for plot in (
+        mp.plot({"x": [huge], "y": [1]}).line("x", "y"),
+        huge_y,
+        mp.plot({}).matrix("m", [[huge]]).heatmap("m"),
+    ):
+        with pytest.raises(ValueError, match="outside the floating-point range"):
+            plot.render()
+        assert plt.get_fignums() == before
+
+    huge_style = mp.plot({"x": [1], "y": [2]}).line("x", "y", line_width=huge)
+    for index, plot in enumerate((huge_y, huge_style)):
+        spec_path = tmp_path / f"huge-{index}.json"
+        output = tmp_path / f"figure-{index}.png"
+        mp.save_spec(plot.spec, spec_path)
+        output.write_bytes(b"keep")
+        assert main(["render", str(spec_path), str(output)]) == 1
+        error = capsys.readouterr().err
+        assert error.startswith("error:")
+        assert "Traceback" not in error
+        assert output.read_bytes() == b"keep"
+        assert plt.get_fignums() == before
+
     p = mp.plot({"x": [1], "y": [2]}).line("x", "y")
     with pytest.raises(ValueError):
         p.save(tmp_path / "figure.unsupported")

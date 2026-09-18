@@ -225,8 +225,17 @@ def _unique_stable(arr):
     return seen
 
 
+def _float_array(values, where: str):
+    try:
+        return np.asarray(values, dtype=float)
+    except OverflowError as error:
+        raise ValueError(
+            f"{where} contains a number outside the floating-point range"
+        ) from error
+
+
 def _col(data_cols, name):
-    return np.asarray(data_cols[name], dtype=float)
+    return _float_array(data_cols[name], f"column {name!r}")
 
 
 def _x_values(ax, data_cols, name):
@@ -241,6 +250,10 @@ def _x_values(ax, data_cols, name):
     raw = data_cols[name]
     try:
         return np.asarray(raw, dtype=float)
+    except OverflowError as error:
+        raise ValueError(
+            f"column {name!r} contains a number outside the floating-point range"
+        ) from error
     except (ValueError, TypeError):
         str_values = [str(v) for v in raw]
         ax.xaxis.update_units(str_values)
@@ -660,7 +673,7 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
 
 def _draw_matrix_layer(ax, spec: FigureSpec, layer: LayerSpec):
     assert layer.matrix is not None
-    matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
+    matrix = _float_array(spec.data.matrices[layer.matrix], f"matrix {layer.matrix!r}")
     cmap = _continuous_cmap(layer.cmap_kind)
     if layer.type == "heatmap":
         im = ax.imshow(matrix, aspect="auto", cmap=cmap, alpha=layer.alpha)
@@ -799,7 +812,9 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
             ax.figure.colorbar(sc, ax=ax, label=layer.clabel or "")
     elif layer.type in ("surface", "wireframe"):
         assert layer.matrix is not None
-        matrix = np.asarray(spec.data.matrices[layer.matrix], dtype=float)
+        matrix = _float_array(
+            spec.data.matrices[layer.matrix], f"matrix {layer.matrix!r}"
+        )
         ny, nx = matrix.shape
         xs, ys = np.meshgrid(np.arange(nx), np.arange(ny))
         if layer.type == "surface":

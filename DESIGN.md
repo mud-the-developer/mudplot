@@ -416,11 +416,13 @@ tests/
 
 M13 lives in the co-versioned `mudplot-editor/` crate. serde models only the
 stable versioned `FigureSpec`/action envelopes and preserves their flattened
-fields and arbitrary-precision integers. Python and Rust both reserve serde's
-internal `$serde_json::private::Number` object key; Python remains the sole
-reducer/validator through the pure-core
-`mudplot apply` CLI, avoiding a second 28-layer semantics implementation. The
-existing `mudplot render` CLI supplies PNG/PDF/SVG. axum owns one atomic local
+fields and arbitrary-precision integers. That guarantee is structural: values
+used as plot coordinates or styles must still fit the renderer's floating-point
+range and otherwise fail cleanly. Python and Rust both reserve serde's internal
+`$serde_json::private::Number` object key; Python remains the sole
+reducer/validator through the dependency-free `mudplot apply` CLI, avoiding a
+second 28-layer semantics implementation. The existing `mudplot render` CLI
+supplies the editor's PNG/PDF/SVG exports. axum owns one atomic local
 session; capabilities drive layer/theme/projection controls, and Askama renders
 htmx fragments for open/actions/history.
 

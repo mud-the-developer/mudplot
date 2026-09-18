@@ -304,11 +304,12 @@ tests/
 
 M13은 함께 versioning하는 `mudplot-editor/` crate에 있다. serde는 versioned
 `FigureSpec`/action envelope의 flattened field와 arbitrary-precision 정수를
-보존한다. serde 내부 object key `$serde_json::private::Number`는 Python/Rust
-모두 예약하며, Python pure-core `mudplot apply`가 유일한 reducer/validator로
-남아 28개 layer의 의미를
-Rust에 다시 구현하지 않는다. 기존 `mudplot render` CLI가 PNG/PDF/SVG를
-만든다. axum은 atomic 로컬 session을 관리하고 capability가 layer/theme/
+보존한다. 이는 JSON 구조 보존 계약이며, 실제 plot 좌표/style로 쓰는 값은
+renderer의 부동소수점 범위 안이어야 하고 범위를 넘으면 명확히 실패한다.
+serde 내부 object key `$serde_json::private::Number`는 Python/Rust 모두
+예약하며, Python dependency-free core `mudplot apply`가 유일한
+reducer/validator로 남아 28개 layer의 의미를 Rust에 다시 구현하지 않는다.
+기존 `mudplot render` CLI가 editor의 PNG/PDF/SVG export를 만든다. axum은 atomic 로컬 session을 관리하고 capability가 layer/theme/
 projection control을 생성하며 Askama가 open/action/history용 htmx fragment를
 렌더한다.
 

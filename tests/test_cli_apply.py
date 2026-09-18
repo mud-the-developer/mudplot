@@ -1,4 +1,4 @@
-"""The pure-core ``mudplot apply`` bridge used by non-Python editors."""
+"""The dependency-free ``mudplot apply`` bridge for non-Python editors."""
 
 import json
 
