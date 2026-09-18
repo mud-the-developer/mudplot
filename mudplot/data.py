@@ -13,31 +13,66 @@ pandas, polars, etc. Supported inputs:
 * numpy / array 2-D                 -> columns ``c0, c1, ...``
 * pyarrow Table (``.to_pydict``)   -> its dict
 * any object with ``.to_dict()``   -> its dict
-* DB-API connection + ``query=``   -> executes and reads the result set
+* DB-API connection + ``query=``/``params=`` -> parameterized result set
 * executed DB-API cursor           -> via ``.description`` + rows
 """
 
 from __future__ import annotations
 
+import math
 from collections.abc import Mapping
+from datetime import date, time
 from typing import Any
 
 __all__ = ["to_columns"]
 
 
-def _to_list(v) -> list:
-    """Coerce a column-ish value to a plain list."""
-    if isinstance(v, (list, tuple)):
-        return list(v)
-    if hasattr(v, "tolist"):  # numpy array / pandas Series / polars Series
-        out = v.tolist()
-        return out if isinstance(out, list) else list(v)
-    if isinstance(v, (str, bytes)):
-        return [v]
+def _plain_value(value):
+    """Normalize common table scalars to dependency-free JSON values."""
+    if value is None or type(value) in (bool, int, str):
+        return value
+    if isinstance(value, float):
+        return None if math.isnan(value) else value
+    value_type = type(value)
+    if value_type.__name__ == "NAType" and value_type.__module__.startswith("pandas"):
+        return None
     try:
-        return list(v)
-    except TypeError:
-        return [v]
+        if bool(value != value):  # pandas/NumPy NaT and similar sentinels
+            return None
+    except (TypeError, ValueError):
+        pass
+    if isinstance(value, (date, time)):
+        return value.isoformat()
+    item = getattr(value, "item", None)
+    if callable(item):
+        try:
+            converted = item()
+        except (TypeError, ValueError, OverflowError):
+            pass
+        else:
+            if converted is not value:
+                return _plain_value(converted)
+    return value
+
+
+def _to_list(v) -> list:
+    """Coerce a column-ish value to a plain JSON-compatible list."""
+    if isinstance(v, (list, tuple)):
+        out = list(v)
+    elif hasattr(v, "tolist"):  # numpy array / pandas Series / polars Series
+        out = v.tolist()
+        if isinstance(out, tuple):
+            out = list(out)
+        elif not isinstance(out, list):
+            out = [out]
+    elif isinstance(v, (str, bytes)):
+        out = [v]
+    else:
+        try:
+            out = list(v)
+        except TypeError:
+            out = [v]
+    return [_plain_value(value) for value in out]
 
 
 def _looks_like_dataframe(data: Any) -> bool:
@@ -67,13 +102,17 @@ def _is_dbapi_cursor(data: Any) -> bool:
 
 
 def _records_to_columns(records: list[Mapping]) -> dict[str, list]:
+    normalized = [
+        {str(key): _plain_value(value) for key, value in record.items()}
+        for record in records
+    ]
     # union of keys, preserving first-seen order
     keys: list[str] = []
-    for r in records:
-        for k in r:
-            if k not in keys:
-                keys.append(str(k))
-    return {k: [rec.get(k) for rec in records] for k in keys}
+    for record in normalized:
+        for key in record:
+            if key not in keys:
+                keys.append(key)
+    return {key: [record.get(key) for record in normalized] for key in keys}
 
 
 def _rows_to_columns(rows) -> dict[str, list]:
@@ -82,7 +121,7 @@ def _rows_to_columns(rows) -> dict[str, list]:
     if not as_lists:
         return {}
     ncols = len(as_lists[0])
-    return {f"c{j}": [row[j] for row in as_lists] for j in range(ncols)}
+    return {f"c{j}": [_plain_value(row[j]) for row in as_lists] for j in range(ncols)}
 
 
 def _cursor_to_columns(cur) -> dict[str, list]:
@@ -91,19 +130,22 @@ def _cursor_to_columns(cur) -> dict[str, list]:
     cols: dict[str, list] = {name: [] for name in names}
     for row in rows:
         for name, val in zip(names, row, strict=False):
-            cols[name].append(val)
+            cols[name].append(_plain_value(val))
     return cols
 
 
-def to_columns(data: Any, *, query: str | None = None) -> dict[str, list]:
+def to_columns(
+    data: Any, *, query: str | None = None, params: Any = ()
+) -> dict[str, list]:
     """Convert ``data`` into an ordered ``dict`` of ``{column: [values]}``.
 
     If ``query`` is given, ``data`` is treated as a DB-API connection and the
-    query is executed to produce the result set.
+    statement is executed with DB-API ``params`` to produce the result set.
     """
     if query is not None:
         cur = data.cursor()
-        cur.execute(query)
+        # The local caller supplies the statement; dynamic values stay in params.
+        cur.execute(query, params)  # nosemgrep: python.lang.security.audit.sqli
         return _cursor_to_columns(cur)
 
     if data is None:

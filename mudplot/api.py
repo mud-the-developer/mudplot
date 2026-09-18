@@ -32,10 +32,12 @@ class Plot:
     Call :meth:`render`, :meth:`save`, or :meth:`to_json` to materialise.
     """
 
-    def __init__(self, data: Any = None, *, query: str | None = None):
+    def __init__(self, data: Any = None, *, query: str | None = None, params: Any = ()):
         self._store = Store(FigureSpec())
         if data is not None or query is not None:
-            self._store._dispatch(A.SetData(_columns_from(data, query=query)))
+            self._store._dispatch(
+                A.SetData(_columns_from(data, query=query, params=params))
+            )
 
     @property
     def spec(self) -> FigureSpec:
@@ -975,14 +977,15 @@ class Plot:
         return obj
 
 
-def plot(data: Any = None, *, query: str | None = None) -> Plot:
+def plot(data: Any = None, *, query: str | None = None, params: Any = ()) -> Plot:
     """Start a new fluent plot.
 
     ``data`` may be a dict of columns, list of records/rows, pandas/polars
     DataFrame, numpy (structured or 2-D) array, pyarrow Table, an executed
-    DB-API cursor, or a DB-API connection together with ``query=``.
+    DB-API cursor, or a DB-API connection together with parameterized
+    ``query=`` and ``params=``.
     """
-    return Plot(data, query=query)
+    return Plot(data, query=query, params=params)
 
 
 def apply(actions, spec: FigureSpec | None = None) -> FigureSpec:

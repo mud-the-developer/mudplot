@@ -58,7 +58,7 @@ benchmark하세요.
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 609개(실제 브라우저 테스트 11개 포함) 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 612개(실제 브라우저 테스트 11개 포함) 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -462,8 +462,14 @@ mp.plot(np_structured_array)                  # numpy 구조화 배열
 mp.plot(np_2d_array)                          # numpy 2차원 -> c0, c1 ...
 mp.plot(arrow_table)                          # pyarrow Table
 mp.plot(cursor)                               # 실행된 DB-API 커서
-mp.plot(conn, query="SELECT x, y FROM t")     # DB-API 연결 + 쿼리 (sqlite 등)
+mp.plot(conn, query="SELECT x, y FROM t WHERE run = ?", params=(run_id,))
+                                              # 매개변수화 DB-API 쿼리(sqlite)
 ```
+
+입력 adapter는 일반적인 결측 sentinel(`NaN`, `pd.NA`, `NaT`)을 JSON
+`null`로, date/time 값을 ISO 8601 문자열로, NumPy scalar를 일반 Python
+값으로 정규화합니다. 무한대와 지원하지 않는 객체는 조용히 바꾸지 않고
+엄격한 JSON 검증에서 계속 거부합니다.
 
 ### 팔레트 직접 사용
 

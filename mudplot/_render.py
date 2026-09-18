@@ -340,7 +340,6 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
         itertools.cycle(theme.hatches) if use_redundant else itertools.repeat(None)
     )
     target = _target_axes(ax, ax2, layer)
-    n_series = len(masks)
 
     x_all = _x_values(target, data_cols, layer.x)
     norm = _color_norm(data_cols, layer) if layer.c is not None else None
@@ -429,12 +428,19 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 collection.set_hatch(next(hatches))
         return
 
+    y_all = _col(data_cols, layer.y)
+    masks = [
+        (label, mask)
+        for label, mask in masks
+        if np.any(np.isfinite(x_all[mask]) & np.isfinite(y_all[mask]))
+    ]
+    n_series = len(masks)
     sc = None
     jitter_rng = np.random.default_rng(0)  # deterministic export/re-render
 
     for series_i, (label, mask) in enumerate(masks):
         x = x_all[mask]
-        y = _col(data_cols, layer.y)[mask]
+        y = y_all[mask]
         marker = layer.marker or next(marker_cycle)
         linestyle = layer.line_style or next(style_cycle)
         if layer.type == "line":

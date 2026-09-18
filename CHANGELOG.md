@@ -12,6 +12,8 @@ All notable changes to this project are documented here.
 - Removed redundant action and return-snapshot copies from internal
   fluent/batch/editor dispatch paths while preserving public `Store` snapshot,
   history, listener, and reducer alias isolation.
+- Added DB-API `params=` forwarding so `query=` values can be parameterized
+  instead of interpolated into SQL.
 
 ### Fixed
 
@@ -35,6 +37,9 @@ All notable changes to this project are documented here.
   cannot stall until the 120-second timeout.
 - Keep grouped-layer and regression-cardinality validation linear for ordinary
   hashable values while retaining equality fallback for unusual unhashable keys.
+- Normalize common DataFrame/NumPy missing, temporal, and scalar values at the
+  input adapter so specs remain strict-JSON serializable across CLI/Rust, and
+  omit grouped render series with no finite observations.
 
 ## [0.6.1] - 2026-09-18
 
