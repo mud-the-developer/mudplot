@@ -19,7 +19,8 @@
 ## 1. 의존성 정책
 
 - 색 변환/색맹 시뮬레이션은 **numpy로 직접 구현** (검증 가능성 + 최소 의존성).
-- 런타임 의존성: `numpy`, `matplotlib` 만.
+- 런타임 의존성은 선택적 색상 계산/렌더링 계층의 `numpy`, `matplotlib`뿐이며,
+  선언적 상태 core에는 서드파티 의존성이 없습니다.
 
 ## 2. 색상 이론 (구현 파이프라인)
 
@@ -82,10 +83,10 @@ CIELCh (L, C, H)
 
 ## 4b. 상태 관리: 순수 reducer + effect 분리 (functional core / imperative shell)
 
-Spec을 단순히 변이(mutate)하지 않고, **상태 전이를 순수 함수로**
-모델링한다 (Elm/Redux 스타일). 현재 Rust 에디터도 이 구조를 그대로 쓴다:
-Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 effect가
-그린다.
+Spec을 단순히 변이(mutate)하지 않고, **reducer가 각 상태 전이를 순수
+함수로** 모델링한다(Elm/Redux 스타일). 현재 Rust 에디터도 이 구조를 그대로
+쓴다. Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며
+effect가 그린다.
 
 ```
    Action (순수 데이터)                State (FigureSpec)
@@ -94,8 +95,8 @@ Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 
    reduce(state, action) -> state'   ...  순수 함수 (입력 불변, 부수효과 없음)
         │
         ▼  (새 상태)
-   ── 여기까지 functional core (순수) ─────────────────────────
-   ── 이 아래부터 imperative shell (effect) ───────────────────
+   ── reducer 계약: 입력 불변, I/O 없음 ────────────────────────
+   ── rendering/file/preview effect는 이 경계 아래에 둠 ───────
         │
         ▼
    Effects:  render (matplotlib) · io (파일) · preview (화면/PNG)
@@ -122,9 +123,9 @@ workload profiling에서 필요성이 확인될 때까지 보류합니다.
 
 ### 대시보드 ↔ 엔진 분리 (기계 친화 vs 사람 친화)
 
-- `mudplot/` = **의존성 없는 선언적 엔진, 기계(AI 에이전트) 친화**.
-  reducer는 부수효과가 없고 JSON I/O/render는 명시적 effect이며, 다른 UI에
-  의존하지 않습니다.
+- `mudplot/` = **의존성 없는 상태 core를 포함한 선언적 엔진, 기계(AI
+  에이전트) 친화**. reducer는 부수효과가 없고 JSON I/O/render는 명시적
+  effect이며, 다른 UI에 의존하지 않습니다.
 - `dashboard/` = **별도 source-tree 패키지, 사람 친화 UI**. 엔진의
   store/reducer/action을 그대로 임포트.
 - `mudplot-editor/` = 함께 versioning하는 Rust(askama+tokio+htmx) UI.
@@ -279,7 +280,7 @@ seaborn(`style="whitegrid"` 문자열)·matplotlib(`rcParams['axes.linewidth']`
 ## 6. 모듈 구조
 
 ```
-mudplot/                 # 의존성 없는 선언적 엔진 (UI 의존 없음)
+mudplot/                 # 선언적 엔진; 상태 core는 의존성 없음
   __init__.py            # 공개 API 노출
   color/                 # 색상 엔진
     convert.py distance.py cvd.py palette.py preview.py

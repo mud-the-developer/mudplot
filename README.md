@@ -103,7 +103,7 @@ steps (more layer types, quality work, and the Rust editor).
       clickable link, raster stays plain (verified by compiling a real paper
       with tectonic and reading the numbers back out of the PDF)
 - [x] Zero required third-party dependencies in the declarative/JSON core
-      (numpy/matplotlib are effect-only extras); broad input-format support
+      (numpy/matplotlib are optional colour/rendering extras); broad input-format support
       (dict/records/DataFrame/numpy/pyarrow/SQL); AI-agent-friendly interface
       (`capabilities()`/`json_schema()`/`apply()`/`action_log`);
       side-effect-free `validate()`/`assert_valid()` run automatically before

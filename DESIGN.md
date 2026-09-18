@@ -21,8 +21,8 @@ paper-ready styles.
 
 - Colour conversion / CVD simulation are **implemented directly with numpy**
   (verifiability + minimal dependencies).
-- Runtime dependencies: `numpy` and `matplotlib` only (and only for the
-  effect layer — see §4b).
+- Runtime dependencies: `numpy` and `matplotlib` only, and only for the
+  optional colour/rendering layers — see §4b.
 
 ## 2. Colour theory (implementation pipeline)
 
@@ -95,9 +95,10 @@ decision:
 
 ## 4b. State management: pure reducer + effects at the edges (functional core / imperative shell)
 
-Rather than simply mutating the spec, state transitions are modelled as
-**pure functions** (Elm/Redux style). This maps directly onto the Rust editor: it sends actions through the Python
-CLI, the same reducer produces new state, and effects do the drawing.
+Rather than simply mutating the spec, the reducer models each state transition
+as a **pure function** (Elm/Redux style). This maps directly onto the Rust
+editor: it sends actions through the Python CLI, the same reducer produces new
+state, and effects do the drawing.
 
 ```
    Action (pure data)                 State (FigureSpec)
@@ -106,8 +107,8 @@ CLI, the same reducer produces new state, and effects do the drawing.
    reduce(state, action) -> state'   ...  pure function (immutable input, no side effects)
         │
         ▼  (new state)
-   ── everything above is the functional core (pure) ──────────
-   ── everything below is the imperative shell (effects) ──────
+   ── reducer contract: inputs unchanged, no I/O ───────────────
+   ── rendering/file/preview effects stay below this boundary ──
         │
         ▼
    Effects:  render (matplotlib) · io (files) · preview (screen/PNG)
@@ -135,9 +136,10 @@ extra complexity.
 
 ### Dashboard ↔ engine separation (machine-friendly vs human-friendly)
 
-- `mudplot/` = **the dependency-free declarative engine, machine- (AI agent-)
-  friendly**. Its reducer is side-effect-free; JSON I/O and rendering remain
-  explicit effects. It has no dependency on any particular UI.
+- `mudplot/` = **the declarative engine, with a dependency-free state core,
+  machine- (AI agent-) friendly**. Its reducer is side-effect-free; JSON I/O
+  and rendering remain explicit effects. It has no dependency on any
+  particular UI.
 - `dashboard/` = **a separate source-tree package, human-friendly UI**.
   Imports the engine's store/reducer/actions directly.
 - `mudplot-editor/` = the co-versioned Rust (askama+tokio+htmx) UI. It calls
@@ -390,7 +392,7 @@ and matplotlib (`rcParams['axes.linewidth']` dotted strings).
 ## 6. Module structure
 
 ```
-mudplot/                 # dependency-free declarative engine (no UI dependency)
+mudplot/                 # declarative engine; dependency-free state core
   __init__.py            # public API surface
   color/                 # colour engine
     convert.py distance.py cvd.py palette.py preview.py

@@ -95,7 +95,7 @@ benchmark하세요.
       일반 텍스트로 처리(tectonic으로 실제 논문을 컴파일해 PDF에서 번호를
       다시 읽어 검증)
 - [x] 선언적/JSON core의 필수 third-party 의존성 0(numpy/matplotlib은
-      effect 전용 extras); 다양한 입력 형식(dict/records/DataFrame/numpy/
+      선택적 색상/렌더링 extras); 다양한 입력 형식(dict/records/DataFrame/numpy/
       pyarrow/SQL) 지원; AI 에이전트 친화 인터페이스(`capabilities()`/
       `json_schema()`/`apply()`/`action_log`); 렌더링 전 자동 실행되는
       부수효과 없는 `validate()`/`assert_valid()`

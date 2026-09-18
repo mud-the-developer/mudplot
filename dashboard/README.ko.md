@@ -2,8 +2,8 @@
 
 *[English docs: README.md](README.md)*
 
-`mudplot` **엔진과 분리된** 사람 대면 도구. 엔진(의존성 없는 선언적 core)에는 UI 의존성이
-전혀 없고, 대시보드는 엔진을 단방향으로 임포트한다.
+`mudplot` **엔진과 분리된** 사람 대면 도구. 엔진의 의존성 없는 선언적
+core에는 UI 의존성이 없고, 대시보드는 엔진을 단방향으로 임포트한다.
 
 ```
 dashboard ──▶ mudplot   (단방향 의존)
