@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- Regenerated the executable publication demos so grouped KDE styling, current
+  `LayerSpec` fields, and timestamp-free PDF metadata match the live engine.
+  Added regressions for canonical demo specs and deterministic PDF metadata,
+  and corrected the documented test total to count browser tests only once.
+
 ## [0.6.1] - 2026-09-18
 
 ### Fixed

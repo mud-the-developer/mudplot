@@ -41,7 +41,7 @@ def export(plot, name):
     assert mp.validate(plot.spec) == []
     rebuilt = mp.Plot.from_json(plot.to_json())
     assert rebuilt.spec.to_dict() == plot.spec.to_dict()
-    (OUT / f"{name}.mplot.json").write_text(plot.to_json(), encoding="utf-8")
+    mp.save_spec(plot.spec, OUT / f"{name}.mplot.json")
     fig = plot.save(OUT / f"{name}.png")
     expected = (
         round(plot.spec.size[1] * plot.spec.dpi),

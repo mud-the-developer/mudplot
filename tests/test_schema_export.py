@@ -1,8 +1,7 @@
-"""Guard: the checked-in schema files must match the live generators.
+"""Guard generated schemas, reference docs, and publication demo artifacts.
 
-If a spec/capabilities change breaks this, regenerate with:
-    python -m mudplot schema --out schemas/figure_spec.schema.json
-    python -m mudplot capabilities > schemas/capabilities.json
+If a generated-artifact check breaks, run ``python -m scripts.render_docs_demo``
+or the schema/capabilities commands named by ``scripts/check_schema_sync.py``.
 """
 
 import json
@@ -10,7 +9,8 @@ from pathlib import Path
 
 import mudplot as mp
 
-SCHEMAS_DIR = Path(__file__).resolve().parent.parent / "schemas"
+ROOT = Path(__file__).resolve().parent.parent
+SCHEMAS_DIR = ROOT / "schemas"
 
 
 def test_figure_spec_schema_file_is_in_sync():
@@ -29,6 +29,23 @@ def test_reference_docs_file_is_in_sync():
     path = SCHEMAS_DIR.parent / "docs" / "REFERENCE.md"
     on_disk = path.read_text()
     assert on_disk == mp.reference_markdown()
+
+
+def test_demo_specs_are_current():
+    paths = sorted((ROOT / "docs" / "images").glob("*.mplot.json"))
+    assert paths
+    for path in paths:
+        contents = path.read_text()
+        assert mp.to_json(mp.from_json(contents)) == contents, path.name
+
+
+def test_demo_pdfs_omit_volatile_timestamps():
+    paths = sorted((ROOT / "docs" / "images").glob("*.pdf"))
+    assert paths
+    for path in paths:
+        payload = path.read_bytes()
+        assert b"/CreationDate" not in payload, path.name
+        assert b"/ModDate" not in payload, path.name
 
 
 def test_schema_is_valid_json_schema_shape():
