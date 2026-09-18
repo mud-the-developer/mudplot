@@ -119,8 +119,9 @@ figure { margin: 0; text-align: center; }
 .panel-btn.active { background: var(--accent); color: var(--accent-ink); }
 .btn-row form { margin: 0; }
 .drag-handle { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px;
-       border-radius: 50%; display: flex; align-items: center; justify-content: center;
-       cursor: grab; font-size: 11px; user-select: none; color: white;
+       padding: 0; border: 0; border-radius: 50%; display: flex;
+       align-items: center; justify-content: center; cursor: grab; font-size: 11px;
+       user-select: none; color: white;
        box-shadow: 0 0 0 2px white, 0 1px 3px rgba(0,0,0,.35); }
 .drag-handle:active { cursor: grabbing; }
 .drag-handle:focus { outline: 2px solid #0a5; outline-offset: 1px; }
@@ -899,6 +900,7 @@ def _data_to_img_frac(value: float, lo: float, hi: float, scale: str, bbox_lo, b
 def _drag_handle_html(
     *,
     kind: str,
+    label: str,
     symbol: str,
     img_x: float,
     img_y: float,
@@ -913,13 +915,14 @@ def _drag_handle_html(
     # Stable across swaps, so keyboard focus can be restored onto the same
     # handle after the edit it just dispatched replaced the whole overlay.
     handle_id = f"{kind}:{fields.get('layer_index', '')}:{fields.get('panel', 0)}"
+    instruction = f"Move {label}; drag or use arrow keys"
     return (
-        f'<div class="drag-handle {kind}" tabindex="0" '
-        f'data-handle-id="{_esc(handle_id)}" '
+        f'<button type="button" class="drag-handle {kind}" '
+        f'aria-label="{_esc(instruction)}" data-handle-id="{_esc(handle_id)}" '
         f'data-imgx="{img_x:g}" data-imgy="{img_y:g}" '
         f'style="left:{img_x * 100:g}%; top:{(1 - img_y) * 100:g}%" '
         f"{data_attrs} {field_attrs} "
-        f'title="Drag, or click and use arrow keys">{symbol}</div>'
+        f'title="{_esc(instruction)}">{symbol}</button>'
     )
 
 
@@ -939,6 +942,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
         handles.append(
             _drag_handle_html(
                 kind="legend",
+                label="legend",
                 symbol="\u2725",
                 img_x=hx,
                 img_y=hy,
@@ -957,6 +961,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
         handles.append(
             _drag_handle_html(
                 kind="title",
+                label="panel title",
                 symbol="T",
                 img_x=_axes_frac_to_img_frac(tx, bx0, bx1),
                 img_y=_axes_frac_to_img_frac(ty, by0, by1),
@@ -977,6 +982,7 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
             handles.append(
                 _drag_handle_html(
                     kind="layer-at",
+                    label=f"{entry['type']} layer {entry['index'] + 1}",
                     symbol="\u2022",
                     img_x=_data_to_img_frac(ax_v, xlim[0], xlim[1], xscale, bx0, bx1),
                     img_y=_data_to_img_frac(ay_v, ylim[0], ylim[1], yscale, by0, by1),

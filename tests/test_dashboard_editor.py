@@ -206,7 +206,8 @@ def test_render_page_shows_legend_handle_at_explicit_position():
     spec = FigureSpec()
     spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.25, 0.75])
     html = render_page(spec, [])
-    assert 'class="drag-handle legend"' in html
+    assert 'type="button" class="drag-handle legend"' in html
+    assert 'aria-label="Move legend; drag or use arrow keys"' in html
     assert 'data-imgx="0.25"' in html
     assert 'data-imgy="0.75"' in html
     assert "left:25%" in html
@@ -232,6 +233,7 @@ def test_render_page_title_handle_needs_panel_bbox_from_layout():
         spec, [], layout={"panel_bbox": [0.1, 0.1, 0.9, 0.9], "is_3d": False}
     )
     assert 'class="drag-handle title"' in html
+    assert 'aria-label="Move panel title; drag or use arrow keys"' in html
     # axes-fraction 0.5 -> figure-fraction 0.1 + 0.5*(0.9-0.1) = 0.5
     assert 'data-imgx="0.5"' in html
 
@@ -265,6 +267,7 @@ def test_render_page_layer_at_handle_uses_data_coordinate_mapping():
     }
     html = render_page(spec, [], layout)
     assert 'class="drag-handle layer-at"' in html
+    assert 'aria-label="Move text layer 1; drag or use arrow keys"' in html
     assert 'data-imgx="0.5"' in html  # (5-0)/(10-0)
     assert 'data-imgy="0.5"' in html  # (0-(-1))/(1-(-1))
     assert 'data-field2="layer_index=0"' in html

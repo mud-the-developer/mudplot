@@ -169,7 +169,9 @@ def test_polar_projection_switches_through_htmx_and_hides_secondary_axis(editor)
 def test_dragging_the_legend_moves_it_and_persists(editor):
     page, url = editor
     _enable(page, "Legend", url, _legend_set(0))
-    handle = page.locator(".drag-handle.legend")
+    handle = page.get_by_role(
+        "button", name="Move legend; drag or use arrow keys", exact=True
+    )
     handle.wait_for()
     before = handle.bounding_box()
 
@@ -197,7 +199,9 @@ def test_arrow_keys_nudge_the_title(editor):
     page.get_by_label("Panel title").press("Enter")
     _settle(page)
     _enable(page, "Title", url, _title_pos_set(0))
-    handle = page.locator(".drag-handle.title")
+    handle = page.get_by_role(
+        "button", name="Move panel title; drag or use arrow keys", exact=True
+    )
     handle.wait_for()
 
     start = _spec(url)["panels"][0]["title_position"]

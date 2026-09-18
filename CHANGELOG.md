@@ -21,6 +21,9 @@ All notable changes to this project are documented here.
   and corrected the documented test total to count browser tests only once.
 - Associated the Python editor's pasted-spec textarea with its visible label so
   assistive technology no longer exposes an unnamed input.
+- Exposed preview drag handles as named native buttons, preserving mouse drag
+  and arrow-key movement while giving assistive technology a control role and
+  useful instruction.
 
 ## [0.6.1] - 2026-09-18
 
