@@ -29,6 +29,7 @@ dist/
 dashboard/site_build/
 
 # caches
+.hypothesis/
 .pytest_cache/
 .ruff_cache/
 mudplot-editor/target/

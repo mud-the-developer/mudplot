@@ -4,6 +4,14 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.6.1] - 2026-09-18
+
+### Fixed
+
+- Excluded Hypothesis runtime caches from source distributions and made the
+  packaging check reject them, so sdist contents and hashes no longer depend on
+  which tests ran before the build. Runtime code and APIs are unchanged.
+
 ## [0.6.0] - 2026-09-18
 
 ### Features

@@ -152,7 +152,7 @@ rendering.
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
   needed) -- attempted once already and failed with `invalid-publisher`
   since no publisher was registered yet.
-- **Versioning**: `0.6.0` as of this release; semver policy: this is a
+- **Versioning**: `0.6.1` as of this release; semver policy: this is a
   young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
   bump the minor version even pre-1.0, since Rust/agent consumers depend on
   schema stability.

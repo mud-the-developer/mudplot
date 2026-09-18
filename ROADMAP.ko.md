@@ -108,7 +108,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   GitHub에도 `pypi` environment를 만든 뒤 `release.yml`에 `publish` job을
   다시 추가할 것 -- 한 번 시도했으나 publisher 미등록으로
   `invalid-publisher` 오류로 실패함.
-- 버전 정책: 현재 `0.6.0`. pre-1.0이라도 `FigureSpec`
+- 버전 정책: 현재 `0.6.1`. pre-1.0이라도 `FigureSpec`
   호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
   안정성에 의존).
 - `pyproject.toml`의 `[project.urls]`는 이제 실제 저장소를 가리킴

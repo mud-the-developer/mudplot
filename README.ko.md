@@ -44,7 +44,7 @@
 
 ## 상태
 
-**v0.6.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
+**v0.6.1**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
@@ -131,10 +131,10 @@
 
 ```bash
 # 순수 엔진만 (의존성 0) — spec/actions/reducer/store/io/tex 크기 계산
-python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
+python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 
 # 색상 엔진 + 렌더링까지 (numpy + matplotlib)
-python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
+python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 ```
 
 wheel에는 `mudplot` engine만 포함됩니다. Python dashboard와 Rust editor는

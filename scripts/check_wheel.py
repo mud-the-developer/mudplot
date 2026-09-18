@@ -123,6 +123,7 @@ def main() -> int:
             if not any(name.endswith(f"/{required}") for name in sdist_names)
         )
         for forbidden in (
+            ".hypothesis",
             "mudplot-editor/target",
             "src/pretext",
             "src/SciencePlots",

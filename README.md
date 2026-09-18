@@ -47,7 +47,7 @@ Effects (render/io/preview) are pushed to the edges.
 
 ## Status
 
-**v0.6.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
+**v0.6.1**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
 architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
@@ -143,10 +143,10 @@ not enabled yet.
 
 ```bash
 # Pure engine only (zero dependencies) — spec/actions/reducer/store/io/tex sizing
-python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
+python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 
 # Colour engine + rendering (numpy + matplotlib)
-python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
+python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 ```
 
 The wheel contains the `mudplot` engine only. The Python dashboard and Rust

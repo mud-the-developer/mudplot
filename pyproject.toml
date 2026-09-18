@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mudplot"
-version = "0.6.0"
+version = "0.6.1"
 description = "Declarative, reproducible scientific plotting with exact sizing and CVD-aware palettes"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -60,7 +60,12 @@ dev = [
 browser = ["mudplot[dev]", "playwright>=1.40"]
 
 [tool.hatch.build]
-exclude = ["/src/pretext/**", "/src/SciencePlots/**", "/mudplot-editor/target/**"]
+exclude = [
+    "/.hypothesis/**",
+    "/src/pretext/**",
+    "/src/SciencePlots/**",
+    "/mudplot-editor/target/**",
+]
 
 [tool.hatch.build.targets.wheel]
 packages = ["mudplot"]
