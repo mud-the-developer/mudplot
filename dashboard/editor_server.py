@@ -18,9 +18,9 @@ import ipaddress
 import socket
 import threading
 from dataclasses import fields as dataclass_fields
+from dataclasses import replace
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
-from typing import Any, cast
 from urllib.parse import parse_qs, urlparse
 
 import mudplot as mp
@@ -129,7 +129,7 @@ class EditorSession:
     def dispatch_safe(self, action) -> None:
         candidate = copy.deepcopy(self.store)
         try:
-            candidate.dispatch(action)
+            candidate._dispatch(action)
             self._commit_store(candidate, self.active_panel)
         except Exception as e:
             self.error = f"{type(e).__name__}: {e}"
@@ -173,8 +173,7 @@ class EditorSession:
         from mudplot._render import _preview_dpi, _save_figure, render
 
         assert_valid(spec)
-        preview_spec = copy.deepcopy(spec)
-        cast(Any, preview_spec).dpi = _preview_dpi(spec)
+        preview_spec = replace(spec, dpi=_preview_dpi(spec))
         fig = render(preview_spec)
         try:
             layout = self._extract_layout(spec, fig, active_panel)

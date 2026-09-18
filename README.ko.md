@@ -20,21 +20,31 @@
   [흑백 인쇄 데모](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
   참고
 
-## 아키텍처: Spec 중심 + 순수 reducer (functional core / imperative shell)
+## 아키텍처: Spec 중심 상태 전이 (functional core / imperative shell)
 
-그림의 모든 상태를 **직렬화 가능한 선언적 `FigureSpec`** 으로 표현하고,
-상태 전이는 **순수 reducer**로만 수행한다. effect(render/io/preview)는
-가장자리로 분리.
+그림의 모든 상태를 **직렬화 가능한 선언적 `FigureSpec`** 으로 표현한다.
+Reducer는 입력을 변형하지 않고 새 spec을 반환하며, render/file I/O/preview는
+effect 경계에 둔다.
 
 ```
- Action (순수 데이터)
+ Action (직렬화 가능한 데이터)
      │
-     ▼  reduce(state, action) -> state'      ─┐ functional core (순수)
+     ▼  reduce(state, action) -> state'      ─┐ 부수효과 없는 상태 전이 계층
  FigureSpec (dataclass ⇆ JSON, .mplot.json) ─┘
      │
      ▼  render / io / preview                ── imperative shell (effect)
  matplotlib → PNG/PDF/SVG
 ```
+
+여기서 **순수**는 `reduce()`가 입력을 변형하거나 I/O를 수행하지 않는다는
+좁은 동작 의미입니다. 패키지 전체가 persistent immutable 구조나 zero-copy
+갱신을 쓴다는 뜻은 아닙니다. `FigureSpec`은 mutable dataclass/list 그래프이며,
+reducer와 `Store`는 snapshot 격리를 위해 방어적 deep copy를 사용합니다.
+따라서 action 비용은 inline data를 포함한 전체 spec 크기에 비례하고,
+undo/redo는 history를 재생합니다. 이는 일반적인 논문 데이터에서 단순하고
+감사 가능한 의미론을 우선한 설계이지, 수백만 행을 고빈도로 갱신하는
+streaming pipeline 설계가 아닙니다. 그런 workload는 먼저 집계/downsample하고
+benchmark하세요.
 
 - fluent 빌더는 **action을 dispatch하는 설탕** — `Store`가 reducer 구동.
 - `mudplot/` 엔진은 UI 의존 없음. `dashboard/`는 별도 source-tree 패키지
@@ -57,7 +67,7 @@
       `soft`) — 명시된 카테고리 수까지 CVD·진짜 흑백 안전성을 직접 측정;
       bar/box/violin도 기본적으로 그룹마다 해칭 패턴을 함께 사용해 색상
       개수와 무관하게 흑백 인쇄에서 구별됨
-- [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 순수 reducer +
+- [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 부수효과 없는 reducer +
       action + store (`Store.undo()`/`redo()`) — render/io/preview 등
       effect는 가장자리로 분리
 - [x] 렌더러: 레이어 28종(line/regplot/scatter/stripplot/bar/errorbar/
@@ -84,11 +94,11 @@
       bibliography·hyperref가 해석하고, SVG는 클릭 가능한 링크, 래스터는
       일반 텍스트로 처리(tectonic으로 실제 논문을 컴파일해 PDF에서 번호를
       다시 읽어 검증)
-- [x] 순수 코어 의존성 0(numpy/matplotlib은 effect 전용 extras); 다양한
-      입력 형식(dict/records/DataFrame/numpy/pyarrow/SQL) 지원; AI
-      에이전트 친화 인터페이스(`capabilities()`/`json_schema()`/
-      `apply()`/`action_log`); 렌더링 전 자동 실행되는 순수
-      `validate()`/`assert_valid()`
+- [x] 선언적/JSON core의 필수 third-party 의존성 0(numpy/matplotlib은
+      effect 전용 extras); 다양한 입력 형식(dict/records/DataFrame/numpy/
+      pyarrow/SQL) 지원; AI 에이전트 친화 인터페이스(`capabilities()`/
+      `json_schema()`/`apply()`/`action_log`); 렌더링 전 자동 실행되는
+      부수효과 없는 `validate()`/`assert_valid()`
 - [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
       JSON 스키마/capabilities/docs export 파일 + CI 동기화 검증
 - [x] 안정성 하드닝 3회, 실제 버그 약 20건 발견/수정 후 회귀 테스트로
@@ -130,7 +140,7 @@
 활성화하지 않았다.
 
 ```bash
-# 순수 엔진만 (의존성 0) — spec/actions/reducer/store/io/tex 크기 계산
+# Core package만 (필수 의존성 0) — spec/actions/store/JSON/TeX 크기 계산
 python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 
 # 색상 엔진 + 렌더링까지 (numpy + matplotlib)
@@ -154,7 +164,8 @@ uv sync --locked --extra dev
 
 | 계층 | 모듈 | 의존성 |
 | --- | --- | --- |
-| 순수 엔진 | `spec` `actions` `reducer` `store` `io` `tex`(크기) | **없음** |
+| 의존성 없는 상태 core | `spec` `actions` `reducer` `store` `validate` `schema` | **없음** |
+| stdlib effect/helper | JSON/CLI I/O, bibliography, TeX 크기 계산 | **없음** |
 | 색상 엔진 | `color/*` | NumPy ≥ 1.23 |
 | 렌더 effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
 
@@ -365,7 +376,7 @@ report.ok   # error 레벨 항목이 있을 때만 False (예: 페이지에 안 
 기준값은 해당 journal 프로필(아래 참고)을 기본으로 사용하고 호출당 덮어쓸 수
 있습니다(`min_font_pt=`, `max_legend_entries=`). `journal=`을 생략하면 이미
 `.journal(...)`로 지정한 것을 자동으로 사용합니다. `mp.lint_figure(spec, ...)`는
-순수/에이전트용 동일 함수입니다 — 실제로 렌더링하지 않으므로 matplotlib 없이 `color`
+부수효과 없는 에이전트용 동일 함수입니다 — 실제로 렌더링하지 않으므로 matplotlib 없이 `color`
 extra(numpy)만 있으면 됩니다.
 
 ### Journal 프로필 (스타일 시트가 아닌 출판 제약 모음)
@@ -400,13 +411,13 @@ import mudplot as mp
 caps = mp.capabilities()   # 레이어/테마/저널/TeX프리셋/액션 어휘 (기계 가독)
 schema = mp.json_schema()  # FigureSpec 전체 JSON Schema
 
-spec = mp.apply([          # JSON 액션만으로 그림 구성 (순수 reduce)
+spec = mp.apply([          # render/I/O effect 없이 JSON action으로 구성
     {"type": "SetData", "columns": {"x": [1, 2, 3], "y": [1, 4, 9]}},
     {"type": "AddLayer", "layer": {"type": "line", "x": "x", "y": "y"}},
     {"type": "SetAxisLabel", "axis": "x", "text": "X"},
     {"type": "SetTheme", "name": "paper"},
 ])
-issues = mp.validate(spec)  # 렌더링 전 자가 검증 (순수, 에이전트 피드백용)
+issues = mp.validate(spec)  # 부수효과 없는 렌더 전 에이전트 피드백
 mp.save(spec, "fig.pdf")   # effect (내부에서 assert_valid 자동 호출)
 
 # 빌드 이력(replay/undo)
@@ -425,7 +436,7 @@ python -m mudplot render fig.mplot.json out.pdf    # 렌더
 python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 
-### 순수 reducer / store 직접 사용
+### Reducer / store 직접 사용
 
 ```python
 from mudplot import Store, actions as A
@@ -434,12 +445,12 @@ store = Store()
 store.subscribe(lambda spec, action: print("changed:", type(action).__name__))
 store.dispatch(A.SetTheme("paper"))
 store.dispatch(A.SetPalette(kind="qualitative", params={"hue_start": 30}))
-spec = store.state          # 순수하게 누적된 상태
+spec = store.state          # 방어적 snapshot; 변경은 action으로
 ```
 
 ### 지원하는 입력 데이터 형식
 
-`mp.plot(data)`는 다음을 모두 자동 인식 (순수 코어라 numpy/pandas를
+`mp.plot(data)`는 다음을 모두 자동 인식 (의존성 없는 core는 numpy/pandas를
 직접 import하지 않고 덕 타이핑으로 처리):
 
 ```python

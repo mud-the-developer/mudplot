@@ -4,6 +4,15 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Changed
+
+- Narrowed the documentation's use of “pure” to the reducer's actual
+  no-input-mutation/no-I/O contract and documented the mutable, defensive
+  deep-copy model and its large-inline-data performance ceiling.
+- Removed redundant action and return-snapshot copies from internal
+  fluent/batch/editor dispatch paths while preserving public `Store` snapshot,
+  history, listener, and reducer alias isolation.
+
 ### Fixed
 
 - Regenerated the executable publication demos so grouped KDE styling, current

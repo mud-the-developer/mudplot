@@ -35,7 +35,7 @@ class Plot:
     def __init__(self, data: Any = None, *, query: str | None = None):
         self._store = Store(FigureSpec())
         if data is not None or query is not None:
-            self._store.dispatch(A.SetData(_columns_from(data, query=query)))
+            self._store._dispatch(A.SetData(_columns_from(data, query=query)))
 
     @property
     def spec(self) -> FigureSpec:
@@ -46,14 +46,14 @@ class Plot:
         return self._store
 
     def dispatch(self, action: A.Action) -> Plot:
-        self._store.dispatch(action)
+        self._store._dispatch(action)
         return self
 
     # -- agent-facing: JSON actions ----------------------------------------
     def apply(self, actions) -> Plot:
         """Apply a list of JSON/dict (or Action) actions in order."""
         for a in actions:
-            self._store.dispatch(
+            self._store._dispatch(
                 a if not isinstance(a, dict) else A.action_from_dict(a)
             )
         return self

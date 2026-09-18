@@ -278,7 +278,7 @@ def qualitative(
 # Named, pre-verified qualitative presets
 # --------------------------------------------------------------------------
 # The preset data itself lives in ``mudplot.capabilities`` (plain dict, no
-# numpy) so the dependency-free pure core can describe available presets
+# numpy) so the dependency-free declarative core can describe available presets
 # without importing this (numpy-dependent) module -- see PALETTE_PRESETS
 # there for the actual lightness/chroma/hue_start/lightness_jitter values
 # and each preset's verified-safe category count.

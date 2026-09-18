@@ -15,7 +15,7 @@ def _messages(report) -> list[str]:
 
 
 def test_lint_needs_no_numpy_or_matplotlib_to_import():
-    """mudplot._lint itself is part of the pure engine -- only running the
+    """mudplot._lint itself is part of the dependency-free core -- only running the
     palette check inside lint_figure() actually needs the colour engine.
     Runs in a fresh subprocess (like tests/test_no_deps.py) so the check
     isn't polluted by other tests in the same process already having

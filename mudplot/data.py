@@ -1,6 +1,6 @@
 """Data ingestion: turn many input formats into ``dict[str, list]`` columns.
 
-Dependency-free by design (part of the pure engine): everything is done with
+Dependency-free by design (part of the declarative core): everything is done with
 duck typing and the standard library, so importing this never pulls numpy,
 pandas, polars, etc. Supported inputs:
 

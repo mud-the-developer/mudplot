@@ -7,7 +7,7 @@ deliberately as non-blocking findings (ok/warning/error) an author reviews
 and decides on, rather than `validate()`'s all-or-nothing raise.
 
 This module itself needs nothing beyond the stdlib to *import* (matching
-the rest of the pure engine); ``lint_figure()`` needs the colour engine
+the rest of the dependency-free core); ``lint_figure()`` needs the colour engine
 (numpy) the moment it actually runs the palette check, imported lazily
 inside that one check only.
 """

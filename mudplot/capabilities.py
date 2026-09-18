@@ -276,7 +276,7 @@ PALETTE_KINDS = ["qualitative", "sequential", "diverging"]
 # Named, pre-verified qualitative presets (see mudplot.color.palette for the
 # generator that consumes these). Kept here, not in mudplot.color.palette,
 # so this plain data stays reachable without importing numpy -- capabilities()
-# is part of the dependency-free pure core (see tests/test_no_deps.py).
+# is part of the dependency-free declarative core (see tests/test_no_deps.py).
 PALETTE_PRESETS: dict[str, dict] = {
     # General-purpose default: verified CVD-safe + true-greyscale-safe for
     # n=3..6 categories (see tests/test_palette_presets.py).

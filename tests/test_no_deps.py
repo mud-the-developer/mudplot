@@ -1,4 +1,4 @@
-"""Guard: the pure engine must import and run without numpy / matplotlib.
+"""Guard: the declarative core must run without numpy / matplotlib.
 
 Runs in a fresh subprocess so the check is not polluted by other tests that
 already imported the effect layer.
@@ -27,13 +27,15 @@ mp.json_schema()
 mp.apply([{"type": "SetSize", "width": 4, "height": 3}])
 A.action_to_dict(A.action_from_dict({"type": "SetTitle", "text": "t"}))
 
-assert "numpy" not in sys.modules, "numpy leaked into the pure core"
-assert "matplotlib" not in sys.modules, "matplotlib leaked into the pure core"
+assert "numpy" not in sys.modules, "numpy leaked into the dependency-free core"
+assert "matplotlib" not in sys.modules, (
+    "matplotlib leaked into the dependency-free core"
+)
 print("OK")
 """
 
 
-def test_pure_core_has_no_third_party_deps():
+def test_declarative_core_has_no_third_party_deps():
     result = subprocess.run(
         [sys.executable, "-c", _SCRIPT],
         capture_output=True,

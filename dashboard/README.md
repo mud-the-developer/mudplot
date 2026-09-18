@@ -3,7 +3,7 @@
 *[한국어 문서 / Korean docs: README.ko.md](README.ko.md)*
 
 The human-facing tool, **separated from the `mudplot` engine**. The engine
-(pure core) has no UI dependency at all; the dashboard imports the engine in
+(dependency-free declarative core) has no UI dependency at all; the dashboard imports the engine in
 one direction only.
 
 ```

@@ -11,8 +11,8 @@ Subcommands:
     mudplot migrate SPEC.json -o OUT   upgrade an old spec to the current version
 
 ``capabilities``, ``schema``, ``docs``, ``validate``, ``apply`` and
-``migrate`` need only the pure core. ``render`` needs the ``[render]`` extra (numpy +
-matplotlib).
+``migrate`` need only the dependency-free core. ``render`` needs the
+``[render]`` extra (numpy + matplotlib).
 """
 
 from __future__ import annotations

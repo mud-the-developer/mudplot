@@ -111,10 +111,20 @@ Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 
 - `api.py`의 fluent 빌더는 **action을 dispatch하는 설탕**일 뿐 —
   코드로 짜든 GUI로 편집하든 같은 reducer를 거친다.
 
+여기서 “순수”는 관찰 가능한 reducer 동작을 뜻하며 immutable/zero-copy
+표현을 뜻하지 않습니다. `FigureSpec`은 mutable dataclass/list 그래프입니다.
+Python reducer는 action마다 현재 spec 전체를 deep copy하고, `Store`는 방어적
+snapshot을 반환하며, undo/redo는 history를 재생해 상태를 다시 만듭니다.
+이 방식은 aliasing·실패 의미론을 단순하게 하지만 비용이 inline data 크기와
+history 길이에 비례합니다. 내부 fluent/batch 경로는 쓰이지 않는 반환 snapshot
+복사를 생략하지만, structural sharing이나 replay checkpoint는 실제 논문
+workload profiling에서 필요성이 확인될 때까지 보류합니다.
+
 ### 대시보드 ↔ 엔진 분리 (기계 친화 vs 사람 친화)
 
-- `mudplot/` = **순수 엔진, 기계(AI 에이전트) 친화**. 모든 것을 JSON/
-  액션으로 조작하고 자기 기술(self-describing)한다. 다른 UI에 비의존.
+- `mudplot/` = **의존성 없는 선언적 엔진, 기계(AI 에이전트) 친화**.
+  reducer는 부수효과가 없고 JSON I/O/render는 명시적 effect이며, 다른 UI에
+  의존하지 않습니다.
 - `dashboard/` = **별도 source-tree 패키지, 사람 친화 UI**. 엔진의
   store/reducer/action을 그대로 임포트.
 - `mudplot-editor/` = 함께 versioning하는 Rust(askama+tokio+htmx) UI.
@@ -124,7 +134,8 @@ Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 
 ### 에이전트 친화 인터페이스 (기계가 쉽게 쓰도록)
 
 AI 에이전트는 텍스트/JSON이 자연스러운 매체이므로, 엔진은 다음 4가지를
-제공한다 (모두 순수·의존성 0):
+제공한다 (모두 third-party 의존성 없이 사용 가능하며 reducer/validation은
+부수효과가 없고 `Store`/history는 의도적으로 stateful):
 
 1. **능력 탐색**: `mp.capabilities()` → 레이어 종류+필드, 테마/저널/
    TeX 프리셋/팔레트 종류, 액션 어휘 전체를 기계 가독 dict로 반환.
@@ -223,7 +234,7 @@ mp.save(spec, "fig.pdf")          # effect
 ## 4e. CLI — 셸/에이전트 자동화 진입점
 
 `python -m mudplot {capabilities,schema,validate,render}`. `capabilities`/
-`schema`/`validate`는 순수 코어만 필요, `render`만 `[render]` extra 필요.
+`schema`/`validate`는 의존성 없는 core만 필요, `render`만 `[render]` extra 필요.
 `schemas/figure_spec.schema.json`, `schemas/capabilities.json`은 CLI로 생성한
 정적 파일이며, CI에서 항상 최신 생성 결과와 diff해 드리프트를 막는다
 (Rust 쪽이 신뢰할 수 있는 단일 스키마 소스).
@@ -268,7 +279,7 @@ seaborn(`style="whitegrid"` 문자열)·matplotlib(`rcParams['axes.linewidth']`
 ## 6. 모듈 구조
 
 ```
-mudplot/                 # 순수 엔진 (UI 의존 없음)
+mudplot/                 # 의존성 없는 선언적 엔진 (UI 의존 없음)
   __init__.py            # 공개 API 노출
   color/                 # 색상 엔진
     convert.py distance.py cvd.py palette.py preview.py
@@ -318,7 +329,7 @@ HTTP Host와 cross-origin browser mutation을 거부한다.
 - [x] M6b: Theme 프리셋 + TeX-aware WYSIWYG 미리보기
 - [x] M7: 레이어 확장(line/scatter/bar/errorbar/band/hline/vline/text/
       annotate) + 멀티패널 레이아웃
-- [x] M7b: 순수 코어 의존성 0 분리 + ruff lint
+- [x] M7b: 선언적 core 의존성 0 분리 + ruff lint
 - [x] M8: JSON 스키마/능력 export (`schemas/`) + CI 동기화 검증 (Rust 대비)
 - [x] M8b: 순수 spec 검증(`validate`/`assert_valid`), 렌더 전 자동 호출
 - [x] M8c: CLI (`python -m mudplot capabilities|schema|validate|render`)

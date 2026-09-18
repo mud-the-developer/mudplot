@@ -71,7 +71,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 - axum + Askama로 PNG/PDF/SVG/JSON output, 공용 vendored htmx, JSON
   `/action`, visual control, 전체 layer capability metadata, spec open,
   undo/redo/reset 제공
-- 새 pure-core `mudplot apply`와 기존 `mudplot render` subprocess를 호출해
+- 새 dependency-free-core `mudplot apply`와 기존 `mudplot render` subprocess를 호출해
   28개 layer의 reducer/validator/renderer 의미를 Rust에 복제하지 않음
 - 인증 없는 로컬 단일 session이며 non-loopback bind/HTTP Host와
   cross-origin browser mutation을 거부
@@ -93,6 +93,11 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   테스트·문서 관례
 - **(완료)** capability 기반 column 계약 — 잘못됐거나 지원하지 않는
   column 필드를 렌더 전에 거부하고 groupable/routable 집합을 계약 테스트로 고정
+- **Deep-copy 성능 경계**: 문서화하고 측정함. 내부 fluent/batch dispatch는
+  쓰이지 않는 반환 snapshot을 더 만들지 않지만, reducer action마다 mutable
+  spec 전체를 복사하고 undo/redo는 history를 재생함. 실제 대형 inline-data
+  workload profiling에서 필요성이 확인될 때만 structural sharing 또는 replay
+  checkpoint를 추가할 것.
 - **(보류)** DESIGN.md 분리 — 현재 목차로 충분하며 탐색/리뷰 비용이 실제로
   커질 때 audit 이력을 CHANGELOG.md로 이동. 파일 분리 자체는 사용자 가치가 없음
 

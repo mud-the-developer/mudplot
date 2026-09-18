@@ -104,7 +104,7 @@ Completed work:
 - axum + Askama exposes PNG/PDF/SVG/JSON output and the shared vendored htmx
   asset; JSON `/action`, visual controls, all-layer capability metadata,
   spec open, undo/redo, and reset mutate one local session atomically.
-- New pure-core `mudplot apply` and existing `mudplot render` subprocesses
+- New dependency-free-core `mudplot apply` and existing `mudplot render` subprocesses
   keep reduction, validation, and rendering semantics in Python instead of
   duplicating 28-layer behavior in Rust.
 - The crate is intentionally local/single-user and rejects non-loopback binds/
@@ -133,6 +133,11 @@ rendering.
 - **(done)** Capability-driven column contracts: validation rejects malformed
   or unsupported column fields before rendering, and consistency tests pin
   the exact groupable/routable layer sets.
+- **Deep-copy performance boundary**: documented and measured. Internal
+  fluent/batch dispatch no longer creates unused return snapshots, but each
+  reducer action still copies the full mutable spec and undo/redo replays
+  history. Add structural sharing or replay checkpoints only when profiling a
+  real large-inline-data workflow justifies the added aliasing complexity.
 - **(deferred)** Splitting `DESIGN.md`: its table of contents is sufficient;
   move audit history to `CHANGELOG.md` only when navigation or review becomes
   measurably painful. A file split alone adds churn, not user value.

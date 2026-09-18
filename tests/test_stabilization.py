@@ -130,15 +130,27 @@ def test_store_isolates_actions_history_snapshots_and_listeners():
 
 
 def test_reducer_result_does_not_alias_action_payload():
+    columns = {"x": [1.0]}
+    state = mp.reduce(FigureSpec(), A.SetData(columns))
+    columns["x"][0] = 9
+    assert state.data.columns == {"x": [1.0]}
+
     markers = ["o", "s"]
-    state = mp.reduce(FigureSpec(), A.SetEncoding({"markers": markers}))
+    state = mp.reduce(state, A.SetEncoding({"markers": markers}))
     markers[0] = "x"
     assert state.theme.markers == ["o", "s"]
+
     limits = [1.0, 10.0]
     state = mp.reduce(state, A.SetSecondaryAxis(limits=limits))
     limits[0] = 9
     assert state.panels[0].y2 is not None
     assert state.panels[0].y2.limits == [1, 10]
+
+    z_limits = [-1.0, 1.0]
+    state = mp.reduce(state, A.SetZAxis(limits=z_limits))
+    z_limits[0] = 0
+    assert state.panels[0].z is not None
+    assert state.panels[0].z.limits == [-1, 1]
 
 
 def test_exact_size_export_ignores_ambient_tight_crop(tmp_path):

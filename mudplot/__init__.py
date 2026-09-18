@@ -1,7 +1,7 @@
 """mudplot — perceptually-uniform, CVD-aware plotting for papers.
 
-The pure engine (spec / actions / reducer / store / io / tex sizing) has **no
-third-party dependencies** and is importable on its own. Anything that needs
+The declarative core (spec / actions / reducer / store / io / tex sizing) has
+**no third-party dependencies** and is importable on its own. Anything that needs
 numpy (``color``) or matplotlib (``render`` / ``tex_preview``, implemented in
 the underscore-prefixed ``mudplot._render``) is loaded lazily on first
 access, so ``import mudplot`` stays dependency-free.
@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-# -- pure engine: zero third-party dependencies (eager) --------------------
+# -- dependency-free core (eager) ------------------------------------------
 from . import actions
 from ._lint import LintIssue, LintReport, lint_figure
 from .actions import action_from_dict, action_to_dict

@@ -5,7 +5,7 @@ it reuses the *exact same* introspection (``mudplot.capabilities()`` /
 ``mudplot.reference_markdown()``) and the *exact same* renderer, so the docs
 and the pictures can never drift from what the engine actually does.
 
-Needs ``mudplot[render]`` (numpy + matplotlib). The pure engine itself stays
+Needs ``mudplot[render]`` (numpy + matplotlib). The declarative engine itself stays
 dependency-free; only this dashboard-side generator pulls those in.
 
 Usage

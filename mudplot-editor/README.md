@@ -30,7 +30,7 @@ security headers.
   recursively. The sole reserved key, `$serde_json::private::Number`, is
   rejected by both Python and Rust because serde uses it internally for those
   arbitrary-precision numbers.
-- The Python pure core remains the only reducer/validator via
+- The Python dependency-free core remains the only reducer/validator via
   `python -m mudplot apply`; rendering uses `python -m mudplot render`.
 - Failed actions, imports, or renders do not mutate the current spec or
   history.

@@ -20,6 +20,13 @@ Listener = Callable[[FigureSpec, "Action | None"], None]
 
 
 class Store:
+    """Action history around mutable specs, isolated by defensive copies.
+
+    Snapshot safety is deliberate, but copying scales with the full spec,
+    including inline data. This is an editor state store, not a streaming data
+    pipeline.
+    """
+
     def __init__(self, state: FigureSpec | None = None, *, reducer=reduce):
         # Defensive deep copy: without this, a caller mutating the
         # FigureSpec object they originally passed in would silently leak
@@ -43,16 +50,22 @@ class Store:
         """Actions dispatched so far (in order). Enables replay / undo."""
         return copy.deepcopy(self._history)
 
-    def dispatch(self, action: Action) -> FigureSpec:
+    def _dispatch(self, action: Action) -> None:
+        """Internal dispatch that skips only the public return snapshot."""
         action = copy.deepcopy(action)
         self._state = self._reducer(self._state, action)
-        self._history.append(copy.deepcopy(action))
+        self._history.append(action)
         self._redo_stack.clear()
         for cb in tuple(self._listeners):
             cb(self.state, copy.deepcopy(action))
+
+    def dispatch(self, action: Action) -> FigureSpec:
+        self._dispatch(action)
         return self.state
 
     def _replay(self) -> None:
+        # ponytail: replay is linear in history; add checkpoints only if long
+        # interactive histories become a measured bottleneck.
         self._state = copy.deepcopy(self._initial)
         for action in self._history:
             self._state = self._reducer(self._state, action)
@@ -79,7 +92,7 @@ class Store:
 
     def dispatch_all(self, actions: Iterable[Action]) -> FigureSpec:
         for action in actions:
-            self.dispatch(action)
+            self._dispatch(action)
         return self.state
 
     def subscribe(self, listener: Listener) -> Callable[[], None]:

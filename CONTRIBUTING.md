@@ -61,7 +61,7 @@ uv run python scripts/rust_editor_smoke_test.py --browser
 
 ## Project rules
 
-- Keep the pure core dependency-free. `spec`, actions, reducer, store, IO,
+- Keep the declarative core dependency-free. `spec`, actions, reducer, store, IO,
   validation, schema generation, and TeX sizing must import without NumPy or
   Matplotlib. NumPy belongs to colour effects; Matplotlib belongs to rendering.
 - Route state changes through actions and `reduce()`; do not create a second

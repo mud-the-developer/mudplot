@@ -44,13 +44,18 @@ def _safe_replace(obj, params: dict, action_name: str):
             f"{action_name}: unknown field(s) {sorted(unknown)}; "
             f"valid fields: {sorted(valid)}"
         )
-    return replace(obj, **params)
+    return replace(obj, **copy.deepcopy(params))
 
 
 def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
-    """Return a new FigureSpec resulting from applying ``action`` to ``state``."""
+    """Apply ``action`` without mutating inputs.
+
+    The mutable dataclass graph is defensively copied, so work scales with the
+    full spec, including inline data; this is not a persistent/zero-copy model.
+    """
+    # ponytail: full-spec copying keeps aliasing rules simple; move to
+    # structural sharing only if profiles show large inline specs dominate.
     s = copy.deepcopy(state)
-    action = copy.deepcopy(action)
 
     match action:
         case A.SetSize(width=w, height=h):
@@ -61,7 +66,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             # Update columns in place rather than replacing ``s.data``
             # wholesale, so any matrices registered via SetMatrix (e.g.
             # before a later data refresh) aren't silently discarded.
-            s.data.columns = {str(k): list(v) for k, v in cols.items()}
+            s.data.columns = {str(k): copy.deepcopy(list(v)) for k, v in cols.items()}
         case A.SetTheme(name=name):
             s.theme = theme_preset(name)
         case A.SetJournal(name=name):
@@ -91,7 +96,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
                     f"SetEncoding: unknown field(s) {sorted(unknown)}; valid "
                     f"fields: {sorted(_ENCODING_FIELDS)}"
                 )
-            s.theme = replace(s.theme, **params)
+            s.theme = replace(s.theme, **copy.deepcopy(params))
         case A.SetShare(x=shx, y=shy):
             if shx is not None:
                 s.share_x = shx
@@ -163,7 +168,11 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             s.panels[pi].y2 = (
                 None
                 if label is None
-                else AxisSpec(label=label, scale=scale, limits=limits)
+                else AxisSpec(
+                    label=label,
+                    scale=scale,
+                    limits=list(limits) if limits is not None else None,
+                )
             )
         case A.SetProjection(projection=proj, panel=pi):
             _ensure_panel(s, pi)
@@ -172,7 +181,11 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
                 s.panels[pi].z = None
         case A.SetZAxis(label=label, scale=scale, limits=limits, panel=pi):
             _ensure_panel(s, pi)
-            s.panels[pi].z = AxisSpec(label=label, scale=scale, limits=limits)
+            s.panels[pi].z = AxisSpec(
+                label=label,
+                scale=scale,
+                limits=list(limits) if limits is not None else None,
+            )
         case A.SetColorbar(layer_index=li, show=show, label=label, panel=pi):
             _ensure_panel(s, pi)
             n_layers = len(s.panels[pi].layers)

@@ -61,7 +61,7 @@ uv run python scripts/rust_editor_smoke_test.py --browser
 
 ## 프로젝트 규칙
 
-- 순수 코어는 의존성 0을 유지합니다. spec, action, reducer, store, IO,
+- 선언적 core는 의존성 0을 유지합니다. spec, action, reducer, store, IO,
   validation, schema 생성, TeX 크기 계산은 NumPy/Matplotlib 없이 import되어야
   합니다. NumPy는 색상 effect, Matplotlib은 렌더 effect에만 둡니다.
 - 상태 변경은 action과 `reduce()`를 거칩니다. 대시보드나 fluent API만을 위한

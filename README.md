@@ -22,21 +22,31 @@ At its core is an **LCH (CIELAB polar coordinates) colour engine**:
   colours compress to similar greys — see the
   [B&W print demo](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
 
-## Architecture: spec-centric + pure reducer (functional core / imperative shell)
+## Architecture: spec-centric state transitions (functional core / imperative shell)
 
 Every bit of figure state is represented as a **serialisable, declarative
-`FigureSpec`**, and all state transitions go through a **pure reducer**.
-Effects (render/io/preview) are pushed to the edges.
+`FigureSpec`**. The reducer returns a new spec without mutating its arguments;
+rendering, file I/O, and preview remain at the effect boundary.
 
 ```
- Action (pure data)
+ Action (serialisable data)
      │
-     ▼  reduce(state, action) -> state'      ─┐ functional core (pure)
+     ▼  reduce(state, action) -> state'      ─┐ side-effect-free transition layer
  FigureSpec (dataclass ⇆ JSON, .mplot.json) ─┘
      │
      ▼  render / io / preview                ── imperative shell (effects)
  matplotlib → PNG/PDF/SVG
 ```
+
+Here **pure** has that narrow behavioural meaning: `reduce()` does not mutate
+its inputs or perform I/O. It does not mean that the whole package uses
+persistent immutable structures or zero-copy updates. `FigureSpec` is a
+mutable dataclass/list graph, and the reducer and `Store` use defensive deep
+copies for snapshot isolation. Consequently, action cost grows with the full
+spec, including inline data, and undo/redo replays history. This favours simple,
+auditable semantics for ordinary publication datasets—not streaming or
+high-frequency updates over millions of rows. Pre-aggregate/downsample and
+benchmark those workloads.
 
 - The fluent builder is just **sugar for dispatching actions** — a `Store`
   drives the reducer underneath.
@@ -64,7 +74,7 @@ steps (more layer types, quality work, and the Rust editor).
       fills cycle a hatch pattern per group by default so they stay
       distinguishable in black & white print regardless of colour count
 - [x] Declarative spec model (`FigureSpec`) + lossless JSON round-trip +
-      pure reducer + actions + store (`Store.undo()`/`redo()`) — effects
+      side-effect-free reducer + actions + store (`Store.undo()`/`redo()`) — effects
       (render/io/preview) kept at the edges
 - [x] Renderer: 28 layer types (line/regplot/scatter/stripplot/bar/errorbar/
       band/stackplot/hline/vline/text/annotate/hist/box/violin/kde/rug/
@@ -92,11 +102,12 @@ steps (more layer types, quality work, and the Rust editor).
       the paper's own bibliography and hyperref to resolve, SVG gets a
       clickable link, raster stays plain (verified by compiling a real paper
       with tectonic and reading the numbers back out of the PDF)
-- [x] Zero dependencies in the pure core (numpy/matplotlib are effect-only
-      extras); broad input-format support (dict/records/DataFrame/numpy/
-      pyarrow/SQL); AI-agent-friendly interface (`capabilities()`/
-      `json_schema()`/`apply()`/`action_log`); pure `validate()`/
-      `assert_valid()` run automatically before rendering
+- [x] Zero required third-party dependencies in the declarative/JSON core
+      (numpy/matplotlib are effect-only extras); broad input-format support
+      (dict/records/DataFrame/numpy/pyarrow/SQL); AI-agent-friendly interface
+      (`capabilities()`/`json_schema()`/`apply()`/`action_log`);
+      side-effect-free `validate()`/`assert_valid()` run automatically before
+      rendering
 - [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
       JSON schema/capabilities/docs export files + CI sync checks
 - [x] Three stability-hardening passes, ~20 real bugs found/fixed and
@@ -142,7 +153,7 @@ Releases are currently GitHub-only; PyPI trusted publishing is intentionally
 not enabled yet.
 
 ```bash
-# Pure engine only (zero dependencies) — spec/actions/reducer/store/io/tex sizing
+# Core package only (zero required dependencies) — spec/actions/store/JSON/TeX sizing
 python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
 
 # Colour engine + rendering (numpy + matplotlib)
@@ -166,7 +177,8 @@ schema regeneration.
 
 | layer | modules | dependencies |
 | --- | --- | --- |
-| pure engine | `spec` `actions` `reducer` `store` `io` `tex` (sizing) | **none** |
+| dependency-free state core | `spec` `actions` `reducer` `store` `validate` `schema` | **none** |
+| stdlib effects/helpers | JSON/CLI I/O, bibliography, TeX sizing | **none** |
 | colour engine | `color/*` | NumPy ≥ 1.23 |
 | render effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
 
@@ -411,7 +423,7 @@ legend size, and reference-metadata validity. Thresholds default to the
 journal's own profile (see below) and can be overridden per call
 (`min_font_pt=`, `max_legend_entries=`). Omitting `journal=` picks it up from
 `.journal(...)` if you already set it. `mp.lint_figure(spec, ...)` is the
-pure/agent-facing equivalent, needing only the `color` extra (numpy) — no
+side-effect-free/agent-facing equivalent, needing only the `color` extra (numpy) — no
 matplotlib required, since nothing is actually rendered.
 
 ### Journal profiles (publication constraints, not just a style sheet)
@@ -449,13 +461,13 @@ import mudplot as mp
 caps = mp.capabilities()   # layers/themes/journals/TeX presets/action vocabulary
 schema = mp.json_schema()  # full FigureSpec JSON Schema
 
-spec = mp.apply([          # build a figure from JSON actions alone (pure reduce)
+spec = mp.apply([          # build from JSON actions without render/I/O effects
     {"type": "SetData", "columns": {"x": [1, 2, 3], "y": [1, 4, 9]}},
     {"type": "AddLayer", "layer": {"type": "line", "x": "x", "y": "y"}},
     {"type": "SetAxisLabel", "axis": "x", "text": "X"},
     {"type": "SetTheme", "name": "paper"},
 ])
-issues = mp.validate(spec)  # self-check before rendering (pure, agent feedback)
+issues = mp.validate(spec)  # side-effect-free pre-render agent feedback
 mp.save(spec, "fig.pdf")   # effect (calls assert_valid internally)
 
 # build history (replay/undo)
@@ -474,7 +486,7 @@ python -m mudplot render fig.mplot.json out.pdf    # render
 python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 
-### Using the pure reducer / store directly
+### Using the reducer / store directly
 
 ```python
 from mudplot import Store, actions as A
@@ -483,13 +495,13 @@ store = Store()
 store.subscribe(lambda spec, action: print("changed:", type(action).__name__))
 store.dispatch(A.SetTheme("paper"))
 store.dispatch(A.SetPalette(kind="qualitative", params={"hue_start": 30}))
-spec = store.state          # purely accumulated state
+spec = store.state          # defensive snapshot; mutate through actions
 ```
 
 ### Supported input data formats
 
-`mp.plot(data)` auto-detects all of the following (the pure core never
-imports numpy/pandas directly — it uses duck typing):
+`mp.plot(data)` auto-detects all of the following (the dependency-free core
+never imports numpy/pandas directly — it uses duck typing):
 
 ```python
 mp.plot({"x": [1, 2], "y": [3, 4]})           # dict of columns
