@@ -140,17 +140,31 @@ def _finite(value) -> bool:
 
 
 def _stable_group_indices(values) -> list[tuple[object, list[int]]]:
-    # ponytail: equality grouping is O(n²) for all-unique keys; index hashable
-    # keys if validation of very large grouped layers becomes a bottleneck.
     groups: list[tuple[object, list[int]]] = []
-    for index, key in enumerate(values):
-        for existing, indices in groups:
-            if key == existing:
-                indices.append(index)
-                break
-        else:
-            groups.append((key, [index]))
-    return groups
+    positions: dict[object, int] = {}
+    try:
+        for index, key in enumerate(values):
+            _ = hash(key)  # route lists/dicts to fallback before comparison
+            if key != key:  # e.g. NaN: dict identity differs from explicit equality
+                raise TypeError
+            if key in positions:
+                groups[positions[key]][1].append(index)
+            else:
+                positions[key] = len(groups)
+                groups.append((key, [index]))
+        return groups
+    except TypeError:
+        # ponytail: unusual unhashable/non-reflexive programmatic keys retain
+        # the old O(n²) equality fallback; JSON scalar group keys stay linear.
+        groups = []
+        for index, key in enumerate(values):
+            for existing, indices in groups:
+                if key == existing:
+                    indices.append(index)
+                    break
+            else:
+                groups.append((key, [index]))
+        return groups
 
 
 def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
@@ -177,10 +191,14 @@ def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
         if any(not _finite(value) for pair in pairs for value in pair):
             issues.append(f"{where}{suffix}: regression values must be finite numbers")
             continue
-        distinct_x: list[object] = []
-        for x, _y in pairs:
-            if not any(x == seen for seen in distinct_x):
-                distinct_x.append(x)
+        try:
+            distinct_x = len({x for x, _y in pairs})
+        except TypeError:
+            unique_x: list[object] = []
+            for x, _y in pairs:
+                if not any(x == seen for seen in unique_x):
+                    unique_x.append(x)
+            distinct_x = len(unique_x)
         parameters = layer.degree + 1
         minimum = parameters + (layer.confidence is not None)
         if len(pairs) < minimum:
@@ -188,7 +206,7 @@ def _check_regression_data(cols, layer, where: str, issues: list[str]) -> None:
                 f"{where}{suffix}: degree {layer.degree} regression requires at "
                 f"least {minimum} observations"
             )
-        if len(distinct_x) < parameters:
+        if distinct_x < parameters:
             issues.append(
                 f"{where}{suffix}: degree {layer.degree} regression requires at "
                 f"least {parameters} distinct x values"

@@ -277,6 +277,37 @@ def test_regplot_renders_polynomial_fit_and_opt_in_confidence_band():
     assert np.any(upper > lower)
 
 
+def test_regplot_validation_is_linear_for_hashable_coordinates_and_groups():
+    class CountedInt(int):
+        comparisons = 0
+
+        def __eq__(self, other):
+            type(self).comparisons += 1
+            return super().__eq__(other)
+
+        __hash__ = int.__hash__
+
+    n = 300
+    counted = [CountedInt(i) for i in range(n)]
+    ungrouped = mp.plot({"x": counted, "y": list(range(n))}).regplot("x", "y")
+    grouped = mp.plot({"x": list(range(n)), "y": list(range(n)), "g": counted}).regplot(
+        "x", "y", group="g"
+    )
+
+    CountedInt.comparisons = 0
+    assert mp.validate(ungrouped.spec) == []
+    assert CountedInt.comparisons <= n
+
+    CountedInt.comparisons = 0
+    assert len(mp.validate(grouped.spec)) == 2 * n
+    assert CountedInt.comparisons <= n
+
+    unhashable_groups = mp.plot(
+        {"x": [0, 1, 0, 1], "y": [0, 1, 1, 2], "g": [[1], [1], [2], [2]]}
+    ).regplot("x", "y", group="g")
+    assert mp.validate(unhashable_groups.spec) == []
+
+
 def test_regplot_rejects_unsafe_fit_settings_and_data():
     data = {"x": [0, 1, 2], "y": [0, 1, 4]}
     bad_degree = mp.plot(data).regplot("x", "y", degree=0)

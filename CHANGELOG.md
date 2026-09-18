@@ -33,6 +33,8 @@ All notable changes to this project are documented here.
   preserves the previous generated file and removes its temporary file.
 - Capture Rust bridge stdout and stderr without OS pipes so large child output
   cannot stall until the 120-second timeout.
+- Keep grouped-layer and regression-cardinality validation linear for ordinary
+  hashable values while retaining equality fallback for unusual unhashable keys.
 
 ## [0.6.1] - 2026-09-18
 
