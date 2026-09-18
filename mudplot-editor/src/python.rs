@@ -1,8 +1,9 @@
 use std::ffi::OsString;
 use std::fmt;
 use std::fs;
+use std::io::{Read, Seek};
 use std::path::Path;
-use std::process::{Command, Stdio};
+use std::process::Command;
 use std::thread;
 use std::time::{Duration, Instant};
 
@@ -95,14 +96,22 @@ impl PythonBridge {
     }
 
     fn run<const N: usize>(&self, args: [&str; N]) -> Result<Vec<u8>, BridgeError> {
+        let mut stdout = tempfile::tempfile().map_err(error("capture Python bridge stdout"))?;
+        let mut stderr = tempfile::tempfile().map_err(error("capture Python bridge stderr"))?;
+        let child_stdout = stdout
+            .try_clone()
+            .map_err(error("capture Python bridge stdout"))?;
+        let child_stderr = stderr
+            .try_clone()
+            .map_err(error("capture Python bridge stderr"))?;
         let mut child = Command::new(&self.executable)
             .args(args)
-            .stdout(Stdio::piped())
-            .stderr(Stdio::piped())
+            .stdout(child_stdout)
+            .stderr(child_stderr)
             .spawn()
             .map_err(error("start Python bridge"))?;
         let started = Instant::now();
-        loop {
+        let status = loop {
             if started.elapsed() >= self.timeout {
                 let _ = child.kill();
                 let _ = child.wait();
@@ -111,26 +120,34 @@ impl PythonBridge {
                     self.timeout
                 )));
             }
-            if child
-                .try_wait()
-                .map_err(error("wait for Python bridge"))?
-                .is_some()
-            {
-                break;
+            match child.try_wait() {
+                Ok(Some(status)) => break status,
+                Ok(None) => thread::sleep(Duration::from_millis(10)),
+                Err(e) => {
+                    let _ = child.kill();
+                    let _ = child.wait();
+                    return Err(error("wait for Python bridge")(e));
+                }
             }
-            thread::sleep(Duration::from_millis(10));
+        };
+        let output = if status.success() {
+            &mut stdout
+        } else {
+            &mut stderr
+        };
+        output
+            .rewind()
+            .map_err(error("read Python bridge output"))?;
+        let mut bytes = Vec::new();
+        output
+            .read_to_end(&mut bytes)
+            .map_err(error("read Python bridge output"))?;
+        if status.success() {
+            return Ok(bytes);
         }
-        let output = child
-            .wait_with_output()
-            .map_err(error("collect Python bridge output"))?;
-        if output.status.success() {
-            return Ok(output.stdout);
-        }
-        let stderr = String::from_utf8_lossy(&output.stderr);
         Err(BridgeError(format!(
-            "Python bridge exited with {}: {}",
-            output.status,
-            stderr.trim()
+            "Python bridge exited with {status}: {}",
+            String::from_utf8_lossy(&bytes).trim()
         )))
     }
 }
@@ -164,5 +181,35 @@ mod tests {
         };
         let error = bridge.run(["--help"]).expect_err("zero timeout must fail");
         assert!(error.to_string().contains("timed out"));
+    }
+
+    #[test]
+    fn bridge_handles_output_larger_than_a_pipe() {
+        let bridge = PythonBridge {
+            executable: std::env::current_exe()
+                .expect("current test executable")
+                .into(),
+            timeout: Duration::from_secs(2),
+        };
+        let output = bridge
+            .run([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_large_output_helper",
+                "--nocapture",
+            ])
+            .expect("large output must not fill the child pipes");
+        assert!(output.len() >= 1024 * 1024);
+    }
+
+    #[test]
+    #[ignore]
+    fn bridge_large_output_helper() -> std::io::Result<()> {
+        use std::io::Write;
+
+        let bytes = vec![b'x'; 1024 * 1024];
+        std::io::stdout().write_all(&bytes)?;
+        std::io::stderr().write_all(&bytes)?;
+        Ok(())
     }
 }

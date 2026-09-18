@@ -31,6 +31,8 @@ All notable changes to this project are documented here.
   replacement.
 - Write `schema --out` and `docs --out` atomically so a failed replacement
   preserves the previous generated file and removes its temporary file.
+- Capture Rust bridge stdout and stderr without OS pipes so large child output
+  cannot stall until the 120-second timeout.
 
 ## [0.6.1] - 2026-09-18
 
