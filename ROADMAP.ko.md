@@ -38,7 +38,7 @@ scatter3d, line3d, surface, wireframe.
   kde/hist 동반 레이어; 그룹에는 중복 선 스타일도 적용
 
 각 추가는 지난 두 배치와 같은 체크리스트를 따름: LayerSpec 필드 →
-capabilities.LAYER_TYPES → _render.py 구현 → validate.py 검사 →
+capabilities.LAYER_TYPES →_render.py 구현 → validate.py 검사 →
 api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스트 확인.
 
 ## 2. 대시보드/에디터 완성도
@@ -52,7 +52,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   유지하면서 오류 표시
 - **(완료)** 패널별 title/reference, x/y 라벨·scale·고정/자동 limits,
   보조 y축 활성화·설정·제거, 3-D z축, projection, 드래그 위치 설정.
-  invalid 결과는 editor history에 들어가기 전에 거부
+  prospective 결과는 검증·렌더에 성공해야 editor history에 commit
 - **(완료)** 전체 페이지 리로드 방식을 htmx 부분 갱신으로 전환
   (`dashboard/static/htmx.min.js`, 0BSD 라이선스로 vendoring, 새 Python
   의존성 없음) — 진짜 Rust+htmx 에디터 전 연습
@@ -63,17 +63,20 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 3. Rust 인터랙티브 에디터 (M13)
 
-**1단계 완료** — Python과 함께 versioning하는 `mudplot-editor/` crate:
+**release-candidate 필수 기능 완료** — Python과 함께 versioning하는
+`mudplot-editor/` crate:
 
 - serde가 versioned `FigureSpec`·action envelope를 보존하고 생성
   schema/reference를 계약으로 사용
-- axum + Askama로 `GET /`, `/fig.png`, `/spec.json`, 공용 vendored htmx와
-  JSON `/action`, htmx `/action/raw`·`/undo`·`/redo`·`/reset` 제공
+- axum + Askama로 PNG/PDF/SVG/JSON output, 공용 vendored htmx, JSON
+  `/action`, visual control, 전체 layer capability metadata, spec open,
+  undo/redo/reset 제공
 - 새 pure-core `mudplot apply`와 기존 `mudplot render` subprocess를 호출해
   28개 layer의 reducer/validator/renderer 의미를 Rust에 복제하지 않음
-- 인증 없는 로컬 단일 session이며 non-loopback bind 주소를 거부
+- 인증 없는 로컬 단일 session이며 non-loopback bind/HTTP Host와
+  cross-origin browser mutation을 거부
 
-실사용이 정당화한 뒤에만 capability 기반 visual form, open/vector export,
+로컬 실사용이 정당화한 뒤에만 Python editor의 특수 axis/drag control,
 원격 사용용 cookie session/auth를 추가. native Rust renderer와 전체 schema
 강타입화는 Rust가 reduction/rendering을 맡을 때만 검토.
 
@@ -95,14 +98,17 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 5. 패키징/릴리스
 
-- GitHub 릴리스: 완료 -- `.github/workflows/release.yml`이 태그(`v*`)마다
-  sdist/wheel을 빌드해 GitHub Release에 첨부함.
+- GitHub 릴리스: 완료 -- `.github/workflows/release.yml`이 tag/Python/
+  pyproject/Rust manifest+lock/changelog/README version 일치를 확인하고 locked
+  dependency로 Python+Rust+전체 TeX-engine preflight 후 sdist/wheel,
+  SHA-256 checksum, OIDC build-provenance attestation을 태그(`v*`)마다
+  GitHub Release에 첨부함.
 - 실제 PyPI 배포: 의도적으로 보류. PyPI 프로젝트(`mudplot`)에 이 저장소를
   trusted publisher로 등록(workflow `release.yml`, environment `pypi`)하고
   GitHub에도 `pypi` environment를 만든 뒤 `release.yml`에 `publish` job을
   다시 추가할 것 -- 한 번 시도했으나 publisher 미등록으로
   `invalid-publisher` 오류로 실패함.
-- 버전 정책: 현재 `0.5.0`. pre-1.0이라도 `FigureSpec`
+- 버전 정책: 현재 `0.6.0`. pre-1.0이라도 `FigureSpec`
   호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
   안정성에 의존).
 - `pyproject.toml`의 `[project.urls]`는 이제 실제 저장소를 가리킴

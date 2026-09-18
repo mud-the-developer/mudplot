@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from typing import Any, cast
 
 
 def _cmd_capabilities(args: argparse.Namespace) -> int:
@@ -72,10 +73,18 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 
 
 def _cmd_render(args: argparse.Namespace) -> int:
-    from ._render import save
+    from pathlib import Path
+
+    from ._render import _preview_dpi, save
     from .io import load_spec
+    from .validate import assert_valid
 
     spec = load_spec(args.spec)
+    if args.preview:
+        if Path(args.out).suffix.lower() != ".png":
+            raise ValueError("--preview requires a .png output path")
+        assert_valid(spec)
+        cast(Any, spec).dpi = _preview_dpi(spec)
     save(spec, args.out)
     print(f"wrote {args.out}", file=sys.stderr)
     return 0
@@ -85,13 +94,13 @@ def _cmd_apply(args: argparse.Namespace) -> int:
     from pathlib import Path
 
     from .actions import action_from_dict
-    from .io import load_spec, save_spec
+    from .io import _loads_json, load_spec, save_spec
     from .reducer import reduce
     from .validate import assert_valid
 
     try:
-        data = json.loads(Path(args.action).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as e:
+        data = _loads_json(Path(args.action).read_text(encoding="utf-8"))
+    except (OSError, ValueError, RecursionError) as e:
         raise ValueError(f"invalid action JSON: {e}") from e
     if not isinstance(data, dict):
         raise ValueError("action JSON must be an object")
@@ -138,6 +147,11 @@ def build_parser() -> argparse.ArgumentParser:
     sp = sub.add_parser("render", help="render a saved spec to an image/PDF")
     sp.add_argument("spec", help="path to a .mplot.json file")
     sp.add_argument("out", help="output path (.png/.pdf/.svg)")
+    sp.add_argument(
+        "--preview",
+        action="store_true",
+        help="bound PNG output to 2000 pixels per axis",
+    )
     sp.set_defaults(func=_cmd_render)
 
     sp = sub.add_parser("apply", help="apply one JSON action to a saved spec")
@@ -163,12 +177,12 @@ def build_parser() -> argparse.ArgumentParser:
 # (through --debug or when not caught), since that indicates a real bug
 # worth a full traceback rather than a swallowed one-liner.
 _USER_ERRORS = (
-    FileNotFoundError,
-    IsADirectoryError,
-    PermissionError,
-    json.JSONDecodeError,
+    OSError,
+    ImportError,
+    RuntimeError,
     ValueError,
     TypeError,
+    RecursionError,
 )
 
 

@@ -3,8 +3,7 @@
 *[한국어 / Korean: CONTRIBUTING.ko.md](CONTRIBUTING.ko.md)*
 
 Keep changes small, reproducible, and spec-first. `FigureSpec` and actions are
-the contract shared by the Python API, dashboard, saved JSON, and future
-non-Python clients.
+the contract shared by the Python API, dashboard, saved JSON, and the Rust editor.
 
 ## Setup
 
@@ -13,13 +12,13 @@ Requirements: Python 3.10+ and [uv](https://docs.astral.sh/uv/).
 ```bash
 git clone https://github.com/mud-the-developer/mudplot.git
 cd mudplot
-uv sync --extra dev
+uv sync --locked --extra dev
 ```
 
 For real-browser editor tests:
 
 ```bash
-uv sync --extra dev --extra browser
+uv sync --locked --extra dev --extra browser
 uv run playwright install chromium
 ```
 
@@ -34,7 +33,10 @@ uv run ruff check .
 uv run ruff format --check .
 uv run pyright
 uv run pytest -q -m "not browser"
+uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
+uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
+uv run python scripts/check_wheel.py
 ```
 
 If Chromium is installed, also run:
@@ -42,6 +44,19 @@ If Chromium is installed, also run:
 ```bash
 uv run pytest -q tests/test_editor_browser.py
 uv run python scripts/editor_smoke_test.py
+```
+
+For `mudplot-editor/` changes, Rust 1.88+ is required:
+
+```bash
+rustup toolchain install 1.88.0 --profile minimal
+cargo +1.88.0 check --locked --all-targets --manifest-path mudplot-editor/Cargo.toml
+cargo fmt --check --manifest-path mudplot-editor/Cargo.toml
+cargo clippy --locked --all-targets --manifest-path mudplot-editor/Cargo.toml -- -D warnings
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml
+uv run python scripts/rust_editor_smoke_test.py
+# With Chromium installed, also verify real htmx swaps under the CSP:
+uv run python scripts/rust_editor_smoke_test.py --browser
 ```
 
 ## Project rules
@@ -89,5 +104,29 @@ Demo data must be deterministic and synthetic; seed random generators. Avoid
 committing regenerated binary assets unless the visible output intentionally
 changed.
 
+## Releases
+
+A `v*` release tag must be annotated, cryptographically signed, and reported as
+verified by GitHub. The release workflow rejects lightweight, unsigned, or
+unverified tags before building. Run `scripts/check_release_version.py vX.Y.Z`
+before pushing a tag; the workflow then rebuilds and verifies the exact
+artifacts it publishes.
+
+For SSH signing, add the **public** key to GitHub as a signing key (never upload
+the private key), then configure this checkout and verify locally before push:
+
+```bash
+git config gpg.format ssh
+git config user.signingkey ~/.ssh/id_ed25519.pub
+git tag -s vX.Y.Z -F /tmp/mudplot-tag-message.txt
+git verify-tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+GPG signing is equally valid. In either case, confirm GitHub displays the tag
+as **Verified**; a locally valid signature alone does not satisfy the release
+gate.
+
 See [`DESIGN.md`](DESIGN.md) for architecture and
-[`ROADMAP.md`](ROADMAP.md) for prioritized work.
+[`ROADMAP.md`](ROADMAP.md) for prioritized work. Report unpatched
+vulnerabilities privately via [`SECURITY.md`](SECURITY.md), not a public issue.

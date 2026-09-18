@@ -7,28 +7,36 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     strategy:
       matrix:
         python-version: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
       - name: Install uv
-        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
+        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
         with:
           python-version: ${{ matrix.python-version }}
           cache-dependency-glob: "uv.lock"
+      - name: Audit all committed Python dependency locks
+        if: matrix.python-version == '3.12'
+        run: uv run --locked --script scripts/audit_dependencies.py
       - name: Install project (with dev extras)
-        run: uv sync --extra dev --extra browser
+        run: uv sync --locked --extra dev --extra browser
       - name: Install Chromium for the browser tests
         run: uv run playwright install --with-deps chromium
       - name: Install pdflatex + tectonic (TeX engines for the .pgf-export
-          reference tests; see tex-matrix.yml for the fuller
-          pdflatex/lualatex/biber matrix, nightly/release-only)
+          reference tests; the fuller pdflatex/lualatex/biber matrix runs
+          nightly in tex-matrix.yml and before publishing in release.yml)
         # pdflatex (texlive-latex-base/-recommended/-pictures) is matplotlib's
         # pgf.texsystem for the base .pgf-export tests (tests/conftest.py
         # picks it over the xelatex default, since xelatex's Ubuntu package
@@ -39,13 +47,17 @@ jobs:
         # (at the cost of bumping TECTONIC_VERSION by hand occasionally).
         env:
           TECTONIC_VERSION: "0.15.0"
+          TECTONIC_SHA256: >-
+            875fbbc9ab48560d7776088c608e0beee49197b57ab4a2f6c5385b2c661c842f
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             texlive-latex-base texlive-latex-recommended texlive-pictures \
             ghostscript
-          curl -fsSL -o tectonic.tar.gz \
+          curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
             "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
+            | sha256sum --check --strict
           tar xzf tectonic.tar.gz
           sudo mv tectonic /usr/local/bin/
           rm tectonic.tar.gz
@@ -53,39 +65,53 @@ jobs:
       - name: Ruff lint
         run: uv run ruff check .
       - name: Ruff format check
-        run: uv run ruff format --check mudplot tests dashboard
+        run: uv run ruff format --check .
       - name: Pyright
         run: uv run pyright
       - name: Pytest
         run: uv run pytest -q
+      - name: Minimum render dependency contract
+        if: matrix.python-version == '3.10'
+        run: >-
+          uv run --python 3.10 --locked --script
+          scripts/check_minimum_versions.py
       - name: Schema/docs export is in sync (drift guard for Rust + humans)
         run: uv run python scripts/check_schema_sync.py
       - name: Dashboard site builds
         run: uv run python -m dashboard --out /tmp/dashboard_build
       - name: Dashboard editor smoke test
         run: uv run python scripts/editor_smoke_test.py
-      - name: Wheel builds and includes py.typed + LICENSE
-        run: |
-          uv pip install build
-          uv run python scripts/check_wheel.py
+      - name: Rust editor real-browser smoke test
+        if: matrix.python-version == '3.12'
+        run: uv run python scripts/rust_editor_smoke_test.py --browser
+      - name: Sdist/wheel rebuild and contents are complete
+        run: uv run python scripts/check_wheel.py
 
   rust-editor:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
         with:
           persist-credentials: false
       - name: Install uv and Python render bridge
-        uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
+        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
         with:
           python-version: "3.12"
           cache-dependency-glob: "uv.lock"
-      - run: uv sync --extra render
+      - run: uv sync --locked --extra render
+      - name: Rust 1.88 MSRV
+        run: |
+          rustup toolchain install 1.88.0 --profile minimal
+          cargo +1.88.0 check --locked --all-targets \
+            --manifest-path mudplot-editor/Cargo.toml
       - name: Rust format
         run: cargo fmt --check --manifest-path mudplot-editor/Cargo.toml
       - name: Rust lint
-        run: cargo clippy --all-targets --manifest-path mudplot-editor/Cargo.toml -- -D warnings
+        run: >-
+          cargo clippy --locked --all-targets
+          --manifest-path mudplot-editor/Cargo.toml -- -D warnings
       - name: Rust tests
-        run: cargo test --manifest-path mudplot-editor/Cargo.toml
+        run: cargo test --locked --manifest-path mudplot-editor/Cargo.toml
       - name: Rust/Python editor bridge smoke test
         run: uv run python scripts/rust_editor_smoke_test.py

@@ -7,10 +7,10 @@ fluent API today and by a Rust/htmx editor later.
 
 from __future__ import annotations
 
-import typing
 from dataclasses import dataclass, field, fields
+from typing import cast
 
-from .spec import LayerSpec
+from .spec import LayerSpec, _from_dict
 
 __all__ = [
     "ACTION_REGISTRY",
@@ -354,16 +354,21 @@ def action_to_dict(action) -> dict:
     return out
 
 
-def action_from_dict(data: dict):
+def action_from_dict(data: dict) -> Action:
     """Build an action from a ``{"type": ..., ...}`` dict (agent-facing)."""
+    if not isinstance(data, dict):
+        raise TypeError("action must be a JSON object")
+    if not all(isinstance(key, str) for key in data):
+        raise TypeError("action object keys must be strings")
     d = dict(data)
-    name = d.pop("type", None) or d.pop("action", None)
+    name = d.pop("type", None)
+    if not isinstance(name, str):
+        raise TypeError("action type must be a string")
     cls = ACTION_REGISTRY.get(name)
     if cls is None:
         raise ValueError(
             f"unknown action type {name!r}; valid: {sorted(ACTION_REGISTRY)}"
         )
-    hints = typing.get_type_hints(cls)
     valid = {f.name for f in fields(cls)}
     unknown = set(d) - valid
     if unknown:
@@ -371,11 +376,4 @@ def action_from_dict(data: dict):
             f"unknown field(s) {sorted(unknown)} for action {name!r}; "
             f"valid fields: {sorted(valid)}"
         )
-    kwargs = {}
-    for k, v in d.items():
-        tp = hints.get(k)
-        if tp is LayerSpec:
-            kwargs[k] = LayerSpec.from_dict(v)
-        else:
-            kwargs[k] = v
-    return cls(**kwargs)
+    return cast(Action, _from_dict(cls, d))

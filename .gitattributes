@@ -1,0 +1,2 @@
+# Preserve the exact upstream bytes verified by scripts/check_wheel.py.
+dashboard/static/htmx.min.js -text

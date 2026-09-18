@@ -2,8 +2,8 @@
 
 ``FigureSpec`` is the single source of truth for a figure. It contains only
 plain data (numbers, strings, lists, nested dataclasses) so it can round-trip
-through JSON/TOML and later be edited by a Rust (serde) frontend that shares
-the same schema.
+through JSON and be edited by the Rust (serde) frontend that shares the same
+schema.
 
 Nothing here touches matplotlib; rendering lives in ``mudplot._render``.
 """
@@ -44,6 +44,8 @@ def migrate_spec_dict(data: dict) -> dict:
     and any *newer* version than this mudplot understands fail loudly here
     rather than silently misinterpreting/dropping fields later.
     """
+    if not isinstance(data, dict):
+        raise TypeError("FigureSpec must be a JSON object")
     version = data.get("version", SPEC_VERSION)
     seen = set()
     while version != SPEC_VERSION:
@@ -86,35 +88,62 @@ def _to_dict(obj: Any) -> Any:
     return obj
 
 
-def _strip_optional(tp):
-    """Union[X, None] -> X (leave other unions as-is)."""
-    if get_origin(tp) in _UNION_ORIGINS:
-        args = [a for a in get_args(tp) if a is not type(None)]
-        if len(args) == 1:
-            return args[0]
-    return tp
-
-
 def _from_dict(cls, data: Any):
+    origin = get_origin(cls)
+    if origin in _UNION_ORIGINS:
+        choices = get_args(cls)
+        if data is None and type(None) in choices:
+            return None
+        for choice in choices:
+            if choice is type(None):
+                continue
+            try:
+                return _from_dict(choice, data)
+            except TypeError:
+                pass
+        raise TypeError(f"value {data!r} does not match {cls}")
     if data is None:
-        return None
+        if cls is Any or cls is type(None):
+            return None
+        raise TypeError(f"expected {cls}, got null")
     if isinstance(cls, type) and is_dataclass(cls):
+        if not isinstance(data, dict):
+            raise TypeError(f"{cls.__name__} must be a JSON object")
         hints = typing.get_type_hints(cls)
         kwargs = {}
         for f in fields(cls):
             if f.name not in data:
                 continue
-            kwargs[f.name] = _from_dict(_strip_optional(hints[f.name]), data[f.name])
+            kwargs[f.name] = _from_dict(hints[f.name], data[f.name])
         return cls(**kwargs)
-    origin = get_origin(cls)
     if origin in (list, tuple):
+        if not isinstance(data, (list, tuple)):
+            raise TypeError(f"expected an array for {cls}")
         (item_t,) = get_args(cls) or (Any,)
-        seq = [_from_dict(item_t, v) for v in data]
+        seq = [_from_dict(item_t, value) for value in data]
         return tuple(seq) if origin is tuple else seq
     if origin is dict:
+        if not isinstance(data, dict):
+            raise TypeError(f"expected an object for {cls}")
         args = get_args(cls)
-        val_t = args[1] if len(args) == 2 else Any
-        return {k: _from_dict(val_t, v) for k, v in data.items()}
+        key_t, val_t = args if len(args) == 2 else (Any, Any)
+        return {
+            _from_dict(key_t, key): _from_dict(val_t, value)
+            for key, value in data.items()
+        }
+    if cls is Any:
+        return data
+    if cls is bool:
+        if type(data) is not bool:
+            raise TypeError(f"expected bool, got {type(data).__name__}")
+    elif cls is int:
+        if type(data) is not int:
+            raise TypeError(f"expected int, got {type(data).__name__}")
+    elif cls is float:
+        if type(data) not in (int, float):
+            raise TypeError(f"expected number, got {type(data).__name__}")
+    elif cls is str and not isinstance(data, str):
+        raise TypeError(f"expected str, got {type(data).__name__}")
     return data
 
 
@@ -201,7 +230,7 @@ class ThemeSpec(SpecBase):
 class DataSpec(SpecBase):
     """Inline columnar data. (Later: external references / files.)"""
 
-    columns: dict[str, list[float]] = field(default_factory=dict)
+    columns: dict[str, list[Any]] = field(default_factory=dict)
     # 2-D matrices for heatmap-style layers, keyed by name
     matrices: dict[str, list[list[float]]] = field(default_factory=dict)
 

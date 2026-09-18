@@ -54,7 +54,7 @@ _PAGE = """<!doctype html>
   <a href="#reference">Engine reference</a>
 </nav>
 <h1>mudplot</h1>
-<p>Perceptually-uniform, colourblind-safe plotting for papers — engine reference
+<p>Perceptually-uniform, CVD-aware plotting for papers — engine reference
 and a visual walkthrough of its design decisions, generated straight from the
 library (never hand-written, never stale).</p>
 

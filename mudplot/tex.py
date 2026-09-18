@@ -260,6 +260,8 @@ def tex_preview(
     )
 
     out, ax = plt.subplots(figsize=(page_w, total_h), dpi=150)
+    # Interactive HiDPI backends may round inches to device pixels.
+    out.set_size_inches((page_w, total_h), forward=False)
     # Data coordinates are inches; default subplot margins would shrink
     # the entire preview (including the supposedly true-size figure).
     out.subplots_adjust(left=0, right=1, bottom=0, top=1)

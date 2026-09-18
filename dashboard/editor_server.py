@@ -1,43 +1,75 @@
-"""A minimal local interactive editor server.
+"""A dependency-light local interactive editor server.
 
-Deliberately dependency-light (stdlib ``http.server`` + ``mudplot[render]``,
-plus a single vendored, dependency-free JS file for htmx partial-page
-updates -- see ``dashboard/static/htmx.min.js``, 0BSD licensed): this is a
-*prototype* per the dashboard roadmap, meant to exercise the engine's
-Store/actions/reducer through a real UI before a Rust/htmx editor replaces
-it. There is exactly one piece of session state (``EditorSession``) and it
-holds nothing the engine doesn't already model — every edit is a
-dispatched ``Action``, same as the fluent API.
+It uses stdlib ``http.server`` + ``mudplot[render]`` and one vendored,
+dependency-free htmx file (``dashboard/static/htmx.min.js``, 0BSD licensed).
+There is exactly one piece of session state (``EditorSession``), and it holds
+nothing the engine doesn't already model — every edit is a dispatched
+``Action``, same as the fluent API.
 
 English by default (per project convention).
 """
 
 from __future__ import annotations
 
+import copy
 import functools
 import io
-import json
+import ipaddress
+import socket
 import threading
 from dataclasses import fields as dataclass_fields
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import Any, cast
 from urllib.parse import parse_qs, urlparse
 
 import mudplot as mp
 from mudplot import actions as A
 from mudplot.capabilities import LAYER_TYPES
-from mudplot.reducer import reduce
+from mudplot.io import _loads_json
 from mudplot.spec import FigureSpec, LayerSpec
 from mudplot.store import Store
 from mudplot.validate import assert_valid
 
-from .editor_view import render_app_body, render_docs_page, render_page
+from .editor_view import _DRAG_JS, render_app_body, render_docs_page, render_page
 from .markdown_lite import markdown_to_html
 from .samples import sample_columns
 
 __all__ = ["EditorSession", "make_server", "serve"]
 
 _HTMX_JS = (Path(__file__).parent / "static" / "htmx.min.js").read_bytes()
+_MAX_BODY_BYTES = 16 * 1024 * 1024
+_CSP = (
+    "default-src 'self'; img-src 'self'; script-src 'self'; "
+    "style-src 'unsafe-inline'; object-src 'none'; form-action 'self'; "
+    "base-uri 'none'; frame-ancestors 'none'"
+)
+
+
+def _is_loopback_address(host: str) -> bool:
+    if host.lower() == "localhost":
+        return True
+    try:
+        return ipaddress.ip_address(host).is_loopback
+    except ValueError:
+        return False
+
+
+def _is_loopback_host(host: str) -> bool:
+    try:
+        parsed = urlparse(f"//{host}")
+        hostname = parsed.hostname
+        _ = parsed.port
+    except ValueError:
+        return False
+    return (
+        hostname is not None
+        and parsed.username is None
+        and parsed.path == ""
+        and parsed.query == ""
+        and parsed.fragment == ""
+        and _is_loopback_address(hostname)
+    )
 
 
 class EditorSession:
@@ -63,11 +95,17 @@ class EditorSession:
         self.refresh()
 
     def select_panel(self, index: int) -> None:
-        n = len(self.store.state.panels)
+        spec = self.store.state
+        n = len(spec.panels)
         if not 0 <= index < max(n, 1):
             raise IndexError(f"no panel {index} (figure has {n})")
+        try:
+            png, layout = self._render_preview(spec, index)
+        except Exception as e:
+            self.error = f"{type(e).__name__}: {e}"
+            return
         self.active_panel = index
-        self.refresh()
+        self.png, self.layout, self.error = png, layout, None
 
     def _clamp_panel(self) -> int:
         """Keep the selection valid when the layout shrinks under it."""
@@ -79,78 +117,93 @@ class EditorSession:
     def action_log(self) -> list[dict]:
         return [A.action_to_dict(a) for a in self.store.history]
 
+    def _commit_store(self, candidate: Store, active_panel: int) -> None:
+        spec = candidate.state
+        assert_valid(spec)
+        active_panel = min(active_panel, max(len(spec.panels) - 1, 0))
+        png, layout = self._render_preview(spec, active_panel)
+        self.store = candidate
+        self.active_panel = active_panel
+        self.png, self.layout, self.error = png, layout, None
+
     def dispatch_safe(self, action) -> None:
+        candidate = copy.deepcopy(self.store)
         try:
-            assert_valid(reduce(self.store.state, action))
-            self.store.dispatch(action)
+            candidate.dispatch(action)
+            self._commit_store(candidate, self.active_panel)
         except Exception as e:
-            # Parsing/reducing/validating failed -- the store is untouched, so
-            # refresh() would only redraw the same valid spec and clear the
-            # useful error banner again.
             self.error = f"{type(e).__name__}: {e}"
-            return
-        self.refresh()
 
     def undo(self) -> None:
-        self.store.undo()
-        self.error = None
-        self.refresh()
+        candidate = copy.deepcopy(self.store)
+        try:
+            candidate.undo()
+            self._commit_store(candidate, self.active_panel)
+        except Exception as e:
+            self.error = f"{type(e).__name__}: {e}"
 
     def redo(self) -> None:
-        self.store.redo()
-        self.error = None
-        self.refresh()
+        candidate = copy.deepcopy(self.store)
+        try:
+            candidate.redo()
+            self._commit_store(candidate, self.active_panel)
+        except Exception as e:
+            self.error = f"{type(e).__name__}: {e}"
 
     def reset(self) -> None:
-        self.store = Store()
-        self.active_panel = 0
-        self.error = None
-        self.refresh()
+        try:
+            self._commit_store(Store(), 0)
+        except Exception as e:
+            self.error = f"{type(e).__name__}: {e}"
 
     def load_spec(self, text: str) -> None:
-        """Open a saved .mplot.json, replacing the current figure.
-
-        Validated before it is accepted, so a malformed file leaves the
-        session untouched and reports the problem instead of wedging the
-        editor on a spec it cannot render.
-        """
+        """Open a saved .mplot.json atomically after validation and rendering."""
         try:
-            spec = FigureSpec.from_dict(json.loads(text))
-            assert_valid(spec)
+            self._commit_store(Store(mp.from_json(text)), 0)
         except Exception as e:
             raise ValueError(f"invalid figure spec: {e}") from e
-        self.store = Store(spec)
-        self.active_panel = 0
-        self.error = None
-        self.refresh()
 
-    def refresh(self) -> None:
-        """Re-render the figure and cache both the PNG and the layout info
-        (panel-0 axes bbox/limits/scale, draggable text-layer positions)
-        the client uses to place handles -- one render pass serves both
-        ``/fig.png`` and the fragment HTML, instead of re-rendering twice
-        (once per request) with the risk of them disagreeing.
-        """
+    def _render_preview(
+        self, spec: FigureSpec, active_panel: int
+    ) -> tuple[bytes, dict]:
         import matplotlib
 
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
-        from mudplot._render import render
+        from mudplot._render import _preview_dpi, _save_figure, render
+
+        assert_valid(spec)
+        preview_spec = copy.deepcopy(spec)
+        cast(Any, preview_spec).dpi = _preview_dpi(spec)
+        fig = render(preview_spec)
+        try:
+            layout = self._extract_layout(spec, fig, active_panel)
+            buf = io.BytesIO()
+            _save_figure(fig, preview_spec, buf, "png")
+            return buf.getvalue(), layout
+        finally:
+            plt.close(fig)
+
+    def refresh(self) -> None:
+        """Re-render the current figure, using a placeholder on failure."""
+        import matplotlib.pyplot as plt
 
         spec = self.store.state
         try:
-            assert_valid(spec)
-            fig = render(spec)
+            self.png, self.layout = self._render_preview(spec, self.active_panel)
             self.error = None
-            self.layout = self._extract_layout(spec, fig)
+            return
         except Exception as e:
             self.error = f"{type(e).__name__}: {e}"
-            fig = self._error_figure(self.error)
             self.layout = {}
-        buf = io.BytesIO()
-        fig.savefig(buf, format="png", dpi=spec.dpi if spec.panels else 150)
-        plt.close(fig)
-        self.png = buf.getvalue()
+
+        fig = self._error_figure(self.error)
+        try:
+            buf = io.BytesIO()
+            fig.savefig(buf, format="png", dpi=150)
+            self.png = buf.getvalue()
+        finally:
+            plt.close(fig)
 
     def export(self, fmt: str) -> bytes:
         """Render the current spec to a vector format at its exact configured
@@ -163,22 +216,22 @@ class EditorSession:
 
         matplotlib.use("Agg")
         import matplotlib.pyplot as plt
-        from mudplot._render import render
+        from mudplot._render import _save_figure, render
 
         spec = self.store.state
         assert_valid(spec)
-        fig = render(spec)
+        fig = render(spec, fmt=fmt)
         try:
             buf = io.BytesIO()
-            fig.savefig(buf, format=fmt)
+            _save_figure(fig, spec, buf, fmt)
         finally:
             plt.close(fig)
         return buf.getvalue()
 
-    def _extract_layout(self, spec, fig) -> dict:
+    def _extract_layout(self, spec, fig, index: int) -> dict:
         if not spec.panels or not fig.axes:
             return {}
-        index = self._clamp_panel()
+        index = min(index, len(spec.panels) - 1)
         # Not fig.axes[index]: twin (y2) and colorbar axes land in that list
         # too, so it stops matching panel order after the first one.
         ax = next(
@@ -265,8 +318,8 @@ def _layer_from_json(fields: dict) -> LayerSpec:
             f"unknown layer type {layer_type!r}; valid: {sorted(LAYER_TYPES)}"
         )
     try:
-        values = json.loads(fields.get("layer_json", "{}"))
-    except (TypeError, json.JSONDecodeError) as e:
+        values = _loads_json(fields.get("layer_json", "{}"))
+    except (TypeError, ValueError, RecursionError) as e:
         raise ValueError(f"layer fields must be valid JSON: {e}") from e
     if not isinstance(values, dict):
         raise ValueError("layer fields must be a JSON object")
@@ -426,7 +479,7 @@ def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
 
 
 def _parse_form(body: bytes) -> dict:
-    parsed = parse_qs(body.decode("utf-8"))
+    parsed = parse_qs(body.decode("utf-8"), max_num_fields=1_000)
     return {k: v[0] for k, v in parsed.items()}
 
 
@@ -436,6 +489,33 @@ class _Handler(BaseHTTPRequestHandler):
     def log_message(self, format: str, *args) -> None:  # quieter test/dev output
         pass
 
+    def end_headers(self) -> None:
+        self.send_header("Content-Security-Policy", _CSP)
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("X-Frame-Options", "DENY")
+        self.send_header("Referrer-Policy", "no-referrer")
+        self.send_header("Cross-Origin-Opener-Policy", "same-origin")
+        self.send_header("Cross-Origin-Resource-Policy", "same-origin")
+        self.send_header(
+            "Permissions-Policy", "camera=(), microphone=(), geolocation=()"
+        )
+        self.send_header("Cache-Control", "no-store")
+        super().end_headers()
+
+    def _reject_untrusted_request(self, *, mutation: bool = False) -> bool:
+        host = self.headers.get("Host", "")
+        if not _is_loopback_host(host):
+            self.send_error(403, "non-loopback Host is not allowed")
+            return True
+        if mutation:
+            origin = self.headers.get("Origin")
+            if self.headers.get("Sec-Fetch-Site") == "cross-site" or (
+                origin is not None and origin != f"http://{host}"
+            ):
+                self.send_error(403, "cross-origin mutations are not allowed")
+                return True
+        return False
+
     def _send_html(self, body: str, status: int = 200) -> None:
         data = body.encode("utf-8")
         self.send_response(status)
@@ -444,12 +524,10 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
-    def _send_bytes(self, data: bytes, content_type: str, *, no_store=False) -> None:
+    def _send_bytes(self, data: bytes, content_type: str) -> None:
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(data)))
-        if no_store:
-            self.send_header("Cache-Control", "no-store")
         self.end_headers()
         self.wfile.write(data)
 
@@ -465,6 +543,8 @@ class _Handler(BaseHTTPRequestHandler):
             raise ValueError("Content-Length must be an integer") from e
         if length < 0:
             raise ValueError("Content-Length must not be negative")
+        if length > _MAX_BODY_BYTES:
+            raise ValueError("request body exceeds the 16 MiB limit")
         return self.rfile.read(length) if length else b""
 
     def _respond_after_action(self, session: EditorSession) -> None:
@@ -485,6 +565,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._redirect_home()
 
     def do_GET(self) -> None:
+        if self._reject_untrusted_request():
+            return
         path = urlparse(self.path).path
         session = self.session
         if path == "/":
@@ -501,10 +583,12 @@ class _Handler(BaseHTTPRequestHandler):
             self._send_html(_docs_page())
         elif path == "/static/htmx.min.js":
             self._send_bytes(_HTMX_JS, "application/javascript")
+        elif path == "/static/editor.js":
+            self._send_bytes(_DRAG_JS.encode("utf-8"), "application/javascript")
         elif path == "/fig.png":
             with session.lock:
                 png = session.png
-            self._send_bytes(png, "image/png", no_store=True)
+            self._send_bytes(png, "image/png")
         elif path in ("/fig.pdf", "/fig.svg"):
             fmt = path.rsplit(".", 1)[1]
             with session.lock:
@@ -514,15 +598,17 @@ class _Handler(BaseHTTPRequestHandler):
                     self.send_error(400, f"{type(e).__name__}: {e}")
                     return
             ctype = "application/pdf" if fmt == "pdf" else "image/svg+xml"
-            self._send_bytes(data, ctype, no_store=True)
+            self._send_bytes(data, ctype)
         elif path == "/spec.json":
             with session.lock:
-                text = json.dumps(session.store.state.to_dict(), indent=2)
+                text = mp.to_json(session.store.state)
             self._send_bytes(text.encode("utf-8"), "application/json")
         else:
             self.send_error(404, "not found")
 
     def do_POST(self) -> None:
+        if self._reject_untrusted_request(mutation=True):
+            return
         path = urlparse(self.path).path
         session = self.session
         try:
@@ -545,7 +631,7 @@ class _Handler(BaseHTTPRequestHandler):
         elif path == "/action/raw":
             with session.lock:
                 try:
-                    data = json.loads(fields.get("json", "{}"))
+                    data = _loads_json(fields.get("json", "{}"))
                     action = A.action_from_dict(data)
                     session.dispatch_safe(action)
                 except Exception as e:
@@ -581,20 +667,27 @@ class _Handler(BaseHTTPRequestHandler):
             self.send_error(404, "not found")
 
 
+class _IPv6ThreadingHTTPServer(ThreadingHTTPServer):
+    address_family = socket.AF_INET6
+
+
 def make_server(
     host: str = "127.0.0.1", port: int = 8765, session: EditorSession | None = None
 ) -> ThreadingHTTPServer:
     """Build (but don't start) an editor HTTP server."""
+    if not _is_loopback_address(host):
+        raise ValueError("dashboard editor only accepts a loopback bind address")
     bound_session = session or EditorSession()
     handler_cls = type("_BoundHandler", (_Handler,), {"session": bound_session})
-    server = ThreadingHTTPServer((host, port), handler_cls)
-    return server
+    server_type = _IPv6ThreadingHTTPServer if ":" in host else ThreadingHTTPServer
+    return server_type((host, port), handler_cls)
 
 
 def serve(host: str = "127.0.0.1", port: int = 8765) -> None:
     """Start the editor and block until interrupted (Ctrl+C)."""
     server = make_server(host, port)
-    url = f"http://{host}:{port}/"
+    display_host = f"[{host}]" if ":" in host else host
+    url = f"http://{display_host}:{port}/"
     print(f"mudplot editor running at {url} (Ctrl+C to stop)")
     try:
         server.serve_forever()

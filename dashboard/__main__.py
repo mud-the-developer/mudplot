@@ -30,7 +30,7 @@ def main(argv=None) -> int:
     sp.set_defaults(func=_cmd_build)
 
     sp = sub.add_parser("serve", help="run the local interactive editor")
-    sp.add_argument("--host", default="127.0.0.1")
+    sp.add_argument("--host", default="127.0.0.1", help="loopback address only")
     sp.add_argument("--port", type=int, default=8765)
     sp.set_defaults(func=_cmd_serve)
 

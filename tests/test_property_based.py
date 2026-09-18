@@ -36,6 +36,20 @@ _lab = st.tuples(
     st.floats(min_value=-128.0, max_value=127.0, allow_nan=False, allow_infinity=False),
     st.floats(min_value=-128.0, max_value=127.0, allow_nan=False, allow_infinity=False),
 )
+_json_value = st.recursive(
+    st.one_of(
+        st.none(),
+        st.booleans(),
+        st.integers(min_value=-(10**6), max_value=10**6),
+        st.floats(allow_nan=False, allow_infinity=False, width=32),
+        st.text(max_size=20),
+    ),
+    lambda children: st.one_of(
+        st.lists(children, max_size=5),
+        st.dictionaries(st.text(max_size=12), children, max_size=5),
+    ),
+    max_leaves=20,
+)
 
 # A curated slice of the action vocabulary: simple, single-field actions
 # whose parameters are cheap to generate and whose *validity* doesn't depend
@@ -66,6 +80,16 @@ _simple_actions = st.one_of(
         A.SetReferenceMeasureText, text=st.one_of(st.none(), st.text(max_size=30))
     ),
 )
+
+
+@given(value=_json_value)
+@settings(max_examples=300)
+def test_untrusted_json_spec_is_rejected_or_validates_without_internal_errors(value):
+    try:
+        spec = FigureSpec.from_dict(value)
+    except (TypeError, ValueError):
+        return
+    assert isinstance(mp.validate(spec), list)
 
 
 @given(action=_simple_actions)
@@ -135,12 +159,16 @@ _safe_alphabet = "".join(
 )
 
 
-@given(st.text(alphabet=_safe_alphabet, min_size=1, max_size=80).filter(str.strip))
+@given(
+    st.text(alphabet=_safe_alphabet, min_size=1, max_size=80).filter(
+        lambda text: bool(text.strip()) and not any(c.isspace() for c in text)
+    )
+)
 @settings(max_examples=200)
-def test_any_string_over_the_safe_alphabet_passes_citation_and_href_validation(
-    text,
-):
-    p = mp.plot({"x": [1], "y": [1]}).line("x", "y", citation=text, href=text)
+def test_safe_citation_and_absolute_https_href_pass_validation(text):
+    p = mp.plot({"x": [1], "y": [1]}).line(
+        "x", "y", citation=text, href=f"https://example.org/{text}"
+    )
     issues = mp.validate(p.spec)
     assert not any("citation" in i or "href" in i for i in issues)
 

@@ -3,7 +3,7 @@
 *[한국어 문서 / Korean docs: DESIGN.ko.md](DESIGN.ko.md)*
 
 A Python plotting library for scientific papers, built on top of Matplotlib.
-It provides **perceptually uniform, colourblind-safe** colour palettes and
+It provides **perceptually uniform, colourblind-aware** colour palettes and
 paper-ready styles.
 
 ## 0. Goals / differentiation
@@ -128,10 +128,11 @@ CLI, the same reducer produces new state, and effects do the drawing.
 - `mudplot/` = **the pure engine, machine- (AI agent-) friendly**. Everything
   is manipulated via JSON/actions and is self-describing. No dependency on
   any particular UI.
-- `dashboard/` = **a separate package, human-friendly UI**. Imports the
-  engine's store/reducer/actions directly. Will eventually be replaced/
-  complemented by a Rust (askama+tokio+htmx) editor.
-- Dependency direction: dashboard → mudplot (one-way).
+- `dashboard/` = **a separate source-tree package, human-friendly UI**.
+  Imports the engine's store/reducer/actions directly.
+- `mudplot-editor/` = the co-versioned Rust (askama+tokio+htmx) UI. It calls
+  the Python CLI rather than reimplementing reducer/render semantics.
+- Dependency directions: dashboard → mudplot; Rust editor → Python CLI.
 
 ### Agent-friendly interface (so machines can drive it easily)
 
@@ -391,7 +392,7 @@ mudplot/                 # pure engine (no UI dependency)
   tex.py                 # TeX-aware sizing/preview (effect)
   io.py                  # effect: spec <-> json (.mplot.json)
   api.py                 # fluent builder (sugar for dispatching actions)
-dashboard/               # Python docs/editor prototype
+dashboard/               # Python docs + local editor
 mudplot-editor/          # co-versioned Rust/htmx local editor
 tests/
   test_convert.py test_distance_cvd.py test_palette.py
@@ -400,18 +401,22 @@ tests/
 
 ## 7. Rust interactive editor
 
-M13 phase 1 lives in the co-versioned `mudplot-editor/` crate. serde models
-only the stable versioned `FigureSpec`/action envelopes and preserves their
-flattened fields; Python remains the sole reducer/validator through the pure-
-core `mudplot apply` CLI, avoiding a second 28-layer semantics implementation.
-The existing `mudplot render` CLI supplies PNGs. axum owns one atomic local
-session and Askama renders htmx fragments for JSON actions and undo/redo/reset.
+M13 lives in the co-versioned `mudplot-editor/` crate. serde models only the
+stable versioned `FigureSpec`/action envelopes and preserves their flattened
+fields and arbitrary-precision integers. Python and Rust both reserve serde's
+internal `$serde_json::private::Number` object key; Python remains the sole
+reducer/validator through the pure-core
+`mudplot apply` CLI, avoiding a second 28-layer semantics implementation. The
+existing `mudplot render` CLI supplies PNG/PDF/SVG. axum owns one atomic local
+session; capabilities drive layer/theme/projection controls, and Askama renders
+htmx fragments for open/actions/history.
 
 This boundary is deliberate: Python and Rust agree on JSON, not internal
 objects. Full generated Rust structs become worthwhile only if reduction or
-rendering moves to Rust. A native backend (for example `plotters`), visual-form
-parity, imports/exports, and authenticated multi-user sessions remain optional
-later phases; the current unauthenticated server stays on loopback.
+rendering moves to Rust. A native backend (for example `plotters`), specialized
+axis/drag controls, and authenticated multi-user sessions remain optional
+later phases; the current unauthenticated server rejects non-loopback binds/
+HTTP Hosts and cross-origin browser mutations.
 
 ## 8. Milestones
 
@@ -495,7 +500,7 @@ later phases; the current unauthenticated server stays on loopback.
 - [x] **v0.3.0 released.**
 - [x] M12f: reference-system stabilization -- grouped-series citations/
       links (`LayerSpec.references`/`ReferenceSpec`), a saner citation/
-      href character-safety validator, `FigureSpec` version/migration
+      href character/scheme-safety validator, `FigureSpec` version/migration
       policy (`MIGRATIONS` registry, `mudplot migrate` CLI), a citation-
       measurement policy for PGF layout (`reference_style`), a real
       JSON-Schema-validator compatibility test suite, Hypothesis-based
@@ -531,7 +536,7 @@ later phases; the current unauthenticated server stays on loopback.
       conversion/distance, zero-error Pyright CI for engine/dashboard/scripts,
       reproducible dev setup and bilingual contribution guides; dashboard
       now exposes all registered layer types from the capability registry,
-      validates prospective actions before commit, and completes multi-panel
+      validates and renders prospective actions before commit, and completes multi-panel
       projection/x/y/z/secondary-axis controls. The current app-fragment htmx
       swap remains deliberately simple; split it further only if profiling
       shows a real latency problem.
@@ -568,8 +573,12 @@ later phases; the current unauthenticated server stays on loopback.
       now matches its implemented behavior, guarded by an exact contract test.
 - [x] M13a: co-versioned Rust axum+Askama+tokio+htmx editor phase 1 — serde
       spec/action envelopes, atomic local history, agent/htmx routes, and
-      Python `apply`/`render` subprocess bridge. Full visual-form parity,
-      import/vector export, multi-user state, and native rendering are deferred.
+      Python `apply`/`render` subprocess bridge.
+- [x] M13b: release-candidate Rust essentials — capability-driven all-layer/
+      theme/projection controls, atomic spec open, exact PDF/SVG/JSON export,
+      bounded request bodies, and expanded cross-language smoke coverage.
+      Specialized axis/drag controls, multi-user state, and native rendering
+      remain deferred.
 
 See [`ROADMAP.md`](ROADMAP.md) for concrete, prioritised next steps beyond
 this list.
@@ -580,6 +589,6 @@ this list.
 - Palettes: report the minimum ΔE00 under normal vision + protan/deutan.
 - **Spec: build → to_json → from_json → identical spec (lossless
   round-trip)**.
-- **Spec → render determinism: the same spec always produces the same
-  figure.**
+- **Spec → render determinism: in the same environment, the same spec produces
+  byte-identical PNG/PDF/SVG exports.**
 - Visual regression: gallery images.

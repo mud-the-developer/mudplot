@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-09-18
+
 ### Features
 
 - Added native polar panels through `.projection_polar()` /
@@ -47,19 +49,25 @@ All notable changes to this project are documented here.
 
 ### Rust editor
 
-- Added the co-versioned `mudplot-editor/` M13 phase-1 crate: axum + Askama +
-  tokio + the existing vendored htmx serve one atomic local session with
-  cached PNG, undo/redo/reset, a raw htmx action form, and an agent-facing JSON
-  action route. serde preserves versioned spec/action envelopes while Python
-  remains the only reducer, validator, and renderer.
+- Added the co-versioned `mudplot-editor/` M13 crate: axum + Askama + tokio +
+  the existing vendored htmx serve one atomic local session with cached PNG,
+  undo/redo/reset, raw and visual action forms, and an agent-facing JSON route.
+  Capabilities drive all-layer metadata plus theme/projection controls; saved
+  specs open atomically and exact-size PDF/SVG/JSON exports are available.
+  serde preserves versioned envelopes and arbitrary-precision JSON integers
+  while Python remains the only reducer, validator, and renderer; bridge
+  subprocesses are killed and reaped after a 120-second timeout.
 - Added the pure-core `python -m mudplot apply SPEC ACTION -o OUT` bridge.
   Actions are reduced and the resulting spec validated before output; failures
-  leave no output file. Rust then calls the existing `render` CLI, so layer
+  do not write output. Rust then calls the existing `render` CLI, so layer
   semantics are not duplicated across languages.
-- Added Cargo format/Clippy/test and real Rust→Python→HTTP/htmx smoke coverage
-  to CI. The phase-1 server is unauthenticated and documented as loopback-only;
-  visual-form parity, import/vector export, multi-user state, and native Rust
-  rendering remain deferred.
+- Added declared Rust 1.88 MSRV, Cargo format/Clippy/test,
+  Rust→Python→HTTP smoke coverage, and a real Chromium htmx/CSP check to CI. The unauthenticated server enforces loopback-
+  only binding and HTTP Hosts (including bracketed IPv6, with userinfo and
+  malformed/out-of-range ports rejected), same-origin browser mutations,
+  restrictive no-store browser security headers, and request/form ceilings;
+  multi-user state, specialized axis/drag
+  controls, and native Rust rendering remain deferred.
 
 ### Dashboard
 
@@ -72,12 +80,49 @@ All notable changes to this project are documented here.
   z-axis setup. `SetLimits(None, None)` now restores automatic limits and
   `SetSecondaryAxis(None)` removes y2, preserving the same action semantics
   for editor, agent, and Python consumers.
-- Dashboard dispatch now validates the prospective spec before committing an
-  action, so invalid edits leave both state and history untouched instead of
-  wedging the preview.
+- Dashboard actions, undo/redo/reset, and spec imports now validate and render
+  a prospective Store copy before committing it, so invalid edits or render
+  failures leave state, history, and the cached preview untouched.
+- Hardened the unauthenticated Python editor to match the Rust editor's local
+  trust boundary: loopback-only bind/HTTP Host, same-origin mutations,
+  restrictive no-store/COOP/CORP browser headers, and a 16-MiB request
+  ceiling. Non-loopback startup now fails before creating editor state;
+  user-controlled column names are escaped in every HTML view. Custom JS is
+  same-origin external (no `script-src 'unsafe-inline'`), and htmx is
+  configured for self-only requests with script-tag/eval processing disabled.
 
 ### Quality
 
+- Release tags now fail preflight unless they are GitHub-verified signed
+  annotated tags and the tag, Python package, `pyproject.toml`, Rust
+  manifest/lock, changelog, and README install URLs agree. The release workflow is least-privilege, cache-disabled, uses locked
+  dependency graphs, and reruns Python/Rust/browser/cross-language checks plus
+  the full Tectonic/pdflatex/LuaLaTeX/BibTeX/biber matrix before publishing;
+  bounded job timeouts prevent hung gates. Releases include SHA-256 checksums,
+  reverify them after the cross-job artifact handoff, and carry GitHub OIDC
+  build-provenance attestations. Official
+  actions are commit-pinned to Node 24 releases, a retry-safe runner-native
+  `gh` flow replaces the former third-party release action, and the pinned Tectonic
+  binary is SHA-256 verified before execution.
+- Added bilingual security-reporting guidance and enabled GitHub private
+  vulnerability reporting, vulnerability alerts, and Dependabot security-fix
+  pull requests for the repository.
+- Added grouped weekly Dependabot updates for uv, Cargo, and GitHub Actions,
+  each with a seven-day supply-chain cooldown. Current Python, minimum-
+  compatibility, and Rust locks pass `pip-audit`/RustSec with no known
+  vulnerabilities. A third isolated uv lock pins `pip-audit` itself; push CI,
+  the nightly workflow, and release preflight audit both Python graphs plus
+  the audit tool graph before project/browser/TeX setup.
+- Pinned the distribution backend in the uv-locked dev environment and removed
+  CI's ad-hoc/isolated installs. Packaging preflight now rebuilds the wheel
+  from the sdist, imports it with site-packages disabled, enforces an
+  engine-only wheel, and verifies Python typing/license, both editors'
+  bilingual instructions, all dashboard sources, and the co-versioned Rust
+  editor's compile-time schema/templates plus htmx inputs; the official htmx 1.9.12 artifact is
+  SHA-256 pinned. Releases publish those exact verified
+  outputs; the release gate independently rebuilds them and requires identical
+  SHA-256 digests before publishing. Reference-only
+  `src/pretext` and `src/SciencePlots` trees are explicitly excluded.
 - Added a zero-error `pyright` check for `mudplot/`, the dashboard, and
   maintenance scripts to the dev environment and both CI Python jobs,
   targeting the supported Python 3.10 language level. Findings were fixed
@@ -89,14 +134,50 @@ All notable changes to this project are documented here.
 - Added concise English/Korean contribution guides covering setup, checks,
   architecture boundaries, schema regeneration, and testing/documentation
   conventions; README development commands now use `uv sync` consistently.
+- Standardized package metadata, module/design prose, dashboard copy, and
+  palette documentation on the accurate `CVD-aware` claim. `CVD-safe` remains
+  only where an explicit measured threshold and verified category ceiling
+  support it. Bilingual architecture docs now describe both editors as the
+  coexisting source-tree tools they are and state the dependency directions
+  correctly.
 - Hardened citation/href validation to reject every ASCII control character,
-  including NUL and DEL, rather than only newline/tab characters.
+  including NUL and DEL, rather than only newline/tab characters. `href` now
+  also permits only absolute HTTP(S) and `mailto` URIs, preventing active
+  `javascript:`/`data:` links from reaching standalone SVG/PDF output.
 - Added regression coverage for duplicate-label citations, disabling
   `\figcite`, math/CJK labels with references, unknown future spec fields,
   and secondary-y-axis plus colorbar layout.
 - Extended Hypothesis coverage to the colour engine: sRGB/linear/Lab/LCh and
   Lab/XYZ round-trips, 8-bit hex identity, CIE76 metric properties, and
   CIEDE2000 identity/symmetry/non-negativity.
+- Raised the render extra's Matplotlib lower bound from 3.6 to 3.8: an
+  isolated Python 3.10/NumPy 1.23 lower-bound run exposed title overflow in
+  Matplotlib 3.6/3.7, while 3.8 passes the 157 focused render/layout/reference
+  checks. A separate committed PEP 723 uv lock reruns that exact Python 3.10/
+  NumPy 1.23/Matplotlib 3.8 floor with Pytest 9.0.3 in CI and release preflight,
+  keeping the documented native wrapping guarantee honest. The dev Pytest
+  floor is now 9.0.3 because older releases are affected by PYSEC-2026-1845.
+- `save_spec()`, single-file PNG/PDF/SVG export, and the apply/migrate/render
+  CLI paths now share a same-directory fsync-and-replace writer, preserving
+  existing permissions and symlink targets. Failed writes leave the previous
+  spec/figure and no temporary debris. PGF retains Matplotlib's native
+  multi-file write so raster sidecars keep the final basename, covered by a
+  real-TeX regression. Saved JSON uses platform-independent LF newlines; CLI
+  I/O and optional-backend failures return clean errors instead of tracebacks.
+- Editor PNG previews and the explicit `mudplot render --preview` path retain
+  configured DPI until either axis would exceed 2000 pixels, bounding memory
+  for untrusted large-size/high-DPI specs without perturbing normal layout.
+  Stored specs and final PDF/SVG exports remain exact and unchanged.
+- Render and TeX-preview figures now reassert their configured inch size after
+  construction, preventing interactive HiDPI backends from quantizing exact
+  TeX geometry to device pixels; backend-quantization regressions are
+  simulated directly in tests.
+- PNG/PDF/SVG exports are now byte-reproducible for the same spec and
+  environment across the Python API, CLI, and both editors. PDF creation/
+  modification timestamps and SVG dates are omitted; SVG element IDs use a
+  stable spec digest instead of Matplotlib's random salt, and raster artists
+  stay inline despite ambient Matplotlib settings. The Python dashboard
+  now also passes the target format into rendering, preserving SVG links.
 - Validation now reports arbitrarily large integers as non-finite instead of
   leaking `OverflowError` from the shared `math.isfinite()` helper.
 - The sRGB transfer functions now share the exact linear/power-branch
@@ -107,6 +188,19 @@ All notable changes to this project are documented here.
   rendering: unsupported fields, non-string names, and empty optional names
   produce clear validation issues instead of ignored settings or `KeyError`.
   The audit also fixed `bar` capabilities omitting its implemented `group`.
+- FigureSpec and action deserialization now enforce object/array/scalar shapes
+  recursively before state mutation. Malformed untrusted JSON produces a
+  boundary `TypeError` instead of implicit defaults or internal exceptions;
+  categorical column values remain intentionally unconstrained JSON data.
+  Excessive nesting, non-standard `NaN`/`Infinity`, floating-point overflow,
+  lone Unicode surrogates, and duplicate object keys are normalized to clean
+  user errors; Python and Rust both reject duplicate keys recursively;
+  serialization emits strict RFC JSON, and actions require one canonical
+  string `type` key. Rust envelopes preserve integers beyond 64-bit range
+  rather than narrowing Python's JSON contract. Both runtimes explicitly
+  reject serde's sole private arbitrary-precision marker key,
+  `$serde_json::private::Number`, instead of interpreting it inconsistently. Hypothesis now checks arbitrary JSON
+  is either rejected or validates without leaking an internal exception.
 
 ## [0.5.0] - 2026-09-14
 

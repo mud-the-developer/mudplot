@@ -2,9 +2,11 @@ use std::ffi::OsString;
 use std::fmt;
 use std::fs;
 use std::path::Path;
-use std::process::Command;
+use std::process::{Command, Stdio};
+use std::thread;
+use std::time::{Duration, Instant};
 
-use crate::model::{Action, FigureSpec};
+use crate::model::{Action, Capabilities, FigureSpec};
 
 #[derive(Debug)]
 pub struct BridgeError(String);
@@ -20,13 +22,21 @@ impl std::error::Error for BridgeError {}
 #[derive(Clone, Debug)]
 pub struct PythonBridge {
     executable: OsString,
+    timeout: Duration,
 }
 
 impl PythonBridge {
     pub fn new(executable: impl Into<OsString>) -> Self {
         Self {
             executable: executable.into(),
+            // ponytail: fixed local ceiling; make configurable if real renders exceed it.
+            timeout: Duration::from_secs(120),
         }
+    }
+
+    pub fn capabilities(&self) -> Result<Capabilities, BridgeError> {
+        let bytes = self.run(["-m", "mudplot", "capabilities"])?;
+        serde_json::from_slice(&bytes).map_err(|e| BridgeError(format!("decode capabilities: {e}")))
     }
 
     pub fn apply(&self, spec: &FigureSpec, action: &Action) -> Result<FigureSpec, BridgeError> {
@@ -51,28 +61,70 @@ impl PythonBridge {
     }
 
     pub fn render(&self, spec: &FigureSpec) -> Result<Vec<u8>, BridgeError> {
-        let dir = tempfile::tempdir().map_err(error("create temporary directory"))?;
-        let spec_path = dir.path().join("spec.json");
-        let output_path = dir.path().join("figure.png");
-        write_json(&spec_path, spec)?;
-
-        self.run([
-            "-m",
-            "mudplot",
-            "render",
-            path(&spec_path)?,
-            path(&output_path)?,
-        ])?;
-        fs::read(output_path).map_err(error("read rendered PNG"))
+        self.render_format(spec, "png")
     }
 
-    fn run<const N: usize>(&self, args: [&str; N]) -> Result<(), BridgeError> {
-        let output = Command::new(&self.executable)
+    pub fn render_format(&self, spec: &FigureSpec, format: &str) -> Result<Vec<u8>, BridgeError> {
+        if !matches!(format, "png" | "pdf" | "svg") {
+            return Err(BridgeError(format!("unsupported render format {format:?}")));
+        }
+        let dir = tempfile::tempdir().map_err(error("create temporary directory"))?;
+        let spec_path = dir.path().join("spec.json");
+        let output_path = dir.path().join(format!("figure.{format}"));
+        write_json(&spec_path, spec)?;
+
+        if format == "png" {
+            self.run([
+                "-m",
+                "mudplot",
+                "render",
+                path(&spec_path)?,
+                path(&output_path)?,
+                "--preview",
+            ])?;
+        } else {
+            self.run([
+                "-m",
+                "mudplot",
+                "render",
+                path(&spec_path)?,
+                path(&output_path)?,
+            ])?;
+        }
+        fs::read(output_path).map_err(error("read rendered figure"))
+    }
+
+    fn run<const N: usize>(&self, args: [&str; N]) -> Result<Vec<u8>, BridgeError> {
+        let mut child = Command::new(&self.executable)
             .args(args)
-            .output()
+            .stdout(Stdio::piped())
+            .stderr(Stdio::piped())
+            .spawn()
             .map_err(error("start Python bridge"))?;
+        let started = Instant::now();
+        loop {
+            if started.elapsed() >= self.timeout {
+                let _ = child.kill();
+                let _ = child.wait();
+                return Err(BridgeError(format!(
+                    "Python bridge timed out after {:?}",
+                    self.timeout
+                )));
+            }
+            if child
+                .try_wait()
+                .map_err(error("wait for Python bridge"))?
+                .is_some()
+            {
+                break;
+            }
+            thread::sleep(Duration::from_millis(10));
+        }
+        let output = child
+            .wait_with_output()
+            .map_err(error("collect Python bridge output"))?;
         if output.status.success() {
-            return Ok(());
+            return Ok(output.stdout);
         }
         let stderr = String::from_utf8_lossy(&output.stderr);
         Err(BridgeError(format!(
@@ -96,4 +148,21 @@ fn path(path: &Path) -> Result<&str, BridgeError> {
 
 fn error(context: &'static str) -> impl FnOnce(std::io::Error) -> BridgeError {
     move |e| BridgeError(format!("{context}: {e}"))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn bridge_processes_have_a_timeout() {
+        let bridge = PythonBridge {
+            executable: std::env::current_exe()
+                .expect("current test executable")
+                .into(),
+            timeout: Duration::ZERO,
+        };
+        let error = bridge.run(["--help"]).expect_err("zero timeout must fail");
+        assert!(error.to_string().contains("timed out"));
+    }
 }

@@ -1,4 +1,4 @@
-"""mudplot — perceptually-uniform, colorblind-safe plotting for papers.
+"""mudplot — perceptually-uniform, CVD-aware plotting for papers.
 
 The pure engine (spec / actions / reducer / store / io / tex sizing) has **no
 third-party dependencies** and is importable on its own. Anything that needs
@@ -37,7 +37,7 @@ from .validate import assert_valid, validate
 
 Reference = ReferenceSpec  # short alias for fluent-API/agent ergonomics
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"
 
 # -- effect layer: needs numpy / matplotlib (lazy via PEP 562) -------------
 #

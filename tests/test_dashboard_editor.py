@@ -1,4 +1,4 @@
-"""Tests for the dashboard's interactive editor (prototype).
+"""Tests for the dashboard's interactive editor.
 
 Split into pure view-layer unit tests (no server) and integration tests that
 spin up a real (ephemeral-port) HTTP server via ``make_server()``.
@@ -6,6 +6,8 @@ spin up a real (ephemeral-port) HTTP server via ``make_server()``.
 
 import http.client
 import json
+import socket
+import struct
 import sys
 import threading
 import time
@@ -60,16 +62,34 @@ def test_label_controls_preserve_position_and_allow_clearing():
 def test_vector_export_uses_configured_size_and_rejects_bad_format():
     session = EditorSession()
     session.dispatch_safe(A.SetData({"x": [1, 2, 3], "y": [1, 4, 9]}))
-    session.dispatch_safe(A.AddLayer(LayerSpec(type="line", x="x", y="y")))
+    session.dispatch_safe(
+        A.AddLayer(
+            LayerSpec(
+                type="line",
+                x="x",
+                y="y",
+                label="paper",
+                href="https://example.org/paper",
+            )
+        )
+    )
     session.dispatch_safe(A.SetSize(4.0, 3.0))
     assert session.error is None
     assert session.export("pdf").startswith(b"%PDF")
-    svg = session.export("svg").decode()
+    svg_bytes = session.export("svg")
+    assert svg_bytes == session.export("svg")
+    svg = svg_bytes.decode()
     assert "<svg" in svg
+    assert "https://example.org/paper" in svg
     # exact configured physical size, not a cropped/expanded one
     assert 'width="288pt"' in svg and 'height="216pt"' in svg
     with pytest.raises(ValueError):
         session.export("jpeg")
+
+    session.dispatch_safe(A.SetSize(100, 50))
+    session.dispatch_safe(A.SetDpi(2400))
+    assert struct.unpack(">II", session.png[16:24]) == (2000, 1000)
+    assert session.store.state.dpi == 2400
 
 
 def test_collapsible_sections_are_keyed_for_state_restore():
@@ -121,9 +141,13 @@ def test_render_page_no_error_banner_when_none():
 def test_render_page_escapes_untrusted_text():
     spec = FigureSpec()
     spec.suptitle = "<script>alert(1)</script>"
+    spec.data.columns = {'<img src=x onerror="alert(2)">': [1]}
     html = render_page(spec, [])
     assert "<script>alert(1)</script>" not in html
+    assert '<img src=x onerror="alert(2)">' not in html
     assert "&lt;script&gt;" in html
+    assert "&lt;img" in html
+    assert '"allowScriptTags":false' in html
 
 
 def test_render_page_lists_available_columns():
@@ -407,13 +431,35 @@ def test_build_action_reports_invalid_numeric_field():
         _build_action("set_size", {"width": "wide", "height": "2"}, FigureSpec())
 
 
-def test_session_dispatch_safe_rejects_invalid_result_without_mutating_store():
+def test_session_rejects_invalid_or_unrenderable_changes_atomically(monkeypatch):
     session = EditorSession()
+    session.dispatch_safe(A.SetSuptitle("keep"))
     before = session.store.state.to_dict()
+    before_history = session.store.history
+    before_png = session.png
+
     session.dispatch_safe(A.AddLayer(LayerSpec(type="line", x="missing", y="y")))
     assert session.error is not None
     assert session.store.state.to_dict() == before
-    assert session.store.history == []
+    assert session.store.history == before_history
+
+    def fail_render(*_args):
+        raise RuntimeError("render failed")
+
+    monkeypatch.setattr(session, "_render_preview", fail_render)
+    session.dispatch_safe(A.SetSuptitle("must not commit"))
+    assert "render failed" in (session.error or "")
+    assert session.store.state.to_dict() == before
+    assert session.store.history == before_history
+    assert session.png == before_png
+
+    with pytest.raises(ValueError, match="render failed"):
+        session.load_spec(json.dumps(FigureSpec(suptitle="must not import").to_dict()))
+    for operation in (session.undo, session.redo, session.reset):
+        operation()
+        assert session.store.state.to_dict() == before
+        assert session.store.history == before_history
+        assert session.png == before_png
 
 
 def test_session_dispatch_safe_records_error_without_raising():
@@ -483,6 +529,21 @@ def test_session_layout_empty_for_3d_panel():
 # --------------------------------------------------------------------------
 
 
+def test_server_rejects_non_loopback_bind_before_creating_a_session():
+    with pytest.raises(ValueError, match="loopback"):
+        make_server("0.0.0.0", 0)
+
+
+def test_server_supports_ipv6_loopback():
+    if not socket.has_ipv6:
+        pytest.skip("Python has no IPv6 support")
+    server = make_server("::1", 0)
+    try:
+        assert server.address_family == socket.AF_INET6
+    finally:
+        server.server_close()
+
+
 @pytest.fixture
 def running_server():
     server = make_server(port=0)  # OS-assigned ephemeral port
@@ -504,7 +565,45 @@ def _post(url: str, fields: dict) -> int:
 def test_get_home_page(running_server):
     with urllib.request.urlopen(running_server + "/") as r:
         assert r.status == 200
+        assert r.headers["X-Content-Type-Options"] == "nosniff"
+        assert r.headers["X-Frame-Options"] == "DENY"
+        assert r.headers["Cache-Control"] == "no-store"
+        assert r.headers["Cross-Origin-Resource-Policy"] == "same-origin"
+        csp = r.headers["Content-Security-Policy"]
+        assert "object-src 'none'" in csp
+        assert "script-src 'self';" in csp
+        assert "script-src 'self' 'unsafe-inline'" not in csp
         assert b"mudplot editor" in r.read()
+
+
+def test_non_loopback_or_malformed_host_is_rejected(running_server):
+    for host in (
+        "attacker.example",
+        "127.0.0.1:invalid-port",
+        "user@127.0.0.1",
+        "127.0.0.1/path",
+        "127.0.0.1?query",
+    ):
+        request = urllib.request.Request(
+            running_server + "/spec.json", headers={"Host": host}
+        )
+        with pytest.raises(urllib.error.HTTPError) as exc:
+            urllib.request.urlopen(request)
+        assert exc.value.code == 403
+
+
+def test_cross_origin_mutation_is_rejected_without_changing_state(running_server):
+    data = urlencode({"type": "set_suptitle", "text": "CSRF"}).encode()
+    request = urllib.request.Request(
+        running_server + "/action",
+        data=data,
+        headers={"Origin": "https://attacker.example"},
+    )
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        urllib.request.urlopen(request)
+    assert exc.value.code == 403
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert json.load(response)["suptitle"] == ""
 
 
 def test_get_unknown_path_is_404(running_server):
@@ -513,12 +612,21 @@ def test_get_unknown_path_is_404(running_server):
     assert exc.value.code == 404
 
 
-def test_invalid_content_length_returns_400(running_server):
+def test_form_field_count_is_bounded(running_server):
+    data = urlencode({str(index): "x" for index in range(1_001)}).encode()
+    request = urllib.request.Request(running_server + "/action", data=data)
+    with pytest.raises(urllib.error.HTTPError) as exc:
+        urllib.request.urlopen(request)
+    assert exc.value.code == 400
+
+
+@pytest.mark.parametrize("length", ["invalid", str(16 * 1024 * 1024 + 1)])
+def test_invalid_or_oversized_content_length_returns_400(running_server, length):
     parsed = urlparse(running_server)
     connection = http.client.HTTPConnection(parsed.hostname, parsed.port)
     try:
         connection.putrequest("POST", "/action")
-        connection.putheader("Content-Length", "invalid")
+        connection.putheader("Content-Length", length)
         connection.endheaders()
         assert connection.getresponse().status == 400
     finally:
@@ -716,8 +824,17 @@ def test_invalid_action_does_not_crash_server(running_server):
         assert b'class="error"' in r.read()
 
 
-def test_malformed_raw_json_does_not_crash_server(running_server):
-    status = _post(running_server + "/action/raw", {"json": "not json"})
+@pytest.mark.parametrize(
+    "payload",
+    [
+        "not json",
+        '{"type":"SetSize","width":NaN,"height":2}',
+        '{"type":"SetSize","width":1e400,"height":2}',
+        r'{"type":"SetTitle","text":"\ud800","panel":0}',
+    ],
+)
+def test_malformed_raw_json_does_not_crash_server(running_server, payload):
+    status = _post(running_server + "/action/raw", {"json": payload})
     assert status == 200
     with urllib.request.urlopen(running_server + "/") as r:
         assert b'class="error"' in r.read()
@@ -757,11 +874,15 @@ def test_htmx_undo_redo_reset_return_fragments(running_server):
         assert json.loads(r.read())["suptitle"] == ""
 
 
-def test_static_htmx_js_is_served(running_server):
-    with urllib.request.urlopen(running_server + "/static/htmx.min.js") as r:
-        assert r.status == 200
-        assert r.headers.get("Content-Type") == "application/javascript"
-        assert len(r.read()) > 1000
+def test_static_editor_scripts_are_served(running_server):
+    for path in ("/static/htmx.min.js", "/static/editor.js"):
+        with urllib.request.urlopen(running_server + path) as r:
+            assert r.status == 200
+            assert r.headers.get("Content-Type") == "application/javascript"
+            script = r.read()
+            assert len(script) > 1000
+            if path.endswith("htmx.min.js"):
+                assert b'version:"1.9.12"' in script
 
 
 def test_title_position_drag_handle_appears_and_moves_title_via_http(running_server):
@@ -853,7 +974,11 @@ def test_open_spec_replaces_the_figure(running_server):
 
 def test_open_invalid_spec_reports_error_and_keeps_current_figure(running_server):
     _post(running_server + "/action", {"type": "set_suptitle", "text": "keep me"})
-    for payload in ("not json at all", json.dumps({"panels": [{"layers": [{}]}]})):
+    for payload in (
+        "not json at all",
+        '{"dpi":NaN}',
+        json.dumps({"panels": [{"layers": [{}]}]}),
+    ):
         _post(running_server + "/open", {"json": payload})
         with urllib.request.urlopen(running_server + "/") as r:
             page = r.read().decode()

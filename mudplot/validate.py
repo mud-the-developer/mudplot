@@ -10,6 +10,7 @@ from __future__ import annotations
 import math
 from itertools import pairwise
 from numbers import Real
+from urllib.parse import urlsplit
 
 from .capabilities import LAYER_TYPES, PALETTE_PRESETS, PROJECTIONS
 from .spec import FigureSpec
@@ -222,9 +223,9 @@ def _check_stackplot_data(cols, layer, where: str, issues: list[str]) -> None:
 # out of that argument (braces/backslash/macro-prefix chars) are unsafe.
 # href becomes a \href{URL}{...} argument, which hyperref itself reads with
 # special "URL-safe" catcodes (the same trick \url uses), so ordinary URL
-# punctuation ("_", "&", "#", "%", "?", "~") is fine there too -- only
-# braces/backslash (which would break hyperref's own argument scanning) and
-# control characters are unsafe.
+# punctuation ("_", "&", "#", "%", "?", "~") is fine there too. Braces,
+# backslashes, controls, whitespace, relative links, and active/non-web URI
+# schemes are unsafe for standalone SVG/PDF output.
 _CONTROL_CHARS = {chr(i) for i in range(32)} | {"\x7f"}
 _CITATION_UNSAFE = set("{}\\%$#&~^") | _CONTROL_CHARS
 _HREF_UNSAFE = set("{}\\") | _CONTROL_CHARS
@@ -237,15 +238,45 @@ def _check_ref_field(
     why: str,
     where: str,
     issues: list[str],
-) -> None:
+) -> bool:
     if value is None:
-        return
+        return False
     if not isinstance(value, str) or not value.strip():
         issues.append(f"{where}: {field_name} must be a non-empty string")
-        return
+        return False
     bad = sorted(unsafe & set(value))
     if bad:
         issues.append(f"{where}: {field_name} may not contain {''.join(bad)!r} ({why})")
+        return False
+    return True
+
+
+def _check_href(href: str | None, where: str, issues: list[str]) -> None:
+    valid = _check_ref_field(
+        "href",
+        href,
+        _HREF_UNSAFE,
+        "it is substituted into a LaTeX \\href{...} argument verbatim",
+        where,
+        issues,
+    )
+    if not valid or not isinstance(href, str):
+        return
+    if any(char.isspace() for char in href):
+        issues.append(f"{where}: href may not contain whitespace")
+        return
+    try:
+        parsed = urlsplit(href)
+        hostname = parsed.hostname
+        _ = parsed.port  # force validation of a declared port
+    except ValueError:
+        issues.append(f"{where}: href must be an absolute http, https, or mailto URI")
+        return
+    scheme = parsed.scheme.lower()
+    valid_web = scheme in {"http", "https"} and bool(hostname)
+    valid_mail = scheme == "mailto" and not parsed.netloc and bool(parsed.path)
+    if not (valid_web or valid_mail):
+        issues.append(f"{where}: href must be an absolute http, https, or mailto URI")
 
 
 def _check_reference(
@@ -259,14 +290,7 @@ def _check_reference(
         where,
         issues,
     )
-    _check_ref_field(
-        "href",
-        href,
-        _HREF_UNSAFE,
-        "it is substituted into a LaTeX \\href{...} argument verbatim",
-        where,
-        issues,
-    )
+    _check_href(href, where, issues)
 
 
 def _check_axis(axis, where: str, issues: list[str]) -> None:

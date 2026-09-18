@@ -3,8 +3,7 @@
 *[English: CONTRIBUTING.md](CONTRIBUTING.md)*
 
 변경은 작고 재현 가능하며 spec 중심이어야 합니다. `FigureSpec`과 action은
-Python API, 대시보드, 저장 JSON, 미래의 비-Python 클라이언트가 공유하는
-계약입니다.
+Python API, 대시보드, 저장 JSON, Rust editor가 공유하는 계약입니다.
 
 ## 개발 환경
 
@@ -13,13 +12,13 @@ Python 3.10+와 [uv](https://docs.astral.sh/uv/)가 필요합니다.
 ```bash
 git clone https://github.com/mud-the-developer/mudplot.git
 cd mudplot
-uv sync --extra dev
+uv sync --locked --extra dev
 ```
 
 실제 브라우저 에디터 테스트까지 실행하려면:
 
 ```bash
-uv sync --extra dev --extra browser
+uv sync --locked --extra dev --extra browser
 uv run playwright install chromium
 ```
 
@@ -34,7 +33,10 @@ uv run ruff check .
 uv run ruff format --check .
 uv run pyright
 uv run pytest -q -m "not browser"
+uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
+uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
+uv run python scripts/check_wheel.py
 ```
 
 Chromium을 설치했다면 다음도 실행합니다.
@@ -42,6 +44,19 @@ Chromium을 설치했다면 다음도 실행합니다.
 ```bash
 uv run pytest -q tests/test_editor_browser.py
 uv run python scripts/editor_smoke_test.py
+```
+
+`mudplot-editor/` 변경에는 Rust 1.88+가 필요합니다.
+
+```bash
+rustup toolchain install 1.88.0 --profile minimal
+cargo +1.88.0 check --locked --all-targets --manifest-path mudplot-editor/Cargo.toml
+cargo fmt --check --manifest-path mudplot-editor/Cargo.toml
+cargo clippy --locked --all-targets --manifest-path mudplot-editor/Cargo.toml -- -D warnings
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml
+uv run python scripts/rust_editor_smoke_test.py
+# Chromium이 있으면 CSP 아래 실제 htmx swap도 확인합니다.
+uv run python scripts/rust_editor_smoke_test.py --browser
 ```
 
 ## 프로젝트 규칙
@@ -87,5 +102,29 @@ uv run python -m dashboard serve
 데모 데이터는 seed를 고정한 합성 데이터여야 합니다. 화면 출력이 의도적으로
 바뀐 경우가 아니면 재생성된 바이너리 자산을 커밋하지 않습니다.
 
+## Release
+
+`v*` release tag는 annotated tag이며 암호학적으로 서명되고 GitHub에서
+verified로 표시되어야 합니다. release workflow는 build 전에 lightweight·
+unsigned·unverified tag를 거부합니다. tag를 push하기 전에
+`scripts/check_release_version.py vX.Y.Z`를 실행하세요. workflow는 publish할
+정확한 artifact를 다시 build·검증합니다.
+
+SSH 서명을 쓸 때는 **public** key만 GitHub signing key로 등록하고(private
+key는 절대 upload하지 않음), 이 checkout을 설정한 뒤 push 전에 로컬에서
+검증하세요.
+
+```bash
+git config gpg.format ssh
+git config user.signingkey ~/.ssh/id_ed25519.pub
+git tag -s vX.Y.Z -F /tmp/mudplot-tag-message.txt
+git verify-tag vX.Y.Z
+git push origin vX.Y.Z
+```
+
+GPG 서명도 동일하게 허용됩니다. 로컬 signature가 유효한 것만으로는
+release gate를 통과하지 않으므로 GitHub tag가 **Verified**인지도 확인하세요.
+
 아키텍처는 [`DESIGN.md`](DESIGN.md), 우선순위 작업은
-[`ROADMAP.md`](ROADMAP.md)를 참고하세요.
+[`ROADMAP.md`](ROADMAP.md)를 참고하세요. 패치되지 않은 취약점은 public
+issue가 아니라 [`SECURITY.ko.md`](SECURITY.ko.md)의 비공개 경로로 제보하세요.

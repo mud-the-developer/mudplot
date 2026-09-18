@@ -12,14 +12,14 @@ All data are **synthetic** (NumPy seed `2026`), not experimental results.
 From the repository root, using the environment where mudplot is installed:
 
 ```bash
-python -m pip install -e '.[dev]' pandas
-python -m scripts.render_docs_demo
-python -m pytest -q
+uv sync --locked --extra dev
+uv run python -m scripts.render_docs_demo
+uv run pytest -q
 ```
 
-이 저장소의 가상환경을 사용한다면 `python` 대신 `.venv/bin/python`을 사용하세요.
 데모 실행은 `docs/images/`의 PNG, PDF, `.mplot.json`을 재생성합니다.
-pandas는 이 데모의 입력 의존성이며 라이브러리 필수 의존성에는 추가하지 않았습니다.
+pandas는 `dev` extra에 포함된 데모 입력 의존성이며 라이브러리 필수 런타임
+의존성은 아닙니다.
 
 ## 1. pandas → four-panel figure
 
@@ -162,7 +162,7 @@ colours themselves compress to similar greys — see
   patterns, verified both before and after true-greyscale conversion.
 
 검증 환경: pandas **3.0.5**, Matplotlib **3.11.1**.
-비브라우저 테스트 **538개**와 실제 브라우저 테스트 **11개** 통과(TeX·브라우저 등 로컬 도구가 없으면 일부 skip). Ruff/Pyright 검사도 통과했습니다.
+비브라우저 테스트 **606개**와 실제 브라우저 테스트 **11개** 통과(TeX·브라우저 등 로컬 도구가 없으면 일부 skip). Ruff/Pyright 검사도 통과했습니다.
 PNG를 직접 열어 패널 배치, 축·범례·colorbar의 잘림과 겹침도 확인했습니다.
 이는 이 환경과 데모에 대한 확인이며, 모든 pandas dtype이나 저널 규정에 대한
 검증을 의미하지 않습니다. 논문 제출용 크기·폰트·단위는 별도로 확인하세요.

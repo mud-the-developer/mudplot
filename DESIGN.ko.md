@@ -3,7 +3,7 @@
 *[English docs: DESIGN.md](DESIGN.md)*
 
 논문용 그래프를 위한 파이썬 플롯 라이브러리. Matplotlib 위에 얹혀서
-**지각적으로 균일하고(perceptually uniform), 색맹 안전한(colorblind-safe)**
+**지각적으로 균일하고(perceptually uniform), 색각 이상을 고려한(colorblind-aware)**
 색상 팔레트와 논문용 스타일을 제공한다.
 
 ## 0. 목표 / 차별점
@@ -115,9 +115,11 @@ Python CLI로 action을 보내고, 동일한 reducer가 새 상태를 만들며 
 
 - `mudplot/` = **순수 엔진, 기계(AI 에이전트) 친화**. 모든 것을 JSON/
   액션으로 조작하고 자기 기술(self-describing)한다. 다른 UI에 비의존.
-- `dashboard/` = **별도 패키지, 사람 친화 UI**. 엔진의 store/reducer/
-  action을 그대로 임포트. 추후 Rust(askama+tokio+htmx) 에디터로 대체.
-- 의존 방향: dashboard → mudplot (단방향).
+- `dashboard/` = **별도 source-tree 패키지, 사람 친화 UI**. 엔진의
+  store/reducer/action을 그대로 임포트.
+- `mudplot-editor/` = 함께 versioning하는 Rust(askama+tokio+htmx) UI.
+  reducer/render 의미론을 재구현하지 않고 Python CLI를 호출.
+- 의존 방향: dashboard → mudplot, Rust editor → Python CLI.
 
 ### 에이전트 친화 인터페이스 (기계가 쉽게 쓰도록)
 
@@ -279,7 +281,7 @@ mudplot/                 # 순수 엔진 (UI 의존 없음)
   tex.py                 # TeX-aware 크기/미리보기 (effect)
   io.py                  # effect: spec <-> json (.mplot.json)
   api.py                 # fluent 빌더 (action dispatch 설탕)
-dashboard/               # Python 문서/editor prototype
+dashboard/               # Python 문서 + 로컬 editor
 mudplot-editor/          # 함께 versioning하는 Rust/htmx 로컬 editor
 tests/
   test_convert.py test_distance_cvd.py test_palette.py
@@ -288,17 +290,21 @@ tests/
 
 ## 7. Rust 인터랙티브 에디터
 
-M13 1단계는 함께 versioning하는 `mudplot-editor/` crate에 있다. serde는
-versioned `FigureSpec`/action envelope와 flattened field를 보존하고, Python
-pure-core `mudplot apply`가 유일한 reducer/validator로 남아 28개 layer의
-의미를 Rust에 다시 구현하지 않는다. PNG는 기존 `mudplot render` CLI가
-만든다. axum은 atomic 로컬 session을 관리하고 Askama는 JSON action과
-undo/redo/reset용 htmx fragment를 렌더한다.
+M13은 함께 versioning하는 `mudplot-editor/` crate에 있다. serde는 versioned
+`FigureSpec`/action envelope의 flattened field와 arbitrary-precision 정수를
+보존한다. serde 내부 object key `$serde_json::private::Number`는 Python/Rust
+모두 예약하며, Python pure-core `mudplot apply`가 유일한 reducer/validator로
+남아 28개 layer의 의미를
+Rust에 다시 구현하지 않는다. 기존 `mudplot render` CLI가 PNG/PDF/SVG를
+만든다. axum은 atomic 로컬 session을 관리하고 capability가 layer/theme/
+projection control을 생성하며 Askama가 open/action/history용 htmx fragment를
+렌더한다.
 
 경계는 의도적이다. Python과 Rust는 내부 object가 아닌 JSON으로 합의한다.
 Rust가 reduction/rendering을 맡을 때만 전체 generated struct가 가치 있다.
-native backend(plotters 등), visual-form parity, import/export, 인증된
-multi-user session은 선택적 후속 단계이며 현재 무인증 서버는 loopback에서만 쓴다.
+native backend(plotters 등), 특수 axis/drag control, 인증된 multi-user
+session은 선택적 후속 단계이며 현재 무인증 서버는 non-loopback bind/
+HTTP Host와 cross-origin browser mutation을 거부한다.
 
 ## 8. 개발 순서 (마일스톤)
 
@@ -368,7 +374,7 @@ multi-user session은 선택적 후속 단계이며 현재 무인증 서버는 l
       버그 3건 발견.
 - [x] **v0.3.0 릴리스.**
 - [x] M12f: 레퍼런스 시스템 안정화 -- group별 citation/link
-      (`LayerSpec.references`/`ReferenceSpec`), citation/href 문자 안전성
+      (`LayerSpec.references`/`ReferenceSpec`), citation/href 문자·scheme 안전성
       validator 개선, `FigureSpec` 버전/마이그레이션 정책(`MIGRATIONS`
       레지스트리, `mudplot migrate` CLI), PGF 레이아웃용 citation 측정
       정책(`reference_style`), 실제 JSON Schema validator 기반 호환성
@@ -398,7 +404,7 @@ multi-user session은 선택적 후속 단계이며 현재 무인증 서버는 l
 - [x] M12h: v0.5 이후 완성도 보강 — 색 변환/거리 Hypothesis 속성 테스트,
       engine/dashboard/scripts Pyright 0-error CI, 재현 가능한 dev 환경과
       영문·한글 기여 가이드. 대시보드는 capability registry의 모든 레이어를
-      노출하고 action 결과를 commit 전에 검증하며, 멀티패널 projection과
+      노출하고 action 결과를 commit 전에 검증·렌더하며, 멀티패널 projection과
       x/y/z/보조축 설정을 완성. 현재 app-fragment htmx swap은 의도적으로
       단순하게 유지하며 실제 latency가 측정될 때만 더 세분화.
 - [x] M12i: native Matplotlib 기능으로 플롯 폭 확장 — 기존 line의
@@ -427,13 +433,17 @@ multi-user session은 선택적 후속 단계이며 현재 무인증 서버는 l
       수정하고 정확한 계약 테스트로 고정.
 - [x] M13a: 함께 versioning하는 Rust axum+Askama+tokio+htmx editor 1단계 —
       serde spec/action envelope, atomic 로컬 history, agent/htmx route,
-      Python `apply`/`render` subprocess bridge. 전체 visual form/import/
-      vector export/multi-user/native rendering은 보류.
+      Python `apply`/`render` subprocess bridge.
+- [x] M13b: release-candidate Rust 필수 기능 — capability 기반 전체 layer/
+      theme/projection control, atomic spec open, 정확한 PDF/SVG/JSON export,
+      request body 상한, 확장된 언어 간 smoke test. 특수 axis/drag control,
+      multi-user/native rendering은 보류.
 
 ## 9. 검증 기준
 
 - 변환: 왕복 오차 < 1e-6, 문헌값 일치.
 - 팔레트: 정상시 + protan/deutan ΔE00 최소값 리포트.
 - **Spec: build → to_json → from_json → 동일 Spec (왕복 무손실)**.
-- **Spec → render 결정성: 같은 Spec은 같은 그림.**
+- **Spec → render 결정성: 같은 환경에서 같은 Spec은 byte-identical
+  PNG/PDF/SVG를 생성.**
 - 시각 회귀: 갤러리 이미지.

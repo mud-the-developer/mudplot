@@ -16,6 +16,7 @@ import warnings
 import matplotlib.pyplot as plt
 import mudplot as mp
 import pytest
+from mudplot.__main__ import main
 from mudplot._render import _substitute_pgf_references
 
 DOI = "https://doi.org/10.1145/358669.358692"
@@ -99,6 +100,19 @@ def test_raster_export_keeps_labels_plain(tmp_path):
 
 
 @needs_tex
+def test_pgf_raster_sidecars_use_the_final_basename(tmp_path):
+    path = tmp_path / "heat.pgf"
+    plot = mp.plot({}).matrix("m", [[1, 2], [3, 4]]).heatmap("m")
+    plt.close(mp.save(plot.spec, path))
+
+    sidecars = sorted(tmp_path.glob("heat-img*.png"))
+    assert sidecars
+    pgf = path.read_text(encoding="utf-8")
+    assert all(sidecar.name in pgf for sidecar in sidecars)
+    assert not list(tmp_path.glob(".heat*"))
+
+
+@needs_tex
 def test_references_do_not_disturb_layout(tmp_path):
     """The markers sit in the text matplotlib measures while laying out, so
     an over-long one silently wrecks the figure (a full URL collapsed the
@@ -177,6 +191,7 @@ def test_realistic_bibtex_keys_pass_validation(citation):
         "https://example.org/paper_v2?x=1&format=pdf#section_2",
         "https://doi.org/10.1145/358669.358692",
         "https://example.org/a%20b?q=1~2",
+        "mailto:author@example.org",
     ],
 )
 def test_realistic_urls_with_query_fragment_pass_validation(href):
@@ -195,6 +210,36 @@ def test_url_with_query_and_fragment_compiles_as_href(tmp_path):
 
     pgf = _save(make, tmp_path, "fig.pgf")
     assert f"\\href{{{href}}}{{" in pgf
+
+
+@pytest.mark.parametrize(
+    "href",
+    [
+        "javascript:alert(1)",
+        "data:text/html,<script>alert(1)</script>",
+        "file:///etc/passwd",
+        "ftp://example.org/paper",
+        "//example.org/paper",
+        "/relative/paper",
+        "https:///missing-host",
+        "https://example.org:not-a-port/paper",
+        "mailto:",
+        "https://example.org/has space",
+    ],
+)
+def test_href_rejects_active_non_web_relative_and_malformed_uris(href):
+    p = mp.plot({"x": [1], "y": [1]}).line("x", "y", href=href)
+    assert any("href" in issue for issue in mp.validate(p.spec))
+
+
+def test_active_href_cannot_reach_standalone_svg(tmp_path):
+    p = mp.plot({"x": [1], "y": [1]}).line(
+        "x", "y", label="unsafe", href="javascript:alert(1)"
+    )
+    output = tmp_path / "unsafe.svg"
+    with pytest.raises(ValueError, match="href"):
+        p.save(output)
+    assert not output.exists()
 
 
 def test_brace_and_backslash_are_still_rejected_in_citation_and_href():
@@ -227,10 +272,16 @@ def test_backend_capabilities_are_exposed():
     assert caps["svg"]["citations"] is False
 
 
-def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch):
+def test_pgf_export_without_tex_explains_itself(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr("shutil.which", lambda _: None)
+    spec = _plot().spec
     with pytest.raises(RuntimeError, match="needs a TeX installation"):
-        mp.save(_plot().spec, str(tmp_path / "fig.pgf"))
+        mp.save(spec, str(tmp_path / "fig.pgf"))
+
+    spec_path = tmp_path / "figure.json"
+    mp.save_spec(spec, spec_path)
+    assert main(["render", str(spec_path), str(tmp_path / "fig.pgf")]) == 1
+    assert "error: .pgf export needs a TeX installation" in capsys.readouterr().err
 
 
 # -- citation measurement policy (P0-3) --------------------------------------

@@ -148,8 +148,7 @@ nav.tabs .navtab.active { color: white; border-bottom: 2px solid var(--accent); 
 #               data values (with log-scale support) if data-data="1"
 #               (title uses axes-fraction directly; text/annotate layers
 #               use the data-coordinate mapping).
-_DRAG_SCRIPT = """
-<script>
+_DRAG_JS = """
 (function () {
   function scaleInverse(f, lo, hi, scale) {
     if (scale === "log") {
@@ -334,7 +333,6 @@ _DRAG_SCRIPT = """
     reader.readAsText(input.files[0]);
   });
 })();
-</script>
 """
 
 
@@ -497,6 +495,7 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
 def _layer_panel(spec: FigureSpec) -> str:
     type_select = _select("layer_type", _SERIES_LAYER_TYPES, "line")
     dl = _column_datalist(spec, "cols")
+    available = _esc(", ".join(spec.data.columns)) or "(none — load sample data first)"
     body = (
         _field("Layer type", type_select)
         + _field("x column", '<input name="x" list="cols" placeholder="x">')
@@ -508,8 +507,7 @@ def _layer_panel(spec: FigureSpec) -> str:
         + _field("Legend label (optional)", '<input name="label" placeholder="">')
         + _reference_fields()
         + f"{dl}"
-        f'<div class="hint">Available columns: '
-        f"{', '.join(spec.data.columns) or '(none — load sample data first)'}</div>"
+        f'<div class="hint">Available columns: {available}</div>'
     )
     form = _hx_form("/action", {"type": "add_layer"}, body, "Add layer")
     return f'<div class="panel"><h2>Add layer</h2>{form}</div>'
@@ -1079,6 +1077,8 @@ def render_page(
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="htmx-config"
+      content='{{"selfRequestsOnly":true,"allowScriptTags":false,"allowEval":false}}'>
 <title>mudplot editor</title>
 <script src="/static/htmx.min.js"></script>
 <style>{_STYLE}</style>
@@ -1090,7 +1090,7 @@ def render_page(
   {_nav_html("editor")}
 </header>
 <main><div id="app-body">{body}</div></main>
-{_DRAG_SCRIPT}
+<script src="/static/editor.js"></script>
 </body>
 </html>"""
 
@@ -1104,6 +1104,7 @@ def render_docs_page(body_html: str) -> str:
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mudplot docs</title>
 <style>{_STYLE}</style>
 </head>

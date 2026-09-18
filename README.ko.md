@@ -37,17 +37,18 @@
 ```
 
 - fluent 빌더는 **action을 dispatch하는 설탕** — `Store`가 reducer 구동.
-- `mudplot/` 엔진은 UI 의존 없음. `dashboard/`는 별도 패키지(추후).
-- Python과 Rust editor는 같은 action/JSON schema로만 소통하며, 1단계는
+- `mudplot/` 엔진은 UI 의존 없음. `dashboard/`는 별도 source-tree 패키지
+  (아래 참고).
+- Python과 Rust editor는 같은 action/JSON schema로만 소통하며, 현재
   reducer/validator/renderer를 Python CLI에 위임.
 
 ## 상태
 
-**v0.5.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
+**v0.6.0**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 538개 + 실제 브라우저 테스트 11개 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 비브라우저 테스트 606개 + 실제 브라우저 테스트 11개 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -71,6 +72,9 @@
       렌더러 사용, 직접 만든 레이아웃 시스템 없음)해 지정한 물리적
       크기를 유지하면서도 텍스트가 잘리거나 겹치지 않음 — TeX WYSIWYG
       `.preview()`(article/ieee/revtex/nature/acm)의 기반이기도 함
+- [x] **재현 가능한 export**: 같은 환경에서 반복한 PNG/PDF/SVG export는
+      byte-identical하며 변동하는 PDF/SVG metadata와 ID는 제거하거나
+      canonical spec에서 유도
 - [x] **정확한 위치 지정**: 범례(`.legend(bbox_to_anchor=...)`), 패널
       제목(`.title_position(...)`), `text`/`annotate` 레이어
       (`.set_layer_at(...)`)를 정확한 위치에 고정 — 인터랙티브 에디터의
@@ -93,7 +97,7 @@
       등) — 자세한 내용은 `DESIGN.md` §4c2,
       `tests/test_bugfixes.py`/`tests/test_stabilization.py`
 
-**대시보드 (`dashboard/`, 별도 패키지) — 사람용, 프로토타입 수준:**
+**대시보드 (`dashboard/`, source-tree 도구) — 로컬 editor + 문서:**
 
 - [x] 엔진 자기소개 기반 문서 + 디자인 갤러리 정적 사이트
       (`python -m dashboard build`)
@@ -109,28 +113,38 @@
       검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
 - [x] capabilities 기반 advanced 폼으로 등록된 레이어 28종 모두 지원;
       향후 registry 추가도 자동 반영. htmx로 전체 페이지 reload 없이 app
-      fragment만 갱신
-**Rust editor (`mudplot-editor/`, M13 1단계):**
+      fragment만 갱신. 인증 없는 서버는 loopback bind/Host, same-origin
+      mutation, browser security header, 16 MiB request 상한을 강제
+
+**Rust editor (`mudplot-editor/`, M13 v0.6):**
 
 - [x] 함께 versioning하는 axum + Askama + htmx 로컬 서버. serde
-      `FigureSpec`/action envelope, atomic action 적용, PNG cache,
-      undo/redo/reset, agent JSON route, Python CLI bridge 지원. 자세한 내용은
+      `FigureSpec`/action envelope, atomic open/action history, PNG cache,
+      PDF/SVG/JSON export, undo/redo/reset, agent JSON route와 전체
+      layer/theme/projection capability 기반 control 지원. 자세한 내용은
       [`mudplot-editor/README.ko.md`](mudplot-editor/README.ko.md).
 
 ## 설치
 
+현재 release는 GitHub에서만 배포하며 PyPI trusted publishing은 의도적으로
+활성화하지 않았다.
+
 ```bash
 # 순수 엔진만 (의존성 0) — spec/actions/reducer/store/io/tex 크기 계산
-pip install mudplot
+python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
 
 # 색상 엔진 + 렌더링까지 (numpy + matplotlib)
-pip install "mudplot[render]"
+python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
 ```
+
+wheel에는 `mudplot` engine만 포함됩니다. Python dashboard와 Rust editor는
+source-tree 도구이므로 template·계약 version을 맞추기 위해 같은 release tag를
+checkout해서 실행하세요.
 
 개발:
 
 ```bash
-uv sync --extra dev
+uv sync --locked --extra dev
 ```
 
 검사 명령, 브라우저/TeX 설정, 스키마 재생성 방법은
@@ -141,8 +155,8 @@ uv sync --extra dev
 | 계층 | 모듈 | 의존성 |
 | --- | --- | --- |
 | 순수 엔진 | `spec` `actions` `reducer` `store` `io` `tex`(크기) | **없음** |
-| 색상 엔진 | `color/*` | numpy |
-| 렌더 effect | `render` `tex_preview` | numpy + matplotlib |
+| 색상 엔진 | `color/*` | NumPy ≥ 1.23 |
+| 렌더 effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
 
 ## 실제 렌더링 데모
 
@@ -274,8 +288,10 @@ figure에는 아무 변화도 주지 않습니다 — 잘릴 우려가 없다면
 | `.svg` | 생략 (해석할 대상이 없음) | 텍스트가 클릭 가능한 링크 |
 | `.png`/`.pdf` | 생략 | 생략 |
 
-이 값들은 LaTeX 소스에 그대로 치환되므로, `validate()`가 중괄호·백슬래시를
-거부합니다(일반적인 BibTeX 키/URL 문자인 `_`/`:`/`-`/`&`/`#`/`%`는 허용).
+이 값들은 LaTeX 소스에 그대로 치환되므로 `validate()`가 중괄호·백슬래시를
+거부합니다. 링크는 절대 `http`/`https`/`mailto` URI만 허용하며 active/file/
+data/custom scheme, 상대 링크, control 문자, 공백은 SVG/PGF export 전에
+거부합니다. `_`/`:`/`-`/`&`/`#`/`%` 같은 일반 URL 문자는 계속 허용합니다.
 
 `group=`으로 묶인 레이어는 `references=`(`{group값: mp.Reference(...)}` 딕셔너리)로
 시리즈별로 다른 논문을 인용할 수 있습니다. 딕셔너리에 없는 group 값은 인용/링크가
@@ -468,19 +484,29 @@ python -m dashboard --out dashboard/site_build
 # dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리
 ```
 
-### Rust editor (로컬 M13 1단계)
+### Rust editor (로컬 M13 v0.6)
 
 ```bash
 MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
-  cargo run --manifest-path mudplot-editor/Cargo.toml
+  cargo run --locked --manifest-path mudplot-editor/Cargo.toml
 ```
 
 Python action/reducer 의미를 복제하지 않고 같은 계약을 호출한다. 인증 없는
-서버는 non-loopback bind를 거부한다. 범위와 route는
+서버는 non-loopback bind/HTTP Host와 cross-origin browser mutation을
+거부한다.
+범위와 route는
 [`mudplot-editor/README.ko.md`](mudplot-editor/README.ko.md) 참고.
 
 ## 개발
 
 ```bash
-uv run pytest        # 또는 .venv/bin/python -m pytest
+uv sync --locked --extra dev --extra browser
+uv run pytest -q -m "not browser"
+uv run python scripts/check_schema_sync.py
+uv run python scripts/check_wheel.py
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml
 ```
+
+전체 Python/browser/TeX/Rust preflight는
+[`CONTRIBUTING.ko.md`](CONTRIBUTING.ko.md), 비공개 취약점 제보는
+[`SECURITY.ko.md`](SECURITY.ko.md) 참고.

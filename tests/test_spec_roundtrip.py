@@ -46,6 +46,35 @@ def test_save_load_file(tmp_path):
     assert loaded.to_dict() == p.spec.to_dict()
 
 
+def test_save_spec_is_atomic_and_preserves_symlinks(tmp_path, monkeypatch):
+    destination = tmp_path / "figure.json"
+    destination.write_text("old", encoding="utf-8")
+    destination.chmod(0o640)
+    link = tmp_path / "linked.json"
+    link.symlink_to(destination)
+
+    io.save_spec(FigureSpec(), link)
+    assert link.is_symlink()
+    assert destination.stat().st_mode & 0o777 == 0o640
+    assert b"\r\n" not in destination.read_bytes()
+    assert io.load_spec(destination) == FigureSpec()
+
+    destination.chmod(0o440)
+    io.save_spec(FigureSpec(), destination)
+    assert destination.stat().st_mode & 0o777 == 0o440
+    destination.chmod(0o640)
+    destination.write_text("keep", encoding="utf-8")
+
+    def fail_replace(source, target):
+        raise OSError("simulated replace failure")
+
+    monkeypatch.setattr(io.os, "replace", fail_replace)
+    with pytest.raises(OSError, match="simulated"):
+        io.save_spec(FigureSpec(), destination)
+    assert destination.read_text(encoding="utf-8") == "keep"
+    assert sorted(tmp_path.iterdir()) == [destination, link]
+
+
 def test_current_version_round_trips_unchanged():
     d = FigureSpec().to_dict()
     assert migrate_spec_dict(d) is d
@@ -69,6 +98,68 @@ def test_directly_constructed_bad_version_fails_validate():
     spec = FigureSpec(version="99.0")
     issues = mp.validate(spec)
     assert any("spec version" in i for i in issues)
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        [],
+        "not an object",
+        {"version": SPEC_VERSION, "panels": "not an array"},
+        {"version": SPEC_VERSION, "panels": [{"layers": [[]]}]},
+        {"version": SPEC_VERSION, "dpi": "300"},
+        {"version": SPEC_VERSION, "theme": {"font": None}},
+        {"version": SPEC_VERSION, "data": {"columns": {"x": "not an array"}}},
+    ],
+)
+def test_malformed_json_shapes_fail_at_deserialization_boundary(payload):
+    with pytest.raises(TypeError):
+        FigureSpec.from_dict(payload)
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "not json",
+        "[]",
+        '{"dpi":"fast"}',
+        '{"dpi":NaN}',
+        '{"dpi":Infinity}',
+        '{"dpi":300,"dpi":72}',
+        '{"$serde_json::private::Number":"1"}',
+        '{"data":{"columns":{"x":[1e400]}}}',
+        r'{"data":{"columns":{"label":["\ud800"]}}}',
+        "[" * 2_000 + "]" * 2_000,
+    ],
+)
+def test_io_from_json_wraps_malformed_input_with_context(text):
+    with pytest.raises(ValueError, match="invalid FigureSpec JSON"):
+        io.from_json(text)
+
+
+def test_to_json_rejects_nonstandard_nonfinite_numbers():
+    spec = FigureSpec()
+    spec.data.columns = {"value": [float("nan")]}
+    with pytest.raises(ValueError, match="finite"):
+        io.to_json(spec)
+
+
+def test_to_json_rejects_lone_unicode_surrogates_and_reserved_keys():
+    spec = FigureSpec()
+    spec.data.columns = {"label": ["\ud800"]}
+    with pytest.raises(ValueError, match="surrogate"):
+        io.to_json(spec)
+
+    spec.data.columns = {"$serde_json::private::Number": [1]}
+    with pytest.raises(ValueError, match="reserved"):
+        io.to_json(spec)
+
+
+def test_categorical_column_values_remain_valid_plain_data():
+    restored = FigureSpec.from_dict(
+        {"data": {"columns": {"group": ["control", "treated"]}}}
+    )
+    assert restored.data.columns["group"] == ["control", "treated"]
 
 
 def test_unknown_future_fields_ignored_without_crashing():

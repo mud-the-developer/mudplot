@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import contextlib
 import contextvars
+import hashlib
 import itertools
 import re
 from statistics import NormalDist
@@ -1156,6 +1157,8 @@ def render(spec: FigureSpec, *, fmt: str = ""):
             dpi=spec.dpi,
             layout=None if has_3d else "constrained",
         )
+        # Interactive HiDPI backends may round inches to device pixels.
+        fig.set_size_inches((spec.size[0], spec.size[1]), forward=False)
         try:
             gs = fig.add_gridspec(rows, cols, **gridspec_kw)
             axes_grid: list[list[object | None]] = [[None] * cols for _ in range(rows)]
@@ -1219,6 +1222,38 @@ def _require_texsystem() -> None:
         )
 
 
+def _preview_dpi(spec: FigureSpec, *, max_dimension: int = 2000) -> float:
+    """Bound editor preview pixels without changing the saved FigureSpec."""
+    return min(spec.dpi, max_dimension / max(spec.size))
+
+
+def _save_figure(fig, spec: FigureSpec, destination, fmt: str, *, tight=False) -> None:
+    """Save deterministic bytes for the supported publication formats."""
+    import matplotlib.pyplot as plt
+
+    rc: dict[str, Any] = {"savefig.bbox": None}
+    kwargs: dict[str, Any] = {
+        "dpi": spec.dpi,
+        "bbox_inches": "tight" if tight else None,
+        "pad_inches": 0.05,
+    }
+    if fmt:
+        kwargs["format"] = fmt
+    if fmt == "pdf":
+        kwargs["metadata"] = {"CreationDate": None, "ModDate": None}
+    elif fmt == "svg":
+        from .io import to_json
+
+        rc["svg.image_inline"] = True
+        digest = hashlib.sha256(
+            to_json(spec, indent=None, sort_keys=True).encode()
+        ).hexdigest()
+        rc["svg.hashsalt"] = f"mudplot-{digest}"
+        kwargs["metadata"] = {"Date": None}
+    with plt.rc_context(cast(Any, rc)):
+        fig.savefig(destination, **kwargs)
+
+
 def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """Save at the exact spec size; ``tight=True`` opts into content cropping.
 
@@ -1230,33 +1265,35 @@ def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """
     import pathlib
 
+    import matplotlib as mpl
     import matplotlib.pyplot as plt
 
-    fmt = pathlib.Path(path).suffix.lstrip(".").lower()
+    from .io import _atomic_destination
+
+    destination = pathlib.Path(path)
+    fmt = destination.suffix.lstrip(".").lower()
+    if not fmt:
+        fmt = str(mpl.rcParams["savefig.format"])
+        destination = destination.with_name(f"{destination.name}.{fmt}")
     if fmt == "pgf":
         _require_texsystem()
     fig = render(spec, fmt=fmt)
     try:
-        # Explicitly disable ambient cropping too: bbox_inches=None alone
-        # falls back to the caller's savefig.bbox rcParam.
-        with plt.rc_context({"savefig.bbox": None}):
-            fig.savefig(
-                path,
-                dpi=spec.dpi,
-                bbox_inches="tight" if tight else None,
-                pad_inches=0.05,
+        if fmt == "pgf":
+            # ponytail: PGF may emit sidecar PNGs; stage the whole bundle if
+            # transactional PGF export becomes necessary.
+            _save_figure(fig, spec, destination, fmt, tight=tight)
+            destination.write_bytes(
+                _substitute_pgf_references(
+                    destination.read_text(encoding="utf-8"),
+                    getattr(fig, "_mudplot_refs", []),
+                    getattr(fig, "_mudplot_ref_measure", ""),
+                ).encode("utf-8")
             )
-    except Exception:
+        else:
+            with _atomic_destination(destination) as temporary:
+                _save_figure(fig, spec, temporary, fmt, tight=tight)
+    except BaseException:
         plt.close(fig)
         raise
-    if fmt == "pgf":
-        p = pathlib.Path(path)
-        p.write_text(
-            _substitute_pgf_references(
-                p.read_text(encoding="utf-8"),
-                getattr(fig, "_mudplot_refs", []),
-                getattr(fig, "_mudplot_ref_measure", ""),
-            ),
-            encoding="utf-8",
-        )
     return fig

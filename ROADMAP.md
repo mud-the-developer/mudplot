@@ -68,9 +68,9 @@ Each addition should follow the same checklist the last two batches did:
 
 ## 2. Dashboard / editor completeness
 
-The editor prototype (`python -m dashboard serve`) currently exposes
-`line`/`scatter`/`bar` plus `text`/`annotate` in its "Add layer" forms,
-while the engine supports 28 types. Concrete gaps:
+The Python editor (`python -m dashboard serve`) now covers the 28-layer
+engine, multi-panel controls, direct manipulation, and shared reference docs.
+Completed work:
 
 - **(done)** Exposed every registered layer type through a generic advanced
   form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
@@ -84,8 +84,8 @@ while the engine supports 28 types. Concrete gaps:
   current figure untouched and report an editor error.
 - **(done)** Panel-level controls: title/reference, x/y labels, scales,
   fixed/automatic limits, secondary-y-axis enable/configure/remove, 3-D z-axis
-  setup, projection, and draggable positions. Invalid prospective states are
-  rejected before they can enter editor history.
+  setup, projection, and draggable positions. Prospective state is validated
+  and rendered before it can enter editor history.
 - **(done)** Replaced the full-page-reload-per-action UX with htmx partial
   swaps (`dashboard/static/htmx.min.js`, vendored, 0BSD, no Python
   dependency) — good practice run before the real Rust+htmx editor.
@@ -96,23 +96,25 @@ while the engine supports 28 types. Concrete gaps:
 
 ## 3. Rust interactive editor (M13)
 
-**Phase 1 landed in-repo** as the co-versioned `mudplot-editor/` crate:
+**Release-candidate essentials landed in-repo** as the co-versioned
+`mudplot-editor/` crate:
 
 - serde preserves the versioned `FigureSpec` and action envelopes while the
   generated schema/reference remain the contract.
-- axum + Askama exposes `GET /`, `/fig.png`, `/spec.json`, and the shared
-  vendored htmx asset; JSON `/action` plus htmx `/action/raw`, `/undo`,
-  `/redo`, and `/reset` mutate one local session atomically.
+- axum + Askama exposes PNG/PDF/SVG/JSON output and the shared vendored htmx
+  asset; JSON `/action`, visual controls, all-layer capability metadata,
+  spec open, undo/redo, and reset mutate one local session atomically.
 - New pure-core `mudplot apply` and existing `mudplot render` subprocesses
   keep reduction, validation, and rendering semantics in Python instead of
   duplicating 28-layer behavior in Rust.
-- The crate is intentionally local/single-user and rejects non-loopback bind
-  addresses; it has no authentication.
+- The crate is intentionally local/single-user and rejects non-loopback binds/
+  HTTP Hosts plus cross-origin browser mutations; it has no authentication.
 
-Next only after phase-1 usage justifies it: capabilities-driven visual forms,
-open/vector export, then cookie-keyed sessions/authentication if remote use is
-actually wanted. A native Rust renderer remains optional; strongly typing all
-schema fields only pays off if Rust takes over reduction or rendering.
+Next only after local usage justifies it: specialized axis/drag controls from
+the mature Python editor, then cookie-keyed sessions/authentication if remote
+use is actually wanted. A native Rust renderer remains optional; strongly
+typing all schema fields only pays off if Rust takes over reduction or
+rendering.
 
 ## 4. Quality / tooling
 
@@ -137,8 +139,11 @@ schema fields only pays off if Rust takes over reduction or rendering.
 
 ## 5. Packaging / release
 
-- **GitHub releases**: done — `.github/workflows/release.yml` builds the
-  sdist/wheel and attaches them to a GitHub release on every `v*` tag.
+- **GitHub releases**: done — `.github/workflows/release.yml` checks tag/
+  Python/pyproject/Rust manifest+lock/changelog/README version agreement,
+  reruns Python + Rust + full TeX-engine preflight with locked dependencies,
+  and attaches the sdist/wheel, SHA-256 checksums, and OIDC build-provenance attestations to
+  every `v*` release.
 - **Actual PyPI publish**: deliberately deferred. Register this repo as a
   trusted publisher on the PyPI project (project name `mudplot`, workflow
   `release.yml`, environment `pypi`; see
@@ -147,7 +152,7 @@ schema fields only pays off if Rust takes over reduction or rendering.
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
   needed) -- attempted once already and failed with `invalid-publisher`
   since no publisher was registered yet.
-- **Versioning**: `0.5.0` as of this release; semver policy: this is a
+- **Versioning**: `0.6.0` as of this release; semver policy: this is a
   young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
   bump the minor version even pre-1.0, since Rust/agent consumers depend on
   schema stability.

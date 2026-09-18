@@ -62,6 +62,28 @@ def test_action_unknown_type_raises():
         A.action_from_dict({"type": "Nope"})
 
 
+@pytest.mark.parametrize(
+    "payload",
+    [
+        [],
+        [["type", "SetTitle"], ["text", "not an object"]],
+        {"type": []},
+        {"action": "SetTitle", "text": "undocumented alias"},
+        {"type": [], "action": "SetTitle", "text": "must not fall back"},
+        {1: "not a JSON key", "type": "SetTitle", "text": "bad"},
+        {"type": "AddLayer", "layer": []},
+        {"type": "SetTitle", "text": []},
+        {"type": "SetSize", "width": "wide", "height": 3},
+        {"type": "SetAutoLabel", "enabled": 1},
+        {"type": "SetLayout", "rows": True, "cols": 2},
+        {"type": "SetLayerAt", "layer_index": 0, "at": "center"},
+    ],
+)
+def test_action_fields_are_type_checked_before_reducer_dispatch(payload):
+    with pytest.raises(TypeError):
+        A.action_from_dict(payload)
+
+
 def test_action_unknown_field_raises():
     with pytest.raises(ValueError, match="unknown field"):
         A.action_from_dict({"type": "SetSize", "width": 1, "height": 1, "z": 9})

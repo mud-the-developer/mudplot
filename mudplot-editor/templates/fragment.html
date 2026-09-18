@@ -4,23 +4,100 @@
   {% endif %}
   <section class="canvas" aria-label="Figure preview">
     <img src="/fig.png?v={{ revision }}" alt="Current mudplot figure preview">
+    <nav class="exports" aria-label="Figure exports">
+      <a href="/fig.pdf">Download PDF</a>
+      <a href="/fig.svg">Download SVG</a>
+      <a href="/spec.json" download="figure.mplot.json">Download FigureSpec</a>
+    </nav>
   </section>
   <section class="controls" aria-label="Editor controls">
-    <h2>JSON action</h2>
-    <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
-      <label for="action-json">Action from the mudplot action vocabulary</label>
-      <textarea id="action-json" name="json" rows="5" spellcheck="false">{"type":"SetTitle","text":"Edited from Rust","panel":0}</textarea>
-      <button type="submit">Apply</button>
+    <h2>Visual controls</h2>
+    <form class="control-form" hx-post="/control/title" hx-target="#app" hx-swap="outerHTML">
+      <label>Panel title <input name="text" type="text" value="{{ current.title }}"></label>
+      <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+      <button type="submit">Set title</button>
     </form>
-    <div class="history">
-      <button hx-post="/undo" hx-target="#app" hx-swap="outerHTML">Undo</button>
-      <button hx-post="/redo" hx-target="#app" hx-swap="outerHTML">Redo</button>
-      <button hx-post="/reset" hx-target="#app" hx-swap="outerHTML">Reset</button>
+    <form class="control-form" hx-post="/control/theme" hx-target="#app" hx-swap="outerHTML">
+      <label>Theme
+        <select name="name">
+          {% for theme in controls.themes %}
+          {% if theme.as_str() == current.theme.as_str() %}<option value="{{ theme }}" selected>{{ theme }}</option>
+          {% else %}<option value="{{ theme }}">{{ theme }}</option>{% endif %}
+          {% endfor %}
+        </select>
+      </label>
+      <button type="submit">Set theme</button>
+    </form>
+    <form class="control-form" hx-post="/control/projection" hx-target="#app" hx-swap="outerHTML">
+      <label>Projection
+        <select name="projection">
+          {% for projection in controls.projections %}
+          {% if projection.as_str() == current.projection.as_str() %}<option value="{{ projection }}" selected>{{ projection }}</option>
+          {% else %}<option value="{{ projection }}">{{ projection }}</option>{% endif %}
+          {% endfor %}
+        </select>
+      </label>
+      <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+      <button type="submit">Set projection</button>
+    </form>
+    <form class="control-form" hx-post="/control/size" hx-target="#app" hx-swap="outerHTML">
+      <label>Width (in) <input name="width" type="number" min="0.01" step="any" value="{{ current.width }}"></label>
+      <label>Height (in) <input name="height" type="number" min="0.01" step="any" value="{{ current.height }}"></label>
+      <button type="submit">Set size</button>
+    </form>
+
+    <details open>
+      <summary>Add any registered layer</summary>
+      <form hx-post="/layers" hx-target="#app" hx-swap="outerHTML">
+        <label>Layer type
+          <select name="layer_type">
+            {% for layer in controls.layers %}<option value="{{ layer.name }}">{{ layer.name }}</option>{% endfor %}
+          </select>
+        </label>
+        <label>LayerSpec fields (JSON object, without <code>type</code>)
+          <textarea name="fields" rows="4" spellcheck="false">{"x":"x","y":"y"}</textarea>
+        </label>
+        <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+        <button type="submit">Add layer</button>
+      </form>
+      <details class="registry">
+        <summary>Required/optional fields for all {{ controls.layers.len() }} layers</summary>
+        <ul>
+          {% for layer in controls.layers %}
+          <li><code>{{ layer.name }}</code> — required: {{ layer.required }}; optional: {{ layer.optional }}</li>
+          {% endfor %}
+        </ul>
+      </details>
+    </details>
+
+    <div class="history" aria-label="History controls">
+      <button type="button" hx-post="/undo" hx-target="#app" hx-swap="outerHTML">Undo</button>
+      <button type="button" hx-post="/redo" hx-target="#app" hx-swap="outerHTML">Redo</button>
+      <button type="button" hx-post="/reset" hx-target="#app" hx-swap="outerHTML">Reset</button>
     </div>
+
+    <details>
+      <summary>Open or replace a FigureSpec</summary>
+      <form hx-post="/open" hx-target="#app" hx-swap="outerHTML">
+        <label>FigureSpec JSON
+          <textarea name="json" rows="10" spellcheck="false">{{ spec_json }}</textarea>
+        </label>
+        <button type="submit">Open spec</button>
+      </form>
+    </details>
+    <details>
+      <summary>Raw JSON action</summary>
+      <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+        <label>Action from the mudplot action vocabulary
+          <textarea name="json" rows="5" spellcheck="false">{"type":"SetTitle","text":"Edited from Rust","panel":0}</textarea>
+        </label>
+        <button type="submit">Apply action</button>
+      </form>
+    </details>
     <details>
       <summary>Current FigureSpec JSON</summary>
       <pre>{{ spec_json }}</pre>
     </details>
-    <p class="api"><a href="/spec.json">GET /spec.json</a> · agents may POST an action JSON object to <code>/action</code>.</p>
+    <p class="api">Agents may POST an action JSON object to <code>/action</code>.</p>
   </section>
 </main>

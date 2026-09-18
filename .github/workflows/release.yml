@@ -10,41 +10,157 @@ on:
   push:
     tags: ["v*"]
 
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          persist-credentials: false
+      - name: Require a GitHub-verified signed annotated tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          ref=$(gh api \
+            "repos/${GITHUB_REPOSITORY}/git/ref/tags/${GITHUB_REF_NAME}")
+          if [[ $(jq -r '.object.type' <<<"${ref}") != tag ]]; then
+            echo "release tag must be annotated" >&2
+            exit 1
+          fi
+          tag_sha=$(jq -r '.object.sha' <<<"${ref}")
+          tag=$(gh api \
+            "repos/${GITHUB_REPOSITORY}/git/tags/${tag_sha}")
+          if [[ $(jq -r '.verification.verified' <<<"${tag}") != true ]]; then
+            echo "release tag signature is not GitHub-verified:" >&2
+            jq '.verification' <<<"${tag}" >&2
+            exit 1
+          fi
+          target_type=$(jq -r '.object.type' <<<"${tag}")
+          target_sha=$(jq -r '.object.sha' <<<"${tag}")
+          checkout_sha=$(git rev-parse HEAD)
+          if [[ ${target_type} != commit ]] \
+            || [[ ${target_sha} != "${checkout_sha}" ]]; then
+            echo "release tag must directly target the checked-out" \
+              "commit" >&2
+            exit 1
+          fi
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@ed21f2f24f8dd64503750218de024bcf64c7250a
         with:
           python-version: "3.12"
-      - name: Install project (with dev extras)
-        run: uv sync --extra dev
-      - name: Full test suite
+          enable-cache: false
+      - name: Release version/tag preflight
+        run: python -m scripts.check_release_version "${GITHUB_REF_NAME}"
+      - name: Audit all committed Python dependency locks
+        run: uv run --locked --script scripts/audit_dependencies.py
+      - name: Install project (with dev + browser extras)
+        run: uv sync --locked --extra dev --extra browser
+      - name: Install Chromium for browser tests
+        run: uv run playwright install --with-deps chromium
+      - name: Install TeX engines and bibliography tools
+        env:
+          TECTONIC_VERSION: "0.15.0"
+          TECTONIC_SHA256: >-
+            875fbbc9ab48560d7776088c608e0beee49197b57ab4a2f6c5385b2c661c842f
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-base texlive-latex-recommended texlive-luatex \
+            texlive-pictures texlive-bibtex-extra biber ghostscript
+          curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
+            "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
+            | sha256sum --check --strict
+          tar xzf tectonic.tar.gz
+          sudo mv tectonic /usr/local/bin/
+          rm tectonic.tar.gz
+          tectonic --version
+      - name: Python lint, format, and type checks
+        run: |
+          uv run ruff check .
+          uv run ruff format --check .
+          uv run pyright
+      - name: Python test suite (browser included)
         run: uv run pytest -q
+      - name: Minimum render dependency contract
+        run: |
+          uv python install 3.10
+          uv run --python 3.10 --locked --script \
+            scripts/check_minimum_versions.py
       - name: Schema/docs export is in sync
         run: uv run python scripts/check_schema_sync.py
-      - name: Build sdist + wheel
-        run: uv build
-      - uses: actions/upload-artifact@v4
+      - name: Dashboard build and editor smoke test
+        run: |
+          uv run python -m dashboard --out /tmp/dashboard_build
+          uv run python scripts/editor_smoke_test.py
+      - name: Build and reproduce verified sdist/wheel from the source archive
+        run: |
+          rm -rf dist dist-rebuild
+          uv run python scripts/check_wheel.py --out-dir dist
+          uv run python scripts/check_wheel.py --out-dir dist-rebuild
+          diff -u \
+            <(cd dist && sha256sum mudplot-*) \
+            <(cd dist-rebuild && sha256sum mudplot-*)
+          rm -rf dist-rebuild
+      - name: Rust editor MSRV, format, lint, and tests
+        run: |
+          rustup toolchain install 1.88.0 --profile minimal
+          cargo +1.88.0 check --locked --all-targets \
+            --manifest-path mudplot-editor/Cargo.toml
+          cargo fmt --check --manifest-path mudplot-editor/Cargo.toml
+          cargo clippy --locked --all-targets \
+            --manifest-path mudplot-editor/Cargo.toml -- -D warnings
+          cargo test --locked --manifest-path mudplot-editor/Cargo.toml
+          uv run python scripts/rust_editor_smoke_test.py --browser
+      - name: Build release checksums
+        run: (cd dist && sha256sum mudplot-* > SHA256SUMS)
+      - name: Attest release artifacts
+        uses: >-
+          actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-path: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/SHA256SUMS
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f
         with:
           name: dist
           path: dist/
+          retention-days: 1
 
   github-release:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@70fc10c6e5e1ce46ad2ea6f2b72d43f7d47b13c3
         with:
           name: dist
           path: dist/
+      - name: Verify downloaded release artifacts
+        run: (cd dist && sha256sum --check --strict SHA256SUMS)
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: dist/*
-          generate_release_notes: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "${GITHUB_REF_NAME}" >/dev/null 2>&1; then
+            gh release upload "${GITHUB_REF_NAME}" dist/* --clobber
+          else
+            gh release create "${GITHUB_REF_NAME}" dist/* \
+              --generate-notes --verify-tag
+          fi

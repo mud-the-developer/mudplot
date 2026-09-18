@@ -6,7 +6,7 @@ Design principles
   stay fair under greyscale printing and no colour dominates by brightness.
 * **Maximum contrast**: colours are chosen to maximise the *minimum*
   perceptual distance (CIEDE2000) between every pair.
-* **Colourblind-safe**: the pairwise distance that is maximised is the
+* **Colourblind-aware**: the pairwise distance that is maximised is the
   *worst case* across normal vision and CVD simulations (protan / deutan),
   so palettes stay distinguishable for red-green colour blindness.
 """
@@ -177,7 +177,7 @@ def qualitative(
 
     Colours are picked by farthest-point sampling on the worst-case
     perceptual distance across normal + CVD vision, giving a maximally
-    contrasting, colourblind-safe set.
+    contrasting, colourblind-aware set.
 
     Parameters
     ----------

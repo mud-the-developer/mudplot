@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="htmx-config"
+        content='{"selfRequestsOnly":true,"allowScriptTags":false,"allowEval":false}'>
   <title>mudplot Rust editor</title>
   <script src="/static/htmx.min.js"></script>
   <style>
@@ -14,9 +16,15 @@
     .canvas, .controls { background: white; border: 1px solid #c8c2b5; border-radius: .4rem; padding: 1rem; }
     .canvas img { display: block; width: 100%; height: auto; }
     .controls h2 { margin-top: 0; }
+    .control-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; align-items: end; margin-bottom: .8rem; }
     label { display: block; margin-bottom: .4rem; font-weight: 600; }
-    textarea { box-sizing: border-box; width: 100%; font: .85rem ui-monospace, monospace; }
-    button { margin: .6rem .35rem 0 0; padding: .45rem .8rem; cursor: pointer; }
+    input, select, textarea { box-sizing: border-box; width: 100%; padding: .4rem; }
+    textarea { font: .85rem ui-monospace, monospace; }
+    button, .exports a { display: inline-block; margin: .6rem .35rem 0 0; padding: .45rem .8rem; cursor: pointer; }
+    details { margin-top: .8rem; }
+    summary { cursor: pointer; font-weight: 600; }
+    .exports { margin-top: .6rem; }
+    .registry ul { max-height: 15rem; overflow: auto; padding-left: 1.25rem; font-size: .78rem; }
     .error { grid-column: 1 / -1; margin: 0; padding: .7rem; border-left: .3rem solid #a52a2a; background: #fff0f0; }
     pre { max-height: 24rem; overflow: auto; padding: .7rem; background: #f6f6f6; font-size: .75rem; }
     .api { font-size: .85rem; }
@@ -24,7 +32,7 @@
   </style>
 </head>
 <body>
-  <header><h1>mudplot Rust editor · phase 1</h1></header>
+  <header><h1>mudplot Rust editor · v{{ version }}</h1></header>
   {% include "fragment.html" %}
 </body>
 </html>

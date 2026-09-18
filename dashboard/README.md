@@ -1,4 +1,4 @@
-# mudplot-dashboard (separate package)
+# mudplot-dashboard (source-tree tool)
 
 *[한국어 문서 / Korean docs: README.ko.md](README.ko.md)*
 
@@ -30,11 +30,11 @@ open dashboard/site_build/index.html
   live engine calls, so they can never go stale the way hand-written docs
   can.
 
-### 2. A local interactive editor (prototype)
+### 2. A local interactive editor
 
 ```bash
 python -m dashboard serve            # http://127.0.0.1:8765/
-python -m dashboard serve --port 9000 --host 0.0.0.0
+python -m dashboard serve --port 9000
 ```
 
 The running editor has two tabs (top nav): **Editor** and **Docs** — the
@@ -42,11 +42,14 @@ same engine reference as the static site's, served live from
 `mp.reference_markdown()` so it can't drift from the running engine, without
 needing a separate `dashboard build` process.
 
-- `editor_server.py` / `editor_view.py` — a deliberately dependency-light
-  local editor: Python's stdlib `http.server` (no web framework) plus
+- `editor_server.py` / `editor_view.py` — a deliberately dependency-light,
+  loopback-only local editor: Python's stdlib `http.server` (no web framework) plus
   `mudplot[render]`, plus one vendored, dependency-free JS file
-  (`dashboard/static/htmx.min.js`, [htmx](https://htmx.org), 0BSD licensed)
-  for partial-page updates. Every click/form submit builds a real `Action`
+  (`dashboard/static/htmx.min.js`, [htmx 1.9.12](https://github.com/bigskysoftware/htmx/releases/tag/v1.9.12),
+  0BSD licensed) for partial-page updates. Packaging pins the official file's
+  SHA-256 in `scripts/check_wheel.py`. It accepts only loopback binds/Hosts and
+  same-origin mutations, bounds request/form bodies, and sends CSP plus
+  `Cache-Control: no-store` on every response. Every click/form submit builds a real `Action`
   and dispatches it through the *exact same* `Store`/reducer the fluent API
   uses — there is no separate editor-only state model.
 - Load sample data; tweak theme/journal/palette; edit the grid, active panel,
@@ -57,11 +60,13 @@ needing a separate `dashboard build` process.
   a raw JSON action (the same shape an AI agent uses). The preview, layer
   list, and action log update **in place** after every change (an htmx partial
   swap of `#app-body`, not a full page navigation).
-- Errors (bad theme name, missing column, malformed JSON, invalid spec) are
-  caught before committing the action and shown as a banner instead of
-  crashing the server or corrupting editor history.
-- Open a saved `.mplot.json`; export the current state as `.mplot.json`, PNG,
-  exact-size PDF, or SVG.
+- Errors (bad theme name, missing column, malformed JSON, invalid spec, or
+  render failure) are caught before committing the action/import and shown as
+  a banner instead of crashing the server or corrupting editor history.
+- Open a saved `.mplot.json`; export the current state as `.mplot.json`, a
+  screen-preview PNG, or exact-size PDF/SVG. Preview rendering retains the
+  configured DPI until either axis would exceed 2000 pixels; the spec and
+  final exports remain unchanged.
 - **Drag directly on the preview**: the Position panel's "Enable" buttons
   add a coloured handle over the figure for the **legend** (blue ✥) and
   **panel title** (purple T); any `text`/`annotate` layer gets a handle
@@ -92,14 +97,15 @@ store.dispatch(A.SetTheme("paper"))
 store.dispatch(A.SetPalette(kind="qualitative", params={"hue_start": 30}))
 ```
 
-The Rust (Askama+tokio+htmx) phase-1 editor now uses the same structure: its
-UI sends JSON actions through `mudplot apply`, preserving the Python reducer
-semantics before `mudplot render` refreshes the image.
+The Rust (Askama+tokio+htmx) editor uses the same structure: capability-driven
+controls and agent JSON both call `mudplot apply`, preserving Python reducer
+semantics before `mudplot render` refreshes or exports the figure.
 
 ## Roadmap
 
 1. **(done)** static docs+gallery site (`python -m dashboard build`)
-2. **(done)** a Python prototype interactive editor (`python -m dashboard serve`),
+2. **(done)** a Python local interactive editor (`python -m dashboard serve`),
    reusing the same Store
-3. **(phase 1 done)** the co-versioned `mudplot-editor/` Rust crate, sharing
-   the JSON action/schema contract through the Python CLI
+3. **(release-candidate essentials done)** the co-versioned `mudplot-editor/`
+   Rust crate, sharing the JSON contract through the Python CLI and supporting
+   visual controls, open, and vector export

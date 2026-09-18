@@ -41,18 +41,18 @@ Effects (render/io/preview) are pushed to the edges.
 - The fluent builder is just **sugar for dispatching actions** — a `Store`
   drives the reducer underneath.
 - The `mudplot/` engine has no UI dependency. `dashboard/` is a separate
-  package (see below).
-- Python and the Rust editor agree only on the same action/JSON schema; phase
-  1 delegates reduction/validation/rendering to the Python CLI.
+  source-tree package (see below).
+- Python and the Rust editor agree only on the same action/JSON schema; the
+  current Rust editor delegates reduction/validation/rendering to the Python CLI.
 
 ## Status
 
-**v0.5.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
+**v0.6.0**, pre-1.0 and moving fast. See [`DESIGN.md`](DESIGN.md) for
 architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 538 non-browser tests passing (+11 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 606 non-browser tests passing (+11 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -80,6 +80,9 @@ steps (more layer types, quality work, and the Rust editor).
       at their exact configured physical size without clipped/overlapping
       text — also the basis of the TeX-aware WYSIWYG `.preview()`
       (article/ieee/revtex/nature/acm)
+- [x] **Reproducible export**: in the same environment, repeated PNG/PDF/SVG
+      exports are byte-identical; volatile PDF/SVG metadata and IDs are removed
+      or derived from the canonical spec
 - [x] **Exact-position placement**: pin the legend
       (`.legend(bbox_to_anchor=...)`), a panel title (`.title_position(...)`),
       or a `text`/`annotate` layer (`.set_layer_at(...)`) to an exact spot —
@@ -103,7 +106,7 @@ steps (more layer types, quality work, and the Rust editor).
       configured size, and more) — see `DESIGN.md` §4c2 and
       `tests/test_bugfixes.py`/`tests/test_stabilization.py`
 
-**Dashboard (`dashboard/`, separate package) — human-facing, prototype-grade:**
+**Dashboard (`dashboard/`, source-tree tool) — local editor + docs:**
 
 - [x] Static docs + design-gallery site generated straight from the
       engine's own introspection (`python -m dashboard build`)
@@ -122,27 +125,38 @@ steps (more layer types, quality work, and the Rust editor).
 - [x] All 28 registered layer types exposed through a capabilities-driven
       advanced form; checked JSON fields automatically follow future registry
       additions. htmx updates the app fragment without a full-page reload.
-**Rust editor (`mudplot-editor/`, M13 phase 1):**
+      The unauthenticated server enforces loopback bind/Host, same-origin
+      mutations, browser security headers, and a 16-MiB request ceiling.
+
+**Rust editor (`mudplot-editor/`, M13 v0.6):**
 
 - [x] Co-versioned axum + Askama + htmx local server with serde
-      `FigureSpec`/action envelopes, atomic action application, cached PNG,
-      undo/redo/reset, agent JSON routes, and a Python CLI bridge. See
+      `FigureSpec`/action envelopes, atomic open/action history, cached PNG,
+      PDF/SVG/JSON export, undo/redo/reset, agent JSON routes, and
+      capabilities-driven controls for every layer/theme/projection. See
       [`mudplot-editor/README.md`](mudplot-editor/README.md).
 
 ## Installation
 
+Releases are currently GitHub-only; PyPI trusted publishing is intentionally
+not enabled yet.
+
 ```bash
 # Pure engine only (zero dependencies) — spec/actions/reducer/store/io/tex sizing
-pip install mudplot
+python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
 
 # Colour engine + rendering (numpy + matplotlib)
-pip install "mudplot[render]"
+python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.0/mudplot-0.6.0-py3-none-any.whl"
 ```
+
+The wheel contains the `mudplot` engine only. The Python dashboard and Rust
+editor are source-tree tools; run them from a checkout of the matching release
+tag so their co-versioned templates and contracts stay aligned.
 
 Development:
 
 ```bash
-uv sync --extra dev
+uv sync --locked --extra dev
 ```
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for checks, browser/TeX setup, and
@@ -153,8 +167,8 @@ schema regeneration.
 | layer | modules | dependencies |
 | --- | --- | --- |
 | pure engine | `spec` `actions` `reducer` `store` `io` `tex` (sizing) | **none** |
-| colour engine | `color/*` | numpy |
-| render effect | `render` `tex_preview` | numpy + matplotlib |
+| colour engine | `color/*` | NumPy ≥ 1.23 |
+| render effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
 
 ## Rendered demo
 
@@ -318,8 +332,10 @@ Each backend does what it can with the same spec:
 | `.png`/`.pdf` | dropped | dropped |
 
 Metadata is substituted into LaTeX source verbatim, so `validate()` rejects
-braces/backslashes in these two fields (ordinary BibTeX-key/URL punctuation
-like `_`/`:`/`-`/`&`/`#`/`%` is fine).
+braces/backslashes in these two fields. Links must be absolute `http`, `https`,
+or `mailto` URIs; active/file/data/custom schemes, relative links, controls,
+and whitespace are rejected before SVG/PGF export. Ordinary URL punctuation
+like `_`/`:`/`-`/`&`/`#`/`%` remains valid.
 
 A `group=`-ed layer can cite a *different* paper per series via
 `references=` (a `{group_value: mp.Reference(...)}` dict); a group value
@@ -509,8 +525,8 @@ p3 = p2.encoding(redundant_encoding=False)               # colour only
 
 ### Dashboard (human-facing docs + design gallery)
 
-`dashboard/` is a separate package from the engine (a one-way dependency:
-engine → dashboard). It reuses the engine's `capabilities()` /
+`dashboard/` is a separate source-tree package from the engine (a one-way
+`dashboard → engine` dependency). It reuses the engine's `capabilities()` /
 `reference_markdown()` and its renderer directly, producing a static site
 where the **docs and the actual figures always stay in sync with the
 engine**.
@@ -522,19 +538,27 @@ python -m dashboard --out dashboard/site_build
 # encoding, TeX preview, secondary axes, heatmaps, etc.)
 ```
 
-### Rust editor (local M13 phase 1)
+### Rust editor (local M13 v0.6)
 
 ```bash
 MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
-  cargo run --manifest-path mudplot-editor/Cargo.toml
+  cargo run --locked --manifest-path mudplot-editor/Cargo.toml
 ```
 
 It shares the Python action/reducer contract instead of duplicating its
-semantics. Its unauthenticated server rejects non-loopback binds; scope and
-routes are documented in [`mudplot-editor/README.md`](mudplot-editor/README.md).
+semantics. Its unauthenticated server rejects non-loopback binds/HTTP Hosts
+and cross-origin browser mutations; scope and routes are documented in [`mudplot-editor/README.md`](mudplot-editor/README.md).
 
 ## Development
 
 ```bash
-uv run pytest        # or .venv/bin/python -m pytest
+uv sync --locked --extra dev --extra browser
+uv run pytest -q -m "not browser"
+uv run python scripts/check_schema_sync.py
+uv run python scripts/check_wheel.py
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml
 ```
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the full Python, browser, TeX,
+and Rust preflight. Report vulnerabilities privately as described in
+[`SECURITY.md`](SECURITY.md).
