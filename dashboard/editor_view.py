@@ -82,11 +82,14 @@ input, select, textarea { width: 100%; box-sizing: border-box; padding: .4rem .5
 input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent);
        outline-offset: 1px; border-color: var(--accent); }
 textarea { font-family: ui-monospace, "SF Mono", monospace; min-height: 4.5rem; }
-button { margin-top: .6rem; padding: .42rem .85rem; border: none; border-radius: 6px;
-         background: var(--accent); color: var(--accent-ink); cursor: pointer;
-         font-size: .82rem; font-weight: 600; transition: filter .1s ease; }
-button:hover { filter: brightness(1.08); }
-button.secondary { background: #eef0f3; color: var(--text); border: 1px solid #d7dae0; }
+button, a.button-link { margin-top: .6rem; padding: .42rem .85rem; border: none;
+         border-radius: 6px; background: var(--accent); color: var(--accent-ink);
+         cursor: pointer; font-size: .82rem; font-weight: 600;
+         transition: filter .1s ease; }
+a.button-link { display: inline-block; text-decoration: none; }
+button:hover, a.button-link:hover { filter: brightness(1.08); }
+button.secondary, a.button-link.secondary { background: #eef0f3; color: var(--text);
+         border: 1px solid #d7dae0; }
 button.danger { background: #fff; color: #b91c1c; border: 1px solid #fca5a5; }
 .row { display: flex; gap: .5rem; }
 .row > * { flex: 1; }
@@ -858,8 +861,7 @@ def _open_panel() -> str:
 
 def _export_panel() -> str:
     links = "".join(
-        f'<a href="{href}" download="{name}">'
-        f'<button type="button" class="secondary">{label}</button></a>'
+        f'<a class="button-link secondary" href="{href}" download="{name}">{label}</a>'
         for href, name, label in (
             ("/fig.pdf", "figure.pdf", "PDF (vector)"),
             ("/fig.svg", "figure.svg", "SVG (vector)"),

@@ -119,6 +119,11 @@ def test_render_page_contains_core_sections():
         "Action history",
     ):
         assert text in html
+    assert (
+        '<a class="button-link secondary" href="/fig.pdf" '
+        'download="figure.pdf">PDF (vector)</a>' in html
+    )
+    assert "</button></a>" not in html
 
 
 def test_any_layer_form_is_driven_by_every_registered_layer_type():

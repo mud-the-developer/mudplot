@@ -99,7 +99,7 @@ benchmark하세요.
       pyarrow/SQL) 지원; AI 에이전트 친화 인터페이스(`capabilities()`/
       `json_schema()`/`apply()`/`action_log`); 렌더링 전 자동 실행되는
       부수효과 없는 `validate()`/`assert_valid()`
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render|migrate`);
       JSON 스키마/capabilities/docs export 파일 + CI 동기화 검증
 - [x] 안정성 하드닝 3회, 실제 버그 약 20건 발견/수정 후 회귀 테스트로
       잠금 (저널 크기 미적용, Store 상태 외부 변형 유출, 범주형 좌표가
@@ -432,7 +432,7 @@ assert mp.apply(log).to_dict() == p.spec.to_dict()   # 재현 가능
 python -m mudplot capabilities                    # 엔진 능력 JSON 출력
 python -m mudplot schema --out s.json              # FigureSpec JSON Schema 저장
 python -m mudplot validate fig.mplot.json          # 저장된 spec 검증
-python -m mudplot render fig.mplot.json out.pdf    # 렌더
+python -m mudplot render fig.mplot.json out.pdf    # suffix에 따라 PNG/PDF/SVG/PGF 렌더
 python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 

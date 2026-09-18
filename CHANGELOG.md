@@ -24,6 +24,8 @@ All notable changes to this project are documented here.
 - Exposed preview drag handles as named native buttons, preserving mouse drag
   and arrow-key movement while giving assistive technology a control role and
   useful instruction.
+- Replaced nested link/button export controls with single native download links
+  and updated CLI help to advertise supported PGF output.
 
 ## [0.6.1] - 2026-09-18
 

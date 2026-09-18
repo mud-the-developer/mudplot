@@ -108,7 +108,7 @@ steps (more layer types, quality work, and the Rust editor).
       (`capabilities()`/`json_schema()`/`apply()`/`action_log`);
       side-effect-free `validate()`/`assert_valid()` run automatically before
       rendering
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render`);
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render|migrate`);
       JSON schema/capabilities/docs export files + CI sync checks
 - [x] Three stability-hardening passes, ~20 real bugs found/fixed and
       locked in with regression tests (journal size not applied, `Store`
@@ -482,7 +482,7 @@ assert mp.apply(log).to_dict() == p.spec.to_dict()   # reproducible
 python -m mudplot capabilities                    # print engine capabilities as JSON
 python -m mudplot schema --out s.json              # save the FigureSpec JSON Schema
 python -m mudplot validate fig.mplot.json          # validate a saved spec
-python -m mudplot render fig.mplot.json out.pdf    # render
+python -m mudplot render fig.mplot.json out.pdf    # render PNG/PDF/SVG/PGF by suffix
 python -m mudplot apply fig.mplot.json action.json -o next.mplot.json
 ```
 

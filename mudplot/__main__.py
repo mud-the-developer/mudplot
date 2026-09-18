@@ -5,7 +5,7 @@ Subcommands:
     mudplot schema [--out FILE]        print/write the FigureSpec JSON Schema
     mudplot docs [--out FILE]          print/write the Markdown reference docs
     mudplot validate SPEC.json         validate a saved spec, print issues
-    mudplot render SPEC.json OUT.png   render a saved spec to an image/PDF
+    mudplot render SPEC.json OUT.png   render a saved spec to PNG/PDF/SVG/PGF
     mudplot apply SPEC.json ACTION.json -o OUT
                                        apply one validated JSON action
     mudplot migrate SPEC.json -o OUT   upgrade an old spec to the current version
@@ -144,9 +144,9 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("spec", help="path to a .mplot.json file")
     sp.set_defaults(func=_cmd_validate)
 
-    sp = sub.add_parser("render", help="render a saved spec to an image/PDF")
+    sp = sub.add_parser("render", help="render a saved spec to PNG/PDF/SVG/PGF")
     sp.add_argument("spec", help="path to a .mplot.json file")
-    sp.add_argument("out", help="output path (.png/.pdf/.svg)")
+    sp.add_argument("out", help="output path (.png/.pdf/.svg/.pgf)")
     sp.add_argument(
         "--preview",
         action="store_true",
