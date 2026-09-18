@@ -122,13 +122,16 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
         raise
 
 
-def save_spec(spec: FigureSpec, path: str | Path) -> None:
-    text = to_json(spec)
+def _atomic_write_text(path: str | Path, text: str) -> None:
     with (
         _atomic_destination(path) as temporary,
         temporary.open("x", encoding="utf-8", newline="\n") as handle,
     ):
         handle.write(text)
+
+
+def save_spec(spec: FigureSpec, path: str | Path) -> None:
+    _atomic_write_text(path, to_json(spec))
 
 
 def load_spec(path: str | Path) -> FigureSpec:

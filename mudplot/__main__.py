@@ -35,9 +35,9 @@ def _cmd_schema(args: argparse.Namespace) -> int:
 
     text = json.dumps(json_schema(), indent=2, ensure_ascii=False)
     if args.out:
-        from pathlib import Path
+        from .io import _atomic_write_text
 
-        Path(args.out).write_text(text, encoding="utf-8")
+        _atomic_write_text(args.out, text)
         print(f"wrote {args.out}", file=sys.stderr)
     else:
         print(text)
@@ -49,9 +49,9 @@ def _cmd_docs(args: argparse.Namespace) -> int:
 
     text = reference_markdown()
     if args.out:
-        from pathlib import Path
+        from .io import _atomic_write_text
 
-        Path(args.out).write_text(text, encoding="utf-8")
+        _atomic_write_text(args.out, text)
         print(f"wrote {args.out}", file=sys.stderr)
     else:
         print(text)

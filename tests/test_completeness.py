@@ -48,7 +48,7 @@ def test_suptitle_and_panel_labels():
         .auto_label(True)
     )
     fig = render(p.spec)
-    assert fig._suptitle.get_text() == "Top title"
+    assert fig.get_suptitle() == "Top title"
     texts = [t.get_text() for ax in fig.axes for t in ax.texts]
     assert "a)" in texts
     assert "b)" in texts
@@ -149,7 +149,7 @@ def test_cli_capabilities():
     assert "layers" in data
 
 
-def test_cli_schema(tmp_path):
+def test_cli_schema(tmp_path, monkeypatch, capsys):
     out = tmp_path / "schema.json"
     result = subprocess.run(
         [sys.executable, "-m", "mudplot", "schema", "--out", str(out)],
@@ -159,6 +159,21 @@ def test_cli_schema(tmp_path):
     assert result.returncode == 0
     assert out.exists()
     assert json.loads(out.read_text())["title"] == "FigureSpec"
+
+    from mudplot import io
+    from mudplot.__main__ import main
+
+    def fail_replace(source, target):
+        raise OSError("simulated replace failure")
+
+    monkeypatch.setattr(io.os, "replace", fail_replace)
+    for command, suffix in (("schema", "json"), ("docs", "md")):
+        protected = tmp_path / f"protected.{suffix}"
+        protected.write_text("keep", encoding="utf-8")
+        assert main([command, "--out", str(protected)]) == 1
+        assert "simulated replace failure" in capsys.readouterr().err
+        assert protected.read_text(encoding="utf-8") == "keep"
+        assert not list(tmp_path.glob(f".{protected.name}.*.tmp"))
 
 
 def test_cli_validate_roundtrip(tmp_path):

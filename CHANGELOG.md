@@ -29,6 +29,8 @@ All notable changes to this project are documented here.
 - Report numeric data, coordinates, and style values outside the renderer's
   floating-point range as clean user errors, without a CLI traceback or output
   replacement.
+- Write `schema --out` and `docs --out` atomically so a failed replacement
+  preserves the previous generated file and removes its temporary file.
 
 ## [0.6.1] - 2026-09-18
 
