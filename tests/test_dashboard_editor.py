@@ -55,6 +55,7 @@ def test_label_controls_preserve_position_and_allow_clearing():
     # labels must stay bound to their control (screen readers, and the
     # browser tests' get_by_label locators, both depend on it)
     assert "<label>X-axis label<input" in page
+    assert '<label>Spec JSON<textarea name="json"' in page
     store.dispatch(_build_action("set_title", {}, store.state))
     assert store.state.panels[0].title == ""
 

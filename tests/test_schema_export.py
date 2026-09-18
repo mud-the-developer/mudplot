@@ -35,7 +35,7 @@ def test_demo_specs_are_current():
     paths = sorted((ROOT / "docs" / "images").glob("*.mplot.json"))
     assert paths
     for path in paths:
-        contents = path.read_text()
+        contents = path.read_text(encoding="utf-8")
         assert mp.to_json(mp.from_json(contents)) == contents, path.name
 
 

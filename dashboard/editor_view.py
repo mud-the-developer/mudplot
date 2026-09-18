@@ -837,14 +837,14 @@ def _advanced_panel() -> str:
 
 def _open_panel() -> str:
     """Open a saved .mplot.json (the same file the Export card writes)."""
-    body = (
-        _field(
-            "Spec file",
-            '<input type="file" accept=".json,.mplot.json,application/json" '
-            'id="spec-file">',
-        )
-        + '<textarea name="json" id="spec-json" placeholder="...or paste the '
-        'spec JSON here"></textarea>'
+    body = _field(
+        "Spec file",
+        '<input type="file" accept=".json,.mplot.json,application/json" '
+        'id="spec-file">',
+    ) + _field(
+        "Spec JSON",
+        '<textarea name="json" id="spec-json" placeholder="...or paste the '
+        'spec JSON here"></textarea>',
     )
     form = _hx_form("/open", {}, body, "Open figure")
     return (
