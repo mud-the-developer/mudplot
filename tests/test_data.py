@@ -93,6 +93,41 @@ def test_arrow_protocol_takes_precedence_over_dataframe_duck_typing():
     }
 
 
+def test_duplicate_column_names_are_rejected_before_data_is_lost():
+    class DuplicateDataFrame:
+        columns = ("x", "x")
+
+        def __getitem__(self, key):
+            raise AssertionError("duplicate DataFrame columns must fail first")
+
+    class DuplicateArrowTable:
+        columns = (object(), object())
+        column_names = ("x", "x")
+
+        def __getitem__(self, key):
+            raise AssertionError("Arrow tables must use to_pydict")
+
+        def to_pydict(self):
+            return {"x": [2]}
+
+    conn = sqlite3.connect(":memory:")
+    conn.execute("create table a(x int)")
+    conn.execute("create table b(x int)")
+    conn.execute("insert into a values (1)")
+    conn.execute("insert into b values (2)")
+    duplicate_cursor = conn.execute("select a.x, b.x from a join b")
+
+    for data in (
+        {1: [1], "1": [2]},
+        [{1: 1, "1": 2}],
+        DuplicateDataFrame(),
+        DuplicateArrowTable(),
+        duplicate_cursor,
+    ):
+        with pytest.raises(ValueError, match="column names must be unique"):
+            to_columns(data)
+
+
 def test_common_missing_and_temporal_values_are_json_safe():
     data = {
         "x": [date(2026, 1, 1), datetime(2026, 1, 2, 3, tzinfo=timezone.utc)],

@@ -75,6 +75,29 @@ def _to_list(v) -> list:
     return [_plain_value(value) for value in out]
 
 
+def _column_names(names, source: str) -> list[str]:
+    normalized: list[str] = []
+    seen: set[str] = set()
+    for raw_name in names:
+        name = str(raw_name)
+        if name in seen:
+            raise ValueError(
+                f"{source} column names must be unique after string conversion; "
+                f"duplicate {name!r}"
+            )
+        seen.add(name)
+        normalized.append(name)
+    return normalized
+
+
+def _mapping_to_columns(data: Mapping, source: str) -> dict[str, list]:
+    items = list(data.items())
+    names = _column_names((key for key, _value in items), source)
+    return {
+        name: _to_list(value) for name, (_key, value) in zip(names, items, strict=True)
+    }
+
+
 def _looks_like_dataframe(data: Any) -> bool:
     # pandas / polars: have a ``columns`` attribute and support df[col]
     return (
@@ -102,10 +125,16 @@ def _is_dbapi_cursor(data: Any) -> bool:
 
 
 def _records_to_columns(records: list[Mapping]) -> dict[str, list]:
-    normalized = [
-        {str(key): _plain_value(value) for key, value in record.items()}
-        for record in records
-    ]
+    normalized = []
+    for record in records:
+        items = list(record.items())
+        names = _column_names((key for key, _value in items), "record")
+        normalized.append(
+            {
+                name: _plain_value(value)
+                for name, (_key, value) in zip(names, items, strict=True)
+            }
+        )
     # union of keys, preserving first-seen order
     keys: list[str] = []
     for record in normalized:
@@ -125,7 +154,7 @@ def _rows_to_columns(rows) -> dict[str, list]:
 
 
 def _cursor_to_columns(cur) -> dict[str, list]:
-    names = [d[0] for d in cur.description]
+    names = _column_names((d[0] for d in cur.description), "DB result")
     rows = cur.fetchall() if hasattr(cur, "fetchall") else list(cur)
     cols: dict[str, list] = {name: [] for name in names}
     for row in rows:
@@ -145,7 +174,8 @@ def to_columns(
     if query is not None:
         cur = data.cursor()
         # The local caller supplies the statement; dynamic values stay in params.
-        cur.execute(query, params)  # nosemgrep: python.lang.security.audit.sqli
+        # pi-lens-ignore: python-sql-injection
+        cur.execute(query, params)
         return _cursor_to_columns(cur)
 
     if data is None:
@@ -155,16 +185,28 @@ def to_columns(
         return _cursor_to_columns(data)
 
     if isinstance(data, Mapping):
-        return {str(k): _to_list(v) for k, v in data.items()}
+        return _mapping_to_columns(data, "mapping")
 
     if _is_structured_ndarray(data):
-        return {str(name): _to_list(data[name]) for name in data.dtype.names}
+        raw_names = list(data.dtype.names)
+        names = _column_names(raw_names, "structured array")
+        return {
+            name: _to_list(data[raw_name])
+            for name, raw_name in zip(names, raw_names, strict=True)
+        }
 
     if hasattr(data, "to_pydict"):  # pyarrow Table (also has .columns)
-        return {str(k): _to_list(v) for k, v in data.to_pydict().items()}
+        if hasattr(data, "column_names"):
+            _column_names(data.column_names, "PyArrow table")
+        return _mapping_to_columns(data.to_pydict(), "PyArrow table")
 
     if _looks_like_dataframe(data):
-        return {str(c): _to_list(data[c]) for c in data.columns}
+        raw_names = list(data.columns)
+        names = _column_names(raw_names, "DataFrame")
+        return {
+            name: _to_list(data[raw_name])
+            for name, raw_name in zip(names, raw_names, strict=True)
+        }
 
     if isinstance(data, (list, tuple)):
         if len(data) == 0:
@@ -191,7 +233,7 @@ def to_columns(
     if hasattr(data, "to_dict"):  # generic, keep last (broad)
         d = data.to_dict()
         if isinstance(d, Mapping):
-            return {str(k): _to_list(v) for k, v in d.items()}
+            return _mapping_to_columns(d, f"{type(data).__name__}.to_dict()")
 
     raise TypeError(
         f"unsupported data type {type(data).__name__!r}; pass a dict of columns, "

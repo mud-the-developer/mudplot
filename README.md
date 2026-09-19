@@ -62,7 +62,7 @@ architecture and the full milestone log, [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 613 tests passing (including 11 real-browser tests):**
+**Engine (`mudplot/`) — usable now, 614 tests passing (including 11 real-browser tests):**
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -519,7 +519,8 @@ mp.plot(conn, query="SELECT x, y FROM t WHERE run = ?", params=(run_id,))
 Input adapters normalize common missing sentinels (`NaN`, `pd.NA`, `NaT`) to
 JSON `null`, date/time values to ISO 8601 strings, and NumPy scalars to their
 plain Python equivalents. Infinity and unsupported objects still fail strict
-JSON validation instead of being silently rewritten.
+JSON validation instead of being silently rewritten. Column names must be
+unique after string conversion; collisions are rejected rather than overwritten.
 
 ### Using palettes directly
 

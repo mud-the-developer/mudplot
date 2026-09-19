@@ -41,6 +41,8 @@ All notable changes to this project are documented here.
   input adapter so specs remain strict-JSON serializable across CLI/Rust,
   recognize PyArrow tables before generic DataFrame duck typing, and omit
   grouped render series with no finite observations.
+- Reject duplicate tabular column names, including collisions after string
+  conversion, before adapters can overwrite or concatenate unrelated data.
 
 ## [0.6.1] - 2026-09-18
 
