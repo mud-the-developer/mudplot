@@ -58,7 +58,7 @@ benchmark하세요.
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 612개(실제 브라우저 테스트 11개 포함) 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 613개(실제 브라우저 테스트 11개 포함) 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/

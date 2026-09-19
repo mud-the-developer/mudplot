@@ -77,6 +77,22 @@ def test_pandas_dataframe():
     assert to_columns(df) == {"x": [1, 2], "y": [3, 4]}
 
 
+def test_arrow_protocol_takes_precedence_over_dataframe_duck_typing():
+    class ArrowLike:
+        columns = (object(),)
+
+        def __getitem__(self, key):
+            raise AssertionError("Arrow tables must use to_pydict")
+
+        def to_pydict(self):
+            return {"x": [date(2026, 1, 1), None], "y": [1.0, float("nan")]}
+
+    assert to_columns(ArrowLike()) == {
+        "x": ["2026-01-01", None],
+        "y": [1.0, None],
+    }
+
+
 def test_common_missing_and_temporal_values_are_json_safe():
     data = {
         "x": [date(2026, 1, 1), datetime(2026, 1, 2, 3, tzinfo=timezone.utc)],

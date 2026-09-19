@@ -160,11 +160,11 @@ def to_columns(
     if _is_structured_ndarray(data):
         return {str(name): _to_list(data[name]) for name in data.dtype.names}
 
+    if hasattr(data, "to_pydict"):  # pyarrow Table (also has .columns)
+        return {str(k): _to_list(v) for k, v in data.to_pydict().items()}
+
     if _looks_like_dataframe(data):
         return {str(c): _to_list(data[c]) for c in data.columns}
-
-    if hasattr(data, "to_pydict"):  # pyarrow Table
-        return {str(k): _to_list(v) for k, v in data.to_pydict().items()}
 
     if isinstance(data, (list, tuple)):
         if len(data) == 0:

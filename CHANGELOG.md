@@ -38,8 +38,9 @@ All notable changes to this project are documented here.
 - Keep grouped-layer and regression-cardinality validation linear for ordinary
   hashable values while retaining equality fallback for unusual unhashable keys.
 - Normalize common DataFrame/NumPy missing, temporal, and scalar values at the
-  input adapter so specs remain strict-JSON serializable across CLI/Rust, and
-  omit grouped render series with no finite observations.
+  input adapter so specs remain strict-JSON serializable across CLI/Rust,
+  recognize PyArrow tables before generic DataFrame duck typing, and omit
+  grouped render series with no finite observations.
 
 ## [0.6.1] - 2026-09-18
 
