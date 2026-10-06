@@ -1,4 +1,4 @@
-# mudplot Rust editor (M13, v0.6)
+# mudplot Rust editor (v1.0)
 
 A local axum + Askama + htmx editor for the same `FigureSpec` and JSON actions
 used by Python mudplot. It is intentionally in this repository and versioned

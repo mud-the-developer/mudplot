@@ -8,6 +8,23 @@
 관례에 따라, 이 파일은 영어판의 요약본입니다 — 자세한 내용은 항상 영어
 `ROADMAP.md`를 확인하세요.)
 
+## 0. Version 1 범위
+
+1.x에서는 Matplotlib을 mudplot의 canonical renderer로 유지한다. 현재
+`FigureSpec → Matplotlib` 경계는 보존하되 실제 두 번째 renderer가 생기기
+전에는 backend 추상화를 추가하지 않는다. Plotly나 Cairo는 reducer·JSON
+계약을 바꾸지 않는 선택적 post-1.0 adapter로 추가할 수 있다.
+
+- **(완료)** 등록된 28개 전체 layer의 영문·한글 실행 문서와 CI registry
+  drift 검증
+- **(완료)** 공개 Python/CLI/schema 표면을 감사하고
+  [1.x 호환성 및 deprecation 정책](docs/COMPATIBILITY.ko.md) 문서화
+- **Release gate:** 발행 전 locked Python/Rust/browser/full-TeX, clean-wheel,
+  packaging, reproducibility 검증을 통과해야 함
+- **Release metadata:** Python/editor `1.0.0`, serialized spec `0.1`, signed
+  annotated tag 및 검증된 artifact·provenance. PyPI는 trusted publisher 설정이
+  필요한 별도 결정으로 유지
+
 ## 1. 플롯 종류 더 추가 (matplotlib/seaborn 근접, 계속)
 
 현재 28종 지원: line, regplot, scatter, stripplot, bar, errorbar, band,
@@ -43,6 +60,9 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 2. 대시보드/에디터 완성도
 
+- **(완료)** 등록된 모든 layer에 실제 PNG·복사 가능한 source·편집 가능한
+  JSON을 갖춘 영문·한글 실행 갤러리 항목을 추가하고,
+  `capabilities.LAYER_TYPES`와 정확히 일치하는지 CI에서 검증
 - **(완료)** `capabilities.LAYER_TYPES` 기반 범용 advanced 폼으로 등록된
   레이어 28종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
   안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
@@ -63,7 +83,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
 
 ## 3. Rust 인터랙티브 에디터 (M13)
 
-**release-candidate 필수 기능 완료** — Python과 함께 versioning하는
+**Version 1 로컬 editor 필수 기능 완료** — Python과 함께 versioning하는
 `mudplot-editor/` crate:
 
 - serde가 versioned `FigureSpec`·action envelope를 보존하고 생성
@@ -113,8 +133,9 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   GitHub에도 `pypi` environment를 만든 뒤 `release.yml`에 `publish` job을
   다시 추가할 것 -- 한 번 시도했으나 publisher 미등록으로
   `invalid-publisher` 오류로 실패함.
-- 버전 정책: 현재 `0.6.1`. pre-1.0이라도 `FigureSpec`
-  호환성을 깨는 변경은 minor 버전을 올림(Rust/에이전트 소비자가 스키마
-  안정성에 의존).
+- 버전 정책: package/editor `1.0.0`, 독립된 spec `0.1`.
+  additive feature는 minor release, 공개 Python/CLI/JSON breaking change는
+  사전 deprecation과 major release가 필요함.
+  [호환성 정책](docs/COMPATIBILITY.ko.md) 참고.
 - `pyproject.toml`의 `[project.urls]`는 이제 실제 저장소를 가리킴
   (<https://github.com/mud-the-developer/mudplot>)

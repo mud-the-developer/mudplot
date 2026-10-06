@@ -7,6 +7,23 @@ within each section. For what's already shipped, see
 [`CHANGELOG.md`](CHANGELOG.md); for architecture and historical milestones
 (M0–M12), see [`DESIGN.md`](DESIGN.md).
 
+## 0. Version 1 scope
+
+Matplotlib remains mudplot's canonical renderer through 1.x. Keep the current
+`FigureSpec → Matplotlib` boundary, but do not add a backend abstraction until
+a real second renderer exists. Plotly or Cairo can be optional post-1.0
+adapters without changing the reducer or JSON contract.
+
+- **(done)** Executable bilingual documentation for all 28 registered layers,
+  guarded against registry drift in CI.
+- **(done)** Audited the public Python/CLI/schema surface and documented the
+  [1.x compatibility and deprecation policy](docs/COMPATIBILITY.md).
+- **Release gate:** locked Python/Rust/browser/full-TeX, clean-wheel, packaging,
+  and reproducibility checks must pass before publishing.
+- **Release metadata:** Python/editor `1.0.0`, serialized spec `0.1`, signed
+  annotated tags, verified artifacts and provenance. PyPI remains a separate
+  decision requiring trusted-publisher configuration.
+
 ## 1. More plot types (matplotlib/seaborn parity, continued)
 
 Currently supported (28 layer types): `line`, `regplot`, `scatter`,
@@ -72,6 +89,9 @@ The Python editor (`python -m dashboard serve`) now covers the 28-layer
 engine, multi-panel controls, direct manipulation, and shared reference docs.
 Completed work:
 
+- **(done)** Added one executable, bilingual gallery entry for every registered
+  layer, with real PNG output, copyable source, editable JSON, and a CI guard
+  requiring exact coverage of `capabilities.LAYER_TYPES`.
 - **(done)** Exposed every registered layer type through a generic advanced
   form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
   `LayerSpec` JSON fields, shows required/optional fields for all 28 types,
@@ -96,7 +116,7 @@ Completed work:
 
 ## 3. Rust interactive editor (M13)
 
-**Release-candidate essentials landed in-repo** as the co-versioned
+**Version 1 local-editor essentials landed in-repo** as the co-versioned
 `mudplot-editor/` crate:
 
 - serde preserves the versioned `FigureSpec` and action envelopes while the
@@ -157,10 +177,10 @@ rendering.
   `pypa/gh-action-pypi-publish` (trusted publishing, no stored token
   needed) -- attempted once already and failed with `invalid-publisher`
   since no publisher was registered yet.
-- **Versioning**: `0.6.1` as of this release; semver policy: this is a
-  young, fast-moving pre-1.0 project — breaking changes to `FigureSpec`
-  bump the minor version even pre-1.0, since Rust/agent consumers depend on
-  schema stability.
+- **Versioning**: package/editor `1.0.0`; spec `0.1` remains independent.
+  Additive features can land in minor releases; incompatible public Python/CLI/
+  JSON changes need advance deprecation and a major release. See the
+  [compatibility policy](docs/COMPATIBILITY.md).
 - `pyproject.toml`'s `[project.urls]` now point at the real repository
   (`https://github.com/mud-the-developer/mudplot`); keep the `Changelog`/
   `Roadmap` links in sync if these files ever move.

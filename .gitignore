@@ -25,6 +25,7 @@ dist/
 *.pdf
 !src/SciencePlots/examples/figures/*.jpg
 !docs/images/*.png
+!docs/images/plots/*.png
 !docs/images/*.pdf
 dashboard/site_build/
 

@@ -54,11 +54,13 @@ benchmark하세요.
 
 ## 상태
 
-**v0.6.1**, pre-1.0으로 빠르게 진행 중. 아키텍처/전체 마일스톤은
+**v1.0.0**, 안정된 1.x 공개 Python/CLI/JSON 계약을 제공하며 Matplotlib을
+canonical renderer로 유지합니다. [호환성 정책](docs/COMPATIBILITY.ko.md),
+아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 614개(실제 브라우저 테스트 11개 포함) 통과:**
+**엔진 (`mudplot/`) — 지금 바로 사용 가능, 전체 테스트 617개(실제 브라우저 테스트 11개 포함) 통과:**
 
 - [x] 색 엔진: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy 전용); CIE76/CIEDE2000
       색차(Sharma 2005 검증값); Machado 2009 색맹 시뮬레이션; qualitative/
@@ -109,7 +111,8 @@ benchmark하세요.
 
 **대시보드 (`dashboard/`, source-tree 도구) — 로컬 editor + 문서:**
 
-- [x] 엔진 자기소개 기반 문서 + 디자인 갤러리 정적 사이트
+- [x] 실제 코드에서 생성하는 28개 전체 layer 영문·한글 실행 갤러리,
+      디자인 갤러리 및 엔진 reference 정적 사이트
       (`python -m dashboard build`)
 - [x] 로컬 인터랙티브 에디터(`python -m dashboard serve`) — fluent API와
       동일한 Store/action/reducer 사용. 한 서버 안에 **Editor**/**Docs**
@@ -126,7 +129,7 @@ benchmark하세요.
       fragment만 갱신. 인증 없는 서버는 loopback bind/Host, same-origin
       mutation, browser security header, 16 MiB request 상한을 강제
 
-**Rust editor (`mudplot-editor/`, M13 v0.6):**
+**Rust editor (`mudplot-editor/`, v1.0):**
 
 - [x] 함께 versioning하는 axum + Askama + htmx 로컬 서버. serde
       `FigureSpec`/action envelope, atomic open/action history, PNG cache,
@@ -141,10 +144,10 @@ benchmark하세요.
 
 ```bash
 # Core package만 (필수 의존성 0) — spec/actions/store/JSON/TeX 크기 계산
-python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
+python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v1.0.0/mudplot-1.0.0-py3-none-any.whl"
 
 # 색상 엔진 + 렌더링까지 (numpy + matplotlib)
-python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v0.6.1/mudplot-0.6.1-py3-none-any.whl"
+python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v1.0.0/mudplot-1.0.0-py3-none-any.whl"
 ```
 
 wheel에는 `mudplot` engine만 포함됩니다. Python dashboard와 Rust editor는
@@ -175,8 +178,10 @@ uv sync --locked --extra dev
 
 `python -m scripts.render_docs_demo`로 생성한 실제 출력입니다.
 고정 난수 시드의 **합성 데이터**이며 실험 결과가 아닙니다.
-**[데모 갤러리](docs/DEMO.md)**에서 수정 전후 이미지, heatmap·3D,
-PDF·편집 가능한 JSON과 실행·검증 방법을 확인할 수 있습니다.
+**[28개 전체 layer 플롯 갤러리](docs/PLOT_GALLERY.md)**에서 각 plot의
+실행 코드·실제 출력·편집 가능한 spec을 확인할 수 있습니다.
+**[디자인 데모 갤러리](docs/DEMO.md)**에는 수정 전후 이미지, heatmap·3D,
+PDF 및 실행·검증 방법이 있습니다.
 데모에는 `mudplot[render]` 외에 pandas가 필요합니다.
 
 ## 사용 예
@@ -502,7 +507,7 @@ python -m dashboard --out dashboard/site_build
 # dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리
 ```
 
-### Rust editor (로컬 M13 v0.6)
+### Rust editor (로컬 v1.0)
 
 ```bash
 MUDPLOT_PYTHON="$PWD/.venv/bin/python" \

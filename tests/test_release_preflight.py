@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import mudplot
 from scripts.check_release_version import main
 
@@ -5,6 +7,18 @@ from scripts.check_release_version import main
 def test_release_versions_currently_agree(capsys):
     assert main([f"v{mudplot.__version__}"]) == 0
     assert "release versions agree" in capsys.readouterr().out
+
+
+def test_release_workflow_cannot_replace_published_assets():
+    workflow = (
+        Path(__file__).resolve().parents[1] / ".github/workflows/release.yml"
+    ).read_text(encoding="utf-8")
+    publish = workflow.split("- name: Create GitHub release", 1)[1]
+    assert "--clobber" not in publish
+    assert "gh release upload" not in publish
+    assert "immutable" in publish and "exit 1" in publish
+    assert "gh release create" in publish and "--verify-tag" in publish
+    assert "--notes-from-tag" in publish
 
 
 def test_release_version_rejects_wrong_tag(capsys):

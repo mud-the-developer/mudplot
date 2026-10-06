@@ -4,6 +4,17 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-06
+
+### Added
+
+- Added a bilingual, executable gallery for all 28 registered plot layers.
+  Every displayed source file builds the shown PNG and editable spec, and CI
+  requires gallery coverage to match the live layer registry exactly.
+- Declared the stable 1.x public Python/CLI/JSON compatibility and deprecation
+  policy in English and Korean, with a public-surface/default-renderer guard.
+  Matplotlib remains canonical; the serialized spec version stays `0.1`.
+
 ### Changed
 
 - Narrowed the documentation's use of “pure” to the reducer's actual
@@ -17,6 +28,12 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- Close successful CLI render figures so repeated in-process CLI calls do not
+  accumulate Matplotlib figure managers.
+- Reject release reruns that would replace already-published tags/assets.
+- Keep gallery source/spec checks strict about schema and values while allowing
+  tiny floating-point calculation differences across NumPy/CPU versions; exact
+  JSON round-trips and same-environment output reproducibility remain checked.
 - Regenerated the executable publication demos so grouped KDE styling, current
   `LayerSpec` fields, and timestamp-free PDF metadata match the live engine.
   Added regressions for canonical demo specs and deterministic PDF metadata,

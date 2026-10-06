@@ -1,4 +1,4 @@
-# mudplot Rust editor (M13, v0.6)
+# mudplot Rust editor (v1.0)
 
 Python mudplot과 같은 `FigureSpec`·JSON action을 쓰는 로컬 axum + Askama +
 htmx editor다. 생성 계약의 drift를 막기 위해 이 저장소 안에서 Python

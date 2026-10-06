@@ -25,6 +25,9 @@ SDIST_FILES = (
     "uv.lock",
     "schemas/capabilities.json",
     "schemas/figure_spec.schema.json",
+    "docs/PLOT_GALLERY.md",
+    "docs/COMPATIBILITY.md",
+    "docs/COMPATIBILITY.ko.md",
     "scripts/audit_dependencies.py",
     "scripts/audit_dependencies.py.lock",
     "scripts/check_minimum_versions.py",
@@ -36,6 +39,7 @@ SDIST_FILES = (
     "dashboard/editor_server.py",
     "dashboard/editor_view.py",
     "dashboard/markdown_lite.py",
+    "dashboard/plot_gallery.py",
     "dashboard/samples.py",
     "dashboard/site.py",
     "dashboard/static/htmx.min.js",
@@ -122,6 +126,37 @@ def main() -> int:
             for required in SDIST_FILES
             if not any(name.endswith(f"/{required}") for name in sdist_names)
         )
+        from dashboard.plot_gallery import GALLERY_EXAMPLES
+
+        expected_examples = {f"{example.name}.py" for example in GALLERY_EXAMPLES}
+        packaged_examples = {
+            Path(name).name
+            for name in sdist_names
+            if "/examples/plots/" in name and name.endswith(".py")
+        }
+        if packaged_examples != expected_examples:
+            missing.append(
+                "sdist plot examples differ: "
+                f"expected {sorted(expected_examples)}, got {sorted(packaged_examples)}"
+            )
+
+        expected_gallery_assets = {
+            filename
+            for example in GALLERY_EXAMPLES
+            for filename in (
+                f"{example.name}.png",
+                f"{example.name}.mplot.json",
+            )
+        }
+        packaged_gallery_assets = {
+            Path(name).name for name in sdist_names if "/docs/images/plots/" in name
+        }
+        if packaged_gallery_assets != expected_gallery_assets:
+            missing.append(
+                "sdist plot gallery assets differ: "
+                f"expected {sorted(expected_gallery_assets)}, "
+                f"got {sorted(packaged_gallery_assets)}"
+            )
         for forbidden in (
             ".hypothesis",
             "mudplot-editor/target",

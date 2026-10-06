@@ -48,9 +48,12 @@ htmx 1.9.12(0BSD, `dashboard/static/htmx.min.js`로 vendoring, 새 Python
 README.md 참고.
 
 - `site.py` — `mudplot.reference_markdown()` / `mudplot.capabilities()` 로
-  엔진 레퍼런스를 만들고, 엔진의 렌더러로 디자인 원칙(팔레트 CVD/그레이스케일
-  안전성, 이중 인코딩, TeX WYSIWYG, 보조축/heatmap 등)을 보여주는 갤러리
-  이미지를 생성해 하나의 HTML로 묶는다.
+  엔진 레퍼런스를 만들고, 28개 전체 layer 실행 예제와 디자인 원칙(팔레트
+  CVD/그레이스케일 안전성, 이중 인코딩, TeX WYSIWYG, 보조축/heatmap 등)을
+  실제 renderer로 생성해 하나의 HTML로 묶는다.
+- `plot_gallery.py` + `../examples/plots/` — 등록된 layer마다 실행 가능한
+  source 파일 하나를 둔다. CI가 registry와 정확한 coverage를 비교하고,
+  모든 spec의 검증·JSON round-trip·실제 렌더링을 수행한다.
 - `markdown_lite.py` — mudplot이 생성하는 마크다운 부분집합만 처리하는
   아주 작은 변환기 (의존성 0, stdlib만).
 - **문서와 그림이 항상 엔진과 일치**한다: 둘 다 라이브 엔진 호출 결과이기
@@ -79,6 +82,6 @@ control과 agent JSON 모두 `mudplot apply`를 호출해 Python reducer 의미�
 
 1. **(완료)** 정적 문서+갤러리 사이트 (`python -m dashboard build`)
 2. **(완료)** Python 로컬 인터랙티브 편집기 (`python -m dashboard serve`)
-3. **(release-candidate 필수 기능 완료)** 함께 versioning하는
+3. **(v1 필수 기능 완료)** 함께 versioning하는
    `mudplot-editor/` Rust crate — Python CLI를 통해 동일 JSON 계약을
    공유하고 visual control/open/vector export 지원

@@ -99,8 +99,11 @@ uv run python -m dashboard --out /tmp/mudplot-dashboard
 uv run python -m dashboard serve
 ```
 
-데모 데이터는 seed를 고정한 합성 데이터여야 합니다. 화면 출력이 의도적으로
-바뀐 경우가 아니면 재생성된 바이너리 자산을 커밋하지 않습니다.
+이 명령은 `docs/PLOT_GALLERY.md`와 등록된 모든 layer의 PNG·편집 가능한
+spec도 재생성합니다. Gallery coverage는 `capabilities.LAYER_TYPES`와 정확히
+일치해야 합니다. 데모 데이터는 seed를 고정한 합성 데이터여야 합니다.
+화면 출력이 의도적으로 바뀐 경우가 아니면 재생성된 바이너리 자산을
+커밋하지 않습니다.
 
 ## Release
 

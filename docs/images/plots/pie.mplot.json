@@ -1,0 +1,173 @@
+{
+  "version": "0.1",
+  "size": [
+    4.2,
+    3.4
+  ],
+  "dpi": 300,
+  "theme": {
+    "name": "paper",
+    "font": {
+      "family": "sans-serif",
+      "size": 10.0,
+      "title_size": 11.0,
+      "label_size": 10.0,
+      "tick_size": 8.5,
+      "use_tex": false
+    },
+    "axes": {
+      "line_width": 0.8,
+      "spines": "LB",
+      "spine_offset": 0.0
+    },
+    "grid": {
+      "show": false,
+      "axis": "both",
+      "line_width": 0.5,
+      "alpha": 0.5
+    },
+    "ticks": {
+      "direction": "out",
+      "major_size": 3.0,
+      "minor_size": 1.5,
+      "width": 0.8,
+      "minor_visible": false,
+      "top": false,
+      "right": false
+    },
+    "palette": {
+      "kind": "qualitative",
+      "preset": null,
+      "lightness": 65.0,
+      "chroma": 55.0,
+      "hue_start": 20.0,
+      "cvd_safe": true
+    },
+    "redundant_encoding": true,
+    "markers": [
+      "o",
+      "s",
+      "^",
+      "D",
+      "v",
+      "P",
+      "X",
+      "*"
+    ],
+    "line_styles": [
+      "-",
+      "--",
+      "-.",
+      ":"
+    ],
+    "hatches": [
+      "",
+      "//",
+      "xx",
+      "..",
+      "\\\\",
+      "oo"
+    ]
+  },
+  "data": {
+    "columns": {
+      "component": [
+        "Compute",
+        "Storage",
+        "Network",
+        "Other"
+      ],
+      "share": [
+        46,
+        28,
+        17,
+        9
+      ]
+    },
+    "matrices": {}
+  },
+  "suptitle": "",
+  "auto_label_panels": false,
+  "width_ratios": null,
+  "height_ratios": null,
+  "panels": [
+    {
+      "layers": [
+        {
+          "type": "pie",
+          "x": "component",
+          "y": "share",
+          "group": null,
+          "label": null,
+          "citation": null,
+          "href": null,
+          "references": null,
+          "color": null,
+          "line_width": null,
+          "line_style": null,
+          "drawstyle": "default",
+          "marker": null,
+          "marker_size": null,
+          "jitter": null,
+          "alpha": 1.0,
+          "yerr": null,
+          "xerr": null,
+          "capsize": null,
+          "y2": null,
+          "value": null,
+          "text": null,
+          "at": null,
+          "to": null,
+          "bins": 20,
+          "density": false,
+          "gridsize": 30,
+          "mincnt": null,
+          "degree": 1,
+          "confidence": null,
+          "c": null,
+          "cmap_kind": "sequential",
+          "colorbar": false,
+          "clabel": null,
+          "matrix": null,
+          "levels": null,
+          "axis": "y",
+          "u": null,
+          "v": null,
+          "quiver_scale": null,
+          "quiver_width": null,
+          "z": null
+        }
+      ],
+      "x": {
+        "label": "",
+        "scale": "linear",
+        "limits": null
+      },
+      "y": {
+        "label": "",
+        "scale": "linear",
+        "limits": null
+      },
+      "y2": null,
+      "z": null,
+      "projection": "2d",
+      "title": "Resource share",
+      "title_position": null,
+      "title_citation": null,
+      "title_href": null,
+      "label": null,
+      "legend": {
+        "bbox_to_anchor": null,
+        "show": true,
+        "title": null,
+        "location": "best",
+        "frame": false
+      }
+    }
+  ],
+  "layout": null,
+  "share_x": "none",
+  "share_y": "none",
+  "journal": null,
+  "reference_measure_text": null
+}

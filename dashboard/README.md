@@ -20,10 +20,13 @@ open dashboard/site_build/index.html
 ```
 
 - `site.py` — builds the engine reference from `mudplot.reference_markdown()`
-  / `mudplot.capabilities()`, and uses the engine's renderer to generate
-  gallery images demonstrating its design principles (palette CVD/greyscale
-  safety, redundant encoding, TeX WYSIWYG, secondary axes/heatmaps, etc.),
-  bundling everything into one HTML page.
+  / `mudplot.capabilities()`, renders executable examples for all 28 layers,
+  and generates design-principle images (palette CVD/greyscale safety,
+  redundant encoding, TeX WYSIWYG, secondary axes/heatmaps, etc.), bundling
+  everything into one HTML page.
+- `plot_gallery.py` + `../examples/plots/` — one runnable source file per
+  registered layer. CI requires exact coverage, validates every resulting
+  spec, round-trips it through JSON, and renders it with the live engine.
 - `markdown_lite.py` — a tiny converter that only handles the Markdown
   subset mudplot itself generates (zero dependencies, stdlib only).
 - **The docs and the figures always match the engine**: both are produced by
@@ -106,6 +109,6 @@ semantics before `mudplot render` refreshes or exports the figure.
 1. **(done)** static docs+gallery site (`python -m dashboard build`)
 2. **(done)** a Python local interactive editor (`python -m dashboard serve`),
    reusing the same Store
-3. **(release-candidate essentials done)** the co-versioned `mudplot-editor/`
+3. **(v1 essentials done)** the co-versioned `mudplot-editor/`
    Rust crate, sharing the JSON contract through the Python CLI and supporting
    visual controls, open, and vector export

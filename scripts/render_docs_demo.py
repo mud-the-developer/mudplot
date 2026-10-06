@@ -1,7 +1,7 @@
-"""Regenerate the documented demos: python -m scripts.render_docs_demo.
+"""Regenerate the documented demos and complete plot gallery.
 
-Uses synthetic, seeded pandas data, not experimental measurements.
-Assertions check the exported images and the actual Matplotlib artists.
+Run with ``python -m scripts.render_docs_demo``. Uses synthetic, seeded data,
+not experimental measurements. Assertions check exported images and artists.
 """
 
 from pathlib import Path
@@ -14,6 +14,7 @@ import matplotlib.pyplot as plt
 import mudplot as mp
 import numpy as np
 import pandas as pd  # provided by the dev extra used to regenerate docs
+from dashboard.plot_gallery import write_plot_gallery_docs
 from matplotlib.container import ErrorbarContainer
 from mpl_toolkits.mplot3d import Axes3D
 from mudplot import actions as A
@@ -243,6 +244,8 @@ def main():
     simulate_bw_print(OUT / "bar_hatched.png", OUT / "bar_hatched_bw.png")
     print("OK bar_hatched: 3 distinct hatches; B&W-print simulation saved")
 
+    gallery = write_plot_gallery_docs(OUT.parent)
+    print(f"OK plot gallery: {gallery}")
     print(f"Verified with pandas {pd.__version__}, Matplotlib {matplotlib.__version__}")
     assert not plt.get_fignums()
 

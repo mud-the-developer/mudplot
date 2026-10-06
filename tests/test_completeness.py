@@ -203,3 +203,12 @@ def test_cli_render(tmp_path):
     )
     assert result.returncode == 0, result.stderr
     assert out_path.exists()
+
+    import matplotlib.pyplot as plt
+    from mudplot.__main__ import main
+
+    figures = set(plt.get_fignums())
+    for suffix in ("png", "pdf", "svg"):
+        output = out_path.with_suffix(f".{suffix}")
+        assert main(["render", str(spec_path), str(output)]) == 0
+        assert set(plt.get_fignums()) == figures

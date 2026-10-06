@@ -23,6 +23,8 @@ TESTS = (
     "tests/test_new_layers.py",
     "tests/test_stabilization.py",
     "tests/test_references.py",
+    "tests/test_dashboard.py",
+    "tests/test_schema_export.py",
 )
 
 

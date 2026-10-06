@@ -15,9 +15,15 @@ Usage
 
 from __future__ import annotations
 
+import html
 from pathlib import Path
 
 from .markdown_lite import markdown_to_html
+from .plot_gallery import (
+    GALLERY_CATEGORIES,
+    GALLERY_EXAMPLES,
+    render_plot_gallery,
+)
 
 __all__ = ["build_site"]
 
@@ -37,19 +43,30 @@ _PAGE = """<!doctype html>
   nav a {{ margin-right: 1rem; text-decoration: none; color: #0a5; font-weight: 600; }}
   code {{ background: #f2f2f2; padding: .1em .35em; border-radius: 4px;
           font-size: .92em; }}
-  table {{ border-collapse: collapse; width: 100%; margin: .75rem 0 1.25rem; }}
+  table {{ display: block; overflow-x: auto; border-collapse: collapse;
+           width: 100%; margin: .75rem 0 1.25rem; }}
   th, td {{ border: 1px solid #ddd; padding: .4rem .6rem; text-align: left;
             font-size: .92em; }}
   th {{ background: #fafafa; }}
   figure {{ margin: 1.5rem 0; text-align: center; }}
   figure img {{ max-width: 100%; border: 1px solid #eee; border-radius: 6px; }}
   figcaption {{ font-size: .88em; color: #555; margin-top: .4rem; }}
-  .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }}
+  .grid, .plot-grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }}
+  .plot-card {{ min-width: 0; border: 1px solid #ddd;
+                border-radius: 8px; padding: 1rem; }}
+  .plot-card h4 {{ margin: 0 0 .6rem; }}
+  .plot-card img {{ width: 100%; border: 1px solid #eee; border-radius: 6px; }}
+  .plot-card p {{ font-size: .9rem; }}
+  .plot-card pre {{ overflow-x: auto; padding: .7rem; background: #f7f7f7; }}
+  .plot-card pre code {{ padding: 0; background: none; }}
+  .contract {{ color: #555; font-size: .82rem !important; }}
+  @media (max-width: 700px) {{ .grid, .plot-grid {{ grid-template-columns: 1fr; }} }}
   footer {{ margin-top: 3rem; color: #888; font-size: .85em; }}
 </style>
 </head>
 <body>
 <nav>
+  <a href="#plots">Plot gallery</a>
   <a href="#gallery">Design gallery</a>
   <a href="#reference">Engine reference</a>
 </nav>
@@ -57,6 +74,13 @@ _PAGE = """<!doctype html>
 <p>Perceptually-uniform, CVD-aware plotting for papers — engine reference
 and a visual walkthrough of its design decisions, generated straight from the
 library (never hand-written, never stale).</p>
+
+<h2 id="plots">Plot gallery</h2>
+<p>Every registered layer has executable Python, real output, and an editable
+spec. Required/optional names are <code>LayerSpec</code> fields; builder aliases
+appear in the code. 각 layer의 실행 코드·실제 출력·편집 가능한 spec을 제공합니다.
+필수·선택 이름은 builder 별칭이 아닌 <code>LayerSpec</code> 필드입니다.</p>
+{plots}
 
 <h2 id="gallery">Design gallery</h2>
 {gallery}
@@ -125,7 +149,7 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
     # tight=True: these are illustrative web-gallery images, not journal
     # figures -- physical inch size doesn't matter here, but content (e.g.
     # this title) shouldn't get silently clipped at the default exact size.
-    p.save(str(gallery_dir / "redundant_encoding.png"), tight=True)
+    plt.close(p.save(str(gallery_dir / "redundant_encoding.png"), tight=True))
     items.append(
         (
             "redundant_encoding.png",
@@ -171,7 +195,7 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
         .legend(location="outside right")
         .axes_style(spine_offset=6)
     )
-    p3.save(str(gallery_dir / "secondary_axis.png"), tight=True)
+    plt.close(p3.save(str(gallery_dir / "secondary_axis.png"), tight=True))
     items.append(
         (
             "secondary_axis.png",
@@ -187,7 +211,7 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
         .heatmap("m", clabel="value", cmap_kind="diverging")
         .labels(title="LCH diverging heatmap")
     )
-    p4.save(str(gallery_dir / "heatmap.png"), tight=True)
+    plt.close(p4.save(str(gallery_dir / "heatmap.png"), tight=True))
     items.append(
         (
             "heatmap.png",
@@ -200,6 +224,42 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
     return items
 
 
+def _plot_gallery_html() -> str:
+    from mudplot.capabilities import LAYER_TYPES
+
+    sections = []
+    for category, title, title_ko in GALLERY_CATEGORIES:
+        cards = []
+        for example in GALLERY_EXAMPLES:
+            if example.category != category:
+                continue
+            fields = LAYER_TYPES[example.name]
+            required = ", ".join(fields["required"])
+            optional = ", ".join(fields["optional"]) or "—"
+            code = html.escape(f'{example.code}\nplot.save("figure.png")')
+            cards.append(
+                f'<article class="plot-card" id="plot-{example.name}">'
+                f"<h4><code>{example.name}</code> — {html.escape(example.title)}</h4>"
+                f'<img loading="lazy" src="plots/{example.name}.png" '
+                f'alt="{html.escape(example.description)}">'
+                f"<p>{html.escape(example.description)}</p>"
+                f'<p lang="ko">{html.escape(example.description_ko)}</p>'
+                f'<p class="contract"><strong>Required:</strong> '
+                f"{html.escape(required)}<br><strong>Optional:</strong> "
+                f"{html.escape(optional)}</p>"
+                f'<p><a href="plots/{example.name}.mplot.json">'
+                "Editable spec / 편집 가능한 spec</a> · "
+                '<a href="#reference">Engine reference</a></p>'
+                "<details><summary>Runnable code / 실행 코드</summary>"
+                f"<pre><code>{code}</code></pre></details></article>"
+            )
+        sections.append(
+            f"<h3>{html.escape(title)} / {html.escape(title_ko)}</h3>"
+            f'<div class="plot-grid">{"".join(cards)}</div>'
+        )
+    return "".join(sections)
+
+
 def build_site(out_dir: str = "dashboard/site_build") -> Path:
     """Generate the static docs+gallery site into ``out_dir``. Returns its path."""
     import mudplot as mp
@@ -207,6 +267,7 @@ def build_site(out_dir: str = "dashboard/site_build") -> Path:
     out = Path(out_dir)
     gallery_dir = out / "gallery"
     items = _generate_gallery_images(gallery_dir)
+    render_plot_gallery(out / "plots", write_specs=True)
 
     gallery_html = (
         '<div class="grid">\n'
@@ -216,6 +277,8 @@ def build_site(out_dir: str = "dashboard/site_build") -> Path:
 
     reference_html = markdown_to_html(mp.reference_markdown())
 
-    page = _PAGE.format(gallery=gallery_html, reference=reference_html)
+    page = _PAGE.format(
+        plots=_plot_gallery_html(), gallery=gallery_html, reference=reference_html
+    )
     (out / "index.html").write_text(page, encoding="utf-8")
     return out

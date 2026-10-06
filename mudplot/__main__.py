@@ -85,7 +85,9 @@ def _cmd_render(args: argparse.Namespace) -> int:
             raise ValueError("--preview requires a .png output path")
         assert_valid(spec)
         cast(Any, spec).dpi = _preview_dpi(spec)
-    save(spec, args.out)
+    import matplotlib.pyplot as plt
+
+    plt.close(save(spec, args.out))
     print(f"wrote {args.out}", file=sys.stderr)
     return 0
 

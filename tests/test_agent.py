@@ -3,6 +3,143 @@ import pytest
 from mudplot import actions as A
 
 
+def test_v1_public_surface_and_matplotlib_ownership(tmp_path):
+    # Additions are compatible; removing an established name needs a major release.
+    exports = {
+        "AVAILABLE_JOURNALS",
+        "AVAILABLE_THEMES",
+        "JOURNAL_PROFILES",
+        "JOURNAL_SIZES",
+        "PREAMBLE",
+        "TEX_PRESETS",
+        "FigureSpec",
+        "JournalProfile",
+        "LintIssue",
+        "LintReport",
+        "Plot",
+        "Reference",
+        "ReferenceCatalog",
+        "ReferenceSpec",
+        "Store",
+        "TexContext",
+        "action_from_dict",
+        "action_to_dict",
+        "actions",
+        "apply",
+        "assert_valid",
+        "capabilities",
+        "color",
+        "color_palette",
+        "figsize_for",
+        "from_json",
+        "get_journal_profile",
+        "json_schema",
+        "lint_figure",
+        "load_spec",
+        "plot",
+        "reduce",
+        "reduce_all",
+        "reference_markdown",
+        "render",
+        "resolve_reference_href",
+        "save",
+        "save_spec",
+        "tex_preview",
+        "to_json",
+        "validate",
+    }
+    builders = {
+        "spec",
+        "store",
+        "dispatch",
+        "apply",
+        "action_log",
+        "line",
+        "regplot",
+        "scatter",
+        "stripplot",
+        "stackplot",
+        "hist2d",
+        "hexbin",
+        "quiver",
+        "heatmap",
+        "matrix",
+        "contour",
+        "contourf",
+        "bar",
+        "errorbar",
+        "band",
+        "hline",
+        "vline",
+        "text",
+        "annotate",
+        "hist",
+        "box",
+        "violin",
+        "kde",
+        "rug",
+        "pie",
+        "scatter3d",
+        "line3d",
+        "surface",
+        "wireframe",
+        "projection3d",
+        "projection_polar",
+        "zlabel",
+        "remove_layer",
+        "set_layer_at",
+        "layout",
+        "suptitle",
+        "panel_label",
+        "auto_label",
+        "labels",
+        "title_reference",
+        "title_position",
+        "reference_style",
+        "xscale",
+        "yscale",
+        "xlim",
+        "ylim",
+        "legend",
+        "theme",
+        "journal",
+        "palette",
+        "font",
+        "axes_style",
+        "grid_style",
+        "ticks_style",
+        "encoding",
+        "share",
+        "secondary_yaxis",
+        "size",
+        "tex_size",
+        "render",
+        "save",
+        "preview",
+        "lint",
+        "to_json",
+        "from_json",
+    }
+    assert exports <= set(mp.__all__)
+    assert all(hasattr(mp, name) for name in exports)
+    assert all(hasattr(mp.Plot, name) for name in builders)
+    assert mp.Reference is mp.ReferenceSpec
+
+    import matplotlib.pyplot as plt
+    from matplotlib.figure import Figure
+
+    plot = mp.plot({"x": [0, 1, 2], "y": [1, 3, 2]}).line("x", "y").size(4, 3)
+    before = plot.to_json()
+    for figure in (plot.render(), plot.save(str(tmp_path / "figure.svg"))):
+        try:
+            assert isinstance(figure, Figure)
+            assert plt.fignum_exists(figure.number)
+            assert tuple(figure.get_size_inches()) == (4, 3)
+            assert plot.to_json() == before
+        finally:
+            plt.close(figure)
+
+
 def test_capabilities_shape():
     caps = mp.capabilities()
     for key in (

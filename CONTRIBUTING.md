@@ -100,9 +100,11 @@ uv run python -m dashboard --out /tmp/mudplot-dashboard
 uv run python -m dashboard serve
 ```
 
-Demo data must be deterministic and synthetic; seed random generators. Avoid
-committing regenerated binary assets unless the visible output intentionally
-changed.
+The demo command also regenerates `docs/PLOT_GALLERY.md` plus one PNG and
+editable spec for every registered layer. Gallery coverage must exactly match
+`capabilities.LAYER_TYPES`. Demo data must be deterministic and synthetic;
+seed random generators. Avoid committing regenerated binary assets unless the
+visible output intentionally changed.
 
 ## Releases
 
