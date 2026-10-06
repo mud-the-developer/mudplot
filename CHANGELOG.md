@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- Check out the annotated release tag in the publisher job before using
+  `--notes-from-tag`. The v1.0.0 tag and verified, attested artifacts remain
+  unchanged; publication was completed from those exact workflow outputs.
+  (발행 job의 tag checkout 누락 수정. v1.0.0 tag와 검증 산출물은 그대로 유지.)
+
 ## [1.0.0] - 2026-10-06
 
 ### Added

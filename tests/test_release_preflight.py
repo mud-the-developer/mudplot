@@ -13,7 +13,14 @@ def test_release_workflow_cannot_replace_published_assets():
     workflow = (
         Path(__file__).resolve().parents[1] / ".github/workflows/release.yml"
     ).read_text(encoding="utf-8")
-    publish = workflow.split("- name: Create GitHub release", 1)[1]
+    publisher = workflow.split("\n  github-release:", 1)[1]
+    checkout = publisher.split("actions/checkout@", 1)[1].split("- uses:", 1)[0]
+    assert "persist-credentials: false" in checkout
+    assert "fetch-depth: 0" in checkout
+    assert publisher.index("actions/checkout@") < publisher.index(
+        "- name: Create GitHub release"
+    )
+    publish = publisher.split("- name: Create GitHub release", 1)[1]
     assert "--clobber" not in publish
     assert "gh release upload" not in publish
     assert "immutable" in publish and "exit 1" in publish
