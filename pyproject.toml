@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling==1.32.0"]
+requires = ["hatchling==1.32.4"]
 build-backend = "hatchling.build"
 
 [project]
@@ -52,7 +52,7 @@ dev = [
     "jsonschema>=4",
     "hypothesis>=6",
     "build>=1",
-    "hatchling==1.32.0",
+    "hatchling==1.32.4",
 ]
 # Real-browser tests for the dashboard editor (tests/test_editor_browser.py).
 # Separate from `dev` because it also needs a browser binary installed
