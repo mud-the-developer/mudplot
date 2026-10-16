@@ -71,6 +71,8 @@ def _dataclass_schema(cls, defs: dict) -> dict:
             required.append(f.name)
         props[f.name] = prop
     schema = {"type": "object", "properties": props}
+    if getattr(cls, "_reject_unknown_fields", False):
+        schema["additionalProperties"] = False
     if required:
         schema["required"] = required
     return schema

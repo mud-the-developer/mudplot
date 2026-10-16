@@ -11,6 +11,7 @@ matplotlib.use("Agg")
 
 import shutil
 import subprocess
+import sys
 import warnings
 
 import matplotlib.pyplot as plt
@@ -531,9 +532,41 @@ _TEX_MATRIX = [
 ]
 
 
+def _ghostscript() -> str | None:
+    """Resolve the real Unix/Windows executable, including TeX Live's shim."""
+    for name in ("gs", "gswin64c", "gswin32c", "rungs"):
+        executable = shutil.which(name)
+        if executable is not None:
+            return executable
+    return None
+
+
 def _missing(engine: str, bibtool: str) -> list[str]:
     tools = ["tectonic"] if engine == "tectonic" else [engine, bibtool]
-    return [t for t in (*tools, "gs") if shutil.which(t) is None]
+    missing = [t for t in tools if shutil.which(t) is None]
+    if _ghostscript() is None:
+        missing.append("gs")
+    return missing
+
+
+@pytest.mark.parametrize("available", ["gs", "gswin64c", "gswin32c", "rungs", None])
+def test_ghostscript_detection_and_matrix_requirements(monkeypatch, available):
+    def which(name):
+        if name in {"tectonic", "lualatex", "biber", available}:
+            return f"C:/tools/{name}.exe"
+        return None
+
+    monkeypatch.setattr(shutil, "which", which)
+    expected = None if available is None else f"C:/tools/{available}.exe"
+    assert _ghostscript() == expected
+    missing = ["gs"] if available is None else []
+    assert _missing("tectonic", "tectonic") == missing
+    assert _missing("lualatex", "biber") == missing
+
+
+def test_ghostscript_prefers_standard_name(monkeypatch):
+    monkeypatch.setattr(shutil, "which", lambda name: f"C:/tools/{name}.exe")
+    assert _ghostscript() == "C:/tools/gs.exe"
 
 
 def _run(cmd: list[str], cwd) -> subprocess.CompletedProcess:
@@ -629,9 +662,11 @@ def _pdf_text(pdf) -> str:
     every TeX install, so no extra tooling) and with common ligatures
     expanded back to plain ASCII letters (see ``_LIGATURES``).
     """
+    executable = _ghostscript()
+    assert executable is not None, "Ghostscript executable unavailable"
     proc = subprocess.run(
         [
-            "gs",
+            executable,
             "-q",
             "-dNOPAUSE",
             "-dBATCH",
@@ -641,9 +676,28 @@ def _pdf_text(pdf) -> str:
         ],
         capture_output=True,
         text=True,
+        encoding="utf-8",
         timeout=120,
     )
+    assert proc.returncode == 0, proc.stderr[-3000:]
     text = proc.stdout
     for ligature, expanded in _LIGATURES.items():
         text = text.replace(ligature, expanded)
     return " ".join(text.split())
+
+
+def test_pdf_text_uses_utf8_independently_of_windows_locale(monkeypatch):
+    run = subprocess.run
+    payload = "  θ ﬁ\t中文\n".encode()
+
+    def ghostscript_output(cmd, **kwargs):
+        assert "-sDEVICE=txtwrite" in cmd
+        kwargs.setdefault("encoding", "cp949")
+        return run(
+            [sys.executable, "-c", f"import sys; sys.stdout.buffer.write({payload!r})"],
+            **kwargs,
+        )
+
+    monkeypatch.setattr(shutil, "which", lambda name: "gs")
+    monkeypatch.setattr(subprocess, "run", ghostscript_output)
+    assert _pdf_text("paper.pdf") == "θ fi 中文"

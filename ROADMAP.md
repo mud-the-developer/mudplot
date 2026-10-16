@@ -7,6 +7,12 @@ within each section. For what's already shipped, see
 [`CHANGELOG.md`](CHANGELOG.md); for architecture and historical milestones
 (M0–M12), see [`DESIGN.md`](DESIGN.md).
 
+## Active target: v1.1
+
+Follow the [v1.1 development tracker](docs/V1_1_PLAN.md) for ordered batches,
+verified checkpoints and release gates. Work remains Unreleased; do not mark
+full feature parity or bump/publish a release before the recorded checks pass.
+
 ## 0. Version 1 scope
 
 Matplotlib remains mudplot's canonical renderer through 1.x. Keep the current
@@ -24,16 +30,117 @@ adapters without changing the reducer or JSON contract.
   annotated tags, verified artifacts and provenance. PyPI remains a separate
   decision requiring trusted-publisher configuration.
 
-## 1. More plot types (matplotlib/seaborn parity, continued)
+## 1. Matplotlib / Seaborn feature parity
 
-Currently supported (28 layer types): `line`, `regplot`, `scatter`,
-`stripplot`, `bar`, `errorbar`, `band`, `stackplot`, `hist`, `hist2d`,
-`hexbin`, `quiver`, `box`, `violin`, `kde`, `rug`, `heatmap`, `contour`,
-`contourf`, `pie`, `hline`, `vline`, `text`, `annotate`, `scatter3d`, `line3d`,
-`surface`, `wireframe`.
+The current checkout has 37 layer types, including Unreleased raw-data
+statistics, swarm, letter values and ECDF: `line`, `lineplot`, `regplot`, `scatter`, `stripplot`,
+`swarmplot`, `bar`, `barplot`, `pointplot`, `countplot`, `errorbar`, `band`,
+`stackplot`, `hist`, `hist2d`, `hexbin`, `quiver`, `box`, `boxenplot`, `violin`,
+`kde`, `kde2d`, `ecdf`, `rug`, `heatmap`, `contour`, `contourf`, `pie`, `hline`, `vline`, `text`,
+`annotate`, `scatter3d`, `line3d`, `surface`, `wireframe`.
+Layer count is not a claim of feature parity.
 
-Candidates for the next batch, roughly by expected value for scientific
-papers:
+The goal is functional coverage of Matplotlib/Seaborn plotting workflows,
+not just more names in the registry. The
+[feature/option/statistics coverage audit](docs/FEATURE_COVERAGE.md) records
+partial and missing support, official reference interfaces, native Python
+escape-hatch limitations, and the definition of supported. Native edits are
+not counted as declarative JSON/editor coverage.
+
+v1.1 batches, preserving `.bar()` as a precomputed-value primitive:
+
+- [x] Shared named estimation for raw `barplot`/`pointplot`/`countplot`:
+      mean/median/sum/min/max/count, SD/mean SEM/PI/seeded bootstrap CI,
+      paired weighted mean/CI, two-stage unit bootstrap and count proportions.
+      Only the documented named operations/assumptions are implemented.
+- [x] First categorical subset for those statistical layers: horizontal
+      orientation, order/hue order, dodge/gaps, stacked counts and value labels.
+- [x] First box/violin subset: category/hue nesting, ordering/orientation,
+      width/gap/numeric dodge, native box summaries and violin bandwidth/marks.
+- [x] First swarm subset: circular display-space packing on each draw, actual
+      layout/DPI and positive log-value transforms, explicit retained overcrowding.
+- [x] First letter-value subset: per-cell quantiles, named/explicit depths,
+      exponential/linear/area widths, median/observed tails and category/hue geometry.
+- [x] Distribution native/log subset: numeric category coordinates and spacing,
+      positive log values, explicit data/axis summary/KDE coordinates and strict
+      shared-axis validation. Legacy defaults retained; 60 new regression tests.
+- [x] Violin semantics subset: four named inner modes/None, two-hue split,
+      width/area/count and normalization scope, bandwidth adjustment/cut/clip.
+      Existing defaults retained; 138 new numerical/artist/editor/export tests.
+- [x] Independent component subset: named typed box body/whisker/cap/median/
+      mean/flier and boxen body/median/flier properties. Defaults and native/log
+      geometry retained; strict settings and 48 new artist/editor/export tests.
+- [x] Statistical native/log subset: bar/point/count numeric spacing/log axes,
+      explicit raw/log-fit inference and positive log bar baseline; preserved count/
+      default semantics and strict unsupported guards, 73 new tests.
+- [x] Weighted violin subset: relative covariance/effective n, inverse weighted
+      ECDF marks, count-mass widths, paired rows/native log geometry; 78 tests.
+- [ ] Categorical remainder: broader components and size/style/date mappings.
+- [x] ECDF subset: weighted/tied empirical steps, strict complement, per-curve
+      proportion/percent/count, hue order/dashes, v/h/log observations and typed
+      pure/JSON/editor/export contracts; 103 new tests, no inferred intervals.
+- [x] Histogram statistics subset: opt-in shared bins/weights, count/frequency/
+      proportion/percent/density, pooled/per-curve in-range normalization,
+      cumulative mass/v-h/raw logs, legacy behavior preserved; 95 new tests.
+- [x] Configurable weighted univariate KDE: typed relative covariance/effective
+      n, bandwidth/cut/clip/grid, shared mass/grid, analytic CDF/fill/v-h/raw
+      observation logs, singular skip and legacy preservation; 125 new tests.
+- [x] Weighted bivariate KDE first subset: full covariance, raw grid/log display,
+      conditional-grid HDR/native contours/fills, no regularization; 129 new tests.
+- [x] Numeric-x line estimate subset: named pointwise bands/bars, weighted/per-x
+      unit CI, sorting and raw/log fit; raw line unchanged,66new tests.
+- [x] Independent scatter semantic subset: typed hue/size/style, explicit kinds/
+      orders/global linear bounds, diameter-to-area mapping/non-data guides;85tests.
+- [x] Named shared scatter scales: pooled figure domains/colour blocks, unique
+      rows and same-setting checks, one pooled guide block per panel;36tests.
+- [x] Independent lineplot semantic subset: raw tuple curves/shared scopes/
+      stroke-point widths/marker-dashes/pointwise inference,48tests;
+      approved foreground rechecks full2159/minimum1703, Rust1.99/browser/TeX pass.
+- [x] Histogram grouped geometry subset: opt-in layer/stack/dodge, unchanged
+      weighted heights/normalization, raw-width reserved hue slots and strict
+      derived geometry guards; 48 added tests, Python/Rust editor smoke covered.
+- [x] Histogram step subset: unfilled native stairs for layer/stack, preserved
+      weighted heights/edges, hue dash slots and v/h/raw-log geometry; 43 added
+      tests, pure/JSON/contracts and Python/Rust editor smoke covered.
+- [x] Automatic facet first subset: terminal row/col grids, wrap/reserved cells,
+      exact panel filters, shared axes/semantic domains and cell-local statistics;
+      Python/actions/JSON/editor paths and executable example. See [scope](docs/FACETS.md).
+- [x] Raw grouped facet support: line/scatter/bar/errorbar/band/stripplot/regplot/rug,
+      reserved hue/style/dodge slots, original raw paths/values/errors and empty cells.
+- [ ] Relational/distribution completeness: wider facet combinations,
+      wider line inference, broader histogram/KDE variants and semantic controls.
+- [x] Joint histogram subset: raw scatter/regplot + paired x/y histograms,
+      complete-case row selectors and correct independent density/value axes.
+      [Scope and example](docs/JOINT_GRID.md).
+- [x] Numeric pair matrix subset: pairwise scatter, histogram diagonals, raw groups
+      and named value-axis sharing without diagonal density/unit conflicts.
+      [Scope and example](docs/PAIR_GRID.md).
+- [x] Configured KDE grids: joint marginals and pair diagonals reuse KDESpec
+      bandwidth/grid/support/normalization/fill; histogram defaults unchanged.
+      Density only, singular curves warn/skip; weighted/CDF grids remain open.
+- [ ] Composition remainder: live facet mapping/consolidated legends, wider pair
+      and joint kinds.
+- [x] Typed heatmap first subset: masks, raw-value annotations/labels, linear/log/
+      centered/robust colour ranges, square cells and borders. [Scope](docs/HEATMAP.md).
+- [x] Configured regression subset: residual/log-x/Huber/binomial-logit/LOWESS,
+      selected raw groups and optional statsmodels effect extra. [Scope](docs/REGRESSION.md).
+- [x] Hierarchical clustermap: row/column trees, supplied linkage/optimal leaves,
+      metadata/colour strips and z-score/min-max. [Scope](docs/CLUSTERMAP.md).
+- [ ] Further heatmap/clustering controls, weighted/bootstrap/advanced-regression inference
+      and residual diagnostics/controls.
+- [ ] Remaining native Matplotlib families and axes/layout/color/annotation
+      controls. Small primitives can land earlier when they unblock a batch.
+
+Checked items describe implemented Unreleased subsets; unchecked items are
+plans, not implemented builders or delivery dates. Track details and pending
+release gates in [V1_1_PLAN.md](docs/V1_1_PLAN.md). Every feature
+needs truthful capabilities, JSON/action round-trip, renderer/editor access,
+statistical/artist tests and reviewed examples. Keep the zero-dependency core
+and version minimums; any advanced-statistics dependency belongs in an
+explicit optional effect layer, not a new mandatory core dependency.
+
+Foundational work below is shipped for its documented subset, **not** a claim
+of complete upstream option/statistical parity:
 
 - **(done) `regplot`**: scatter + a numerically scaled linear/polynomial
   `numpy.polyfit`, with an explicit opt-in normal-approximation confidence
@@ -42,9 +149,11 @@ papers:
 - **(done) `stripplot`**: categorical/raw-data scatter with bounded,
   deterministic horizontal jitter, grouping, and redundant markers. Fixed
   seeding makes every export reproducible.
-- **`swarmplot`**: pack points to avoid overlap. Defer the substantially more
-  complex collision algorithm until stripplot overlap is a demonstrated
-  problem rather than shipping a fragile approximation.
+- **(done, first subset) `swarmplot`**: draw-time circular display-space packing,
+  order/hue nesting/orientation and positive log-value axes. Repack after DPI,
+  layout/limits/size changes; overcrowding retains rows and warns. Greedy packing
+  is not optimal; numeric native/log categories are supported, while broader
+  semantic mappings stay deferred.
 - **(done) `stackplot`**: native stacked areas from the existing long-form
   `x`/`y`/`group` contract. Validation requires every group to share the same
   ordered x sequence and finite values; hatch cycling keeps stacks distinct

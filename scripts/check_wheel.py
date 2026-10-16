@@ -25,9 +25,100 @@ SDIST_FILES = (
     "uv.lock",
     "schemas/capabilities.json",
     "schemas/figure_spec.schema.json",
+    "tests/fixtures/review_json_boundaries.json",
     "docs/PLOT_GALLERY.md",
     "docs/COMPATIBILITY.md",
     "docs/COMPATIBILITY.ko.md",
+    "docs/VISUAL_QUALITY.md",
+    "docs/VISUAL_QUALITY.ko.md",
+    "docs/VISUAL_REVIEW.html",
+    "docs/FACETS.md",
+    "docs/FACETS.ko.md",
+    "docs/JOINT_GRID.md",
+    "docs/JOINT_GRID.ko.md",
+    "docs/PAIR_GRID.md",
+    "docs/PAIR_GRID.ko.md",
+    "docs/HEATMAP.md",
+    "docs/HEATMAP.ko.md",
+    "docs/REGRESSION.md",
+    "docs/REGRESSION.ko.md",
+    "docs/CLUSTERMAP.md",
+    "docs/CLUSTERMAP.ko.md",
+    "examples/clustered_profiles.py",
+    "docs/images/clustered_profiles.png",
+    "docs/images/clustered_profiles.pdf",
+    "docs/images/clustered_profiles.svg",
+    "docs/images/clustered_profiles.mplot.json",
+    "examples/regression_modes.py",
+    *(
+        f"docs/images/{name}.{extension}"
+        for name in (
+            "regression_residual",
+            "regression_logx",
+            "regression_robust",
+            "regression_logistic",
+            "regression_lowess",
+        )
+        for extension in ("png", "pdf", "svg", "mplot.json")
+    ),
+    "examples/heatmap_controls.py",
+    "docs/images/heatmap_controls.png",
+    "docs/images/heatmap_controls.pdf",
+    "docs/images/heatmap_controls.svg",
+    "docs/images/heatmap_controls.mplot.json",
+    "examples/pair_observations.py",
+    "examples/kde_grids.py",
+    "docs/images/kde_joint.png",
+    "docs/images/kde_joint.pdf",
+    "docs/images/kde_joint.svg",
+    "docs/images/kde_joint.mplot.json",
+    "docs/images/kde_pair.png",
+    "docs/images/kde_pair.pdf",
+    "docs/images/kde_pair.svg",
+    "docs/images/kde_pair.mplot.json",
+    "docs/images/pair_observations.png",
+    "docs/images/pair_observations.pdf",
+    "docs/images/pair_observations.svg",
+    "docs/images/pair_observations.mplot.json",
+    "examples/joint_observations.py",
+    "docs/images/joint_observations.png",
+    "docs/images/joint_observations.pdf",
+    "docs/images/joint_observations.svg",
+    "docs/images/joint_observations.mplot.json",
+    "examples/faceted_responses.py",
+    "docs/images/faceted_responses.png",
+    "docs/images/faceted_responses.pdf",
+    "docs/images/faceted_responses.svg",
+    "docs/images/faceted_responses.mplot.json",
+    "docs/images/visual_before.png",
+    "docs/images/visual_before.pdf",
+    "docs/images/visual_before.svg",
+    "docs/images/visual_before.mplot.json",
+    "docs/images/visual_after.png",
+    "docs/images/visual_after.pdf",
+    "docs/images/visual_after.svg",
+    "docs/images/visual_after.mplot.json",
+    "docs/images/visual_after_gray.png",
+    "docs/images/visual_after_protan.png",
+    "docs/images/visual_after_deutan.png",
+    "docs/images/visual_quality.json",
+    "docs/images/visual_response.png",
+    "docs/images/visual_response.pdf",
+    "docs/images/visual_response.svg",
+    "docs/images/visual_response.mplot.json",
+    "docs/images/visual_endpoint.png",
+    "docs/images/visual_endpoint.pdf",
+    "docs/images/visual_endpoint.svg",
+    "docs/images/visual_endpoint.mplot.json",
+    "docs/images/visual_response_mobile.png",
+    "docs/images/visual_response_mobile.mplot.json",
+    "docs/images/visual_endpoint_mobile.png",
+    "docs/images/visual_endpoint_mobile.mplot.json",
+    "docs/images/visual_response_gray.png",
+    "docs/images/visual_response_protan.png",
+    "docs/images/visual_response_deutan.png",
+    "examples/publication_showcase.py",
+    "scripts/render_docs_demo.py",
     "scripts/audit_dependencies.py",
     "scripts/audit_dependencies.py.lock",
     "scripts/check_minimum_versions.py",
@@ -176,7 +267,25 @@ def main() -> int:
         smoke = (
             "import mudplot; "
             "assert '.whl' in mudplot.__file__; "
-            "assert mudplot.from_json(mudplot.to_json(mudplot.FigureSpec())).version"
+            "assert mudplot.from_json(mudplot.to_json(mudplot.FigureSpec())).version; "
+            "p=mudplot.plot({'x':[1,2],'y':[3,4]}).scatter('x','y'); "
+            "p.joint(marginal_kind='kde',kde={'cut':0}); "
+            "assert len(p.spec.panels)==3 and mudplot.validate(p.spec)==[]; "
+            "assert mudplot.apply(p.action_log)==p.spec; "
+            "q=mudplot.plot({'a':[1,2],'b':[3,4]}).pair(['a','b'],diag_kind='kde'); "
+            "assert len(q.spec.panels)==4 and mudplot.validate(q.spec)==[]; "
+            "assert mudplot.apply(q.action_log)==q.spec; "
+            "h=mudplot.plot().matrix('m',[[1,2],[3,4]]); "
+            "h.heatmap('m',heatmap={'annot':True}); "
+            "assert mudplot.validate(h.spec)==[]; "
+            "assert mudplot.apply(h.action_log)==h.spec; "
+            "r=mudplot.plot({'x':[1,2,3],'y':[2,3,4]}).residplot('x','y'); "
+            "assert mudplot.validate(r.spec)==[]; "
+            "u=mudplot.Plot.from_json(r.to_json()).spec; "
+            "assert mudplot.apply(r.action_log)==u; "
+            "c=mudplot.plot().matrix('m',[[1,2],[3,4]]).clustermap('m'); "
+            "assert mudplot.validate(c.spec)==[]; "
+            "assert mudplot.apply(c.action_log)==c.spec"
         )
         subprocess.run(
             [sys.executable, "-S", "-c", smoke],

@@ -1,3 +1,5 @@
+import os
+
 import mudplot as mp
 import pytest
 from mudplot import io
@@ -46,23 +48,14 @@ def test_save_load_file(tmp_path):
     assert loaded.to_dict() == p.spec.to_dict()
 
 
-def test_save_spec_is_atomic_and_preserves_symlinks(tmp_path, monkeypatch):
+def test_save_spec_is_atomic_and_cleans_up_failed_replace(tmp_path, monkeypatch):
+    # Always exercise atomic replacement, newlines and failure cleanup, even
+    # on Windows without symlink privileges or POSIX permission semantics.
     destination = tmp_path / "figure.json"
     destination.write_text("old", encoding="utf-8")
-    destination.chmod(0o640)
-    link = tmp_path / "linked.json"
-    link.symlink_to(destination)
-
-    io.save_spec(FigureSpec(), link)
-    assert link.is_symlink()
-    assert destination.stat().st_mode & 0o777 == 0o640
+    io.save_spec(FigureSpec(), destination)
     assert b"\r\n" not in destination.read_bytes()
     assert io.load_spec(destination) == FigureSpec()
-
-    destination.chmod(0o440)
-    io.save_spec(FigureSpec(), destination)
-    assert destination.stat().st_mode & 0o777 == 0o440
-    destination.chmod(0o640)
     destination.write_text("keep", encoding="utf-8")
 
     def fail_replace(source, target):
@@ -72,7 +65,49 @@ def test_save_spec_is_atomic_and_preserves_symlinks(tmp_path, monkeypatch):
     with pytest.raises(OSError, match="simulated"):
         io.save_spec(FigureSpec(), destination)
     assert destination.read_text(encoding="utf-8") == "keep"
+    assert list(tmp_path.iterdir()) == [destination]
+
+
+def test_save_spec_preserves_symlink_and_target_on_failed_replace(
+    tmp_path, monkeypatch
+):
+    destination = tmp_path / "figure.json"
+    destination.write_text("old", encoding="utf-8")
+    link = tmp_path / "linked.json"
+    try:
+        link.symlink_to(destination)
+    except OSError as error:
+        if os.name == "nt" and error.winerror == 1314:
+            pytest.skip("Windows symlink creation requires Developer Mode or privilege")
+        raise
+
+    io.save_spec(FigureSpec(), link)
+    assert link.is_symlink()
+    assert io.load_spec(destination) == FigureSpec()
+    destination.write_text("keep", encoding="utf-8")
+
+    def fail_replace(source, target):
+        raise OSError("simulated replace failure")
+
+    monkeypatch.setattr(io.os, "replace", fail_replace)
+    with pytest.raises(OSError, match="simulated"):
+        io.save_spec(FigureSpec(), link)
+    assert link.is_symlink()
+    assert destination.read_text(encoding="utf-8") == "keep"
     assert sorted(tmp_path.iterdir()) == [destination, link]
+
+
+@pytest.mark.skipif(os.name == "nt", reason="POSIX mode bits do not apply on Windows")
+def test_save_spec_preserves_posix_permissions(tmp_path):
+    destination = tmp_path / "figure.json"
+    destination.write_text("old", encoding="utf-8")
+    destination.chmod(0o640)
+    io.save_spec(FigureSpec(), destination)
+    assert destination.stat().st_mode & 0o777 == 0o640
+    destination.chmod(0o440)
+    io.save_spec(FigureSpec(), destination)
+    assert destination.stat().st_mode & 0o777 == 0o440
+    assert io.load_spec(destination) == FigureSpec()
 
 
 def test_current_version_round_trips_unchanged():

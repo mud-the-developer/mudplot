@@ -48,6 +48,16 @@ def theme_preset(name: str) -> ThemeSpec:
         t.axes.spines = "LB"
         t.ticks.direction = "out"
         return t
+    if name == "publication":
+        t = ThemeSpec(name="publication")
+        t.font = FontSpec(size=9.5, title_size=10.5, label_size=9.5, tick_size=8.0)
+        t.axes = AxesSpec(line_width=0.65, spines="LB", spine_offset=3.0)
+        t.grid = GridSpec(show=True, axis="y", line_width=0.5, alpha=0.22)
+        t.ticks = TicksSpec(major_size=2.5, width=0.65)
+        t.palette.preset = "soft"
+        # Retain redundant encoding, but use less dense fill patterns.
+        t.hatches = ["", "/", "\\", ".", "o", "-"]
+        return t
     if name == "boxed":
         t = ThemeSpec(name="boxed")
         t.axes.spines = "LRTB"
@@ -58,7 +68,7 @@ def theme_preset(name: str) -> ThemeSpec:
     raise ValueError(f"unknown theme preset: {name!r}")
 
 
-AVAILABLE_THEMES = ("paper", "paper-grid", "minimal", "boxed")
+AVAILABLE_THEMES = ("paper", "paper-grid", "minimal", "boxed", "publication")
 
 
 # --------------------------------------------------------------------------
@@ -304,5 +314,22 @@ def spec_to_rcparams(
     rc.update(_grid_rc(theme.grid))
     rc.update(_ticks_rc(theme.ticks))
     rc.update(_palette_rc(theme.palette, n=n_colors))
+    if theme.name == "publication":
+        rc.update(
+            {
+                "axes.axisbelow": True,
+                "axes.edgecolor": "#64748b",
+                "axes.labelcolor": "#334155",
+                "axes.titlepad": 12.0,
+                "axes.labelpad": 7.0,
+                "grid.color": "#94a3b8",
+                "text.color": "#1f2937",
+                "xtick.color": "#475569",
+                "ytick.color": "#475569",
+                "xtick.major.pad": 5.0,
+                "ytick.major.pad": 5.0,
+                "hatch.linewidth": 0.45,
+            }
+        )
     rc.update(journal_overrides(journal))
     return rc

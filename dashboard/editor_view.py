@@ -22,7 +22,7 @@ from mudplot.capabilities import LAYER_TYPES, PROJECTIONS
 from mudplot.spec import FigureSpec
 from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
-from .samples import SAMPLES
+from .samples import FIGURE_SAMPLES, SAMPLES
 
 __all__ = ["render_app_body", "render_docs_page", "render_page"]
 
@@ -388,7 +388,8 @@ def _hx_form(action: str, hidden: dict, body: str, button: str = "Apply") -> str
         for k, v in hidden.items()
     )
     return (
-        f'<form hx-post="{_esc(action)}" hx-target="#app-body" '
+        f'<form method="post" action="{_esc(action)}" '
+        f'hx-post="{_esc(action)}" hx-target="#app-body" '
         f'hx-swap="{_SWAP}">'
         f"{hidden_inputs}{body}"
         f'<button type="submit">{_esc(button)}</button>'
@@ -406,7 +407,18 @@ def _samples_panel() -> str:
         ).replace("<button", '<button class="secondary"')
         for name in SAMPLES
     )
-    return f'<div class="panel samples"><h2>Sample data</h2>{buttons}</div>'
+    figures = "".join(
+        f'<a class="button-link secondary" href="/?example={_esc(name)}#open-figure">'
+        f"{_esc(label)}</a>"
+        for name, (label, _, _) in FIGURE_SAMPLES.items()
+    )
+    return (
+        f'<div class="panel samples"><h2>Sample data</h2>{buttons}</div>'
+        '<div class="panel"><h2>Complete figure drafts</h2>'
+        '<p class="hint">Loads the Open form only. Your current figure stays '
+        "unchanged until you press Open figure.</p>"
+        f'<div class="btn-row">{figures}</div></div>'
+    )
 
 
 def _theme_panel(spec: FigureSpec) -> str:
@@ -815,10 +827,8 @@ def _position_panel(spec: FigureSpec, active: int) -> str:
 
 def _history_panel() -> str:
     def btn(action: str, label: str) -> str:
-        return (
-            f'<form hx-post="{action}" hx-target="#app-body" '
-            f'hx-swap="{_SWAP}">'
-            f'<button type="submit" class="secondary">{label}</button></form>'
+        return _hx_form(action, {}, "", label).replace(
+            "<button ", '<button class="secondary" ', 1
         )
 
     buttons = btn("/undo", "Undo") + btn("/redo", "Redo") + btn("/reset", "Reset")
@@ -839,7 +849,7 @@ def _advanced_panel() -> str:
     return f'<div class="panel"><h2>Advanced</h2>{form}</div>'
 
 
-def _open_panel() -> str:
+def _open_panel(draft_json: str = "") -> str:
     """Open a saved .mplot.json (the same file the Export card writes)."""
     body = _field(
         "Spec file",
@@ -848,12 +858,19 @@ def _open_panel() -> str:
     ) + _field(
         "Spec JSON",
         '<textarea name="json" id="spec-json" placeholder="...or paste the '
-        'spec JSON here"></textarea>',
+        f'spec JSON here">{_esc(draft_json)}</textarea>',
     )
-    form = _hx_form("/open", {}, body, "Open figure")
+    form = _hx_form("/open", {}, body, "Open figure").replace(
+        "<form ", '<form hx-replace-url="/" ', 1
+    )
     return (
         '<div class="panel"><h2>Open</h2>'
         + form
+        + (
+            '<p class="hint" role="status">Draft not applied yet.</p>'
+            if draft_json
+            else ""
+        )
         + '<div class="hint">Replaces the current figure. Undo history starts '
         "fresh, so export first if the current one matters.</div></div>"
     )
@@ -1015,6 +1032,7 @@ def render_app_body(
     *,
     error: str | None = None,
     active_panel: int = 0,
+    draft_json: str = "",
 ) -> str:
     """The inner ``#app-body`` content: everything htmx swaps after an
     action, and what ``render_page`` embeds for the first load.
@@ -1026,6 +1044,7 @@ def render_app_body(
     layout = layout or {}
     active = min(active_panel, max(len(spec.panels) - 1, 0))
     error_html = f'<div class="error">{_esc(error)}</div>' if error else ""
+    open_attr = " open" if draft_json else ""
     left = (
         '<details data-key="samples"><summary>Start from a sample</summary>'
         + _samples_panel()
@@ -1048,15 +1067,18 @@ def render_app_body(
         + _advanced_panel()
         + "</details>"
         + _export_panel()
-        + '<details data-key="open"><summary>Open a saved figure</summary>'
-        + _open_panel()
+        + f'<details id="open-figure" data-key="open"{open_attr}>'
+        "<summary>Open a saved figure</summary>"
+        + _open_panel(draft_json)
         + "</details>"
     )
     handles_html = _preview_handles_html(spec, layout, active)
     right = (
         '<div class="panel"><h2>Preview</h2><figure><div class="preview-wrap">'
         '<img src="/fig.png" alt="figure preview">'
-        f"{handles_html}</div></figure></div>"
+        f"{handles_html}</div></figure>"
+        '<p class="hint">Preview fits this workspace. Check exported dimensions '
+        "and the actual-size reading examples separately.</p></div>"
         '<details class="panel" data-key="history"><summary>Action history · '
         f"{len(action_log)} actions</summary>"
         f"{_action_log_html(action_log)}</details>"
@@ -1075,10 +1097,16 @@ def render_page(
     *,
     error: str | None = None,
     active_panel: int = 0,
+    draft_json: str = "",
 ) -> str:
     """Render the full editor page (used for the initial ``GET /`` only)."""
     body = render_app_body(
-        spec, action_log, layout, error=error, active_panel=active_panel
+        spec,
+        action_log,
+        layout,
+        error=error,
+        active_panel=active_panel,
+        draft_json=draft_json,
     )
     return f"""<!doctype html>
 <html lang="en">
@@ -1091,7 +1119,7 @@ def render_page(
 <script src="/static/htmx.min.js"></script>
 <style>{_STYLE}</style>
 </head>
-<body>
+<body hx-history="false">
 <header>
   <h1>mudplot editor</h1>
   <div class="sub">Figure studio · Edit, refine, export</div>

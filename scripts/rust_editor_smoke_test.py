@@ -14,6 +14,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+import mudplot as mp
+from mudplot.capabilities import LAYER_TYPES
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = REPO_ROOT / "mudplot-editor" / "Cargo.toml"
 
@@ -29,6 +32,47 @@ def _request(
         request_headers["Content-Type"] = content_type
     return urllib.request.urlopen(
         urllib.request.Request(url, data=data, headers=request_headers), timeout=30
+    )
+
+
+def _review_json_boundaries(base: str) -> None:
+    corpus = json.loads(
+        (REPO_ROOT / "tests/fixtures/review_json_boundaries.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    with _request(f"{base}/spec.json") as response:
+        before = json.load(response)
+    with _request(f"{base}/fig.png") as response:
+        preview = response.read()
+    for case in corpus["invalid_specs"]:
+        with _form(base, "/open", {"json": case["text"]}) as response:
+            assert b"error" in response.read().lower(), case["id"]
+        with _request(f"{base}/spec.json") as response:
+            assert json.load(response) == before, case["id"]
+        with _request(f"{base}/fig.png") as response:
+            assert response.read() == preview, case["id"]
+    for case in corpus["invalid_actions"]:
+        try:
+            _request(f"{base}/action", case["text"].encode(), "application/json")
+            raise AssertionError(f"accepted action {case['id']}")
+        except urllib.error.HTTPError as error:
+            assert error.code in (400, 422), case["id"]
+        with _form(base, "/action/raw", {"json": case["text"]}) as response:
+            assert b"error" in response.read().lower(), case["id"]
+        with _request(f"{base}/spec.json") as response:
+            assert json.load(response) == before, case["id"]
+        with _request(f"{base}/fig.png") as response:
+            assert response.read() == preview, case["id"]
+    for case in corpus["valid_specs"]:
+        _submit(base, "/open", {"json": case["text"]})
+        with _request(f"{base}/spec.json") as response:
+            actual = mp.FigureSpec.from_dict(json.load(response))
+        assert actual == mp.from_json(case["text"]), case["id"]
+    _submit(base, "/open", {"json": json.dumps(before)})
+    print(
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, "
+        "2 accepted; spec/preview retained"
     )
 
 
@@ -133,7 +177,8 @@ def main(*, browser: bool = False) -> int:
             assert b"mudplot Rust editor" in page
             assert b"Visual controls" in page
             assert b'"allowScriptTags":false' in page
-            assert b"Required/optional fields for all 28 layers" in page
+            expected = f"Required/optional fields for all {len(LAYER_TYPES)} layers"
+            assert expected.encode() in page
         with _request(f"{base}/fig.png") as response:
             assert response.read(8) == b"\x89PNG\r\n\x1a\n"
         with _request(f"{base}/static/htmx.min.js") as response:
@@ -202,6 +247,32 @@ def main(*, browser: bool = False) -> int:
         row_count = len(next(iter(edited["data"]["columns"].values())))
         huge_values = [huge_integer] * row_count
         edited["data"]["columns"]["unused_huge_integer"] = huge_values
+        boundaries = [
+            2**53 - 1,
+            2**53,
+            2**53 + 1,
+            2**63 - 1,
+            2**63,
+            2**64 - 1,
+            2**64,
+            huge_integer,
+        ]
+        signed_boundaries = [
+            value for number in boundaries for value in (number, -number)
+        ]
+        edited["data"]["columns"]["unused_integer_boundaries"] = [
+            signed_boundaries
+        ] * row_count
+        edited["data"]["columns"]["unused_unicode"] = ["한글 Ω 😀"] * row_count
+        edited["data"]["columns"]["sample_weight"] = [1.0] * row_count
+        edited["data"]["columns"]["line_x"] = [i // 2 + 1 for i in range(row_count)]
+        edited["data"]["columns"]["semantic_hue"] = [
+            "A" if i % 2 else "B" for i in range(row_count)
+        ]
+        edited["data"]["columns"]["semantic_style"] = [
+            "X" if i % 2 else "Y" for i in range(row_count)
+        ]
+        edited["data"]["columns"]["semantic_size"] = list(range(row_count))
         _submit(base, "/open", {"json": json.dumps(edited)})
         with _form(
             base,
@@ -213,12 +284,36 @@ def main(*, browser: bool = False) -> int:
             opened = json.load(response)
         assert opened["panels"][0]["title"] == "Opened spec"
         assert opened["data"]["columns"]["unused_huge_integer"] == huge_values
+        assert (
+            opened["data"]["columns"]["unused_integer_boundaries"]
+            == [signed_boundaries] * row_count
+        )
+        assert opened["data"]["columns"]["unused_unicode"] == ["한글 Ω 😀"] * row_count
+        with _request(f"{base}/fig.png") as response:
+            previous_png = response.read()
+        for payload in (
+            '{"dpi":100,"dpi":100}',
+            '{"dpi":100,"dpi":200}',
+            '{"theme":{"font":{"size":11,"size":11}}}',
+            '{"theme":{"font":{"size":11,"size":12}}}',
+            '{"data":{"columns":{"unused":[{"key":1,"key":1}]}}}',
+            '{"data":{"columns":{"unused":[{"key":1,"key":2}]}}}',
+        ):
+            with _form(base, "/open", {"json": payload}) as response:
+                assert b"duplicate JSON object key" in response.read()
+            with _request(f"{base}/spec.json") as response:
+                assert json.load(response) == opened
+            with _request(f"{base}/fig.png") as response:
+                assert response.read() == previous_png
 
         action = json.dumps(
             {"type": "SetTitle", "text": "Agent JSON", "panel": 0}
         ).encode()
         with _request(f"{base}/action", action, "application/json") as response:
-            assert json.load(response)["panels"][0]["title"] == "Agent JSON"
+            agent_state = json.load(response)
+            assert agent_state["panels"][0]["title"] == "Agent JSON"
+        with _request(f"{base}/fig.png") as response:
+            agent_preview = response.read()
 
         invalid_actions = (
             (
@@ -231,12 +326,33 @@ def main(*, browser: bool = False) -> int:
                 422,
             ),
         )
+        invalid_actions += tuple(
+            (text.encode(), 422)
+            for text in (
+                '{"type":"SetTitle","text":"A","text":"A"}',
+                '{"type":"SetTitle","text":"A","text":"B"}',
+                '{"type":"SetFont","params":{"size":11,"size":11}}',
+                '{"type":"SetFont","params":{"size":11,"size":12}}',
+                '{"type":"SetData","columns":{"unused":[{"key":1,"key":1}]}}',
+                '{"type":"SetData","columns":{"unused":[{"key":1,"key":2}]}}',
+            )
+        )
         for invalid, status in invalid_actions:
             try:
                 _request(f"{base}/action", invalid, "application/json")
                 raise AssertionError("invalid action unexpectedly succeeded")
             except urllib.error.HTTPError as error:
                 assert error.code == status
+            with _request(f"{base}/spec.json") as response:
+                assert json.load(response) == agent_state
+            with _request(f"{base}/fig.png") as response:
+                assert response.read() == agent_preview
+        for invalid, status in invalid_actions[3:]:
+            assert status == 422
+            with _form(base, "/action/raw", {"json": invalid.decode()}) as response:
+                assert b"duplicate JSON object key" in response.read()
+            with _request(f"{base}/spec.json") as response:
+                assert json.load(response) == agent_state
 
         with _form(
             base,
@@ -246,6 +362,163 @@ def main(*, browser: bool = False) -> int:
             assert b'<main id="app">' in response.read()
         with _request(f"{base}/undo", b"") as response:
             assert response.status == 200
+
+        _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "violin",
+                "fields": '{"x":"y","weights":"sample_weight","inner":"quart"}',
+                "panel": "0",
+            },
+        )
+        with _request(f"{base}/spec.json") as response:
+            weighted = json.load(response)["panels"][0]["layers"][-1]
+        assert weighted["type"] == "violin"
+        assert weighted["weights"] == "sample_weight"
+
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetLayout", "rows": 1, "cols": 2}).encode(),
+            "application/json",
+        ) as response:
+            assert len(json.load(response)["panels"]) == 2
+        _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "lineplot",
+                "panel": "1",
+                "fields": json.dumps(
+                    {
+                        "x": "line_x",
+                        "y": "y",
+                        "error_style": "band",
+                        "stat": {"errorbar": "sd"},
+                    }
+                ),
+            },
+        )
+        with _request(f"{base}/spec.json") as response:
+            estimated = json.load(response)["panels"][1]["layers"][-1]
+        assert estimated["type"] == "lineplot" and estimated["error_style"] == "band"
+        _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "scatter",
+                "panel": "1",
+                "fields": json.dumps(
+                    {
+                        "x": "line_x",
+                        "y": "y",
+                        "semantics": {
+                            "hue": "semantic_hue",
+                            "size": "semantic_size",
+                            "style": "semantic_style",
+                            "legend": False,
+                            "scale_id": "study",
+                        },
+                    }
+                ),
+            },
+        )
+        with _request(f"{base}/spec.json") as response:
+            semantic = json.load(response)["panels"][1]["layers"][-1]
+        assert semantic["semantics"]["hue"] == "semantic_hue"
+        assert semantic["semantics"]["size"] == "semantic_size"
+        assert semantic["semantics"]["style"] == "semantic_style"
+        assert semantic["semantics"]["scale_id"] == "study"
+        _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "scatter",
+                "panel": "1",
+                "fields": json.dumps(
+                    {
+                        "x": "x",
+                        "y": "y",
+                        "semantics": {
+                            "hue": "semantic_hue",
+                            "size": "semantic_size",
+                            "style": "semantic_style",
+                            "legend": True,
+                            "scale_id": "study",
+                        },
+                    }
+                ),
+            },
+        )
+        with _request(f"{base}/spec.json") as response:
+            shared = json.load(response)["panels"][1]["layers"][-2:]
+        assert all(layer["semantics"]["scale_id"] == "study" for layer in shared)
+
+        _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "lineplot",
+                "panel": "1",
+                "fields": json.dumps(
+                    {
+                        "x": "line_x",
+                        "y": "y",
+                        "stat": {"errorbar": None},
+                        "semantics": {
+                            "scale_id": "study",
+                            "hue": "semantic_hue",
+                            "size": "semantic_size",
+                            "style": "semantic_style",
+                        },
+                    }
+                ),
+            },
+        )
+        with _request(f"{base}/spec.json") as response:
+            mapped_line = json.load(response)["panels"][1]["layers"][-1]
+        assert (
+            mapped_line["type"] == "lineplot"
+            and mapped_line["semantics"]["scale_id"] == "study"
+        )
+
+        for element, multiple in (
+            ("bars", "stack"),
+            ("bars", "dodge"),
+            ("step", "layer"),
+            ("step", "stack"),
+        ):
+            _submit(
+                base,
+                "/layers",
+                {
+                    "layer_type": "hist",
+                    "panel": "1",
+                    "fields": json.dumps(
+                        {
+                            "x": "line_x",
+                            "group": "semantic_hue",
+                            "bins": [0.5, 1.5, 2.5, 4.5],
+                            "hue_order": ["empty", "B", "A"],
+                            "histogram": {
+                                "stat": "density",
+                                "weights": "sample_weight",
+                                "multiple": multiple,
+                                "element": element,
+                            },
+                        }
+                    ),
+                },
+            )
+            with _request(f"{base}/spec.json") as response:
+                histogram = json.load(response)["panels"][1]["layers"][-1]
+            assert histogram["type"] == "hist"
+            assert histogram["histogram"]["multiple"] == multiple
+            assert histogram["histogram"]["element"] == element
+            with _request(f"{base}/fig.png") as response:
+                assert response.read(8) == b"\x89PNG\r\n\x1a\n"
+            with _request(f"{base}/undo", b"") as response:
+                assert response.status == 200
 
         exports = {}
         for fmt, prefix in (("pdf", b"%PDF"), ("svg", b"<?xml")):
@@ -260,10 +533,225 @@ def main(*, browser: bool = False) -> int:
         assert initial["panels"][0]["title"] == "mudplot Rust editor"
         assert final["panels"][0]["title"] == "Agent JSON"
         assert final["data"]["columns"]["unused_huge_integer"] == huge_values
+
+        template = mp.plot(
+            {
+                "x": [2, 1, 1, 1, 2, 1, 2],
+                "y": [8, 4, 5, 2, 3, 4, 6],
+                "group": ["B", "B", "B", "A", "A", "A", "A"],
+                "site": ["North"] * 5 + ["South"] * 2,
+            }
+        ).line("x", "y", group="group")
+        _submit(base, "/open", {"json": template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetFacets", "col": "site"}).encode(),
+            "application/json",
+        ) as response:
+            faceted = json.load(response)
+        assert [panel["filters"] for panel in faceted["panels"]] == [
+            {"site": "North"},
+            {"site": "South"},
+        ]
+        assert faceted["data"] == template.spec.data.to_dict()
+        assert all(
+            panel["layers"][0]["hue_order"] == ["B", "A"] for panel in faceted["panels"]
+        )
+        assert all(panel["layers"][0]["stat"] is None for panel in faceted["panels"])
+        with _request(f"{base}/fig.png") as response:
+            assert response.read(8) == b"\x89PNG\r\n\x1a\n"
+        with _request(f"{base}/fig.svg") as response:
+            assert b"<svg" in response.read()
+        joint_template = (
+            mp.plot(
+                {
+                    "x": [1, 2, None, 4, 5],
+                    "y": [2, 4, 5, None, 7],
+                    "group": ["A", "A", "B", "B", "B"],
+                }
+            )
+            .scatter("x", "y", group="group")
+            .size(6, 6)
+        )
+        _submit(base, "/open", {"json": joint_template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetJointGrid", "bins": 3}).encode(),
+            "application/json",
+        ) as response:
+            joint = json.load(response)
+        assert len(joint["panels"]) == 3 and joint["layout"] == [2, 2]
+        assert joint["data"] == joint_template.spec.data.to_dict()
+        assert all(panel["dropna"] == ["x", "y", "group"] for panel in joint["panels"])
+        assert joint["share_x"] == "col" and joint["share_y"] == "row"
+        for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+            with _request(f"{base}/fig.{extension}") as response:
+                assert response.read().startswith(prefix)
+        pair_template = mp.plot(
+            {
+                "a": [1, 2, None, 4],
+                "b": [2, None, 4, 5],
+                "c": [4, 3, 2, 1],
+                "group": ["A", "A", "B", "B"],
+            }
+        ).size(8, 8)
+        _submit(base, "/open", {"json": pair_template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps(
+                {
+                    "type": "SetPairGrid",
+                    "columns": ["a", "b", "c"],
+                    "group": "group",
+                    "bins": 3,
+                }
+            ).encode(),
+            "application/json",
+        ) as response:
+            pair = json.load(response)
+        assert len(pair["panels"]) == 9 and pair["layout"] == [3, 3]
+        assert pair["data"] == pair_template.spec.data.to_dict()
+        assert pair["panels"][1]["y"]["share_id"] == pair["panels"][2]["y"]["share_id"]
+        assert pair["panels"][0]["y"]["share_id"] is None
+        for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+            with _request(f"{base}/fig.{extension}") as response:
+                assert response.read().startswith(prefix)
+        kde_data = {
+            "x": [1, 2, 3, 4, 5, 6],
+            "y": [2, 4, 3, 5, 7, 6],
+            "z": [6, 4, 5, 3, 1, 2],
+            "group": ["A"] * 3 + ["B"] * 3,
+        }
+        kde_template = mp.plot(kde_data).scatter("x", "y", group="group").size(6, 6)
+        _submit(base, "/open", {"json": kde_template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps(
+                {
+                    "type": "SetJointGrid",
+                    "marginal_kind": "kde",
+                    "kde": {"cut": 0, "gridsize": 31, "bw_adjust": 0.75},
+                }
+            ).encode(),
+            "application/json",
+        ) as response:
+            kde_joint = json.load(response)
+        assert kde_joint["data"] == kde_template.spec.data.to_dict()
+        assert all(kde_joint["panels"][i]["layers"][0]["type"] == "kde" for i in (1, 2))
+        kde_pair_template = mp.plot(kde_data).size(8, 8)
+        _submit(base, "/open", {"json": kde_pair_template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps(
+                {
+                    "type": "SetPairGrid",
+                    "columns": ["x", "y", "z"],
+                    "group": "group",
+                    "diag_kind": "kde",
+                    "kde": {"cut": 0, "gridsize": 31},
+                }
+            ).encode(),
+            "application/json",
+        ) as response:
+            kde_pair = json.load(response)
+        assert kde_pair["data"] == kde_pair_template.spec.data.to_dict()
+        assert all(
+            kde_pair["panels"][i]["layers"][0]["type"] == "kde" for i in (0, 4, 8)
+        )
+        for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+            with _request(f"{base}/fig.{extension}") as response:
+                assert response.read().startswith(prefix)
+        heatmap_template = mp.plot().matrix("m", [[-2, 0, 3], [1, 4, 8]]).size(6, 4)
+        _submit(base, "/open", {"json": heatmap_template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps(
+                {
+                    "type": "AddLayer",
+                    "layer": {
+                        "type": "heatmap",
+                        "matrix": "m",
+                        "cmap_kind": "diverging",
+                        "colorbar": True,
+                        "line_width": 0.5,
+                        "edge_color": "#ffffff",
+                        "heatmap": {
+                            "annot": True,
+                            "center": 0,
+                            "fmt": ".1f",
+                            "mask": [[False, True, False], [False, False, False]],
+                            "xlabels": ["A", "B", "C"],
+                            "ylabels": ["N", "S"],
+                        },
+                    },
+                }
+            ).encode(),
+            "application/json",
+        ) as response:
+            heatmap = json.load(response)
+        assert heatmap["data"] == heatmap_template.spec.data.to_dict()
+        assert heatmap["panels"][0]["layers"][0]["heatmap"]["annot"] is True
+        for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+            with _request(f"{base}/fig.{extension}") as response:
+                assert response.read().startswith(prefix)
+        from examples.regression_modes import build_plots as regression_examples
+
+        for name, source in regression_examples().items():
+            template = mp.plot(source.spec.data.columns).size(7, 4.5)
+            _submit(base, "/open", {"json": template.to_json()})
+            layer = source.spec.panels[0].layers[0]
+            with _request(
+                f"{base}/action",
+                json.dumps({"type": "AddLayer", "layer": layer.to_dict()}).encode(),
+                "application/json",
+            ) as response:
+                regression = json.load(response)
+            assert regression["data"] == template.spec.data.to_dict(), name
+            assert (
+                regression["panels"][0]["layers"][0]["regression"]
+                == layer.to_dict()["regression"]
+            )
+            for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+                with _request(f"{base}/fig.{extension}") as response:
+                    assert response.read().startswith(prefix), name
+        from examples.clustered_profiles import build_plot as cluster_example
+
+        source = cluster_example()
+        template = (
+            mp.plot()
+            .matrix("profiles", source.spec.data.matrices["profiles"])
+            .size(7, 6.5)
+        )
+        _submit(base, "/open", {"json": template.to_json()})
+        with _request(
+            f"{base}/action",
+            json.dumps(
+                {
+                    "type": "AddLayer",
+                    "layer": source.spec.panels[0].layers[0].to_dict(),
+                }
+            ).encode(),
+            "application/json",
+        ) as response:
+            clustered = json.load(response)
+        assert clustered["data"] == template.spec.data.to_dict()
+        assert clustered["panels"][0]["layers"][0]["cluster"]["z_score"] == "row"
+        for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
+            with _request(f"{base}/fig.{extension}") as response:
+                assert response.read().startswith(prefix)
+        _review_json_boundaries(base)
         if browser:
             _browser_check(base)
     finally:
-        process.terminate()
+        if os.name == "nt" and process.poll() is None:
+            # Terminate this owned cargo/server tree, not just its cargo parent.
+            subprocess.run(
+                ["taskkill", "/PID", str(process.pid), "/T", "/F"],
+                capture_output=True,
+                timeout=10,
+            )
+        else:
+            process.terminate()
         try:
             process.wait(timeout=10)
         except subprocess.TimeoutExpired:

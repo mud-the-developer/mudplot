@@ -16,22 +16,25 @@ dashboard ──▶ mudplot   (one-way dependency)
 
 ```bash
 python -m dashboard build --out dashboard/site_build   # or just: python -m dashboard --out ...
-open dashboard/site_build/index.html
+# Open dashboard/site_build/index.html in a browser.
 ```
 
 - `site.py` — builds the engine reference from `mudplot.reference_markdown()`
-  / `mudplot.capabilities()`, renders executable examples for all 28 layers,
+  / `mudplot.capabilities()`, renders executable examples for every registered layer,
   and generates design-principle images (palette CVD/greyscale safety,
   redundant encoding, TeX WYSIWYG, secondary axes/heatmaps, etc.), bundling
-  everything into one HTML page.
+  an index plus a self-contained reading review under `reading/`.
 - `plot_gallery.py` + `../examples/plots/` — one runnable source file per
   registered layer. CI requires exact coverage, validates every resulting
   spec, round-trips it through JSON, and renders it with the live engine.
 - `markdown_lite.py` — a tiny converter that only handles the Markdown
   subset mudplot itself generates (zero dependencies, stdlib only).
-- **The docs and the figures always match the engine**: both are produced by
-  live engine calls, so they can never go stale the way hand-written docs
-  can.
+- **Reading examples are built from the same source as the editor drafts**:
+  `reading/VISUAL_REVIEW.html` includes 700px/320px layouts, captions and numerical
+  lookup, SVG/PDF/editable exports and locally rendered criteria pages. Source
+  data, canonical specs and local links are tested. Curated explanations and
+  aesthetic/readability judgments still need review; generated does not mean
+  automatically good.
 
 ### 2. A local interactive editor
 
@@ -39,6 +42,15 @@ open dashboard/site_build/index.html
 python -m dashboard serve            # http://127.0.0.1:8765/
 python -m dashboard serve --port 9000
 ```
+
+Under **Start from a sample → Complete figure drafts**, choose Response or
+Endpoint at 700px or 320px. The link only prefills the **Open** form: the current
+figure, PNG and action history remain unchanged. Review the draft and export any
+current work before pressing **Open figure**; an accepted import starts fresh
+undo history, as for opening a saved spec. Invalid imports preserve both the
+current figure and the submitted JSON so it can be corrected. The editor opts
+out of htmx's localStorage page-body history cache. Its workspace preview can be
+scaled; use actual-size review/exports to judge delivered dimensions.
 
 The running editor has two tabs (top nav): **Editor** and **Docs** — the
 same engine reference as the static site's, served live from
@@ -52,14 +64,17 @@ needing a separate `dashboard build` process.
   0BSD licensed) for partial-page updates. Packaging pins the official file's
   SHA-256 in `scripts/check_wheel.py`. It accepts only loopback binds/Hosts and
   same-origin mutations, bounds request/form bodies, and sends CSP plus
-  `Cache-Control: no-store` on every response. Every click/form submit builds a real `Action`
-  and dispatches it through the *exact same* `Store`/reducer the fluent API
-  uses — there is no separate editor-only state model.
+  `Cache-Control: no-store` on every response. Figure edits build real `Action`s
+  and dispatch them through the *exact same* `Store`/reducer the fluent API
+  uses — there is no separate editor-only state model. Native forms also have
+  explicit POST actions, so missing/not-yet-wired JavaScript cannot put input
+  values in GET URLs. Referrer policy is same-origin (none to external sites),
+  without relaxing Origin/cross-site mutation rejection.
 - Load sample data; tweak theme/journal/palette; edit the grid, active panel,
   Cartesian/polar/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
   labels, references, suptitle, and size; add common
-  series/annotations through quick forms or **any of the 28 registered layer
-  types** through a capabilities-driven checked-JSON form; undo/redo; or send
+  series/annotations through quick forms or **any registered layer type**
+  through a capabilities-driven checked-JSON form; undo/redo; or send
   a raw JSON action (the same shape an AI agent uses). The preview, layer
   list, and action log update **in place** after every change (an htmx partial
   swap of `#app-body`, not a full page navigation).

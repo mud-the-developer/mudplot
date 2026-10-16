@@ -22,6 +22,7 @@ from mudplot._render import (
     _MATRIX_TYPES,
     _SERIES_TYPES,
     _STANDALONE_TYPES,
+    _STAT_TYPES,
 )
 from mudplot.capabilities import LAYER_TYPES
 from mudplot.spec import SPEC_VERSION, FigureSpec, LayerSpec
@@ -34,6 +35,7 @@ _RENDER_KNOWN_TYPES = (
     | _MATRIX_TYPES
     | _3D_TYPES
     | _STANDALONE_TYPES
+    | _STAT_TYPES
     | {
         "hline",
         "vline",
@@ -70,17 +72,25 @@ def test_every_renderer_type_is_advertised_in_capabilities():
 def test_group_field_advertised_exactly_for_groupable_types():
     groupable = {
         "line",
+        "lineplot",
         "regplot",
         "scatter",
         "stripplot",
+        "swarmplot",
         "stackplot",
         "bar",
+        "barplot",
+        "pointplot",
+        "countplot",
         "errorbar",
         "band",
         "hist",
+        "boxenplot",
         "box",
         "violin",
         "kde",
+        "kde2d",
+        "ecdf",
         "rug",
         "scatter3d",
         "line3d",

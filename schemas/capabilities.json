@@ -8,6 +8,7 @@
       ],
       "optional": [
         "group",
+        "hue_order",
         "label",
         "color",
         "line_width",
@@ -25,9 +26,11 @@
         "y"
       ],
       "optional": [
+        "regression",
         "degree",
         "confidence",
         "group",
+        "hue_order",
         "label",
         "color",
         "line_width",
@@ -44,7 +47,9 @@
         "y"
       ],
       "optional": [
+        "semantics",
         "group",
+        "hue_order",
         "label",
         "color",
         "marker",
@@ -65,12 +70,37 @@
       "optional": [
         "jitter",
         "group",
+        "hue_order",
         "label",
         "color",
         "marker",
         "marker_size",
         "alpha",
         "axis"
+      ]
+    },
+    "swarmplot": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "orient",
+        "order",
+        "hue_order",
+        "width",
+        "dodge",
+        "gap",
+        "native_scale",
+        "warn_thresh",
+        "label",
+        "color",
+        "edge_color",
+        "line_width",
+        "marker",
+        "marker_size",
+        "alpha"
       ]
     },
     "stackplot": {
@@ -115,8 +145,131 @@
       ],
       "optional": [
         "group",
+        "hue_order",
         "label",
         "color",
+        "bar_width",
+        "edge_color",
+        "line_width",
+        "yerr",
+        "y_lower",
+        "y_upper",
+        "error_color",
+        "error_line_width",
+        "capsize",
+        "capthick",
+        "alpha",
+        "axis"
+      ]
+    },
+    "barplot": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "stat",
+        "native_scale",
+        "stat_scale",
+        "baseline",
+        "orient",
+        "order",
+        "hue_order",
+        "gap",
+        "value_labels",
+        "label_format",
+        "label",
+        "color",
+        "bar_width",
+        "edge_color",
+        "line_width",
+        "error_color",
+        "error_line_width",
+        "capsize",
+        "capthick",
+        "alpha",
+        "axis"
+      ]
+    },
+    "pointplot": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "stat",
+        "native_scale",
+        "stat_scale",
+        "orient",
+        "order",
+        "hue_order",
+        "dodge",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
+        "error_color",
+        "error_line_width",
+        "capsize",
+        "capthick",
+        "alpha",
+        "axis"
+      ]
+    },
+    "lineplot": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "semantics",
+        "cmap_kind",
+        "group",
+        "stat",
+        "orient",
+        "stat_scale",
+        "hue_order",
+        "sort",
+        "error_style",
+        "error_alpha",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
+        "error_color",
+        "error_line_width",
+        "capsize",
+        "capthick",
+        "alpha"
+      ]
+    },
+    "countplot": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "group",
+        "stat",
+        "native_scale",
+        "baseline",
+        "orient",
+        "order",
+        "hue_order",
+        "gap",
+        "stack",
+        "value_labels",
+        "label_format",
+        "label",
+        "color",
+        "bar_width",
+        "edge_color",
+        "line_width",
         "alpha",
         "axis"
       ]
@@ -129,10 +282,16 @@
       "optional": [
         "yerr",
         "xerr",
+        "y_lower",
+        "y_upper",
         "group",
+        "hue_order",
         "label",
         "color",
+        "error_color",
+        "error_line_width",
         "capsize",
+        "capthick",
         "marker",
         "marker_size",
         "line_width",
@@ -148,6 +307,7 @@
       ],
       "optional": [
         "group",
+        "hue_order",
         "label",
         "color",
         "alpha",
@@ -210,9 +370,46 @@
       "optional": [
         "bins",
         "density",
+        "histogram",
         "group",
+        "hue_order",
+        "orient",
         "label",
         "color",
+        "edge_color",
+        "line_width",
+        "alpha"
+      ]
+    },
+    "boxenplot": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "y",
+        "group",
+        "orient",
+        "order",
+        "hue_order",
+        "width",
+        "dodge",
+        "gap",
+        "native_scale",
+        "stat_scale",
+        "k_depth",
+        "components",
+        "width_method",
+        "outlier_prop",
+        "trust_alpha",
+        "showfliers",
+        "showmedians",
+        "label",
+        "color",
+        "edge_color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
         "alpha"
       ]
     },
@@ -221,9 +418,28 @@
         "x"
       ],
       "optional": [
+        "y",
         "group",
+        "orient",
+        "order",
+        "hue_order",
+        "width",
+        "dodge",
+        "gap",
+        "native_scale",
+        "stat_scale",
+        "whis",
+        "components",
+        "notch",
+        "showmeans",
+        "showfliers",
         "label",
         "color",
+        "edge_color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
         "alpha"
       ]
     },
@@ -262,10 +478,28 @@
         "matrix"
       ],
       "optional": [
+        "heatmap",
         "cmap_kind",
         "colorbar",
         "clabel",
-        "alpha"
+        "alpha",
+        "line_width",
+        "edge_color"
+      ]
+    },
+    "clustermap": {
+      "required": [
+        "matrix"
+      ],
+      "optional": [
+        "cluster",
+        "heatmap",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "line_width",
+        "edge_color"
       ]
     },
     "contour": {
@@ -297,9 +531,52 @@
         "x"
       ],
       "optional": [
+        "y",
         "group",
+        "orient",
+        "order",
+        "hue_order",
+        "width",
+        "dodge",
+        "gap",
+        "native_scale",
+        "stat_scale",
+        "bw_method",
+        "points",
+        "weights",
+        "inner",
+        "split",
+        "density_norm",
+        "common_norm",
+        "bw_adjust",
+        "cut",
+        "clip",
+        "marker",
+        "marker_size",
+        "showmeans",
+        "showmedians",
+        "showextrema",
         "label",
         "color",
+        "edge_color",
+        "line_width",
+        "line_style",
+        "alpha"
+      ]
+    },
+    "ecdf": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "ecdf",
+        "group",
+        "hue_order",
+        "orient",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
         "alpha"
       ]
     },
@@ -308,12 +585,33 @@
         "x"
       ],
       "optional": [
+        "kde",
         "group",
+        "hue_order",
+        "orient",
         "label",
         "color",
         "alpha",
         "line_width",
-        "line_style"
+        "line_style",
+        "edge_color"
+      ]
+    },
+    "kde2d": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "kde2d",
+        "group",
+        "hue_order",
+        "label",
+        "color",
+        "alpha",
+        "line_width",
+        "line_style",
+        "edge_color"
       ]
     },
     "rug": {
@@ -322,6 +620,7 @@
       ],
       "optional": [
         "group",
+        "hue_order",
         "label",
         "color",
         "alpha",
@@ -404,8 +703,1286 @@
     "paper",
     "paper-grid",
     "minimal",
-    "boxed"
+    "boxed",
+    "publication"
   ],
+  "facets": {
+    "action": "SetFacets",
+    "fields": [
+      {
+        "name": "row",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_wrap",
+        "type": "int or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "share_x",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      },
+      {
+        "name": "share_y",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      }
+    ],
+    "panel_selector": "filters: exact JSON scalar matches on up to two columns",
+    "max_panels": 64,
+    "supported_layers": [
+      "annotate",
+      "band",
+      "bar",
+      "barplot",
+      "box",
+      "boxenplot",
+      "countplot",
+      "ecdf",
+      "errorbar",
+      "hist",
+      "hline",
+      "kde",
+      "kde2d",
+      "line",
+      "lineplot",
+      "pointplot",
+      "regplot",
+      "rug",
+      "scatter",
+      "stripplot",
+      "swarmplot",
+      "text",
+      "violin",
+      "vline"
+    ],
+    "template": "one completed unfiltered primary Cartesian2D panel",
+    "ordering": "first-seen/explicit levels; row-major; col-only wrap",
+    "statistics": "row selection before cell-local estimation/normalization",
+    "semantics": "pooled original selected row IDs; named shared domains",
+    "layout": "explicit cells; later edits panel-scoped; size unchanged",
+    "data_updates": "selectors/orders persist; rebuild to add new levels",
+    "raw_groups": "hue_order selects/reserves; raw rows/gaps/values kept",
+    "limits": "no matrices/3D/polar/y2/c colourbars; hist needs typed config and common explicit edges; kde needs KDESpec"
+  },
+  "joint_grid": {
+    "action": "SetJointGrid",
+    "fields": [
+      {
+        "name": "bins",
+        "type": "int",
+        "required": false,
+        "default": 20
+      },
+      {
+        "name": "ratio",
+        "type": "float",
+        "required": false,
+        "default": 3.0
+      },
+      {
+        "name": "marginal_stat",
+        "type": "str",
+        "required": false,
+        "default": "density"
+      },
+      {
+        "name": "marginal_kind",
+        "type": "str",
+        "required": false,
+        "default": "hist"
+      },
+      {
+        "name": "kde",
+        "type": "KDESpec or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "main": [
+      "scatter",
+      "regplot"
+    ],
+    "marginals": "hist count/density/probability/percent or KDE density",
+    "layout": "main top-left, y right, x below; no fourth axes",
+    "selection": "dynamic complete x/y/group cases; source table intact",
+    "sharing": "x by column, y by row; density axes remain independent",
+    "limits": "one raw primary Cartesian2D template; no semantics/c/y2/weights"
+  },
+  "pair_grid": {
+    "action": "SetPairGrid",
+    "fields": [
+      {
+        "name": "columns",
+        "type": "list[str]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "group",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "bins",
+        "type": "int",
+        "required": false,
+        "default": 20
+      },
+      {
+        "name": "diag_stat",
+        "type": "str",
+        "required": false,
+        "default": "density"
+      },
+      {
+        "name": "diag_kind",
+        "type": "str",
+        "required": false,
+        "default": "hist"
+      },
+      {
+        "name": "kde",
+        "type": "KDESpec or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "max_variables": 8,
+    "cells": "raw scatter off diagonal; typed hist/KDE diagonal",
+    "selection": "pairwise complete rows; diagonal variable-only rows",
+    "sharing": "named x columns/y off-diagonal rows; density y independent",
+    "limits": "2..8 numeric vars; categorical group; no corner/weights/CDF"
+  },
+  "named_axis_sharing": {
+    "field": "AxisSpec.share_id",
+    "action": "SetAxisShare",
+    "axes": [
+      "x",
+      "y"
+    ],
+    "limits": "primary Cartesian; figure mode none; same scales/limits"
+  },
+  "heatmap": {
+    "fields": [
+      {
+        "name": "norm",
+        "type": "str",
+        "required": false,
+        "default": "linear"
+      },
+      {
+        "name": "vmin",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "vmax",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "center",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "robust",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "annot",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "fmt",
+        "type": "str",
+        "required": false,
+        "default": "g"
+      },
+      {
+        "name": "mask",
+        "type": "list[list[bool]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "xlabels",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "ylabels",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "square",
+        "type": "bool",
+        "required": false,
+        "default": false
+      }
+    ],
+    "defaults": {
+      "norm": "linear",
+      "vmin": null,
+      "vmax": null,
+      "center": null,
+      "robust": false,
+      "annot": false,
+      "fmt": "g",
+      "mask": null,
+      "xlabels": null,
+      "ylabels": null,
+      "square": false
+    },
+    "norms": [
+      "linear",
+      "log"
+    ],
+    "center": "linear diverging TwoSlope; inferred bounds symmetric",
+    "robust": "unmasked finite-value 2nd/98th percentiles",
+    "mask": "same-shaped booleans; hidden values excluded from norm/text",
+    "annotations": "raw values/bounded formats; alpha-aware text contrast",
+    "max_annotations": 4096,
+    "borders": "typed layer line_width/edge_color in points",
+    "legacy": "heatmap=None retains old imshow display",
+    "limits": "finite rectangular matrix; no custom text/cluster/date axes"
+  },
+  "clustermap": {
+    "fields": [
+      {
+        "name": "method",
+        "type": "str",
+        "required": false,
+        "default": "average"
+      },
+      {
+        "name": "metric",
+        "type": "str",
+        "required": false,
+        "default": "euclidean"
+      },
+      {
+        "name": "row_cluster",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "col_cluster",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "z_score",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "standard_scale",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "optimal_ordering",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "row_linkage",
+        "type": "list[list[float]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_linkage",
+        "type": "list[list[float]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_colors",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_colors",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "dendrogram_ratio",
+        "type": "float",
+        "required": false,
+        "default": 0.2
+      },
+      {
+        "name": "tree_width",
+        "type": "float",
+        "required": false,
+        "default": 0.8
+      },
+      {
+        "name": "tree_color",
+        "type": "str",
+        "required": false,
+        "default": "#475569"
+      }
+    ],
+    "defaults": {
+      "method": "average",
+      "metric": "euclidean",
+      "row_cluster": true,
+      "col_cluster": true,
+      "z_score": null,
+      "standard_scale": null,
+      "optimal_ordering": false,
+      "row_linkage": null,
+      "col_linkage": null,
+      "row_colors": null,
+      "col_colors": null,
+      "dendrogram_ratio": 0.2,
+      "tree_width": 0.8,
+      "tree_color": "#475569"
+    },
+    "methods": [
+      "single",
+      "complete",
+      "average",
+      "weighted",
+      "centroid",
+      "median",
+      "ward"
+    ],
+    "metrics": [
+      "euclidean",
+      "cityblock",
+      "cosine",
+      "correlation"
+    ],
+    "max_dimension": 512,
+    "optional": "mudplot[cluster], scipy>=1.10 for clustering effects",
+    "orders": "fit or supplied linkage; labels/mask/colours follow leaves",
+    "standardization": "row/col sample z-score or min-max, mutually exclusive",
+    "mask": "display only; does not remove fit or standardization values",
+    "layout": "own Cartesian panel; no axis sharing/cropped limits/overlays",
+    "data": "source matrix unchanged; fit-time transformation/order only",
+    "limits": "one colour strip/axis; no missing data/continuous strip legend"
+  },
+  "regression": {
+    "fields": [
+      {
+        "name": "model",
+        "type": "str",
+        "required": false,
+        "default": "poly"
+      },
+      {
+        "name": "residual",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "frac",
+        "type": "float",
+        "required": false,
+        "default": 0.6666666666666666
+      },
+      {
+        "name": "iterations",
+        "type": "int",
+        "required": false,
+        "default": 3
+      }
+    ],
+    "defaults": {
+      "model": "poly",
+      "residual": false,
+      "frac": 0.6666666666666666,
+      "iterations": 3
+    },
+    "models": [
+      "poly",
+      "logx",
+      "robust",
+      "logistic",
+      "lowess"
+    ],
+    "residual": "residplot alias; observed y minus in-sample fitted response",
+    "optional": "mudplot[regression], statsmodels>=0.14.1",
+    "confidence": "normal-approx poly/logx only; no bootstrap",
+    "grouping": "fit after panel/hue selection; source rows retained",
+    "max_rows": 10000,
+    "max_lowess_rows": 5000,
+    "failures": "nonfinite/singular/separated/unconverged fits raise",
+    "legacy": "regression=None retains old polynomial effects",
+    "limits": "no weights/bootstrap/deviance residuals/residual smooth trend"
+  },
+  "statistics": {
+    "estimators": [
+      "mean",
+      "median",
+      "sum",
+      "min",
+      "max",
+      "count"
+    ],
+    "interval_methods": [
+      "sd",
+      "se",
+      "pi",
+      "ci"
+    ],
+    "interval_constraints": {
+      "se": "sample-mean SEM only",
+      "count": "no intervals"
+    },
+    "default_levels": {
+      "sd": 1.0,
+      "se": 1.0,
+      "pi": 95.0,
+      "ci": 95.0
+    },
+    "max_bootstraps": 100000,
+    "fields": [
+      {
+        "name": "estimator",
+        "type": "str",
+        "required": false,
+        "default": "mean"
+      },
+      {
+        "name": "errorbar",
+        "type": "str or None",
+        "required": false,
+        "default": "ci"
+      },
+      {
+        "name": "level",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "n_boot",
+        "type": "int",
+        "required": false,
+        "default": 1000
+      },
+      {
+        "name": "seed",
+        "type": "int",
+        "required": false,
+        "default": 0
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "units",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "normalize",
+        "type": "str",
+        "required": false,
+        "default": "count"
+      }
+    ],
+    "layer_defaults": {
+      "barplot": {
+        "estimator": "mean",
+        "errorbar": "ci",
+        "level": null,
+        "n_boot": 1000,
+        "seed": 0,
+        "weights": null,
+        "units": null,
+        "normalize": "count"
+      },
+      "pointplot": {
+        "estimator": "mean",
+        "errorbar": "ci",
+        "level": null,
+        "n_boot": 1000,
+        "seed": 0,
+        "weights": null,
+        "units": null,
+        "normalize": "count"
+      },
+      "lineplot": {
+        "estimator": "mean",
+        "errorbar": "ci",
+        "level": null,
+        "n_boot": 1000,
+        "seed": 0,
+        "weights": null,
+        "units": null,
+        "normalize": "count"
+      },
+      "countplot": {
+        "estimator": "count",
+        "errorbar": null,
+        "level": null,
+        "n_boot": 1000,
+        "seed": 0,
+        "weights": null,
+        "units": null,
+        "normalize": "count"
+      }
+    },
+    "axes": "Cartesian 2-D primary native/log; legacy linear ordinal y2 only",
+    "unknown_stat_options": "rejected, never silently ignored",
+    "category_scale": "ordinal default; explicit numeric native/log",
+    "stat_scale": "raw default; axis log mean/median/min/max + inverse",
+    "log_intervals": "SD/SEM/PI/CI in declared space; no endpoint clipping",
+    "axis_log_estimators": [
+      "mean",
+      "median",
+      "min",
+      "max"
+    ],
+    "baseline": "bar/count raw endpoint base; log needs explicit positive base",
+    "bar_endpoint": "estimate, not baseline+estimate; labels show estimate",
+    "log_stack": "no log values; native/log categories + linear stacks",
+    "native_sizes": "bar_width in (0,1], point dodge [0,1] times min spacing",
+    "orientations": [
+      "v",
+      "h"
+    ],
+    "category_argument": "x remains categorical, y remains the value even in h",
+    "empty_levels": "reserve slots, never invent estimates or legend entries",
+    "stack": "countplot only; additive counts/proportions/percentages",
+    "missing_rows": "drop missing required rows; countplot needs no y",
+    "singleton_intervals": "omitted with a render warning",
+    "weights": true,
+    "weighted_methods": "mean with None or paired-row percentile bootstrap CI",
+    "zero_weights": "excluded from estimation and resampling",
+    "repeated_measures": true,
+    "unit_resampling": "resample units, then rows within each selected unit",
+    "unit_point_estimate": "observation-weighted, not an equal-unit mean",
+    "count_statistics": [
+      "count",
+      "probability",
+      "proportion",
+      "percent"
+    ],
+    "count_denominator": "all usable selected rows across categories and hues",
+    "callable_estimators": false
+  },
+  "scatter_semantics": {
+    "fields": [
+      {
+        "name": "scale_id",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_kind",
+        "type": "str",
+        "required": false,
+        "default": "categorical"
+      },
+      {
+        "name": "hue_order",
+        "type": "list[Any] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_norm",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "size",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "size_kind",
+        "type": "str",
+        "required": false,
+        "default": "numeric"
+      },
+      {
+        "name": "size_order",
+        "type": "list[Any] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "size_norm",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "sizes",
+        "type": "list[float]",
+        "required": false,
+        "default": [
+          3.0,
+          9.0
+        ]
+      },
+      {
+        "name": "style",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "style_order",
+        "type": "list[Any] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "markers",
+        "type": "list[str]",
+        "required": false,
+        "default": [
+          "o",
+          "s",
+          "D",
+          "^",
+          "v",
+          "P",
+          "X"
+        ]
+      },
+      {
+        "name": "dashes",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "legend",
+        "type": "bool",
+        "required": false,
+        "default": true
+      }
+    ],
+    "defaults": {
+      "scale_id": null,
+      "hue": null,
+      "hue_kind": "categorical",
+      "hue_order": null,
+      "hue_norm": null,
+      "size": null,
+      "size_kind": "numeric",
+      "size_order": null,
+      "size_norm": null,
+      "sizes": [
+        3.0,
+        9.0
+      ],
+      "style": null,
+      "style_order": null,
+      "markers": [
+        "o",
+        "s",
+        "D",
+        "^",
+        "v",
+        "P",
+        "X"
+      ],
+      "dashes": null,
+      "legend": true
+    },
+    "roles": "independent hue/size/style, not inferred redundant grouping",
+    "scale_id": "named figure pool, identical settings except legend",
+    "shared_rows": "unique member rows in original table order",
+    "shared_guides": "pooled scope guides, once per panel; dataset labels kept",
+    "shared_palette": "one reserved colour block per name, legacy cannot shift",
+    "sharing_limits": "pool <=10000 rows/64levels/enough distinct markers",
+    "hue": "categorical LCH slots or explicit numeric linear mapping",
+    "size": "numeric/categorical diameters in points; native area=diameter**2",
+    "style": "categorical unique filled markers; no cycling/repeating",
+    "orders": "selected/reserved levels; missing rows drop listwise",
+    "norms": "selected global bounds or explicit mapping-only clipped bounds",
+    "constant": "numeric auto-constant maps midpoint, one numeric guide",
+    "legend": "observed categories / numeric mapping guides, no plotted data",
+    "max_levels": 64,
+    "max_rows": 10000,
+    "markers": [
+      "o",
+      "s",
+      "D",
+      "^",
+      "v",
+      "P",
+      "X",
+      "d",
+      "p",
+      "h",
+      "8",
+      "*"
+    ],
+    "limits": "primary2D numeric x/y; no group/c, colorbar, date/y2, outline",
+    "legacy": "semantics=None leaves existing group/c/marker calls unchanged"
+  },
+  "lineplot": {
+    "coordinates": "numeric predictor x; horizontal swaps display only",
+    "default": "mean/seeded pointwise CI band; raw line primitive unchanged",
+    "interval_scope": "per-x cells, not simultaneous or whole-curve bootstrap",
+    "sort": "ascending default; False per-hue first observed x order",
+    "bands": "monotonic x; split at missing bounds, no fake singleton CI",
+    "weights_units": "shared mean/paired CI and within-x unit bootstrap",
+    "axes": "primary2D; raw/log predictors; explicit data/axis response fit",
+    "semantics": "independent raw hue/size/style tuples define curves",
+    "size": "sizes interpolate main stroke widths in points, not marker area",
+    "style": "unique filled markers; optional distinct named dashes",
+    "shared": "figure scale_id pools row domains; per-geometry guide blocks",
+    "numeric_curves": "clipping changes appearance, never merges raw curves",
+    "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
+    "max_semantic_curves": 256
+  },
+  "histogram": {
+    "fields": [
+      {
+        "name": "stat",
+        "type": "str",
+        "required": false,
+        "default": "count"
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "common_norm",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "cumulative",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "multiple",
+        "type": "str",
+        "required": false,
+        "default": "layer"
+      },
+      {
+        "name": "element",
+        "type": "str",
+        "required": false,
+        "default": "bars"
+      }
+    ],
+    "defaults": {
+      "stat": "count",
+      "weights": null,
+      "common_norm": true,
+      "cumulative": false,
+      "multiple": "layer",
+      "element": "bars"
+    },
+    "statistics": [
+      "count",
+      "frequency",
+      "probability",
+      "proportion",
+      "percent",
+      "density"
+    ],
+    "multiple": [
+      "layer",
+      "stack",
+      "dodge"
+    ],
+    "elements": [
+      "bars",
+      "step"
+    ],
+    "max_bins": 10000,
+    "legacy": "histogram=None preserves old density/group/bin/alpha effects",
+    "bins": "pooled shared equal-width integer bins or explicit raw edges",
+    "membership": "[left,right), final edge closed; outside mass excluded",
+    "weights": "finite nonnegative paired rows; missing/zero weights dropped",
+    "normalization": "in-bin mass: common_norm=True pooled, False per-curve",
+    "width": "density/frequency divide raw data bin widths, not log widths",
+    "cumulative": "count/mass sums; density integrates mass; no frequency",
+    "axes": "primary2D v/h; positive raw observation log, linear heights",
+    "style": "bars/hatches or unfilled steps/dashes; exact alpha/edge/width",
+    "step": "native stairs; layer/stack only; edge_color overrides stroke",
+    "geometry": "grouped stack/dodge keep heights; dodge splits raw bin width including reserved empty hues",
+    "precision": "scaled mass/prefixes; nonfinite/collapsed geometry fails",
+    "limits": "no fill/poly/step dodge/discrete/auto estimator/2D/KDE/y2"
+  },
+  "kde": {
+    "fields": [
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "bw_method",
+        "type": "str or float",
+        "required": false,
+        "default": "scott"
+      },
+      {
+        "name": "bw_adjust",
+        "type": "float",
+        "required": false,
+        "default": 1.0
+      },
+      {
+        "name": "gridsize",
+        "type": "int",
+        "required": false,
+        "default": 200
+      },
+      {
+        "name": "cut",
+        "type": "float",
+        "required": false,
+        "default": 3.0
+      },
+      {
+        "name": "clip",
+        "type": "list[float or None] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "common_norm",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "common_grid",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "cumulative",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "fill",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "warn_singular",
+        "type": "bool",
+        "required": false,
+        "default": true
+      }
+    ],
+    "defaults": {
+      "weights": null,
+      "bw_method": "scott",
+      "bw_adjust": 1.0,
+      "gridsize": 200,
+      "cut": 3.0,
+      "clip": null,
+      "common_norm": true,
+      "common_grid": false,
+      "cumulative": false,
+      "fill": false,
+      "warn_singular": true
+    },
+    "max_points": 4096,
+    "legacy": "kde=None keeps 1.06*sample-SD*n**(-1/5)/200-point fit",
+    "weights": "nonnegative relative row mass, not sample replication",
+    "bandwidth": "unbiased weighted SD times factor*bw_adjust; effective n",
+    "methods": [
+      "scott",
+      "silverman",
+      "positive covariance factor"
+    ],
+    "rows": "paired missing/zero weights/hue deselection excluded",
+    "normalization": "all usable selected mass, including singular hues",
+    "clip": "evaluation only; never trims fit rows or renormalizes tails",
+    "common_grid": "pooled weighted support, per-curve bandwidths retained",
+    "cumulative": "analytic full Gaussian CDF from -infinity, not ECDF",
+    "singular": "skip without fake bandwidth; warn_singular controls warning",
+    "axes": "primary2D v/h; positive raw/log observations + support",
+    "density_units": "raw data even on logs; linear density/CDF axis only",
+    "style": "line or fill; exact alpha/width; hue dash/hatch slots",
+    "limits": "no bivariate/stack/multiple/date/y2/kernel/callable/log fit",
+    "precision": "scaled sums/covariance, bounded chunks; invalid derived fail"
+  },
+  "kde2d": {
+    "fields": [
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "bw_method",
+        "type": "str or float",
+        "required": false,
+        "default": "scott"
+      },
+      {
+        "name": "bw_adjust",
+        "type": "float",
+        "required": false,
+        "default": 1.0
+      },
+      {
+        "name": "gridsize",
+        "type": "int",
+        "required": false,
+        "default": 80
+      },
+      {
+        "name": "cut",
+        "type": "float",
+        "required": false,
+        "default": 3.0
+      },
+      {
+        "name": "clip",
+        "type": "list[list[float or None]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "common_norm",
+        "type": "bool",
+        "required": false,
+        "default": true
+      },
+      {
+        "name": "common_grid",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "levels",
+        "type": "list[float]",
+        "required": false,
+        "default": [
+          0.5,
+          0.8,
+          0.95
+        ]
+      },
+      {
+        "name": "fill",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "warn_singular",
+        "type": "bool",
+        "required": false,
+        "default": true
+      }
+    ],
+    "defaults": {
+      "weights": null,
+      "bw_method": "scott",
+      "bw_adjust": 1.0,
+      "gridsize": 80,
+      "cut": 3.0,
+      "clip": null,
+      "common_norm": true,
+      "common_grid": false,
+      "levels": [
+        0.5,
+        0.8,
+        0.95
+      ],
+      "fill": false,
+      "warn_singular": true
+    },
+    "max_points_per_axis": 256,
+    "max_usable_rows": 10000,
+    "max_levels": 16,
+    "weights": "relative paired x/y row mass, not sample replication",
+    "covariance": "unbiased weighted full covariance, effective n",
+    "bandwidth": "d=2 Scott=Silverman=n_eff**(-1/6); numeric factor",
+    "normalization": "all usable selected mass incl skipped singular hues",
+    "support": "cut/clip evaluation only; pooled grid, conditional fits",
+    "levels": "increasing enclosed HDR fractions conditional on grid mass",
+    "quadrature": "raw-coordinate trapezoidal nodes; ties all included",
+    "level_precision": "approximate grid HDR, not CI/full-space coverage",
+    "singular": "skip rank deficient, no jitter/regularization or fake fit",
+    "axes": "Cartesian2D raw x/y; positive observations + support on logs",
+    "style": "native contours/fill, exact alpha/outline, hue dash/hatch",
+    "limits": "no cumulative/orient/date/y2/colorbar/kernel/log fit/kwargs",
+    "precision": "scaled covariance/product, bounded point-row matrices"
+  },
+  "ecdf": {
+    "fields": [
+      {
+        "name": "stat",
+        "type": "str",
+        "required": false,
+        "default": "proportion"
+      },
+      {
+        "name": "complementary",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "defaults": {
+      "stat": "proportion",
+      "complementary": false,
+      "weights": null
+    },
+    "statistics": [
+      "proportion",
+      "percent",
+      "count"
+    ],
+    "definition": "right-continuous mass of X<=t; complement is X>t",
+    "weights": "finite nonnegative; count sums weights, not number of rows",
+    "normalization": "within each selected curve, not across hues",
+    "rows": "drop required missing and zero-weight rows before positivity",
+    "ties": "aggregate equal values into one full jump",
+    "empty": "no curve/legend; explicit hue order reserves color/style",
+    "support": "finite numeric; full jump at min; no tail extension",
+    "axes": "primary Cartesian2D; v/h; positive observation log, linear mass",
+    "precision": "scaled proportion sums; strict tails summed from the right",
+    "unknown": "reject ignored options; no fit/intervals/censoring/2-D ECDF"
+  },
+  "distribution_components": {
+    "box": [
+      "body",
+      "whisker",
+      "cap",
+      "median",
+      "mean",
+      "flier"
+    ],
+    "boxenplot": [
+      "body",
+      "median",
+      "flier"
+    ],
+    "defaults": "None inherits existing layer/native/hue/tier defaults",
+    "precedence": "component overrides layer shorthand; body color keeps tiers",
+    "colors": "hex RGB/RGBA, basic names, C0..C9 or none",
+    "stroke": "named styles; finite sizes in [0,1000]",
+    "alpha": "fraction [0,1], exact override including 0/1",
+    "hatch": "body only; <=32 native symbols; empty disables redundant hatch",
+    "mean": "requires showmeans=True; style does not infer visibility",
+    "hidden": "reject styles for explicitly hidden median/fliers",
+    "unknown": "reject unknown component/property keys; no arbitrary kwargs"
+  },
+  "violin": {
+    "inner": [
+      "legacy",
+      "box",
+      "quart",
+      "point",
+      "stick",
+      null
+    ],
+    "default_inner": "legacy",
+    "density_norm": [
+      "width",
+      "area",
+      "count"
+    ],
+    "default_density_norm": "width",
+    "common_norm": "area/count: across hues; False compares within hue",
+    "area": "common KDE density scale, not exact truncated polygon area",
+    "count": "peak-normalized profile times row count or weight mass / max",
+    "weights": "relative paired rows; unbiased covariance/effective n",
+    "weighted_inner": "inverse weighted ECDF quartiles; weighted mean",
+    "weighted_rows": "missing/zero rows dropped; no replication or sampling",
+    "weighted_limit": 10000,
+    "split": "two selected/reserved hues; shared center; no positive dodge",
+    "bw_adjust": "finite multiplier in (0,1000], default 1",
+    "cut": "finite in [0,10] bandwidths, default 0",
+    "clip": "increasing finite/None raw-value bounds; KDE support only",
+    "inner_rows": "point/stick <=10000 usable rows; no silent sampling",
+    "singular": "finite degenerate body, never invent a KDE or sample",
+    "log": "stat_scale controls fitted coordinates; clip stays raw units",
+    "unknown_options": "callable KDE and arbitrary inner_kws rejected"
+  },
+  "categorical_scales": {
+    "layers": [
+      "box",
+      "violin",
+      "boxenplot",
+      "swarmplot",
+      "barplot",
+      "pointplot",
+      "countplot"
+    ],
+    "native_scale_default": false,
+    "native_levels": "finite numeric scalars, not bool/strings/dates",
+    "native_order": "select/reserve numeric positions, not physical reorder",
+    "spacing": "minimum selected/reserved spacing in axis coordinates",
+    "singleton_spacing": 1,
+    "native_log_category": "positive levels; geometry in log10 coordinates",
+    "log_value": "positive usable selected observations only",
+    "stat_scale_default": "data",
+    "stat_scale_axis": "opt-in log10 summaries/KDE, inverse-map all artists",
+    "stat_scale_layers": [
+      "box",
+      "violin",
+      "boxenplot",
+      "barplot",
+      "pointplot"
+    ],
+    "legacy": "ordinal and one-column one-based coordinates unchanged",
+    "shared_axes": "reject native/ordinal mixtures or conflicting scales"
+  },
+  "letter_values": {
+    "depth_methods": [
+      "tukey",
+      "proportion",
+      "trustworthy",
+      "full"
+    ],
+    "max_depth": 32,
+    "depth_default": "tukey",
+    "named_depths": "bounded to 1..32; explicit integers in 1..32",
+    "width_methods": [
+      "exponential",
+      "linear",
+      "area"
+    ],
+    "width_default": "exponential",
+    "quantiles": "linear interpolation of usable raw observations per cell",
+    "area_widths": "probability mass / band height, normalized within cell",
+    "zero_height_area": "zero width; all-constant cells use exponential",
+    "outlier_prop": "(0,1), proportion rule only; default 0.007",
+    "trust_alpha": "[1e-12,1), trustworthy rule only; default 0.05",
+    "tail_points": "raw rows strictly outside outer letter values, not IQR",
+    "full_depth": "outer endpoints are min/max, no tail points",
+    "width": "total category span in (0,1]; default 0.8",
+    "dodge": "total hue span <=width; None auto, 0 overlays hues",
+    "flier_markers": [
+      "o",
+      "d",
+      "D",
+      "s",
+      "^",
+      "v",
+      "+",
+      "x",
+      ".",
+      "*"
+    ],
+    "flier_defaults": "hollow diamond, 3pt; median/tails shown",
+    "stroke_sizes": "line_width/marker_size finite in [0,1000] points",
+    "axes": "Cartesian 2-D; ordinal or native numeric/log categories",
+    "stat_scale": "data default; axis opts into log10 quantiles/area heights",
+    "missing_rows": "listwise drop; empty slots have no invented summaries",
+    "intervals": "distribution quantiles, not confidence intervals",
+    "unknown_options": "reject rather than ignore"
+  },
+  "swarm": {
+    "max_observations": 2000,
+    "packing": "stable display-space greedy circles; repack every draw",
+    "markers": [
+      "o"
+    ],
+    "marker_size": "positive points <=1000; default 6",
+    "line_width": "points in [0,1000]; default 0.5",
+    "category_scale": "ordinal or native numeric/log; x remains category in h",
+    "value_scales": [
+      "linear",
+      "positive log"
+    ],
+    "width": "total category span in (0,1]; default 0.8",
+    "dodge": "total hue span <=width; None auto, 0 jointly packs hues",
+    "overcrowding": "keep all rows at gutters; greedy packing is not optimal",
+    "warn_thresh": "fraction in [0,1]; default 0.05; warn once per collection",
+    "unknown_options": "reject rather than ignore"
+  },
   "journals": [
     "nature",
     "ieee",
@@ -643,6 +2220,26 @@
         "default": 0
       }
     ],
+    "SetAxisShare": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "share_id",
+        "type": "str or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
     "SetColorbar": [
       {
         "name": "layer_index",
@@ -693,6 +2290,50 @@
         "default": {}
       }
     ],
+    "SetFacets": [
+      {
+        "name": "row",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_wrap",
+        "type": "int or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "share_x",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      },
+      {
+        "name": "share_y",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      }
+    ],
     "SetFont": [
       {
         "name": "params",
@@ -707,6 +2348,38 @@
         "type": "dict",
         "required": false,
         "default": {}
+      }
+    ],
+    "SetJointGrid": [
+      {
+        "name": "bins",
+        "type": "int",
+        "required": false,
+        "default": 20
+      },
+      {
+        "name": "ratio",
+        "type": "float",
+        "required": false,
+        "default": 3.0
+      },
+      {
+        "name": "marginal_stat",
+        "type": "str",
+        "required": false,
+        "default": "density"
+      },
+      {
+        "name": "marginal_kind",
+        "type": "str",
+        "required": false,
+        "default": "hist"
+      },
+      {
+        "name": "kde",
+        "type": "KDESpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "SetJournal": [
@@ -838,6 +2511,50 @@
         "name": "values",
         "type": "list",
         "required": true,
+        "default": null
+      }
+    ],
+    "SetPairGrid": [
+      {
+        "name": "columns",
+        "type": "list[str]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "group",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "bins",
+        "type": "int",
+        "required": false,
+        "default": 20
+      },
+      {
+        "name": "diag_stat",
+        "type": "str",
+        "required": false,
+        "default": "density"
+      },
+      {
+        "name": "diag_kind",
+        "type": "str",
+        "required": false,
+        "default": "hist"
+      },
+      {
+        "name": "kde",
+        "type": "KDESpec or None",
+        "required": false,
         "default": null
       }
     ],

@@ -1,7 +1,9 @@
 """Tests for the dashboard's static site generator (docs + gallery)."""
 
 import sys
+from html.parser import HTMLParser
 from pathlib import Path
+from urllib.parse import urlparse
 
 import matplotlib
 import pytest
@@ -12,16 +14,21 @@ import matplotlib.pyplot as plt
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
+import mudplot as mp
 from dashboard import plot_gallery
 from dashboard.markdown_lite import markdown_to_html
 from dashboard.plot_gallery import GALLERY_EXAMPLES
+from dashboard.samples import FIGURE_SAMPLES, sample_figure
 from dashboard.site import build_site
 from mudplot.capabilities import LAYER_TYPES
 
 
 @pytest.fixture(scope="module")
 def built_site(tmp_path_factory):
-    return build_site(str(tmp_path_factory.mktemp("dashboard") / "site"))
+    directory = tmp_path_factory.mktemp("dashboard") / "site"
+    directory.mkdir()
+    (directory / "notes.txt").write_text("keep user notes", encoding="utf-8")
+    return build_site(str(directory))
 
 
 def test_markdown_headers_and_inline():
@@ -80,6 +87,43 @@ def test_build_site_produces_index_and_gallery(built_site):
         for path in (built_site / "plots").glob("*.mplot.json")
     } == expected
     assert not plt.get_fignums()
+
+
+def test_reading_gallery_has_live_editable_layouts_and_keeps_user_notes(built_site):
+    html = (built_site / "index.html").read_text(encoding="utf-8")
+    assert 'id="reading"' in html and "reading/VISUAL_REVIEW.html" in html
+    assert 'name="viewport"' in html
+    assert (built_site / "notes.txt").read_text(encoding="utf-8") == "keep user notes"
+    directory = built_site / "reading" / "images"
+    for name, (_, kind, width) in FIGURE_SAMPLES.items():
+        filename = f"visual_{kind}" + ("_mobile" if width == 320 else "")
+        assert (directory / f"{filename}.png").exists()
+        assert mp.load_spec(directory / f"{filename}.mplot.json") == sample_figure(name)
+    assert (directory / "visual_after.png").exists()
+
+
+class _PageLinks(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.links = []
+
+    def handle_starttag(self, tag, attrs):
+        for key, value in attrs:
+            if value and key in ("href", "src", "srcset"):
+                self.links.append(value.split()[0])
+
+
+def test_reading_review_and_criteria_have_no_missing_local_link_targets(built_site):
+    directory = built_site / "reading"
+    pages = list(directory.glob("*.html"))
+    assert len(pages) == 3
+    for page in pages:
+        parser = _PageLinks()
+        parser.feed(page.read_text(encoding="utf-8"))
+        for value in parser.links:
+            url = urlparse(value)
+            if not url.scheme and not url.netloc and url.path:
+                assert (page.parent / url.path).is_file(), (page.name, value)
 
 
 def test_gallery_preserves_existing_files(tmp_path, monkeypatch):

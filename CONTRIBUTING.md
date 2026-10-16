@@ -26,19 +26,29 @@ TeX-dependent tests skip when no TeX engine is installed. CI runs the normal
 PGF suite with Tectonic/pdflatex; the scheduled/release matrix also covers
 LuaLaTeX, BibTeX, and biber.
 
+## Review checklist and evidence
+
+Use the [2026-10-16 detailed checklist](mudplot_review_checklist_detailed_2026-10-16.md)
+with the [ID/evidence tracker](docs/REVIEW_CHECKLIST_STATUS.md). The 150 entries
+are verification tasks, not 150 confirmed bugs. Preserve existing batch/listener/
+JSON/output contracts; record HEAD plus local changes, environment, command,
+exit code, skips and evidence before closing an ID. Missing coverage stays open.
+Full release gates and historical focused receipts are not interchangeable.
+
 ## Before opening a pull request
 
 ```bash
 uv run ruff check .
 uv run ruff format --check .
 uv run pyright
-uv run pytest -q -m "not browser"
+uv run pytest -q --ignore=tests/test_editor_browser.py
 uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
 uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
 uv run python scripts/check_wheel.py
 ```
 
+Select browser checks by filename; they do not have a `browser` marker.
 If Chromium is installed, also run:
 
 ```bash

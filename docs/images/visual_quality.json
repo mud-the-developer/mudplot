@@ -1,0 +1,172 @@
+{
+  "scope": "Web PNG font/bounds/text-box checks; not aesthetic certification.",
+  "independent_human_review": "not_run",
+  "model_judge": "not_run",
+  "font_reference": "https://service-manual.ons.gov.uk/data-visualisation/build-specifications/typography",
+  "charts": {
+    "visual_response": {
+      "source_pixels": [
+        1400,
+        800
+      ],
+      "display_pixels": [
+        700,
+        400
+      ],
+      "min_display_font_px": 16.666666666666668,
+      "font_floor_14px_ok": true,
+      "content_bounds_ok": true,
+      "overlapping_text": [],
+      "text_overlap_ok": true,
+      "lint": [
+        {
+          "level": "ok",
+          "message": "all text >= 8pt"
+        },
+        {
+          "level": "ok",
+          "message": "palette passes CVD-safety threshold (3 series)"
+        },
+        {
+          "level": "ok",
+          "message": "palette distinguishable in true greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series have redundant marker/line-style/hatch encoding"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series stay distinguishable in greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "citation/href metadata is well-formed"
+        }
+      ]
+    },
+    "visual_endpoint": {
+      "source_pixels": [
+        1400,
+        600
+      ],
+      "display_pixels": [
+        700,
+        300
+      ],
+      "min_display_font_px": 16.666666666666668,
+      "font_floor_14px_ok": true,
+      "content_bounds_ok": true,
+      "overlapping_text": [],
+      "text_overlap_ok": true,
+      "lint": [
+        {
+          "level": "ok",
+          "message": "all text >= 8pt"
+        },
+        {
+          "level": "ok",
+          "message": "palette passes CVD-safety threshold (3 series)"
+        },
+        {
+          "level": "ok",
+          "message": "palette distinguishable in true greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series have redundant marker/line-style/hatch encoding"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series stay distinguishable in greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "citation/href metadata is well-formed"
+        }
+      ]
+    },
+    "visual_response_mobile": {
+      "source_pixels": [
+        640,
+        800
+      ],
+      "display_pixels": [
+        320,
+        400
+      ],
+      "min_display_font_px": 16.666666666666668,
+      "font_floor_14px_ok": true,
+      "content_bounds_ok": true,
+      "overlapping_text": [],
+      "text_overlap_ok": true,
+      "lint": [
+        {
+          "level": "ok",
+          "message": "all text >= 8pt"
+        },
+        {
+          "level": "ok",
+          "message": "palette passes CVD-safety threshold (3 series)"
+        },
+        {
+          "level": "ok",
+          "message": "palette distinguishable in true greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series have redundant marker/line-style/hatch encoding"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series stay distinguishable in greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "citation/href metadata is well-formed"
+        }
+      ]
+    },
+    "visual_endpoint_mobile": {
+      "source_pixels": [
+        640,
+        600
+      ],
+      "display_pixels": [
+        320,
+        300
+      ],
+      "min_display_font_px": 16.666666666666668,
+      "font_floor_14px_ok": true,
+      "content_bounds_ok": true,
+      "overlapping_text": [],
+      "text_overlap_ok": true,
+      "lint": [
+        {
+          "level": "ok",
+          "message": "all text >= 8pt"
+        },
+        {
+          "level": "ok",
+          "message": "palette passes CVD-safety threshold (3 series)"
+        },
+        {
+          "level": "ok",
+          "message": "palette distinguishable in true greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series have redundant marker/line-style/hatch encoding"
+        },
+        {
+          "level": "ok",
+          "message": "grouped series stay distinguishable in greyscale"
+        },
+        {
+          "level": "ok",
+          "message": "citation/href metadata is well-formed"
+        }
+      ]
+    }
+  }
+}

@@ -150,6 +150,9 @@ def _rows_to_columns(rows) -> dict[str, list]:
     if not as_lists:
         return {}
     ncols = len(as_lists[0])
+    for index, row in enumerate(as_lists):
+        if len(row) != ncols:
+            raise ValueError(f"row {index} has {len(row)} values; expected {ncols}")
     return {f"c{j}": [_plain_value(row[j]) for row in as_lists] for j in range(ncols)}
 
 
@@ -157,8 +160,13 @@ def _cursor_to_columns(cur) -> dict[str, list]:
     names = _column_names((d[0] for d in cur.description), "DB result")
     rows = cur.fetchall() if hasattr(cur, "fetchall") else list(cur)
     cols: dict[str, list] = {name: [] for name in names}
-    for row in rows:
-        for name, val in zip(names, row, strict=False):
+    for index, row in enumerate(rows):
+        values = list(row)
+        if len(values) != len(names):
+            raise ValueError(
+                f"DB result row {index} has {len(values)} values; expected {len(names)}"
+            )
+        for name, val in zip(names, values, strict=True):
             cols[name].append(_plain_value(val))
     return cols
 

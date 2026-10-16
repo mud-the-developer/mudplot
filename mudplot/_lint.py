@@ -58,13 +58,21 @@ def _series_counts(spec: FigureSpec) -> list[int]:
     counting logic the renderer uses to size its palette, so a lint
     finding always agrees with what actually gets drawn)."""
     from ._render import _count_colors
+    from ._semantics import shared_scale_domains
 
-    return [_count_colors(FigureSpec(panels=[p], data=spec.data)) for p in spec.panels]
+    domains = shared_scale_domains(spec)
+    return [
+        _count_colors(FigureSpec(panels=[p], data=spec.data), domains=domains)
+        for p in spec.panels
+    ]
 
 
 def _legend_entry_counts(spec: FigureSpec) -> list[int]:
     counts = []
     for panel in spec.panels:
+        if not panel.legend.show:
+            counts.append(0)
+            continue
         n = 0
         for layer in panel.layers:
             if layer.group and layer.group in spec.data.columns:

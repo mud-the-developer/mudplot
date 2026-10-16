@@ -112,7 +112,8 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
     try:
         yield temporary
         with temporary.open("rb+") as handle:
-            if mode is not None:
+            # Windows read-only is a replacement barrier, not a POSIX mode to copy.
+            if mode is not None and os.name != "nt":
                 temporary.chmod(mode)
             os.fsync(handle.fileno())
         os.replace(temporary, destination)

@@ -10,7 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field, fields
 from typing import cast
 
-from .spec import LayerSpec, _from_dict
+from .spec import KDESpec, LayerSpec, SpecBase, _from_dict
 
 __all__ = [
     "ACTION_REGISTRY",
@@ -21,18 +21,22 @@ __all__ = [
     "SetAutoLabel",
     "SetAxesStyle",
     "SetAxisLabel",
+    "SetAxisShare",
     "SetColorbar",
     "SetData",
     "SetDpi",
     "SetEncoding",
+    "SetFacets",
     "SetFont",
     "SetGridStyle",
+    "SetJointGrid",
     "SetJournal",
     "SetLayerAt",
     "SetLayout",
     "SetLegend",
     "SetLimits",
     "SetMatrix",
+    "SetPairGrid",
     "SetPalette",
     "SetPanelLabel",
     "SetProjection",
@@ -166,6 +170,44 @@ class SetLayout:
     height_ratios: list[float] | None = None
 
 
+@dataclass(frozen=True)
+class SetFacets:
+    row: str | None = None
+    col: str | None = None
+    row_order: list[str | bool | int | float] | None = None
+    col_order: list[str | bool | int | float] | None = None
+    col_wrap: int | None = None
+    share_x: str = "all"
+    share_y: str = "all"
+
+
+@dataclass(frozen=True)
+class SetJointGrid:
+    bins: int = 20
+    ratio: float = 3.0
+    marginal_stat: str = "density"
+    marginal_kind: str = "hist"
+    kde: KDESpec | None = None
+
+
+@dataclass(frozen=True)
+class SetPairGrid:
+    columns: list[str]
+    group: str | None = None
+    hue_order: list[str | bool | int | float] | None = None
+    bins: int = 20
+    diag_stat: str = "density"
+    diag_kind: str = "hist"
+    kde: KDESpec | None = None
+
+
+@dataclass(frozen=True)
+class SetAxisShare:
+    axis: str
+    share_id: str | None
+    panel: int = 0
+
+
 # -- panel-level -----------------------------------------------------------
 @dataclass(frozen=True)
 class AddLayer:
@@ -269,7 +311,11 @@ class SetAutoLabel:
 
 
 Action = (
-    SetLayout
+    SetPairGrid
+    | SetAxisShare
+    | SetJointGrid
+    | SetFacets
+    | SetLayout
     | SetSize
     | SetDpi
     | SetData
@@ -316,6 +362,10 @@ _ACTION_CLASSES = (
     SetFont,
     AddPanel,
     SetLayout,
+    SetFacets,
+    SetJointGrid,
+    SetPairGrid,
+    SetAxisShare,
     AddLayer,
     RemoveLayer,
     SetAxisLabel,
@@ -348,7 +398,7 @@ def action_to_dict(action) -> dict:
     out: dict = {"type": type(action).__name__}
     for f in fields(action):
         val = getattr(action, f.name)
-        if isinstance(val, LayerSpec):
+        if isinstance(val, SpecBase):
             val = val.to_dict()
         out[f.name] = val
     return out

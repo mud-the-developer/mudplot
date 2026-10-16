@@ -26,19 +26,28 @@ TeX 엔진이 없으면 TeX 의존 테스트는 건너뜁니다. 일반 CI는
 Tectonic/pdflatex로 PGF 테스트를 실행하며, nightly/release 매트릭스는
 LuaLaTeX, BibTeX, biber까지 검사합니다.
 
+## 리뷰 체크리스트와 증거
+
+[2026-10-16 상세 체크리스트](mudplot_review_checklist_detailed_2026-10-16.md)와
+[ID/증거 대장](docs/REVIEW_CHECKLIST_STATUS.md)을 함께 사용합니다. 150개는 검증
+과제이지 확인된 결함 수가 아닙니다. Batch/listener/JSON/출력 계약을 유지하고,
+ID를 닫기 전에 HEAD+로컬 변경·환경·명령·종료 코드·skip·증거를 기록합니다.
+부족한 검증은 OPEN으로 두며 과거 대상 통과를 전체 릴리스 gate 통과로 바꾸지 않습니다.
+
 ## Pull request 전 확인
 
 ```bash
 uv run ruff check .
 uv run ruff format --check .
 uv run pyright
-uv run pytest -q -m "not browser"
+uv run pytest -q --ignore=tests/test_editor_browser.py
 uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
 uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
 uv run python scripts/check_wheel.py
 ```
 
+브라우저 테스트에는 `browser` marker가 없으므로 파일명으로 선택합니다.
 Chromium을 설치했다면 다음도 실행합니다.
 
 ```bash

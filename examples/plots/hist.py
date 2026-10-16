@@ -11,7 +11,8 @@ plot = (
     .hist(
         "value",
         bins=np.histogram_bin_edges(data["value"], bins=18).tolist(),
-        density=True,
+        stat="density",
+        common_norm=False,
         group="group",
         alpha=0.55,
     )

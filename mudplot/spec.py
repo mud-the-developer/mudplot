@@ -109,6 +109,10 @@ def _from_dict(cls, data: Any):
     if isinstance(cls, type) and is_dataclass(cls):
         if not isinstance(data, dict):
             raise TypeError(f"{cls.__name__} must be a JSON object")
+        if getattr(cls, "_reject_unknown_fields", False):
+            unknown = set(data) - {f.name for f in fields(cls)}
+            if unknown:
+                raise ValueError(f"unknown {cls.__name__} field(s): {sorted(unknown)}")
         hints = typing.get_type_hints(cls)
         kwargs = {}
         for f in fields(cls):
@@ -250,9 +254,189 @@ class ReferenceSpec(SpecBase):
 
 
 @dataclass
+class StatSpec(SpecBase):
+    """Named estimation settings; numerical work lives in the effect layer."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    estimator: str = "mean"  # mean | median | sum | min | max | count
+    errorbar: str | None = "ci"  # sd | se | pi | ci; None disables intervals
+    level: float | None = None  # SD/SE multiplier, or PI/CI coverage percent
+    n_boot: int = 1000
+    seed: int = 0  # explicit local RNG state, never global random state
+    weights: str | None = None  # nonnegative weights; mean and bootstrap CI only
+    units: str | None = None  # unit column for two-stage hierarchical bootstrap CI
+    normalize: str = "count"  # countplot: count | probability | proportion | percent
+
+
+@dataclass
+class ClusterSpec(SpecBase):
+    """Hierarchical matrix clustering; computed orders live only in effects."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    method: str = "average"
+    metric: str = "euclidean"
+    row_cluster: bool = True
+    col_cluster: bool = True
+    z_score: str | None = None  # row | col; sample SD
+    standard_scale: str | None = None  # row | col; min-max
+    optimal_ordering: bool = False
+    row_linkage: list[list[float]] | None = None
+    col_linkage: list[list[float]] | None = None
+    row_colors: list[str] | None = None
+    col_colors: list[str] | None = None
+    dendrogram_ratio: float = 0.2  # relative to heatmap body
+    tree_width: float = 0.8  # points
+    tree_color: str = "#475569"
+
+
+@dataclass
+class RegressionSpec(SpecBase):
+    """Opt-in regression effects; None retains the legacy polynomial renderer."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    model: str = "poly"  # poly | logx | robust | logistic | lowess
+    residual: bool = False  # observed y minus fitted response, not deviance residuals
+    frac: float = 2 / 3  # LOWESS neighbourhood fraction
+    iterations: int = 3  # LOWESS robust reweighting iterations
+
+
+@dataclass
+class HeatmapSpec(SpecBase):
+    """Opt-in matrix display controls; None retains legacy imshow defaults."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    norm: str = "linear"  # linear | log
+    vmin: float | None = None
+    vmax: float | None = None
+    center: float | None = None  # diverging palette only; incompatible with log
+    robust: bool = False  # visible-value 2nd/98th percentiles
+    annot: bool = False
+    fmt: str = "g"  # existing bounded numeric-format whitelist
+    mask: list[list[bool]] | None = None
+    xlabels: list[str] | None = None
+    ylabels: list[str] | None = None
+    square: bool = False
+
+
+@dataclass
+class KDESpec(SpecBase):
+    """Opt-in weighted univariate Gaussian KDE; None keeps the legacy effect."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    weights: str | None = None  # relative row weights, not replicated samples
+    bw_method: str | float = "scott"  # scott | silverman | positive covariance factor
+    bw_adjust: float = 1.0
+    gridsize: int = 200
+    cut: float = 3.0  # support extends this many bandwidths beyond observed extremes
+    clip: list[float | None] | None = None  # bounds evaluation, never drops fit rows
+    common_norm: bool = True  # selected usable mass, including skipped singular hues
+    common_grid: bool = False  # shared support from pooled weighted fit
+    cumulative: bool = False  # analytic mixture CDF from -infinity, not grid integral
+    fill: bool = False
+    warn_singular: bool = True  # no invented bandwidth for singleton/constant curves
+
+
+@dataclass
+class KDE2DSpec(SpecBase):
+    """Weighted Gaussian contours; levels enclose conditional finite-grid mass."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    weights: str | None = None
+    bw_method: str | float = "scott"  # Scott/Silverman coincide in d=2: n_eff**(-1/6)
+    bw_adjust: float = 1.0
+    gridsize: int = 80  # nodes per raw-coordinate axis
+    cut: float = 3.0
+    clip: list[list[float | None]] | None = None  # [[xlo,xhi],[ylo,yhi]] eval only
+    common_norm: bool = True  # all usable selected mass, including singular hues
+    common_grid: bool = False  # pooled weighted support, conditional covariance
+    levels: list[float] = field(default_factory=lambda: [0.5, 0.8, 0.95])
+    fill: bool = False
+    warn_singular: bool = True  # no jitter/regularization or fake 2-D density
+
+
+@dataclass
+class HistogramSpec(SpecBase):
+    """Opt-in shared-bin weighted histogram statistics; None retains legacy hist."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    stat: str = (
+        "count"  # count | frequency | probability/proportion | percent | density
+    )
+    weights: str | None = None
+    common_norm: bool = True  # normalized stats: pooled in-bin mass vs per-curve
+    cumulative: bool = False  # density integrates mass, not sums density heights
+    multiple: str = "layer"  # layer | stack | dodge; heights keep original bin units
+    element: str = "bars"  # bars | step; unfilled steps support layer/stack only
+
+
+@dataclass
+class ECDFSpec(SpecBase):
+    """Empirical cumulative mass, not a fitted estimator or confidence band."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    stat: str = "proportion"  # proportion | percent | count (sum of weights)
+    complementary: bool = False  # strict greater-than mass, not >=
+    weights: str | None = None  # finite nonnegative row weights; zeros excluded
+
+
+@dataclass
+class ComponentStyleSpec(SpecBase):
+    """Safe named artist properties, not arbitrary Matplotlib kwargs."""
+
+    _reject_unknown_fields = True
+    color: str | None = None  # body base fill or component stroke
+    edge_color: str | None = None  # body/marker outline
+    face_color: str | None = None  # marker fill (mean/flier only)
+    line_width: float | None = None
+    line_style: str | None = None
+    marker: str | None = None
+    marker_size: float | None = None
+    marker_edge_width: float | None = None
+    alpha: float | None = None
+    hatch: str | None = None  # body only; empty string disables redundant hatch
+
+
+@dataclass
+class DistributionComponentsSpec(SpecBase):
+    """Independent box/boxen component styles; absent fields inherit defaults."""
+
+    _reject_unknown_fields = True
+    body: ComponentStyleSpec | None = None
+    whisker: ComponentStyleSpec | None = None
+    cap: ComponentStyleSpec | None = None
+    median: ComponentStyleSpec | None = None
+    mean: ComponentStyleSpec | None = None
+    flier: ComponentStyleSpec | None = None
+
+
+@dataclass
+class SemanticSpec(SpecBase):
+    """Independent roles: scatter diameters or lineplot stroke widths in points."""
+
+    _reject_unknown_fields: typing.ClassVar[bool] = True
+    scale_id: str | None = None  # named figure scope; None keeps layer-local maps
+    hue: str | None = None
+    hue_kind: str = "categorical"  # categorical | numeric
+    hue_order: list[Any] | None = None
+    hue_norm: list[float] | None = None  # mapping bounds, never row selection
+    size: str | None = None
+    size_kind: str = "numeric"  # categorical | numeric
+    size_order: list[Any] | None = None
+    size_norm: list[float] | None = None
+    sizes: list[float] = field(default_factory=lambda: [3.0, 9.0])  # diameters, pt
+    style: str | None = None  # always categorical; not inferred from hue
+    style_order: list[Any] | None = None
+    markers: list[str] = field(
+        default_factory=lambda: ["o", "s", "D", "^", "v", "P", "X"]
+    )
+    dashes: list[str] | None = None  # lineplot style dashes; None maps markers only
+    legend: bool = True  # observed categorical levels / numeric mapping guides
+
+
+@dataclass
 class LayerSpec(SpecBase):
     # line | scatter | bar | errorbar | band | hline | vline | annotate | text
-    # | hist | box | heatmap | violin | kde | rug | regplot | stripplot
+    # | hist | box | heatmap | violin | kde | ecdf | rug | regplot | stripplot
     # | stackplot | hist2d | hexbin | quiver | pie | contour | contourf
     # | scatter3d
     # | line3d | surface | wireframe
@@ -260,6 +444,7 @@ class LayerSpec(SpecBase):
     x: str = ""  # column name (unused for hline/vline/annotate/text)
     y: str = ""  # column name
     group: str | None = None  # column to split into series (hue)
+    semantics: SemanticSpec | None = None  # scatter only; None keeps legacy roles
     label: str | None = None
     # Reference metadata for the legend entry (see mudplot.tex.PREAMBLE).
     # Backend-dependent: plain text in raster output, a clickable link in
@@ -279,10 +464,35 @@ class LayerSpec(SpecBase):
     marker_size: float | None = None
     jitter: float | None = None  # stripplot x jitter; None uses 0.15
     alpha: float = 1.0
-    # error bars
-    yerr: str | None = None  # column of symmetric y errors
-    xerr: str | None = None  # column of symmetric x errors
-    capsize: float | None = None
+    # bar geometry / outlines (bar_width is the total span of a category)
+    bar_width: float | None = None
+    baseline: float | None = None  # nonstack statistical bars: raw baseline (default 0)
+    edge_color: str | None = None
+    # Raw-data statistical layers; None selects documented type defaults.
+    stat: StatSpec | None = None
+    sort: bool = True  # lineplot only; otherwise preserve first-observed x order
+    error_style: str | None = None  # lineplot: band (default) | bars
+    error_alpha: float | None = None  # band opacity; default 0.2 * line alpha
+    ecdf: ECDFSpec | None = None  # ecdf only; None selects ECDFSpec defaults
+    dodge: float | None = None  # total span for point/distribution hue offsets
+    orient: str = "v"  # v | h; two-column builders keep x categorical
+    native_scale: bool = False  # numeric category coordinates, distributions/statistics
+    stat_scale: str = "data"  # summary/KDE coordinates: data | axis (log10)
+    order: list[Any] | None = None  # selected category levels, in display order
+    hue_order: list[Any] | None = None  # selected hue levels, in display order
+    gap: float | None = None  # fraction of allocated statistical bar span (0..1)
+    stack: bool = False  # countplot only; additive counts/proportions
+    value_labels: bool = False  # barplot/countplot value labels
+    label_format: str = "g"  # a bounded whitelist of numeric format choices
+    # error bars: caller-supplied magnitudes OR absolute y interval bounds
+    yerr: str | None = None  # column of symmetric y errors (e.g. SD)
+    xerr: str | None = None  # column of symmetric x errors (errorbar only)
+    y_lower: str | None = None  # absolute lower endpoint, paired with y_upper
+    y_upper: str | None = None  # absolute upper endpoint, paired with y_lower
+    error_color: str | None = None
+    error_line_width: float | None = None
+    capsize: float | None = None  # points; zero explicitly removes caps
+    capthick: float | None = None  # cap stroke width in points
     # band / fill_between: fills between column ``y`` (upper) and ``y2`` (lower)
     y2: str | None = None
     # reference lines (hline uses ``value`` on y; vline on x)
@@ -294,13 +504,43 @@ class LayerSpec(SpecBase):
     # histogram
     bins: int | list[float] = 20
     density: bool = False
+    histogram: HistogramSpec | None = None  # hist only; None preserves legacy effects
+    kde: KDESpec | None = None  # kde only; None preserves legacy fit/defaults
+    kde2d: KDE2DSpec | None = None  # kde2d only; None uses KDE2DSpec defaults
     # bivariate count plots
     gridsize: int = 30
     mincnt: int | None = None
     # regression: polynomial degree and optional normal-approximation CI (%)
     degree: int = 1
     confidence: float | None = None
-    # boxplot: ``x`` is the value column; ``group`` splits into boxes
+    regression: RegressionSpec | None = None  # opt-in models/residuals
+    # box/violin: one column keeps x-as-value; optional y enables category/hue.
+    # None preserves legacy native defaults (violin medians remain enabled).
+    width: float | None = None
+    whis: float | list[float] | None = None  # box IQR multiplier or percentiles
+    components: DistributionComponentsSpec | None = None  # box/boxen only
+    notch: bool | None = None
+    showmeans: bool | None = None
+    showfliers: bool | None = None
+    showmedians: bool | None = None
+    showextrema: bool | None = None
+    bw_method: str | float | None = None  # violin: scott/silverman/positive factor
+    points: int | None = None  # violin KDE grid, default 100
+    # Violin: preserve the old median/width/range behavior unless opted in.
+    inner: str | None = "legacy"  # legacy | box | quart | point | stick | None
+    split: bool = False  # exactly two selected/reserved hue levels
+    density_norm: str = "width"  # width | area | count
+    common_norm: bool = False  # shared across hues (otherwise within hue)
+    bw_adjust: float | None = None  # positive bandwidth multiplier, default 1
+    cut: float | None = None  # support extension in bandwidths, default 0
+    clip: list[float | None] | None = None  # KDE support bounds, raw value units
+    weights: str | None = None  # violin only; relative paired row weights
+    warn_thresh: float | None = None  # swarm overlap warning fraction, default 0.05
+    # Letter-value tail stopping and relative band widths (boxenplot only).
+    k_depth: str | int | None = None  # tukey/proportion/trustworthy/full or 1..32
+    width_method: str | None = None  # exponential (default) | linear | area
+    outlier_prop: float | None = None  # proportion depth only, default 0.007
+    trust_alpha: float | None = None  # trustworthy depth only, default 0.05
     # continuous colour mapping (scatter): colour points by column ``c``
     c: str | None = None
     cmap_kind: str = "sequential"  # sequential | diverging
@@ -309,6 +549,8 @@ class LayerSpec(SpecBase):
     # heatmap / contour / contourf / surface / wireframe: references a
     # DataSpec.matrices key
     matrix: str | None = None
+    heatmap: HeatmapSpec | None = None  # opt-in; legacy matrix display unchanged
+    cluster: ClusterSpec | None = None  # clustermap only; fitted at render time
     # contour / contourf: number of levels, or explicit level values
     levels: int | list[float] | None = None
     # route this layer onto the panel's secondary y-axis
@@ -327,6 +569,7 @@ class AxisSpec(SpecBase):
     label: str = ""
     scale: str = "linear"  # linear | log
     limits: list[float] | None = None  # [min, max]
+    share_id: str | None = None  # named primary Cartesian sharing group
 
 
 @dataclass
@@ -359,6 +602,8 @@ class PanelSpec(SpecBase):
     title_href: str | None = None
     label: str | None = None  # explicit panel tag, e.g. "a"; None -> auto
     legend: LegendSpec = field(default_factory=LegendSpec)
+    filters: dict[str, Any] = field(default_factory=dict)  # exact row/col selections
+    dropna: list[str] = field(default_factory=list)  # shared complete-case view
 
 
 @dataclass

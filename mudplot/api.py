@@ -11,8 +11,22 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any
 
 from . import actions as A
+from ._components import make_components
+from ._stat import make_stat
 from .reducer import reduce_all
-from .spec import FigureSpec, LayerSpec
+from .spec import (
+    ClusterSpec,
+    DistributionComponentsSpec,
+    ECDFSpec,
+    FigureSpec,
+    HeatmapSpec,
+    HistogramSpec,
+    KDE2DSpec,
+    KDESpec,
+    LayerSpec,
+    RegressionSpec,
+    SemanticSpec,
+)
 from .store import Store
 
 if TYPE_CHECKING:
@@ -88,6 +102,7 @@ class Plot:
         x: str,
         y: str,
         *,
+        regression: RegressionSpec | dict | None = None,
         degree: int = 1,
         confidence: float | None = None,
         group: str | None = None,
@@ -101,10 +116,14 @@ class Plot:
         approximation; it is disabled by default rather than implying
         uncertainty the caller did not request.
         """
+        from ._regression import prepare_regression
+
+        config = prepare_regression(regression)
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
                     type="regplot",
+                    regression=config,
                     x=x,
                     y=y,
                     degree=degree,
@@ -128,12 +147,33 @@ class Plot:
         cmap_kind: str = "sequential",
         colorbar: bool = False,
         clabel: str | None = None,
+        semantics: SemanticSpec | dict | None = None,
+        hue: str | None = None,
+        size: str | None = None,
+        style: str | None = None,
         panel: int = 0,
-        **style,
+        **appearance,
     ) -> Plot:
-        """Scatter plot. Pass ``c`` (a column name) to colour points by a
-        continuous value instead of ``group`` (categorical); set
-        ``colorbar=True`` to draw the colour scale."""
+        """Legacy group/c scatter, or independent opt-in hue/size/style roles.
+
+        Advanced kinds/orders/linear bounds/diameters/markers use SemanticSpec
+        or its strict dict. Numeric guides are mappings, not invented samples.
+        Do not combine legacy group/c or scalar overrides with mapped roles.
+        """
+        mapped = any(value is not None for value in (hue, size, style))
+        if semantics is not None and mapped:
+            raise ValueError("pass either semantics or hue/size/style keywords")
+        if semantics is not None:
+            data = (
+                semantics.to_dict()
+                if isinstance(semantics, SemanticSpec)
+                else semantics
+            )
+            config = SemanticSpec.from_dict(data)
+        else:
+            config = SemanticSpec(hue=hue, size=size, style=style) if mapped else None
+        if config is not None and not isinstance(config, SemanticSpec):
+            raise TypeError("semantics must decode to SemanticSpec")
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
@@ -146,10 +186,38 @@ class Plot:
                     cmap_kind=cmap_kind,
                     colorbar=colorbar,
                     clabel=clabel,
-                    **style,
+                    semantics=config,
+                    **appearance,
                 ),
                 panel=panel,
             )
+        )
+
+    def residplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        degree: int = 1,
+        regression: RegressionSpec | dict | None = None,
+        group: str | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Raw response residuals from a fitted model, with a zero reference guide."""
+        from ._regression import prepare_regression
+
+        config = prepare_regression(regression, residual=True)
+        return self.regplot(
+            x,
+            y,
+            degree=degree,
+            regression=config,
+            group=group,
+            label=label,
+            panel=panel,
+            **style,
         )
 
     def stripplot(
@@ -172,6 +240,52 @@ class Plot:
                     y=y,
                     jitter=jitter,
                     group=group,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def swarmplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        orient: str = "v",
+        order: list[Any] | None = None,
+        hue_order: list[Any] | None = None,
+        width: float | None = None,
+        dodge: float | None = None,
+        gap: float | None = None,
+        native_scale: bool = False,
+        warn_thresh: float | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Pack circular observations in display space on every draw.
+
+        x stays categorical, y numeric; positive log-value axes are supported.
+        Numeric dodge is the hue span (None auto, 0 packs hues together).
+        Overcrowding retains all rows and warns, not a fake jitter approximation.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="swarmplot",
+                    x=x,
+                    y=y,
+                    group=group,
+                    orient=orient,
+                    order=order,
+                    hue_order=hue_order,
+                    width=width,
+                    dodge=dodge,
+                    gap=gap,
+                    native_scale=native_scale,
+                    warn_thresh=warn_thresh,
                     label=label,
                     **style,
                 ),
@@ -301,18 +415,74 @@ class Plot:
         self,
         matrix: str,
         *,
+        heatmap: HeatmapSpec | dict | None = None,
         cmap_kind: str = "sequential",
         colorbar: bool = True,
         clabel: str | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Heatmap of a 2-D matrix previously added with ``.matrix(name, values)``."""
+        """Heatmap of a registered matrix; opt-in controls use HeatmapSpec/dict."""
+        config = None
+        if heatmap is not None:
+            config = HeatmapSpec.from_dict(
+                heatmap.to_dict() if isinstance(heatmap, HeatmapSpec) else heatmap
+            )
+            if not isinstance(config, HeatmapSpec):
+                raise TypeError("heatmap must decode to HeatmapSpec")
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
                     type="heatmap",
                     matrix=matrix,
+                    heatmap=config,
+                    cmap_kind=cmap_kind,
+                    colorbar=colorbar,
+                    clabel=clabel,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def clustermap(
+        self,
+        matrix: str,
+        *,
+        cluster: ClusterSpec | dict | None = None,
+        heatmap: HeatmapSpec | dict | None = None,
+        cmap_kind: str = "sequential",
+        colorbar: bool = True,
+        clabel: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Hierarchical matrix heatmap with effect-time row/column dendrograms."""
+        config = ClusterSpec.from_dict(
+            {}
+            if cluster is None
+            else cluster.to_dict()
+            if isinstance(cluster, ClusterSpec)
+            else cluster
+        )
+        display = HeatmapSpec.from_dict(
+            {}
+            if heatmap is None
+            else heatmap.to_dict()
+            if isinstance(heatmap, HeatmapSpec)
+            else heatmap
+        )
+        if not isinstance(config, ClusterSpec) or not isinstance(display, HeatmapSpec):
+            raise TypeError(
+                "clustermap settings must decode to ClusterSpec/HeatmapSpec"
+            )
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="clustermap",
+                    matrix=matrix,
+                    cluster=config,
+                    heatmap=display,
                     cmap_kind=cmap_kind,
                     colorbar=colorbar,
                     clabel=clabel,
@@ -383,11 +553,240 @@ class Plot:
         )
 
     def bar(
-        self, x: str, y: str, *, label: str | None = None, panel: int = 0, **style
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        yerr: str | None = None,
+        y_lower: str | None = None,
+        y_upper: str | None = None,
+        bar_width: float | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
     ) -> Plot:
+        """Bars with optional caller-supplied uncertainty, dodged by group.
+
+        ``yerr`` names a column of symmetric error magnitudes (e.g. SD).
+        Alternatively, ``y_lower``/``y_upper`` name absolute endpoints of
+        a precomputed interval (e.g. 95% CI), not error magnitudes. No
+        statistical estimation is performed. ``bar_width`` controls the
+        total category span (default 0.8), divided between grouped bars.
+        """
         return self.dispatch(
             A.AddLayer(
-                LayerSpec(type="bar", x=x, y=y, label=label, **style), panel=panel
+                LayerSpec(
+                    type="bar",
+                    x=x,
+                    y=y,
+                    group=group,
+                    yerr=yerr,
+                    y_lower=y_lower,
+                    y_upper=y_upper,
+                    bar_width=bar_width,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def barplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        estimator: str = "mean",
+        errorbar: str | tuple[str, float] | None = "ci",
+        n_boot: int = 1000,
+        seed: int = 0,
+        weights: str | None = None,
+        units: str | None = None,
+        native_scale: bool = False,
+        stat_scale: str = "data",
+        baseline: float | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Estimate raw observations per category/hue; do not pre-average data.
+
+        Named estimators and SD/SE/PI/seeded percentile-bootstrap CI are
+        explicit statistical settings. Existing ``bar()`` remains a
+        primitive for already summarized values. Weighted means use paired-row
+        bootstrap CI; units opt into two-stage (unit then within-unit) resampling.
+        Missing/zero-weight rows are excluded. Callables are not stored in specs.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="barplot",
+                    x=x,
+                    y=y,
+                    group=group,
+                    native_scale=native_scale,
+                    stat_scale=stat_scale,
+                    baseline=baseline,
+                    label=label,
+                    stat=make_stat(
+                        estimator, errorbar, n_boot, seed, weights=weights, units=units
+                    ),
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def lineplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        estimator: str = "mean",
+        errorbar: str | tuple[str, float] | None = "ci",
+        n_boot: int = 1000,
+        seed: int = 0,
+        weights: str | None = None,
+        units: str | None = None,
+        sort: bool = True,
+        orient: str = "v",
+        stat_scale: str = "data",
+        hue_order: list[Any] | None = None,
+        error_style: str | None = None,
+        error_alpha: float | None = None,
+        label: str | None = None,
+        semantics: SemanticSpec | dict | None = None,
+        hue: str | None = None,
+        size: str | None = None,
+        style: str | None = None,
+        panel: int = 0,
+        **appearance,
+    ) -> Plot:
+        """Numeric-x cell estimates with pointwise bands/bars, not simultaneous CI.
+
+        Raw .line() is unchanged. Units resample within each x cell, not entire
+        longitudinal curves. sort=False uses per-hue first-observed x order;
+        nonmonotonic bands fail clearly (use sorting or bars). Independent roles
+        partition raw tuples; size maps stroke widths in points, style markers
+        and optional named dashes. Numeric guides aren't extra observations.
+        """
+        mapped = any(value is not None for value in (hue, size, style))
+        if semantics is not None and mapped:
+            raise ValueError("pass either semantics or hue/size/style keywords")
+        if semantics is not None:
+            data = (
+                semantics.to_dict()
+                if isinstance(semantics, SemanticSpec)
+                else semantics
+            )
+            config = SemanticSpec.from_dict(data)
+        else:
+            config = SemanticSpec(hue=hue, size=size, style=style) if mapped else None
+        if config is not None and not isinstance(config, SemanticSpec):
+            raise TypeError("semantics must decode to SemanticSpec")
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="lineplot",
+                    x=x,
+                    y=y,
+                    group=group,
+                    semantics=config,
+                    orient=orient,
+                    sort=sort,
+                    stat_scale=stat_scale,
+                    hue_order=hue_order,
+                    error_style=error_style,
+                    error_alpha=error_alpha,
+                    label=label,
+                    stat=make_stat(
+                        estimator, errorbar, n_boot, seed, weights=weights, units=units
+                    ),
+                    **appearance,
+                ),
+                panel=panel,
+            )
+        )
+
+    def pointplot(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        estimator: str = "mean",
+        errorbar: str | tuple[str, float] | None = "ci",
+        n_boot: int = 1000,
+        seed: int = 0,
+        weights: str | None = None,
+        units: str | None = None,
+        dodge: float | None = None,
+        native_scale: bool = False,
+        stat_scale: str = "data",
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Raw-data estimates and intervals with optional connecting lines.
+
+        ``dodge`` is a total category span for hue offsets (default zero).
+        Use ``line_style="none"`` to omit connecting lines. Missing category
+        cells break the line rather than bridging unobserved categories.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="pointplot",
+                    x=x,
+                    y=y,
+                    group=group,
+                    native_scale=native_scale,
+                    stat_scale=stat_scale,
+                    label=label,
+                    dodge=dodge,
+                    stat=make_stat(
+                        estimator, errorbar, n_boot, seed, weights=weights, units=units
+                    ),
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def countplot(
+        self,
+        x: str,
+        *,
+        group: str | None = None,
+        stat: str = "count",
+        native_scale: bool = False,
+        baseline: float | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Count observations or globally normalized proportions/percentages.
+
+        ``stat``: count, probability/proportion, percent. The denominator is all
+        usable selected observations (not each hue/category separately).
+        No y column or inferred count interval is required.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="countplot",
+                    x=x,
+                    group=group,
+                    native_scale=native_scale,
+                    baseline=baseline,
+                    label=label,
+                    stat=make_stat("count", None, 1000, 0, normalize=stat),
+                    **style,
+                ),
+                panel=panel,
             )
         )
 
@@ -398,11 +797,18 @@ class Plot:
         *,
         yerr: str | None = None,
         xerr: str | None = None,
+        y_lower: str | None = None,
+        y_upper: str | None = None,
         group: str | None = None,
         label: str | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
+        """Points with symmetric errors or absolute y interval endpoints.
+
+        Use ``yerr`` OR paired ``y_lower``/``y_upper`` columns; intervals
+        are supplied by the caller, never inferred from SD or sample size.
+        """
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
@@ -411,6 +817,8 @@ class Plot:
                     y=y,
                     yerr=yerr,
                     xerr=xerr,
+                    y_lower=y_lower,
+                    y_upper=y_upper,
                     group=group,
                     label=label,
                     **style,
@@ -499,11 +907,51 @@ class Plot:
         *,
         bins: int | list = 20,
         density: bool = False,
+        stat: str | None = None,
+        weights: str | None = None,
+        common_norm: bool | None = None,
+        cumulative: bool = False,
+        multiple: str | None = None,
+        element: str | None = None,
         group: str | None = None,
+        hue_order: list | None = None,
+        orient: str = "v",
         label: str | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
+        """Opt-in shared-bin weighted statistics, retaining legacy calls unchanged.
+
+        Explicit statistics/geometry/style options create HistogramSpec.
+        Density uses original raw bin widths; normalized
+        mass includes only in-range rows. Cumulative density integrates mass.
+        Grouped stack/dodge change geometry, not heights or normalization.
+        Element='step' draws unfilled native stairs with layer/stack (not dodge).
+        Without new options, density/group/bin behavior remains Matplotlib's.
+        """
+        advanced = (
+            stat is not None
+            or weights is not None
+            or common_norm is not None
+            or cumulative is not False
+            or multiple is not None
+            or element is not None
+            or orient != "v"
+            or hue_order is not None
+            or any(style.get(key) is not None for key in ("line_width", "edge_color"))
+        )
+        config = (
+            HistogramSpec(
+                stat if stat is not None else "density" if density else "count",
+                weights,
+                True if common_norm is None else common_norm,
+                cumulative,
+                "layer" if multiple is None else multiple,
+                "bars" if element is None else element,
+            )
+            if advanced
+            else None
+        )
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
@@ -511,7 +959,72 @@ class Plot:
                     x=x,
                     bins=bins,
                     density=density,
+                    histogram=config,
                     group=group,
+                    hue_order=hue_order,
+                    orient=orient,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def boxenplot(
+        self,
+        x: str,
+        y: str | None = None,
+        *,
+        group: str | None = None,
+        orient: str = "v",
+        order: list[Any] | None = None,
+        hue_order: list[Any] | None = None,
+        width: float | None = None,
+        dodge: float | None = None,
+        gap: float | None = None,
+        native_scale: bool = False,
+        stat_scale: str = "data",
+        k_depth: str | int | None = None,
+        components: DistributionComponentsSpec | dict | None = None,
+        width_method: str | None = None,
+        outlier_prop: float | None = None,
+        trust_alpha: float | None = None,
+        showfliers: bool | None = None,
+        showmedians: bool | None = None,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Letter-value bands of raw observations, not confidence intervals.
+
+        One column uses group-as-category; x/y use category x/value y and hue.
+        Depth defaults to tukey; named depths cap at 32, explicit depths 1..32.
+        Widths are exponential/linear/area. Numeric native/log axes are supported.
+        stat_scale='axis' opts into log-space summaries; default 'data' stays raw.
+        Fliers are raw observations outside outer letter values, not IQR rules.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="boxenplot",
+                    x=x,
+                    y="" if y is None else y,
+                    group=group,
+                    orient=orient,
+                    order=order,
+                    hue_order=hue_order,
+                    width=width,
+                    dodge=dodge,
+                    gap=gap,
+                    native_scale=native_scale,
+                    stat_scale=stat_scale,
+                    k_depth=k_depth,
+                    components=make_components(components),
+                    width_method=width_method,
+                    outlier_prop=outlier_prop,
+                    trust_alpha=trust_alpha,
+                    showfliers=showfliers,
+                    showmedians=showmedians,
                     label=label,
                     **style,
                 ),
@@ -522,16 +1035,54 @@ class Plot:
     def box(
         self,
         x: str,
+        y: str | None = None,
         *,
         group: str | None = None,
+        orient: str = "v",
+        order: list[Any] | None = None,
+        hue_order: list[Any] | None = None,
+        width: float | None = None,
+        dodge: float | None = None,
+        gap: float | None = None,
+        native_scale: bool = False,
+        stat_scale: str = "data",
+        whis: float | list[float] | tuple[float, float] | None = None,
+        components: DistributionComponentsSpec | dict | None = None,
+        notch: bool | None = None,
+        showmeans: bool | None = None,
+        showfliers: bool | None = None,
         label: str | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Boxplot of column ``x``, optionally split into boxes by ``group``."""
+        """One-column boxes, or category x/value y boxes with group-as-hue.
+
+        Numeric dodge is the total hue span (0 overlays hues); None auto-dodges.
+        whis is an IQR multiplier or an ordered percentile pair, not a CI.
+        """
         return self.dispatch(
             A.AddLayer(
-                LayerSpec(type="box", x=x, group=group, label=label, **style),
+                LayerSpec(
+                    type="box",
+                    x=x,
+                    y="" if y is None else y,
+                    group=group,
+                    orient=orient,
+                    order=order,
+                    hue_order=hue_order,
+                    width=width,
+                    dodge=dodge,
+                    gap=gap,
+                    native_scale=native_scale,
+                    stat_scale=stat_scale,
+                    whis=list(whis) if isinstance(whis, tuple) else whis,
+                    components=make_components(components),
+                    notch=notch,
+                    showmeans=showmeans,
+                    showfliers=showfliers,
+                    label=label,
+                    **style,
+                ),
                 panel=panel,
             )
         )
@@ -539,16 +1090,110 @@ class Plot:
     def violin(
         self,
         x: str,
+        y: str | None = None,
         *,
         group: str | None = None,
+        orient: str = "v",
+        order: list[Any] | None = None,
+        hue_order: list[Any] | None = None,
+        width: float | None = None,
+        dodge: float | None = None,
+        gap: float | None = None,
+        native_scale: bool = False,
+        stat_scale: str = "data",
+        bw_method: str | float | None = None,
+        points: int | None = None,
+        weights: str | None = None,
+        inner: str | None = "legacy",
+        split: bool = False,
+        density_norm: str = "width",
+        common_norm: bool = False,
+        bw_adjust: float | None = None,
+        cut: float | None = None,
+        clip: list[float | None] | tuple[float | None, float | None] | None = None,
+        showmeans: bool | None = None,
+        showmedians: bool | None = None,
+        showextrema: bool | None = None,
         label: str | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Violin plot of column ``x``, optionally split by ``group``."""
+        """One-column violins, or category x/value y violins with group-as-hue.
+
+        Defaults preserve native median, width normalization and observed range.
+        Opt into named inner styles, two-hue split, area/count normalization,
+        bandwidth adjustment, bounded support and paired relative weights.
+        Weighted quartiles use inverse weighted ECDF; count widths use total mass.
+        No replicated rows, callable kernels or inferred confidence intervals.
+        """
         return self.dispatch(
             A.AddLayer(
-                LayerSpec(type="violin", x=x, group=group, label=label, **style),
+                LayerSpec(
+                    type="violin",
+                    weights=weights,
+                    x=x,
+                    y="" if y is None else y,
+                    group=group,
+                    orient=orient,
+                    order=order,
+                    hue_order=hue_order,
+                    width=width,
+                    dodge=dodge,
+                    gap=gap,
+                    native_scale=native_scale,
+                    stat_scale=stat_scale,
+                    bw_method=bw_method,
+                    points=points,
+                    inner=inner,
+                    split=split,
+                    density_norm=density_norm,
+                    common_norm=common_norm,
+                    bw_adjust=bw_adjust,
+                    cut=cut,
+                    clip=list(clip) if isinstance(clip, tuple) else clip,
+                    showmeans=showmeans,
+                    showmedians=showmedians,
+                    showextrema=showextrema,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def ecdf(
+        self,
+        x: str,
+        *,
+        stat: str = "proportion",
+        complementary: bool = False,
+        weights: str | None = None,
+        group: str | None = None,
+        hue_order: list | None = None,
+        orient: str = "v",
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Right-continuous empirical cumulative mass of raw column ``x``.
+
+        Proportion/percent normalize within each curve; count sums weights (or
+        observations). Complementary mass is strictly greater than each value.
+        Ties jump together. Missing/zero-weight rows are excluded. Horizontal
+        geometry keeps x as the observation argument. No intervals/censoring.
+        """
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="ecdf",
+                    x=x,
+                    ecdf=ECDFSpec(stat, complementary, weights),
+                    group=group,
+                    hue_order=hue_order,
+                    orient=orient,
+                    label=label,
+                    **style,
+                ),
                 panel=panel,
             )
         )
@@ -559,13 +1204,159 @@ class Plot:
         *,
         group: str | None = None,
         label: str | None = None,
+        weights: str | None = None,
+        bw_method: str | float | None = None,
+        bw_adjust: float | None = None,
+        gridsize: int | None = None,
+        cut: float | None = None,
+        clip: list[float | None] | tuple[float | None, ...] | None = None,
+        common_norm: bool | None = None,
+        common_grid: bool | None = None,
+        cumulative: bool = False,
+        fill: bool = False,
+        warn_singular: bool | None = None,
+        orient: str = "v",
+        hue_order: list[Any] | None = None,
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Kernel-density-estimate curve of column ``x`` (numpy-only Gaussian KDE)."""
+        """Gaussian KDE; new options opt into typed weighted fitting/evaluation.
+
+        Legacy calls retain the old 1.06*sample-SD*n**(-1/5),200-point curve.
+        Typed bandwidth factors scale unbiased weighted covariance, with Scott/
+        Silverman based on effective sample size. Cut/clip bound evaluation, not
+        fit rows. Cumulative is the full analytic Gaussian-mixture CDF, not a
+        rebased grid integral/ECDF. x remains the observation column in h.
+        """
+        kernel_options = (
+            any(
+                value is not None
+                for value in (
+                    weights,
+                    bw_method,
+                    bw_adjust,
+                    gridsize,
+                    cut,
+                    clip,
+                    common_norm,
+                    common_grid,
+                    warn_singular,
+                )
+            )
+            or cumulative is not False
+            or fill is not False
+        )
+        if kernel_options and "kde" in style:
+            raise ValueError("pass either kde=KDESpec or KDE keyword options, not both")
+        extended = (
+            kernel_options
+            or hue_order is not None
+            or orient != "v"
+            or "edge_color" in style
+        )
+        if extended:
+            style.setdefault(
+                "kde",
+                KDESpec(
+                    weights=weights,
+                    bw_method="scott" if bw_method is None else bw_method,
+                    bw_adjust=1.0 if bw_adjust is None else bw_adjust,
+                    gridsize=200 if gridsize is None else gridsize,
+                    cut=3.0 if cut is None else cut,
+                    clip=list(clip) if isinstance(clip, tuple) else clip,
+                    common_norm=True if common_norm is None else common_norm,
+                    common_grid=False if common_grid is None else common_grid,
+                    cumulative=cumulative,
+                    fill=fill,
+                    warn_singular=True if warn_singular is None else warn_singular,
+                ),
+            )
         return self.dispatch(
             A.AddLayer(
-                LayerSpec(type="kde", x=x, group=group, label=label, **style),
+                LayerSpec(
+                    type="kde",
+                    x=x,
+                    group=group,
+                    label=label,
+                    orient=orient,
+                    hue_order=hue_order,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
+    def kde2d(
+        self,
+        x: str,
+        y: str,
+        *,
+        group: str | None = None,
+        label: str | None = None,
+        weights: str | None = None,
+        bw_method: str | float = "scott",
+        bw_adjust: float = 1.0,
+        gridsize: int = 80,
+        cut: float = 3.0,
+        clip: list[list[float | None]] | tuple | None = None,
+        common_norm: bool = True,
+        common_grid: bool = False,
+        levels: list[float] | tuple[float, ...] | None = None,
+        fill: bool = False,
+        warn_singular: bool = True,
+        hue_order: list[Any] | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Weighted bivariate Gaussian highest-density contours, not confidence CI.
+
+        Levels are increasing enclosed fractions of trapezoidal mass WITHIN the
+        evaluated grid, not absolute density/full-space guarantees. Cut/clip
+        never trim fit rows. Scott/Silverman use effective n**(-1/6) in d=2.
+        Relative weights, conditional covariance, raw-coordinate densities even
+        on log display. Singular groups skip without artificial regularization.
+        """
+        if "kde2d" in style:
+            raise ValueError(
+                "kde2d uses explicit keyword options; use AddLayer for config"
+            )
+        bounds = (
+            [
+                list(bound) if isinstance(bound, (list, tuple)) else bound
+                for bound in clip
+            ]
+            if isinstance(clip, (list, tuple))
+            else clip
+        )
+        config = KDE2DSpec(
+            weights=weights,
+            bw_method=bw_method,
+            bw_adjust=bw_adjust,
+            gridsize=gridsize,
+            cut=cut,
+            clip=bounds,
+            common_norm=common_norm,
+            common_grid=common_grid,
+            levels=[0.5, 0.8, 0.95]
+            if levels is None
+            else list(levels)
+            if isinstance(levels, (list, tuple))
+            else levels,
+            fill=fill,
+            warn_singular=warn_singular,
+        )
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="kde2d",
+                    x=x,
+                    y=y,
+                    group=group,
+                    label=label,
+                    hue_order=hue_order,
+                    kde2d=config,
+                    **style,
+                ),
                 panel=panel,
             )
         )
@@ -727,6 +1518,98 @@ class Plot:
                 rows, cols, width_ratios=width_ratios, height_ratios=height_ratios
             )
         )
+
+    def facet(
+        self,
+        *,
+        row: str | None = None,
+        col: str | None = None,
+        row_order: list | None = None,
+        col_order: list | None = None,
+        col_wrap: int | None = None,
+        share_x: str = "all",
+        share_y: str = "all",
+    ) -> Plot:
+        """Materialize a row/column grid from one completed template panel.
+
+        Cells keep exact selectors over the unchanged source table. Statistics
+        are cell-local; semantic mapping domains are shared across selected cells.
+        Build layers first; later edits address explicit panel indices. Orders
+        reserve empty cells. New levels after SetData require rebuilding the grid.
+        """
+        return self.dispatch(
+            A.SetFacets(
+                row=row,
+                col=col,
+                row_order=row_order,
+                col_order=col_order,
+                col_wrap=col_wrap,
+                share_x=share_x,
+                share_y=share_y,
+            )
+        )
+
+    def joint(
+        self,
+        *,
+        bins: int = 20,
+        ratio: float = 3.0,
+        marginal_stat: str = "density",
+        marginal_kind: str = "hist",
+        kde: KDESpec | dict | None = None,
+    ) -> Plot:
+        """Add paired histogram/KDE marginals to a completed raw scatter/regplot.
+
+        Main panel is top-left, y marginal right, x marginal below. Original
+        data remains intact; all views use dynamic complete x/y/group cases.
+        """
+        from ._joint import grid_kde_config
+
+        config = grid_kde_config(marginal_kind, bins, marginal_stat, kde)
+        return self.dispatch(
+            A.SetJointGrid(
+                bins=bins,
+                ratio=ratio,
+                marginal_stat=marginal_stat,
+                marginal_kind=marginal_kind,
+                kde=config,
+            )
+        )
+
+    def pair(
+        self,
+        columns: list[str],
+        *,
+        group: str | None = None,
+        hue_order: list | None = None,
+        bins: int = 20,
+        diag_stat: str = "density",
+        diag_kind: str = "hist",
+        kde: KDESpec | dict | None = None,
+    ) -> Plot:
+        """Materialize a numeric scatter matrix with histogram/KDE diagonals.
+
+        Each cell uses pairwise complete cases; original data stays intact.
+        Named value axes share across rows/columns, never with diagonal density.
+        """
+        from ._joint import grid_kde_config
+
+        config = grid_kde_config(diag_kind, bins, diag_stat, kde)
+        return self.dispatch(
+            A.SetPairGrid(
+                columns=columns,
+                group=group,
+                hue_order=hue_order,
+                bins=bins,
+                diag_stat=diag_stat,
+                diag_kind=diag_kind,
+                kde=config,
+            )
+        )
+
+    def share_axis(self, axis: str, share_id: str | None, *, panel: int = 0) -> Plot:
+        """Link selected primary Cartesian axes by name; figure sharing must be none."""
+        return self.dispatch(A.SetAxisShare(axis=axis, share_id=share_id, panel=panel))
 
     def suptitle(self, text: str) -> Plot:
         return self.dispatch(A.SetSuptitle(text))

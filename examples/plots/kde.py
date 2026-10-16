@@ -8,7 +8,7 @@ data = {
 }
 plot = (
     mp.plot(data)
-    .kde("value", group="group", line_width=2)
+    .kde("value", group="group", bw_method="scott", common_norm=False, line_width=2)
     .labels(x="Value", y="Density", title="Gaussian KDE")
     .legend()
     .size(4.5, 3.2)

@@ -1,0 +1,683 @@
+{
+  "scope": "Historical focused verification of the local worktree, not full release gates. Paths/account identifiers omitted. Exact commands/logs originally stored locally.",
+  "base_head": "c4f40ab22660129ad4e35c63d1f66feb62e2dd99",
+  "phases": {
+    "phase2": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "scipy": "1.18.1",
+        "statsmodels": "0.15.0",
+        "pytest": "9.1.1",
+        "playwright": "1.62.0"
+      },
+      "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+      "files_sha256": {
+        ".github/workflows/ci.yml": "912df3e20eef3138ebcb158f7679840d46c3d2e4d101e8e0067fb66ef8b9ab7d",
+        "CHANGELOG.md": "e60e7d01e53aed9fa3e29c25f8f6bfdcde0643b9c59725a20516f9f5e23af609",
+        "CONTRIBUTING.ko.md": "2d9b4a71ca19bf3f464e5d47dffd0a7e9518f37fbfd4883ac21968b19b345d24",
+        "CONTRIBUTING.md": "ba70434a18b6ff94c72728bf4d6915732016e6c23b234acca6b1d01cea704873",
+        "README.ko.md": "5e4f520efa4ea48dc450133dda54d2dba7b2260672d853ae57ac6e17f5818194",
+        "README.md": "b3e9efa724068807cb32e4d7a3fae6afc9ff22f33672457ed13eca193dc651bb",
+        "ROADMAP.ko.md": "2651541d86528ffc6f316e674caf33aa37f984738908c73772892fb3c54cb56f",
+        "ROADMAP.md": "e14fd6ebbe96445f5553aa63d4e15db6126aa5d8079d0326cd519e47d6bab27e",
+        "dashboard/README.ko.md": "1035e305dbe1b49b0fc1a7da14b98f3b44dade31f58e6955c3ea7870a1ee29b3",
+        "dashboard/README.md": "d3f7007afe894c6fcb27d0627c656841dec2012bc58148b13af6e838da38c9d4",
+        "dashboard/editor_server.py": "7cc1d13c669e3ae9350b8f3bf8b9efcbddfeab8e53cc32823ef4bbf906c738e2",
+        "dashboard/editor_view.py": "69b33e51b389f48d233dd8b9bebfaf2eee4863b8026d9bfcd5095fd6e4f6e96b",
+        "dashboard/plot_gallery.py": "dc95b86764267e0f19258294782daf6aa390477edc4e3ddc414aea78b948087e",
+        "dashboard/samples.py": "ac40bc7259595a9135b8f28c623838bb0d2eb1bef39f9196592aa13d9526168d",
+        "dashboard/site.py": "8343da170220dca6d90f51cf7b46565bc46889c0749533f0b601d62bf5ac583f",
+        "docs/CLUSTERMAP.ko.md": "3413994a53e5d6aa0e4261b319d2bced84ba917063f67dd2cd53af341d08d1ef",
+        "docs/CLUSTERMAP.md": "7303b72fd4fa702c7195557cb7554147ff8b2ceb6293fe64ed558144d6214855",
+        "docs/COMPATIBILITY.ko.md": "3c96509b53d92b73fb24772f9a76036bf6945d5b7eaa28e7d1bfe5c4158d423e",
+        "docs/COMPATIBILITY.md": "2962675b22602db47409b72324efccca11c746fdb29dbfa1e73cac87dd3cdf07",
+        "docs/FACETS.ko.md": "f92f31de098c16c2842d296a3d4a71559269755d28036c64e6037f2955b4a84f",
+        "docs/FACETS.md": "68f0cccd68de27baf2d83d6be852a6383bdb42d88842a45087937cf69ffb86ee",
+        "docs/FEATURE_COVERAGE.ko.md": "ae9268ad98c8ae41618fb974a7bd34678e92fbd550caa68a1f4b39d9ccc1fe77",
+        "docs/FEATURE_COVERAGE.md": "489316618564fafc775628560c77faffb7d35e8e0b24aeb43b1c3f2a59fdd739",
+        "docs/HEATMAP.ko.md": "0260656ac799f2f1deadecc1d0b41431cabe552cbf9c846714d1fdd50e903a7f",
+        "docs/HEATMAP.md": "50d5489f879453c939a7600d8316030fba21958d08ca2f6a0247dbdccc404fae",
+        "docs/JOINT_GRID.ko.md": "d48c3368a479551bdc0e11861158618f5d977cceb5b58acd7a4adf1295c43faf",
+        "docs/JOINT_GRID.md": "f57b15055230a894511c20f3de7dd6a9a0aacb047633b06e5139abe9cb597d7a",
+        "docs/PAIR_GRID.ko.md": "484e4c0c227e86bd9fd4eed283e5bfe35effbec4908655c37e8f324c6e67b4ef",
+        "docs/PAIR_GRID.md": "0edbae0f7789c4a1deb73eb83a1d841be1a02083b08a919437268d8e98e3e07f",
+        "docs/PLOT_GALLERY.md": "d9fd0f8fc648e1694d6d9107aeb5d964c2e9177338be0c60452bbe7456bf3c3e",
+        "docs/REFERENCE.md": "2abbbd9a5980822653d173c6892385c6f36924b7bdb79c94056971300797d24e",
+        "docs/REGRESSION.ko.md": "93069c5852c264be6877052844819cc5eb7fdc27435b62fc4dcaa9967143bd9c",
+        "docs/REGRESSION.md": "22672e6e8977dfbc2710d76aec2fd3d925ac6ff68cb1494863a19d5c69e3dd0a",
+        "docs/REVIEW_CHECKLIST_STATUS.md": "9cf675d22e9f6a9e250ad1a0bfcfb57d4375eb2355e703a2d12350b4abb6f5e4",
+        "docs/V1_1_PLAN.ko.md": "8790ddba450b9a62cbc24cf727143aa0a2f90cdd1f84e688e6b36f542233c6d5",
+        "docs/V1_1_PLAN.md": "471d342f03dc31ff8e3c0035f9ae99bcce671282514c091aec56045f8862a8c5",
+        "docs/VISUAL_QUALITY.ko.md": "bc327e646efff0d55de18c084d5fe681fab67cc08fa39e3c4c1666d3bf0ec6fa",
+        "docs/VISUAL_QUALITY.md": "f9bb90871b837565219a0ee78fa0adb7c29fdc33271d4a4a48c2e86dae6de16f",
+        "docs/VISUAL_REVIEW.html": "ee6449613ee4adb3c4de19406f62eb8537a0ee95d02f9bae0d7bda0350b398fd",
+        "docs/images/bar_before.mplot.json": "bce398f480a8bee131a7542113291d97c759c6d32d2c96d91ae92b97d57e7835",
+        "docs/images/bar_before.png": "c1b728abbefe221c7ee89357a8625cc011171fd9f7191080c188eb3d212ef592",
+        "docs/images/bar_before.svg": "240df55390b6306f748d168eabef140dd297a4fd1939aeaa0de4accb92e0ba44",
+        "docs/images/bar_ci95.mplot.json": "3db0715be7b17450b13235fa175b94df1892f55fabb1b639aad8dbb3c3385441",
+        "docs/images/bar_ci95.png": "660f25b26be82f0e85f7f3018b98c8679e7b28f64d2f0489741a75ade298fc90",
+        "docs/images/bar_ci95.svg": "b041cfe7a0b728769cc994c71235f659f2831cb2b3aa86a3241b41d0ed8b30ec",
+        "docs/images/bar_hatched.mplot.json": "5f6c04a4463979e744e047a860e46f1358313433cd1b6ea7173d727e460de601",
+        "docs/images/bar_sd.mplot.json": "afc19a8c9642d7c6516f814125fb376e1b17d35eaecce51e4992ebadf9a1e239",
+        "docs/images/bar_sd.png": "bf04febfe5037a2ad1c3ad88b5f6ec418c0864c76f4f233c998206c734087aea",
+        "docs/images/bar_sd.svg": "c560bbcf6f807ef32af38b63d76e8624708405dfe20c4f135ce1c17b7ccc97c1",
+        "docs/images/bar_uncertainty.mplot.json": "51f4e9e340020a21573b5ef1fa6e5bb2833d9028bb2fd8d709e7e89be4a21e8d",
+        "docs/images/bar_uncertainty.png": "fa50093e1b2a5cb12a052a468e65147fb3960221cf99562699688b61bf13a49b",
+        "docs/images/bar_uncertainty.svg": "9601e764d68991f5cd5ff0141a2c52d09cdb381705bafac5a9f762f276650d14",
+        "docs/images/clustered_profiles.mplot.json": "489b97c59de799942ec4092af91a3b910e59f1f19ebc40bb1ee0422a09cad541",
+        "docs/images/clustered_profiles.pdf": "78ea2f4455c9663c4333fa6bd0ca4d1835f12b9991679902d8e1ed0eb2c3b64e",
+        "docs/images/clustered_profiles.png": "fe8acecc93b065e637cfc406c53ccb6f37ac51a40b63f1e88c163ae37673464f",
+        "docs/images/clustered_profiles.svg": "e978ae1950cbf8e65acab7114205dbce411a6567addaab32e14713116f651c6e",
+        "docs/images/distribution_components.mplot.json": "e8a26c9cc341a18621ba8b7a2baf66142b66001408ed87f248284522e0e54d06",
+        "docs/images/distribution_components.png": "6360e5f2e8f5067484cb7ea29c4a015fe7b303a7b36877fa445f67cf0f38c2fe",
+        "docs/images/distribution_components.svg": "5756717f404573398d7b2e3343fd79c97ffb0c011feb44bd9a0dcfb5b957fe5b",
+        "docs/images/ecdf_semantics.mplot.json": "4734d744917999b8b4cb0702ab062c15c7513564812fe95d19fd9e897dcc9e6c",
+        "docs/images/ecdf_semantics.png": "44ba24f007d21c5fdd9c1768fbbf08946567445aa860fb1ed243745383a44478",
+        "docs/images/ecdf_semantics.svg": "fe84b5b8a7336e7f0317518d9bc2c88cbed8620d3aba68862a1f8f47f884b075",
+        "docs/images/editing_after.mplot.json": "a67248301871c0775ee72a1d722411aac59bc24df84c00c9b717ea5785176c82",
+        "docs/images/editing_before.mplot.json": "292562ca47d69a945597452ae2d40c8e3c4d698e71b796dbc775c6042dcacc7f",
+        "docs/images/faceted_responses.mplot.json": "65b8c0d33b45aa55fa6ac42c721781ebc9219f2c813a0cd035ede14931b8861a",
+        "docs/images/faceted_responses.pdf": "d8f5c4111940a82951b65c9b26f56924dfd2a3541a540629ca1b41e1cd682252",
+        "docs/images/faceted_responses.png": "88f161ca20ebdc82bf61b2ac20b4bda950442b23f3829e766ebabea978b37f97",
+        "docs/images/faceted_responses.svg": "80d5e6d2c960cd51e009476c0b04a28a52d155719bd9ad0dea6542e345cb7b98",
+        "docs/images/fields_demo.mplot.json": "9af686ac0e21ce800e7c51182b1847c413e9f9f8c3c10bc64ff2fce0b57f855e",
+        "docs/images/heatmap_controls.mplot.json": "5b6a01a3aec4cc5f36d15e905710fa97efc8e831b67b2664978405be4f8b8339",
+        "docs/images/heatmap_controls.pdf": "08df15eb928c3d1e75730e31bd818f567fe4f04c13c854ac461c40b775b6f9e8",
+        "docs/images/heatmap_controls.png": "3e7b7d1e87b84749608b7d19fd81f345a0f12712ce4e51ca67e39fac3cc81bde",
+        "docs/images/heatmap_controls.svg": "76719559439075abcc1e868cc0faecab3bf32f068e35cf611725701ec077d9b2",
+        "docs/images/histogram_statistics.mplot.json": "913263930d59459cabae955a6e71e13e488d27d8355af06d4a7aff2c7d152f14",
+        "docs/images/histogram_statistics.png": "d17bc3e8b6c89740d27a5cc1de5a6602f69dcee4c0e04484462f17c1ddfd3345",
+        "docs/images/histogram_statistics.svg": "03db1d1b452b8f169fd7ae336e5510b01ba2d83ed4c3df641626a55860d93d05",
+        "docs/images/joint_observations.mplot.json": "a7c6ef804a33ac6da2cea79fe5f43f2579f46b686d4b9d43173e9871410fce08",
+        "docs/images/joint_observations.pdf": "a3686ed52632bff70c8e240c453a2ccfbb5196ddf952c45434de5ef3ea11ca7e",
+        "docs/images/joint_observations.png": "7dd37604d61806c3e7058ef72f98b80d96ee277736066d3013afc22141f08c9f",
+        "docs/images/joint_observations.svg": "dccd374aae90114d03692623d2346389f14a31a5b05cb711a41f6dddd2d20fc3",
+        "docs/images/kde2d_semantics.mplot.json": "872e09d233916cdb4d62770e9069f73eee344cdb49e82906a8dbc28c27f54f46",
+        "docs/images/kde2d_semantics.png": "5935f27014f9671d99fbcd30e1bdaf5b71ad91a1a8de7af3e3d49eab023f9063",
+        "docs/images/kde2d_semantics.svg": "a3a296f32dd2815f3db9f23d76d2c45f7a27e96cc0eb340b1f61904044ad7eac",
+        "docs/images/kde_joint.mplot.json": "9b61b07a732d2cebe132906c125681f1daf51a6635bde94b162bed00f0103c8e",
+        "docs/images/kde_joint.pdf": "570d630f6867db5a4583e16da4108b3f2562595a51b37b66e617c896d9251f22",
+        "docs/images/kde_joint.png": "43a3d56637dd891160fc2d342cdd94ef7e80a81339ce48fa772502c1572d22e0",
+        "docs/images/kde_joint.svg": "da6f5cb9861b74f9aa6f64f0acd5ba9f6c666fd53d3be5e6ee2d674f0de7d0c2",
+        "docs/images/kde_pair.mplot.json": "c228b5140dd406a3f8ecb660882c6e3a4ed9eecbc3dbdaffb69945cdabda9c9d",
+        "docs/images/kde_pair.pdf": "8024f392bdc80c362700c3e96c64d158639602860f5e187efe13eaad8e32134a",
+        "docs/images/kde_pair.png": "d9a7dde571b410a5435b247f2355f936ab7251d3c1ebcf9788728e73310e7deb",
+        "docs/images/kde_pair.svg": "411c8ec013d1cfa72820a897fc1ef88d025dad978870d0268347e7fb8a9e9ca9",
+        "docs/images/kde_semantics.mplot.json": "4d19d9fccace1acc01ae086645dd656ac996eb8b2e17cbdf69b4b9c5ea97e391",
+        "docs/images/kde_semantics.png": "75c1f809ff0a6dab4ba78554827db8cee05016493a9ad80fa9883ee728b5a6e2",
+        "docs/images/kde_semantics.svg": "1a0696fbadf474aa7d9ab86936fcc09a40a8f860dfb88a3bd3db8d6c7e100fbc",
+        "docs/images/letter_value_categories.mplot.json": "38d4cbb7a57ea807fa3b2d0bcc29a429eea26dbc19a6afbc2250eaad1c85f828",
+        "docs/images/letter_value_categories.png": "e2446c8d350b95171f327e3e498a2bc347bfcb100618f103c866de1b46b51b60",
+        "docs/images/letter_value_categories.svg": "207a9fd4d7e08cf349ec8c8b06b09db9c0ff7f9cc7a7e0630c57f2dbdf08c22e",
+        "docs/images/line_estimates.mplot.json": "0dc5e837c905898f3f46f0c94ab72e010180bf7d898e9d4332f1714c55debb9a",
+        "docs/images/line_estimates.png": "3ecc26d5bbc1c98c8fbb857795fc93720ed1960c0a7ccc9a6df8d0ba98aa2d13",
+        "docs/images/line_estimates.svg": "98137dff54030b550f09b8f718725fa37c36552c124cc3732435adb10fa457d5",
+        "docs/images/line_semantics.mplot.json": "3108324e31be86d615f5911cb06771c19bf4ef45d8b764347a276d37ce0062d1",
+        "docs/images/line_semantics.png": "42f81dce94eaa01b34a5545dc5348356e6f08d689e8f0a2382c717b5617af456",
+        "docs/images/line_semantics.svg": "adeaadb4c3036c4ad7996f92f6386d9c3d38048b1b4a5bede8e64897168d8a02",
+        "docs/images/native_categorical_scales.mplot.json": "5b6a2512161036ea560aaead24b0797f9582477df380aa6c881863a1c2640b12",
+        "docs/images/native_categorical_scales.png": "2fe97a7ad6b28ccb1acefc706bd25ffa9f2191c08874f035e0c41d1281a4490e",
+        "docs/images/native_categorical_scales.svg": "c267d324e94a9a9996ed3d818b1e3f36565d12b251bbd2deafca28589db0b9b6",
+        "docs/images/pair_observations.mplot.json": "a0c9e526327d3796fade11ad793cda25f0280b364c4bd6b0aa8c789b5e987de4",
+        "docs/images/pair_observations.pdf": "0455793cc35bc03400eb1e0f868ee78eedbe140ea1631e4eb39309820e7a4fb6",
+        "docs/images/pair_observations.png": "34bf0ec8b39660b81cd74b3e263c52355f263ffb8daa327bc96258bb547c75a9",
+        "docs/images/pair_observations.svg": "81afed9788106562c7933abe03cf38626dbe9afb1c3c86f79310a6b7bfa6f81e",
+        "docs/images/pandas_demo.mplot.json": "6ed1a78542e141ba15569679dc6fec7b74158e86605062c0fbe0db6f7fdcf693",
+        "docs/images/pandas_demo.pdf": "cc1e1e724389945404eea5109d2963dd6defa5bc297e341a73d5daf462a0c279",
+        "docs/images/pandas_demo.png": "1ea68a5fbf6e6ec06c323c70cc821b1c61b8d4eb5a4aed1c6dd13fb037f63c8b",
+        "docs/images/plots/annotate.mplot.json": "b018056c0c06ab093b08bad22a98f4bc99522e4f253ffdcd13f526228d9e9a18",
+        "docs/images/plots/annotate.png": "f17b8d39f07b5efeddba9abb18c4670ce81a812ac5db1e262e7c62eda9b26f6a",
+        "docs/images/plots/band.mplot.json": "0a5257741cfb810fee676475745174ba85d19d2b4f0c2d1e442aaca61e855c7f",
+        "docs/images/plots/bar.mplot.json": "e30e23e01b35d100ba108e57075f438854afab05946192ed3f9db1d9aa766c69",
+        "docs/images/plots/bar.png": "ef31404e70ba295ccfa8d3e7f51616d6e7c84f59fedbc54cc3eceefacb5ed26e",
+        "docs/images/plots/barplot.mplot.json": "c6cb26741b06b5b585fe5c00a851856a7e8ace700d5d74f161b460992d6ac5e0",
+        "docs/images/plots/barplot.png": "ac45748cf0cb782cc31f94cbe46e8e34ed0b7ae972eaef61fc3acb979031ffde",
+        "docs/images/plots/box.mplot.json": "6db806d2a76088894493bffb802273b3ab81ceba8fb2aec83a8352d08cca35f9",
+        "docs/images/plots/box.png": "54c5d7d9d02824c6fdaf9a43dac7d66045d3fea5e3d2182bc69c69aaacfa2a0b",
+        "docs/images/plots/boxenplot.mplot.json": "0f79cee2f8f7ba85b62b9b8919d9197d7f669aea83cf002838b925e59da2b112",
+        "docs/images/plots/boxenplot.png": "f21342be77fd14a668b3f0229ad6329decf206e23ce2158aed1ee461bf4a32b5",
+        "docs/images/plots/clustermap.mplot.json": "e58b022543afa86cede1876fe1a2397f1f61231a25959410d515469ba03be43f",
+        "docs/images/plots/clustermap.png": "9b50c50253f2de72d53462931af2b1addaade7d1881aac5edf53944b5a3b9861",
+        "docs/images/plots/contour.mplot.json": "3e131c3c066ffcfd5d8527f0eb40e5654900b9678bce442d6af397d2945a6009",
+        "docs/images/plots/contourf.mplot.json": "45395f7fe1487ac0afe81f0c2c00500836db0bc88e389848a0b66ae772e2b461",
+        "docs/images/plots/countplot.mplot.json": "d570cd461ada52811d99344ea3428cf9ede5a10df777f94eba5c6cac28f050c7",
+        "docs/images/plots/countplot.png": "d13de6f7e204a960b039f8e3671af341f7b0825180637cce909b03ca89ec5b73",
+        "docs/images/plots/ecdf.mplot.json": "958116977ba893c993372a69eb17689f493e07dba680b170c846700afcef1fb3",
+        "docs/images/plots/ecdf.png": "faa514f5d4b5f955ebce476ad21949fd788867018e5b90256412b926adebcebc",
+        "docs/images/plots/errorbar.mplot.json": "126c0bf7f732a5b7ef0c6f0f52de3745305c7005886587a5a537a66e38851788",
+        "docs/images/plots/heatmap.mplot.json": "01618bd427c6787ec20d8af15348a30414baf0ffbfe3e41a5665ba22b2954243",
+        "docs/images/plots/hexbin.mplot.json": "f56dd90a45a7b9994aaa1bed048545dfdfb75cde7bd5b1434226d29db3d376e4",
+        "docs/images/plots/hist.mplot.json": "f51b32c8a5ccb81f89e81fcaa5602e35922438b798e4ea03dca5f7c3ecdd16bb",
+        "docs/images/plots/hist2d.mplot.json": "0db3491f521e7aac76c4b068811b4c99a23eb35e290e567e941dd646b57f9ddb",
+        "docs/images/plots/hline.mplot.json": "f18572c525fa7e4f13e553a490a799a700da5a00df7e937219034dc2111cb212",
+        "docs/images/plots/hline.png": "149d4d177a0711a041be8813dc005132fb092f717d994447892c7fea18211d76",
+        "docs/images/plots/kde.mplot.json": "a83d74a24857712b469dacdba8effcd42a9d25b1c9006f609d7bf662d27999fc",
+        "docs/images/plots/kde.png": "e287d8affb2b764ec45b9479ced0d937550a9031b0082da78b773d5566013f0c",
+        "docs/images/plots/kde2d.mplot.json": "3c5a225252783ec1b4e08028aa542b22454c164e3496abea44ae28cd15aab1b7",
+        "docs/images/plots/kde2d.png": "02dbf2f8e44af134f59cd4ab3acff352640729dbecd5ee747b60bf935e6e16d4",
+        "docs/images/plots/line.mplot.json": "a7d497c0f1dea3a4c32100a6c38ee9b41f18a7374b7ae917c0cb9e9f667b867b",
+        "docs/images/plots/line3d.mplot.json": "e7f3735737f7599d50bb990262bc43a9de13bf67ce71cd798c6bc54f22975dfc",
+        "docs/images/plots/lineplot.mplot.json": "2a7d57f3521f561fb57a57548aea2568d14a7ae9f7031d101ce643637097cd4b",
+        "docs/images/plots/lineplot.png": "fca34206a507f9e3ac49054271103f8533d9a6f86db3cd9aa84293a11486fd14",
+        "docs/images/plots/pie.mplot.json": "f116cb2c67f483d52169926831ad1f23db936bfd3ee65b55542561a9cf6da12f",
+        "docs/images/plots/pointplot.mplot.json": "b0af12125aa565157ad2c432af4eda41aa719cbbc3c5c418d5cd643262dee9f0",
+        "docs/images/plots/pointplot.png": "8ab4576f45c6a1cc31e06d5370f981e765275ceac1b230d949d3e2a159785f76",
+        "docs/images/plots/quiver.mplot.json": "132e6e911d3f56c9c66879bfae118ffe67d4fa28efaa5174a82d8d93f43481eb",
+        "docs/images/plots/regplot.mplot.json": "3f7fca488d50355f06b6b32a014b0ca6cd9d7c290772d0a91c013887fdaa4106",
+        "docs/images/plots/rug.mplot.json": "1914c634f0c28fffb835ab26fb36e7dfc43fead399cb0fa1702abde0d1e7f7e5",
+        "docs/images/plots/scatter.mplot.json": "8150e9bc05132974a4300efef29ab39098c8af69dbb59bd0274cfc4715a1790f",
+        "docs/images/plots/scatter3d.mplot.json": "f8594ec46e0e100d059ca54814c3c0fe9ad6eac6e7f0224c53e4cd7a9b65bef7",
+        "docs/images/plots/stackplot.mplot.json": "4c2a11894e3c31e8519cb42f309c8c535ffbd9108a09edec5331609d755ab3f0",
+        "docs/images/plots/stripplot.mplot.json": "92fa2b7b888385d1809290bce503b27fffcb8f0ee2d56ac42cd2140bdb802c6a",
+        "docs/images/plots/surface.mplot.json": "fa7a1b13056d11f15968c6943b3e8af01a604e57fe40ab9d8b170efe95ca20d6",
+        "docs/images/plots/swarmplot.mplot.json": "40ea9932a59128e06db708918788dc466090b7852d91edb09e55041d64f83161",
+        "docs/images/plots/swarmplot.png": "0d6c7cf29834f0d03be458c87b01e70123847b14c2ab5ea0648946d1db336196",
+        "docs/images/plots/text.mplot.json": "03eae6a67152eae424d7e91ae7eb7de1fd8211b74245805009921cd58af8ccfc",
+        "docs/images/plots/violin.mplot.json": "b988100d307f9e868d7c6cc17db909a7375fa275c89d892de92ef53868b41db5",
+        "docs/images/plots/violin.png": "392daf92b456645cfb7ec16ef9700ba3e4a40656a61c2b185cb167517cd31495",
+        "docs/images/plots/vline.mplot.json": "7bdfdbda670d042efd1173a726ce9db098a5dae7454220b7e53960b2f327b97a",
+        "docs/images/plots/wireframe.mplot.json": "1520359750afa0990a1cde0614ac412a35cd0a1755e592b7307ebd0e22797d23",
+        "docs/images/regression_logistic.mplot.json": "40eb437fb896f31aa7cd64d491c493bc348373b9893d62692fd195f24b644b61",
+        "docs/images/regression_logistic.pdf": "55f86a7ff2865ce326a29f37d2da563c373ad1e35c43aaffbafd0e652fd7fcd8",
+        "docs/images/regression_logistic.png": "4009c25f2c6b8fd00c95368c18f3e53a091dacab9c4da68e9eeb00054a35106a",
+        "docs/images/regression_logistic.svg": "dba7212c5aeefbaed36c143973ea900bc43740bf388770c77a2de1f3f7d0e180",
+        "docs/images/regression_logx.mplot.json": "ae97d971aeddad7ae6579d0d5104d652c232ce28415a02a20206dbc3026dbfe9",
+        "docs/images/regression_logx.pdf": "62a9e6ea6140d9f6556938380269d5e1bdb692d012afe8a58ccceee79ae3814d",
+        "docs/images/regression_logx.png": "e71697fdaff0a552eeefc492c81dfb1d8abe5a5f273df5ff87c9aebe34ec01f7",
+        "docs/images/regression_logx.svg": "33c82e58dc85da5b5e1372ab9359dd20f5e9303aa3714505dd4452c06ebbc796",
+        "docs/images/regression_lowess.mplot.json": "eaacc88135198920129e5f3b24c272d2ed056a142b48420b0a7dcbb7a748ac4a",
+        "docs/images/regression_lowess.pdf": "843b7a24d66eac4eb1d9eb7a6b2f058e0cd4c866979bcbdbbbac12c912b762a5",
+        "docs/images/regression_lowess.png": "13daa99c5f340e52ad903de1eec260aaf0f769e8f73b795bde7aa1f538051f06",
+        "docs/images/regression_lowess.svg": "b37f7ccf7b2a914f92beabfc5e30bcffefc1d85b0e4bef163fb149325e3ba4ba",
+        "docs/images/regression_residual.mplot.json": "63cd25fee2a3c3bfd9200a9cf714cef061c01a0b3a8b3129a06620889d4e46cd",
+        "docs/images/regression_residual.pdf": "fcf956d07675987ebd71e18b317389536d27a68742b76723e1857560b88cc5c7",
+        "docs/images/regression_residual.png": "6e8c512ab599d11000aac560ed08fd1dbc1e0e2af55ee7bba2a3a4e4756c3d30",
+        "docs/images/regression_residual.svg": "c8bfdf0cd8cbdc972dbb18df360ac141321c54a61c13eb0390f11a41dee88147",
+        "docs/images/regression_robust.mplot.json": "6541e182875e87bfe6996441afd48a597504692b5bcaac9535b0782ff6818feb",
+        "docs/images/regression_robust.pdf": "80d77c271425d11c958961a9ff647a3035fa20f561711035ae1c2dd038ee9539",
+        "docs/images/regression_robust.png": "5c25a828bd6eed6c150ce448144de7d37ead6e6c374d84effb4978614c16119d",
+        "docs/images/regression_robust.svg": "6ade90c3fbf9b9fbbf9bf6da7de034a047e954fc39bb5c4ae6634a3780eba750",
+        "docs/images/scatter_semantics.mplot.json": "a123d697ee3a0f20b3f4114e8d28b1fa2c9228d9cfc2f0646f2b86f69f2a6d57",
+        "docs/images/scatter_semantics.png": "c28163f09f291f0bec469421e0aa84198c6b2945ccf06084be3ed62087882cd9",
+        "docs/images/scatter_semantics.svg": "57a5989d92f9e769d64a8ecd1c78fd4d1d163982af28d76e6386bff7f29f3104",
+        "docs/images/shared_semantics.mplot.json": "fe0abea500a5e7ec97cf1ba8973033f0ae6f776229fcd86b151cf9c092cb87a7",
+        "docs/images/shared_semantics.png": "023de69a89b38a00a9e70d9e841e1d8352d82cdc75e32223be330485f95e8fbe",
+        "docs/images/shared_semantics.svg": "61aa27d1245eb65e79cbdfab14e9b53a755ec442c5467a8314d4dcbf9f5d7bcb",
+        "docs/images/statistical_categories.mplot.json": "6f9dfe7a2809b6a8ba9763b014c6d3158d7cb1c4f798c5d2fd7ee84b5f6bcaaa",
+        "docs/images/statistical_categories.png": "c843cc15512c551671248e78174900420c5e5ae76c81a1ea3ff97f424b584738",
+        "docs/images/statistical_categories.svg": "769404d6c25aba7c9799c7e7a22851726685ab18d53e3a373665ab2631d03cf7",
+        "docs/images/statistical_scales.mplot.json": "2618f5af5fc4ba0f4a5242d787099bcfdb576f8610179092b6cd7422d09f85a2",
+        "docs/images/statistical_scales.png": "1588557dfb11b28ab4f77439dbac2dc0a55e4528f45288d8d77e7fb10e448caf",
+        "docs/images/statistical_scales.svg": "1d497d3b68fc0ebe661d014da26fcacbe075846b164d1c4c24595298791b127c",
+        "docs/images/swarm_categories.mplot.json": "74d96205f4b7efd91135fbaefe68ef696c22b4c1048bf4c13a0fa7ef22afc650",
+        "docs/images/swarm_categories.png": "75bea7975b92438ea8b891e457cba44e57aee8a96c70bf6f2d3a6d910a181d59",
+        "docs/images/swarm_categories.svg": "ab21b51b063f906ca8f2c52511436b49a9fa64831953747ffbb34d9d4b49d571",
+        "docs/images/violin_semantics.mplot.json": "d63598286fe9946efc84e48e72cd78a3e172694c349c39098eee9c6ae70f7226",
+        "docs/images/violin_semantics.png": "0806cec2465ddc4645f50753e7812339e56a8f1b48cbb877360eb1796f22ac22",
+        "docs/images/violin_semantics.svg": "1af84052207a3e8ceb47e5b159d00f4d48fb33b65d37b1a585941c4dae3d4e7d",
+        "docs/images/visual_after.mplot.json": "04ca86a63415d1c17cbf7f2780da36b0c73c7a9ec7e0db5ed143ea03b1ef6b4c",
+        "docs/images/visual_after.pdf": "73746f616ffe18545b99e0e342568dd6ff4719f31fbaa7704a1ceb808e8ef3f3",
+        "docs/images/visual_after.png": "6c176fc271c644a8b983119ed2db53030df82f4dd7c63eb90481264831b4f213",
+        "docs/images/visual_after.svg": "58b0b5382abe656701390fd2e520b555d2220b4282ebaaf2d844d6cd4e79db29",
+        "docs/images/visual_after_deutan.png": "b0435c2ed41755a98b1041923359b2fc93592fe96c0c70e0a56220f0c8288b3a",
+        "docs/images/visual_after_gray.png": "4ca3c4c9eb399d8f4d54aa4d7c769d763d18fdc4c200777eed610b2aad781a69",
+        "docs/images/visual_after_protan.png": "8149be65b9900707679cd283dcdbae032bdfdbc5ecbedaeab5b1cb604b202a55",
+        "docs/images/visual_before.mplot.json": "eabd3ec5522b6996a4ebb3f2ee422a2eeb98b6079e15a44dfba00807e9058cf2",
+        "docs/images/visual_before.pdf": "f59243ca64d5b86dab32afab3e4cb2d5dd042b35e849efc3ecdd617d8a6ea5cf",
+        "docs/images/visual_before.png": "5f0cbe80ebebbc592135ffe17cd87512dc719b9f9075ef3218a4a5d7c49b4d9c",
+        "docs/images/visual_before.svg": "2192d622dca9152463f821e3dab7e79f673e8cf54647c6cbd6b97b1b2108c7d4",
+        "docs/images/visual_endpoint.mplot.json": "000fc25e1b8fb61956a331491fd45974411d41f9153386bd1c799eb6f75404e7",
+        "docs/images/visual_endpoint.pdf": "de1b7cbb82afe628cfb47f101e3e997af6383a8e3132697b3ce6ed60794e7ab6",
+        "docs/images/visual_endpoint.png": "b52b1e92de3d8bae8cd1baedcf0595a3fb12c76ec568a045f597f6bb9b8dd7e9",
+        "docs/images/visual_endpoint.svg": "8987b3d6c0fdc953d06bb04c2c45202011fc9eb31151615d75b27b7cc0df5544",
+        "docs/images/visual_endpoint_mobile.mplot.json": "e2f78f3726917665c3a65ac9d23f5c6cdc25a5efb61f7d4a71bc22646006d1ad",
+        "docs/images/visual_endpoint_mobile.png": "bb7ddda7a9a977bdc03400cd990f7174135bb6d8c87667fe7a681457e95631f3",
+        "docs/images/visual_quality.json": "9b582bb8b28625d81da5c197af5c1e8dc6da7bf6472ea76f3c384ac3b9343b18",
+        "docs/images/visual_response.mplot.json": "b27a0610d91acde63817796729b9cb5265bb9ebef6effcd66bc7b9ad285801ec",
+        "docs/images/visual_response.pdf": "f890c5b54e4d2c05c0a1804c34faceb3c9e570e4cbab8da39715bce92054d411",
+        "docs/images/visual_response.png": "273f3813b2a4c18ef93e5def91502851af67e02d45b30676a22276bbd88644c2",
+        "docs/images/visual_response.svg": "0b1c4b556e20083e8d31a8ef4075402544837d6378a27f9ca1a2a44190c11c46",
+        "docs/images/visual_response_deutan.png": "f000bba5c40714cf607f4cd53bf736aa4c8e6c6329a7a3f82d087c3b28b65e82",
+        "docs/images/visual_response_gray.png": "11066adc227178cfc3a1235f59eda6dbeeb3dc968457ec41f438c2c91f4e84e4",
+        "docs/images/visual_response_mobile.mplot.json": "cd4e26efc11d6031c35f448a6f531401dd4bd9584ae79bb056cfa8c470d28452",
+        "docs/images/visual_response_mobile.png": "73c069bd66b666e4eec4e15ace700fe8c0419c2df5433696f02eca1b363da06c",
+        "docs/images/visual_response_protan.png": "d95516ca78ecddf475a88cf12be5f8862354b8a271a7b3520d99dc24a119c192",
+        "docs/images/weighted_violin.mplot.json": "31326183c77fe757d87b2a74d2a81f900c11ed348d82f32d0fd1d6b3902bc71e",
+        "docs/images/weighted_violin.png": "c9bdca67cc8bbaf6601568aa8c1d2713e94efb339db55970eacecd30e0a7cbff",
+        "docs/images/weighted_violin.svg": "530bddb8f3bd10364dbf5a9116cb3942ab62f9b1df23c48d5eccebad9e24ddd2",
+        "examples/bar_uncertainty.py": "43eaa9651377b817f8b861c1ade34ce2cbcad3d5d8548425896ed22d2e20a050",
+        "examples/clustered_profiles.py": "68b4c9d2b0dd873d425b9f3fe0084db3b68efdce317bc119ac86482b983b88b1",
+        "examples/distribution_components.py": "81ff46b493b82c7befa58b616e87aeac22021a92706fdd49ecab874906bc2428",
+        "examples/ecdf_semantics.py": "2259d5e254b10e2d3e2df59a618e5a1b3aff599986bd66589d9d8ed84e936f49",
+        "examples/faceted_responses.py": "68384cb3797b03fa1322aa5a2e2af9c22c077da74a4f18c27f09716b1758ed97",
+        "examples/heatmap_controls.py": "99429994f92c905cf32ba3189ccd03ce21d04afad227199f106919483f5b2160",
+        "examples/histogram_statistics.py": "31fce18c748f741c495e5bcdcc7e2b0986b2c7dbf9d49f5e42bb0789765db8f6",
+        "examples/joint_observations.py": "939d92864183b933c88be9253dda3f1760226a68d35eb90df9b5cc28cc1998ee",
+        "examples/kde2d_semantics.py": "22a1f13ac0e0e14522eed92cbc0f8513267b22952ffcb3f5a5528f2343776fd8",
+        "examples/kde_grids.py": "3ec541864375ffe5036a66c365a62e03c143e2a4b1cc07e2c100f660bb16476b",
+        "examples/kde_semantics.py": "1b83a962b93cc268cbe1389c08e5c6f1eabe1e374859601be898c654fe27e42c",
+        "examples/letter_value_categories.py": "ee3cbf22d5d332e8d7237f0c0a9723ee206856f2b73de7284a66006f95f8fb5d",
+        "examples/line_estimates.py": "a5f2db03a025c695fe55a40b2c3515614147f2d03b1b7f07020472d78026f040",
+        "examples/line_semantics.py": "8401ab956aafdd8aa6d859a26cd173617e91b27cca2832b2dac3349dbd33256c",
+        "examples/native_categorical_scales.py": "71217458155dfd0f337135e4b7b17fcb78d6e0c7654eeef09a2facc5f8e17ad5",
+        "examples/pair_observations.py": "17893152d67911ccd14929fc77a90be5a89ad439ea440e432131df293a8642cf",
+        "examples/plots/bar.py": "8e277db2eaa030fbf91d6767155eda8bd820619c5cf0f13f99554168646a7177",
+        "examples/plots/barplot.py": "0ab5b5e5fa2d0bfcf8b3015ef067bf0564fdd8c157f9db40cd05bbc7ee479da3",
+        "examples/plots/box.py": "99f7d94e8f21899c5ff768ca40f736f4bc90c36bd41aeb9de494f91b716253fd",
+        "examples/plots/boxenplot.py": "995e4ccb052ef77320d43e3f4f0dcd25cce572a96ea74fe581990445019786c3",
+        "examples/plots/clustermap.py": "37f7f0b2331a14c0c3467151cdf298884d2e4b34c730f03a72191bd877db71a0",
+        "examples/plots/countplot.py": "bb601faabb468151fc04fb31c2d03b810dc02556a0e99a818fd8c0db23445c89",
+        "examples/plots/ecdf.py": "88c8e086fdafef4ec29ce281faae972ca133567b73e5ff67db5f884b91e43095",
+        "examples/plots/hist.py": "02af2d680ff6da2922312c13a08c3163dc43aa9a3e4cfa3ffd53876499c095d6",
+        "examples/plots/kde.py": "fb580486b306ab567f5c1b8e76db0a36ae4abacd1ffa894e950cc8ed831250a1",
+        "examples/plots/kde2d.py": "ae19b4749294e501c8162d7ddd6cc02bafa1fd2b4ca4a713e428adbe9e0a26bc",
+        "examples/plots/lineplot.py": "7f2a7b4a16312d7124ecc26993d113163538e0d76eaddec8ed13d3d53416ec6e",
+        "examples/plots/pointplot.py": "321801e3c3ff8263fee5be31a2c947d6a0154d12df0f0f53d918c93d503f18d4",
+        "examples/plots/swarmplot.py": "63bf0cc9021e82d9ce5ff175b6d11ff17de68bd454558006960d3c333582d70d",
+        "examples/plots/violin.py": "786c70f783bf0138e957b501476b5bfa4159d1465ee8af1faf5b05f57636dadd",
+        "examples/publication_showcase.py": "b35dd8b888644eeacce77267bc880068f454e6716a2029bc225ac55f19f83160",
+        "examples/regression_modes.py": "d0febbe7683d0170b3581acb7d17cd99672eab48332ad48bdbb3aaf4981ff500",
+        "examples/scatter_semantics.py": "3b13b163cf404b4ad48574db00c7c7a5e447f27e9455f658c3c268fe600e7bad",
+        "examples/shared_semantics.py": "e6540fecbada99bfc4e605aa636d9fdc2a40c7dd755ecf56af803c110a8b7e1b",
+        "examples/statistical_categories.py": "37efe1713b3b25caea5049639ba8910bb06519aed0c894850cc536bf21b4c3b6",
+        "examples/statistical_scales.py": "18dc39f47a8f1e56352f763fe7be82c99ce8baf8d5128f319de9b2d74cd22803",
+        "examples/swarm_categories.py": "ecf059e1a4b0e7c4dd25137ad3770ec002514374350a0a44a751ad6cec1e494a",
+        "examples/violin_semantics.py": "662f58395d79bec9459d6c78de605533bb448782e5fb37db65bf278da79a1d33",
+        "examples/weighted_violin.py": "03fb6a4dde92865fd0e522f4c8ed3c4a3c5dc9509a5ab6ba3989b382a136b800",
+        "mudplot-editor/src/model.rs": "3a8c15eae54264e1ff04773811955f6cfe13631be367ca786239d8e9bcead20c",
+        "mudplot/__init__.py": "349d91132da9206cb22377e4a41c088e449fa708014c7fe3c69ee3aad09fe893",
+        "mudplot/_categorical.py": "594f8d472ba4455141b312ef4e67bb528f57ef46938708a31287c53e6196998f",
+        "mudplot/_cluster.py": "8dfc8ba10e40ab12ef2ccef67e12c3a4c2eb41e8e52249153fcb38991b153f64",
+        "mudplot/_cluster_render.py": "152e32ba069eb8ea354747f1f49922bb9d193a6670a876f2e9417ea0042757df",
+        "mudplot/_components.py": "977ed6fe9a348c48c980f13989c8e8c863e2b6a1d53124c5355d5515aff4985d",
+        "mudplot/_ecdf.py": "093b86087a5c85da34a6b98b9c79c305c3edccc008bcfdaa7d98ff900c03b899",
+        "mudplot/_estimate.py": "681fcdb596569fda751839d99f9202fa6c1053ed53dc1cd3e48b4a662a5ab3ac",
+        "mudplot/_facet.py": "b976f31dbcceeee0fb6538cb079f8c3b3e4317c8a15c607c301be15bb68ab207",
+        "mudplot/_heatmap.py": "8608ca654892b4e15dfc2e5d1040095a9a4226ce4bea6df76d97e78d46a5f572",
+        "mudplot/_heatmap_render.py": "dc837fe55c2d30f2cd731e3fad3124490ca4169fdefbd41a1c1949398402c17a",
+        "mudplot/_histogram.py": "4b66085ba4c4678b040b04320159372be35df571ded9da94ebd54cea52a2f13d",
+        "mudplot/_joint.py": "7ca6a321d9a7a3b619f8765caf5503daaca49f8be1ed448e4f88c9dd35abde16",
+        "mudplot/_kde.py": "bc3e4c38c40c4c21b20bc4b51f24653b2cd02c0256aafb9299d5216f41b8d77a",
+        "mudplot/_kde2d.py": "140e9446f4cfd6d3ef04f1b6dc916e9dd44f20af94eb90554daca5cb516a0ef9",
+        "mudplot/_letter_value.py": "bf28883c4c8fc467105dcfc527b998e3282e58e45f6d358e03118a94f2cba8ed",
+        "mudplot/_line_semantics.py": "6a9c5bda0bf6e2a760873aa660236c2d120ba177c4892db703c1d66d9ef32671",
+        "mudplot/_lineplot.py": "f9dbc013b6d11cc92368cff4620528bc2e05cbb330065cdaea40d26859d33ffd",
+        "mudplot/_lint.py": "cde2e103b23754e3a7b88ed50f4ea40548474ffd0a3065670d41f5c9abe94a5f",
+        "mudplot/_pair.py": "2a4143263241ddf0bda771e51fb6d9e0514d1f4bfe6626b1e7f5e13353471388",
+        "mudplot/_regression.py": "bce69b2bf8169cc9918eab0b8cbf5ebf425138a7e6ce76bd0e41c839ebbae776",
+        "mudplot/_regression_render.py": "55b36a8ea7feee73beb9b7f2239beef0df6f178ae69d0f468f611ef80e8e77a5",
+        "mudplot/_render.py": "1d77f8db12aa581a40cb5c1121756d37f535962d2c6d55821401bc027260ec0a",
+        "mudplot/_scatter_semantics.py": "23bc5a18e9893a9c3232364ba2da65adc0523e4799bf8b570f21c5f66684a79a",
+        "mudplot/_semantics.py": "79b3c88d44a538ebfb276ae112cbbf9f74dcaedf3af0e14d7ad891883a1f4d02",
+        "mudplot/_stat.py": "0786605360f0ddcbacc2fb6f351295d95f7fe6b8d4b8a26b1ae1c87fd7cbef27",
+        "mudplot/_swarm.py": "205579c419688d385e1c2d1d30da0f2a9ce8febfcd7a28be840403c3af3aed22",
+        "mudplot/_violin.py": "839e9f3864232545f33149e0e521be9ffb636fd320788aea72e5c79f25b3d18a",
+        "mudplot/_violin_options.py": "1eb66f2486f3c3e20af53e11ecf1ee2901c9d3350f9c72951772b58a7f1b4e0c",
+        "mudplot/actions.py": "e3e05dd14a4746c708f3abc61eeeaf93cb1ed9bdf293f4dcce385d661fa3f34d",
+        "mudplot/api.py": "0ee970d6b0b06d23ab5e630fb5253e3629f59ea04bf20668f203fa5de804aab3",
+        "mudplot/capabilities.py": "b71dbf142de62471aa5bb3a37b22762a3a546b5cc42053bfd6e5c490e3684869",
+        "mudplot/docs.py": "3aadfc753a9b7c13b242ffef1e127227a83695ff87935dff9e56afe8b40a71ee",
+        "mudplot/reducer.py": "6a4a62f3f916e1e92308bec2017050cd562c22f524612227a607ff1c44725f57",
+        "mudplot/schema.py": "2af0a68a6a497b7f13d633331dabc394bfdc92baca693152d44c8385ac8d7484",
+        "mudplot/spec.py": "0cec837f31e597df9bfd46da86b2d56176b294d6ee5ab9ad8ec461021d13ecab",
+        "mudplot/theme.py": "b5e06c51bc1d90d08f5af283c07f4fc859b7974a696647a5a0c3dcc7a8bea51a",
+        "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+        "mudplot_review_checklist_detailed_2026-10-16.md": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+        "pyproject.toml": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb",
+        "schemas/capabilities.json": "3cdb2f0b4a2de25ebc5ead198dfb9a895196df5a9b090d33d1a777bde62ac1df",
+        "schemas/figure_spec.schema.json": "9f10da048cea5c17706eb31195a3eb049fa58dd85e1ee16d19af9566a09e2cca",
+        "scripts/check_minimum_versions.py": "783c15f37d256de7ebcc551f1e354b7f4ae28fb13f87534da66ec7c936cd7251",
+        "scripts/check_minimum_versions.py.lock": "720b9d4f80e019d8c324c2a7a6e9c7eb8e152c2115195c19c1d16e038c7ace34",
+        "scripts/check_wheel.py": "bbaa7572bd61e1183ab09954b12992c4fe267f4110a440520ec1dbad6f419e72",
+        "scripts/render_docs_demo.py": "4eb661a26a2c7b8e2625f4eddd21c421d13e0e0fc8032606ad3bbf1224659df2",
+        "scripts/rust_editor_smoke_test.py": "144ab8551f64c30f9579e4a3fdfec44ef8e8874a339c941672c5d110f9bca3ed",
+        "tests/test_bar_uncertainty.py": "ea24150b48206272b8521b2af3e7883c1d2233a4b4d53e5d5635eca918c8f215",
+        "tests/test_box_violin.py": "39e5d6d5c05e7f8966d3d11e769eb8cce2db125f16d611211217628394229eb1",
+        "tests/test_boxen.py": "8ea52202c0b3df703cee716f43d31bc340f9791a5ce9fe2841955aec16fb6e3d",
+        "tests/test_capabilities_consistency.py": "d67a9e4a0ec1dedaf54c2c6df321e27b6ac05a88bebde2055b3b35e8894f073c",
+        "tests/test_categorical_scales.py": "4c3f2216ac0a8e1f81cd6c3f5fbcef1fcbd3eb7828b1847d2ebcc94a31b25907",
+        "tests/test_categorical_statistics.py": "8a605320f7f914eb2987389fc798ca53525eb48315569ee89bb48bfcc62b2790",
+        "tests/test_clustermap.py": "50e73f3ff4a085cb877c918fed561c6ac11f58ed7dfae14736041ac86c749fa5",
+        "tests/test_dashboard.py": "d2ef9b8cbe949eaaf5b7050efe9cea7d37e65ef2b6c5b619969a4b6b38dd06b6",
+        "tests/test_dashboard_editor.py": "5f58afa58775f911067856f614ceff14aece24adb29af3d376cc885fbd3cda64",
+        "tests/test_distribution_components.py": "cb4055f3433979288951c0a602206164fc6d2952ced5da9c16f600487656dd73",
+        "tests/test_ecdf.py": "5ae35ee2ef4f6565bf6f1e9acebb945c1a2fed51aa117e5640eeac36841b1ca9",
+        "tests/test_editor_browser.py": "e1e35d560b4bf066bea8e6f3d773b06b9caae3587e89d87a5c8f7419b596853b",
+        "tests/test_facets.py": "a0bbc3d627a8f2cea1870a6e314a4c0d02e87c2130005eed21787980a7443bc9",
+        "tests/test_grid_kde.py": "6590984c1117b57872ecdd5496b355ba5f2cb6b72880131b0927ed139a51df87",
+        "tests/test_heatmap_options.py": "334ecebe7603ce9d24fb1bca71a3f4e3244128410d73c95640a2ed5d0b34f84f",
+        "tests/test_histogram_statistics.py": "7927bd74254562b8c2890935715b0f473ef46fd4b5de5e554d288e9605841459",
+        "tests/test_joint_grid.py": "f8100e03b211818fb4651d8220e33679a2cc1371454ae53ec6bf36b5b0e08d80",
+        "tests/test_json_schema_compat.py": "c05cf5bf41f03e86d1c42fcb38b04934100f661aa73de6e4ebed921acdd20012",
+        "tests/test_kde2d.py": "ca9e28759a30339089277cc54281586bd2df9951f5c2ecca968a49e23ccf941d",
+        "tests/test_kde_options.py": "eb566760c3f8818a917efd3b30b66541d435c7e9b612dbfcf76d03bad7021006",
+        "tests/test_line_semantics.py": "8a51e5d1d184f4403c3e10c75158729f28245aa8d25822d1a0dee4f3573683b4",
+        "tests/test_lineplot.py": "128fa34daaa77b746b50dfacaf82118dc27a5b97b2f8332bb9cc8bd79ef4e4dc",
+        "tests/test_lint.py": "96fe3c3d7a954c6a023a9ea313728bb758e58e7f13f86dc090adee68dc9cdc25",
+        "tests/test_no_deps.py": "fe4d6cfd0da7649bbbc6a13f463da50929521bdccf9912da5ca84a286c2ebb59",
+        "tests/test_pair_grid.py": "0ce859f20e672f8b1123eebf2662e2b06327d451f7adc83ba604453c42acad6c",
+        "tests/test_raw_group_order.py": "c247cfa4c4cdd7ea4c7b6000241e9ad9914567240ecb4d12f13ed04508d90708",
+        "tests/test_references.py": "a97bb94d51d4b4f6d654d2b0d32fb96dd053f6a07c35497a31ed83ad7e38d947",
+        "tests/test_regression_models.py": "64ac6fca91d924d754b63d0e87ad9a35442e653a8ab3eb9b4b88d6654c0aff49",
+        "tests/test_review_json_contracts.py": "9039fe6c859ba56f93d269dbd04fc24443285f1e71ce90e18f552e1024c36c9d",
+        "tests/test_review_output_contracts.py": "c94c9e525f95927dc3f9a0c718ce060f8f73a1a1579f92cb5997fa9811598ce1",
+        "tests/test_review_state_contracts.py": "05cc6b899828037cc9baf361641a38293db94402ff05fdfff54f216908bb55a8",
+        "tests/test_scatter_semantics.py": "73a85b3b5175a406412a09f4b5a7205143402031e8d9426f5abf11ebd78e0f9d",
+        "tests/test_schema_export.py": "0e89814ed53c99b51e1b9fd8b1cc17099e75411e8c999b3c0d6cd38a735be551",
+        "tests/test_shared_semantics.py": "534a084716dc39fbbf22bcf455058b4974de6057b477fb8aeb4346fdefa4f973",
+        "tests/test_spec_roundtrip.py": "518670e115514b25d714059f0818d7213418770bcfdd420cb8d39a62957e5702",
+        "tests/test_statistical_plots.py": "cdaaf078bd4005570bc1e326e96c0277b3a71b0a2f6e27d789709260ac0c2701",
+        "tests/test_statistical_scales.py": "efe51e283ccf89bb87382da1db2a0b590c6e1553d27d889c3b269ceae85e192f",
+        "tests/test_statistics.py": "6e4206516ed129f6de01de565b86271c58d101d265f72f8defb8999326b30317",
+        "tests/test_swarm.py": "324506a575ca5b806d9508cc646182261e5b3a42a11682d993aaafe80e69c877",
+        "tests/test_violin_options.py": "88779b082f002f45f0e616d3688cc295ce5e7eb8e509bb753879fd65a70b5f63",
+        "tests/test_visual_quality.py": "ee07103b118b67dc1bf8216545e284a21e5b25ae8886567f91006b668cd4f9ba",
+        "tests/test_weighted_statistics.py": "87fee2474a8b7a7badeb3ad603a8461a7cf86a575ff8f9cfe898e967cbc517da",
+        "tests/test_weighted_violin.py": "86f7063d09ffde00ab5b2f7dab4e737227ebade8236218458cb0d263a82694ab",
+        "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df"
+      },
+      "checks": [
+        {
+          "name": "python-contracts",
+          "exit_code": 0,
+          "log_sha256": "334ccd80ab212e685efb4d8407ec6f1af8857c9fb331b4ec6983fdb0aea94675",
+          "results": [
+            "338 passed, 2 skipped in 133.81s (0:02:13)"
+          ]
+        },
+        {
+          "name": "rust-lib",
+          "exit_code": 0,
+          "log_sha256": "31da4613371ec110eaba0ff3fcb6834ea0ac2643fe3c54a22f84bcc735625862",
+          "results": [
+            "test result: ok. 11 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s"
+          ]
+        },
+        {
+          "name": "rust-http-browser",
+          "exit_code": 0,
+          "log_sha256": "21fd6c5b05ad62fd939e61b0ef83dcab52a7b78f902a1c7848b05be4023bccd0",
+          "results": [
+            "Rust editor smoke test OK"
+          ]
+        },
+        {
+          "name": "schema-sync",
+          "exit_code": 0,
+          "log_sha256": "13f553d4c57a42a920c04dcd99e578e6c1a6b3e113d0f571b224864140a49eb3",
+          "results": [
+            "OK: schemas/figure_spec.schema.json is in sync",
+            "OK: schemas/capabilities.json is in sync",
+            "OK: docs/REFERENCE.md is in sync"
+          ]
+        },
+        {
+          "name": "ruff",
+          "exit_code": 0,
+          "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "results": [
+            "All checks passed!"
+          ]
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "log_sha256": "d7c211682ac4a89663dc79f242647c3da0b4c4dc492b512acf58d7f76cf9b71c",
+          "results": []
+        },
+        {
+          "name": "pyright",
+          "exit_code": 0,
+          "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+          "results": [
+            "0 errors, 0 warnings, 0 informations"
+          ]
+        },
+        {
+          "name": "rust-format",
+          "exit_code": 0,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "results": []
+        }
+      ]
+    },
+    "phase3": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pytest": "9.1.1"
+      },
+      "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+      "files_sha256": {
+        "mudplot/io.py": "16f8de523430b2215d51ca988d6208bf68528488b77e47e0073a894c34eb97c1",
+        "tests/test_review_windows_output.py": "f35d11a58806d443ff0287eab6789bb041cd3b5e5cd4f7fc968122fca22a5dff",
+        "tests/test_review_output_contracts.py": "830f75f9a55ebf14ee341524761fe3f8c0ad9403762449b7179b210f9ad6508e",
+        "tests/test_review_json_contracts.py": "9039fe6c859ba56f93d269dbd04fc24443285f1e71ce90e18f552e1024c36c9d"
+      },
+      "checks": [
+        {
+          "name": "python-contracts",
+          "exit_code": 0,
+          "log_sha256": "09dd853736994761c7fa279a51cb53ba9ecc9a25ee150cedaba04730c8065185",
+          "results": [
+            "354 passed, 2 skipped in 145.92s (0:02:25)"
+          ]
+        },
+        {
+          "name": "ruff",
+          "exit_code": 0,
+          "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "results": [
+            "All checks passed!"
+          ]
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "log_sha256": "82a96897c2e32e25d0c331f67fd0e62f0a1bdf2d0ea1cddaa49079d4f6c6396b",
+          "results": []
+        },
+        {
+          "name": "pyright",
+          "exit_code": 0,
+          "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+          "results": [
+            "0 errors, 0 warnings, 0 informations"
+          ]
+        },
+        {
+          "name": "schema",
+          "exit_code": 0,
+          "log_sha256": "60674a921f54ffd94f0a36681cdb27e1c71a47c785852aa3531a56c6f67a9ae0",
+          "results": [
+            "OK: schemas/figure_spec.schema.json is in sync",
+            "OK: schemas/capabilities.json is in sync",
+            "OK: docs/REFERENCE.md is in sync"
+          ]
+        },
+        {
+          "name": "packaging",
+          "exit_code": 0,
+          "log_sha256": "2b7ac22636775400c3e1ef376f2436b37dc2ff4780dda3a21506177a10156605",
+          "results": [
+            "distribution packaging OK: C:\\Users\\mud\\AppData\\Local\\Temp\\tmpb25djik8\\mudplot-1.0.0.tar.gz, C:\\Users\\mud\\AppData\\Local\\Temp\\tmpb25djik8\\mudplot-1.0.0-py3-none-any.whl"
+          ]
+        }
+      ]
+    },
+    "phase4": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pandas": "3.0.5",
+        "pytest": "9.1.1"
+      },
+      "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+      "files_sha256": {
+        "mudplot/data.py": "f532622183818569151b2ebccd5614a91f7594649b5d557fd88f14b0a4f45568",
+        "tests/test_review_data_contracts.py": "62892c1e8c9e8c397da11bc11a7ffad1463eab62fb9e081ef497904326e01974",
+        "tests/test_review_json_contracts.py": "42526afff741913e3495744ad115e0ddafc3af2baad6b4127c89a072f2a7b612",
+        "tests/test_review_render_contracts.py": "82d2c805065236aadd1672008a59eb5d55fc836c3a7f3b717d37f602478b3db9",
+        "scripts/check_minimum_versions.py": "04d34ea4630d262e1541f3341867662a276a54ac13b61b2289cd2a71f47d3e1e"
+      },
+      "checks": [
+        {
+          "name": "python-contracts",
+          "exit_code": 0,
+          "log_sha256": "919e5f3cfe7bf0713b5b44de0658d91e8b9409d2b07ab3e7f7e65fe379f39c82",
+          "results": [
+            "404 passed, 2 skipped in 149.32s (0:02:29)"
+          ]
+        },
+        {
+          "name": "minimum-data",
+          "exit_code": 0,
+          "log_sha256": "0734045276345447fba85fe4f6f8cbd6208ca0cf46d0d4c3ea708bb4643759be",
+          "results": [
+            "25 passed, 2142 deselected, 13 warnings in 2.47s"
+          ]
+        },
+        {
+          "name": "ruff",
+          "exit_code": 0,
+          "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "results": [
+            "All checks passed!"
+          ]
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "log_sha256": "692aa17a66e5a48293d97156d9c8b2690bef0a98514251662ef4832003fb0463",
+          "results": []
+        },
+        {
+          "name": "pyright",
+          "exit_code": 0,
+          "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+          "results": [
+            "0 errors, 0 warnings, 0 informations"
+          ]
+        },
+        {
+          "name": "schema",
+          "exit_code": 0,
+          "log_sha256": "12a8a7eb059c1753053ff46c30c23f377363a976606795d25bd10a0ac2e81133",
+          "results": [
+            "OK: schemas/figure_spec.schema.json is in sync",
+            "OK: schemas/capabilities.json is in sync",
+            "OK: docs/REFERENCE.md is in sync"
+          ]
+        }
+      ]
+    },
+    "phase5": {
+      "os": "Windows-11-10.0.26300-SP0",
+      "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pandas": "3.0.5",
+        "pytest": "9.1.1"
+      },
+      "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+      "files_sha256": {
+        "mudplot-editor/src/model.rs": "7a406d6ef9e1f1aa84a2e3200587c5c886ce560cfdd198fb977c394ab06dbbf4",
+        "tests/fixtures/review_json_boundaries.json": "b193953f8ef3e250a77d854562b2f0d8907186f921160316cbe6816740d81341",
+        "tests/test_review_json_boundary_paths.py": "91f3941ffc4fd4bde72c5676b245a250f272e813b5263098c64f732dc102376f",
+        "tests/test_review_json_contracts.py": "31877ce6e610722f54e5542f5ae3bfd50a6550278c77b72fee7315fd58834af9",
+        "tests/test_dashboard_editor.py": "be05b4180430697da3cb076fb2d40d9af1f0a112dc3a7eee506226d5041c77aa",
+        "scripts/rust_editor_smoke_test.py": "202b23cd34cc1f4d063f922a663e7c9914bb518f8c857404e995abf8474601df",
+        "scripts/check_wheel.py": "86c930892c7dba91e1aafad046b10547e63f0ecd64e6bc321d41b689d008b639"
+      },
+      "checks": [
+        {
+          "name": "python-contracts",
+          "exit_code": 0,
+          "log_sha256": "35be25483827ceee05c29e221b67daf63bc7211e51e1d217041edc6f2a93753d",
+          "results": [
+            "597 passed, 2 skipped in 168.22s (0:02:48)"
+          ]
+        },
+        {
+          "name": "rust-tests",
+          "exit_code": 0,
+          "log_sha256": "0bc848fc042b4f9bb43662622ce634a9f1fd5d5a587f39767b991ed18ef7d804",
+          "results": [
+            "test result: ok. 13 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.01s",
+            "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+          ]
+        },
+        {
+          "name": "rust-http-browser",
+          "exit_code": 0,
+          "log_sha256": "f0432fb8b122ab0adda8f5c3d58dd46159af23d7a678a8d94e104dfd96306e98",
+          "results": [
+            "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+            "Rust editor smoke test OK"
+          ]
+        },
+        {
+          "name": "rust-clippy",
+          "exit_code": 0,
+          "log_sha256": "c331448e0b6bb27f481f08e54b25f76bb64ef0718bdfc23f4edd236a4f6ce7e0",
+          "results": []
+        },
+        {
+          "name": "rust-format",
+          "exit_code": 0,
+          "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "results": []
+        },
+        {
+          "name": "ruff",
+          "exit_code": 0,
+          "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+          "results": [
+            "All checks passed!"
+          ]
+        },
+        {
+          "name": "format",
+          "exit_code": 0,
+          "log_sha256": "34eedbe65445e7f6ccc1c0c018c97937c191b040532a97b36912e423fb30c028",
+          "results": []
+        },
+        {
+          "name": "pyright",
+          "exit_code": 0,
+          "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332",
+          "results": [
+            "0 errors, 0 warnings, 0 informations"
+          ]
+        },
+        {
+          "name": "schema",
+          "exit_code": 0,
+          "log_sha256": "ad9201dbd4d5705d9f5df733fe6733a19ad5d24786ab5c9cda4341df0fba60fb",
+          "results": [
+            "OK: schemas/figure_spec.schema.json is in sync",
+            "OK: schemas/capabilities.json is in sync",
+            "OK: docs/REFERENCE.md is in sync"
+          ]
+        },
+        {
+          "name": "packaging",
+          "exit_code": 0,
+          "log_sha256": "753bb7bbf97ee2a1b4f5778203527b53a4e5adb1b186845215539b64a0590911",
+          "results": [
+            "distribution packaging OK: C:\\Users\\mud\\AppData\\Local\\Temp\\tmps_9la_0p\\mudplot-1.0.0.tar.gz, C:\\Users\\mud\\AppData\\Local\\Temp\\tmps_9la_0p\\mudplot-1.0.0-py3-none-any.whl"
+          ]
+        }
+      ],
+      "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)"
+    }
+  }
+}

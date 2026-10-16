@@ -4,7 +4,354 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Added
+
+- Fixed Rust strict-JSON reserved-key reinterpretation under arbitrary-precision
+  serde numbers. Original decoded key tokens are now checked without converting
+  large integers to float or rejecting ordinary string values. Added failing
+  numeric/escaped/nested-key regressions and real HTTP state/preview checks.
+- Aligned Rust omitted spec-version behavior with Python using the embedded
+  current default; null, malformed and unknown versions still fail. Shared
+  boundary fixtures use explicit valid versions for unrelated negative cases
+  and distinct accepted states to prevent masked failures/stale-state passes.
+- Fixed silent truncation of ragged positional rows and malformed DB result
+  row widths. Adapters now reject mismatches before pivoting with row index,
+  actual and expected widths; valid values/order and missing-value normalization
+  remain unchanged. Added pre-fix failing fixtures and minimum-version checks.
+- Expanded JSON finite/missing boundary and out-of-range-render failure tests,
+  including PNG/PDF/SVG output preservation and editor recovery, without claiming
+  arbitrary-precision plotting or full cross-language checklist closure.
+- Fixed atomic-output cleanup on Windows read-only targets: staging files no
+  longer inherit the read-only flag before a replacement that must fail. Original
+  bytes/read-only attributes stay unchanged; POSIX mode preservation remains.
+  Added real Win32 sharing-lock/read-only tests across JSON/PNG/PDF/SVG and failed
+  directory/path recovery, without administrator privileges or target chmod.
+- Fixed the Rust capability regression count after clustermap registration and
+  asserted its required/configuration fields. Expanded strict JSON duplicate-key,
+  signed integer boundary and Unicode checks across Python/CLI/Rust/HTTP paths.
+- Integrated the operator's 2026-10-16 review checklist as an ID/evidence workflow,
+  preserving its original unchecked source. Added a 150-ID tracker with explicit
+  open/running/pass scope, local tree/environment fingerprints and contract-run
+  receipts. Added failure regressions for functional versus imperative batches,
+  post-commit listener errors, and JSON/PNG/PDF/SVG partial-write/fsync/replace
+  preservation on Windows Unicode paths; no production contract change or full
+  review/release approval is implied.
+- Added clustermap/ClusterSpec with optional SciPy row/column linkage, checked
+  supplied trees/optimal leaves, matched dendrogram/matrix/label/mask/colour-strip
+  orders and sample z-score/min-max display. Original finite matrices stay intact;
+  undefined distances/bad topology/counts/transforms/layout fail without invented
+  fits. Nested GridSpec keeps auxiliary axes/title/colorbar in bounds and freezes
+  clustered layouts for exact vector replay. New cluster extra requires SciPy>=1.10;
+  mandatory core deps and versions/releases remain unchanged. Added registry/
+  bilingual gallery/editor/schema/minimum tests and a synthetic profile example.
+- Added opt-in RegressionSpec poly/log-x/Huber/binomial-logit/LOWESS and residplot
+  alias for observed-minus-fitted responses, preserving original rows and group/
+  facet selection. Typed fits condition numeric units and reject unsafe model/
+  option/data combinations, singular/separated/nonconverged results and residual
+  joint templates. Legacy regression=None retains its polynomial path. Added an
+  explicit optional regression extra(statsmodels>=0.14.1), included by all/dev;
+  mandatory core dependencies remain empty and versions/releases are unchanged.
+  Normal-approximation poly/log-x CI remains opt-in; weights/bootstrap/advanced CI
+  and extra residual trends are not claimed. Added independent numeric/Windows/
+  core/editor/export tests and five synthetic single-question examples.
+- Added opt-in HeatmapSpec mask, original-value annotations/labels, explicit/log/
+  centered/robust colour ranges, square cells and point-width borders. Masked
+  values leave source matrices intact and do not enter colour statistics/text;
+  annotation contrast accounts for image alpha. Strict options, finite matrix/
+  shape checks, bounded formats and annotation cap fail before effects. Typed
+  colourbar boundaries avoid native large-value/subnormal failures. Legacy
+  heatmap=None behavior, versions and required dependencies remain unchanged.
+- Fixed Python editor native-form fallback to use POST rather than leaking fields
+  into GET URLs. Same-origin referrer policy retains valid browser Origin while
+  withholding external referrers; cross-origin/null-Origin mutation guards remain
+  unchanged. History forms reuse the same helper and work without JavaScript.
+- Added configured KDE joint marginals (`marginal_kind="kde"`) and pair diagonals
+  (`diag_kind="kde"`) with strict KDESpec/dict bandwidth, grid, cut/clip, common
+  normalization/grid and fill. Existing paired/univariate cohorts, axes, singular
+  skip rules and histogram defaults are retained. Actions serialize nested spec
+  configuration as plain JSON. Weighted/CDF KDE grids and nondefault histogram
+  bins/stat combinations fail explicitly; no dependency/version/release change.
+- Added `Plot.pair()` / `SetPairGrid` numeric scatter matrices with typed histogram
+  diagonals, categorical group slots and dynamic pairwise/univariate missing-row
+  views over retained source data. Added named `AxisSpec.share_id` /
+  `SetAxisShare` / `share_axis()` primary Cartesian linking so diagonal density
+  y is never mixed with measurement units. Conflicting names/scales/limits and
+  figure-sharing mixes fail validation. Existing unnamed sharing remains unchanged.
+  Supports 2..8 variables; corner/semantic/weighted/CDF/nested grids stay out of
+  scope. Includes editable/vector synthetic example; no dependency/version/release.
+- Added terminal `Plot.joint()` / `SetJointGrid` for raw scatter/regplot with paired
+  histogram marginals. Three editable panels share value axes without mixing
+  density/count units; all views dynamically select complete x/y/group cases via
+  optional `PanelSpec.dropna`, keeping the full source table intact. Group slots,
+  source styles/references, JSON/actions/schema and existing editor paths remain.
+  Supports count/density/probability/percent and integer bins; wider joint kinds,
+  semantic/c/weighted/nested grids and wider pair-grid options remain open. Added a synthetic
+  desktop example and retained derived-bin/log validation. No dependency/version/
+  release change or full upstream parity claim.
+- Extended facets to grouped raw line/scatter/bar/errorbar/band/stripplot/regplot/
+  rug. Explicit raw hue_order selects/reserves typed group identities before
+  coordinates, errors and fitting; facets pool those slots across cells. Missing
+  groups retain colour/style/hatch/dodge positions without fictional artists.
+  Duplicate/nonmonotonic raw paths, coordinate gaps, supplied bar values and paired
+  uncertainty are preserved; no mean/statistical conversion. Existing unordered
+  defaults remain unchanged; legacy numeric c/colorbar faceting remains unsupported.
+- Added terminal `Plot.facet()` / `SetFacets` for a completed single 2-D template:
+  row/col grids, column wrapping, selected/reserved empty levels, shared axes and
+  independently editable panel filters over unchanged source data. Inference,
+  weights and normalization are cell-local; independent scatter/line mappings
+  pool deduplicated original row IDs with stable domains. Added JSON/action/
+  schema/validation/editor contracts and a synthetic response-by-site example.
+  This facet family still rejects legacy c, matrices/3-D/y2 and unsafe
+  histogram/KDE combinations; live mapping, consolidated guides, wider pair and
+  wider joint kinds remain open. No dependency/version/release or full-parity claim.
+- Integrated the reading examples into the built gallery with offline review/
+  criteria pages and editable downloads. Added four complete-figure drafts to
+  the Python editor: selection prefills Open without changing figure/history;
+  explicit Open uses the existing validated import path. Invalid imports retain
+  submitted JSON, and htmx page-body history caching is disabled. Figure builders
+  are shared with the reviewed examples, loaded lazily; no engine/schema/default/
+  dependency/version changes. Editable sample specs are replaced only after
+  successful rendering/QA, preserving earlier specs on render failure.
+- Reworked the rejected four-panel showcase into separate response and endpoint
+  reading tasks, with direct labels and explicit 700px/320px web layouts. Kept raw
+  data, estimates, confidence bounds and numeric ranges; added a real-browser
+  review page, numerical endpoint lookup and display-pixel/text-overlap checks on
+  actual saved PNGs. Review criteria cite ONS, PLOS/Rougier, VisJudgeBench and
+  graphical-perception research; no independent human/model quality score is
+  claimed. Desktop vector/editable exports, mobile specs and grey/CVD views are
+  included. Core defaults, schema, dependencies and release state are unchanged.
+- The initial visual prototype and Pandas demo styling remain as historical
+  examples; the four-panel image is no longer presented as a readability success.
+- Added opt-in histogram `element="step"` using unfilled native stairs for
+  layer/stack, both orientations and raw/log observations. Weighted/statistical
+  heights and edges are unchanged; stacks outline absolute tops and previous
+  baselines. Empty hues reserve theme dashes/colors, exact alpha/width include
+  zero, and edge_color overrides stroke color. Old specs default to bars;
+  step+dodge, filled steps/poly and custom step dashes fail validation.
+  Added 43 regression cases for native paths, JSON/actions/schema/editor,
+  overflow guards, PNG/PDF/SVG reproducibility and RNG isolation; refreshed
+  Rust HTTP/PNG smoke and editable comparison. No dependencies/version/release.
+- Added opt-in histogram `multiple="layer"|"stack"|"dodge"`, retaining legacy
+  calls and defaulting old typed specs to layer. Grouped stacking follows hue
+  order; dodging splits raw bin widths, including reserved empty hues. Heights,
+  normalization and cumulative statistics stay unchanged; dodged density uses
+  original bin widths without an area correction. Nonfinite/lost positive stack
+  increments and collapsed dodge slots fail before any bars. Added 48 regression
+  cases covering weighted v/h/log geometry, empty slots, pure/JSON/actions/schema,
+  Python editor and repeatable PNG/PDF/SVG; updated Rust HTTP/PNG smoke and the
+  editable histogram comparison. No dependency/version/release or parity change.
+- Added independent lineplot SemanticSpec/column roles: distinct raw hue/size/
+  style tuples partition curve/predictor cells; numeric clipping changes display
+  not identity. Main stroke widths in points, filled markers/optional1..4unique
+  named dashes, shared line/scatter scale domains with separate geometry guides.
+  Existing weighted/per-x unit pointwise inference/sorting/raw-log/bands/bars/
+  missing bounds retained, no whole-curve CI. Pure core/JSON/schema/actions/
+  Python/Rust editor/exports/RNG/legacy,48newtests and editable comparison.
+  Limits10000rows/256raw curves/64levels/enough markers/dashes; scalar conflicts
+  fail and zero strokes retain points/intervals. No dependencies/version/release/
+  raw-line/date/y2/colourbar/automatic facets/upstream parity claim.
+- Added optional SemanticSpec.scale_id named figure-shared scatter domains:
+  deduplicated selected table rows, matching settings/numeric hue cmap, shared
+  categorical colour blocks/global bounds/sizes/marker slots and once-per-panel
+  pooled guide legends without false observations. Legend-only differences and
+  separate dataset labels retained; invalid names/pooled limits/conflicts fail.
+  Layer-local defaults unchanged,36new tests/actual Rust browser/vector smoke
+  and executable/editable local-vs-shared comparison. No dependencies/version/
+  release or automatic faceting/line semantic claim; wider planned scope remains.
+- Added strict opt-in SemanticSpec for independent scatter hue/size/style roles:
+  categorical/numeric hue and size, categorical distinct filled markers, selected/
+  reserved slots, listwise rows and global explicit/auto linear bounds. Sizes are
+  point diameters, then squared to native areas; clipping changes mapping only.
+  Constant/subnormal midpoint/one-guide, scaled extreme/adjacent normalization,
+  positive-area underflow errors. Non-data role legend guides, label references,
+  core/JSON/schema/actions/Python/Rust editor/native/export/RNG and85newtests.
+  Legacy group/c/marker calls unchanged; no required dependency/version/release
+  or numerical parity claim. Numeric coordinate primary2D first subset; semantic
+  colorbar/outline/date/y2 and line/facet sharing remain on the wider plan.
+- Added lineplot numeric-x estimates using shared named estimators/pointwise
+  SD/SEM/PI/seeded CI, paired weighted mean/CI and within-x hierarchical unit
+  bootstrap. NOT simultaneous bands or whole-curve resampling; raw line unchanged.
+  Native bands/bars, sorting/per-hue first-seen order, horizontal/raw/log display/
+  explicit axis-log fit, honest missing bounds and reserved hues/references.
+  Exact band alpha/bar caps; invalid/nonmonotonic bands/derived endpoints fail.
+  Pure config/JSON/schema/actions/Python/Rust editor/exports,66new tests, gallery/
+  editable comparison. No new dependency/version/release or full-parity claim;
+  no date/category predictors/y2/dodge/order/callable/independent semantic maps.
+- Added optional violin weights: paired relative Gaussian covariance/effective n,
+  inverse weighted ECDF quartile/median marks, declared-coordinate weighted mean,
+  total-mass count widths and retained positive-row point/stick marks. No sample
+  replication, sampling, fabricated singular KDE or clipping of fit/inner rows;
+  old unweighted fits/linear quantiles remain unchanged. Stable scaled mass/mean/
+  covariance and bounded kernel chunks, strict limits/derived failures, 78 new
+  equation/artist/core/JSON/schema/editor/export tests and editable comparison.
+  Updated Rust capability checks/real weighted HTTP/browser smoke, Windows
+  Ghostscript detection and stale CI dashboard build invocation. No new required
+  dependency/version/release/full-parity claim; Rust1.88 MSRV remains a final gate.
+- Added kde2d/KDE2DSpec for weighted full-covariance bivariate Gaussian native
+  contours/fills. Paired x/y relative weights, effective n and d=2 Scott=
+  Silverman, pooled/per-hue density mass and evaluation grid, unchanged fit under
+  cut/clip, raw-unit positive log display, singular/rank skip without jitter.
+  Levels enclose approximate trapezoidal HDR mass CONDITIONAL on evaluated
+  grid, all ties included: not confidence intervals/full-space guarantees or
+  density renormalization. Scaled covariance/products and bounded 32×1024
+  evaluation, clear failures for unresolvable grid/levels. Exact alpha/outline/
+  hue dash/hatch/reference and native no-data legend proxies; 129 new module tests
+  plus 1 registry regression, gallery 35/canonical specs 55 and editable comparison.
+  No SciPy/dependencies/version/release changes; no 2D cumulative/colorbar/
+  absolute levels/callable/other kernels/log fit/upstream parity.
+- Added strict opt-in KDESpec for configurable weighted univariate Gaussian
+  curves/fills. Relative weights define unbiased covariance/effective sample
+  size, Scott/Silverman/numeric factors and bandwidth adjustment; bounded grid/
+  cut/clip change evaluation, never fit rows or renormalize tails. Pooled or
+  per-curve mass (including skipped singular hue mass), shared pooled support
+  with conditional bandwidths, analytic full Gaussian CDF from -infinity,
+  v/h/raw-unit positive observation logs and exact alpha/outline/width/hue
+  dashes/hatches/reference metadata. Singleton/constant curves skip with an
+  optional warning, never invent density/CDF/legend. Scaled covariance/weights,
+  centered low bits, positive cross-product correction and bounded accurate
+  evaluation handle extreme inputs or clearly fail invalid derived quantities.
+  Old calls/JSON retain their 1.06*SD*n**(-1/5),200-point/constant fallback.
+  125 new independent/native/numeric/artist/core/JSON/schema/editor/export tests,
+  regenerated gallery and editable comparison. No SciPy/dependency/version/
+  release change or bivariate/log-fit/weighted violin/upstream parity claim.
+- Added opt-in typed HistogramSpec for shared equal-width/explicit raw bins,
+  paired nonnegative weights, count/frequency/probability/proportion/percent/
+  density, pooled/per-curve in-range normalization and cumulative mass
+  integration (not summing density heights). Legacy hist density/group/bin/
+  alpha behavior is unchanged. Supports v/h, positive observation logs/raw
+  density widths, hue slots/hatches and exact alpha/outline/ref metadata.
+  Scaled normalized sums/independent bins/accurate row prefixes preserve small
+  mass and monotonicity; invalid derived widths/heights/raw totals fail clearly.
+  95 new equation/native/artist/core/JSON/schema/editor/export tests, refreshed
+  gallery and editable comparison. Bars/primary2D/linear heights only; no stack/
+  dodge/step/fill/discrete/auto-bin/KDE/bivariate/date/y2/interval extension or
+  new core dependency/version/release/parity claim.
+- Added the ECDF first subset: raw observations/typed ECDFSpec, weighted tied
+  empirical steps, per-curve proportion/percent/count and strict X>t complements.
+  Accurate unrounded online prefixes preserve monotone mass; scaled normalized
+  sums avoid weight overflow and right-to-left tails avoid 1-F cancellation.
+  Missing/zero-weight exclusions, reserved hue color/dash slots, orientation,
+  positive observation logs, exact line styles and reference metadata have
+  103 equation/artist/schema/actions/editor/export tests plus native Matplotlib
+  path comparisons. Zero-width dashed artists remain invisible without losing
+  style/data, including Matplotlib3.8; extreme1e308 count ticker warnings reported.
+  New gallery and editable four-panel preview. Primary2D/linear cumulative axes
+  only; no extrapolated tails, intervals/censoring/smoothing/date/y2 or required
+  dependency/version/release/parity claim. Existing layer defaults unchanged.
+- Added statistical native/log first subset for barplot/pointplot/countplot:
+  explicit numeric category locations/axis-coordinate spacing, log-width/dodge,
+  physical-order sparse point paths, positive log values and opt-in log-fit
+  mean/median/min/max with SD/SEM/PI/CI inverse endpoints. Original weighted/unit
+  row pairing, count normalization and ordinal defaults remain. Nonstack bar/
+  count baseline is a raw-value coordinate (linear default0, explicit positive
+  on logs); bodies end at estimates, not baseline+estimate. Value-log stacked
+  counts, axis-log sum/count and native/log y2 are explicitly rejected; positive
+  derived/inverse geometry is never silently clipped. Pure core/JSON/actions/
+  editor/native artists and repeatable PNG/PDF/SVG have 73 new tests and an
+  editable four-panel preview. No required dependency, parity/version/release claim.
+- Added named typed `components` styles for box body/whisker/cap/median/mean/
+  flier and boxen body/median/flier. Component properties override layer styling
+  with exact alpha and independent line/marker/fill controls, retaining defaults,
+  hue/hatching, letter-value tiers and raw/native-log statistics/geometry.
+  Unknown/unsafe/unsupported/explicitly hidden settings fail clearly. Public
+  ComponentStyleSpec/DistributionComponentsSpec, strict nested JSON/schema,
+  pure builders/actions/editor and repeatable PNG/PDF/SVG have 48 new tests and
+  an editable four-panel comparison. No arbitrary kwargs, per-band/hue maps,
+  precomputed bxp, bootstrap inference, new core dependency or version release.
+- Added the violin semantics first subset: explicit box/quart/point/stick/None
+  inner marks, exactly two selected/reserved hue split, width/area/count with
+  per-hue/global reference scope, bandwidth adjustment and bounded cut/clip.
+  Legacy median/width/observed-range defaults remain. Clip restricts KDE support,
+  not fitting counts/observations; area is a common density scale rather than an
+  exact clipped-polygon-area guarantee. Native/log artists and pure JSON/actions/
+  editor routes are covered by 138 new tests and an editable four-panel preview.
+  Callable KDE, arbitrary-hue split/inner kwargs and broader mappings remain
+  unsupported; weighted violin is added in the separate extension above. No new core/SciPy dependency, version bump or publication.
+- Added the native/log categorical first subset for box/violin/boxen/swarm:
+  opt-in finite numeric category coordinates, reserved axis-coordinate spacing,
+  positive log values, strict shared-axis declarations and preserved defaults.
+  Summary `stat_scale='data'` stays raw; explicit 'axis' selects log10 statistics/
+  KDE with inverse-mapped artists. Swarm keeps exact raw values and bounds.
+  Added 60 regression tests and a runnable/editable comparison. Statistical
+  bar/point/count native logs, date/style mappings and wider density/component
+  options remain pending. No version change, release or full parity claim.
+- Started the v1.1 functional-coverage target with shared, serializable `StatSpec`
+  settings and dedicated raw-data `barplot`, `pointplot` and `countplot` builders
+  (31 layer types). Named estimation, sample SD/mean SEM, observation PI and
+  seeded percentile-bootstrap CI are independent of the existing precomputed
+  `bar()` primitive. General intervals are drawn without clipping around the
+  estimate; missing/singleton behavior and unsupported options are explicit.
+  This subset uses 2-D linear ordinal axes; remaining coverage batches and
+  release gates are still pending. No version bump or publication.
+- Added paired-row weighted mean/percentile-bootstrap CI and two-stage
+  unit-then-within-unit-row resampling, with explicit validation and assumptions.
+  Zero-weight/missing rows are excluded; point estimates stay observation-weighted.
+  Countplots now support probability/proportion/percent over all selected usable
+  rows. Core builders/validation/JSON remain dependency-free.
+- Added orientation, category/hue selection and reserved ordering, bar gaps,
+  stacked counts and bounded numeric value labels to statistical layers, plus a
+  runnable three-panel weighted/unit-CI, horizontal-SEM and stacked-percent demo.
+  No invented estimates fill empty slots; unsupported scales/routes/settings and
+  conflicting shared-axis orders fail explicitly.
+- Extended box/violin with optional category/value columns and hue nesting,
+  orientation, selected/reserved orders, width/gap/numeric dodge and shared
+  colour/hatch encoding. One-column semantics/default coordinates remain.
+  Missing rows drop listwise; empty cells have no fake distributions.
+- Added native box IQR/percentile whiskers, deterministic Gaussian notches,
+  mean/flier controls and shared stroke/flier styling; violin named/numeric
+  bandwidth, bounded grid and mean/median/extrema controls. Arbitrary code,
+  split/other inner styles, area/count normalization and weighted KDE are not
+  silently accepted. Python/actions/JSON/schema/editor, minimum versions,
+  native numeric/artist tests and repeatable PNG/SVG exports are covered.
+- Added `swarmplot` (32 layer types), packing uniform circular raw observations
+  in actual display space on every draw, including DPI/size/limits/layout and
+  positive log-value axis changes. Orientation, order/hue/gap/numeric dodge,
+  joint non-dodged hues, editable specs and editor previews are covered. Greedy
+  packing is bounded to 2000 usable rows/layer; overcrowding retains all rows
+  at gutters and warns rather than silently discarding observations. Arbitrary
+  shapes/size mappings, native/log category scales and y2 remain unsupported.
+- Added `boxenplot` (33 layer types) with deterministic linear-interpolated
+  raw-data letter values, named/explicit bounded depth rules, exponential/linear/
+  area widths, medians and observed tails. Includes one-column/group and nested
+  category/hue orders/orientation/gap/dodge, native artists and repeatable editable
+  PNG/PDF/SVG. Area uses actual interval mass, handles ties without infinities
+  and extends full-depth outer bands to min/max. These bands are not CIs.
+  Unsupported scale/weight/component options fail explicitly; core remains
+  dependency-free and existing defaults/version metadata are unchanged.
+- Bars support caller-supplied symmetric uncertainty (`yerr`, e.g. SD) and
+  absolute asymmetric interval endpoints (`y_lower`/`y_upper`, e.g. 95% CI).
+  Errors share actual grouped/dodged bar centers, including missing categories,
+  secondary axes and polar bars. The primitive `bar()` never infers statistics.
+- Added bar span/outline and independent error-line/cap styling controls, with
+  thin neutral capped defaults for new bar errors and strict interval validation.
+- Added an opt-in `publication` theme with soft fills, restrained typography,
+  quieter spines and subtle y-grid lines behind marks. Existing themes and
+  redundant encoding defaults remain unchanged.
+- Added executable, seeded SD-versus-bootstrap-CI examples, editable specs and
+  deterministic PNG/SVG previews, plus a refreshed bar gallery and bilingual
+  usage docs. (bar의 SD·CI 표시, 논문용 스타일과 재현 가능한 비교 예제 추가.)
+- Documented a bilingual Matplotlib/Seaborn feature-coverage audit and phased
+  parity roadmap. Distinguish plot names from option/statistical/composition
+  support and native Python customization from declarative JSON/editor support;
+  planned APIs are explicitly not advertised as implemented features.
+
 ### Fixed
+
+- Exclude disabled panel legends from lint's visible-clutter count without
+  removing palette/redundant-encoding checks for their plotted data. Two regression
+  cases cover entirely hidden legends and mixed visible/hidden panels.
+- Decode Ghostscript's UTF-8 PDF text explicitly in TeX integration checks,
+  independent of Windows cp949. Added a portable subprocess regression for
+  non-ASCII text and ligatures; plot output and public APIs are unchanged.
+  Corrected contributor commands to select browser tests by filename rather
+  than an unregistered marker.
+- Place statistical bar labels beyond their real interval endpoints, including
+  negative/horizontal bars and groups that omit singleton intervals.
+- Honor explicit zero cap sizes and error/outline stroke widths instead of
+  substituting defaults; preserve existing standalone errorbar defaults.
+- Read generated UTF-8 documentation explicitly on Windows. Separate atomic
+  save/failure-cleanup tests from platform-dependent symlink and POSIX-mode
+  checks so atomic replacement remains tested without elevated privileges.
 
 - Check out the annotated release tag in the publisher job before using
   `--notes-from-tag`. The v1.0.0 tag and verified, attested artifacts remain

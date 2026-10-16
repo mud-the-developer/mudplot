@@ -57,6 +57,13 @@ GALLERY_EXAMPLES = tuple(
             "그룹별 궤적을 색상·마커·선 모양으로 함께 구분합니다.",
         ),
         (
+            "lineplot",
+            "series",
+            "Raw-data line estimates",
+            "Numeric x-cell means with seeded pointwise CI, not simultaneous bands.",
+            "숫자 x별 평균과 seeded 점별 CI를 표시하며 동시 신뢰대역이 아닙니다.",
+        ),
+        (
             "regplot",
             "series",
             "Regression",
@@ -78,6 +85,15 @@ GALLERY_EXAMPLES = tuple(
             "결정론적 jitter로 범주별 개별 관측값을 보여줍니다.",
         ),
         (
+            "swarmplot",
+            "series",
+            "Swarm plot",
+            "Circular observations repack in display space on each draw, including "
+            "positive log-value axes; overcrowding retains rows with a warning.",
+            "매 draw의 화면 좌표에서 원형 관측값을 다시 배치하며 "
+            "양수 log 값축을 지원하고 과밀하면 행을 보존하며 경고합니다.",
+        ),
+        (
             "stackplot",
             "series",
             "Stack plot",
@@ -95,8 +111,31 @@ GALLERY_EXAMPLES = tuple(
             "bar",
             "series",
             "Bar",
-            "Grouped bars retain hatch differences in grayscale print.",
-            "그룹 막대는 흑백 인쇄에서도 해칭으로 구분됩니다.",
+            "Grouped means with supplied SD, light fills, and aligned capped errors; "
+            "default redundant encoding remains available for hatch differences.",
+            "그룹 평균과 제공된 SD를 옅은 면·정렬된 캡 오차막대로 표시합니다. "
+            "기본 redundant encoding을 유지하면 해칭으로도 구분할 수 있습니다.",
+        ),
+        (
+            "barplot",
+            "series",
+            "Raw-data bar plot",
+            "Raw replicates aggregate to means and seeded percentile-bootstrap CI.",
+            "원자료 반복 관측에서 평균과 seeded percentile-bootstrap CI를 계산합니다.",
+        ),
+        (
+            "pointplot",
+            "series",
+            "Raw-data point plot",
+            "Raw means and sample SE use aligned, optionally dodged point estimates.",
+            "원자료 평균·표본 SE를 정렬하고 선택한 dodge로 점 추정값을 구분합니다.",
+        ),
+        (
+            "countplot",
+            "series",
+            "Raw-data count plot",
+            "Categorical observation counts require no y column or inferred interval.",
+            "y 열이나 추정 구간 없이 범주별 원자료 관측 개수를 표시합니다.",
         ),
         (
             "errorbar",
@@ -123,22 +162,46 @@ GALLERY_EXAMPLES = tuple(
             "box",
             "distributions",
             "Box plot",
-            "Compact summaries compare grouped medians and spread.",
-            "그룹별 중앙값과 산포를 간결하게 비교합니다.",
+            "Nested category/hue boxes show medians, means and 5-95% whiskers; "
+            "percentile whiskers are not confidence intervals.",
+            "범주/그룹 box로 중앙값·평균과 5-95% whisker를 표시합니다. "
+            "분위수 whisker는 신뢰구간이 아닙니다.",
+        ),
+        (
+            "boxenplot",
+            "distributions",
+            "Letter-value plot",
+            "Nested raw-data quantile bands reveal tails with exponential widths; "
+            "median and outside observations are not confidence intervals.",
+            "원자료 분위수 띠와 지수 폭으로 꼬리를 표시합니다. "
+            "중앙값·바깥 관측값은 신뢰구간이 아닙니다.",
         ),
         (
             "violin",
             "distributions",
             "Violin",
-            "Mirrored density shapes retain categorical colour and hatch encoding.",
-            "대칭 밀도 모양에 범주별 색상과 해칭을 함께 적용합니다.",
+            "Horizontal nested violins use named bandwidth, median lines and "
+            "consistent hue colours/hatches.",
+            "가로 중첩 violin에 이름 기반 대역폭·중앙값·"
+            "공통 그룹 색상과 해칭을 적용합니다.",
         ),
         (
             "kde",
             "distributions",
             "Kernel density",
-            "A NumPy-only Gaussian KDE compares smooth grouped distributions.",
-            "NumPy 기반 Gaussian KDE로 그룹별 분포를 부드럽게 비교합니다.",
+            "Typed NumPy Gaussian KDE uses explicit Scott bandwidth and per-curve "
+            "normalization; weights/support/CDF/fill controls are also available.",
+            "Typed NumPy Gaussian KDE에 Scott 대역폭·곡선별 정규화를 명시합니다. "
+            "가중치/평가 범위/CDF/채우기 설정도 지원합니다.",
+        ),
+        (
+            "ecdf",
+            "distributions",
+            "Empirical cumulative distribution",
+            "Weighted empirical steps aggregate ties and normalize within each curve; "
+            "no bins, smoothing or inferred confidence interval.",
+            "가중 원자료 계단선으로 반복값을 합산하고 각 곡선 안에서 정규화합니다. "
+            "Bin·평활화·추정 신뢰구간은 사용하지 않습니다.",
         ),
         (
             "rug",
@@ -146,6 +209,15 @@ GALLERY_EXAMPLES = tuple(
             "Rug",
             "Rug marks expose observations underneath a density estimate.",
             "밀도 추정 아래에 rug 표시로 개별 관측값을 드러냅니다.",
+        ),
+        (
+            "kde2d",
+            "fields",
+            "Weighted bivariate KDE",
+            "Full weighted Gaussian covariance; contour levels enclose conditional "
+            "finite-grid mass, not confidence intervals or full-space coverage.",
+            "가중 Gaussian 공분산을 사용하며 등고선은 유한 격자의 조건부 질량 "
+            "비율입니다. 신뢰구간/전체 공간 확률 보장이 아닙니다.",
         ),
         (
             "hist2d",
@@ -167,6 +239,13 @@ GALLERY_EXAMPLES = tuple(
             "Heatmap",
             "A diverging LCH colormap represents a signed matrix field.",
             "발산형 LCH colormap으로 부호가 있는 행렬 필드를 표현합니다.",
+        ),
+        (
+            "clustermap",
+            "fields",
+            "Clustered heatmap",
+            "Hierarchical row/column ordering preserves labels and source values.",
+            "계층적 행/열 순서에 label을 맞추며 원자료는 보존합니다.",
         ),
         (
             "contour",

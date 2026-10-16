@@ -112,6 +112,41 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             s.height_ratios = list(hr) if hr else None
             while len(s.panels) < r * c:
                 s.panels.append(PanelSpec())
+        case A.SetFacets():
+            from ._facet import materialize_facets
+
+            materialize_facets(
+                s,
+                **{
+                    field.name: getattr(action, field.name)
+                    for field in dc_fields(action)
+                },
+            )
+        case A.SetJointGrid():
+            from ._joint import materialize_joint
+
+            materialize_joint(
+                s,
+                **{
+                    field.name: getattr(action, field.name)
+                    for field in dc_fields(action)
+                },
+            )
+        case A.SetPairGrid():
+            from ._pair import materialize_pair
+
+            materialize_pair(
+                s,
+                **{
+                    field.name: getattr(action, field.name)
+                    for field in dc_fields(action)
+                },
+            )
+        case A.SetAxisShare(axis=axis, share_id=name, panel=pi):
+            if axis not in ("x", "y"):
+                raise ValueError("named axis sharing requires x or y")
+            _ensure_panel(s, pi)
+            getattr(s.panels[pi], axis).share_id = name
         case A.AddLayer(layer=layer, panel=pi):
             _ensure_panel(s, pi)
             s.panels[pi].layers.append(copy.deepcopy(layer))

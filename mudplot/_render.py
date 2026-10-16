@@ -9,13 +9,35 @@ from __future__ import annotations
 import contextlib
 import contextvars
 import hashlib
+import inspect
 import itertools
 import re
+import warnings
+from dataclasses import replace
 from statistics import NormalDist
 from typing import Any, cast
 
 import numpy as np
 
+from ._categorical import (
+    DISTRIBUTION_TYPES,
+    distribution_columns,
+    distribution_levels,
+    distribution_rows,
+    native_category_geometry,
+)
+from ._ecdf import ecdf_config, ecdf_groups, ecdf_rows, empirical_steps
+from ._facet import RAW_HUE_TYPES, ordered_group_columns, panel_columns
+from ._histogram import histogram_groups, histogram_rows, histogram_summary
+from ._kde import kde_groups, kde_rows, kde_summary
+from ._kde2d import kde2d_config, kde2d_groups, kde2d_rows, kde2d_summary
+from ._semantics import (
+    category_key,
+    semantic_levels,
+    semantic_rows,
+    shared_scale_domains,
+)
+from ._stat import STAT_LAYER_TYPES, category_levels, stat_config, usable_rows
 from .spec import FigureSpec, LayerSpec, PanelSpec
 from .theme import spec_to_rcparams
 from .validate import assert_valid
@@ -36,14 +58,15 @@ _SERIES_TYPES = {
     "errorbar",
     "band",
 }
+_STAT_TYPES = STAT_LAYER_TYPES
 # layer types that draw a distribution of a single column (support ``group``)
-_DIST_TYPES = {"hist", "box", "violin", "kde", "rug"}
+_DIST_TYPES = {"hist", "box", "boxenplot", "violin", "kde", "kde2d", "ecdf", "rug"}
 # layer types that draw a 2-D matrix
-_MATRIX_TYPES = {"heatmap", "contour", "contourf"}
+_MATRIX_TYPES = {"heatmap", "clustermap", "contour", "contourf"}
 # layer types only meaningful on a projection="3d" panel
 _3D_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
 # layer types with their own standalone drawing logic
-_STANDALONE_TYPES = {"pie"}
+_STANDALONE_TYPES = {"pie", "swarmplot"}
 
 # -- reference metadata (citation / href) ----------------------------------
 #
@@ -271,12 +294,24 @@ def _series_masks(data_cols, layer: LayerSpec):
         return
     g = np.asarray(data_cols[layer.group])
     refs = layer.references or {}
-    for key in _unique_stable(g):
+    keys = _unique_stable(g) if layer.hue_order is None else layer.hue_order
+    for key in keys:
         key_s = str(key)
         ref = refs.get(key_s)
         citation = ref.citation if ref else None
         href = ref.href if ref else None
-        yield (_decorate(key_s, citation, href), g == key)
+        mask = (
+            g == key
+            if layer.hue_order is None
+            else np.asarray(
+                [
+                    category_key(value) == category_key(key)
+                    for value in data_cols[layer.group]
+                ],
+                dtype=bool,
+            )
+        )
+        yield (_decorate(key_s, citation, href), mask)
 
 
 def _continuous_cmap(kind: str):
@@ -299,7 +334,7 @@ def _target_axes(ax, ax2, layer: LayerSpec):
     return ax2 if (layer.axis == "y2" and ax2 is not None) else ax
 
 
-def _regression_fit(x, y, degree: int, confidence: float | None):
+def _regression_fit(x, y, degree: int, confidence: float | None, *, at=None):
     """Return a numerically scaled polynomial fit and optional mean-fit CI."""
     try:
         x = np.asarray(x, dtype=float)
@@ -307,7 +342,11 @@ def _regression_fit(x, y, degree: int, confidence: float | None):
         center = float(x.mean())
         scale = float(np.ptp(x)) / 2
         x_scaled = (x - center) / scale
-        grid = np.linspace(float(x.min()), float(x.max()), 200)
+        grid = (
+            np.linspace(float(x.min()), float(x.max()), 200)
+            if at is None
+            else np.asarray(at, dtype=float)
+        )
         grid_scaled = (grid - center) / scale
 
         if confidence is None:
@@ -325,7 +364,41 @@ def _regression_fit(x, y, degree: int, confidence: float | None):
         raise ValueError(f"regplot fit failed: {e}") from e
 
 
-def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
+def _y_errors(data_cols, layer: LayerSpec, mask):
+    """Translate supplied absolute endpoints to Matplotlib error magnitudes."""
+    if layer.yerr is not None:
+        return _col(data_cols, layer.yerr)[mask]
+    if layer.y_lower is not None and layer.y_upper is not None:
+        center = _col(data_cols, layer.y)[mask]
+        lower = _col(data_cols, layer.y_lower)[mask]
+        upper = _col(data_cols, layer.y_upper)[mask]
+        return np.asarray([center - lower, upper - center], dtype=float)
+    return None
+
+
+def _draw_series_layer(
+    ax,
+    ax2,
+    data_cols,
+    layer: LayerSpec,
+    color_iter,
+    theme,
+    *,
+    semantic_domain=None,
+    semantic_guides=True,
+):
+    if layer.type == "scatter" and layer.semantics is not None:
+        from ._scatter_semantics import draw_semantic_scatter
+
+        return draw_semantic_scatter(
+            ax,
+            data_cols,
+            layer,
+            color_iter,
+            domain=semantic_domain,
+            guides=semantic_guides,
+        )
+    data_cols = ordered_group_columns(data_cols, layer)
     masks = list(_series_masks(data_cols, layer))
     # redundant marker/line-style encoding: only kicks in for *grouped*
     # (multi-series) layers, so a single clean line/scatter stays untouched.
@@ -429,20 +502,35 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
         return
 
     y_all = _col(data_cols, layer.y)
-    masks = [
-        (label, mask)
-        for label, mask in masks
-        if np.any(np.isfinite(x_all[mask]) & np.isfinite(y_all[mask]))
-    ]
+    if layer.hue_order is None:
+        masks = [
+            (label, mask)
+            for label, mask in masks
+            if np.any(np.isfinite(x_all[mask]) & np.isfinite(y_all[mask]))
+        ]
     n_series = len(masks)
     sc = None
     jitter_rng = np.random.default_rng(0)  # deterministic export/re-render
+
+    if (
+        layer.type == "regplot"
+        and layer.regression is not None
+        and layer.regression.residual
+        and any(np.any(mask) for _label, mask in masks)
+    ):
+        target.axhline(0, color="#6b7280", linewidth=0.75, linestyle="--")
 
     for series_i, (label, mask) in enumerate(masks):
         x = x_all[mask]
         y = y_all[mask]
         marker = layer.marker or next(marker_cycle)
         linestyle = layer.line_style or next(style_cycle)
+        if layer.hue_order is not None and not np.any(np.isfinite(x) & np.isfinite(y)):
+            if not layer.color:
+                next(color_iter)
+            if layer.type == "bar":
+                next(hatch_cycle)
+            continue
         if layer.type == "line":
             color = layer.color or next(color_iter)
             target.plot(
@@ -459,9 +547,28 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
             )
         elif layer.type == "regplot":
             color = layer.color or next(color_iter)
-            grid, fitted, interval = _regression_fit(
-                x, y, layer.degree, layer.confidence
-            )
+            config = layer.regression
+            if config is None:
+                grid, fitted, interval = _regression_fit(
+                    x, y, layer.degree, layer.confidence
+                )
+            else:
+                from ._regression_render import fit_regression
+
+                grid, fitted, interval = fit_regression(
+                    x, y, layer, _regression_fit, at=x if config.residual else None
+                )
+                if target.get_yscale() == "log" and any(
+                    np.any(values <= 0) for values in [fitted, *(interval or ())]
+                ):
+                    raise ValueError(
+                        "regression predictions/bands must be positive on log y"
+                    )
+                if config.residual:
+                    with np.errstate(over="raise", invalid="raise"):
+                        y = y - fitted
+                    if not np.isfinite(y).all():
+                        raise ValueError("regression residuals are not representable")
             if interval is not None:
                 target.fill_between(
                     grid,
@@ -480,14 +587,15 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 marker=marker or "o",
                 alpha=layer.alpha,
             )
-            target.plot(
-                grid,
-                fitted,
-                color=color,
-                linewidth=layer.line_width,
-                linestyle=linestyle,
-                alpha=layer.alpha,
-            )
+            if config is None or not config.residual:
+                target.plot(
+                    grid,
+                    fitted,
+                    color=color,
+                    linewidth=layer.line_width,
+                    linestyle=linestyle,
+                    alpha=layer.alpha,
+                )
         elif layer.type == "scatter":
             if layer.c is not None:
                 values = _col(data_cols, layer.c)[mask]
@@ -528,29 +636,37 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
         elif layer.type == "bar":
             color = layer.color or next(color_iter)
             hatch = next(hatch_cycle)
-            if n_series > 1:
-                # Dodge grouped bars side-by-side instead of stacking them
-                # on top of each other at identical x positions -- plain
-                # ax.bar() calls at the same x would silently overlap
-                # (hiding shorter bars behind taller ones), which is a
-                # correctness/readability problem for grouped bar charts,
-                # not just cosmetic.
-                bar_w = 0.8 / n_series
-                offset = (series_i - (n_series - 1) / 2) * bar_w
-                target.bar(
-                    x + offset,
-                    y,
-                    width=bar_w * 0.92,
-                    label=label,
-                    color=color,
-                    hatch=hatch,
-                    alpha=layer.alpha,
-                )
-            else:
-                target.bar(x, y, label=label, color=color, alpha=layer.alpha)
+            span = 0.8 if layer.bar_width is None else layer.bar_width
+            # Errorbars are drawn by the same bar() call, so they share the
+            # actual dodged centers even with missing categories or twins.
+            bar_w = span / n_series if n_series > 1 else span
+            offset = (series_i - (n_series - 1) / 2) * bar_w
+            yerr = _y_errors(data_cols, layer, mask)
+            error_kw = {
+                "ecolor": layer.error_color or "#30343b",
+                "elinewidth": (
+                    1.1 if layer.error_line_width is None else layer.error_line_width
+                ),
+                "capsize": 3.0 if layer.capsize is None else layer.capsize,
+                "capthick": 1.1 if layer.capthick is None else layer.capthick,
+                "alpha": layer.alpha,
+            }
+            target.bar(
+                x + offset,
+                y,
+                width=bar_w * 0.92 if n_series > 1 else bar_w,
+                label=label,
+                color=color,
+                edgecolor=layer.edge_color,
+                linewidth=layer.line_width,
+                hatch=hatch if n_series > 1 else None,
+                alpha=layer.alpha,
+                yerr=yerr,
+                error_kw=error_kw,
+            )
         elif layer.type == "errorbar":
             color = layer.color or next(color_iter)
-            yerr = _col(data_cols, layer.yerr)[mask] if layer.yerr else None
+            yerr = _y_errors(data_cols, layer, mask)
             xerr = _col(data_cols, layer.xerr)[mask] if layer.xerr else None
             target.errorbar(
                 x,
@@ -559,10 +675,13 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
                 xerr=xerr,
                 label=label,
                 color=color,
+                ecolor=layer.error_color,
                 fmt=marker or "o",
                 markersize=layer.marker_size or 4,
                 linewidth=layer.line_width,
-                capsize=layer.capsize or 2,
+                elinewidth=layer.error_line_width,
+                capsize=2.0 if layer.capsize is None else layer.capsize,
+                capthick=layer.capthick,
                 alpha=layer.alpha,
             )
         elif layer.type == "band":
@@ -582,12 +701,310 @@ def _draw_series_layer(ax, ax2, data_cols, layer: LayerSpec, color_iter, theme):
         target.figure.colorbar(sc, ax=target, label=layer.clabel or "")
 
 
-def _gaussian_kde(values: np.ndarray, n_points: int = 200):
-    """A small numpy-only Gaussian KDE (Scott's rule bandwidth).
+def _draw_stat_ranges(ax, x, lower, upper, layer: LayerSpec, color):
+    """Draw actual endpoints, even if they do not bracket the point estimate."""
+    from matplotlib.container import ErrorbarContainer
 
-    Avoids adding scipy as a dependency for one feature; not as fast or
-    feature-complete as scipy.stats.gaussian_kde, but numerically
-    equivalent for the common case (no weights, Gaussian kernel).
+    width = 1.1 if layer.error_line_width is None else layer.error_line_width
+    capsize = 3.0 if layer.capsize is None else layer.capsize
+    capthick = 1.1 if layer.capthick is None else layer.capthick
+    horizontal = layer.orient == "h"
+    draw = ax.hlines if horizontal else ax.vlines
+    collection = draw(
+        x,
+        lower,
+        upper,
+        colors=color,
+        linewidths=width,
+        alpha=layer.alpha,
+        zorder=2.5,
+        label="_nolegend_",
+    )
+    caps = []
+    if capsize > 0:
+        for endpoints in (lower, upper):
+            coordinates = (endpoints, x) if horizontal else (x, endpoints)
+            caps.append(
+                ax.plot(
+                    *coordinates,
+                    linestyle="none",
+                    marker="|" if horizontal else "_",
+                    markersize=2 * capsize,
+                    markeredgewidth=capthick,
+                    color=color,
+                    alpha=layer.alpha,
+                    zorder=2.5,
+                    label="_nolegend_",
+                )[0]
+            )
+    # Like native errorbar(fmt="none"), a range has no data-line artist;
+    # Matplotlib's annotation incorrectly requires Line2D rather than None.
+    errors = ErrorbarContainer(
+        cast(Any, (None, tuple(caps), (collection,))),
+        has_xerr=horizontal,
+        has_yerr=not horizontal,
+        label="_nolegend_",
+    )
+    ax.add_container(errors)
+    return errors
+
+
+def _draw_stat_layer(
+    ax,
+    ax2,
+    data_cols,
+    layer: LayerSpec,
+    color_iter,
+    theme,
+    *,
+    semantic_domain=None,
+    semantic_guides=True,
+):
+    if layer.type == "lineplot" and layer.semantics is not None:
+        from ._line_semantics import draw_semantic_lineplot
+
+        return draw_semantic_lineplot(
+            ax,
+            data_cols,
+            layer,
+            color_iter,
+            theme,
+            domain=semantic_domain,
+            guides=semantic_guides,
+        )
+    if layer.type == "lineplot":
+        from ._lineplot import draw_lineplot
+
+        return draw_lineplot(ax, data_cols, layer, color_iter, theme)
+    from ._estimate import summarize
+
+    target = _target_axes(ax, ax2, layer)
+    horizontal = layer.orient == "h"
+    value_scale = target.get_xscale() if horizontal else target.get_yscale()
+    summary = summarize(data_cols, layer, value_scale=value_scale)
+    config = stat_config(layer)
+    labels = [str(category) for category in summary.categories]
+    spacing = 1.0
+    if layer.native_scale:
+        positions, spacing, labels = _category_geometry(
+            target, summary.categories, layer
+        )
+    else:
+        category_axis = target.yaxis if horizontal else target.xaxis
+        category_axis.update_units(labels)
+        convert = target.convert_yunits if horizontal else target.convert_xunits
+        positions = np.asarray(convert(labels), dtype=float)
+        if layer.order is not None and np.any(np.diff(positions) <= 0):
+            raise ValueError(
+                "conflicting category order on a shared axis; use matching orders"
+            )
+    category_positions = dict(zip(summary.categories, positions, strict=True))
+    category_ranks = (
+        {
+            c: j
+            for j, c in enumerate(
+                sorted(summary.categories, key=category_positions.__getitem__)
+            )
+        }
+        if layer.native_scale
+        else category_positions
+    )
+    bottoms = dict.fromkeys(summary.categories, 0.0)
+    grouped = {group: [] for group in summary.groups}
+    for point in summary.estimates:
+        grouped[point.group].append(point)
+    if config.errorbar is not None and any(p.lower is None for p in summary.estimates):
+        warnings.warn(
+            "statistical intervals omitted for groups with fewer than 2 observations "
+            "or independent resampling units",
+            UserWarning,
+            stacklevel=2,
+        )
+    n_series = len(summary.groups)
+    redundant = theme.redundant_encoding and layer.group is not None
+    for i, group in enumerate(summary.groups):
+        points = sorted(grouped[group], key=lambda p: category_positions[p.category])
+        color = layer.color or next(color_iter)
+        if not points:
+            continue  # Reserve the hue's colour/dodge slot, but invent no legend entry.
+        if layer.group is None:
+            label = _decorate(layer.label, layer.citation, layer.href)
+        else:
+            key = str(group)
+            ref = (layer.references or {}).get(key)
+            label = _decorate(
+                key, ref.citation if ref else None, ref.href if ref else None
+            )
+        x = np.asarray([category_positions[p.category] for p in points])
+        y = np.asarray([p.value for p in points])
+        bars = None
+        if layer.type in {"barplot", "countplot"}:
+            span = (0.8 if layer.bar_width is None else layer.bar_width) * spacing
+            dodged = n_series > 1 and not layer.stack
+            width = span / n_series if dodged else span
+            if dodged:
+                x = x + (i - (n_series - 1) / 2) * width
+            gap = (0.08 if dodged else 0.0) if layer.gap is None else layer.gap
+            base = (
+                np.asarray([bottoms[p.category] for p in points])
+                if layer.stack
+                else 0
+                if layer.baseline is None
+                else layer.baseline
+            )
+            heights = y if layer.stack else y - base
+            if np.any(~np.isfinite(heights)):
+                raise ValueError("statistical bar span exceeds finite plotting range")
+            drawn_width = width * (1 - gap)
+            locations = x
+            align = {}
+            if layer.native_scale:
+                low = _category_inverse(target, x - drawn_width / 2, layer)
+                high = _category_inverse(target, x + drawn_width / 2, layer)
+                drawn_width = high - low
+                if np.any(~np.isfinite(drawn_width)) or np.any(drawn_width <= 0):
+                    raise ValueError(
+                        "native statistical bar geometry collapses or overflows"
+                    )
+                locations = low
+                align = {"align": "edge"}
+            geometry = (
+                {"height": drawn_width, "left": base}
+                if horizontal
+                else {"width": drawn_width, "bottom": base}
+            )
+            hatch = theme.hatches[i % len(theme.hatches)] if redundant else None
+            draw_bars = target.barh if horizontal else target.bar
+            bars = draw_bars(
+                locations,
+                heights,
+                **geometry,
+                **align,
+                color=color,
+                edgecolor=layer.edge_color,
+                linewidth=layer.line_width,
+                hatch=hatch,
+                alpha=layer.alpha,
+                label=label,
+            )
+            if layer.stack:
+                for p in points:
+                    bottoms[p.category] += p.value
+        else:
+            span = (0.0 if layer.dodge is None else layer.dodge) * spacing
+            x = x + (i - (n_series - 1) / 2) * span / n_series
+            # Insert breaks instead of bridging a missing category cell.
+            line_x, line_y = [], []
+            previous = None
+            for position, point in zip(x, points, strict=True):
+                index = category_ranks[point.category]
+                if previous is not None and index > previous + 1:
+                    line_x.append(np.nan)
+                    line_y.append(np.nan)
+                line_x.append(
+                    _category_inverse(target, [position], layer)[0]
+                    if layer.native_scale
+                    else position
+                )
+                line_y.append(point.value)
+                previous = index
+            marker = layer.marker or (
+                theme.markers[i % len(theme.markers)] if redundant else "o"
+            )
+            style = layer.line_style or (
+                theme.line_styles[i % len(theme.line_styles)] if redundant else "-"
+            )
+            coordinates = (line_y, line_x) if horizontal else (line_x, line_y)
+            target.plot(
+                *coordinates,
+                color=color,
+                label=label,
+                marker=marker,
+                linestyle=style,
+                markersize=5.0 if layer.marker_size is None else layer.marker_size,
+                linewidth=1.25 if layer.line_width is None else layer.line_width,
+                alpha=layer.alpha,
+            )
+        if layer.native_scale:
+            x = _category_inverse(target, x, layer)
+        valid = [j for j, p in enumerate(points) if p.lower is not None]
+        if valid:
+            error_color = layer.error_color or (color if bars is None else "#30343b")
+            errors = _draw_stat_ranges(
+                target,
+                x[valid],
+                [points[j].lower for j in valid],
+                [points[j].upper for j in valid],
+                layer,
+                error_color,
+            )
+            if bars is not None:
+                bars.errorbar = errors
+        if bars is not None and layer.value_labels:
+            if layer.stack:
+                if layer.native_scale:
+                    for position, point in zip(x, points, strict=True):
+                        center = bottoms[point.category] - point.value / 2
+                        coordinates = (
+                            (center, position) if horizontal else (position, center)
+                        )
+                        target.annotate(
+                            format(point.value, layer.label_format),
+                            coordinates,
+                            ha="center",
+                            va="center",
+                        )
+                else:
+                    target.bar_label(
+                        bars,
+                        labels=[format(p.value, layer.label_format) for p in points],
+                        label_type="center",
+                    )
+            else:
+                # Label each real endpoint independently: native bar_label zips
+                # errors/rectangles and misaligns sparse singleton intervals.
+                for position, point in zip(x, points, strict=True):
+                    positive = point.value >= (
+                        0 if layer.baseline is None else layer.baseline
+                    )
+                    endpoint = point.upper if positive else point.lower
+                    edge = (
+                        point.value
+                        if endpoint is None
+                        else (
+                            max(point.value, endpoint)
+                            if positive
+                            else min(point.value, endpoint)
+                        )
+                    )
+                    coordinates = (edge, position) if horizontal else (position, edge)
+                    offset = (
+                        (2 if positive else -2, 0)
+                        if horizontal
+                        else (0, 2 if positive else -2)
+                    )
+                    target.annotate(
+                        format(point.value, layer.label_format),
+                        coordinates,
+                        xytext=offset,
+                        textcoords="offset points",
+                        ha=("left" if positive else "right")
+                        if horizontal
+                        else "center",
+                        va="center"
+                        if horizontal
+                        else ("bottom" if positive else "top"),
+                    )
+    if layer.native_scale:
+        _finish_category_axis(target, positions, spacing, labels, layer)
+
+
+def _gaussian_kde(values: np.ndarray, n_points: int = 200):
+    """Legacy NumPy Gaussian KDE: 1.06*sample-SD*n**(-1/5), 200 points.
+
+    Retained for old specs/default calls, including the fallback for constants.
+    This is NOT SciPy's default Scott factor or a numerical-parity claim.
+    Opt-in weighted/configurable KDE uses the separate typed calculation.
     """
     values = np.asarray(values, dtype=float)
     n = len(values)
@@ -601,7 +1018,896 @@ def _gaussian_kde(values: np.ndarray, n_points: int = 200):
     return grid, density
 
 
+def _letter_value_artists(ax, values, positions, width, layer):
+    """Native disjoint polygon bands with deterministic median and tail points."""
+    from matplotlib.collections import PolyCollection
+
+    from ._components import apply_component_style
+    from ._letter_value import letter_value_summary
+
+    edge = layer.edge_color or "#4b5563"
+    stroke = 0.8 if layer.line_width is None else layer.line_width
+    bodies = []
+    horizontal = layer.orient == "h"
+    for data, center in zip(values, positions, strict=True):
+        summary = letter_value_summary(
+            data,
+            k_depth=layer.k_depth,
+            width_method=layer.width_method,
+            outlier_prop=layer.outlier_prop,
+            trust_alpha=layer.trust_alpha,
+        )
+        vertices = []
+        for (low, high), relative in zip(
+            itertools.pairwise(summary.values), summary.widths, strict=True
+        ):
+            half = width * relative / 2
+            rectangle = np.asarray(
+                [
+                    [center - half, low],
+                    [center + half, low],
+                    [center + half, high],
+                    [center - half, high],
+                ]
+            )
+            vertices.append(rectangle[:, ::-1] if horizontal else rectangle)
+        body = PolyCollection(
+            vertices,
+            edgecolors=edge,
+            linewidths=stroke,
+            linestyles=layer.line_style or "-",
+        )
+        ax.add_collection(body)
+        bodies.append(body)
+        if layer.showmedians is None or layer.showmedians:
+            category = [center - width / 2, center + width / 2]
+            value = [summary.median, summary.median]
+            x, y = (value, category) if horizontal else (category, value)
+            (median_artist,) = ax.plot(
+                x,
+                y,
+                color=edge,
+                linewidth=stroke,
+                linestyle=layer.line_style or "-",
+                alpha=layer.alpha,
+                solid_capstyle="butt",
+            )
+            if layer.components is not None:
+                apply_component_style(median_artist, layer.components.median)
+        if (layer.showfliers is None or layer.showfliers) and summary.fliers:
+            category = np.full(len(summary.fliers), center)
+            value = np.asarray(summary.fliers)
+            x, y = (value, category) if horizontal else (category, value)
+            (flier_artist,) = ax.plot(
+                x,
+                y,
+                linestyle="none",
+                color=edge,
+                marker=layer.marker or "d",
+                markersize=3 if layer.marker_size is None else layer.marker_size,
+                markerfacecolor="none",
+                markeredgewidth=stroke,
+                alpha=layer.alpha,
+            )
+            if layer.components is not None:
+                apply_component_style(flier_artist, layer.components.flier)
+    ax.autoscale_view()
+    return bodies
+
+
+def _category_geometry(ax, categories, layer):
+    """Working category coordinates; native logs use log10 geometry."""
+    horizontal = layer.orient == "h"
+    axis = ax.yaxis if horizontal else ax.xaxis
+    labels = [str(c) for c in categories]
+    if layer.native_scale:
+        positions, spacing = native_category_geometry(categories, axis.get_scale())
+        return np.asarray(positions), spacing, labels
+    if layer.y:
+        axis.update_units(labels)
+        convert = ax.convert_yunits if horizontal else ax.convert_xunits
+        positions = np.asarray(convert(labels), dtype=float)
+        if layer.order is not None and np.any(np.diff(positions) <= 0):
+            raise ValueError(
+                "conflicting category order on a shared axis; use matching orders"
+            )
+        return positions, 1.0, labels
+    return np.arange(1, len(categories) + 1, dtype=float), 1.0, labels
+
+
+def _category_inverse(ax, values, layer):
+    axis = ax.yaxis if layer.orient == "h" else ax.xaxis
+    numbers = np.asarray(values, dtype=float)
+    if layer.native_scale and axis.get_scale() == "log":
+        with np.errstate(over="ignore", under="ignore"):
+            numbers = np.power(10.0, numbers)
+        if np.any(~np.isfinite(numbers)) or np.any(numbers <= 0):
+            raise ValueError(
+                "native log category geometry exceeds finite positive range"
+            )
+    if np.any(~np.isfinite(numbers)):
+        raise ValueError("native category geometry exceeds finite plotting range")
+    return numbers
+
+
+def _finish_category_axis(ax, positions, spacing, labels, layer):
+    horizontal = layer.orient == "h"
+    if not layer.native_scale and (
+        layer.type in {"violin", "boxenplot", "swarmplot"}
+        or layer.y
+        or layer.order is not None
+    ):
+        ticks = ax.set_yticks if horizontal else ax.set_xticks
+        ticks(positions, labels=labels)
+    if layer.y or layer.native_scale:
+        bounds = _category_inverse(
+            ax, [positions.min() - spacing / 2, positions.max() + spacing / 2], layer
+        )
+        limits = ax.get_ylim if horizontal else ax.get_xlim
+        set_limits = ax.set_ylim if horizontal else ax.set_xlim
+        low, high = limits()
+        if low < high:
+            set_limits(min(low, bounds[0]), max(high, bounds[1]))
+        else:
+            set_limits(max(low, bounds[1]), min(high, bounds[0]))
+
+
+def _distribution_artists(
+    ax, values, positions, width, labels, layer, violin_context=None
+):
+    """Compute in declared coordinates then inverse-map native artist geometry."""
+    from matplotlib.collections import LineCollection
+
+    category_dim = int(layer.orient == "h")
+    value_dim = 1 - category_dim
+    scales = [ax.get_xscale(), ax.get_yscale()]
+    inverse = [False, False]
+    inverse[category_dim] = layer.native_scale and scales[category_dim] == "log"
+    inverse[value_dim] = layer.stat_scale == "axis" and scales[value_dim] == "log"
+    data = [np.log10(v) for v in values] if inverse[value_dim] else values
+    starts = len(ax.patches), len(ax.lines), len(ax.collections)
+    old_lim = ax.dataLim.frozen()
+    old_minpos = ax.dataLim.minpos.copy()
+    old_ignore = ax.ignore_existing_data_limits
+    locators = [
+        (
+            axis.get_major_locator(),
+            axis.get_major_formatter(),
+            axis.get_minor_locator(),
+            axis.get_minor_formatter(),
+        )
+        for axis in (ax.xaxis, ax.yaxis)
+    ]
+
+    def mapped(points):
+        points = np.asarray(points, dtype=float).copy()
+        for dim in range(2):
+            if inverse[dim]:
+                with np.errstate(over="ignore", under="ignore"):
+                    points[:, dim] = 10.0 ** points[:, dim]
+            if np.any(~np.isfinite(points[:, dim])) or (
+                scales[dim] == "log" and np.any(points[:, dim] <= 0)
+            ):
+                raise ValueError(
+                    "distribution geometry must be finite and positive on log axes; "
+                    "use stat_scale='axis' or adjust notch/width controls"
+                )
+        return points
+
+    geometry = []
+    try:
+        if any(inverse):
+            ax.set_xscale("linear")
+            ax.set_yscale("linear")
+        bodies = _native_distribution_artists(
+            ax, data, positions, width, labels, layer, violin_context
+        )
+        for patch in list(ax.patches)[starts[0] :]:
+            vertices = mapped(patch.get_path().vertices)
+            patch.get_path().vertices[:] = vertices
+            geometry.append(vertices)
+        for line in list(ax.lines)[starts[1] :]:
+            vertices = mapped(line.get_xydata())
+            line.set_data(vertices[:, 0], vertices[:, 1])
+            geometry.append(vertices)
+        for collection in list(ax.collections)[starts[2] :]:
+            if isinstance(collection, LineCollection):
+                segments = [mapped(v) for v in collection.get_segments()]
+                collection.set_segments(segments)
+                geometry.extend(segments)
+            else:
+                for path in collection.get_paths():
+                    vertices = mapped(path.vertices)
+                    path.vertices[:] = vertices
+                    geometry.append(vertices)
+        ax.dataLim.set_points(old_lim.get_points())
+        ax.dataLim._minpos = old_minpos
+        ax.ignore_existing_data_limits = old_ignore
+        for vertices in geometry:
+            if len(vertices):
+                ax.update_datalim(vertices)
+    finally:
+        if any(inverse):
+            ax.set_xscale(scales[0])
+            ax.set_yscale(scales[1])
+            for axis, (major, fmt, minor, minor_fmt) in zip(
+                (ax.xaxis, ax.yaxis), locators, strict=True
+            ):
+                axis.set_major_locator(major)
+                axis.set_major_formatter(fmt)
+                axis.set_minor_locator(minor)
+                axis.set_minor_formatter(minor_fmt)
+    ax.autoscale_view()
+    return bodies
+
+
+def _native_distribution_artists(
+    ax, values, positions, width, labels, layer, violin_context=None
+):
+    """Native artists for deterministic summaries/KDE across Matplotlib 3.8+."""
+    if violin_context is not None:
+        from ._violin import violin_artists
+
+        return violin_artists(ax, violin_context, positions, width, layer)
+    if layer.type == "boxenplot":
+        return _letter_value_artists(ax, values, positions, width, layer)
+    draw = ax.boxplot if layer.type == "box" else ax.violinplot
+    parameters = inspect.signature(draw).parameters
+    kwargs: dict[str, Any] = {"positions": positions}
+    if "orientation" in parameters:
+        kwargs["orientation"] = "horizontal" if layer.orient == "h" else "vertical"
+    else:
+        kwargs["vert"] = layer.orient != "h"
+    if width is not None:
+        kwargs["widths"] = width
+    if layer.type == "box":
+        kwargs["patch_artist"] = True
+        kwargs["manage_ticks"] = not bool(layer.y) and not layer.native_scale
+        if not layer.y and not layer.native_scale:
+            kwargs["tick_labels" if "tick_labels" in parameters else "labels"] = labels
+        for name in ("whis", "notch", "showmeans", "showfliers"):
+            if getattr(layer, name) is not None:
+                kwargs[name] = getattr(layer, name)
+        common = {
+            name: value
+            for name, value in (
+                ("linewidth", layer.line_width),
+                ("linestyle", layer.line_style),
+            )
+            if value is not None
+        }
+        outline = {**common}
+        lines = {**common}
+        fliers = {}
+        if layer.edge_color is not None:
+            outline["edgecolor"] = layer.edge_color
+            lines["color"] = layer.edge_color
+            fliers["markeredgecolor"] = layer.edge_color
+        if layer.marker is not None:
+            fliers["marker"] = layer.marker
+        if layer.marker_size is not None:
+            fliers["markersize"] = layer.marker_size
+        kwargs.update(
+            boxprops=outline,
+            whiskerprops=lines,
+            capprops=lines,
+            medianprops=lines,
+            flierprops=fliers,
+        )
+        import matplotlib as mpl
+
+        # Serializable notches use the native deterministic Gaussian formula,
+        # never an ambient rc bootstrap that draws from NumPy's global RNG.
+        if layer.components is not None:
+            if layer.components.body is not None:
+                kwargs["showbox"] = True
+            if layer.components.cap is not None:
+                kwargs["showcaps"] = True
+        with mpl.rc_context({"boxplot.bootstrap": None}):
+            parts = draw(values, **kwargs)
+        if layer.components is not None:
+            from ._components import apply_component_style
+
+            for role, key in (
+                ("whisker", "whiskers"),
+                ("cap", "caps"),
+                ("median", "medians"),
+                ("mean", "means"),
+                ("flier", "fliers"),
+            ):
+                for artist in parts[key]:
+                    apply_component_style(artist, getattr(layer.components, role))
+        return parts["boxes"]
+    kwargs["showmedians"] = True if layer.showmedians is None else layer.showmedians
+    for name in ("showmeans", "showextrema", "bw_method", "points"):
+        if getattr(layer, name) is not None:
+            kwargs[name] = getattr(layer, name)
+    parts = draw(values, **kwargs)
+    for name, artist in parts.items():
+        if name == "bodies":
+            continue
+        if layer.edge_color is not None:
+            artist.set_color(layer.edge_color)
+        if layer.line_width is not None:
+            artist.set_linewidth(layer.line_width)
+        if layer.line_style is not None:
+            artist.set_linestyle(layer.line_style)
+    return parts["bodies"]
+
+
+def _draw_categorical_distribution(ax, columns, layer, color_iter, theme):
+    category, value, hue = distribution_columns(layer)
+    rows = distribution_rows(columns, layer)
+    categories, groups = distribution_levels(columns, layer, rows)
+    positions, spacing, labels = _category_geometry(ax, categories, layer)
+    if not layer.y and not layer.native_scale:
+        # Legacy one-column distributions use one-based native coordinates.
+        labels = [
+            _decorate(layer.label, layer.citation, layer.href)
+            if category is None
+            else _decorate(
+                str(c), (ref.citation if ref else None), (ref.href if ref else None)
+            )
+            for c in categories
+            for ref in [(layer.references or {}).get(str(c))]
+        ]
+    index = {c: i for i, c in enumerate(categories)}
+    cells = {group: {} for group in groups}
+    weight_cells = {group: {} for group in groups}
+    for row in rows:
+        c = None if category is None else columns[category][row]
+        g = None if hue is None else columns[hue][row]
+        cells[g].setdefault(c, []).append(columns[value][row])
+        if layer.weights is not None:
+            weight_cells[g].setdefault(c, []).append(columns[layer.weights][row])
+    redundant = theme.redundant_encoding and len(groups if layer.y else categories) > 1
+    width = layer.width
+    if (layer.y or layer.native_scale or layer.type == "boxenplot") and width is None:
+        width = 0.8
+    if layer.native_scale:
+        width *= spacing
+    gap = 0 if layer.gap is None else layer.gap
+    if not layer.y and (
+        width is not None or layer.gap is not None or layer.order is not None
+    ):
+        if width is None:
+            width = (
+                0.5
+                if layer.type == "violin"
+                else np.clip(0.15 * (len(categories) - 1), 0.15, 0.5)
+            )
+        width *= 1 - gap
+    colors = [
+        layer.color or next(color_iter) for _ in (groups if layer.y else categories)
+    ]
+    profiles = None
+    if layer.type == "violin":
+        from ._violin_options import extended_violin
+
+        if extended_violin(layer):
+            from ._violin import prepare_violin
+
+            value_axis = ax.xaxis if layer.orient == "h" else ax.yaxis
+            profiles = prepare_violin(
+                cells,
+                layer,
+                weights=weight_cells if layer.weights is not None else None,
+                log_value=(
+                    layer.stat_scale == "axis" and value_axis.get_scale() == "log"
+                ),
+            )
+    for i, group in enumerate(groups):
+        points = sorted(cells[group], key=index.__getitem__)
+        if not points:
+            continue  # Consume the reserved hue slot without inventing a legend entry.
+        x = np.asarray([positions[index[c]] for c in points])
+        span = (
+            (
+                (width if width is not None else 0)
+                if layer.dodge is None
+                else layer.dodge * spacing
+            )
+            if layer.y
+            else 0
+        )
+        dodged = (
+            len(groups) > 1
+            and span != 0
+            and not (layer.type == "violin" and layer.split)
+        )
+        drawn_width = width
+        if dodged:
+            assert width is not None
+            x += (i - (len(groups) - 1) / 2) * span / len(groups)
+            drawn_width = width / len(groups)
+        if layer.y:
+            assert drawn_width is not None
+            drawn_width *= 1 - gap
+        bodies = _distribution_artists(
+            ax,
+            [cells[group][c] for c in points],
+            x,
+            drawn_width,
+            [labels[index[c]] for c in points],
+            layer,
+            None
+            if profiles is None
+            else [
+                (profiles[group, c], (-1 if i == 0 else 1) if layer.split else 0)
+                for c in points
+            ],
+        )
+        for c, body in zip(points, bodies, strict=True):
+            style_index = i if layer.y else index[c]
+            body_style = layer.components.body if layer.components is not None else None
+            base_color = (
+                body_style.color
+                if body_style is not None and body_style.color is not None
+                else colors[style_index]
+            )
+            if layer.type == "boxenplot" and base_color != "none":
+                from matplotlib.colors import to_rgb
+
+                rgb = np.asarray(to_rgb(base_color))
+                n_bands = len(body.get_paths())
+                depth = (n_bands + 1) // 2
+                # Lighter outer tiers; identical central hue across cells.
+                tints = [
+                    0.55 * (1 - (min(j, n_bands - 1 - j) + 1) / depth)
+                    for j in range(n_bands)
+                ]
+                body.set_facecolor([rgb * (1 - tint) + tint for tint in tints])
+            else:
+                body.set_facecolor(base_color)
+            body.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
+            body.set_hatch(
+                theme.hatches[style_index % len(theme.hatches)] if redundant else None
+            )
+            if layer.edge_color is not None:
+                body.set_edgecolor(layer.edge_color)
+            if layer.line_width is not None:
+                body.set_linewidth(layer.line_width)
+            if layer.line_style is not None:
+                body.set_linestyle(layer.line_style)
+            if body_style is not None:
+                from ._components import apply_component_style
+
+                # Base color already applied (boxen keeps its lighter tail tiers).
+                apply_component_style(body, body_style, body=True, include_color=False)
+        if layer.y:
+            ref = (layer.references or {}).get(str(group))
+            label = (
+                _decorate(layer.label, layer.citation, layer.href)
+                if hue is None
+                else _decorate(
+                    str(group), ref.citation if ref else None, ref.href if ref else None
+                )
+            )
+            bodies[0].set_label(label)
+    _finish_category_axis(ax, positions, spacing, labels, layer)
+
+
+def _draw_swarm_layer(ax, columns, layer: LayerSpec, color_iter):
+    from ._swarm import SwarmCollection
+
+    rows = distribution_rows(columns, layer)
+    categories, groups = distribution_levels(columns, layer, rows)
+    horizontal = layer.orient == "h"
+    positions, spacing, labels = _category_geometry(ax, categories, layer)
+    width = (0.8 if layer.width is None else layer.width) * spacing
+    span = width if layer.dodge is None else layer.dodge * spacing
+    dodged = len(groups) > 1 and span != 0
+    cell_width = (span / len(groups) if dodged else width) * (
+        1 - (0 if layer.gap is None else layer.gap)
+    )
+    colors = {g: layer.color or next(color_iter) for g in groups}
+    offsets = []
+    faces = []
+    urls = []
+    indices = {c: i for i, c in enumerate(categories)}
+    group_indices = {g: i for i, g in enumerate(groups)}
+    cells = {}
+    observed = set()
+    for row in rows:
+        c = columns[layer.x][row]
+        g = columns[layer.group][row] if layer.group is not None else None
+        observed.add(g)
+        center = positions[indices[c]]
+        if dodged:
+            center += (group_indices[g] - (len(groups) - 1) / 2) * span / len(groups)
+        cell = (c, g if dodged else None)
+        if cell not in cells:
+            lower, upper = _category_inverse(
+                ax, [center - cell_width / 2, center + cell_width / 2], layer
+            )
+            cells[cell] = ([], lower, upper)
+        cells[cell][0].append(len(offsets))
+        raw_center = float(_category_inverse(ax, [center], layer)[0])
+        offsets.append(
+            [columns[layer.y][row], raw_center]
+            if horizontal
+            else [raw_center, columns[layer.y][row]]
+        )
+        faces.append(colors[g])
+        ref = (layer.references or {}).get(str(g))
+        urls.append((ref.href if ref else None) if layer.group else layer.href)
+    size = 6 if layer.marker_size is None else layer.marker_size
+    line_width = 0.5 if layer.line_width is None else layer.line_width
+    edge = layer.edge_color or "white"
+    collection = SwarmCollection(
+        offsets,
+        [(np.asarray(ids, dtype=int), lo, hi) for ids, lo, hi in cells.values()],
+        horizontal=horizontal,
+        size=size,
+        line_width=line_width,
+        warn_thresh=0.05 if layer.warn_thresh is None else layer.warn_thresh,
+        facecolors=faces,
+        edgecolors=edge,
+        alpha=layer.alpha,
+        offset_transform=ax.transData,
+        label="_nolegend_",
+        zorder=2,
+    )
+    collection.set_urls(urls)
+    ax.add_collection(collection)
+    ax.autoscale_view()
+    _finish_category_axis(ax, positions, spacing, labels, layer)
+    # Legend-only proxies have no coordinates/observations. One collection lets
+    # non-dodged hues pack together instead of colliding across separate swarms.
+    for group in groups:
+        if group not in observed:
+            continue
+        ref = (layer.references or {}).get(str(group))
+        label = (
+            _decorate(layer.label, layer.citation, layer.href)
+            if layer.group is None
+            else _decorate(
+                str(group), ref.citation if ref else None, ref.href if ref else None
+            )
+        )
+        if label is not None:
+            ax.plot(
+                [],
+                [],
+                linestyle="none",
+                marker="o",
+                markersize=size,
+                markeredgewidth=line_width,
+                markeredgecolor=edge,
+                color=colors[group],
+                alpha=layer.alpha,
+                label=label,
+            )
+
+
+def _draw_ecdf_layer(ax, columns, layer: LayerSpec, color_iter, theme):
+    config = ecdf_config(layer)
+    rows = ecdf_rows(columns, layer)
+    groups = ecdf_groups(columns, layer, rows)
+    redundant = theme.redundant_encoding and len(groups) > 1
+    styles = itertools.cycle(theme.line_styles) if redundant else itertools.repeat("-")
+    refs = layer.references or {}
+    for group in groups:
+        color, style = layer.color or next(color_iter), next(styles)
+        selected = [
+            i for i in rows if layer.group is None or columns[layer.group][i] == group
+        ]
+        if not selected:
+            continue
+        values = [columns[layer.x][i] for i in selected]
+        weights = (
+            None
+            if config.weights is None
+            else [columns[config.weights][i] for i in selected]
+        )
+        knots, mass = empirical_steps(
+            values, weights, stat=config.stat, complementary=config.complementary
+        )
+        if layer.group is None:
+            label = _decorate(layer.label, layer.citation, layer.href)
+        else:
+            key = str(group)
+            ref = refs.get(key)
+            label = _decorate(
+                key, ref.citation if ref else None, ref.href if ref else None
+            )
+        x, y = (knots, mass) if layer.orient == "v" else (mass, knots)
+        (line,) = ax.plot(
+            x,
+            y,
+            drawstyle="steps-post" if layer.orient == "v" else "steps-pre",
+            label=label,
+            color=color,
+            linestyle=layer.line_style or style,
+            linewidth=layer.line_width,
+            alpha=layer.alpha,
+        )
+        if layer.line_width == 0:
+            # Matplotlib 3.8 rejects all-zero scaled dash patterns even for
+            # transparent lines. Keep data/style/width and legend metadata,
+            # but do not draw a zero-width stroke (including its legend proxy).
+            line.set_visible(False)
+
+
+def _draw_histogram_layer(ax, columns, layer: LayerSpec, color_iter, theme):
+    result = histogram_summary(columns, layer)
+    if not result.edges:
+        return
+    config = layer.histogram
+    assert config is not None  # summary already rejects an untyped configuration
+    edges = np.asarray(result.edges, dtype=float)
+    widths = np.diff(edges)
+    value_axis = ax.xaxis if layer.orient == "v" else ax.yaxis
+    if value_axis.get_scale() == "log" and np.any(edges <= 0):
+        raise ValueError(
+            "derived log histogram bin edges must be positive; provide edges"
+        )
+    # Check every group before drawing, including empty reserved dodge slots.
+    geometry = []
+    baseline = np.zeros_like(widths)
+    for slot, curve in enumerate(result.curves):
+        start, stop = edges[:-1], edges[1:]
+        if config.multiple == "dodge":
+            step = widths / len(result.curves)
+            start = edges[:-1] + slot * step
+            stop = (
+                edges[1:]
+                if slot == len(result.curves) - 1
+                else edges[:-1] + (slot + 1) * step
+            )
+            if np.any(stop <= start):
+                raise ValueError("derived histogram dodge bins must be increasing")
+        geometry.append((start, stop - start, baseline))
+        if config.multiple == "stack" and curve.heights:
+            heights = np.asarray(curve.heights, dtype=float)
+            with np.errstate(over="ignore", invalid="ignore"):
+                top = baseline + heights
+            if np.any(~np.isfinite(top)) or np.any((heights > 0) & (top <= baseline)):
+                raise ValueError(
+                    "derived histogram stacked tops must be finite and "
+                    "increase for nonzero bins"
+                )
+            baseline = top
+    redundant = theme.redundant_encoding and len(result.curves) > 1
+    hatches = itertools.cycle(theme.hatches) if redundant else itertools.repeat(None)
+    refs = layer.references or {}
+    styles = itertools.cycle(theme.line_styles) if redundant else itertools.repeat("-")
+    for curve, (start, span, baseline) in zip(result.curves, geometry, strict=True):
+        color, hatch, line_style = (
+            layer.color or next(color_iter),
+            next(hatches),
+            next(styles),
+        )
+        if not curve.heights:
+            continue
+        if layer.group is None:
+            label = _decorate(layer.label, layer.citation, layer.href)
+        else:
+            ref = refs.get(str(curve.group))
+            label = _decorate(
+                str(curve.group),
+                ref.citation if ref else None,
+                ref.href if ref else None,
+            )
+        if config.element == "step":
+            ax.stairs(
+                baseline + np.asarray(curve.heights),
+                edges,
+                baseline=baseline if config.multiple == "stack" else 0,
+                orientation="vertical" if layer.orient == "v" else "horizontal",
+                fill=False,
+                edgecolor=layer.edge_color or color,
+                linewidth=layer.line_width,
+                linestyle="-" if layer.line_width == 0 else line_style,
+                alpha=layer.alpha,
+                label=label,
+            )
+            continue
+        style = {
+            "align": "edge",
+            "color": color,
+            "hatch": hatch,
+            "label": label,
+            "alpha": layer.alpha,
+            "edgecolor": layer.edge_color,
+            "linewidth": layer.line_width,
+        }
+        if layer.orient == "v":
+            ax.bar(start, curve.heights, width=span, bottom=baseline, **style)
+        else:
+            ax.barh(start, curve.heights, height=span, left=baseline, **style)
+
+
+def _draw_kde_layer(ax, columns, layer: LayerSpec, color_iter, theme):
+    config = layer.kde
+    curves = kde_summary(columns, layer)
+    assert config is not None  # summary already rejects an untyped configuration
+    value_axis = ax.xaxis if layer.orient == "v" else ax.yaxis
+    if value_axis.get_scale() == "log" and any(
+        point <= 0 for curve in curves for point in curve.support
+    ):
+        raise ValueError(
+            "derived log KDE support must be positive; provide clip or cut"
+        )
+    redundant = theme.redundant_encoding and len(curves) > 1
+    styles = itertools.cycle(theme.line_styles) if redundant else itertools.repeat("-")
+    hatches = itertools.cycle(theme.hatches) if redundant else itertools.repeat(None)
+    refs = layer.references or {}
+    for curve in curves:
+        color, style, hatch = (
+            layer.color or next(color_iter),
+            next(styles),
+            next(hatches),
+        )
+        if curve.singular and config.warn_singular:
+            warnings.warn(
+                f"KDE skipped singular/insufficient group {curve.group!r}; "
+                "no continuous density or bandwidth was invented",
+                UserWarning,
+                stacklevel=3,
+            )
+        if not curve.support:
+            continue
+        if layer.group is None:
+            label = _decorate(layer.label, layer.citation, layer.href)
+        else:
+            ref = refs.get(str(curve.group))
+            label = _decorate(
+                str(curve.group),
+                ref.citation if ref else None,
+                ref.href if ref else None,
+            )
+        if config.fill:
+            draw = ax.fill_between if layer.orient == "v" else ax.fill_betweenx
+            draw(
+                curve.support,
+                0,
+                curve.heights,
+                color=color,
+                alpha=layer.alpha,
+                edgecolor=layer.edge_color or color,
+                linewidth=layer.line_width,
+                linestyle="-" if layer.line_width == 0 else layer.line_style or style,
+                hatch=hatch,
+                label=label,
+            )
+        else:
+            x, y = (
+                (curve.support, curve.heights)
+                if layer.orient == "v"
+                else (curve.heights, curve.support)
+            )
+            (line,) = ax.plot(
+                x,
+                y,
+                color=color,
+                alpha=layer.alpha,
+                label=label,
+                linewidth=layer.line_width,
+                linestyle=layer.line_style or style,
+            )
+            if layer.line_width == 0:
+                line.set_visible(False)  # all-zero dashes are invalid in Matplotlib3.8
+
+
+def _draw_kde2d_layer(ax, columns, layer: LayerSpec, color_iter, theme):
+    from matplotlib.colors import to_rgb
+    from matplotlib.container import BarContainer
+    from matplotlib.patches import Rectangle
+
+    config = kde2d_config(layer)
+    fields = kde2d_summary(columns, layer)
+    if any(
+        (ax.xaxis.get_scale() == "log" and any(v <= 0 for v in field.x))
+        or (ax.yaxis.get_scale() == "log" and any(v <= 0 for v in field.y))
+        for field in fields
+    ):
+        raise ValueError(
+            "derived log KDE2D support must be positive; provide clip or cut"
+        )
+    redundant = theme.redundant_encoding and len(fields) > 1
+    styles = itertools.cycle(theme.line_styles) if redundant else itertools.repeat("-")
+    hatches = itertools.cycle(theme.hatches) if redundant else itertools.repeat(None)
+    refs = layer.references or {}
+    for field in fields:
+        color, style, hatch = (
+            layer.color or next(color_iter),
+            next(styles),
+            next(hatches),
+        )
+        if field.singular and config.warn_singular:
+            warnings.warn(
+                f"KDE2D skipped singular/insufficient group {field.group!r}; "
+                "no jitter or artificial covariance",
+                UserWarning,
+                stacklevel=3,
+            )
+        if not field.density:
+            continue
+        ref = refs.get(str(field.group)) if layer.group is not None else None
+        label = (
+            _decorate(layer.label, layer.citation, layer.href)
+            if layer.group is None
+            else _decorate(
+                str(field.group),
+                ref.citation if ref else None,
+                ref.href if ref else None,
+            )
+        )
+        density = np.asarray(field.density)
+        linestyle = "-" if layer.line_width == 0 else layer.line_style or style
+        if config.fill:
+            rgb = to_rgb(color)
+            amounts = np.linspace(0.65, 0.1, len(field.thresholds))
+            shades = (
+                ["none"] * len(amounts)
+                if color == "none"
+                else [tuple(c * (1 - a) + a for c in rgb) for a in amounts]
+            )
+            ax.contourf(
+                field.x,
+                field.y,
+                density,
+                levels=[*field.thresholds, float(density.max())],
+                colors=shades,
+                alpha=layer.alpha,
+                hatches=[hatch] * len(amounts),
+            )
+        ax.contour(
+            field.x,
+            field.y,
+            density,
+            levels=field.thresholds,
+            colors=[layer.edge_color or color if config.fill else color],
+            alpha=layer.alpha,
+            linewidths=layer.line_width,
+            linestyles=linestyle,
+        )
+        # ContourSet legend support differs between mpl3.8 and3.11. Explicit
+        # native legend-only proxies don't invent data or alter contour limits.
+        if config.fill:
+            patch = Rectangle(
+                (0, 0),
+                0,
+                0,
+                facecolor=color,
+                edgecolor=layer.edge_color or color,
+                linewidth=layer.line_width,
+                hatch=hatch,
+                alpha=layer.alpha,
+            )
+            ax.add_container(BarContainer([patch], label=label))
+        else:
+            (proxy,) = ax.plot(
+                [],
+                [],
+                color=color,
+                linestyle=linestyle,
+                linewidth=layer.line_width,
+                alpha=layer.alpha,
+                label=label,
+            )
+            if layer.line_width == 0:
+                proxy.set_visible(False)
+
+
 def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
+    if layer.type == "kde2d":
+        _draw_kde2d_layer(ax, data_cols, layer, color_iter, theme)
+        return
+    if layer.type == "kde" and layer.kde is not None:
+        _draw_kde_layer(ax, data_cols, layer, color_iter, theme)
+        return
+    if layer.type == "hist" and layer.histogram is not None:
+        _draw_histogram_layer(ax, data_cols, layer, color_iter, theme)
+        return
+    if layer.type == "ecdf":
+        _draw_ecdf_layer(ax, data_cols, layer, color_iter, theme)
+        return
+    if layer.type in DISTRIBUTION_TYPES:
+        _draw_categorical_distribution(ax, data_cols, layer, color_iter, theme)
+        return
+    data_cols = ordered_group_columns(data_cols, layer)
     masks = list(_series_masks(data_cols, layer))
     # Same rationale as the marker/line-style cycle in _draw_series_layer:
     # a hatch pattern per series keeps grouped fills (bar-like area charts)
@@ -626,28 +1932,6 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
                 hatch=next(hatch_cycle),
                 alpha=layer.alpha if layer.alpha < 1 else 0.6,
             )
-    elif layer.type == "box":
-        values = [_col(data_cols, layer.x)[mask] for _label, mask in masks]
-        labels = [label for label, _mask in masks]
-        try:  # matplotlib >= 3.9
-            bp = ax.boxplot(values, tick_labels=labels, patch_artist=True)
-        except TypeError:  # matplotlib < 3.9
-            bp = ax.boxplot(values, labels=labels, patch_artist=True)
-        for patch in bp["boxes"]:
-            patch.set_facecolor(layer.color or next(color_iter))
-            patch.set_hatch(next(hatch_cycle))
-            patch.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
-    elif layer.type == "violin":
-        values = [_col(data_cols, layer.x)[mask] for _label, mask in masks]
-        labels = [label for label, _mask in masks]
-        positions = range(1, len(values) + 1)
-        parts = ax.violinplot(values, positions=positions, showmedians=True)
-        for body in parts["bodies"]:
-            body.set_facecolor(layer.color or next(color_iter))
-            body.set_hatch(next(hatch_cycle))
-            body.set_alpha(layer.alpha if layer.alpha < 1 else 0.6)
-        ax.set_xticks(list(positions))
-        ax.set_xticklabels(labels)
     elif layer.type == "kde":
         for label, mask in masks:
             values = _col(data_cols, layer.x)[mask]
@@ -664,25 +1948,39 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
     elif layer.type == "rug":
         for label, mask in masks:
             values = _col(data_cols, layer.x)[mask]
+            color = layer.color or next(color_iter)
+            linestyle = layer.line_style or next(style_cycle)
+            if layer.hue_order is not None and not np.isfinite(values).any():
+                continue
             ax.vlines(
                 values,
                 0,
                 0.04,
                 transform=ax.get_xaxis_transform(),
                 label=label,
-                colors=layer.color or next(color_iter),
+                colors=color,
                 linewidths=layer.line_width,
-                linestyles=layer.line_style or next(style_cycle),
+                linestyles=linestyle,
                 alpha=layer.alpha,
             )
 
 
 def _draw_matrix_layer(ax, spec: FigureSpec, layer: LayerSpec):
+    from ._heatmap_render import draw_colourbar, draw_heatmap
+
     assert layer.matrix is not None
     matrix = _float_array(spec.data.matrices[layer.matrix], f"matrix {layer.matrix!r}")
     cmap = _continuous_cmap(layer.cmap_kind)
+    if layer.type == "clustermap":
+        from ._cluster_render import draw_clustermap
+
+        draw_clustermap(ax, matrix, layer, cmap)
+        return
     if layer.type == "heatmap":
-        im = ax.imshow(matrix, aspect="auto", cmap=cmap, alpha=layer.alpha)
+        if layer.heatmap is None:
+            im = ax.imshow(matrix, aspect="auto", cmap=cmap, alpha=layer.alpha)
+        else:
+            im = draw_heatmap(ax, matrix, layer, cmap)
     elif layer.type == "contour":
         im = ax.contour(matrix, levels=layer.levels or 8, cmap=cmap, alpha=layer.alpha)
     elif layer.type == "contourf":
@@ -690,7 +1988,10 @@ def _draw_matrix_layer(ax, spec: FigureSpec, layer: LayerSpec):
     else:
         raise ValueError(f"unknown matrix layer type: {layer.type!r}")
     if layer.colorbar:
-        ax.figure.colorbar(im, ax=ax, label=layer.clabel or "")
+        if layer.type == "heatmap" and layer.heatmap is not None:
+            draw_colourbar(ax, im, layer.clabel or "")
+        else:
+            ax.figure.colorbar(im, ax=ax, label=layer.clabel or "")
 
 
 def _draw_pie_layer(ax, data_cols, layer: LayerSpec, color_iter):
@@ -894,7 +2195,8 @@ def _apply_title(ax, panel: PanelSpec) -> None:
         )
         artist.set_in_layout(False)
     else:
-        artist = ax.set_title(title_text, wrap=True)
+        title_axes = getattr(ax, "_mudplot_cluster_title_axes", ax)
+        artist = title_axes.set_title(title_text, wrap=True)
     _set_url(artist, panel.title_href)
 
 
@@ -930,21 +2232,54 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
         _link_legend_texts(legend_artist, panel)
 
 
-def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec):
+def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
     import matplotlib.pyplot as plt
 
     if panel.projection == "3d":
         _draw_panel_3d(ax, spec, panel)
         return
+    if panel.filters or panel.dropna:
+        spec = replace(
+            spec,
+            data=replace(spec.data, columns=panel_columns(spec.data.columns, panel)),
+        )
 
     prop = plt.rcParams["axes.prop_cycle"].by_key().get("color", ["C0"])
-    color_iter = itertools.cycle(prop)
+    domains = {} if domains is None else domains
+    shared_colors = sum(d["colors"] for d in domains.values())
+    color_iter = itertools.cycle(prop[shared_colors:] or prop)
+    shown_scales = set()
     theme = spec.theme
 
+    # Geometry and optional axis-space statistics need the declared transforms
+    # before drawing, not only during final labels/limits application.
+    ax.set_xscale(panel.x.scale)
+    ax.set_yscale(panel.y.scale)
     ax2 = ax.twinx() if panel.y2 is not None else None
 
     for layer in panel.layers:
-        if layer.type in _SERIES_TYPES:
+        if layer.type in ("scatter", "lineplot") and layer.semantics is not None:
+            scale_id = layer.semantics.scale_id
+            guide_key = (scale_id, layer.type)
+            show_guides = scale_id is None or guide_key not in shown_scales
+            if scale_id is not None and layer.semantics.legend:
+                shown_scales.add(guide_key)
+            draw = _draw_stat_layer if layer.type == "lineplot" else _draw_series_layer
+            draw(
+                ax,
+                ax2,
+                spec.data.columns,
+                layer,
+                color_iter,
+                theme,
+                semantic_domain=domains.get(scale_id),
+                semantic_guides=show_guides,
+            )
+        elif layer.type == "swarmplot":
+            _draw_swarm_layer(ax, spec.data.columns, layer, color_iter)
+        elif layer.type in _STAT_TYPES:
+            _draw_stat_layer(ax, ax2, spec.data.columns, layer, color_iter, theme)
+        elif layer.type in _SERIES_TYPES:
             _draw_series_layer(ax, ax2, spec.data.columns, layer, color_iter, theme)
         elif layer.type in _DIST_TYPES:
             _draw_dist_layer(ax, spec.data.columns, layer, color_iter, theme)
@@ -1025,9 +2360,12 @@ def _grid_shape(spec: FigureSpec) -> tuple[int, int]:
     return 1, len(spec.panels)
 
 
-def _count_colors(spec: FigureSpec) -> int:
+def _count_colors(spec: FigureSpec, *, domains=None) -> int:
+    domains = shared_scale_domains(spec) if domains is None else domains
+    shared_colors = sum(d["colors"] for d in domains.values())
     counts = []
     for p in spec.panels:
+        columns = panel_columns(spec.data.columns, p)
         count = 0
         for lyr in p.layers:
             if lyr.color or lyr.type in _MATRIX_TYPES | {
@@ -1038,14 +2376,43 @@ def _count_colors(spec: FigureSpec) -> int:
                 continue
             if lyr.type in {"scatter", "scatter3d", "quiver"} and lyr.c is not None:
                 continue
-            if lyr.type == "pie":
-                count += len(spec.data.columns[lyr.y])
-            elif lyr.group and lyr.group in spec.data.columns:
-                count += len(_unique_stable(spec.data.columns[lyr.group]))
+            if lyr.type in RAW_HUE_TYPES and isinstance(lyr.hue_order, (list, tuple)):
+                count += len(lyr.hue_order)
+            elif lyr.type in ("scatter", "lineplot") and lyr.semantics is not None:
+                config = lyr.semantics
+                if config.hue is None:
+                    count += 1
+                elif config.hue_kind == "categorical" and config.scale_id is None:
+                    rows = semantic_rows(columns, lyr)
+                    count += len(semantic_levels(columns, config, "hue", rows))
+            elif lyr.type == "pie":
+                count += len(columns[lyr.y])
+            elif lyr.type == "hist" and lyr.histogram is not None:
+                rows = histogram_rows(columns, lyr)
+                count += len(histogram_groups(columns, lyr, rows))
+            elif lyr.type == "kde2d":
+                rows = kde2d_rows(columns, lyr)
+                count += len(kde2d_groups(columns, lyr, rows))
+            elif lyr.type == "kde" and lyr.kde is not None:
+                rows = kde_rows(columns, lyr)
+                count += len(kde_groups(columns, lyr, rows))
+            elif lyr.type == "ecdf":
+                rows = ecdf_rows(columns, lyr)
+                count += len(ecdf_groups(columns, lyr, rows))
+            elif lyr.type in DISTRIBUTION_TYPES | {"swarmplot"}:
+                rows = distribution_rows(columns, lyr)
+                categories, groups = distribution_levels(columns, lyr, rows)
+                count += len(groups if lyr.y else categories)
+            elif lyr.group and lyr.group in columns:
+                if lyr.type in _STAT_TYPES:
+                    rows = usable_rows(columns, lyr)
+                    count += len(category_levels(columns, lyr, rows)[1])
+                else:
+                    count += len(_unique_stable(columns[lyr.group]))
             else:
                 count += 1
         counts.append(count)
-    return max(counts, default=1)
+    return shared_colors + max(counts, default=1)
 
 
 def _link_shared_axes(axes_grid, rows: int, cols: int, mode: str, axis: str) -> None:
@@ -1085,6 +2452,17 @@ def _link_shared_axes(axes_grid, rows: int, cols: int, mode: str, axis: str) -> 
             for ax in column:
                 if ax is not None and ax is not base:
                     link(ax, base)
+
+
+def _link_named_axes(axes, panels, axis: str) -> None:
+    groups = {}
+    for ax, panel in zip(axes, panels, strict=True):
+        name = getattr(panel, axis).share_id
+        if name is None:
+            continue
+        base = groups.setdefault(name, ax)
+        if ax is not base:
+            (ax.sharex if axis == "x" else ax.sharey)(base)
 
 
 def _autofit(fig, pad_px: float = 6.0) -> None:
@@ -1150,9 +2528,10 @@ def render(spec: FigureSpec, *, fmt: str = ""):
     import matplotlib.pyplot as plt
 
     assert_valid(spec)
+    domains = shared_scale_domains(spec)
 
     rc = spec_to_rcparams(
-        spec.theme, spec.journal, n_colors=max(_count_colors(spec), 3)
+        spec.theme, spec.journal, n_colors=max(_count_colors(spec, domains=domains), 3)
     )
 
     with plt.rc_context(rc), _render_format(fmt, spec.reference_measure_text or ""):
@@ -1203,9 +2582,11 @@ def render(spec: FigureSpec, *, fmt: str = ""):
             # Share the 2-D subset, even when other panels are 3-D.
             _link_shared_axes(axes_grid, rows, cols, spec.share_x, "x")
             _link_shared_axes(axes_grid, rows, cols, spec.share_y, "y")
+            _link_named_axes(panel_axes, spec.panels, "x")
+            _link_named_axes(panel_axes, spec.panels, "y")
 
             for i, (ax, panel) in enumerate(zip(panel_axes, spec.panels, strict=False)):
-                _draw_panel(ax, spec, panel)
+                _draw_panel(ax, spec, panel, domains=domains)
                 _apply_panel_label(ax, spec, panel, i)
 
             if spec.suptitle:
@@ -1214,6 +2595,14 @@ def render(spec: FigureSpec, *, fmt: str = ""):
                 fig.tight_layout()
             else:
                 _autofit(fig)
+            if any(
+                layer.type == "clustermap"
+                for panel in spec.panels
+                for layer in panel.layers
+            ):
+                from ._cluster_render import freeze_layout
+
+                freeze_layout(fig)
             # Reference table for this figure's markers, needed after the
             # render context exits (see save()'s .pgf post-processing).
             cast(Any, fig)._mudplot_refs = list(_REFS.get() or [])

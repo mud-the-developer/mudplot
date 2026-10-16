@@ -4,10 +4,12 @@ Split into pure view-layer unit tests (no server) and integration tests that
 spin up a real (ephemeral-port) HTTP server via ``make_server()``.
 """
 
+import html
 import http.client
 import json
 import socket
 import struct
+import subprocess
 import sys
 import threading
 import time
@@ -24,13 +26,20 @@ matplotlib.use("Agg")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
+import mudplot as mp
 from dashboard.editor_server import EditorSession, _build_action, make_server
 from dashboard.editor_view import render_app_body, render_docs_page, render_page
-from dashboard.samples import SAMPLES, sample_columns
+from dashboard.samples import FIGURE_SAMPLES, SAMPLES, sample_columns, sample_figure
 from mudplot import actions as A
 from mudplot.capabilities import LAYER_TYPES
 from mudplot.spec import FigureSpec, LayerSpec, LegendSpec
 from mudplot.store import Store
+
+_REVIEW_JSON_BOUNDARIES = json.loads(
+    (REPO_ROOT / "tests/fixtures/review_json_boundaries.json").read_text(
+        encoding="utf-8"
+    )
+)
 
 # --------------------------------------------------------------------------
 # pure view-layer tests
@@ -291,6 +300,45 @@ def test_render_page_no_handles_for_3d_layout():
     assert 'class="drag-handle legend"' in html
     # ...but title needs the (unavailable, for 3-D) axes bbox
     assert 'class="drag-handle title"' not in html
+
+
+def test_sample_import_keeps_optional_dependencies_lazy():
+    script = (
+        "import sys; import dashboard.samples as s; s.sample_columns('sine'); "
+        "assert 'numpy' not in sys.modules; assert 'matplotlib' not in sys.modules"
+    )
+    subprocess.run([sys.executable, "-S", "-c", script], cwd=REPO_ROOT, check=True)
+
+
+@pytest.mark.parametrize("name", FIGURE_SAMPLES)
+def test_complete_figure_samples_are_fresh_and_match_reviewed_builders(name):
+    from examples.publication_showcase import build_plot
+
+    _, kind, width = FIGURE_SAMPLES[name]
+    spec = sample_figure(name)
+    assert mp.validate(spec) == []
+    assert spec == build_plot(kind, width_px=width).spec
+    spec.panels[0].title = "changed locally"
+    spec.data.columns["response"][0] = 999
+    assert sample_figure(name) == build_plot(kind, width_px=width).spec
+
+
+@pytest.mark.parametrize("name", ["unknown", "../../secret", "", None, []])
+def test_unknown_figure_sample_is_rejected_before_loading_code(name):
+    with pytest.raises(ValueError, match="unknown figure example"):
+        sample_figure(name)
+
+
+def test_example_draft_is_escaped_and_requires_explicit_open():
+    payload = '</textarea><script>alert("x")</script>'
+    page = render_page(FigureSpec(), [], draft_json=payload)
+    assert html.escape(payload) in page and payload not in page
+    assert '<details id="open-figure" data-key="open" open>' in page
+    assert "Draft not applied yet" in page
+    assert 'hx-replace-url="/"' in page
+    assert '<body hx-history="false">' in page
+    for name in FIGURE_SAMPLES:
+        assert f"/?example={name}#open-figure" in page
 
 
 def test_samples_are_valid_columns():
@@ -577,6 +625,7 @@ def test_get_home_page(running_server):
         assert r.headers["X-Content-Type-Options"] == "nosniff"
         assert r.headers["X-Frame-Options"] == "DENY"
         assert r.headers["Cache-Control"] == "no-store"
+        assert r.headers["Referrer-Policy"] == "same-origin"
         assert r.headers["Cross-Origin-Resource-Policy"] == "same-origin"
         csp = r.headers["Content-Security-Policy"]
         assert "object-src 'none'" in csp
@@ -601,12 +650,22 @@ def test_non_loopback_or_malformed_host_is_rejected(running_server):
         assert exc.value.code == 403
 
 
-def test_cross_origin_mutation_is_rejected_without_changing_state(running_server):
+@pytest.mark.parametrize(
+    "headers",
+    [
+        {"Origin": "https://attacker.example"},
+        {"Origin": "null"},
+        {"Origin": "null", "Sec-Fetch-Site": "same-origin"},
+    ],
+)
+def test_cross_origin_mutation_is_rejected_without_changing_state(
+    running_server, headers
+):
     data = urlencode({"type": "set_suptitle", "text": "CSRF"}).encode()
     request = urllib.request.Request(
         running_server + "/action",
         data=data,
-        headers={"Origin": "https://attacker.example"},
+        headers=headers,
     )
     with pytest.raises(urllib.error.HTTPError) as exc:
         urllib.request.urlopen(request)
@@ -840,13 +899,28 @@ def test_invalid_action_does_not_crash_server(running_server):
         '{"type":"SetSize","width":NaN,"height":2}',
         '{"type":"SetSize","width":1e400,"height":2}',
         r'{"type":"SetTitle","text":"\ud800","panel":0}',
+        '{"type":"SetTitle","text":"A","text":"A"}',
+        '{"type":"SetTitle","text":"A","text":"B"}',
+        '{"type":"SetFont","params":{"size":11,"size":11}}',
+        '{"type":"SetFont","params":{"size":11,"size":12}}',
+        '{"type":"SetData","columns":{"unused":[{"key":1,"key":1}]}}',
+        '{"type":"SetData","columns":{"unused":[{"key":1,"key":2}]}}',
+        *(case["text"] for case in _REVIEW_JSON_BOUNDARIES["invalid_actions"]),
     ],
 )
 def test_malformed_raw_json_does_not_crash_server(running_server, payload):
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        before = response.read()
+    with urllib.request.urlopen(running_server + "/fig.png") as response:
+        preview = response.read()
     status = _post(running_server + "/action/raw", {"json": payload})
     assert status == 200
     with urllib.request.urlopen(running_server + "/") as r:
         assert b'class="error"' in r.read()
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert response.read() == before
+    with urllib.request.urlopen(running_server + "/fig.png") as response:
+        assert response.read() == preview
 
 
 # --------------------------------------------------------------------------
@@ -969,6 +1043,75 @@ def test_set_layer_at_out_of_range_shows_error_not_crash(running_server):
         assert b'class="error"' in r.read()
 
 
+@pytest.mark.parametrize("name", FIGURE_SAMPLES)
+def test_get_example_only_prefills_a_draft_and_preserves_state_history_png(
+    running_server, name
+):
+    _post(running_server + "/action", {"type": "set_suptitle", "text": "keep current"})
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        before = response.read()
+    with urllib.request.urlopen(running_server + "/fig.png") as response:
+        png = response.read()
+    with urllib.request.urlopen(
+        running_server + "/?" + urlencode({"example": name})
+    ) as response:
+        page = response.read().decode("utf-8")
+    assert html.escape(mp.to_json(sample_figure(name))) in page
+    assert "Draft not applied yet" in page
+    assert "Action history · 1 actions" in page
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert response.read() == before
+    with urllib.request.urlopen(running_server + "/fig.png") as response:
+        assert response.read() == png
+    _post(running_server + "/undo", {})
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert json.load(response)["suptitle"] == ""
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "example=unknown",
+        "example=",
+        "example=../../secret",
+        "example=%FF",
+        "example=response&example=endpoint",
+        urlencode({"example": "알수없음"}),
+        urlencode({str(index): "x" for index in range(9)}),
+    ],
+)
+def test_bad_example_query_is_400_without_changing_current_figure(
+    running_server, query
+):
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        before = response.read()
+    with pytest.raises(urllib.error.HTTPError) as error:
+        urllib.request.urlopen(running_server + "/?" + query)
+    assert error.value.code == 400
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert response.read() == before
+
+
+@pytest.mark.parametrize("name", ["response-mobile", "endpoint-mobile"])
+def test_complete_example_opens_through_existing_validated_import_and_stays_editable(
+    running_server, name
+):
+    spec = sample_figure(name)
+    _post(running_server + "/open", {"json": mp.to_json(spec)})
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert mp.FigureSpec.from_dict(json.load(response)) == spec
+    _post(
+        running_server + "/action",
+        {"type": "set_title", "text": "Edited example", "panel": "0"},
+    )
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        edited = json.load(response)
+    assert edited["panels"][0]["title"] == "Edited example"
+    assert edited["data"] == spec.data.to_dict()
+    with urllib.request.urlopen(running_server + "/fig.svg") as response:
+        assert b"<svg" in response.read()
+
+
 def test_open_spec_replaces_the_figure(running_server):
     spec = FigureSpec()
     spec.data.columns = {"a": [1, 2, 3], "b": [3, 2, 1]}
@@ -981,12 +1124,38 @@ def test_open_spec_replaces_the_figure(running_server):
     assert loaded["panels"][0]["layers"][0]["x"] == "a"
 
 
+@pytest.mark.parametrize("htmx", [False, True])
+def test_invalid_open_keeps_the_submitted_draft_for_correction(running_server, htmx):
+    _post(running_server + "/action", {"type": "set_suptitle", "text": "keep current"})
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        before = response.read()
+    payload = '</textarea><script>alert("x")</script>'
+    request = urllib.request.Request(
+        running_server + "/open",
+        data=urlencode({"json": payload}).encode(),
+        headers={"HX-Request": "true"} if htmx else {},
+    )
+    with urllib.request.urlopen(request) as response:
+        page = response.read().decode("utf-8")
+    assert html.escape(payload) in page and payload not in page
+    assert 'class="error"' in page and "Draft not applied yet" in page
+    with urllib.request.urlopen(running_server + "/spec.json") as response:
+        assert response.read() == before
+
+
 def test_open_invalid_spec_reports_error_and_keeps_current_figure(running_server):
     _post(running_server + "/action", {"type": "set_suptitle", "text": "keep me"})
     for payload in (
         "not json at all",
         '{"dpi":NaN}',
+        '{"dpi":100,"dpi":100}',
+        '{"dpi":100,"dpi":200}',
+        '{"theme":{"font":{"size":11,"size":11}}}',
+        '{"theme":{"font":{"size":11,"size":12}}}',
+        '{"data":{"columns":{"unused":[{"key":1,"key":1}]}}}',
+        '{"data":{"columns":{"unused":[{"key":1,"key":2}]}}}',
         json.dumps({"panels": [{"layers": [{}]}]}),
+        *(case["text"] for case in _REVIEW_JSON_BOUNDARIES["invalid_specs"]),
     ):
         _post(running_server + "/open", {"json": payload})
         with urllib.request.urlopen(running_server + "/") as r:

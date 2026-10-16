@@ -33,7 +33,7 @@ from mudplot.validate import assert_valid
 
 from .editor_view import _DRAG_JS, render_app_body, render_docs_page, render_page
 from .markdown_lite import markdown_to_html
-from .samples import sample_columns
+from .samples import sample_columns, sample_figure
 
 __all__ = ["EditorSession", "make_server", "serve"]
 
@@ -492,7 +492,8 @@ class _Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Security-Policy", _CSP)
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("X-Frame-Options", "DENY")
-        self.send_header("Referrer-Policy", "no-referrer")
+        # Native same-origin POST keeps Origin; external navigation gets no referrer.
+        self.send_header("Referrer-Policy", "same-origin")
         self.send_header("Cross-Origin-Opener-Policy", "same-origin")
         self.send_header("Cross-Origin-Resource-Policy", "same-origin")
         self.send_header(
@@ -546,10 +547,12 @@ class _Handler(BaseHTTPRequestHandler):
             raise ValueError("request body exceeds the 16 MiB limit")
         return self.rfile.read(length) if length else b""
 
-    def _respond_after_action(self, session: EditorSession) -> None:
+    def _respond_after_action(
+        self, session: EditorSession, *, draft_json: str = ""
+    ) -> None:
         """htmx requests get the updated fragment back in-place (no full
-        navigation); anything else (a plain form post, curl, urllib) falls
-        back to the classic redirect-then-GET / round trip.
+        navigation); ordinary form posts redirect. Failed imports instead
+        retain their draft in a full page so submitted edits are not lost.
         """
         if self.headers.get("HX-Request") == "true":
             fragment = render_app_body(
@@ -558,17 +561,45 @@ class _Handler(BaseHTTPRequestHandler):
                 session.layout,
                 error=session.error,
                 active_panel=session._clamp_panel(),
+                draft_json=draft_json,
             )
             self._send_html(fragment)
+        elif draft_json:
+            self._send_html(
+                render_page(
+                    session.store.state,
+                    session.action_log(),
+                    session.layout,
+                    error=session.error,
+                    active_panel=session._clamp_panel(),
+                    draft_json=draft_json,
+                )
+            )
         else:
             self._redirect_home()
 
     def do_GET(self) -> None:
         if self._reject_untrusted_request():
             return
-        path = urlparse(self.path).path
+        parsed = urlparse(self.path)
+        path = parsed.path
         session = self.session
         if path == "/":
+            try:
+                query = parse_qs(
+                    parsed.query,
+                    keep_blank_values=True,
+                    max_num_fields=8,
+                    encoding="utf-8",
+                    errors="strict",
+                )
+                names = query.get("example", [])
+                if len(names) > 1:
+                    raise ValueError("ambiguous figure example")
+                draft = mp.to_json(sample_figure(names[0])) if names else ""
+            except ValueError:
+                self._send_html("<p>Invalid figure example request.</p>", status=400)
+                return
             with session.lock:
                 page = render_page(
                     session.store.state,
@@ -576,6 +607,7 @@ class _Handler(BaseHTTPRequestHandler):
                     session.layout,
                     error=session.error,
                     active_panel=session._clamp_panel(),
+                    draft_json=draft,
                 )
             self._send_html(page)
         elif path == "/docs":
@@ -646,11 +678,14 @@ class _Handler(BaseHTTPRequestHandler):
                 self._respond_after_action(session)
         elif path == "/open":
             with session.lock:
+                draft = fields.get("json", "")
                 try:
-                    session.load_spec(fields.get("json", ""))
+                    session.load_spec(draft)
                 except Exception as e:
                     session.error = f"{type(e).__name__}: {e}"
-                self._respond_after_action(session)
+                self._respond_after_action(
+                    session, draft_json=draft if session.error else ""
+                )
         elif path == "/select-panel":
             with session.lock:
                 try:

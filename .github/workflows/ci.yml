@@ -78,7 +78,7 @@ jobs:
       - name: Schema/docs export is in sync (drift guard for Rust + humans)
         run: uv run python scripts/check_schema_sync.py
       - name: Dashboard site builds
-        run: uv run python -m dashboard --out /tmp/dashboard_build
+        run: uv run python -m dashboard build --out /tmp/dashboard_build
       - name: Dashboard editor smoke test
         run: uv run python scripts/editor_smoke_test.py
       - name: Rust editor real-browser smoke test

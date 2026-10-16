@@ -398,6 +398,15 @@
         },
         "legend": {
           "$ref": "#/$defs/LegendSpec"
+        },
+        "filters": {
+          "type": "object"
+        },
+        "dropna": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -420,6 +429,17 @@
           "anyOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "semantics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SemanticSpec"
             },
             {
               "type": "null"
@@ -545,6 +565,157 @@
           "type": "number",
           "default": 1.0
         },
+        "bar_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "baseline": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "edge_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stat": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StatSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sort": {
+          "type": "boolean",
+          "default": true
+        },
+        "error_style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "error_alpha": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ecdf": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ECDFSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dodge": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "orient": {
+          "type": "string",
+          "default": "v"
+        },
+        "native_scale": {
+          "type": "boolean",
+          "default": false
+        },
+        "stat_scale": {
+          "type": "string",
+          "default": "data"
+        },
+        "order": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_order": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "gap": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stack": {
+          "type": "boolean",
+          "default": false
+        },
+        "value_labels": {
+          "type": "boolean",
+          "default": false
+        },
+        "label_format": {
+          "type": "string",
+          "default": "g"
+        },
         "yerr": {
           "anyOf": [
             {
@@ -567,7 +738,62 @@
           ],
           "default": null
         },
+        "y_lower": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y_upper": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "error_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "error_line_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "capsize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "capthick": {
           "anyOf": [
             {
               "type": "number"
@@ -657,6 +883,39 @@
           "type": "boolean",
           "default": false
         },
+        "histogram": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HistogramSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kde": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KDESpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kde2d": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KDE2DSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
         "gridsize": {
           "type": "integer",
           "default": 30
@@ -677,6 +936,271 @@
           "default": 1
         },
         "confidence": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "regression": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "whis": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "components": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DistributionComponentsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "notch": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "showmeans": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "showfliers": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "showmedians": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "showextrema": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bw_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "points": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "inner": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "legacy"
+        },
+        "split": {
+          "type": "boolean",
+          "default": false
+        },
+        "density_norm": {
+          "type": "string",
+          "default": "width"
+        },
+        "common_norm": {
+          "type": "boolean",
+          "default": false
+        },
+        "bw_adjust": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cut": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "clip": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "warn_thresh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "k_depth": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "outlier_prop": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "trust_alpha": {
           "anyOf": [
             {
               "type": "number"
@@ -721,6 +1245,28 @@
           "anyOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "heatmap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HeatmapSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cluster": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ClusterSpec"
             },
             {
               "type": "null"
@@ -806,6 +1352,889 @@
         }
       }
     },
+    "SemanticSpec": {
+      "type": "object",
+      "properties": {
+        "scale_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_kind": {
+          "type": "string",
+          "default": "categorical"
+        },
+        "hue_order": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_norm": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "size": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "size_kind": {
+          "type": "string",
+          "default": "numeric"
+        },
+        "size_order": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "size_norm": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sizes": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "style_order": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {}
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "markers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "dashes": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "legend": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "StatSpec": {
+      "type": "object",
+      "properties": {
+        "estimator": {
+          "type": "string",
+          "default": "mean"
+        },
+        "errorbar": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": "ci"
+        },
+        "level": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "n_boot": {
+          "type": "integer",
+          "default": 1000
+        },
+        "seed": {
+          "type": "integer",
+          "default": 0
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "units": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "normalize": {
+          "type": "string",
+          "default": "count"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ECDFSpec": {
+      "type": "object",
+      "properties": {
+        "stat": {
+          "type": "string",
+          "default": "proportion"
+        },
+        "complementary": {
+          "type": "boolean",
+          "default": false
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "HistogramSpec": {
+      "type": "object",
+      "properties": {
+        "stat": {
+          "type": "string",
+          "default": "count"
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "common_norm": {
+          "type": "boolean",
+          "default": true
+        },
+        "cumulative": {
+          "type": "boolean",
+          "default": false
+        },
+        "multiple": {
+          "type": "string",
+          "default": "layer"
+        },
+        "element": {
+          "type": "string",
+          "default": "bars"
+        }
+      },
+      "additionalProperties": false
+    },
+    "KDESpec": {
+      "type": "object",
+      "properties": {
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bw_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "default": "scott"
+        },
+        "bw_adjust": {
+          "type": "number",
+          "default": 1.0
+        },
+        "gridsize": {
+          "type": "integer",
+          "default": 200
+        },
+        "cut": {
+          "type": "number",
+          "default": 3.0
+        },
+        "clip": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "common_norm": {
+          "type": "boolean",
+          "default": true
+        },
+        "common_grid": {
+          "type": "boolean",
+          "default": false
+        },
+        "cumulative": {
+          "type": "boolean",
+          "default": false
+        },
+        "fill": {
+          "type": "boolean",
+          "default": false
+        },
+        "warn_singular": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "KDE2DSpec": {
+      "type": "object",
+      "properties": {
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bw_method": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "default": "scott"
+        },
+        "bw_adjust": {
+          "type": "number",
+          "default": 1.0
+        },
+        "gridsize": {
+          "type": "integer",
+          "default": 80
+        },
+        "cut": {
+          "type": "number",
+          "default": 3.0
+        },
+        "clip": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "common_norm": {
+          "type": "boolean",
+          "default": true
+        },
+        "common_grid": {
+          "type": "boolean",
+          "default": false
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "fill": {
+          "type": "boolean",
+          "default": false
+        },
+        "warn_singular": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "RegressionSpec": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "default": "poly"
+        },
+        "residual": {
+          "type": "boolean",
+          "default": false
+        },
+        "frac": {
+          "type": "number",
+          "default": 0.6666666666666666
+        },
+        "iterations": {
+          "type": "integer",
+          "default": 3
+        }
+      },
+      "additionalProperties": false
+    },
+    "DistributionComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "whisker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "median": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ComponentStyleSpec": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "edge_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "face_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line_style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "marker": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "marker_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "marker_edge_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alpha": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hatch": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "HeatmapSpec": {
+      "type": "object",
+      "properties": {
+        "norm": {
+          "type": "string",
+          "default": "linear"
+        },
+        "vmin": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vmax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "center": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "robust": {
+          "type": "boolean",
+          "default": false
+        },
+        "annot": {
+          "type": "boolean",
+          "default": false
+        },
+        "fmt": {
+          "type": "string",
+          "default": "g"
+        },
+        "mask": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "xlabels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ylabels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "square": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "ClusterSpec": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "default": "average"
+        },
+        "metric": {
+          "type": "string",
+          "default": "euclidean"
+        },
+        "row_cluster": {
+          "type": "boolean",
+          "default": true
+        },
+        "col_cluster": {
+          "type": "boolean",
+          "default": true
+        },
+        "z_score": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "standard_scale": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "optimal_ordering": {
+          "type": "boolean",
+          "default": false
+        },
+        "row_linkage": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_linkage": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_colors": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_colors": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dendrogram_ratio": {
+          "type": "number",
+          "default": 0.2
+        },
+        "tree_width": {
+          "type": "number",
+          "default": 0.8
+        },
+        "tree_color": {
+          "type": "string",
+          "default": "#475569"
+        }
+      },
+      "additionalProperties": false
+    },
     "AxisSpec": {
       "type": "object",
       "properties": {
@@ -824,6 +2253,17 @@
               "items": {
                 "type": "number"
               }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "share_id": {
+          "anyOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

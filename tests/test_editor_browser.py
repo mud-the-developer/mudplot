@@ -15,13 +15,14 @@ import json
 import threading
 import time
 import urllib.request
+from pathlib import Path
 from urllib.parse import urlencode
 
 import pytest
 
 pytest.importorskip("playwright", reason="playwright not installed")
 from dashboard.editor_server import make_server
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import expect, sync_playwright
 
 
 @pytest.fixture(scope="module")
@@ -384,3 +385,383 @@ def test_opening_a_spec_file_from_the_picker(editor, tmp_path):
     page.get_by_role("button", name="Open figure").click()
 
     _wait_until(lambda: _spec(url)["suptitle"], lambda t: t == "from a file")
+
+
+@pytest.mark.parametrize(
+    "viewport,width,suffix",
+    [
+        (900, 700, ""),
+        (600, 320, "_mobile"),
+        (360, 320, "_mobile"),
+        (320, 280, "_mobile"),
+    ],
+)
+def test_visual_review_uses_real_desktop_and_mobile_layouts(
+    browser, tmp_path, viewport, width, suffix
+):
+    from examples.publication_showcase import build_plot
+    from mudplot._estimate import summarize
+
+    page = browser.new_page(viewport={"width": viewport, "height": 900})
+    try:
+        review = Path(__file__).resolve().parents[1] / "docs" / "VISUAL_REVIEW.html"
+        report = json.loads(
+            (review.parent / "images/visual_quality.json").read_text(encoding="utf-8")
+        )
+        page.goto(review.as_uri())
+        page.wait_for_function(
+            "() => [...document.images].every("
+            "image => image.complete && image.naturalWidth > 0)"
+        )
+        for kind in ("response", "endpoint"):
+            image = page.locator(f"#{kind} img")
+            info = image.evaluate(
+                "image => ({width: image.clientWidth, natural: image.naturalWidth, "
+                "source: image.currentSrc})"
+            )
+            qa = report["charts"][f"visual_{kind}{suffix}"]
+            assert info["width"] == width and info["natural"] == qa["source_pixels"][0]
+            assert qa["min_display_font_px"] * width / qa["display_pixels"][0] >= 14
+            assert info["source"].endswith(f"visual_{kind}{suffix}.png")
+            page.locator(f"#{kind}").screenshot(
+                path=str(tmp_path / f"{kind}-{width}.png")
+            )
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        sizes = page.locator("figcaption").evaluate_all(
+            "items => items.map(item => parseFloat(getComputedStyle(item).fontSize))"
+        )
+        assert sizes == [14, 14]
+        page.locator("#endpoint-values summary").click()
+        rows = page.locator("#endpoint-values tbody tr").evaluate_all(
+            "rows => rows.map(row => [...row.cells].map("
+            "cell => cell.textContent.trim()))"
+        )
+        plot = build_plot("endpoint")
+        summary = summarize(plot.spec.data.columns, plot.spec.panels[0].layers[0])
+        expected = []
+        for estimate in reversed(summary.estimates):
+            assert estimate.lower is not None and estimate.upper is not None
+            expected.append(
+                [
+                    estimate.group,
+                    f"{estimate.value:.3f}",
+                    f"{estimate.lower:.3f}\u2013{estimate.upper:.3f}",
+                ]
+            )
+        assert rows == expected
+        assert page.evaluate("document.documentElement.scrollWidth <= innerWidth")
+        print(f"Visual review screenshots: {tmp_path}")
+    finally:
+        page.close()
+
+
+@pytest.mark.parametrize("name", ["response-mobile", "endpoint-mobile"])
+def test_complete_example_draft_requires_open_and_can_be_edited(editor, name):
+    from dashboard.samples import FIGURE_SAMPLES, sample_figure
+
+    page, url = editor
+    errors = []
+    page.on("pageerror", lambda error: errors.append(str(error)))
+    before = _spec(url)
+    page.locator('details[data-key="samples"] > summary').click()
+    page.get_by_role("link", name=FIGURE_SAMPLES[name][0], exact=True).click()
+    _settle(page)
+    assert _spec(url) == before
+    assert page.locator("#open-figure").evaluate("element => element.open")
+    expected = sample_figure(name).to_dict()
+    assert json.loads(page.get_by_label("Spec JSON").input_value()) == expected
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _settle(page)
+    assert _spec(url) == expected
+    assert not errors, errors
+    # The Store commits before htmx finishes its swap and history update.
+    expect(page).to_have_url(url + "/")
+    assert page.evaluate("localStorage.getItem('htmx-history-cache')") is None
+    title = page.get_by_label("Panel title", exact=True)
+    expect(title).to_have_value(expected["panels"][0]["title"])
+    title.fill("Edited reading example")
+    page.locator("form", has=title).get_by_role(
+        "button", name="Apply", exact=True
+    ).click()
+    _settle(page)
+    edited = _wait_until(
+        lambda: _spec(url),
+        lambda spec: spec["panels"][0]["title"] == "Edited reading example",
+    )
+    assert edited["data"] == expected["data"]
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+@pytest.mark.parametrize("kind", ["hist", "kde"])
+def test_joint_grid_import_has_three_editable_panels_and_preserves_source(
+    editor, tmp_path, kind
+):
+    import mudplot as mp
+
+    raw = {
+        "x": [1, 2, 3, 4, None],
+        "y": [2, 3, 5, 6, 8],
+        "h": ["A", "A", "B", "B", "B"],
+    }
+    plot = (
+        mp.plot(raw)
+        .scatter("x", "y", group="h")
+        .joint(
+            bins=3 if kind == "hist" else 20,
+            marginal_kind=kind,
+            kde={"cut": 0, "gridsize": 31} if kind == "kde" else None,
+        )
+        .size(6, 6)
+    )
+    expected = plot.spec.to_dict()
+    path = tmp_path / "joint.mplot.json"
+    path.write_text(plot.to_json(), encoding="utf-8")
+    page, url = editor
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _wait_until(lambda: _spec(url), lambda spec: len(spec["panels"]) == 3)
+    assert _spec(url) == expected
+    panels = page.get_by_role("group", name="Active panel")
+    expect(panels.get_by_role("button")).to_have_count(3)
+    panels.get_by_role("button", name="3", exact=True).click()
+    page.get_by_text("Editing panel 3").wait_for()
+    page.get_by_label("Panel title", exact=True).fill("X marginal edited")
+    page.get_by_label("Panel title", exact=True).press("Enter")
+    current = _wait_until(
+        lambda: _spec(url),
+        lambda spec: spec["panels"][2]["title"] == "X marginal edited",
+    )
+    assert current["panels"][0]["title"] == expected["panels"][0]["title"]
+    assert current["data"] == expected["data"]
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+@pytest.mark.parametrize("kind", ["hist", "kde"])
+def test_pair_grid_file_opens_nine_named_axis_cells_and_exports(editor, tmp_path, kind):
+    import mudplot as mp
+
+    raw = {"a": [1, 2, None, 4], "b": [2, None, 4, 5], "c": [4, 3, 2, 1]}
+    plot = (
+        mp.plot(raw)
+        .pair(
+            ["a", "b", "c"],
+            bins=3 if kind == "hist" else 20,
+            diag_kind=kind,
+            kde={"cut": 0, "gridsize": 31} if kind == "kde" else None,
+        )
+        .size(8, 8)
+    )
+    path = tmp_path / "pair.mplot.json"
+    path.write_text(plot.to_json(), encoding="utf-8")
+    page, url = editor
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _wait_until(lambda: _spec(url), lambda spec: len(spec["panels"]) == 9)
+    assert _spec(url) == plot.spec.to_dict()
+    panels = page.get_by_role("group", name="Active panel")
+    expect(panels.get_by_role("button")).to_have_count(9)
+    panels.get_by_role("button", name="9", exact=True).click()
+    page.get_by_text("Editing panel 9").wait_for()
+    page.get_by_label("Panel title", exact=True).fill("Edited diagonal")
+    page.get_by_label("Panel title", exact=True).press("Enter")
+    current = _wait_until(
+        lambda: _spec(url), lambda spec: spec["panels"][8]["title"] == "Edited diagonal"
+    )
+    assert current["data"] == plot.spec.data.to_dict()
+    assert current["panels"][0]["y"]["share_id"] is None
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+def test_typed_heatmap_file_retains_mask_norm_and_annotations_after_edit(
+    editor, tmp_path
+):
+    from examples.heatmap_controls import build_plot
+
+    plot = build_plot()
+    path = tmp_path / "heatmap.mplot.json"
+    path.write_text(plot.to_json(), encoding="utf-8")
+    page, url = editor
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    expected = plot.spec.to_dict()
+    _wait_until(lambda: _spec(url), lambda spec: spec == expected)
+    expect(page.get_by_label("Panel title", exact=True)).to_have_value(
+        expected["panels"][0]["title"]
+    )
+    page.get_by_label("Panel title", exact=True).fill("Edited heatmap")
+    with page.expect_response(
+        lambda response: response.url == url + "/action"
+    ) as submit:
+        page.get_by_label("Panel title", exact=True).press("Enter")
+    assert submit.value.status in (200, 303), {
+        "status": submit.value.status,
+        "origin": submit.value.request.all_headers().get("origin"),
+        "fetch_site": submit.value.request.all_headers().get("sec-fetch-site"),
+    }
+    current = _wait_until(
+        lambda: _spec(url), lambda spec: spec["panels"][0]["title"] == "Edited heatmap"
+    )
+    assert current["data"] == expected["data"]
+    assert (
+        current["panels"][0]["layers"][0]["heatmap"]
+        == expected["panels"][0]["layers"][0]["heatmap"]
+    )
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+def test_native_editor_forms_post_and_undo_without_query_leaks(browser, editor):
+    _, url = editor
+    original = _spec(url)["panels"][0]["title"]
+    context = browser.new_context(java_script_enabled=False)
+    page = context.new_page()
+    try:
+        page.goto(url)
+        page.get_by_label("Panel title", exact=True).fill("Private native title")
+        with page.expect_response(
+            lambda response: response.url == url + "/action"
+        ) as submit:
+            page.get_by_label("Panel title", exact=True).press("Enter")
+        assert submit.value.status == 303
+        expect(page).to_have_url(url + "/")
+        assert _spec(url)["panels"][0]["title"] == "Private native title"
+        assert "Private" not in page.url
+        page.get_by_role("button", name="Undo", exact=True).click()
+        expect(page).to_have_url(url + "/")
+        assert (
+            _wait_until(
+                lambda: _spec(url)["panels"][0]["title"],
+                lambda value: value == original,
+            )
+            == original
+        )
+    finally:
+        context.close()
+
+
+@pytest.mark.parametrize("name", ["residual", "logx", "robust", "logistic", "lowess"])
+def test_configured_regression_import_edit_and_svg(editor, tmp_path, name):
+    if name in ("robust", "logistic", "lowess"):
+        pytest.importorskip("statsmodels")
+    from examples.regression_modes import build_plots
+
+    plot = build_plots()["regression_" + name]
+    expected = plot.spec.to_dict()
+    path = tmp_path / f"regression-{name}.mplot.json"
+    path.write_text(plot.to_json(), encoding="utf-8")
+    page, url = editor
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _wait_until(lambda: _spec(url), lambda spec: spec == expected)
+    expect(page.get_by_label("Panel title", exact=True)).to_have_value(
+        expected["panels"][0]["title"]
+    )
+    page.get_by_label("Panel title", exact=True).fill("Edited regression")
+    page.get_by_label("Panel title", exact=True).press("Enter")
+    current = _wait_until(
+        lambda: _spec(url),
+        lambda spec: spec["panels"][0]["title"] == "Edited regression",
+    )
+    assert current["data"] == expected["data"]
+    assert (
+        current["panels"][0]["layers"][0]["regression"]
+        == expected["panels"][0]["layers"][0]["regression"]
+    )
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+def test_cluster_file_keeps_orders_metadata_and_matrix_after_title_edit(
+    editor, tmp_path
+):
+    pytest.importorskip("scipy")
+    from examples.clustered_profiles import build_plot
+
+    plot = build_plot()
+    expected = plot.spec.to_dict()
+    path = tmp_path / "cluster.mplot.json"
+    path.write_text(plot.to_json(), encoding="utf-8")
+    page, url = editor
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _wait_until(lambda: _spec(url), lambda spec: spec == expected)
+    expect(page.get_by_label("Panel title", exact=True)).to_have_value(
+        expected["panels"][0]["title"]
+    )
+    page.get_by_label("Panel title", exact=True).fill("Edited clustered profiles")
+    page.get_by_label("Panel title", exact=True).press("Enter")
+    current = _wait_until(
+        lambda: _spec(url),
+        lambda spec: spec["panels"][0]["title"] == "Edited clustered profiles",
+    )
+    assert current["data"] == expected["data"]
+    assert current["panels"][0]["layers"] == expected["panels"][0]["layers"]
+    response = page.request.get(url + "/fig.svg")
+    assert response.ok and b"<svg" in response.body()
+
+
+def test_built_reading_gallery_and_downloaded_spec_open_in_editor(
+    browser, editor, tmp_path
+):
+    from dashboard.site import build_site
+
+    site = build_site(str(tmp_path / "site"))
+    page = browser.new_page(viewport={"width": 900, "height": 900})
+    try:
+        for viewport, width, suffix in ((900, 700, ""), (360, 320, "_mobile")):
+            page.set_viewport_size({"width": viewport, "height": 900})
+            page.goto((site / "index.html").as_uri())
+            image = page.locator(".reading-example img")
+            page.wait_for_function(
+                "() => document.querySelector('.reading-example img').naturalWidth > 0"
+            )
+            assert image.evaluate("image => image.clientWidth") == width
+            assert image.evaluate("image => image.currentSrc").endswith(
+                f"visual_response{suffix}.png"
+            )
+        page.get_by_role(
+            "link", name="Open the actual-size desktop/mobile review"
+        ).click()
+        assert page.url.endswith("reading/VISUAL_REVIEW.html")
+        page.get_by_role("link", name="the criteria and limitations").click()
+        assert page.url.endswith("VISUAL_QUALITY.html")
+        assert page.get_by_role(
+            "heading", name="Reading-first chart review", exact=True
+        ).is_visible()
+    finally:
+        page.close()
+
+    page, url = editor
+    path = site / "reading/images/visual_response_mobile.mplot.json"
+    expected = json.loads(path.read_text(encoding="utf-8"))
+    page.locator('details[data-key="open"] > summary').click()
+    page.locator("#spec-file").set_input_files(str(path))
+    page.wait_for_function(
+        "() => document.getElementById('spec-json').value.length > 0"
+    )
+    page.get_by_role("button", name="Open figure", exact=True).click()
+    _settle(page)
+    assert _spec(url) == expected

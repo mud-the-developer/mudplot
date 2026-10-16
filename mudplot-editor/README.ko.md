@@ -27,7 +27,10 @@ cross-origin browser mutation을 거부하며 모든 response를 `no-store`로
 - serde `FigureSpec`·action envelope는 64-bit 범위를 넘는 정수를 포함한
   지원 JSON 필드를 보존하며 중복 key를 재귀적으로 거부한다. arbitrary-
   precision 정수에 serde가 내부 사용하는 유일한 예약 key
-  `$serde_json::private::Number`는 Python/Rust 모두 거부한다. 이는 JSON 구조
+  `$serde_json::private::Number`는 Python/Rust 모두 거부한다. 원래 key token을
+  검사하여 serde가 literal 예약-key object를 값으로 바꾸지 못하게 하며 같은 표기의
+  일반 문자열 value는 허용한다. 생략된 spec version은 Python처럼 내장 현재 기본값을
+  쓰지만 명시한 null/unknown version은 실패한다. 이는 JSON 구조
   보존 계약이며 renderer 부동소수점 범위를 넘는 좌표/style 값은 명확히 실패한다.
 - reducer/validator의 단일 source는 `python -m mudplot apply`, renderer는
   `python -m mudplot render`로 유지한다.

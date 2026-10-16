@@ -155,6 +155,23 @@ def test_custom_max_legend_entries_threshold_is_respected():
     assert any(i.level == "warning" for i in p.lint(max_legend_entries=0))
 
 
+def test_disabled_legend_is_not_counted_as_visible_clutter():
+    p = mp.plot({"x": [1], "y": [1]}).line("x", "y", label="hidden").legend(False)
+    assert not any(
+        "legend" in message for message in _messages(p.lint(max_legend_entries=0))
+    )
+
+
+def test_disabled_panel_legend_does_not_hide_the_visible_panel_check():
+    p = mp.plot({"x": [1], "y": [1]}).layout(1, 2)
+    for label in ("hidden A", "hidden B", "hidden C"):
+        p.line("x", "y", label=label, panel=0)
+    p.legend(False, panel=0).line("x", "y", label="visible", panel=1)
+    messages = _messages(p.lint(max_legend_entries=1))
+    assert "legend size (1 entries) is reasonable" in messages
+    assert not any("legend contains" in message for message in messages)
+
+
 def test_no_labelled_layers_skips_the_legend_size_check():
     p = mp.plot({"x": [1], "y": [1]}).line("x", "y")
     report = p.lint()

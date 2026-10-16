@@ -12,6 +12,7 @@ use serde_json::{Map, Value};
 /// instead of maintaining a second, inevitably drifting copy of ~70 fields.
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct FigureSpec {
+    #[serde(default = "default_spec_version")]
     pub version: String,
     #[serde(flatten)]
     pub fields: Map<String, Value>,
@@ -42,13 +43,38 @@ pub struct Action {
 
 pub const DEFAULT_SPEC: &str = include_str!("../default_spec.json");
 
+fn default_spec_version() -> String {
+    let default: Value = serde_json::from_str(DEFAULT_SPEC).expect("embedded default spec is JSON");
+    default["version"]
+        .as_str()
+        .expect("embedded spec has a version")
+        .to_owned()
+}
+
 pub(crate) fn from_json_strict<T: DeserializeOwned>(text: &str) -> Result<T, serde_json::Error> {
     // ponytail: two bounded passes preserve arbitrary precision; use one custom
     // deserializer only if 16 MiB request parsing profiles hot.
     let mut deserializer = serde_json::Deserializer::from_str(text);
     StrictJson::deserialize(&mut deserializer)?;
     deserializer.end()?;
+    reject_reserved_keys(text)?;
     serde_json::from_str(text)
+}
+
+fn reject_reserved_keys(mut text: &str) -> Result<(), serde_json::Error> {
+    // serde fabricates this key for big numbers; inspect original string tokens instead.
+    while let Some(start) = text.find('"') {
+        let mut strings = serde_json::Deserializer::from_str(&text[start..]).into_iter::<String>();
+        let Some(key) = strings.next() else { break };
+        let key = key?;
+        text = &text[start + strings.byte_offset()..];
+        if key == "$serde_json::private::Number" && text.trim_start().starts_with(':') {
+            return Err(de::Error::custom(
+                "JSON object key $serde_json::private::Number is reserved",
+            ));
+        }
+    }
+    Ok(())
 }
 
 struct StrictJson;
@@ -136,6 +162,15 @@ mod tests {
     use super::*;
 
     #[test]
+    fn omitted_spec_version_uses_the_embedded_current_default() {
+        let expected: FigureSpec = serde_json::from_str(DEFAULT_SPEC).unwrap();
+        let actual: FigureSpec = from_json_strict(r#"{"suptitle":"omitted version"}"#).unwrap();
+        assert_eq!(actual.version, expected.version);
+        assert_eq!(actual.fields["suptitle"], "omitted version");
+        assert!(from_json_strict::<FigureSpec>(r#"{"version":null}"#).is_err());
+    }
+
+    #[test]
     fn figure_spec_round_trip_preserves_schema_fields() {
         let spec: FigureSpec = serde_json::from_str(DEFAULT_SPEC).unwrap();
         let round_trip = serde_json::to_value(spec).unwrap();
@@ -156,21 +191,103 @@ mod tests {
     }
 
     #[test]
+    fn strict_json_rejects_reserved_number_objects_without_reinterpreting_them() {
+        for input in [
+            r#"{"$serde_json::private::Number":"1"}"#,
+            r#"{"outer":{"$serde_json::private::Number":"1"}}"#,
+            r#"{"outer":[{"$serde_json::private::Number":"1"}]}"#,
+            r#"{"outer":[{"\u0024serde_json::private::Number":"1"}]}"#,
+        ] {
+            assert!(
+                from_json_strict::<Value>(input).is_err(),
+                "accepted {input}"
+            );
+        }
+        for text in [
+            r#"{"text":"$serde_json::private::Number: literal, not a key"}"#,
+            r#"{"text":"{\"$serde_json::private::Number\":\"1\"}"}"#,
+        ] {
+            assert!(from_json_strict::<Value>(text).is_ok());
+        }
+    }
+
+    #[test]
     fn strict_json_rejects_duplicate_keys_at_any_depth() {
-        let error = from_json_strict::<Value>(r#"{"outer":{"x":1,"x":2}}"#)
-            .expect_err("duplicate key must fail");
-        assert!(
-            error
-                .to_string()
-                .contains("duplicate JSON object key \"x\"")
-        );
+        for input in [
+            r#"{"x":1,"x":1}"#,
+            r#"{"x":1,"x":2}"#,
+            r#"{"outer":{"x":1,"x":1}}"#,
+            r#"{"outer":{"x":1,"x":2}}"#,
+            r#"{"outer":[{"x":1,"x":1}]}"#,
+            r#"{"outer":[{"x":1,"x":2}]}"#,
+        ] {
+            let error = from_json_strict::<Value>(input).expect_err("duplicate key must fail");
+            assert!(
+                error
+                    .to_string()
+                    .contains("duplicate JSON object key \"x\"")
+            );
+        }
+    }
+
+    #[test]
+    fn strict_json_preserves_signed_integer_boundaries_and_valid_unicode() {
+        for integer in [
+            "9007199254740991",
+            "9007199254740992",
+            "9007199254740993",
+            "9223372036854775807",
+            "9223372036854775808",
+            "18446744073709551615",
+            "18446744073709551616",
+            "100000000000000000000000000000000000000000000000000000000000000000000000000000001",
+        ] {
+            for sign in ["", "-"] {
+                let number = format!("{sign}{integer}");
+                let input =
+                    format!(r#"{{"version":"0.1","data":{{"columns":{{"unused":[{number}]}}}}}}"#);
+                let spec: FigureSpec = from_json_strict(&input).unwrap();
+                let output = serde_json::to_string(&spec).unwrap();
+                let restored: Value = from_json_strict(&output).unwrap();
+                assert_eq!(restored["data"]["columns"]["unused"][0].to_string(), number);
+            }
+        }
+        let value: Value = from_json_strict(r#"{"text":"한글 Ω \ud83d\ude00"}"#).unwrap();
+        assert_eq!(value["text"], "한글 Ω 😀");
+        for invalid in [r#"{"text":"\ud800"}"#, r#"{"text":"\udfff"}"#] {
+            assert!(from_json_strict::<Value>(invalid).is_err());
+        }
     }
 
     #[test]
     fn generated_capabilities_cover_visual_controls() {
         let capabilities: Capabilities =
             serde_json::from_str(include_str!("../../schemas/capabilities.json")).unwrap();
-        assert_eq!(capabilities.layers.len(), 28);
+        assert_eq!(capabilities.layers.len(), 37);
+        assert_eq!(capabilities.layers["clustermap"].required, ["matrix"]);
+        for field in ["cluster", "heatmap", "colorbar"] {
+            assert!(
+                capabilities.layers["clustermap"]
+                    .optional
+                    .contains(&field.into())
+            );
+        }
+        assert_eq!(capabilities.layers["lineplot"].required, ["x", "y"]);
+        assert!(
+            capabilities.layers["lineplot"]
+                .optional
+                .contains(&"semantics".into())
+        );
+        assert!(
+            capabilities.layers["scatter"]
+                .optional
+                .contains(&"semantics".into())
+        );
+        assert!(
+            capabilities.layers["violin"]
+                .optional
+                .contains(&"weights".into())
+        );
         assert_eq!(capabilities.projections, ["2d", "polar", "3d"]);
         assert!(capabilities.themes.contains(&"paper".into()));
         assert_eq!(capabilities.layers["line"].required, ["x", "y"]);

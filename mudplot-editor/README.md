@@ -29,7 +29,10 @@ security headers.
   integers beyond 64-bit range, with serde. Duplicate keys are rejected
   recursively. The sole reserved key, `$serde_json::private::Number`, is
   rejected by both Python and Rust because serde uses it internally for those
-  arbitrary-precision numbers. This is structural JSON preservation; numeric
+  arbitrary-precision numbers. Original key tokens are checked before serde can
+  reinterpret literal reserved-key objects; the same spelling in a string value
+  remains text. Omitted spec versions use the embedded current default, matching
+  Python; explicit null/unknown versions still fail. This is structural JSON preservation; numeric
   coordinates/styles outside the renderer's floating-point range fail cleanly.
 - The Python dependency-free core remains the only reducer/validator via
   `python -m mudplot apply`; rendering uses `python -m mudplot render`.

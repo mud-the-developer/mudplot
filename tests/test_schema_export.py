@@ -36,20 +36,22 @@ def _assert_demo_value(actual, expected):
 
 def test_figure_spec_schema_file_is_in_sync():
     path = SCHEMAS_DIR / "figure_spec.schema.json"
-    on_disk = json.loads(path.read_text())
+    on_disk = json.loads(path.read_text(encoding="utf-8"))
     assert on_disk == mp.json_schema()
 
 
 def test_capabilities_file_is_in_sync():
     path = SCHEMAS_DIR / "capabilities.json"
-    on_disk = json.loads(path.read_text())
+    on_disk = json.loads(path.read_text(encoding="utf-8"))
     assert on_disk == mp.capabilities()
 
 
 def test_reference_docs_file_is_in_sync():
     docs = SCHEMAS_DIR.parent / "docs"
-    assert (docs / "REFERENCE.md").read_text() == mp.reference_markdown()
-    assert (docs / "PLOT_GALLERY.md").read_text() == gallery_markdown()
+    assert (docs / "REFERENCE.md").read_text(
+        encoding="utf-8"
+    ) == mp.reference_markdown()
+    assert (docs / "PLOT_GALLERY.md").read_text(encoding="utf-8") == gallery_markdown()
 
 
 def test_demo_specs_are_current():

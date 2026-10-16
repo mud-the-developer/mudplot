@@ -22,7 +22,21 @@ from .docs import reference_markdown
 from .io import from_json, load_spec, save_spec, to_json
 from .reducer import reduce, reduce_all
 from .schema import json_schema
-from .spec import FigureSpec, ReferenceSpec
+from .spec import (
+    ClusterSpec,
+    ComponentStyleSpec,
+    DistributionComponentsSpec,
+    ECDFSpec,
+    FigureSpec,
+    HeatmapSpec,
+    HistogramSpec,
+    KDE2DSpec,
+    KDESpec,
+    ReferenceSpec,
+    RegressionSpec,
+    SemanticSpec,
+    StatSpec,
+)
 from .store import Store
 from .tex import PREAMBLE, TEX_PRESETS, TexContext, figsize_for
 from .theme import (
@@ -97,14 +111,25 @@ __all__ = [
     "JOURNAL_SIZES",
     "PREAMBLE",
     "TEX_PRESETS",
+    "ClusterSpec",
+    "ComponentStyleSpec",
+    "DistributionComponentsSpec",
+    "ECDFSpec",
     "FigureSpec",
+    "HeatmapSpec",
+    "HistogramSpec",
     "JournalProfile",
+    "KDE2DSpec",
+    "KDESpec",
     "LintIssue",
     "LintReport",
     "Plot",
     "Reference",
     "ReferenceCatalog",
     "ReferenceSpec",
+    "RegressionSpec",
+    "SemanticSpec",
+    "StatSpec",
     "Store",
     "TexContext",
     "action_from_dict",

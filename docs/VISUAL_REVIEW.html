@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Two questions, two charts — mudplot</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #222; background: #fff;
+      font: 16px/1.5 system-ui, sans-serif; }
+    main { max-width: 740px; padding: 24px 20px; margin: auto; }
+    h1 { font-size: 24px; line-height: 1.25; margin: 0 0 12px; }
+    h2 { font-size: 19px; margin-top: 32px; }
+    p { margin: 0 0 16px; }
+    figure { margin: 24px 0 40px; }
+    img { display: block; width: 100%; height: auto; }
+    figcaption { margin-top: 10px; font-size: 14px; color: #444; }
+    a { color: #075985; }
+    li { margin-bottom: 8px; }
+    summary { cursor: pointer; font-size: 14px; }
+    table { width: 100%; border-collapse: collapse; font-size: 14px;
+      font-variant-numeric: tabular-nums; }
+    th, td { padding: 6px 4px; text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    thead { border-bottom: 1px solid #ddd; }
+    @media (max-width: 739px) { main { max-width: 360px; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Two questions, two charts</h1>
+  <p>Independent synthetic observations, not experimental results.
+    Desktop charts are shown at 700px; a separate 320px layout is used on
+    narrow screens. Neither is independently rated for readability yet.</p>
+
+  <figure id="response">
+    <picture>
+      <source media="(max-width: 739px)" srcset="images/visual_response_mobile.png">
+      <img src="images/visual_response.png" width="700" height="400"
+        alt="Means over time for Reference, Method A and Method B, with direct labels and confidence bands">
+    </picture>
+    <figcaption>
+      <strong>Shading: pointwise 95% bootstrap CI of the mean.</strong>
+      n = 12 independent synthetic observations per method and timepoint.
+      <a href="images/visual_response.svg">SVG</a> ·
+      <a href="images/visual_response.pdf">PDF</a> ·
+      <a href="images/visual_response.mplot.json">Editable spec</a>
+    </figcaption>
+  </figure>
+
+  <figure id="endpoint">
+    <picture>
+      <source media="(max-width: 739px)" srcset="images/visual_endpoint_mobile.png">
+      <img src="images/visual_endpoint.png" width="700" height="300"
+        alt="Horizontal mean and confidence interval comparison of the three methods at 12 hours">
+    </picture>
+    <figcaption>
+      <strong>Points: means. Bars: 95% bootstrap CI.</strong>
+      n = 12 synthetic observations per method. Numerical values are available below.
+      <a href="images/visual_endpoint.svg">SVG</a> ·
+      <a href="images/visual_endpoint.pdf">PDF</a> ·
+      <a href="images/visual_endpoint.mplot.json">Editable spec</a>
+    </figcaption>
+  </figure>
+
+  <details id="endpoint-values">
+    <summary>Endpoint values (3 decimals)</summary>
+    <table>
+      <caption>Mean response and 95% CI (a.u.), n = 12</caption>
+      <thead><tr><th scope="col">Method</th><th scope="col">Mean</th><th scope="col">95% CI</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Method B</th><td>1.275</td><td>1.257–1.296</td></tr>
+        <tr><th scope="row">Method A</th><td>0.965</td><td>0.946–0.984</td></tr>
+        <tr><th scope="row">Reference</th><td>0.607</td><td>0.577–0.638</td></tr>
+      </tbody>
+    </table>
+  </details>
+
+  <section>
+    <h2>Reading tasks — independent review pending</h2>
+    <ol>
+      <li>Which method has the highest mean at 12 h?</li>
+      <li>Approximately what is the Reference mean at 12 h?</li>
+      <li>Does the shading show observation spread or uncertainty in a mean?</li>
+    </ol>
+    <p>For a reader study, record answer accuracy and reading time. No reader
+      study or model grading has been run. Automated checks do not certify
+      aesthetic quality or accessibility.</p>
+    <p>The illustrative bootstrap uses 399 resamples with seed 17. See
+      <a href="VISUAL_QUALITY.md">the criteria and limitations</a>,
+      <a href="VISUAL_QUALITY.ko.md">한국어 설명</a>, and
+      <a href="images/visual_quality.json">the measured QA report</a>.</p>
+  </section>
+</main>
+</body>
+</html>

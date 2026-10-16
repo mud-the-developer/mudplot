@@ -32,7 +32,7 @@ Grouped trajectories use colour, marker, and dash together.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `label`, `color`, `line_width`, `line_style`, `drawstyle`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `drawstyle`, `marker`, `marker_size`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -60,6 +60,61 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/line.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#line)
 
+### `lineplot` — Raw-data line estimates
+
+![Raw-data line estimates](images/plots/lineplot.png)
+
+Numeric x-cell means with seeded pointwise CI, not simultaneous bands.
+
+숫자 x별 평균과 seeded 점별 CI를 표시하며 동시 신뢰대역이 아닙니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `semantics`, `cmap_kind`, `group`, `stat`, `orient`, `stat_scale`, `hue_order`, `sort`, `error_style`, `error_alpha`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+# Synthetic replicates. CI is pointwise at each predictor, not simultaneous.
+data = {
+    "time": [1, 1, 2, 2, 4, 4, 8, 8] * 2,
+    "response": [
+        1,
+        1.4,
+        1.5,
+        2,
+        2.5,
+        3.2,
+        3.8,
+        4.7,
+        1.4,
+        1.8,
+        2,
+        2.4,
+        3.2,
+        3.6,
+        4.7,
+        5.6,
+    ],
+    "method": ["Control"] * 8 + ["Treatment"] * 8,
+}
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .lineplot("time", "response", group="method", errorbar="ci", n_boot=251, seed=17)
+    .labels(x="Time (h)", y="Response", title="Means / pointwise 95% bootstrap CI")
+    .legend(title="Method", location="upper left")
+    .size(5.4, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/lineplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#lineplot)
+
 ### `regplot` — Regression
 
 ![Regression](images/plots/regplot.png)
@@ -70,7 +125,7 @@ A polynomial mean fit with an explicit opt-in confidence band.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `degree`, `confidence`, `group`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `regression`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -104,7 +159,7 @@ Point colour shares one continuous normalization and colorbar.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`, `axis`
+**Optional / 선택:** `semantics`, `group`, `hue_order`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -141,7 +196,7 @@ Deterministic jitter reveals individual categorical observations.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `jitter`, `group`, `label`, `color`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `jitter`, `group`, `hue_order`, `label`, `color`, `marker`, `marker_size`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -176,6 +231,59 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/stripplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#stripplot)
+
+### `swarmplot` — Swarm plot
+
+![Swarm plot](images/plots/swarmplot.png)
+
+Circular observations repack in display space on each draw, including positive log-value axes; overcrowding retains rows with a warning.
+
+매 draw의 화면 좌표에서 원형 관측값을 다시 배치하며 양수 log 값축을 지원하고 과밀하면 행을 보존하며 경고합니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+import numpy as np
+
+rng = np.random.default_rng(19)
+data = {"dose": [], "response": [], "method": []}
+for method, shift in (("A", 0), ("B", 0.25)):
+    for dose, step in (("Low", 0), ("High", 0.6)):
+        data["dose"].extend([dose] * 22)
+        data["method"].extend([method] * 22)
+        data["response"].extend(
+            np.exp(rng.normal(shift + step, 0.16, 22)).round(2).tolist()
+        )
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .swarmplot(
+        "dose",
+        "response",
+        group="method",
+        order=["Low", "High"],
+        hue_order=["B", "A"],
+        marker_size=4,
+        edge_color="#ffffff",
+        line_width=0.4,
+        gap=0.1,
+    )
+    .yscale("log")
+    .labels(x="Dose", y="Response (log scale)", title="Display-space swarm packing")
+    .legend(title="Method", location="upper left")
+    .size(4.5, 3.2)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/swarmplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#swarmplot)
 
 ### `stackplot` — Stack plot
 
@@ -269,13 +377,13 @@ plot.save("figure.png")
 
 ![Bar](images/plots/bar.png)
 
-Grouped bars retain hatch differences in grayscale print.
+Grouped means with supplied SD, light fills, and aligned capped errors; default redundant encoding remains available for hatch differences.
 
-그룹 막대는 흑백 인쇄에서도 해칭으로 구분됩니다.
+그룹 평균과 제공된 SD를 옅은 면·정렬된 캡 오차막대로 표시합니다. 기본 redundant encoding을 유지하면 해칭으로도 구분할 수 있습니다.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`, `axis`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `yerr`, `y_lower`, `y_upper`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -285,14 +393,26 @@ import mudplot as mp
 data = {
     "dose": ["Control", "Low", "High"] * 3,
     "response": [1.0, 1.4, 1.9, 0.9, 1.6, 2.3, 1.1, 1.3, 1.7],
+    "sd": [0.10, 0.13, 0.16, 0.09, 0.14, 0.18, 0.11, 0.12, 0.15],
     "cell": ["A"] * 3 + ["B"] * 3 + ["C"] * 3,
 }
 plot = (
     mp.plot(data)
-    .bar("dose", "response", group="cell")
-    .labels(x="Dose", y="Response", title="Grouped bars")
-    .legend(title="Cell line")
-    .size(4.5, 3.2)
+    .theme("publication")
+    .encoding(redundant_encoding=False)  # clean fills; omit for hatch encoding
+    .bar(
+        "dose",
+        "response",
+        group="cell",
+        yerr="sd",
+        bar_width=0.72,
+        edge_color="white",
+        line_width=0.5,
+    )
+    .labels(x="Dose", y="Response (a.u.)", title="Mean ± SD")
+    .legend(title="Cell line", location="upper left")
+    .ylim(0, 2.8)
+    .size(5.2, 3.5)
 )
 plot.save("figure.png")
 ```
@@ -300,6 +420,192 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/bar.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#bar)
+
+### `barplot` — Raw-data bar plot
+
+![Raw-data bar plot](images/plots/barplot.png)
+
+Raw replicates aggregate to means and seeded percentile-bootstrap CI.
+
+원자료 반복 관측에서 평균과 seeded percentile-bootstrap CI를 계산합니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `group`, `stat`, `native_scale`, `stat_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+# Each condition/cell contains three raw replicates, not a supplied mean.
+data = {
+    "dose": (["Control"] * 3 + ["Low"] * 3 + ["High"] * 3) * 3,
+    "response": [
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.4,
+        1.6,
+        1.7,
+        1.9,
+        2.1,
+        0.8,
+        0.9,
+        1.0,
+        1.3,
+        1.6,
+        1.9,
+        2.0,
+        2.3,
+        2.6,
+        1.0,
+        1.1,
+        1.2,
+        1.1,
+        1.3,
+        1.5,
+        1.4,
+        1.7,
+        2.0,
+    ],
+    "cell": ["A"] * 9 + ["B"] * 9 + ["C"] * 9,
+}
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .encoding(redundant_encoding=False)
+    .barplot(
+        "dose",
+        "response",
+        group="cell",
+        errorbar=("ci", 95),
+        seed=42,
+        bar_width=0.72,
+        edge_color="white",
+        line_width=0.5,
+    )
+    .labels(
+        x="Dose",
+        y="Response (a.u.)",
+        title="Raw replicates: mean with 95% bootstrap CI",
+    )
+    .legend(title="Cell line", location="upper left")
+    .ylim(0, 3.0)
+    .size(5.2, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/barplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#barplot)
+
+### `pointplot` — Raw-data point plot
+
+![Raw-data point plot](images/plots/pointplot.png)
+
+Raw means and sample SE use aligned, optionally dodged point estimates.
+
+원자료 평균·표본 SE를 정렬하고 선택한 dodge로 점 추정값을 구분합니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `group`, `stat`, `native_scale`, `stat_scale`, `orient`, `order`, `hue_order`, `dodge`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+# No manual summary table: one observation per row.
+data = {
+    "dose": (["Control"] * 3 + ["Low"] * 3 + ["High"] * 3) * 3,
+    "response": [
+        0.9,
+        1.0,
+        1.1,
+        1.2,
+        1.4,
+        1.6,
+        1.7,
+        1.9,
+        2.1,
+        0.8,
+        0.9,
+        1.0,
+        1.3,
+        1.6,
+        1.9,
+        2.0,
+        2.3,
+        2.6,
+        1.0,
+        1.1,
+        1.2,
+        1.1,
+        1.3,
+        1.5,
+        1.4,
+        1.7,
+        2.0,
+    ],
+    "cell": ["A"] * 9 + ["B"] * 9 + ["C"] * 9,
+}
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .pointplot("dose", "response", group="cell", errorbar="se", dodge=0.18)
+    .labels(x="Dose", y="Response (a.u.)", title="Raw replicates: mean ± sample SE")
+    .legend(title="Cell line", location="upper left")
+    .ylim(0, 2.8)
+    .size(5.2, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/pointplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#pointplot)
+
+### `countplot` — Raw-data count plot
+
+![Raw-data count plot](images/plots/countplot.png)
+
+Categorical observation counts require no y column or inferred interval.
+
+y 열이나 추정 구간 없이 범주별 원자료 관측 개수를 표시합니다.
+
+**Required / 필수:** `x`
+
+**Optional / 선택:** `group`, `stat`, `native_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `stack`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+# Unequal sample sizes; countplot needs no y column and does not infer a CI.
+data = {
+    "dose": ["Control"] * 7 + ["Low"] * 6 + ["High"] * 5,
+    "cell": ["A"] * 4 + ["B"] * 3 + ["A"] * 2 + ["B"] * 4 + ["A"] * 3 + ["B"] * 2,
+}
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .countplot("dose", group="cell", bar_width=0.72, edge_color="white", line_width=0.5)
+    .labels(x="Dose", y="Observations", title="Raw observation counts")
+    .legend(title="Cell line", location="upper right")
+    .ylim(0, 5)
+    .size(5.2, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/countplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#countplot)
 
 ### `errorbar` — Error bar
 
@@ -311,7 +617,7 @@ Caller-supplied x/y uncertainty is rendered without inference.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `yerr`, `xerr`, `group`, `label`, `color`, `capsize`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`
+**Optional / 선택:** `yerr`, `xerr`, `y_lower`, `y_upper`, `group`, `hue_order`, `label`, `color`, `error_color`, `error_line_width`, `capsize`, `capthick`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -346,7 +652,7 @@ A shaded lower/upper envelope accompanies the central trajectory.
 
 **Required / 필수:** `x`, `y`, `y2`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`, `axis`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -385,7 +691,7 @@ Grouped samples share bins for direct distribution comparison.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `bins`, `density`, `group`, `label`, `color`, `alpha`
+**Optional / 선택:** `bins`, `density`, `histogram`, `group`, `hue_order`, `orient`, `label`, `color`, `edge_color`, `line_width`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -403,7 +709,8 @@ plot = (
     .hist(
         "value",
         bins=np.histogram_bin_edges(data["value"], bins=18).tolist(),
-        density=True,
+        stat="density",
+        common_norm=False,
         group="group",
         alpha=0.55,
     )
@@ -422,13 +729,13 @@ plot.save("figure.png")
 
 ![Box plot](images/plots/box.png)
 
-Compact summaries compare grouped medians and spread.
+Nested category/hue boxes show medians, means and 5-95% whiskers; percentile whiskers are not confidence intervals.
 
-그룹별 중앙값과 산포를 간결하게 비교합니다.
+범주/그룹 box로 중앙값·평균과 5-95% whisker를 표시합니다. 분위수 whisker는 신뢰구간이 아닙니다.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`
+**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `whis`, `components`, `notch`, `showmeans`, `showfliers`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -437,16 +744,29 @@ import mudplot as mp
 import numpy as np
 
 rng = np.random.default_rng(5)
-data = {
-    "value": np.r_[
-        rng.normal(0, 1, 70), rng.normal(0.8, 0.7, 70), rng.normal(1.5, 1.15, 70)
-    ],
-    "group": np.repeat(["A", "B", "C"], 70),
-}
+data = {"dose": [], "value": [], "method": []}
+for method, shift in (("A", 0), ("B", 0.55)):
+    for dose, effect in (("Low", 0), ("High", 1)):
+        data["dose"].extend([dose] * 40)
+        data["method"].extend([method] * 40)
+        data["value"].extend(rng.normal(1 + shift + effect, 0.35, 40).tolist())
 plot = (
     mp.plot(data)
-    .box("value", group="group")
-    .labels(y="Value", title="Grouped box plot")
+    .theme("publication")
+    .box(
+        "dose",
+        "value",
+        group="method",
+        order=["Low", "High"],
+        hue_order=["B", "A"],
+        whis=(5, 95),
+        gap=0.16,
+        showmeans=True,
+        edge_color="#4b5563",
+        line_width=0.8,
+    )
+    .labels(x="Dose", y="Value", title="Nested boxes / 5-95% whiskers")
+    .legend(title="Method", location="upper left")
     .size(4.5, 3.2)
 )
 plot.save("figure.png")
@@ -456,17 +776,69 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/box.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#box)
 
+### `boxenplot` — Letter-value plot
+
+![Letter-value plot](images/plots/boxenplot.png)
+
+Nested raw-data quantile bands reveal tails with exponential widths; median and outside observations are not confidence intervals.
+
+원자료 분위수 띠와 지수 폭으로 꼬리를 표시합니다. 중앙값·바깥 관측값은 신뢰구간이 아닙니다.
+
+**Required / 필수:** `x`
+
+**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `k_depth`, `components`, `width_method`, `outlier_prop`, `trust_alpha`, `showfliers`, `showmedians`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+import numpy as np
+
+rng = np.random.default_rng(83)
+data = {"dose": [], "value": [], "method": []}
+for method, shift in (("A", 0), ("B", 0.4)):
+    for dose, effect in (("Low", 0), ("High", 0.9)):
+        data["dose"].extend([dose] * 128)
+        data["method"].extend([method] * 128)
+        data["value"].extend(rng.normal(1 + shift + effect, 0.4, 128).tolist())
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .boxenplot(
+        "dose",
+        "value",
+        group="method",
+        order=["Low", "High"],
+        hue_order=["B", "A"],
+        k_depth=4,
+        width_method="exponential",
+        gap=0.15,
+        edge_color="#4b5563",
+        line_width=0.7,
+        marker_size=2.5,
+    )
+    .labels(x="Dose", y="Response", title="Letter values / quantiles, not CI")
+    .legend(title="Method", location="upper left")
+    .size(4.5, 3.2)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/boxenplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#boxenplot)
+
 ### `violin` — Violin
 
 ![Violin](images/plots/violin.png)
 
-Mirrored density shapes retain categorical colour and hatch encoding.
+Horizontal nested violins use named bandwidth, median lines and consistent hue colours/hatches.
 
-대칭 밀도 모양에 범주별 색상과 해칭을 함께 적용합니다.
+가로 중첩 violin에 이름 기반 대역폭·중앙값·공통 그룹 색상과 해칭을 적용합니다.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`
+**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `bw_method`, `points`, `weights`, `inner`, `split`, `density_norm`, `common_norm`, `bw_adjust`, `cut`, `clip`, `marker`, `marker_size`, `showmeans`, `showmedians`, `showextrema`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -475,16 +847,31 @@ import mudplot as mp
 import numpy as np
 
 rng = np.random.default_rng(6)
-data = {
-    "value": np.r_[
-        rng.normal(0, 0.7, 100), rng.normal(1.0, 0.45, 100), rng.normal(1.8, 0.9, 100)
-    ],
-    "group": np.repeat(["A", "B", "C"], 100),
-}
+data = {"dose": [], "value": [], "method": []}
+for method, shift in (("A", 0), ("B", 0.45)):
+    for dose, effect in (("Low", 0), ("High", 1)):
+        data["dose"].extend([dose] * 50)
+        data["method"].extend([method] * 50)
+        data["value"].extend(rng.normal(1 + shift + effect, 0.3, 50).tolist())
 plot = (
     mp.plot(data)
-    .violin("value", group="group")
-    .labels(y="Value", title="Grouped violin plot")
+    .theme("publication")
+    .violin(
+        "dose",
+        "value",
+        group="method",
+        orient="h",
+        order=["Low", "High"],
+        hue_order=["B", "A"],
+        bw_method="silverman",
+        points=100,
+        gap=0.12,
+        showextrema=False,
+        edge_color="#4b5563",
+        line_width=0.8,
+    )
+    .labels(x="Value", y="Dose", title="Horizontal nested violins")
+    .legend(title="Method", location="lower right")
     .size(4.5, 3.2)
 )
 plot.save("figure.png")
@@ -498,13 +885,13 @@ plot.save("figure.png")
 
 ![Kernel density](images/plots/kde.png)
 
-A NumPy-only Gaussian KDE compares smooth grouped distributions.
+Typed NumPy Gaussian KDE uses explicit Scott bandwidth and per-curve normalization; weights/support/CDF/fill controls are also available.
 
-NumPy 기반 Gaussian KDE로 그룹별 분포를 부드럽게 비교합니다.
+Typed NumPy Gaussian KDE에 Scott 대역폭·곡선별 정규화를 명시합니다. 가중치/평가 범위/CDF/채우기 설정도 지원합니다.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`, `line_width`, `line_style`
+**Optional / 선택:** `kde`, `group`, `hue_order`, `orient`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -519,7 +906,7 @@ data = {
 }
 plot = (
     mp.plot(data)
-    .kde("value", group="group", line_width=2)
+    .kde("value", group="group", bw_method="scott", common_norm=False, line_width=2)
     .labels(x="Value", y="Density", title="Gaussian KDE")
     .legend()
     .size(4.5, 3.2)
@@ -531,6 +918,49 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/kde.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#kde)
 
+### `ecdf` — Empirical cumulative distribution
+
+![Empirical cumulative distribution](images/plots/ecdf.png)
+
+Weighted empirical steps aggregate ties and normalize within each curve; no bins, smoothing or inferred confidence interval.
+
+가중 원자료 계단선으로 반복값을 합산하고 각 곡선 안에서 정규화합니다. Bin·평활화·추정 신뢰구간은 사용하지 않습니다.
+
+**Required / 필수:** `x`
+
+**Optional / 선택:** `ecdf`, `group`, `hue_order`, `orient`, `label`, `color`, `line_width`, `line_style`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+import numpy as np
+
+rng = np.random.default_rng(28)
+data = {
+    "value": np.round(
+        np.r_[rng.lognormal(0, 0.45, 60), rng.lognormal(0.4, 0.5, 80)], 1
+    ),
+    "weight": rng.integers(1, 5, 140),
+    "group": ["Control"] * 60 + ["Treatment"] * 80,
+}
+plot = (
+    mp.plot(data)
+    .theme("publication")
+    .ecdf("value", weights="weight", group="group", line_width=1.8)
+    .labels(
+        x="Observed value", y="Within-curve proportion", title="Weighted empirical CDF"
+    )
+    .legend()
+    .size(4.5, 3.2)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/ecdf.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#ecdf)
+
 ### `rug` — Rug
 
 ![Rug](images/plots/rug.png)
@@ -541,7 +971,7 @@ Rug marks expose observations underneath a density estimate.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `label`, `color`, `alpha`, `line_width`, `line_style`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -567,6 +997,51 @@ plot.save("figure.png")
 [Editable spec / 편집 가능한 spec](images/plots/rug.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#rug)
 
 ## Bivariate and matrix fields / 이변량 및 행렬 필드
+
+### `kde2d` — Weighted bivariate KDE
+
+![Weighted bivariate KDE](images/plots/kde2d.png)
+
+Full weighted Gaussian covariance; contour levels enclose conditional finite-grid mass, not confidence intervals or full-space coverage.
+
+가중 Gaussian 공분산을 사용하며 등고선은 유한 격자의 조건부 질량 비율입니다. 신뢰구간/전체 공간 확률 보장이 아닙니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `kde2d`, `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+import numpy as np
+
+rng = np.random.default_rng(41)
+cloud = rng.multivariate_normal([0, 0], [[1, 0.65], [0.65, 0.8]], size=160)
+data = {"x": cloud[:, 0], "y": cloud[:, 1], "weight": rng.integers(1, 5, len(cloud))}
+plot = (
+    mp.plot(data)
+    .kde2d(
+        "x",
+        "y",
+        weights="weight",
+        gridsize=61,
+        levels=[0.5, 0.8, 0.95],
+        fill=True,
+        alpha=0.65,
+        line_width=0.8,
+        label="Weighted joint density",
+    )
+    .labels(x="Observed x", y="Observed y", title="Gaussian KDE / conditional grid HDR")
+    .legend()
+    .size(4.5, 3.2)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/kde2d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#kde2d)
 
 ### `hist2d` — 2-D histogram
 
@@ -646,7 +1121,7 @@ A diverging LCH colormap represents a signed matrix field.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+**Optional / 선택:** `heatmap`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `line_width`, `edge_color`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -669,6 +1144,42 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/heatmap.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#heatmap)
+
+### `clustermap` — Clustered heatmap
+
+![Clustered heatmap](images/plots/clustermap.png)
+
+Hierarchical row/column ordering preserves labels and source values.
+
+계층적 행/열 순서에 label을 맞추며 원자료는 보존합니다.
+
+**Required / 필수:** `matrix`
+
+**Optional / 선택:** `cluster`, `heatmap`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `line_width`, `edge_color`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .matrix("profiles", [[1, 2, 5], [2, 1, 4], [8, 7, 2], [9, 8, 1]])
+    .clustermap(
+        "profiles",
+        cluster={"method": "average", "row_colors": ["#00858a"] * 2 + ["#ba4056"] * 2},
+        heatmap={"xlabels": ["A", "B", "C"], "ylabels": ["N1", "N2", "S1", "S2"]},
+        clabel="Response",
+    )
+    .labels(title="Hierarchical profiles — synthetic")
+    .size(6, 5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/clustermap.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#clustermap)
 
 ### `contour` — Contour
 

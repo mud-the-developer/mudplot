@@ -1,0 +1,40 @@
+{
+  "invalid_specs": [
+    {"id":"JSON-02-nan","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[NaN]}}}"},
+    {"id":"JSON-02-positive-infinity","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[Infinity]}}}"},
+    {"id":"JSON-02-negative-infinity","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[-Infinity]}}}"},
+    {"id":"JSON-02-positive-exponent-overflow","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[1e400]}}}"},
+    {"id":"JSON-02-negative-exponent-overflow","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[-1e400]}}}"},
+    {"id":"JSON-06-reserved-root","text":"{\"version\":\"0.1\",\"$serde_json::private::Number\":\"1\"}"},
+    {"id":"JSON-06-reserved-column","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"$serde_json::private::Number\":[1]}}}"},
+    {"id":"JSON-06-reserved-array-object","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[{\"$serde_json::private::Number\":\"1\"}]}}}"},
+    {"id":"JSON-06-high-surrogate-value","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[\"\\ud800\"]}}}"},
+    {"id":"JSON-06-low-surrogate-value","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"unused\":[\"\\udfff\"]}}}"},
+    {"id":"JSON-06-surrogate-key","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{\"\\ud800\":[1]}}}"},
+    {"id":"JSON-06-nonstring-key","text":"{\"version\":\"0.1\",\"data\":{\"columns\":{1:[1]}}}"},
+    {"id":"JSON-07-future","text":"{\"version\":\"99.0\"}"},
+    {"id":"JSON-07-unimplemented-old","text":"{\"version\":\"0.0\"}"},
+    {"id":"JSON-07-empty","text":"{\"version\":\"\"}"},
+    {"id":"JSON-07-number","text":"{\"version\":1}"},
+    {"id":"JSON-07-boolean","text":"{\"version\":false}"},
+    {"id":"JSON-07-null","text":"{\"version\":null}"},
+    {"id":"JSON-07-array","text":"{\"version\":[]}"}
+  ],
+  "invalid_actions": [
+    {"id":"JSON-02-action-nan","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[NaN]}}"},
+    {"id":"JSON-02-action-positive-infinity","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[Infinity]}}"},
+    {"id":"JSON-02-action-negative-infinity","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[-Infinity]}}"},
+    {"id":"JSON-02-action-positive-exponent","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[1e400]}}"},
+    {"id":"JSON-02-action-negative-exponent","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[-1e400]}}"},
+    {"id":"JSON-06-action-reserved-column","text":"{\"type\":\"SetData\",\"columns\":{\"$serde_json::private::Number\":[1]}}"},
+    {"id":"JSON-06-action-reserved-nested","text":"{\"type\":\"SetData\",\"columns\":{\"unused\":[{\"$serde_json::private::Number\":\"1\"}]}}"},
+    {"id":"JSON-06-action-high-surrogate","text":"{\"type\":\"SetTitle\",\"text\":\"\\ud800\"}"},
+    {"id":"JSON-06-action-low-surrogate","text":"{\"type\":\"SetTitle\",\"text\":\"\\udfff\"}"},
+    {"id":"JSON-06-action-surrogate-key","text":"{\"type\":\"SetData\",\"columns\":{\"\\ud800\":[1]}}"},
+    {"id":"JSON-06-action-nonstring-key","text":"{\"type\":\"SetData\",\"columns\":{1:[1]}}"}
+  ],
+  "valid_specs": [
+    {"id":"JSON-06-unicode-current","text":"{\"version\":\"0.1\",\"suptitle\":\"explicit version\",\"data\":{\"columns\":{\"unused\":[\"한글 <&> Ω 😀\"]}}}"},
+    {"id":"JSON-06-surrogate-pair-omitted-version","text":"{\"suptitle\":\"omitted version\",\"data\":{\"columns\":{\"unused\":[\"한글 <&> Ω \\ud83d\\ude00\"]}}}"}
+  ]
+}

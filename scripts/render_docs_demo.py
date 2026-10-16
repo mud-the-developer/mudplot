@@ -15,6 +15,14 @@ import mudplot as mp
 import numpy as np
 import pandas as pd  # provided by the dev extra used to regenerate docs
 from dashboard.plot_gallery import write_plot_gallery_docs
+from examples.clustered_profiles import render_example as render_cluster_example
+from examples.faceted_responses import render_example as render_facet_example
+from examples.heatmap_controls import render_example as render_heatmap_example
+from examples.joint_observations import render_example as render_joint_example
+from examples.kde_grids import render_examples as render_kde_grids
+from examples.pair_observations import render_example as render_pair_example
+from examples.publication_showcase import render_examples as render_visual_examples
+from examples.regression_modes import render_examples as render_regression_examples
 from matplotlib.container import ErrorbarContainer
 from mpl_toolkits.mplot3d import Axes3D
 from mudplot import actions as A
@@ -82,11 +90,14 @@ def main():
     )
     p = (
         mp.plot(data)
+        .theme("publication")
+        .palette(preset=None, lightness=48, chroma=55, hue_start=20, cvd_safe=True)
+        .font(size=9.5, title_size=11, label_size=9.5, tick_size=8.5)
         .layout(2, 2)
         .size(9, 6.5)
-        .dispatch(A.SetDpi(150))
+        .dispatch(A.SetDpi(180))
         .auto_label()
-        .line("time", "response", group="condition", marker_size=3)
+        .line("time", "response", group="condition", marker_size=2.5, line_width=1.4)
         .labels(x="Time (h)", y="Response (a.u.)", title="Response trajectories")
         .legend(location="lower right")
         .scatter(
@@ -101,9 +112,15 @@ def main():
         )
         .labels(x="Time (h)", y="Response (a.u.)", title="Shared colour scale", panel=1)
         .legend(show=False, panel=1)
-        .violin("response", group="condition", panel=2)
-        .labels(y="Response (a.u.)", title="Distribution across sampled times", panel=2)
-        .kde("response", group="condition", panel=3)
+        .violin(
+            "response",
+            group="condition",
+            edge_color="#475569",
+            line_width=0.8,
+            panel=2,
+        )
+        .labels(y="Response (a.u.)", title="Responses pooled over time", panel=2)
+        .kde("response", group="condition", line_width=1.4, panel=3)
         .labels(x="Response (a.u.)", y="Density", title="Gaussian KDE", panel=3)
         .legend(show=False, panel=3)
     )
@@ -244,6 +261,14 @@ def main():
     simulate_bw_print(OUT / "bar_hatched.png", OUT / "bar_hatched_bw.png")
     print("OK bar_hatched: 3 distinct hatches; B&W-print simulation saved")
 
+    render_visual_examples(OUT)
+    render_facet_example(OUT)
+    render_joint_example(OUT)
+    render_pair_example(OUT)
+    render_kde_grids(OUT)
+    render_heatmap_example(OUT)
+    render_regression_examples(OUT)
+    render_cluster_example(OUT)
     gallery = write_plot_gallery_docs(OUT.parent)
     print(f"OK plot gallery: {gallery}")
     print(f"Verified with pandas {pd.__version__}, Matplotlib {matplotlib.__version__}")

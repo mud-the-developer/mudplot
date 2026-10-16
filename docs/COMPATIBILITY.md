@@ -82,19 +82,30 @@ checks; rendering validates automatically.
 Package/editor version **1.0.0** and serialized spec version **0.1** are
 independent. A package release does not require a spec-version bump.
 
-- Supported fields and JSON values round-trip without loss. Unknown dataclass
-  fields under a recognized spec version are ignored by the Python loader and
-  are **not** promised to survive a round-trip. Keep custom metadata elsewhere.
+- Supported fields and JSON values round-trip without loss. Unknown legacy
+  dataclass fields under a recognized spec version are ignored by the Python
+  loader and are **not** promised to survive a round-trip. Keep custom metadata
+  elsewhere. New `StatSpec` objects reject unknown options (such as arbitrary
+  callable operations) so the requested calculation cannot silently change.
+  Weighted/unit resampling options are supported only in their documented scope.
+- An omitted spec version uses the current embedded default in both Python and
+  Rust; explicit null or malformed versions are not omissions.
 - Unknown spec versions fail explicitly. A future incompatible serialized
   shape needs a spec-version bump and migration support for previously
   supported saved files; additions with safe defaults need not change it.
 - JSON is RFC-compliant: recursive duplicate keys, non-finite numbers, lone
   surrogates, non-string keys, and `$serde_json::private::Number` are rejected.
+  Rust checks original decoded property names, including Unicode escapes, so
+  serde's big-number adapter cannot reinterpret literal reserved-key objects.
+  The reserved spelling inside an ordinary string value remains valid text.
 - Integers beyond 64-bit range are preserved structurally, not guaranteed to be
   renderable at arbitrary precision. Action envelopes use a string `"type"`.
 - Input adapters normalize common missing values to `null`, date/time values
   to ISO strings, and NumPy scalars to Python values. Infinity, `Decimal`, and
   unsupported objects are not silently coerced. Duplicate column names fail.
+  Positional row widths must match the first row; DB result row widths must
+  match cursor description. Malformed rows fail with their index/expected width
+  before pivoting, never silently truncating extra values or padding short rows.
 - SQL values are forwarded through DB-API `params=`; mudplot does not
   interpolate them into a query.
 
@@ -102,6 +113,14 @@ independent. A package release does not require a spec-version bump.
 
 The declarative/state/JSON core has no required third-party dependencies.
 Colour operations require NumPy; rendering requires NumPy and Matplotlib.
+Unreleased advanced robust/logistic/LOWESS effects use the optional `regression`
+extra with statsmodels>=0.14.1 (also included by all/dev), loaded only at fit time.
+Ordinary polynomial/residual/log-x rendering needs no statsmodels. This extra
+is tested on Python 3.10/NumPy1.23/Matplotlib3.8 with statsmodels0.14.1; it does
+not change the mandatory dependency contract or already-published assets.
+Unreleased clustermap uses a separate cluster extra(SciPy>=1.10, all/dev included),
+verified with SciPy1.10/Python3.10/NumPy1.23/Matplotlib3.8. Pure clustering configs
+and checked linkage JSON remain standard-library-only.
 The 1.0 support floors are Python **3.10**, NumPy **1.23**, Matplotlib **3.8**,
 and Rust **1.88** for the editor. These floors remain supported in 1.x;
 a planned runtime-floor increase requires advance deprecation and a major

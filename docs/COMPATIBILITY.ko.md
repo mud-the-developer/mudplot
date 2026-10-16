@@ -80,25 +80,41 @@ exception은 전파되지만 commit을 되돌리지 않습니다. editor는 반�
 package/editor **1.0.0**과 serialized spec **0.1**은 독립된 버전입니다.
 package release마다 spec version을 올릴 필요는 없습니다.
 
-- 지원 필드·JSON 값은 무손실 왕복합니다. 인식하는 spec version의 알 수 없는
-  dataclass 필드는 Python loader가 무시하므로 **왕복 보존을 보장하지 않습니다**.
-  사용자 정의 metadata는 별도로 보관하세요.
+- 지원 필드·JSON 값은 무손실 왕복합니다. 인식하는 spec version의 기존
+  dataclass에 있는 알 수 없는 필드는 Python loader가 무시하므로 **왕복 보존을
+  보장하지 않습니다**. 사용자 metadata는 별도로 보관하세요. 새 `StatSpec`은
+  임의 callable operation 같은 알 수 없는 옵션을 거부하여 요청한 계산을
+  조용히 바꾸지 않습니다. 가중치·단위 재표본화는 문서화한 범위만 지원합니다.
+- spec version을 생략하면 Python/Rust 모두 내장된 현재 기본값을 사용합니다.
+  명시한 null이나 잘못된 값은 생략이 아닙니다.
 - 알 수 없는 spec version은 명확히 거부합니다. 향후 비호환 serialized shape는
   spec version을 올리고 이전 지원 파일의 migration을 제공해야 합니다.
   안전한 default를 가진 추가 필드는 version bump가 필요하지 않을 수 있습니다.
 - JSON은 RFC 규약을 따릅니다. 재귀적 duplicate key, non-finite number,
   lone surrogate, 문자열이 아닌 key와 `$serde_json::private::Number`를 거부합니다.
+  Rust는 Unicode escape를 포함한 원본 property 이름을 검사하여 serde big-number
+  adapter가 예약 key object를 값으로 바꾸지 못하게 합니다. 일반 문자열 value 안의
+  예약어 표기는 정상 텍스트로 유지합니다.
 - 64-bit를 넘는 정수는 구조적으로 보존하지만 arbitrary-precision plotting까지
   보장하지 않습니다. action envelope는 문자열 `"type"`을 사용합니다.
 - input adapter는 일반적인 missing value를 `null`, 날짜·시간을 ISO 문자열,
   NumPy scalar를 Python 값으로 정규화합니다. Infinity·`Decimal`·미지원 객체를
-  조용히 변환하지 않으며 중복 열 이름은 거부합니다.
+  조용히 변환하지 않으며 중복 열 이름은 거부합니다. Positional row 너비는 첫 행,
+  DB result row는 cursor description과 같아야 하며 불일치 시 pivot 전에 행 index/
+  기대 너비를 포함한 오류를 냅니다. 추가 값을 잘라내거나 짧은 행을 채우지 않습니다.
 - SQL 값은 DB-API `params=`로 전달하며 mudplot이 query에 보간하지 않습니다.
 
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는
-NumPy, 렌더링에는 NumPy와 Matplotlib이 필요합니다. 1.0 지원 하한은 Python
+NumPy, 렌더링에는 NumPy와 Matplotlib이 필요합니다. Unreleased robust/logistic/
+LOWESS effect는 optional `regression` extra(statsmodels>=0.14.1; all/dev 포함)를
+fit 때만 불러옵니다. 일반 polynomial/residual/log-x는 statsmodels가 필요 없습니다.
+이 extra는 Python3.10/NumPy1.23/Matplotlib3.8/statsmodels0.14.1에서 확인했으며
+필수 의존성이나 기존 공개 자산을 바꾸지 않습니다. Unreleased clustermap은 별도
+cluster extra(SciPy>=1.10, all/dev 포함)이며 SciPy1.10/Python3.10/NumPy1.23/
+Matplotlib3.8에서 확인했습니다. Pure 설정/linkage JSON 검사는 stdlib만 사용합니다.
+1.0 지원 하한은 Python
 **3.10**, NumPy **1.23**, Matplotlib **3.8**, Rust editor **1.88**입니다.
 이 하한은 1.x에서 계속 지원합니다. 계획된 runtime 하한 상향은 사전 deprecation과
 major release가 필요합니다. 중대한 보안 수정은 의존성 조건을 강화할 수 있으며

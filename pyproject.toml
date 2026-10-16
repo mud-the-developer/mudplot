@@ -42,9 +42,12 @@ mudplot = "mudplot.__main__:main"
 [project.optional-dependencies]
 color = ["numpy>=1.23"]                       # colour engine (LCH, CVD, palettes)
 render = ["numpy>=1.23", "matplotlib>=3.8"]   # native title wrapping + rendering
-all = ["mudplot[render]"]
+# Advanced regressions are optional effects; never imported by the pure core.
+regression = ["mudplot[render]", "statsmodels>=0.14.1"]
+cluster = ["mudplot[render]", "scipy>=1.10"]
+all = ["mudplot[regression,cluster]"]
 dev = [
-    "mudplot[render]",
+    "mudplot[regression,cluster]",
     "pytest>=9.0.3",
     "ruff>=0.6",
     "pyright>=1.1.390",

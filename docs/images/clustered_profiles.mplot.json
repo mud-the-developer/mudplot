@@ -1,0 +1,358 @@
+{
+  "version": "0.1",
+  "size": [
+    7,
+    6.5
+  ],
+  "dpi": 200,
+  "theme": {
+    "name": "publication",
+    "font": {
+      "family": "sans-serif",
+      "size": 11,
+      "title_size": 12,
+      "label_size": 11,
+      "tick_size": 10.5,
+      "use_tex": false
+    },
+    "axes": {
+      "line_width": 0.65,
+      "spines": "LB",
+      "spine_offset": 3.0
+    },
+    "grid": {
+      "show": true,
+      "axis": "y",
+      "line_width": 0.5,
+      "alpha": 0.22
+    },
+    "ticks": {
+      "direction": "out",
+      "major_size": 2.5,
+      "minor_size": 1.5,
+      "width": 0.65,
+      "minor_visible": false,
+      "top": false,
+      "right": false
+    },
+    "palette": {
+      "kind": "qualitative",
+      "preset": "soft",
+      "lightness": 65.0,
+      "chroma": 55.0,
+      "hue_start": 20.0,
+      "cvd_safe": true
+    },
+    "redundant_encoding": true,
+    "markers": [
+      "o",
+      "s",
+      "^",
+      "D",
+      "v",
+      "P",
+      "X",
+      "*"
+    ],
+    "line_styles": [
+      "-",
+      "--",
+      "-.",
+      ":"
+    ],
+    "hatches": [
+      "",
+      "/",
+      "\\",
+      ".",
+      "o",
+      "-"
+    ]
+  },
+  "data": {
+    "columns": {},
+    "matrices": {
+      "profiles": [
+        [
+          1.0,
+          1.2,
+          4.0,
+          4.5,
+          0.8
+        ],
+        [
+          1.3,
+          1.0,
+          3.8,
+          4.7,
+          1.1
+        ],
+        [
+          4.8,
+          4.2,
+          1.1,
+          0.9,
+          4.6
+        ],
+        [
+          5.1,
+          4.0,
+          0.8,
+          1.3,
+          4.3
+        ],
+        [
+          0.9,
+          1.4,
+          4.2,
+          4.3,
+          1.0
+        ],
+        [
+          4.7,
+          4.5,
+          1.2,
+          1.0,
+          4.8
+        ]
+      ]
+    }
+  },
+  "suptitle": "",
+  "auto_label_panels": false,
+  "width_ratios": null,
+  "height_ratios": null,
+  "panels": [
+    {
+      "layers": [
+        {
+          "type": "clustermap",
+          "x": "",
+          "y": "",
+          "group": null,
+          "semantics": null,
+          "label": null,
+          "citation": null,
+          "href": null,
+          "references": null,
+          "color": null,
+          "line_width": 0.5,
+          "line_style": null,
+          "drawstyle": "default",
+          "marker": null,
+          "marker_size": null,
+          "jitter": null,
+          "alpha": 1.0,
+          "bar_width": null,
+          "baseline": null,
+          "edge_color": "#ffffff",
+          "stat": null,
+          "sort": true,
+          "error_style": null,
+          "error_alpha": null,
+          "ecdf": null,
+          "dodge": null,
+          "orient": "v",
+          "native_scale": false,
+          "stat_scale": "data",
+          "order": null,
+          "hue_order": null,
+          "gap": null,
+          "stack": false,
+          "value_labels": false,
+          "label_format": "g",
+          "yerr": null,
+          "xerr": null,
+          "y_lower": null,
+          "y_upper": null,
+          "error_color": null,
+          "error_line_width": null,
+          "capsize": null,
+          "capthick": null,
+          "y2": null,
+          "value": null,
+          "text": null,
+          "at": null,
+          "to": null,
+          "bins": 20,
+          "density": false,
+          "histogram": null,
+          "kde": null,
+          "kde2d": null,
+          "gridsize": 30,
+          "mincnt": null,
+          "degree": 1,
+          "confidence": null,
+          "regression": null,
+          "width": null,
+          "whis": null,
+          "components": null,
+          "notch": null,
+          "showmeans": null,
+          "showfliers": null,
+          "showmedians": null,
+          "showextrema": null,
+          "bw_method": null,
+          "points": null,
+          "inner": "legacy",
+          "split": false,
+          "density_norm": "width",
+          "common_norm": false,
+          "bw_adjust": null,
+          "cut": null,
+          "clip": null,
+          "weights": null,
+          "warn_thresh": null,
+          "k_depth": null,
+          "width_method": null,
+          "outlier_prop": null,
+          "trust_alpha": null,
+          "c": null,
+          "cmap_kind": "diverging",
+          "colorbar": true,
+          "clabel": "Row z-score",
+          "matrix": "profiles",
+          "heatmap": {
+            "norm": "linear",
+            "vmin": null,
+            "vmax": null,
+            "center": 0,
+            "robust": false,
+            "annot": true,
+            "fmt": ".1f",
+            "mask": [
+              [
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false,
+                false
+              ]
+            ],
+            "xlabels": [
+              "M1",
+              "M2",
+              "M3",
+              "M4",
+              "M5"
+            ],
+            "ylabels": [
+              "A1",
+              "A2",
+              "B1",
+              "B2",
+              "A3",
+              "B3"
+            ],
+            "square": false
+          },
+          "cluster": {
+            "method": "average",
+            "metric": "euclidean",
+            "row_cluster": true,
+            "col_cluster": true,
+            "z_score": "row",
+            "standard_scale": null,
+            "optimal_ordering": true,
+            "row_linkage": null,
+            "col_linkage": null,
+            "row_colors": [
+              "#00858a",
+              "#00858a",
+              "#ba4056",
+              "#ba4056",
+              "#00858a",
+              "#ba4056"
+            ],
+            "col_colors": [
+              "#94a3b8",
+              "#94a3b8",
+              "#00858a",
+              "#00858a",
+              "#94a3b8"
+            ],
+            "dendrogram_ratio": 0.2,
+            "tree_width": 0.8,
+            "tree_color": "#475569"
+          },
+          "levels": null,
+          "axis": "y",
+          "u": null,
+          "v": null,
+          "quiver_scale": null,
+          "quiver_width": null,
+          "z": null
+        }
+      ],
+      "x": {
+        "label": "",
+        "scale": "linear",
+        "limits": null,
+        "share_id": null
+      },
+      "y": {
+        "label": "",
+        "scale": "linear",
+        "limits": null,
+        "share_id": null
+      },
+      "y2": null,
+      "z": null,
+      "projection": "2d",
+      "title": "Row-standardised profiles — synthetic",
+      "title_position": null,
+      "title_citation": null,
+      "title_href": null,
+      "label": null,
+      "legend": {
+        "bbox_to_anchor": null,
+        "show": true,
+        "title": null,
+        "location": "best",
+        "frame": false
+      },
+      "filters": {},
+      "dropna": []
+    }
+  ],
+  "layout": null,
+  "share_x": "none",
+  "share_y": "none",
+  "journal": null,
+  "reference_measure_text": null
+}

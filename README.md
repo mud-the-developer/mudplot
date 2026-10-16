@@ -22,6 +22,22 @@ At its core is an **LCH (CIELAB polar coordinates) colour engine**:
   colours compress to similar greys — see the
   [B&W print demo](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
 
+## Reading-first examples
+
+<a href="docs/VISUAL_REVIEW.html"><img src="docs/images/visual_response_mobile.png" width="320" alt="Synthetic mean response over time, directly labelled with pointwise confidence bands"></a>
+
+A 320px preview, not four charts squeezed into one image. Shading is a pointwise
+95% CI of the mean; data are synthetic.
+**[Open the desktop/mobile review](docs/VISUAL_REVIEW.html)** ·
+[Separate endpoint chart](docs/images/visual_endpoint.png) ·
+[Criteria and references](docs/VISUAL_QUALITY.md) ·
+[Runnable sample](examples/publication_showcase.py).
+The source-tree editor (`python -m dashboard serve`) offers the same figures
+under **Start from a sample → Complete figure drafts**; selection only fills
+the Open form until you explicitly apply it.
+Raw data and estimates are preserved from the rejected prototype. Checks on
+saved PNGs and real browser sizes are **not** an independent readability rating.
+
 ## Architecture: spec-centric state transitions (functional core / imperative shell)
 
 Every bit of figure state is represented as a **serialisable, declarative
@@ -64,7 +80,14 @@ as the canonical renderer. See the [compatibility policy](docs/COMPATIBILITY.md)
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-**Engine (`mudplot/`) — usable now, 617 tests passing (including 11 real-browser tests):**
+**37 layer types are not full Matplotlib/Seaborn feature parity.** The
+[feature coverage audit](docs/FEATURE_COVERAGE.md) separates partial plot
+support from missing options, automatic statistics and facet/grid workflows,
+and explains the limits of native Matplotlib customization.
+
+**Engine (`mudplot/`) — implemented surfaces below.** See the
+[development checkpoint](docs/V1_1_PLAN.md#current-checkpoint) for the latest
+full/minimum/focused verification receipts and their scope.
 
 - [x] Colour engine: sRGB ↔ linear ↔ XYZ ↔ Lab ↔ LCH (numpy-only); CIE76/
       CIEDE2000 colour difference (Sharma 2005 reference values); Machado
@@ -78,20 +101,46 @@ steps (more layer types, quality work, and the Rust editor).
 - [x] Declarative spec model (`FigureSpec`) + lossless JSON round-trip +
       side-effect-free reducer + actions + store (`Store.undo()`/`redo()`) — effects
       (render/io/preview) kept at the edges
-- [x] Renderer: 28 layer types (line/regplot/scatter/stripplot/bar/errorbar/
-      band/stackplot/hline/vline/text/annotate/hist/box/violin/kde/rug/
-      hist2d/hexbin/quiver/heatmap/contour/contourf/pie/
+- [x] Renderer: 37 layer types (line/lineplot/regplot/scatter/stripplot/swarmplot/bar/barplot/
+      pointplot/countplot/errorbar/
+      band/stackplot/hline/vline/text/annotate/hist/box/boxenplot/violin/kde/kde2d/ecdf/rug/
+      hist2d/hexbin/quiver/heatmap/clustermap/contour/contourf/pie/
       scatter3d/line3d/surface/wireframe), multi-panel layouts, secondary
       y-axis, shared axes, despine, outside legends, continuous colour
       mapping + colorbar
-- [x] **TeX-ready sizing and overlap-free layout**: `.tex_size(preset,
+- [x] **Automatic facets (first subset)**: build one template, then
+      `.facet(row=..., col=..., col_wrap=...)` materializes selected cells with
+      shared axes, stable category/hue slots and shared semantic domains.
+      Statistics remain cell-local. [Supported scope and example](docs/FACETS.md);
+      raw grouped paths/bars now retain their original values and stable hue slots.
+      Legacy c/colorbar faceting remains open.
+- [x] **Joint histogram/KDE grid**: `.scatter(...).joint(...)` or
+      `.regplot(...).joint(...)` links complete x/y/group cases to aligned
+      histogram or KDE marginals without discarding the source table. Counts/density
+      axes stay independent of measurement values. [Scope and example](docs/JOINT_GRID.md).
+- [x] **Numeric pair matrix (first subset)**: `.pair(["a", "b", "c"], group=...)`
+      creates raw scatter cells and histogram/KDE diagonals with pairwise missingness.
+      Named axes keep measurement ranges linked without sharing diagonal density.
+      [Scope and example](docs/PAIR_GRID.md).
+- [x] **Typed heatmap controls**: opt-in `HeatmapSpec` mask/annotations/labels,
+      linear/log/centered/robust colour ranges, square cells and borders; raw
+      matrix data and legacy defaults stay intact. [Scope and example](docs/HEATMAP.md).
+- [x] **Configured regression / residuals (Unreleased)**: `RegressionSpec` adds
+      log-x, Huber, binomial-logit and LOWESS; `.residplot()` keeps raw y minus
+      fitted response. Advanced effects use optional `regression` extra; legacy
+      polynomial/core behavior remains. [Scope and examples](docs/REGRESSION.md).
+- [x] **Clustered heatmaps (Unreleased)**: `.clustermap()` / `ClusterSpec` link
+      hierarchical rows/columns, aligned trees/labels/masks/colour strips and
+      opt-in z-score/min-max display. Source matrix stays intact; SciPy belongs
+      to optional `cluster` effects. [Scope and example](docs/CLUSTERMAP.md).
+- [x] **TeX-ready sizing and measured layout**: `.tex_size(preset,
       columns=1|2)` sizes the actual figure to a document column/full text
       width; `render()` wraps overflowing titles and reserves canvas space
       for outside legends automatically (matplotlib's own layout engine +
       text-measurement renderer, no custom layout system) so figures stay
-      at their exact configured physical size without clipped/overlapping
-      text — also the basis of the TeX-aware WYSIWYG `.preview()`
-      (article/ieee/revtex/nature/acm)
+      at their configured physical size. Arbitrary annotation/data overlaps still
+      need review. This also underlies the TeX-aware WYSIWYG `.preview()`
+      (article/ieee/revtex/nature/acm).
 - [x] **Reproducible export**: in the same environment, repeated PNG/PDF/SVG
       exports are byte-identical; volatile PDF/SVG metadata and IDs are removed
       or derived from the canonical spec
@@ -121,7 +170,7 @@ steps (more layer types, quality work, and the Rust editor).
 
 **Dashboard (`dashboard/`, source-tree tool) — local editor + docs:**
 
-- [x] Static docs with an executable bilingual gallery for all 28 layers,
+- [x] Static docs with an executable bilingual gallery for all 37 layers,
       plus the design gallery and engine reference, generated from live code
       (`python -m dashboard build`)
 - [x] Local interactive editor (`python -m dashboard serve`) driving the
@@ -136,7 +185,7 @@ steps (more layer types, quality work, and the Rust editor).
       export exact-size PDF/SVG
 - [x] Real-browser test coverage (Playwright, optional `browser` extra) for
       the drag/keyboard/multi-panel paths that HTML-level tests can't see
-- [x] All 28 registered layer types exposed through a capabilities-driven
+- [x] All 37 registered layer types exposed through a capabilities-driven
       advanced form; checked JSON fields automatically follow future registry
       additions. htmx updates the app fragment without a full-page reload.
       The unauthenticated server enforces loopback bind/Host, same-origin
@@ -173,6 +222,10 @@ Development:
 uv sync --locked --extra dev
 ```
 
+Unreleased robust/logistic/LOWESS effects are available from this source tree
+(`pip install '.[regression]'`), not the already-published v1.0.0 wheel. `all`
+and `dev` extras include them; `render` alone remains NumPy/Matplotlib only.
+
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for checks, browser/TeX setup, and
 schema regeneration.
 
@@ -184,19 +237,22 @@ schema regeneration.
 | stdlib effects/helpers | JSON/CLI I/O, bibliography, TeX sizing | **none** |
 | colour engine | `color/*` | NumPy ≥ 1.23 |
 | render effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
+| advanced regression effect (Unreleased) | `regression` extra | render + statsmodels ≥ 0.14.1; no mandatory core dependency |
+| clustering effect (Unreleased) | `cluster` extra | render + SciPy ≥ 1.10; no mandatory core dependency |
 
 ## Rendered demo
 
 ![Actual mudplot output from a synthetic pandas DataFrame: line, scatter, violin and KDE](docs/images/pandas_demo.png)
 
 Generated by `python -m scripts.render_docs_demo` using a seeded pandas
-DataFrame, not experimental measurements. Browse the **[complete 28-layer plot
+DataFrame, not experimental measurements. Browse the **[complete 37-layer plot
 gallery](docs/PLOT_GALLERY.md)** for runnable code, real output, and editable
 specs for every plot type. See the **[design demo gallery](docs/DEMO.md)**
 for editing before/after, heatmap + 3-D output, **named colour-palette presets
 measured CVD-safe and true-greyscale-safe**, a grouped bar chart verified
 readable after simulated black & white printing, vector PDFs, editable JSON,
-and runnable checks. Requires pandas in addition to `mudplot[render]`.
+and runnable checks. Full demo regeneration requires pandas and the optional
+`regression` extra in addition to `mudplot[render]` (included by `dev`).
 
 ## Usage
 
@@ -219,12 +275,526 @@ to crop to content instead. The returned Matplotlib figure remains open; close
 it with `plt.close(fig)` when finished. `Plot.spec` and `Store.state` are isolated
 snapshots: edit through builder methods/actions, not by mutating these snapshots.
 
+### Publication-style bars: SD and 95% CI
+
+![The same synthetic means with sample SD and a 95% bootstrap CI](docs/images/bar_uncertainty.png)
+
+Bars now draw uncertainty at their own centers, including grouped bars:
+
+```python
+summary = {
+    "condition": ["Control", "Treatment"],
+    "mean": [1.0, 1.45], "sd": [0.12, 0.17],
+    "ci_low": [0.93, 1.35], "ci_high": [1.08, 1.57],
+}
+(mp.plot(summary).theme("publication")
+    .bar("condition", "mean", yerr="sd", bar_width=0.60)
+    .labels(y="Response", title="Mean ± SD")
+    .save("mean_sd.svg"))
+
+# Absolute interval endpoints, NOT error magnitudes:
+(mp.plot(summary).theme("publication")
+    .bar("condition", "mean", y_lower="ci_low", y_upper="ci_high")
+    .labels(y="Response", title="Mean with 95% CI")
+    .save("mean_ci95.svg"))
+```
+
+`yerr` supplies symmetric nonnegative magnitudes. Alternatively, supply both
+`y_lower` and `y_upper` as absolute endpoints containing the central value;
+these also work with `errorbar()`. **These primitives do not compute statistics:**
+SD describes observation spread, while a CI describes uncertainty in an
+estimate. Choose and compute the CI method yourself; do not use `1.96 * SD`
+as a mean's 95% CI. The small snippet uses illustrative supplied summaries.
+
+Control bar outlines with `edge_color`/`line_width`, category span with
+`bar_width` (default 0.8, divided between groups), and uncertainty with
+`error_color`, `error_line_width`, `capsize`, and `capthick` (stroke/cap sizes
+in points). `capsize=0` removes caps. The opt-in `publication` theme uses soft
+fills, quiet spines and a subtle y-grid behind the marks; other themes and
+existing no-error bars keep their defaults. Redundant hatch encoding remains
+on by default. The gallery explicitly turns it off for clean fills; the soft
+palette's measured safety guarantee is limited to five categories.
+
+Reproduce the images with `uv run python examples/bar_uncertainty.py`. This
+example generates seeded synthetic observations (12 per cell/dose), computes
+sample SD with `ddof=1`, and estimates a 95% percentile-bootstrap CI of the
+mean using 4,000 resamples **outside the renderer**.
+[Original style](docs/images/bar_before.png) ·
+[SD SVG](docs/images/bar_sd.svg) · [CI SVG](docs/images/bar_ci95.svg) ·
+[Editable comparison](docs/images/bar_uncertainty.mplot.json).
+
+### v1.1 development: raw-data statistical plots
+
+The first subset is implemented; follow the [v1.1 tracker](docs/V1_1_PLAN.md)
+for remaining batches and release gates. The package is not yet a 1.1 release.
+
+```python
+raw = {"dose": ["Control"] * 3 + ["High"] * 3,
+       "response": [0.9, 1.0, 1.1, 1.7, 1.9, 2.1]}
+(mp.plot(raw).theme("publication")
+   .barplot("dose", "response", errorbar=("ci", 95), n_boot=1000, seed=42)
+   .labels(y="Response", title="Mean with bootstrap CI")
+   .save("raw_mean_ci.svg"))
+# Alternatively: .pointplot("dose", "response", errorbar="se")
+# Or: .countplot("dose") — no response column needed.
+```
+
+These builders store raw observations and a named `StatSpec`, not a precomputed
+summary. Estimators: mean/median/sum/min/max/count. Choose `errorbar=None`,
+`"sd"`, `"se"`, `"pi"`, `"ci"`, or `(method, level)`. SD/SEM use sample ddof=1
+and default multiplier 1; PI/CI use coverage percent (default 95). SEM is the
+sample-mean SE, not uncertainty for arbitrary estimators; count has no intervals.
+Bootstrap defaults to independent rows and uses a local stored seed. `weights=`
+supports means with paired value/weight bootstrap CI (not probability-weighted
+sampling); zero-weight rows are excluded. `units=` resamples independent units,
+then rows within each selected unit; point estimates remain observation-weighted.
+Missing required x/y/group/weight/unit rows are dropped; fewer than two effective
+observations or units omit intervals with a warning. General intervals are never
+clipped to contain the point estimate.
+
+`order`/`hue_order` select and order categorical levels, reserving empty slots
+without invented estimates. `orient="h"` swaps geometry but keeps x categorical
+and y the value. Bar `gap` is a fraction of its allocated span. Countplots support
+`stat="probability"`/`"proportion"`/`"percent"`, normalized over all usable selected
+rows, plus `stack=True`. Bar/count `value_labels=True` uses a bounded numeric
+`label_format` such as `".2f"`. Conflicting shared-axis orders fail explicitly;
+horizontal plots do not route to y2. Native/log support is described below;
+arbitrary callables remain unsupported. This is **not full upstream parity**.
+
+Run `python examples/statistical_categories.py` for a weighted/unit CI,
+horizontal SEM and stacked-percent comparison:
+![Statistical categorical options](docs/images/statistical_categories.png)
+[Editable comparison](docs/images/statistical_categories.mplot.json).
+[Bar preview](docs/images/plots/barplot.png) ·
+[Point preview](docs/images/plots/pointplot.png) ·
+[Count preview](docs/images/plots/countplot.png) ·
+[Runnable code and editable specs](docs/PLOT_GALLERY.md).
+
+### v1.1 development: statistical native/log axes
+
+```python
+p = (mp.plot(raw_numeric)
+       .barplot("dose", "response", native_scale=True, stat_scale="axis",
+                baseline=0.5, errorbar=("ci", 95), seed=7)
+       .xscale("log").yscale("log"))
+```
+
+Bar/point/count support finite numeric native categories (not bool/string/date).
+Order selects/reserves physical locations; bar width/point dodge use minimum
+selected/reserved spacing in axis coordinates (log10 for logs; singleton1).
+Missing point cells break lines; large physical distances alone do not. Bar
+width is (0,1], point dodge [0,1]; hatches/empty hue slots remain shared.
+
+Log values keep raw-data estimates by default. Explicit `stat_scale="axis"`
+fits mean/median/min/max and SD/SEM/PI/CI in log10, then inverse-maps centers/
+endpoints; weights/units stay paired. Log-space mean is geometric, not arithmetic.
+Axis/log sum and count are rejected, not interpreted as products/powers. Count
+normalization uses all selected usable rows as before.
+
+Nonstack bar/count `baseline` is a finite raw value, default0 on linear values;
+log values require an explicit positive baseline. Bodies run baseline->estimate,
+labels show estimates (not span length or baseline+estimate). Stacked counts
+need linear values and no explicit baseline; native/log categories are supported.
+Nonpositive derived log bounds/inverse overflow fail, never clipped. This subset
+is primary 2-D only; legacy linear ordinal y2 remains. No full parity claim.
+[Runnable comparison](examples/statistical_scales.py):
+![Statistical native/log axes](docs/images/statistical_scales.png)
+[Editable comparison](docs/images/statistical_scales.mplot.json).
+
+### v1.1 development: independent lineplot semantics
+
+```python
+p = mp.plot(raw).lineplot("time", "response", errorbar="sd",
+    semantics=mp.SemanticSpec(hue="method", size="dose", sizes=[1, 3],
+                              style="batch", dashes=["-", "--"]))
+```
+
+Each distinct **raw hue/size/style tuple defines a curve**, with named estimates
+and pointwise intervals per predictor/curve cell. Clipping numeric appearance
+never combines curves; within-x weighted/unit CI stays pointwise, not whole-curve
+resampling. Size interpolates **main line width in points**, not scatter areas or
+interval widths. Style uses unique filled markers and optional distinct named
+dashes; no scalar override silently replaces mapped roles. Missing roles and
+missing/zero weights/units stay paired; numeric/horizontal/raw/log-fit/sorting/
+missing bounds remain supported. Zero strokes retain markers/intervals/rows.
+`scale_id` shares domains with lineplot/scatter; mixed geometry keeps separate
+width-vs-diameter guide blocks, never extra data/limits. Pure core/JSON/editor/
+export/RNG/legacy contracts,48tests. Limits10000rows/256raw curves/64levels/enough
+markers/dashes; no raw-line/date/y2/colourbar/callable/simultaneous-CI parity claim.
+[Runnable comparison](examples/line_semantics.py):
+![Independent line roles](docs/images/line_semantics.png)
+[Editable comparison](docs/images/line_semantics.mplot.json).
+
+### v1.1 development: named figure-shared scatter scales
+
+```python
+mapping = mp.SemanticSpec(scale_id="study", hue="species", size="mass", style="batch")
+p.scatter("left_x", "y", semantics=mapping, panel=0)
+p.scatter("right_x", "y", semantics=mapping, panel=1)
+```
+
+`scale_id=None` preserves layer-local mappings. A name pools **unique selected
+row IDs in original table order**, so missing coordinates in one panel do not
+reset global colours/bounds/sizes/marker slots. Identical settings are required
+(only legend may differ; numeric hue cmap must also match). Conflicts or pooled
+row/level/marker limits fail before artists. Shared colour blocks precede legacy
+entries; repeated layers do not consume the same colour block again. Guides
+calibrate the **pooled scope**, never add observations/limits, and occur once per
+panel even with multiple members; dataset labels remain separate. Different names
+stay independent. This is the sharing foundation; use the separate
+[automatic facet API](docs/FACETS.md) to materialize a grid;
+lineplot semantics are described above. [Comparison](examples/shared_semantics.py):
+![Local versus shared domains](docs/images/shared_semantics.png)
+[Editable comparison](docs/images/shared_semantics.mplot.json).
+
+### v1.1 development: independent scatter semantics
+
+```python
+p = mp.plot(raw).scatter("x", "y", hue="species", size="mass", style="batch")
+# Advanced controls: semantics=mp.SemanticSpec(hue="score", hue_kind="numeric",
+#     hue_norm=[0, 10], size="mass", size_norm=[0, 100], sizes=[2, 9], style="batch")
+```
+
+Strict `SemanticSpec`/dict separates roles; existing group/c/marker calls stay
+unchanged. Hue is categorical by default (numeric explicit), size numeric by
+default (categorical explicit), style always categorical. Orders select/reserve
+slots; missing x/y/role rows drop listwise. Bounds map all selected rows globally,
+**not each style subset**, and clip mapping only, never observations. `sizes`
+are **diameters in points**, interpolated then squared to native marker areas.
+Constant numeric variables map midpoint with one guide; stable differences handle
+extreme scales/nearby low bits. Positive area underflow fails; exact zero sizes
+keep invisible rows. Markers must be distinct filled named symbols, no recycling.
+Legend shows observed categorical levels and **numeric mapping guides, not extra
+data**; guides do not expand data limits. Global reference metadata uses an
+explicit layer label. No group/c/role scalar override conflicts, colourbar,
+outline/date/y2/line/facet semantics in this first scatter subset. Legacy c/
+colourbar remains supported; broader workflows stay on the plan, no parity claim.
+[Runnable comparison](examples/scatter_semantics.py):
+![Independent scatter mappings](docs/images/scatter_semantics.png)
+[Editable comparison](docs/images/scatter_semantics.mplot.json).
+
+### v1.1 development: numeric-x line estimates
+
+```python
+p = mp.plot(raw).lineplot("time", "response", group="method", errorbar="ci",
+                          n_boot=1000, seed=7, error_alpha=.25)
+```
+
+Separate from unchanged raw `.line()`. Numeric x cells use named estimators and
+shared SD/SEM/PI/seeded CI, weighted mean/paired CI and within-x unit bootstrap.
+**Intervals are pointwise, NOT simultaneous confidence bands or whole-curve
+resampling.** Ribbons join observed-cell bounds for display, not model coverage
+at unmeasured x. Missing bounds break ribbons without removing estimates.
+Default sorts x ascending; `sort=False` uses per-hue first-observed x order.
+Nonmonotonic ribbons fail (sort or choose `error_style='bars'`). Bands default
+to `.2*line alpha`; `error_alpha` overrides exactly. Caps/stroke are bars-only.
+Both orientations, positive log predictors and raw/explicit log10 response
+fit are supported; invalid endpoints fail, never clip. Primary2D only; no
+category/date predictors/y2/dodge/order/callables. Opt-in semantic maps are above.
+[Runnable comparison](examples/line_estimates.py):
+![Pointwise line estimates](docs/images/line_estimates.png)
+[Editable comparison](docs/images/line_estimates.mplot.json).
+
+### v1.1 development: weighted violin
+
+```python
+p = mp.plot(raw).violin("dose", "response", group="method", weights="weight",
+                        inner="quart", split=True, density_norm="count",
+                        common_norm=True)
+```
+
+Paired nonnegative relative weights define unbiased Gaussian covariance and
+effective sample size, not replicated rows. Missing/zero-weight rows are dropped
+before positivity. Weighted quartiles/medians use **inverse weighted ECDF** with
+all ties and no interpolation; even equal weights intentionally differ from
+legacy linear quantiles. Means use weights in the declared data/log10 space;
+points/sticks retain each positive row once. `count` width uses **total weight
+mass, not row count or effective n**. Use comparable weight units across cells.
+Cut/clip bound evaluation only, never fitting/inner rows or mass. Degenerate
+observed bodies remain honest point masses, no invented bandwidth. Maximum
+10000 usable rows/layer; bounded kernel chunks and clear derived failures.
+Unweighted calls retain their old fits/marks. No new dependency or full-parity
+claim. [Executable comparison](examples/weighted_violin.py):
+![Weighted violin comparison](docs/images/weighted_violin.png)
+[Editable comparison](docs/images/weighted_violin.mplot.json).
+
+### v1.1 development: weighted bivariate KDE contours
+
+```python
+p = mp.plot(raw).kde2d("x", "y", weights="weight", group="method",
+                      levels=[.5, .8, .95], gridsize=80, fill=True, alpha=.5)
+```
+
+Strict `KDE2DSpec` uses full relative-weighted covariance/effective n; in 2D,
+Scott/Silverman coincide at `n_eff**(-1/6)`. Cut/clip bound evaluation only, never
+fit rows or density tail normalization. Common mass includes selected singular
+hues; common grid uses pooled support with conditional covariance. Insufficient/
+collinear/numerically rank-deficient data skip with optional warnings, no jitter
+or fabricated Gaussian. Missing/zero-weight x/y rows stay paired.
+
+**Levels enclose trapezoidal highest-density mass conditional on the finite
+GRID.** Ties all count. This is an approximate KDE region, **not a confidence
+interval or full-space coverage guarantee**. Clip/grid changes may change HDR
+thresholds; density remains raw-normalized. Native contours/fills use hue dash/
+hatch and exact alpha/outline; raw-unit log display needs positive observations
+and support, no Jacobian. Limits: 10000 usable rows, 256 nodes/axis, 16 increasing
+levels strictly in (0, 1); invalid support/density/grid mass/tied levels fail.
+No 2D cumulative/automatic regularization/colorbar/kernel/callable/date/y2/
+absolute density levels/log fit/stack/multiple/kwargs or upstream parity claim.
+[Runnable comparison](examples/kde2d_semantics.py):
+![Bivariate KDE conditional HDR](docs/images/kde2d_semantics.png)
+[Editable comparison](docs/images/kde2d_semantics.mplot.json).
+
+### v1.1 development: configurable weighted Gaussian KDE
+
+```python
+p = mp.plot(raw).kde("value", weights="weight", group="method",
+                    bw_method="scott", bw_adjust=.8, common_norm=False,
+                    common_grid=True, cut=3, clip=(0, None), fill=True, alpha=.4)
+# cumulative=True gives the analytic full Gaussian CDF, not an ECDF/grid sum.
+```
+
+New options store strict `KDESpec`; plain old calls retain their unweighted
+1.06*sample-SD*n**(-1/5),200-point effect, including constant fallback. Typed
+relative weights define unbiased covariance and effective n=1/sum(p**2),
+p=w/sum(w); Scott=n_eff**(-1/5), Silverman=(3*n_eff/4)**(-1/5). A numeric method
+is a covariance factor, not an absolute bandwidth. These weights are NOT
+replicated sample counts. Missing required/zero weights and unselected hues drop
+as paired rows; observations/weights are finite non-bool, weights nonnegative.
+
+Common_norm=True uses all usable selected mass, INCLUDING skipped singular
+hues; False each curve's mass. Cut/clip restrict evaluation, never fit rows or
+renormalize tails. Full-line areas/CDF endpoints are group shares or1; finite
+support does not necessarily integrate to1 or end at1. Common_grid uses pooled
+weighted support but each hue's own bandwidth. Singleton/constant curves are
+skipped with a controllable warning: no fabricated Gaussian/CDF/legend.
+
+Cumulative sums analytic Gaussian CDFs from -infinity, not from the first grid
+point. Scaled weights/covariance, accurate positive sums and bounded evaluation
+avoid huge matrix allocations and cancellation; invalid derived support/bandwidth/
+heights fail. Primary2D line/fill/v-h, exact alpha/width, fill outlines, hue dashes/
+hatches and reference metadata work. Observation log display still fits RAW
+units (no Jacobian), requiring positive values AND generated support; explicit
+clip/cut may be needed. Density/CDF axes stay linear. No bivariate/date/y2/stack/
+other kernel/callable bandwidth/log-fit/interval/kwargs or upstream parity claim.
+Weighted violin KDE is supported separately through the violin options above.
+[Runnable comparison](examples/kde_semantics.py):
+![Weighted Gaussian KDE semantics](docs/images/kde_semantics.png)
+[Editable comparison](docs/images/kde_semantics.mplot.json).
+
+### v1.1 development: weighted histogram statistics
+
+```python
+p = mp.plot(raw).hist("value", bins=[0, 1, 3, 6], weights="weight",
+                     stat="density", group="method", multiple="stack",
+                     element="step")
+# Default element="bars" also supports multiple="dodge". Steps: layer/stack only.
+# cumulative=True integrates mass; orient="h" swaps geometry, not x's role.
+```
+
+New options opt into typed `HistogramSpec`; old `.hist(..., density=...)`
+remains unchanged, including per-group bins/normalization/default alpha.
+Typed integer bins pool usable selected rows; explicit edges share raw widths.
+Bins are [left,right), with the final edge closed. Missing required and zero-weight
+rows are dropped, weights are finite/nonnegative (not bool). Outside-bin mass is
+excluded from denominators. Common_norm=True uses pooled in-bin mass, False each
+curve's mass. Count sums weights; frequency divides by raw width; probability/
+proportion divides by mass; percent multiplies by100; density divides by mass
+AND raw width. Density integrates to1, not sums heights to1.
+
+Cumulative density integrates probability mass (a binned CDF, not exact ECDF);
+no cumulative frequency. Scaled normalized weights avoid total overflow;
+independent bin sums retain small mass and accurate row prefixes remain monotone.
+Nonfinite raw totals/derived widths/heights fail, never silently clipped.
+Primary2D v/h bars or unfilled steps; positive observation logs use raw bin widths,
+height axes remain linear. Hue slots/hatches, exact alpha/edge/width and reference
+metadata work. `multiple="stack"` adds heights in hue order; `"dodge"` splits
+raw bin widths into equal hue slots, including reserved empty hues. Heights and
+normalization do not change: density/frequency use the original bin width, so
+dodging reduces drawn area without height correction. Stack overflow/lost nonzero
+increments and collapsed dodge slots fail before drawing. `element="step"`
+uses native stairs: layer closes to zero, stack outlines the absolute top and
+previous baseline. Empty hues reserve theme dash/color slots; `edge_color`
+overrides stroke color, and exact alpha/width (including zero) are retained.
+Step with dodge, filled steps, fill/poly/discrete/auto-bin/date/bivariate/KDE/y2
+and intervals remain outside this subset.
+No full upstream parity claim.
+[Runnable comparison](examples/histogram_statistics.py):
+![Weighted histogram statistics](docs/images/histogram_statistics.png)
+[Editable comparison](docs/images/histogram_statistics.mplot.json).
+
+### v1.1 development: empirical cumulative distributions
+
+```python
+p = (mp.plot(raw)
+       .ecdf("value", weights="weight", group="method", stat="percent")
+       .labels(x="Value", y="Within-curve percent"))
+# Or: .ecdf("value", complementary=True, orient="h") — strict upper tail.
+```
+
+ECDF stores raw values and typed `ECDFSpec`, not a fit/histogram/KDE. Default
+`stat="proportion"` is F(t)=sum(w for X<=t)/sum(w); percent multiplies by 100,
+count is cumulative weight mass (ordinary observation count without weights).
+Each selected curve normalizes separately, unlike countplot's global denominator.
+Complementary mass is strictly X>t, excluding all ties. Equal values jump together;
+horizontal geometry keeps x as the observation argument. Curves show the full
+minimum jump and stop at finite observed extrema, with no extrapolated tail.
+
+Missing x/group/weight rows and zero weights are dropped before log positivity.
+Values/weights must be finite numeric (not bool), weights nonnegative. Empty
+hues have no curve/legend; `hue_order` selects/reserves color and dash slots.
+Scaled sums avoid proportion/percent overflow, accurate unrounded prefixes keep
+steps monotone, and right-to-left tails avoid loss from 1-F. Count overflow fails.
+
+Primary Cartesian2D only; v/h, positive log observation axes, linear mass axes.
+Named line/alpha styles and reference metadata work; bins, smoothing, intervals,
+censoring/Kaplan-Meier, markers, date/2-D ECDF and y2 routing are unsupported.
+This is a bounded subset, **not full upstream parity**.
+[Runnable comparison](examples/ecdf_semantics.py):
+![ECDF semantics](docs/images/ecdf_semantics.png)
+[Editable comparison](docs/images/ecdf_semantics.mplot.json).
+[Gallery](docs/PLOT_GALLERY.md#ecdf--empirical-cumulative-distribution).
+
+### v1.1 development: nested box/violin distributions
+
+```python
+# x stays categorical even with horizontal orientation.
+p = mp.plot(raw).box("dose", "response", group="cell", whis=(5, 95),
+                     order=["Control", "Low", "High"], gap=0.12,
+                     showmeans=True, showfliers=False)
+q = mp.plot(raw).violin("dose", "response", group="cell", orient="h",
+                        bw_method="silverman", points=100,
+                        showextrema=False, edge_color="#4b5563")
+```
+
+Legacy `.box("response", group="cell")` / `.violin("response", group="cell")`
+still mean one value column split by group. New nesting supports order/hue order,
+width/gap and numeric dodge (None auto, 0 overlays), shared hue colour/hatches,
+listwise missing-row exclusion and empty reserved slots. Box whiskers follow
+IQR/percentile rules, **not confidence intervals**; notches use a deterministic
+Gaussian approximation. Violin uses native Gaussian KDE, per-violin widths and
+observed min/max extent. `showmeans`/`showmedians`/`showextrema` control marks.
+Named inner styles, two-hue split, area/count references, bandwidth adjustment
+and cut/clip are supported below. Callable KDE and arbitrary inner
+kwargs remain unsupported. Numeric native/log categories and positive log values
+are supported on primary axes (see explicit statistic coordinates below).
+[Box example](examples/plots/box.py) · [Box preview](docs/images/plots/box.png) ·
+[Violin example](examples/plots/violin.py) · [Violin preview](docs/images/plots/violin.png).
+
+### v1.1 development: independent box/boxen components
+
+```python
+p = mp.plot(raw).box("dose", "response", showmeans=True, components={
+    "body": {"alpha": 1},
+    "median": {"color": "#b54b00", "line_width": 2},
+    "mean": {"marker": "s", "face_color": "white", "edge_color": "black"},
+    "flier": {"marker": "d", "marker_size": 3, "edge_color": "#0072b2"}})
+```
+
+`box` accepts body/whisker/cap/median/mean/flier; `boxenplot` only body/median/flier.
+Typed `ComponentStyleSpec` / `DistributionComponentsSpec` work too. Missing styles
+inherit native/layer/hue settings; named component properties override shorthand
+without changing statistics/coordinates. Body colour keeps boxen tint tiers;
+empty hatch disables redundant hatching. Component alpha is exact, including 1.
+Marker stroke/fill use edge_color/face_color separately. Mean style requires
+showmeans=True; explicitly hidden/unsupported/unknown settings fail before render.
+Bounded basic/hex/cycle colours, named styles/markers and finite sizes only; no
+arbitrary kwargs, per-hue/per-band maps or precomputed bxp statistics.
+[Runnable comparison](examples/distribution_components.py):
+![Distribution components](docs/images/distribution_components.png)
+[Editable comparison](docs/images/distribution_components.mplot.json).
+
+### v1.1 development: violin inner and density semantics
+
+```python
+p = mp.plot(raw).violin("dose", "response", group="cell", inner="quart",
+                        split=True, density_norm="area", bw_adjust=0.8, cut=1)
+```
+
+Defaults stay median/width/observed-range (`inner="legacy"`, `density_norm="width"`,
+cut 0). Inner modes: box (IQR/whiskers/median, not CI), quart, point, stick, or None.
+Only legacy accepts showmeans/showmedians/showextrema. Point/stick preserve every
+selected usable observation, up to 10000/layer. Split requires exactly two
+selected/reserved hues, shared center and no positive dodge; empty halves stay empty.
+
+Area uses a common KDE density peak; count scales by cell n/reference maximum n.
+`common_norm=False` compares within hue across categories; True compares all cells
+(for area/count only). Truncated grid area is not guaranteed identical. `bw_adjust`
+is a finite multiplier in (0,1000], cut is [0,10] bandwidths, clip is raw-value
+finite/None bounds restricting support only, not fitting rows/counts/inner marks.
+Log clip bounds must be positive; stat_scale still chooses raw vs explicit log fits.
+This is a bounded subset, not arbitrary-hue/weighted KDE or full upstream parity.
+[Runnable comparison](examples/violin_semantics.py):
+![Violin semantics](docs/images/violin_semantics.png)
+[Editable comparison](docs/images/violin_semantics.mplot.json).
+
+### v1.1 development: display-space swarm observations
+
+```python
+p = (mp.plot(raw).swarmplot("dose", "response", group="cell",
+                           order=["Control", "Low", "High"],
+                           marker_size=5, warn_thresh=0)
+     .yscale("log"))  # positive observations only
+```
+
+Circular markers repack at every draw using the actual layout/axis transform,
+DPI, marker size and stroke width. Values stay unchanged; orientation, orders,
+width/gap and numeric dodge are supported (None auto, 0 jointly packs hues).
+Overcrowding **retains every row**, warns once per collection and reports
+`crowded_count`; reduce marker size or enlarge the figure. Deterministic greedy
+packing is bounded to 2000 usable observations/layer, not optimal packing.
+Numeric native/log categories are now supported with `native_scale=True`.
+Arbitrary marker shapes/size mappings and y2 are not supported. [Runnable comparison](examples/swarm_categories.py):
+![Swarm layouts](docs/images/swarm_categories.png)
+[Editable comparison](docs/images/swarm_categories.mplot.json).
+
+### v1.1 development: letter-value distributions
+
+```python
+p = (mp.plot(raw).boxenplot("dose", "response", group="cell",
+                           k_depth=4, width_method="exponential", gap=0.15)
+     .theme("publication"))
+```
+
+`boxenplot` shows progressively deeper raw-data quantiles, **not confidence
+intervals**. Depth rules: tukey (default), full, proportion and trustworthy,
+plus explicit integers 1..32; named rules cap at 32. Widths: exponential,
+linear or area (actual probability mass/band height, normalized within a cell).
+Full depth extends to min/max; other tail points are raw observations strictly
+outside outer letter values, not IQR outliers. Constant/tied bands stay finite;
+zero-height area bands have zero width, all-constant cells use exponential.
+One-column grouping, category/hue nesting, orders/orientation/gap/dodge and
+median/tail visibility/style are supported on primary 2-D numeric native/log axes.
+Weights and arbitrary component kwargs remain unsupported.
+[Runnable comparison](examples/letter_value_categories.py):
+![Letter-value widths](docs/images/letter_value_categories.png)
+[Editable comparison](docs/images/letter_value_categories.mplot.json).
+
+### v1.1 development: native/log categorical coordinates
+
+Box, violin, boxenplot and swarmplot accept `native_scale=True` (default False)
+for finite numeric category IDs, not strings/bools/dates. Order selects/reserves
+locations, not their physical ordering. Width/dodge are relative to the minimum
+selected/reserved spacing in axis coordinates (log10 on log category axes;
+single level spacing 1). Legacy ordinal/one-based defaults stay unchanged.
+
+Summary types default to `stat_scale="data"`, preserving raw-data estimates.
+Explicit `stat_scale="axis"` opts into log10 summaries/KDE with inverse-mapped
+artists; swarm always keeps raw values. Log values/categories must be positive.
+Shared axes reject native/ordinal mixtures and conflicting scale declarations.
+Statistical bar/point/count use this spacing in their documented subset above;
+broader mappings remain unsupported.
+[Runnable comparison](examples/native_categorical_scales.py):
+![Native and log coordinates](docs/images/native_categorical_scales.png)
+[Editable comparison](docs/images/native_categorical_scales.mplot.json).
+
 ### Supported plot types
 
 | category | types | notes |
 | --- | --- | --- |
 | basic | `line`, `regplot`, `scatter`, `bar`, `errorbar`, `band`, `stackplot` | `group=` for multiple series; line supports `drawstyle="steps-post"` (and pre/mid/steps); bars auto-dodge when grouped; categorical or numeric x |
-| distributions | `hist`, `box`, `violin`, `kde`, `rug`, `stripplot` | `kde` uses a small numpy-only Gaussian KDE (no scipy dependency); `rug` marks x observations; `stripplot` uses reproducible bounded jitter |
+| raw-data statistics | `barplot`, `pointplot`, `countplot` | named estimation and explicit intervals; countplot needs x only; ordinal default or explicit numeric native/log primary axes; log bars need baseline |
+| distributions | `hist`, `box`, `boxenplot`, `violin`, `kde`, `kde2d`, `ecdf`, `rug`, `stripplot`, `swarmplot` | `kde` preserves legacy calls and adds opt-in weighted/configurable Gaussian density/CDF (no scipy dependency); `rug` marks x observations; `stripplot` uses reproducible bounded jitter |
 | 2-D fields | `heatmap`, `contour`, `contourf`, `hist2d`, `hexbin` | share a matrix registered via `.matrix(name, values)`; use the same LCH colormaps as the palettes |
 | vector fields | `quiver` | numeric x/y positions plus u/v components; optional continuous colour and explicit scale/shaft-width controls |
 | polar | `line`, `scatter`, `bar` | call `.projection_polar()`; angles are x values in radians |

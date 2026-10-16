@@ -69,6 +69,28 @@ def _demo_specs():
     )
     matrix = mp.plot({}).matrix("field", [[1, 2], [3, 4]]).heatmap("field").spec
     threed = mp.plot(data).projection3d().scatter3d("x", "y", "x", c="y").spec
+    bar_data = {
+        "x": [0, 1],
+        "mean": [1, 2],
+        "sd": [0.1, 0.2],
+        "lo": [0.8, 1.9],
+        "hi": [1.1, 2.3],
+    }
+    bar_sd = mp.plot(bar_data).bar("x", "mean", yerr="sd").spec
+    bar_ci = (
+        mp.plot(bar_data)
+        .theme("publication")
+        .bar(
+            "x",
+            "mean",
+            y_lower="lo",
+            y_upper="hi",
+            bar_width=0.6,
+            error_color="#334155",
+            capthick=0.8,
+        )
+        .spec
+    )
     default = FigureSpec()
     return {
         "plain grouped line": plain,
@@ -77,6 +99,8 @@ def _demo_specs():
         "matrix/heatmap": matrix,
         "3-D scatter": threed,
         "bare default": default,
+        "bar with SD": bar_sd,
+        "publication bar with asymmetric CI": bar_ci,
     }
 
 
