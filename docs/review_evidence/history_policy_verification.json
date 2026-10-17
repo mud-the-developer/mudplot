@@ -1,0 +1,538 @@
+{
+  "scope": "phase14 existing history/document/no-op/long replay policies and Rust UI request serialization; current Windows plus observed Linux/Windows Rust CI jobs for781f3f5, not full arbitrary-history/performance or release guarantee",
+  "head": "781f3f56c75c975d985e713562deb65afdfa723c",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "tests/test_review_history_policies.py": "6d561582ce32694526efd3113d30b9f034ddb5dfe3d9e2f782e92b27aac45f0f",
+    "tests/test_editor_browser.py": "2b865e8edbce7588e2d5b4eeb0932631c84c55adb681dffbbd6481c6afc18691",
+    "scripts/rust_editor_smoke_test.py": "89928d1ebd69f6012443c19ab4634fadc92755dd46f369c2ed00c67342582a3e",
+    "mudplot-editor/templates/fragment.html": "44306561d049d198504f63b0e8c10d72621e7f06ed88276a791237b4323b5ea0",
+    "scripts/check_minimum_versions.py": "f3516a2f6bb953d0735967d90d559ef4f1d26d9660da9c00bf4537402ea2fcec"
+  },
+  "policies": {
+    "python": "open/reset starts fresh history; no imported filename is a bound server-side save target; download exports current state; no separate dirty-bit feature",
+    "rust": "open/reset is undoable snapshot; redo cleared on new successful branch; reset returns startup default, not last open document",
+    "noop": "record an event/snapshot and clear redo even if figure state unchanged; do not optimize away listeners",
+    "replay": "two seeds20261016/24301;768valid actions each;128undo+128redo checkpoints; whole-state/cursor/hash equality, not arbitrary length/performance threshold"
+  },
+  "ui_fix": {
+    "observed": "uncaught null querySelector in htmx during overlapping app outerHTML swaps",
+    "change": "root hx-disabled-elt disables current controls during request; no vendor, state-policy or dependency change",
+    "test_corrections": "native history buttons are direct hx-post controls, not forms; Python picker test rechecks visible details before Open. Earlier failed runs retained separately, not counted as complete."
+  },
+  "remote_ci": {
+    "run": 39050108296,
+    "commit": "781f3f56c75c975d985e713562deb65afdfa723c",
+    "status": "completed",
+    "conclusion": "cancelled",
+    "jobs": [
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117447100073,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117447100173,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "success"
+          },
+          {
+            "name": "Minimum render dependency contract",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117447100196,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117447100296,
+        "conclusion": "cancelled",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Minimum render dependency contract",
+            "conclusion": "cancelled"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "interpretation": "both Rust OS jobs including MSRV1.88/interpreter/body probes succeeded; Python3.12 success,Python3.10 cancelled; not full workflow or release approval"
+  },
+  "checks": [
+    {
+      "name": "history-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_history_policies.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_known_behaviors.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_editor_paths.py",
+        "--junitxml=<evidence>/history.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "199 passed in 219.56s (0:03:39)"
+      ],
+      "log_text_sha256": "cc1e5bb97e33bab6a89f07fad3044975d35a74f501d5a05440325c1e0fb59e0d"
+    },
+    {
+      "name": "python-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_editor_browser.py",
+        "--junitxml=<evidence>/browser.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "32 passed in 164.54s (0:02:44)"
+      ],
+      "log_text_sha256": "6467c63405bd8bb1ce65d40f7cdd3a878b8cc88c1233d507b4a4bebb9f9bcef0"
+    },
+    {
+      "name": "rust-http-browser",
+      "argv": [
+        "python",
+        "scripts/rust_editor_smoke_test.py",
+        "--browser"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "Document/no-op policies OK: open/reset snapshots, redo invalidation and current JSON/PNG",
+        "Cross-path state OK (supported forms/agent): 926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+        "Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo",
+        "HTTP boundary OK: Host/Origin/16MiB rejection and security headers",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_text_sha256": "7b31514eda469906223afe682dd16f568d4d372d794d876b6857f42892c54aba"
+    },
+    {
+      "name": "minimum-history",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_history_policies or test_review_state_contracts\""
+      },
+      "exit_code": 0,
+      "results": [
+        "20 passed, 2506 deselected, 13 warnings in 53.16s"
+      ],
+      "log_text_sha256": "fe4d9dccec4ebfa7e8b065d9e8db26fe365e360505975f8419551b9e56eafbdd"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "213 files already formatted"
+      ],
+      "log_text_sha256": "82d11debb2402ed51f854503a78bcf145a3f850bb5ab8b9bb5a00ffdbdbaa513"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "8aae203cd1af3c9ce48c172f7ae4e5740a37a7566cfb7540e1ad661b443cc55f"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "e9b3fd4c612ad9050d5648a6bdca1b0871fb9bd42bb3083af5d57cf4c507264e"
+    }
+  ]
+}

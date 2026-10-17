@@ -104,6 +104,84 @@ def _review_history_contracts(base: str) -> None:
     print("History boundary/branch OK: spec and PNG agree at every undo/redo step")
 
 
+def _review_document_policies(base: str) -> None:
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            spec = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            return spec, response.read()
+
+    def post(path):
+        with _request(base + path, b"") as response:
+            assert response.status == 200
+
+    def title(text):
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetTitle", "text": text}).encode(),
+            "application/json",
+        ) as response:
+            assert json.load(response)["panels"][0]["title"] == text
+
+    original = capture()
+    first = (
+        mp.plot({"x": [1, 2], "y": [2, 3]})
+        .line("x", "y")
+        .labels(title="document A")
+        .size(4, 3)
+    )
+    second = (
+        mp.plot({"u": [1, 2], "v": [3, 4]})
+        .line("u", "v")
+        .labels(title="document B")
+        .size(4, 3)
+    )
+    _submit(base, "/open", {"json": first.to_json()})
+    title("A-edited")
+    edited_a = capture()
+    title("A-future")
+    post("/undo")
+    assert capture() == edited_a
+    _submit(base, "/open", {"json": second.to_json()})
+    opened_b = capture()
+    assert mp.FigureSpec.from_dict(opened_b[0]) == second.spec
+    post("/redo")
+    assert capture() == opened_b
+    post("/undo")
+    assert capture() == edited_a
+    post("/redo")
+    assert capture() == opened_b
+    title("B-edited")
+    edited_b = capture()
+    post("/reset")
+    assert capture() == original
+    post("/undo")
+    assert capture() == edited_b
+    post("/redo")
+    assert capture() == original
+    title("no-op")
+    unchanged = capture()
+    title("discarded-future")
+    post("/undo")
+    assert capture() == unchanged
+    title("no-op")
+    post("/redo")
+    assert capture() == unchanged
+    post("/undo")
+    assert capture() == unchanged
+    post("/undo")
+    assert capture() == original
+    post("/redo")
+    post("/redo")
+    assert capture() == unchanged
+    _submit(base, "/open", {"json": json.dumps(original[0])})
+    assert capture() == original
+    print(
+        "Document/no-op policies OK: open/reset snapshots, "
+        "redo invalidation and current JSON/PNG"
+    )
+
+
 def _review_state_paths(base: str) -> None:
     case = json.loads(
         (REPO_ROOT / "tests/fixtures/review_state_paths.json").read_text(
@@ -375,7 +453,7 @@ def _browser_check(base: str) -> None:
             if "content security policy" in message.text.lower():
                 errors.append(message.text)
 
-        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on("pageerror", lambda error: errors.append(error.stack or str(error)))
         page.on("console", check_console)
         page.goto(base)
         assert page.evaluate("typeof window.htmx") == "object"
@@ -396,6 +474,21 @@ def _browser_check(base: str) -> None:
         page.wait_for_function(
             "document.querySelector('select[name=name]').value === 'paper'"
         )
+        page.wait_for_load_state("networkidle")
+        with _request(f"{base}/spec.json") as response:
+            edited = mp.FigureSpec.from_dict(json.load(response))
+        default = mp.Plot.from_json(
+            (REPO_ROOT / "mudplot-editor/default_spec.json").read_text(encoding="utf-8")
+        ).spec
+        for operation, expected in (
+            ("reset", default),
+            ("undo", edited),
+            ("redo", default),
+        ):
+            page.locator(f'button[hx-post="/{operation}"]').click()
+            page.wait_for_load_state("networkidle")
+            with _request(f"{base}/spec.json") as response:
+                assert mp.FigureSpec.from_dict(json.load(response)) == expected
         assert not errors, errors
         browser.close()
 
@@ -442,6 +535,7 @@ def main(*, browser: bool = False) -> int:
                 time.sleep(0.1)
 
         _review_history_contracts(base)
+        _review_document_policies(base)
         with _request(f"{base}/") as response:
             page = response.read()
             assert response.headers["X-Content-Type-Options"] == "nosniff"
@@ -636,7 +730,7 @@ def main(*, browser: bool = False) -> int:
             "/action/raw",
             {"json": '{"type":"SetTitle","text":"htmx form","panel":0}'},
         ) as response:
-            assert b'<main id="app">' in response.read()
+            assert b'<main id="app"' in response.read()
         with _request(f"{base}/undo", b"") as response:
             assert response.status == 200
 

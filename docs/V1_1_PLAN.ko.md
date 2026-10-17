@@ -120,6 +120,28 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 14차에서 문서/no-op/long-history 정책을 검증했습니다.** Python open/reset은
+새 이력, Rust는 undo 가능한 snapshot이고 reset은 시작 기본 문서로 돌아갑니다.
+다운로드는 현재 상태이며 import 파일명을 묶는 dirty-bit/save-target 기능을 추가하지
+않았습니다. 같은 값 action도 event로 남기고 redo를 지웁니다. 두 seed의768action과
+128undo/128redo checkpoint가 정확히 재생되어 HIST-04/05/06은 이 범위에서 PASS입니다.
+
+FIND-017은 Rust control 요청이 같은 app target을 겹쳐 swap하며 detached-target
+pageerror를 내던 문제입니다. Root hx-disabled-elt로 요청 중 control을 비활성화했고
+vendor/서버 이력은 바꾸지 않았습니다. 잘못된 form selector와 Open section 가정은 QA만
+고쳤습니다. 최종 **이력 대상199통과**, 전체 Python browser **32통과**, 실제 Rust
+HTTP/browser 통과이며 최소 history-only는 **20통과/2506deselected/경고13**입니다.
+Ruff213파일/format·Pyright·LSP5경로·계약·packaging의9명령을 기록했습니다.
+
+원격781f3f5 Rust Linux/Windows jobs는 MSRV1.88/interpreter/body 단계까지 모두
+성공해 RUST-02를 PASS 처리했습니다. Python3.12도 성공했지만3.10이 취소되어
+workflow39050108296 전체는 cancelled이지 green이 아닙니다. 이 결과를 후속 UI 변경의
+원격 통과로 소급하지 않습니다. [14차 증거](review_evidence/history_policy_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS34/RUNNING12/OPEN104**이며 원문/버전/
+lock/tag/배포는 유지하고 전체 CI/릴리스/성능 gate는 남깁니다.
+
+### 이전 리뷰 13차
+
 **리뷰 13차에서 미지원 scalar의 조용한 coercion/재귀를 수정했습니다.** FIND-015는
 Decimal/custom NaN→null, sNaN의 InvalidOperation, longdouble/same-type/순환 item의
 재귀이며 수정 전7개 실패를 확보했습니다. 알려진 NumPy/pandas scalar만 결측으로

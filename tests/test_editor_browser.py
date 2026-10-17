@@ -690,6 +690,75 @@ def test_configured_regression_import_edit_and_svg(editor, tmp_path, name):
     assert response.ok and b"<svg" in response.body()
 
 
+def test_open_reset_and_download_keep_python_document_history_and_source_files_separate(
+    editor, tmp_path
+):
+    import mudplot as mp
+
+    page, url = editor
+    first = (
+        mp.plot({"x": [1, 2], "y": [2, 3]})
+        .line("x", "y")
+        .labels(title="file A")
+        .size(4, 3)
+    )
+    second = (
+        mp.plot({"u": [1, 2], "v": [3, 4]})
+        .line("u", "v")
+        .labels(title="file B")
+        .size(4, 3)
+    )
+    paths = [tmp_path / "source-a.json", tmp_path / "source-b.json"]
+    for path, plot in zip(paths, (first, second), strict=True):
+        mp.save_spec(plot.spec, path)
+    original = [path.read_bytes() for path in paths]
+
+    def open_file(path, expected):
+        section = page.locator('details[data-key="open"]')
+        if section.get_attribute("open") is None:
+            section.locator("summary").click()
+        page.locator("#spec-file").set_input_files(str(path))
+        page.wait_for_function(
+            "expected => document.getElementById('spec-json').value === expected",
+            arg=path.read_text(encoding="utf-8"),
+        )
+        if section.get_attribute("open") is None:
+            section.locator("summary").click()
+        page.get_by_role("button", name="Open figure", exact=True).click()
+        _wait_until(lambda: _spec(url), lambda spec: spec == expected)
+        _settle(page)
+
+    open_file(paths[0], first.spec.to_dict())
+    page.get_by_label("Panel title", exact=True).fill("A unsaved edit")
+    page.get_by_label("Panel title", exact=True).press("Enter")
+    _wait_until(
+        lambda: _spec(url), lambda spec: spec["panels"][0]["title"] == "A unsaved edit"
+    )
+    _settle(page)
+    open_file(paths[1], second.spec.to_dict())
+    history = page.locator('details[data-key="history"]')
+    if history.get_attribute("open") is None:
+        history.locator("summary").click()
+    for name in ("Undo", "Redo"):
+        page.get_by_role("button", name=name, exact=True).click()
+        _settle(page)
+        assert _spec(url) == second.spec.to_dict()
+    with page.expect_download() as download:
+        page.get_by_role("link", name="Spec (.json)", exact=True).click()
+    saved = tmp_path / "download-b.json"
+    download.value.save_as(str(saved))
+    assert mp.load_spec(saved) == second.spec
+    page.get_by_role("button", name="Reset", exact=True).click()
+    _settle(page)
+    assert _spec(url) == mp.FigureSpec().to_dict()
+    with page.expect_download() as download:
+        page.get_by_role("link", name="Spec (.json)", exact=True).click()
+    saved = tmp_path / "download-reset.json"
+    download.value.save_as(str(saved))
+    assert mp.load_spec(saved) == mp.FigureSpec()
+    assert [path.read_bytes() for path in paths] == original
+
+
 def test_csp_headers_and_real_htmx_swap_have_no_policy_violations(editor):
     page, url = editor
     violations = []

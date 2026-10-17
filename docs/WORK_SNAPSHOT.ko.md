@@ -22,9 +22,9 @@
 
 ## 검증과 리뷰 상태
 
-- 최신 프로젝트 대상 **1116통과/27skip**(선택 전용25·Windows2), PyArrow26/Polars2
-  overlay **244통과/skip0**이며 겹치는 범위를 합산하지 않습니다. 최소 대상은
-  **354통과/선택25skip/경고481**로 전체/zero-warning matrix가 아닙니다.
+- 최신 이력 대상 **199통과**, 전체 Python browser **32통과** 및 실제 Rust HTTP/
+  browser도 통과했습니다. 최소 history-only **20통과/경고13**은 과거354case의 반복이
+  아닙니다. 이전1116/27·optional244는 과거의 겹치는 범위이지 새 전체 앱 검증은 아닙니다.
 - Browser **31통과**와 native Rust **15통과/helper1ignored**는 이전11차 결과이며
   새 count가 아닙니다. 이번12차 격리 all-extra Rust smoke는 로컬 통과했습니다.
   Form/JSON/chunked39순차 body case와 실제 서버 PID 수명 peak를 관찰했지만 native
@@ -41,7 +41,7 @@
   성공 명령·공통 상태 해시를 보존하고 이전 실패/제한도 별도 기록했습니다.
 - [Codec/경로 요약](review_evidence/codec_path_verification.json)에24모델/272필드·
   typed Python→Rust→Python 왕복과 Windows 별도 venv child argv를 경로 제거해 보존합니다.
-  Linux CI는 구성만 했으며 실행은 아직 관찰하지 않았습니다.
+  후속 Linux/Windows 실제 성공 근거는14차에 있습니다.
 - [Table/SQL 요약](review_evidence/table_sql_verification.json)에 실제 optional 버전·
   형식/소유권 범위·격리 venv 정리를 기록했습니다. 프로젝트 패키지/lock은 유지합니다.
 - [Body 경계 요약](review_evidence/body_boundary_verification.json)에 framing/크기/status/
@@ -51,8 +51,11 @@
   취소였으며 수정 후 원격 재통과는 아직 관찰하지 않았습니다.
 - [Scalar/계측 요약](review_evidence/scalar_provenance_verification.json)에 미지원 값의
   명시적 거부와 가려지지 않는 recorder를 기록합니다. Linux914a402 smoke는 통과 후
-  provenance에서 실패했으며 보강 후 재실행은 아직 관찰하지 않았습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 30 / RUNNING 14 / OPEN 106**.
+  provenance에서 실패했으며 후속781f3f5의 양 OS Rust jobs는 성공했습니다.
+- [이력 정책 요약](review_evidence/history_policy_verification.json)에 문서/no-op/replay/UI와
+  원격781f3f5 양 OS Rust·Python3.12 성공을 기록했습니다. Python3.10 취소로 전체는
+  cancelled이며 이를 후속 UI 수정의 원격 통과로 소급하지 않습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 34 / RUNNING 12 / OPEN 104**.
   미검증 항목을 통과로 취급하지 않습니다.
 
 이전 기능/최소환경/브라우저 결과는 각자의 범위이며 후속 변경 이전 결과입니다.

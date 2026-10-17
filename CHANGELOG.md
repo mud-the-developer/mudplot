@@ -6,6 +6,13 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Prevented overlapping Rust control swaps from using detached app targets by
+  disabling the current controls during htmx requests; kept official vendor bytes,
+  access rules and history policy unchanged. Added real reset/undo/redo browser checks.
+- Verified open/reset/download ownership, no-op events/redo invalidation and seeded
+  long replay without adding dirty-bit/save-target, coalescing or checkpoint features.
+  Recorded successful Linux/Windows Rust CI jobs separately from a cancelled full
+  workflow rather than claiming universal/release completion.
 - Restricted missing-scalar normalization to recognized NumPy/pandas cases so
   Decimal NaNs and custom non-reflexive objects do not silently become null.
   Bounded item conversion to supported representations, preventing longdouble

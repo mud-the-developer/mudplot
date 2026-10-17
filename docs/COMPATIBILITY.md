@@ -78,7 +78,12 @@ cached previews. `validate()` / `assert_valid()` remain the explicit contract
 checks; rendering validates automatically. The Python editor starts a fresh
 history on open/reset. The Rust editor retains open/reset as undoable snapshot
 transitions; new successful edits clear redo in both editors. These existing
-history policies differ and are not a promise of identical UI history.
+history policies differ and are not a promise of identical UI history. Rust
+reset returns the editor's startup default, not the last imported document.
+Neither editor binds an imported filename for automatic overwrite or tracks a
+separate persistent dirty-bit/save-target feature; downloads export current state.
+An equal-value action still records an event/snapshot and clears redo. Listener
+and undo semantics must not be silently removed by a no-op optimization.
 
 ## JSON and versions
 

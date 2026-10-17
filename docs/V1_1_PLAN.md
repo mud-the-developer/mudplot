@@ -124,6 +124,31 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 14 verifies document/no-op/long-history policies.** Python opens/
+resets fresh history; Rust snapshots are undoable and reset to startup default.
+Downloads export the current state, not a bound imported filename; no new dirty-
+bit/save-target feature was added. Equal-value actions remain events and clear
+redo. Two seeds with768actions and128undo/128redo checkpoints replay exactly.
+HIST-04/05/06 are PASS for these observed policies.
+
+FIND-017 caught a real Rust browser pageerror when overlapping control requests
+swapped the same detached app target. Root hx-disabled-elt now disables current
+controls during requests without editing htmx vendor bytes or server history.
+A bad form-selector assumption and an Open-details visibility assumption were
+corrected in QA, not counted as extra product bugs. Final local checks: **199
+history-target passes**, full Python browser **32 passes**, actual Rust HTTP/
+browser passes; minimum history-only **20 passed/2506 deselected/13warnings**.
+Ruff213formatted/Pyright/LSP5paths/contracts/packaging pass in9recorded commands.
+
+Observed remote781f3f5 Rust Linux/Windows jobs, including MSRV1.88/interpreter/
+body probes, both succeeded; RUST-02 is now PASS. Python3.12 also succeeded but
+Python3.10 was cancelled, so workflow39050108296 was cancelled, not fully green.
+The remote result does not validate this later UI change. See [phase14 receipts](review_evidence/history_policy_verification.json).
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS34/RUNNING12/OPEN104**. Version/lock/
+tag/deploy/source checklist unchanged; broader CI/release/performance gates remain.
+
+### Earlier review phase 13
+
 **Review phase 13 fixes unsupported scalar coercion/recursion.** FIND-015 had
 Decimal/custom NaNs becoming null, signaling NaN leaking InvalidOperation, and
 longdouble/same-type/alternating item chains recursing. Seven cases failed before

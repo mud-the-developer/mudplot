@@ -18,6 +18,38 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 14차 — 문서 이력·no-op·long replay와 원격 Rust 확인
+
+- 기반781f3f5 위에서 기존 정책을 검증했습니다. 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-history-final-5yqwup_o`,
+  [경로 제거 이력/원격 job 요약](review_evidence/history_policy_verification.json)도 보존합니다.
+- Python open/reset은 새 이력, Rust open/reset은 undo 가능한 snapshot이며 reset은 시작
+  기본 문서로 돌아갑니다. A의 미저장 편집/future가 있는 상태에서 B를 열고 export·undo/
+  redo·reset을 확인했습니다. Python 실제 파일 picker/다운로드에서 source A/B bytes는
+  불변이고 현재 B/reset spec을 다운로드했습니다. 서버에 bound filename/별도 dirty-bit 기능은
+  없어 새로 구현하지 않고 정책을 명시했습니다. HIST-04는 **PASS**입니다.
+- Equal-value action도 event/snapshot을 기록하고 old redo를 지우며 Store listener와
+  Python/Rust 이력 의미가 유지됐습니다. HIST-05는 **PASS**입니다. Seed20261016/24301의
+  각768유효 action과128undo/128redo checkpoint에서 spec/cursor/hash가 정확히 일치하여
+  HIST-06을 **PASS** 처리합니다. 무한 이력/성능 상한 또는 coalescing 최적화 주장은 아닙니다.
+- **FIND-017 (Rust UI):** 서버 state는 맞아도 빠른 title/theme/history 요청의 outerHTML
+  swap target이 분리되어 official htmx의 null querySelector pageerror가 발생했습니다.
+  Root의 hx-disabled-elt로 요청 중 현재 control들을 비활성화해 중복 swap을 방지했습니다.
+  Vendor/서버 정책은 바꾸지 않고 실제 reset/undo/redo click·CSP/pageerror 없음도 확인했습니다.
+- 처음 native form-selector 가정은 실제 standalone hx-post button과 달라 QA만 고쳤습니다.
+  첫 묶음은 history199통과 후 browser1fail/31pass에서 멈췄습니다. 파일 선택 뒤 Open
+  section 재접힘을 재확인하는 테스트로 보강하고 최종 재실행했습니다. 이전 실패를 완료로 세지 않았습니다.
+- 최종 **이력 대상199통과**, 전체 Python browser **32통과**, 실제 Rust HTTP/browser의
+  문서/no-op/상태/PNG 시나리오 통과. 최소 **이력-only20통과/2506deselected/경고13**이며
+  더 넓은 이전354case 반복이 아닙니다. Ruff213파일/format·Pyright·계약·clean sdist→wheel을
+  포함한9기록 명령이 exit0입니다. 새 전체 application regression/native-unit count는 없습니다.
+- 781f3f5의 CI run39050108296에서 Linux job117447100073와 Windows job117447100196은
+  MSRV1.88·native tests·bridge smoke·interpreter 경로·본문/RSS 단계 모두 성공했습니다.
+  그 근거로 RUST-02를 **PASS** 처리합니다. Python3.12도 성공했지만 Python3.10이 취소되어
+  workflow 전체 결론은 cancelled입니다. 전체 CI/OS/릴리스 승인으로 확대하지 않습니다.
+- 원문 체크리스트/의존성/lock/버전/tag/배포는 유지합니다. 현재 UI 수정은 별도 로컬 변경이므로
+  원격781의 성공을 이 후속 변경의 CI 통과로 소급하지 않습니다.
+
 ## 13차 — 미지원 scalar 거부·가려지지 않는 probe 계측
 
 - 기반914a402 위에서 진행했습니다. 로컬 증거는
@@ -411,9 +443,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | HIST-01 | P0 | PASS | 기본 undo/redo와 경계 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-02 | P0 | PASS | undo 이후 분기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-03 | P0 | PASS | 편집기 action/import/render 실패 원자성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-04 | P1 | RUNNING | reset과 open의 이력 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-05 | P1 | OPEN | no-op action의 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-06 | P1 | OPEN | 긴 이력의 재생 정확성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-04 | P1 | PASS | reset과 open의 이력 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-05 | P1 | PASS | no-op action의 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-06 | P1 | PASS | 긴 이력의 재생 정확성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-07 | P2 | OPEN | 연속 드래그 action 합치기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-08 | P2 | OPEN | 체크포인트와 이력 제한 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | JSON-01 | P0 | PASS | 공식 지원 필드의 손실 없는 왕복 | io.py/spec.py; model.rs::full_field_fixture_preserves_types_values_and_array_order | test_review_full_spec_fields.py(69); Python→Rust→Python 9차 artifact |
@@ -496,7 +528,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-09 | P1 | OPEN | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-02 | P0 | RUNNING | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows4cases/12children; Linux CI 미실행 |
+| RUST-02 | P0 | PASS | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows/Linux CI jobs success for781f3f5; 14차 remote snapshot |
 | RUST-03 | P1 | OPEN | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-04 | P1 | OPEN | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-05 | P1 | OPEN | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
@@ -545,8 +577,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 30, RUNNING 14, OPEN 106, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015를 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 34, RUNNING 12, OPEN 104, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

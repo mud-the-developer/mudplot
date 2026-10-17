@@ -76,7 +76,11 @@ exception은 전파되지만 commit을 되돌리지 않습니다. editor는 반�
 명시적 계약 검사이며 render는 자동으로 검증합니다. Python editor는 open/reset 때
 새 이력을 시작하고, Rust editor는 기존처럼 open/reset도 undo 가능한 snapshot 전이로
 보존합니다. 새 정상 편집은 둘 다 redo를 지웁니다. 서로 다른 기존 UI 이력 정책을
-동일한 동작으로 보장하거나 이번에 변경한 것은 아닙니다.
+동일한 동작으로 보장하거나 이번에 변경한 것은 아닙니다. Rust reset은 마지막 import가
+아닌 시작 기본 문서로 돌아갑니다. 두 editor 모두 import 파일명을 자동 덮어쓰기 대상으로
+묶거나 별도 persistent dirty-bit/save-target 기능을 추적하지 않으며 다운로드는 현재 상태를
+내보냅니다. 값이 같은 action도 event/snapshot을 기록하고 redo를 지웁니다. No-op 최적화로
+listener/undo 의미를 조용히 제거하면 안 됩니다.
 
 ## JSON과 버전
 

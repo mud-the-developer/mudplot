@@ -1,4 +1,4 @@
-<main id="app">
+<main id="app" hx-disabled-elt="#app button, #app input, #app select, #app textarea">
   {% if has_error %}
   <p class="error" role="alert">{{ error }}</p>
   {% endif %}
