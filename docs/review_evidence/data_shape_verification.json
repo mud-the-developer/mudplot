@@ -1,0 +1,38 @@
+{
+  "scope": "Local worktree after 96a8592; phase6 DATA-02 shape checks, not full suite or release gates. Absolute paths omitted; raw logs remain local.",
+  "head_before_changes": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15",
+  "backend": "Agg",
+  "versions": {"numpy": "2.5.2", "matplotlib": "3.11.1", "pandas": "3.0.5", "pytest": "9.1.1"},
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "abc641a5b2e6d71a4bf50e64ec00e7eb79990dac09ca9d39f892ade114fa9655",
+    "tests/test_review_data_contracts.py": "9f3ae59c3852c04410c0f557c5b3741030d70c10218a0e0388f9be592b8f47d5"
+  },
+  "coverage": "Malformed record/row structure; lengths/missing columns/duplicates; editor import/action rollback and redo; existing core/JSON/output regressions. Arrow/DataFrame duck protocols exercised; actual PyArrow/polars not installed or claimed.",
+  "pre_fix": {"failed": 19, "passed": 9, "kind": "Summary of actual pre-fix regression output, not a raw failure log"},
+  "checks": [
+    {
+      "name": "python-contracts",
+      "argv": ["python", "-m", "pytest", "-q", "tests/test_review_data_contracts.py", "tests/test_data.py", "tests/test_validate_hardening.py", "tests/test_completeness.py", "tests/test_review_json_boundary_paths.py", "tests/test_review_render_contracts.py", "tests/test_review_json_contracts.py", "tests/test_review_windows_output.py", "tests/test_review_output_contracts.py", "tests/test_review_state_contracts.py", "tests/test_no_deps.py", "tests/test_spec_roundtrip.py", "tests/test_json_schema_compat.py", "tests/test_cli_apply.py", "tests/test_cli_migrate.py", "tests/test_schema_export.py", "tests/test_stabilization.py", "tests/test_dashboard_editor.py", "--junitxml=<evidence>/contracts.xml"],
+      "env_overrides": {"MPLBACKEND": "Agg"},
+      "exit_code": 0,
+      "result": "677 passed, 2 skipped in 209.71s",
+      "log_sha256": "dba902fefb5df2747c09c6eebf73196efc4bacf73cb20bf55939af975f7a1427"
+    },
+    {
+      "name": "minimum-data",
+      "argv": ["uv", "run", "--python", "3.10", "--locked", "--script", "scripts/check_minimum_versions.py"],
+      "env_overrides": {"MPLBACKEND": "Agg", "PYTEST_ADDOPTS": "-k \"test_review_data_contracts or test_data\""},
+      "exit_code": 0,
+      "result": "66 passed, 2142 deselected, 13 warnings in 18.10s",
+      "log_sha256": "8ae51322a01556fa822070e538bfb6546802383e77fc91731bf20e3d65c05f95"
+    },
+    {"name": "ruff", "command": "uv run --no-sync ruff check .", "exit_code": 0, "result": "All checks passed!", "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"},
+    {"name": "format", "command": "uv run --no-sync ruff format --check .", "exit_code": 0, "result": "200 files already formatted", "log_sha256": "34eedbe65445e7f6ccc1c0c018c97937c191b040532a97b36912e423fb30c028"},
+    {"name": "pyright", "command": "uv run --no-sync pyright", "exit_code": 0, "result": "0 errors, 0 warnings, 0 informations", "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"},
+    {"name": "schema", "command": "python scripts/check_schema_sync.py", "exit_code": 0, "result": "schema, capabilities and reference in sync", "log_sha256": "c8e86668ccce613b3a11ab6f6b21d4e51aea3bf5afb279e727c025e30d53b71f"},
+    {"name": "packaging", "command": "python scripts/check_wheel.py", "exit_code": 0, "result": "mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl built and checked", "log_sha256": "fe0edc67dcf74d0c48e549fe2e32cbeed6a80029bfeeb2f8449a3b5204c55391"}
+  ]
+}

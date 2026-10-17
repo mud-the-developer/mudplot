@@ -22,7 +22,15 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent
 TESTS = (
     "tests/test_data.py",
+    "tests/test_review_sql_ownership.py",
+    "tests/test_review_table_formats.py",
     "tests/test_review_data_contracts.py",
+    "tests/test_review_missing_data.py",
+    "tests/test_review_state_contracts.py",
+    "tests/test_review_editor_paths.py",
+    "tests/test_review_http_boundaries.py",
+    "tests/test_review_body_framing.py",
+    "tests/test_review_full_spec_fields.py",
     "tests/test_layers.py",
     "tests/test_layout.py",
     "tests/test_facets.py",

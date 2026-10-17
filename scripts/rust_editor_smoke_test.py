@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
+import http.client
 import json
 import os
 import socket
@@ -21,6 +23,14 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = REPO_ROOT / "mudplot-editor" / "Cargo.toml"
 
 
+def _assert_security_headers(headers) -> None:
+    assert headers["Cache-Control"] == "no-store"
+    assert headers["X-Content-Type-Options"] == "nosniff"
+    assert headers["X-Frame-Options"] == "DENY"
+    assert "frame-ancestors 'none'" in headers["Content-Security-Policy"]
+    assert "script-src 'self';" in headers["Content-Security-Policy"]
+
+
 def _request(
     url: str,
     data: bytes | None = None,
@@ -30,9 +40,266 @@ def _request(
     request_headers = dict(headers or {})
     if content_type:
         request_headers["Content-Type"] = content_type
-    return urllib.request.urlopen(
-        urllib.request.Request(url, data=data, headers=request_headers), timeout=30
+    try:
+        response = urllib.request.urlopen(
+            urllib.request.Request(url, data=data, headers=request_headers), timeout=30
+        )
+    except urllib.error.HTTPError as error:
+        _assert_security_headers(error.headers)
+        raise
+    _assert_security_headers(response.headers)
+    return response
+
+
+def _review_history_contracts(base: str) -> None:
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            spec = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            return spec, response.read()
+
+    states = [capture()]
+    original, initial_preview = states[0]
+    for title in ("A", "B", "C"):
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetTitle", "text": title}).encode(),
+            "application/json",
+        ) as response:
+            assert json.load(response)["panels"][0]["title"] == title
+        states.append(capture())
+    for state in reversed(states[:-1]):
+        with _request(f"{base}/undo", b"") as response:
+            assert response.status == 200
+        assert capture() == state
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    assert capture() == states[0]
+    for state in states[1:]:
+        with _request(f"{base}/redo", b"") as response:
+            assert response.status == 200
+        assert capture() == state
+    with _request(f"{base}/redo", b"") as response:
+        assert response.status == 200
+    assert capture() == states[-1]
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    with _request(
+        f"{base}/action", b'{"type":"SetTitle","text":"D"}', "application/json"
+    ) as response:
+        assert json.load(response)["panels"][0]["title"] == "D"
+    branch = capture()
+    with _request(f"{base}/redo", b"") as response:
+        assert response.status == 200
+    assert capture() == branch
+    assert mp.from_json(json.dumps(branch[0])).panels[0].title == "D"
+    _submit(base, "/open", {"json": json.dumps(original)})
+    assert capture() == (original, initial_preview)
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    assert capture() == branch  # Rust open is undoable; Python opens fresh history.
+    with _request(f"{base}/redo", b"") as response:
+        assert response.status == 200
+    assert capture() == (original, initial_preview)
+    print("History boundary/branch OK: spec and PNG agree at every undo/redo step")
+
+
+def _review_state_paths(base: str) -> None:
+    case = json.loads(
+        (REPO_ROOT / "tests/fixtures/review_state_paths.json").read_text(
+            encoding="utf-8"
+        )
     )
+    with _request(f"{base}/spec.json") as response:
+        original = json.load(response)
+    final_json = []
+    for route in ("agent", "form"):
+        state = mp.FigureSpec.from_dict(case["initial"])
+        actual = state
+        _submit(base, "/open", {"json": mp.to_json(state)})
+        for step in case["steps"]:
+            action = step["action"]
+            if route == "form" and "rust_form" in step:
+                form = step["rust_form"]
+                assert b'class="error"' not in _submit(
+                    base, form["path"], form["fields"]
+                )
+            elif route == "form" and action["type"] == "AddLayer":
+                layer = dict(action["layer"])
+                kind = layer.pop("type")
+                assert b'class="error"' not in _submit(
+                    base,
+                    "/layers",
+                    {
+                        "layer_type": kind,
+                        "fields": json.dumps(layer),
+                        "panel": str(action["panel"]),
+                    },
+                )
+            else:
+                with _request(
+                    f"{base}/action", json.dumps(action).encode(), "application/json"
+                ) as response:
+                    assert response.status == 200
+            state = mp.apply([action], state)
+            with _request(f"{base}/spec.json") as response:
+                actual = mp.FigureSpec.from_dict(json.load(response))
+                assert actual == state, action["type"]
+        final_json.append(mp.to_json(actual, sort_keys=True))
+    assert final_json[0] == final_json[1]
+    _submit(base, "/open", {"json": json.dumps(original)})
+    print(
+        "Cross-path state OK (supported forms/agent):",
+        hashlib.sha256(final_json[0].encode()).hexdigest(),
+    )
+
+
+def _review_failure_contracts(base: str) -> None:
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            spec = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            return spec, response.read()
+
+    original, _ = capture()
+    valid = mp.plot({"x": [1, 2], "y": [2, 3]}).line("x", "y").size(4, 3)
+    _submit(base, "/open", {"json": valid.to_json()})
+    for title in ("A", "B"):
+        with _request(
+            f"{base}/action",
+            json.dumps({"type": "SetTitle", "text": title}).encode(),
+            "application/json",
+        ) as response:
+            assert response.status == 200
+    future = capture()
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    before = capture()
+    invalid = (
+        mp.plot({"x": [1, 2], "y": [2, 3]}).line("x", "y", color="not-a-color").spec
+    )
+    assert mp.validate(invalid) == []
+    for failure in ("invalid_action", "damaged_json", "render_action", "render_import"):
+        if failure in ("invalid_action", "render_action"):
+            action = (
+                {"type": "SetSize", "width": -1, "height": 3}
+                if failure == "invalid_action"
+                else {
+                    "type": "AddLayer",
+                    "layer": invalid.panels[0].layers[0].to_dict(),
+                }
+            )
+            try:
+                _request(
+                    f"{base}/action", json.dumps(action).encode(), "application/json"
+                )
+                raise AssertionError(f"unexpected successful {failure}")
+            except urllib.error.HTTPError as error:
+                assert error.code == 400
+        else:
+            text = "{damaged JSON" if failure == "damaged_json" else mp.to_json(invalid)
+            assert b'class="error"' in _submit(base, "/open", {"json": text})
+        assert capture() == before, failure
+        with _request(f"{base}/redo", b"") as response:
+            assert response.status == 200
+        assert capture() == future, failure
+        with _request(f"{base}/undo", b"") as response:
+            assert response.status == 200
+        assert capture() == before
+    with _request(
+        f"{base}/action", b'{"type":"SetTitle","text":"recovered"}', "application/json"
+    ) as response:
+        assert json.load(response)["panels"][0]["title"] == "recovered"
+    _submit(base, "/open", {"json": json.dumps(original)})
+    print("Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo")
+
+
+def _review_http_boundaries(base: str) -> None:
+    def headers(response_headers):
+        assert response_headers["Cache-Control"] == "no-store"
+        assert response_headers["X-Content-Type-Options"] == "nosniff"
+        assert response_headers["X-Frame-Options"] == "DENY"
+        assert "frame-ancestors 'none'" in response_headers["Content-Security-Policy"]
+
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            spec = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            return spec, response.read()
+
+    cases = json.loads(
+        (REPO_ROOT / "tests/fixtures/review_http_boundaries.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    before = capture()
+    parsed = urllib.parse.urlparse(base)
+    assert parsed.hostname is not None and parsed.port is not None
+    for host in cases["rejected_hosts"]:
+        try:
+            _request(
+                f"{base}/spec.json",
+                headers={"Host": host, "X-Forwarded-Host": parsed.netloc},
+            )
+            raise AssertionError(f"accepted Host {host}")
+        except urllib.error.HTTPError as error:
+            assert error.code == 403
+            headers(error.headers)
+        assert capture() == before
+    for host in cases["accepted_hosts"]:
+        with _request(f"{base}/spec.json", headers={"Host": host}) as response:
+            assert response.status == 200
+            headers(response.headers)
+    for template in cases["rejected_origins"]:
+        request_headers = {
+            name: value.format(base=base, port=parsed.port, other_port=parsed.port + 1)
+            for name, value in template.items()
+        }
+        try:
+            _request(
+                f"{base}/action",
+                b"",  # Require header rejection before body decoding/upload.
+                "application/json",
+                request_headers,
+            )
+            raise AssertionError(f"accepted Origin {template}")
+        except urllib.error.HTTPError as error:
+            assert error.code == 403
+            headers(error.headers)
+        assert capture() == before
+    for template in cases["accepted_origins"]:
+        request_headers = {
+            name: value.format(base=base) for name, value in template.items()
+        }
+        with _request(
+            f"{base}/action",
+            b'{"type":"SetSuptitle","text":"accepted origin"}',
+            "application/json",
+            request_headers,
+        ) as response:
+            assert json.load(response)["suptitle"] == "accepted origin"
+    accepted_state = capture()
+    connection = http.client.HTTPConnection(parsed.hostname, parsed.port, timeout=5)
+    try:
+        connection.putrequest("POST", "/action")
+        connection.putheader("Content-Type", "application/json")
+        connection.putheader("Content-Length", str(16 * 1024 * 1024 + 1))
+        connection.endheaders()
+        response = connection.getresponse()
+        assert response.status == 413
+        headers(response.headers)
+        response.read()
+    finally:
+        connection.close()
+    assert capture() == accepted_state
+    try:
+        _request(f"{base}/does-not-exist")
+        raise AssertionError("unknown route succeeded")
+    except urllib.error.HTTPError as error:
+        assert error.code == 404
+        headers(error.headers)
+    _submit(base, "/open", {"json": json.dumps(before[0])})
+    print("HTTP boundary OK: Host/Origin/16MiB rejection and security headers")
 
 
 def _review_json_boundaries(base: str) -> None:
@@ -103,7 +370,13 @@ def _browser_check(base: str) -> None:
             browser = playwright.chromium.launch(channel="chrome")
         page = browser.new_page()
         errors: list[str] = []
+
+        def check_console(message):
+            if "content security policy" in message.text.lower():
+                errors.append(message.text)
+
         page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on("console", check_console)
         page.goto(base)
         assert page.evaluate("typeof window.htmx") == "object"
         assert page.locator(".canvas img").evaluate("image => image.naturalWidth") > 0
@@ -168,6 +441,7 @@ def main(*, browser: bool = False) -> int:
                     ) from error
                 time.sleep(0.1)
 
+        _review_history_contracts(base)
         with _request(f"{base}/") as response:
             page = response.read()
             assert response.headers["X-Content-Type-Options"] == "nosniff"
@@ -189,20 +463,23 @@ def main(*, browser: bool = False) -> int:
             raise AssertionError("non-loopback Host unexpectedly succeeded")
         except urllib.error.HTTPError as error:
             assert error.code == 403
+            assert error.headers["Cache-Control"] == "no-store"
+            assert error.headers["X-Content-Type-Options"] == "nosniff"
+            assert "frame-ancestors 'none'" in error.headers["Content-Security-Policy"]
 
-        cross_origin = json.dumps(
-            {"type": "SetTitle", "text": "CSRF", "panel": 0}
-        ).encode()
         try:
             _request(
                 f"{base}/action",
-                cross_origin,
+                b"",  # Probe the pre-body Origin boundary, not JSON validation.
                 "application/json",
                 {"Origin": "https://attacker.example"},
             )
             raise AssertionError("cross-origin action unexpectedly succeeded")
         except urllib.error.HTTPError as error:
             assert error.code == 403
+            assert error.headers["Cache-Control"] == "no-store"
+            assert error.headers["X-Content-Type-Options"] == "nosniff"
+            assert "frame-ancestors 'none'" in error.headers["Content-Security-Policy"]
 
         html = _submit(base, "/control/title", {"text": "Visual form", "panel": "0"})
         assert b'value="Visual form"' in html
@@ -739,6 +1016,9 @@ def main(*, browser: bool = False) -> int:
         for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml")):
             with _request(f"{base}/fig.{extension}") as response:
                 assert response.read().startswith(prefix)
+        _review_state_paths(base)
+        _review_failure_contracts(base)
+        _review_http_boundaries(base)
         _review_json_boundaries(base)
         if browser:
             _browser_check(base)

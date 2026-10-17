@@ -690,6 +690,41 @@ def test_configured_regression_import_edit_and_svg(editor, tmp_path, name):
     assert response.ok and b"<svg" in response.body()
 
 
+def test_csp_headers_and_real_htmx_swap_have_no_policy_violations(editor):
+    page, url = editor
+    violations = []
+
+    def check_console(message):
+        if "content security policy" in message.text.lower():
+            violations.append(message.text)
+
+    page.on("console", check_console)
+    page.on("pageerror", lambda error: violations.append(str(error)))
+    page.add_init_script(
+        "window.__reviewCsp=[]; document.addEventListener('securitypolicyviolation',"
+        "event=>window.__reviewCsp.push(event.effectiveDirective));"
+    )
+    response = page.reload()
+    assert response is not None
+    assert "script-src 'self';" in response.headers["content-security-policy"]
+    assert response.headers["cache-control"] == "no-store"
+    title = page.get_by_label("Panel title", exact=True)
+    title.fill("CSP verified")
+    title.press("Enter")
+    _settle(page)
+    assert _spec(url)["panels"][0]["title"] == "CSP verified"
+    rejected = page.request.post(
+        url + "/action",
+        form={"type": "set_title", "text": "blocked"},
+        headers={"Origin": "null"},
+    )
+    assert rejected.status == 403
+    assert rejected.headers["cache-control"] == "no-store"
+    assert "frame-ancestors 'none'" in rejected.headers["content-security-policy"]
+    assert page.evaluate("window.__reviewCsp") == []
+    assert not violations, violations
+
+
 def test_cluster_file_keeps_orders_metadata_and_matrix_after_title_edit(
     editor, tmp_path
 ):

@@ -1,0 +1,566 @@
+{
+  "scope": "dirty worktree including phases6-8; phase9 all-field codec and interpreter selection verification. Windows executed; Linux CI configured, not observed. Not full release gates.",
+  "head": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "backend": "Agg",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1",
+    "jsonschema": "4.26.0"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "initial_files_sha256": {
+    "mudplot-editor/src/model.rs": "9e072468d195bc6274d798a31763b4f0e19edb245e0e5b71352ac09283d9365f",
+    "scripts/check_python_bridge_paths.py": "6bc90fb8ac695b3f3fec83b3da9a75df9027fedab6aac9b350e66709f37b13dd",
+    "tests/test_review_full_spec_fields.py": "a4dee808210dbe1237a90981c7a3c5821f0fbdd79f01efd936ac7db24ae6a8f4",
+    "tests/fixtures/review_full_spec_fields.json": "3fef66ebbfffb670f37b6fab0acea8bd9d34fd98c1b3d5a04828e7b93c545e3a",
+    "scripts/check_minimum_versions.py": "568ec7711870de6e14d62cee88a1dce7933e5872625b701edaaddc7dc9fd59a3",
+    "scripts/check_wheel.py": "bee364e75b59e9bc31a70a433eebb61c9f6c3fb79d61cc7d021c7f93bb0c9868",
+    ".github/workflows/ci.yml": "f22884aa865daae2062d4f484f2ac7032672153717f65f660f576f70bed67727"
+  },
+  "verified_files_sha256": {
+    "mudplot-editor/src/model.rs": "9e072468d195bc6274d798a31763b4f0e19edb245e0e5b71352ac09283d9365f",
+    "scripts/check_python_bridge_paths.py": "6f5eb8fa0b52357434bc38ea2d7826aaf9743ec77e67aa7c80553de4094cb4ba",
+    "tests/test_review_full_spec_fields.py": "a4dee808210dbe1237a90981c7a3c5821f0fbdd79f01efd936ac7db24ae6a8f4",
+    "tests/fixtures/review_full_spec_fields.json": "3fef66ebbfffb670f37b6fab0acea8bd9d34fd98c1b3d5a04828e7b93c545e3a",
+    "scripts/check_minimum_versions.py": "568ec7711870de6e14d62cee88a1dce7933e5872625b701edaaddc7dc9fd59a3",
+    "scripts/check_wheel.py": "bee364e75b59e9bc31a70a433eebb61c9f6c3fb79d61cc7d021c7f93bb0c9868",
+    ".github/workflows/ci.yml": "f22884aa865daae2062d4f484f2ac7032672153717f65f660f576f70bed67727"
+  },
+  "qa_followup": {
+    "source": "scripts/check_python_bridge_paths.py",
+    "source_sha256": "6f5eb8fa0b52357434bc38ea2d7826aaf9743ec77e67aa7c80553de4094cb4ba",
+    "reason": "assert the site-packages target is inside the disposable venv, and exclusively create the test-only startup hook before running probes; application source unchanged",
+    "prior_contract_tests": "968-pass run covers unchanged core/codec/tests; updated QA script is separately re-executed below",
+    "scope": "updated QA script independently re-executed; 968 contract tests concern unchanged application/model/fixture sources"
+  },
+  "limits": "All-field fixture is structural/schema-valid but intentionally not renderable; 37 registered examples separately validated and serialized. Windows interpreter paths executed; Linux CI configured but not executed locally or remotely. No new application bug/fix, core dependency/version bump, full-suite/minimum/MSRV/Linux/audit/release approval claimed.",
+  "codec": {
+    "model_types": 24,
+    "modeled_fields": 272,
+    "structural_variants": 3,
+    "rust_output_sha256": "48d2da2b5c34b030512bb52175df970b2b919c8b95fa2aabb2de78a9fd495777",
+    "type_check": "Python -> Rust -> Python compared exact JSON primitive types and nested Python model classes; object key order not required, array order preserved"
+  },
+  "interpreter_probe": {
+    "platform": "win32",
+    "python": "3.12.15",
+    "selection": [
+      {
+        "mode": "default",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "한글 bridge & (space)\\Scripts\\python3.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpTDDhsh\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpTDDhsh\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\임시 data & (bridge)\\.tmpwMObKb\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpwMObKb\\action.json",
+            "-o",
+            "<temp>\\임시 data & (bridge)\\.tmpwMObKb\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpydXPMY\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpydXPMY\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "environment",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "한글 bridge & (space)\\Scripts\\python.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpNCUxRG\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpNCUxRG\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\임시 data & (bridge)\\.tmpKYgHmy\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpKYgHmy\\action.json",
+            "-o",
+            "<temp>\\임시 data & (bridge)\\.tmpKYgHmy\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpalby1s\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpalby1s\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "flag",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "한글 bridge & (space)\\Scripts\\python.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpwmLsbB\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpwmLsbB\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\임시 data & (bridge)\\.tmpPiGtz8\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpPiGtz8\\action.json",
+            "-o",
+            "<temp>\\임시 data & (bridge)\\.tmpPiGtz8\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\임시 data & (bridge)\\.tmpFSvWhP\\spec.json",
+            "<temp>\\임시 data & (bridge)\\.tmpFSvWhP\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "invalid-flag",
+        "rejected_without_fallback": true
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "python-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "968 passed, 4 skipped in 331.81s (0:05:31)"
+      ],
+      "log_text_sha256": "c54672418082157d3c84dba5fa1f1b2bb16c5e9ca47e247c1177765e53792d4d"
+    },
+    {
+      "name": "rust-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "MUDPLOT_CODEC_PROBE_OUT": "<evidence>/rust-roundtrip.json"
+      },
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 14 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.42s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "d564ed24a0810001c4856fb8e75b2bfa0766de2d54a543d88ff3ab839f658cd2"
+    },
+    {
+      "name": "codec-handback",
+      "argv": [
+        "python",
+        "-c",
+        "\nimport json,runpy,sys\nfrom pathlib import Path\nimport mudplot as mp\nhelpers=runpy.run_path('tests/test_review_full_spec_fields.py')\nfixture=json.loads(Path('tests/fixtures/review_full_spec_fields.json').read_text(encoding='utf-8'))\nactual=json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))\nassert len(actual)==len(fixture['figures'])==3\nfor original,returned in zip(fixture['figures'],actual,strict=True):\n    expected=mp.FigureSpec.from_dict(original)\n    restored=mp.from_json(json.dumps(returned,ensure_ascii=False))\n    helpers['_assert_json_types'](original,restored.to_dict())\n    assert [type(node) for node in helpers['_walk'](expected)]==[type(node) for node in helpers['_walk'](restored)]\nprint('Python -> Rust -> Python:3 structural figures,24 model types,272 fields preserved')\n",
+        "<evidence>/rust-roundtrip.json"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Python -> Rust -> Python:3 structural figures,24 model types,272 fields preserved"
+      ],
+      "log_text_sha256": "347b3a8a8aecbf4c007c3846173cd19b8e8f33ddd4d924a55994646ff44e501f"
+    },
+    {
+      "name": "python-paths",
+      "argv": [
+        "python",
+        "scripts/check_python_bridge_paths.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "2b3764d01cc32097362e5a89d2dad09d3f77714e2a6f8f3e02f429d87d6f1f0f"
+    },
+    {
+      "name": "minimum-codec-data",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_full_spec_fields or test_review_editor_paths or test_review_http_boundaries or test_review_missing_data or test_review_state_contracts or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "207 passed, 2 skipped, 2142 deselected, 481 warnings in 84.85s (0:01:24)"
+      ],
+      "log_text_sha256": "723070f665dace5af51e15589ce708ba5b88158877cf0d05deaeb006c6435772"
+    },
+    {
+      "name": "rust-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "5bcc1bf1bc5565843c422eaf50a144afef5021768af468b4e4f242ef52c76150"
+    },
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--check",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "205 files already formatted"
+      ],
+      "log_text_sha256": "89cf5f3f28b95095537dc83953fa31dc1b8021697b62c017e54605432c0c84ef"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "d48ed3ecb5019bbda712197aafd71a82d5ad99577b4080960dd81d7e8398c37e"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "5dd1863548fdb6114e6349eb7b742b07db46d5db76cdbc257a81a4dc23b2f15a"
+    },
+    {
+      "name": "python-paths-isolation",
+      "argv": [
+        "python",
+        "scripts/check_python_bridge_paths.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "7fd556e145d7989dde5f62ae7f86fff2d39e8a8b8208b326232440c5360a32af"
+    },
+    {
+      "name": "ruff-final",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format-final",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "205 files already formatted"
+      ],
+      "log_text_sha256": "89cf5f3f28b95095537dc83953fa31dc1b8021697b62c017e54605432c0c84ef"
+    },
+    {
+      "name": "pyright-final",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "packaging-final",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "d7ab20033882f1be8c7f40b994b6beeae44f7fa4243b4332c13b36b68a3ee2c8"
+    }
+  ]
+}

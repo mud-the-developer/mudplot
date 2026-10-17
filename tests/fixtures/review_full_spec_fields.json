@@ -1,0 +1,2088 @@
+{
+  "scope": "Structural/schema-valid codec stress only; mutually incompatible options are intentionally populated. Not renderable plot claims.",
+  "model_fields": {
+    "AxesSpec": [
+      "line_width",
+      "spines",
+      "spine_offset"
+    ],
+    "AxisSpec": [
+      "label",
+      "scale",
+      "limits",
+      "share_id"
+    ],
+    "ClusterSpec": [
+      "method",
+      "metric",
+      "row_cluster",
+      "col_cluster",
+      "z_score",
+      "standard_scale",
+      "optimal_ordering",
+      "row_linkage",
+      "col_linkage",
+      "row_colors",
+      "col_colors",
+      "dendrogram_ratio",
+      "tree_width",
+      "tree_color"
+    ],
+    "ComponentStyleSpec": [
+      "color",
+      "edge_color",
+      "face_color",
+      "line_width",
+      "line_style",
+      "marker",
+      "marker_size",
+      "marker_edge_width",
+      "alpha",
+      "hatch"
+    ],
+    "DataSpec": [
+      "columns",
+      "matrices"
+    ],
+    "DistributionComponentsSpec": [
+      "body",
+      "whisker",
+      "cap",
+      "median",
+      "mean",
+      "flier"
+    ],
+    "ECDFSpec": [
+      "stat",
+      "complementary",
+      "weights"
+    ],
+    "FigureSpec": [
+      "version",
+      "size",
+      "dpi",
+      "theme",
+      "data",
+      "suptitle",
+      "auto_label_panels",
+      "width_ratios",
+      "height_ratios",
+      "panels",
+      "layout",
+      "share_x",
+      "share_y",
+      "journal",
+      "reference_measure_text"
+    ],
+    "FontSpec": [
+      "family",
+      "size",
+      "title_size",
+      "label_size",
+      "tick_size",
+      "use_tex"
+    ],
+    "GridSpec": [
+      "show",
+      "axis",
+      "line_width",
+      "alpha"
+    ],
+    "HeatmapSpec": [
+      "norm",
+      "vmin",
+      "vmax",
+      "center",
+      "robust",
+      "annot",
+      "fmt",
+      "mask",
+      "xlabels",
+      "ylabels",
+      "square"
+    ],
+    "HistogramSpec": [
+      "stat",
+      "weights",
+      "common_norm",
+      "cumulative",
+      "multiple",
+      "element"
+    ],
+    "KDE2DSpec": [
+      "weights",
+      "bw_method",
+      "bw_adjust",
+      "gridsize",
+      "cut",
+      "clip",
+      "common_norm",
+      "common_grid",
+      "levels",
+      "fill",
+      "warn_singular"
+    ],
+    "KDESpec": [
+      "weights",
+      "bw_method",
+      "bw_adjust",
+      "gridsize",
+      "cut",
+      "clip",
+      "common_norm",
+      "common_grid",
+      "cumulative",
+      "fill",
+      "warn_singular"
+    ],
+    "LayerSpec": [
+      "type",
+      "x",
+      "y",
+      "group",
+      "semantics",
+      "label",
+      "citation",
+      "href",
+      "references",
+      "color",
+      "line_width",
+      "line_style",
+      "drawstyle",
+      "marker",
+      "marker_size",
+      "jitter",
+      "alpha",
+      "bar_width",
+      "baseline",
+      "edge_color",
+      "stat",
+      "sort",
+      "error_style",
+      "error_alpha",
+      "ecdf",
+      "dodge",
+      "orient",
+      "native_scale",
+      "stat_scale",
+      "order",
+      "hue_order",
+      "gap",
+      "stack",
+      "value_labels",
+      "label_format",
+      "yerr",
+      "xerr",
+      "y_lower",
+      "y_upper",
+      "error_color",
+      "error_line_width",
+      "capsize",
+      "capthick",
+      "y2",
+      "value",
+      "text",
+      "at",
+      "to",
+      "bins",
+      "density",
+      "histogram",
+      "kde",
+      "kde2d",
+      "gridsize",
+      "mincnt",
+      "degree",
+      "confidence",
+      "regression",
+      "width",
+      "whis",
+      "components",
+      "notch",
+      "showmeans",
+      "showfliers",
+      "showmedians",
+      "showextrema",
+      "bw_method",
+      "points",
+      "inner",
+      "split",
+      "density_norm",
+      "common_norm",
+      "bw_adjust",
+      "cut",
+      "clip",
+      "weights",
+      "warn_thresh",
+      "k_depth",
+      "width_method",
+      "outlier_prop",
+      "trust_alpha",
+      "c",
+      "cmap_kind",
+      "colorbar",
+      "clabel",
+      "matrix",
+      "heatmap",
+      "cluster",
+      "levels",
+      "axis",
+      "u",
+      "v",
+      "quiver_scale",
+      "quiver_width",
+      "z"
+    ],
+    "LegendSpec": [
+      "bbox_to_anchor",
+      "show",
+      "title",
+      "location",
+      "frame"
+    ],
+    "PaletteSpec": [
+      "kind",
+      "preset",
+      "lightness",
+      "chroma",
+      "hue_start",
+      "cvd_safe"
+    ],
+    "PanelSpec": [
+      "layers",
+      "x",
+      "y",
+      "y2",
+      "z",
+      "projection",
+      "title",
+      "title_position",
+      "title_citation",
+      "title_href",
+      "label",
+      "legend",
+      "filters",
+      "dropna"
+    ],
+    "ReferenceSpec": [
+      "citation",
+      "href"
+    ],
+    "RegressionSpec": [
+      "model",
+      "residual",
+      "frac",
+      "iterations"
+    ],
+    "SemanticSpec": [
+      "scale_id",
+      "hue",
+      "hue_kind",
+      "hue_order",
+      "hue_norm",
+      "size",
+      "size_kind",
+      "size_order",
+      "size_norm",
+      "sizes",
+      "style",
+      "style_order",
+      "markers",
+      "dashes",
+      "legend"
+    ],
+    "StatSpec": [
+      "estimator",
+      "errorbar",
+      "level",
+      "n_boot",
+      "seed",
+      "weights",
+      "units",
+      "normalize"
+    ],
+    "ThemeSpec": [
+      "name",
+      "font",
+      "axes",
+      "grid",
+      "ticks",
+      "palette",
+      "redundant_encoding",
+      "markers",
+      "line_styles",
+      "hatches"
+    ],
+    "TicksSpec": [
+      "direction",
+      "major_size",
+      "minor_size",
+      "width",
+      "minor_visible",
+      "top",
+      "right"
+    ]
+  },
+  "figures": [
+    {
+      "version": "0.1",
+      "size": [
+        0.146484375,
+        0.1474609375
+      ],
+      "dpi": 305,
+      "theme": {
+        "name": "probe:FigureSpec.theme.name:한글 Ω 😀 <&>",
+        "font": {
+          "family": "probe:FigureSpec.theme.font.family:한글 Ω 😀 <&>",
+          "size": 10.1396484375,
+          "title_size": 11.1298828125,
+          "label_size": 10.126953125,
+          "tick_size": 8.634765625,
+          "use_tex": true
+        },
+        "axes": {
+          "line_width": 0.9337890625,
+          "spines": "probe:FigureSpec.theme.axes.spines:한글 Ω 😀 <&>",
+          "spine_offset": 0.138671875
+        },
+        "grid": {
+          "show": true,
+          "axis": "probe:FigureSpec.theme.grid.axis:한글 Ω 😀 <&>",
+          "line_width": 0.6533203125,
+          "alpha": 0.6357421875
+        },
+        "ticks": {
+          "direction": "probe:FigureSpec.theme.ticks.direction:한글 Ω 😀 <&>",
+          "major_size": 3.130859375,
+          "minor_size": 1.642578125,
+          "width": 0.926953125,
+          "minor_visible": true,
+          "top": true,
+          "right": true
+        },
+        "palette": {
+          "kind": "probe:FigureSpec.theme.palette.kind:한글 Ω 😀 <&>",
+          "preset": "probe:FigureSpec.theme.palette.preset:한글 Ω 😀 <&>",
+          "lightness": 65.1484375,
+          "chroma": 55.146484375,
+          "hue_start": 20.146484375,
+          "cvd_safe": false
+        },
+        "redundant_encoding": false,
+        "markers": [
+          "probe:FigureSpec.theme.markers[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.markers[1]:한글 Ω 😀 <&>"
+        ],
+        "line_styles": [
+          "probe:FigureSpec.theme.line_styles[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.line_styles[1]:한글 Ω 😀 <&>"
+        ],
+        "hatches": [
+          "probe:FigureSpec.theme.hatches[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.hatches[1]:한글 Ω 😀 <&>"
+        ]
+      },
+      "data": {
+        "columns": {
+          "probe κ": [
+            {
+              "tag": "FigureSpec.data.columns.probe κ[0]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            },
+            {
+              "tag": "FigureSpec.data.columns.probe κ[1]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          ]
+        },
+        "matrices": {
+          "probe κ": [
+            [
+              0.1494140625,
+              0.150390625
+            ],
+            [
+              0.150390625,
+              0.1513671875
+            ]
+          ]
+        }
+      },
+      "suptitle": "probe:FigureSpec.suptitle:한글 Ω 😀 <&>",
+      "auto_label_panels": true,
+      "width_ratios": [
+        0.1328125,
+        0.1337890625
+      ],
+      "height_ratios": [
+        0.12890625,
+        0.1298828125
+      ],
+      "panels": [
+        {
+          "layers": [
+            {
+              "type": "probe:FigureSpec.panels[0].layers[0].type:한글 Ω 😀 <&>",
+              "x": "probe:FigureSpec.panels[0].layers[0].x:한글 Ω 😀 <&>",
+              "y": "probe:FigureSpec.panels[0].layers[0].y:한글 Ω 😀 <&>",
+              "group": "probe:FigureSpec.panels[0].layers[0].group:한글 Ω 😀 <&>",
+              "semantics": {
+                "scale_id": "probe:FigureSpec.panels[0].layers[0].semantics.scale_id:한글 Ω 😀 <&>",
+                "hue": "probe:FigureSpec.panels[0].layers[0].semantics.hue:한글 Ω 😀 <&>",
+                "hue_kind": "probe:FigureSpec.panels[0].layers[0].semantics.hue_kind:한글 Ω 😀 <&>",
+                "hue_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.hue_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.hue_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "hue_norm": [
+                  0.146484375,
+                  0.1474609375
+                ],
+                "size": "probe:FigureSpec.panels[0].layers[0].semantics.size:한글 Ω 😀 <&>",
+                "size_kind": "probe:FigureSpec.panels[0].layers[0].semantics.size_kind:한글 Ω 😀 <&>",
+                "size_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.size_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.size_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "size_norm": [
+                  0.1435546875,
+                  0.14453125
+                ],
+                "sizes": [
+                  0.1533203125,
+                  0.154296875
+                ],
+                "style": "probe:FigureSpec.panels[0].layers[0].semantics.style:한글 Ω 😀 <&>",
+                "style_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.style_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.style_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "markers": [
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[1]:한글 Ω 😀 <&>"
+                ],
+                "dashes": [
+                  "probe:FigureSpec.panels[0].layers[0].semantics.dashes[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].semantics.dashes[1]:한글 Ω 😀 <&>"
+                ],
+                "legend": false
+              },
+              "label": "probe:FigureSpec.panels[0].layers[0].label:한글 Ω 😀 <&>",
+              "citation": "probe:FigureSpec.panels[0].layers[0].citation:한글 Ω 😀 <&>",
+              "href": "probe:FigureSpec.panels[0].layers[0].href:한글 Ω 😀 <&>",
+              "references": {
+                "probe κ": {
+                  "citation": "probe:FigureSpec.panels[0].layers[0].references.probe κ.citation:한글 Ω 😀 <&>",
+                  "href": "probe:FigureSpec.panels[0].layers[0].references.probe κ.href:한글 Ω 😀 <&>"
+                }
+              },
+              "color": "probe:FigureSpec.panels[0].layers[0].color:한글 Ω 😀 <&>",
+              "line_width": 0.126953125,
+              "line_style": "probe:FigureSpec.panels[0].layers[0].line_style:한글 Ω 😀 <&>",
+              "drawstyle": "probe:FigureSpec.panels[0].layers[0].drawstyle:한글 Ω 😀 <&>",
+              "marker": "probe:FigureSpec.panels[0].layers[0].marker:한글 Ω 😀 <&>",
+              "marker_size": 0.150390625,
+              "jitter": 0.1552734375,
+              "alpha": 1.1396484375,
+              "bar_width": 0.1357421875,
+              "baseline": 0.146484375,
+              "edge_color": "probe:FigureSpec.panels[0].layers[0].edge_color:한글 Ω 😀 <&>",
+              "stat": {
+                "estimator": "probe:FigureSpec.panels[0].layers[0].stat.estimator:한글 Ω 😀 <&>",
+                "errorbar": "probe:FigureSpec.panels[0].layers[0].stat.errorbar:한글 Ω 😀 <&>",
+                "level": 0.1513671875,
+                "n_boot": 1008,
+                "seed": 1,
+                "weights": "probe:FigureSpec.panels[0].layers[0].stat.weights:한글 Ω 😀 <&>",
+                "units": "probe:FigureSpec.panels[0].layers[0].stat.units:한글 Ω 😀 <&>",
+                "normalize": "probe:FigureSpec.panels[0].layers[0].stat.normalize:한글 Ω 😀 <&>"
+              },
+              "sort": false,
+              "error_style": "probe:FigureSpec.panels[0].layers[0].error_style:한글 Ω 😀 <&>",
+              "error_alpha": 0.1376953125,
+              "ecdf": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].ecdf.stat:한글 Ω 😀 <&>",
+                "complementary": true,
+                "weights": "probe:FigureSpec.panels[0].layers[0].ecdf.weights:한글 Ω 😀 <&>"
+              },
+              "dodge": 0.13671875,
+              "orient": "probe:FigureSpec.panels[0].layers[0].orient:한글 Ω 😀 <&>",
+              "native_scale": true,
+              "stat_scale": "probe:FigureSpec.panels[0].layers[0].stat_scale:한글 Ω 😀 <&>",
+              "order": [
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].order[0]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                },
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].order[1]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                }
+              ],
+              "hue_order": [
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].hue_order[0]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                },
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].hue_order[1]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                }
+              ],
+              "gap": 0.150390625,
+              "stack": true,
+              "value_labels": true,
+              "label_format": "probe:FigureSpec.panels[0].layers[0].label_format:한글 Ω 😀 <&>",
+              "yerr": "probe:FigureSpec.panels[0].layers[0].yerr:한글 Ω 😀 <&>",
+              "xerr": "probe:FigureSpec.panels[0].layers[0].xerr:한글 Ω 😀 <&>",
+              "y_lower": "probe:FigureSpec.panels[0].layers[0].y_lower:한글 Ω 😀 <&>",
+              "y_upper": "probe:FigureSpec.panels[0].layers[0].y_upper:한글 Ω 😀 <&>",
+              "error_color": "probe:FigureSpec.panels[0].layers[0].error_color:한글 Ω 😀 <&>",
+              "error_line_width": 0.1552734375,
+              "capsize": 0.1552734375,
+              "capthick": 0.150390625,
+              "y2": "probe:FigureSpec.panels[0].layers[0].y2:한글 Ω 😀 <&>",
+              "value": 0.1318359375,
+              "text": "probe:FigureSpec.panels[0].layers[0].text:한글 Ω 😀 <&>",
+              "at": [
+                0.12890625,
+                0.1298828125
+              ],
+              "to": [
+                0.142578125,
+                0.1435546875
+              ],
+              "bins": 38,
+              "density": true,
+              "histogram": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].histogram.stat:한글 Ω 😀 <&>",
+                "weights": "probe:FigureSpec.panels[0].layers[0].histogram.weights:한글 Ω 😀 <&>",
+                "common_norm": false,
+                "cumulative": true,
+                "multiple": "probe:FigureSpec.panels[0].layers[0].histogram.multiple:한글 Ω 😀 <&>",
+                "element": "probe:FigureSpec.panels[0].layers[0].histogram.element:한글 Ω 😀 <&>"
+              },
+              "kde": {
+                "weights": "probe:FigureSpec.panels[0].layers[0].kde.weights:한글 Ω 😀 <&>",
+                "bw_method": "probe:FigureSpec.panels[0].layers[0].kde.bw_method:한글 Ω 😀 <&>",
+                "bw_adjust": 1.1328125,
+                "gridsize": 203,
+                "cut": 3.15234375,
+                "clip": [
+                  0.1357421875,
+                  0.13671875
+                ],
+                "common_norm": false,
+                "common_grid": true,
+                "cumulative": true,
+                "fill": true,
+                "warn_singular": false
+              },
+              "kde2d": {
+                "weights": "probe:FigureSpec.panels[0].layers[0].kde2d.weights:한글 Ω 😀 <&>",
+                "bw_method": "probe:FigureSpec.panels[0].layers[0].kde2d.bw_method:한글 Ω 😀 <&>",
+                "bw_adjust": 1.1279296875,
+                "gridsize": 109,
+                "cut": 3.1474609375,
+                "clip": [
+                  [
+                    0.1455078125,
+                    0.146484375
+                  ],
+                  [
+                    0.146484375,
+                    0.1474609375
+                  ]
+                ],
+                "common_norm": false,
+                "common_grid": true,
+                "levels": [
+                  0.140625,
+                  0.1416015625
+                ],
+                "fill": true,
+                "warn_singular": false
+              },
+              "gridsize": 51,
+              "mincnt": 22,
+              "degree": 25,
+              "confidence": 0.1328125,
+              "regression": {
+                "model": "probe:FigureSpec.panels[0].layers[0].regression.model:한글 Ω 😀 <&>",
+                "residual": true,
+                "frac": 0.8121744791666666,
+                "iterations": 20
+              },
+              "width": 0.134765625,
+              "whis": 0.126953125,
+              "components": {
+                "body": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.body.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.body.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.body.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.130859375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.body.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.body.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.154296875,
+                  "marker_edge_width": 0.1357421875,
+                  "alpha": 0.1435546875,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.body.hatch:한글 Ω 😀 <&>"
+                },
+                "whisker": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.whisker.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.whisker.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.whisker.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.1552734375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.whisker.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.whisker.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.1484375,
+                  "marker_edge_width": 0.1298828125,
+                  "alpha": 0.1376953125,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.whisker.hatch:한글 Ω 😀 <&>"
+                },
+                "cap": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.cap.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.cap.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.cap.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.1328125,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.cap.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.cap.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.1259765625,
+                  "marker_edge_width": 0.1376953125,
+                  "alpha": 0.1455078125,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.cap.hatch:한글 Ω 😀 <&>"
+                },
+                "median": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.median.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.median.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.median.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.13671875,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.median.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.median.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.1298828125,
+                  "marker_edge_width": 0.1416015625,
+                  "alpha": 0.1494140625,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.median.hatch:한글 Ω 😀 <&>"
+                },
+                "mean": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.mean.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.mean.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.mean.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.1484375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.mean.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.mean.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.1416015625,
+                  "marker_edge_width": 0.1533203125,
+                  "alpha": 0.130859375,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.mean.hatch:한글 Ω 😀 <&>"
+                },
+                "flier": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.flier.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.flier.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.flier.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.1376953125,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.flier.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.flier.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.130859375,
+                  "marker_edge_width": 0.142578125,
+                  "alpha": 0.150390625,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.flier.hatch:한글 Ω 😀 <&>"
+                }
+              },
+              "notch": false,
+              "showmeans": false,
+              "showfliers": false,
+              "showmedians": false,
+              "showextrema": false,
+              "bw_method": "probe:FigureSpec.panels[0].layers[0].bw_method:한글 Ω 😀 <&>",
+              "points": 11,
+              "inner": "probe:FigureSpec.panels[0].layers[0].inner:한글 Ω 😀 <&>",
+              "split": true,
+              "density_norm": "probe:FigureSpec.panels[0].layers[0].density_norm:한글 Ω 😀 <&>",
+              "common_norm": true,
+              "bw_adjust": 0.150390625,
+              "cut": 0.1396484375,
+              "clip": [
+                0.1533203125,
+                0.154296875
+              ],
+              "weights": "probe:FigureSpec.panels[0].layers[0].weights:한글 Ω 😀 <&>",
+              "warn_thresh": 0.12890625,
+              "k_depth": "probe:FigureSpec.panels[0].layers[0].k_depth:한글 Ω 😀 <&>",
+              "width_method": "probe:FigureSpec.panels[0].layers[0].width_method:한글 Ω 😀 <&>",
+              "outlier_prop": 0.1318359375,
+              "trust_alpha": 0.130859375,
+              "c": "probe:FigureSpec.panels[0].layers[0].c:한글 Ω 😀 <&>",
+              "cmap_kind": "probe:FigureSpec.panels[0].layers[0].cmap_kind:한글 Ω 😀 <&>",
+              "colorbar": true,
+              "clabel": "probe:FigureSpec.panels[0].layers[0].clabel:한글 Ω 😀 <&>",
+              "matrix": "probe:FigureSpec.panels[0].layers[0].matrix:한글 Ω 😀 <&>",
+              "heatmap": {
+                "norm": "probe:FigureSpec.panels[0].layers[0].heatmap.norm:한글 Ω 😀 <&>",
+                "vmin": 0.1328125,
+                "vmax": 0.134765625,
+                "center": 0.1455078125,
+                "robust": true,
+                "annot": true,
+                "fmt": "probe:FigureSpec.panels[0].layers[0].heatmap.fmt:한글 Ω 😀 <&>",
+                "mask": [
+                  [
+                    true,
+                    false
+                  ],
+                  [
+                    true,
+                    false
+                  ]
+                ],
+                "xlabels": [
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.xlabels[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.xlabels[1]:한글 Ω 😀 <&>"
+                ],
+                "ylabels": [
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.ylabels[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.ylabels[1]:한글 Ω 😀 <&>"
+                ],
+                "square": true
+              },
+              "cluster": {
+                "method": "probe:FigureSpec.panels[0].layers[0].cluster.method:한글 Ω 😀 <&>",
+                "metric": "probe:FigureSpec.panels[0].layers[0].cluster.metric:한글 Ω 😀 <&>",
+                "row_cluster": false,
+                "col_cluster": false,
+                "z_score": "probe:FigureSpec.panels[0].layers[0].cluster.z_score:한글 Ω 😀 <&>",
+                "standard_scale": "probe:FigureSpec.panels[0].layers[0].cluster.standard_scale:한글 Ω 😀 <&>",
+                "optimal_ordering": true,
+                "row_linkage": [
+                  [
+                    0.1494140625,
+                    0.150390625
+                  ],
+                  [
+                    0.150390625,
+                    0.1513671875
+                  ]
+                ],
+                "col_linkage": [
+                  [
+                    0.154296875,
+                    0.1552734375
+                  ],
+                  [
+                    0.1552734375,
+                    0.1259765625
+                  ]
+                ],
+                "row_colors": [
+                  "probe:FigureSpec.panels[0].layers[0].cluster.row_colors[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].cluster.row_colors[1]:한글 Ω 😀 <&>"
+                ],
+                "col_colors": [
+                  "probe:FigureSpec.panels[0].layers[0].cluster.col_colors[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].cluster.col_colors[1]:한글 Ω 😀 <&>"
+                ],
+                "dendrogram_ratio": 0.350390625,
+                "tree_width": 0.94453125,
+                "tree_color": "probe:FigureSpec.panels[0].layers[0].cluster.tree_color:한글 Ω 😀 <&>"
+              },
+              "levels": 24,
+              "axis": "probe:FigureSpec.panels[0].layers[0].axis:한글 Ω 😀 <&>",
+              "u": "probe:FigureSpec.panels[0].layers[0].u:한글 Ω 😀 <&>",
+              "v": "probe:FigureSpec.panels[0].layers[0].v:한글 Ω 😀 <&>",
+              "quiver_scale": 0.1298828125,
+              "quiver_width": 0.1533203125,
+              "z": "probe:FigureSpec.panels[0].layers[0].z:한글 Ω 😀 <&>"
+            }
+          ],
+          "x": {
+            "label": "probe:FigureSpec.panels[0].x.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].x.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.146484375,
+              0.1474609375
+            ],
+            "share_id": "probe:FigureSpec.panels[0].x.share_id:한글 Ω 😀 <&>"
+          },
+          "y": {
+            "label": "probe:FigureSpec.panels[0].y.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.1474609375,
+              0.1484375
+            ],
+            "share_id": "probe:FigureSpec.panels[0].y.share_id:한글 Ω 😀 <&>"
+          },
+          "y2": {
+            "label": "probe:FigureSpec.panels[0].y2.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y2.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.1357421875,
+              0.13671875
+            ],
+            "share_id": "probe:FigureSpec.panels[0].y2.share_id:한글 Ω 😀 <&>"
+          },
+          "z": {
+            "label": "probe:FigureSpec.panels[0].z.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].z.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.1484375,
+              0.1494140625
+            ],
+            "share_id": "probe:FigureSpec.panels[0].z.share_id:한글 Ω 😀 <&>"
+          },
+          "projection": "probe:FigureSpec.panels[0].projection:한글 Ω 😀 <&>",
+          "title": "probe:FigureSpec.panels[0].title:한글 Ω 😀 <&>",
+          "title_position": [
+            0.1357421875,
+            0.13671875
+          ],
+          "title_citation": "probe:FigureSpec.panels[0].title_citation:한글 Ω 😀 <&>",
+          "title_href": "probe:FigureSpec.panels[0].title_href:한글 Ω 😀 <&>",
+          "label": "probe:FigureSpec.panels[0].label:한글 Ω 😀 <&>",
+          "legend": {
+            "bbox_to_anchor": [
+              0.1376953125,
+              0.138671875
+            ],
+            "show": false,
+            "title": "probe:FigureSpec.panels[0].legend.title:한글 Ω 😀 <&>",
+            "location": "probe:FigureSpec.panels[0].legend.location:한글 Ω 😀 <&>",
+            "frame": true
+          },
+          "filters": {
+            "probe κ": {
+              "tag": "FigureSpec.panels[0].filters.probe κ",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          },
+          "dropna": [
+            "probe:FigureSpec.panels[0].dropna[0]:한글 Ω 😀 <&>",
+            "probe:FigureSpec.panels[0].dropna[1]:한글 Ω 😀 <&>"
+          ]
+        }
+      ],
+      "layout": [
+        1,
+        2
+      ],
+      "share_x": "probe:FigureSpec.share_x:한글 Ω 😀 <&>",
+      "share_y": "probe:FigureSpec.share_y:한글 Ω 😀 <&>",
+      "journal": "probe:FigureSpec.journal:한글 Ω 😀 <&>",
+      "reference_measure_text": "probe:FigureSpec.reference_measure_text:한글 Ω 😀 <&>"
+    },
+    {
+      "version": "0.1",
+      "size": [
+        0.396484375,
+        0.3974609375
+      ],
+      "dpi": 306,
+      "theme": {
+        "name": "probe:FigureSpec.theme.name:한글 Ω 😀 <&>",
+        "font": {
+          "family": "probe:FigureSpec.theme.font.family:한글 Ω 😀 <&>",
+          "size": 10.3896484375,
+          "title_size": 11.3798828125,
+          "label_size": 10.376953125,
+          "tick_size": 8.884765625,
+          "use_tex": true
+        },
+        "axes": {
+          "line_width": 1.1837890625,
+          "spines": "probe:FigureSpec.theme.axes.spines:한글 Ω 😀 <&>",
+          "spine_offset": 0.388671875
+        },
+        "grid": {
+          "show": true,
+          "axis": "probe:FigureSpec.theme.grid.axis:한글 Ω 😀 <&>",
+          "line_width": 0.9033203125,
+          "alpha": 0.8857421875
+        },
+        "ticks": {
+          "direction": "probe:FigureSpec.theme.ticks.direction:한글 Ω 😀 <&>",
+          "major_size": 3.380859375,
+          "minor_size": 1.892578125,
+          "width": 1.176953125,
+          "minor_visible": true,
+          "top": true,
+          "right": true
+        },
+        "palette": {
+          "kind": "probe:FigureSpec.theme.palette.kind:한글 Ω 😀 <&>",
+          "preset": "probe:FigureSpec.theme.palette.preset:한글 Ω 😀 <&>",
+          "lightness": 65.3984375,
+          "chroma": 55.396484375,
+          "hue_start": 20.396484375,
+          "cvd_safe": false
+        },
+        "redundant_encoding": false,
+        "markers": [
+          "probe:FigureSpec.theme.markers[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.markers[1]:한글 Ω 😀 <&>"
+        ],
+        "line_styles": [
+          "probe:FigureSpec.theme.line_styles[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.line_styles[1]:한글 Ω 😀 <&>"
+        ],
+        "hatches": [
+          "probe:FigureSpec.theme.hatches[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.hatches[1]:한글 Ω 😀 <&>"
+        ]
+      },
+      "data": {
+        "columns": {
+          "probe κ": [
+            {
+              "tag": "FigureSpec.data.columns.probe κ[0]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            },
+            {
+              "tag": "FigureSpec.data.columns.probe κ[1]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          ]
+        },
+        "matrices": {
+          "probe κ": [
+            [
+              0.3994140625,
+              0.400390625
+            ],
+            [
+              0.400390625,
+              0.4013671875
+            ]
+          ]
+        }
+      },
+      "suptitle": "probe:FigureSpec.suptitle:한글 Ω 😀 <&>",
+      "auto_label_panels": true,
+      "width_ratios": [
+        0.3828125,
+        0.3837890625
+      ],
+      "height_ratios": [
+        0.37890625,
+        0.3798828125
+      ],
+      "panels": [
+        {
+          "layers": [
+            {
+              "type": "probe:FigureSpec.panels[0].layers[0].type:한글 Ω 😀 <&>",
+              "x": "probe:FigureSpec.panels[0].layers[0].x:한글 Ω 😀 <&>",
+              "y": "probe:FigureSpec.panels[0].layers[0].y:한글 Ω 😀 <&>",
+              "group": "probe:FigureSpec.panels[0].layers[0].group:한글 Ω 😀 <&>",
+              "semantics": {
+                "scale_id": "probe:FigureSpec.panels[0].layers[0].semantics.scale_id:한글 Ω 😀 <&>",
+                "hue": "probe:FigureSpec.panels[0].layers[0].semantics.hue:한글 Ω 😀 <&>",
+                "hue_kind": "probe:FigureSpec.panels[0].layers[0].semantics.hue_kind:한글 Ω 😀 <&>",
+                "hue_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.hue_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.hue_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "hue_norm": [
+                  0.396484375,
+                  0.3974609375
+                ],
+                "size": "probe:FigureSpec.panels[0].layers[0].semantics.size:한글 Ω 😀 <&>",
+                "size_kind": "probe:FigureSpec.panels[0].layers[0].semantics.size_kind:한글 Ω 😀 <&>",
+                "size_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.size_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.size_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "size_norm": [
+                  0.3935546875,
+                  0.39453125
+                ],
+                "sizes": [
+                  0.4033203125,
+                  0.404296875
+                ],
+                "style": "probe:FigureSpec.panels[0].layers[0].semantics.style:한글 Ω 😀 <&>",
+                "style_order": [
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.style_order[0]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  },
+                  {
+                    "tag": "FigureSpec.panels[0].layers[0].semantics.style_order[1]",
+                    "values": [
+                      null,
+                      true,
+                      1208925819614629174706177,
+                      -1208925819614629174706177,
+                      0.5,
+                      "한글 Ω 😀 <&>"
+                    ]
+                  }
+                ],
+                "markers": [
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[1]:한글 Ω 😀 <&>"
+                ],
+                "dashes": [
+                  "probe:FigureSpec.panels[0].layers[0].semantics.dashes[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].semantics.dashes[1]:한글 Ω 😀 <&>"
+                ],
+                "legend": false
+              },
+              "label": "probe:FigureSpec.panels[0].layers[0].label:한글 Ω 😀 <&>",
+              "citation": "probe:FigureSpec.panels[0].layers[0].citation:한글 Ω 😀 <&>",
+              "href": "probe:FigureSpec.panels[0].layers[0].href:한글 Ω 😀 <&>",
+              "references": {
+                "probe κ": {
+                  "citation": "probe:FigureSpec.panels[0].layers[0].references.probe κ.citation:한글 Ω 😀 <&>",
+                  "href": "probe:FigureSpec.panels[0].layers[0].references.probe κ.href:한글 Ω 😀 <&>"
+                }
+              },
+              "color": "probe:FigureSpec.panels[0].layers[0].color:한글 Ω 😀 <&>",
+              "line_width": 0.376953125,
+              "line_style": "probe:FigureSpec.panels[0].layers[0].line_style:한글 Ω 😀 <&>",
+              "drawstyle": "probe:FigureSpec.panels[0].layers[0].drawstyle:한글 Ω 😀 <&>",
+              "marker": "probe:FigureSpec.panels[0].layers[0].marker:한글 Ω 😀 <&>",
+              "marker_size": 0.400390625,
+              "jitter": 0.4052734375,
+              "alpha": 1.3896484375,
+              "bar_width": 0.3857421875,
+              "baseline": 0.396484375,
+              "edge_color": "probe:FigureSpec.panels[0].layers[0].edge_color:한글 Ω 😀 <&>",
+              "stat": {
+                "estimator": "probe:FigureSpec.panels[0].layers[0].stat.estimator:한글 Ω 😀 <&>",
+                "errorbar": "probe:FigureSpec.panels[0].layers[0].stat.errorbar:한글 Ω 😀 <&>",
+                "level": 0.4013671875,
+                "n_boot": 1009,
+                "seed": 2,
+                "weights": "probe:FigureSpec.panels[0].layers[0].stat.weights:한글 Ω 😀 <&>",
+                "units": "probe:FigureSpec.panels[0].layers[0].stat.units:한글 Ω 😀 <&>",
+                "normalize": "probe:FigureSpec.panels[0].layers[0].stat.normalize:한글 Ω 😀 <&>"
+              },
+              "sort": false,
+              "error_style": "probe:FigureSpec.panels[0].layers[0].error_style:한글 Ω 😀 <&>",
+              "error_alpha": 0.3876953125,
+              "ecdf": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].ecdf.stat:한글 Ω 😀 <&>",
+                "complementary": true,
+                "weights": "probe:FigureSpec.panels[0].layers[0].ecdf.weights:한글 Ω 😀 <&>"
+              },
+              "dodge": 0.38671875,
+              "orient": "probe:FigureSpec.panels[0].layers[0].orient:한글 Ω 😀 <&>",
+              "native_scale": true,
+              "stat_scale": "probe:FigureSpec.panels[0].layers[0].stat_scale:한글 Ω 😀 <&>",
+              "order": [
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].order[0]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                },
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].order[1]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                }
+              ],
+              "hue_order": [
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].hue_order[0]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                },
+                {
+                  "tag": "FigureSpec.panels[0].layers[0].hue_order[1]",
+                  "values": [
+                    null,
+                    true,
+                    1208925819614629174706177,
+                    -1208925819614629174706177,
+                    0.5,
+                    "한글 Ω 😀 <&>"
+                  ]
+                }
+              ],
+              "gap": 0.400390625,
+              "stack": true,
+              "value_labels": true,
+              "label_format": "probe:FigureSpec.panels[0].layers[0].label_format:한글 Ω 😀 <&>",
+              "yerr": "probe:FigureSpec.panels[0].layers[0].yerr:한글 Ω 😀 <&>",
+              "xerr": "probe:FigureSpec.panels[0].layers[0].xerr:한글 Ω 😀 <&>",
+              "y_lower": "probe:FigureSpec.panels[0].layers[0].y_lower:한글 Ω 😀 <&>",
+              "y_upper": "probe:FigureSpec.panels[0].layers[0].y_upper:한글 Ω 😀 <&>",
+              "error_color": "probe:FigureSpec.panels[0].layers[0].error_color:한글 Ω 😀 <&>",
+              "error_line_width": 0.4052734375,
+              "capsize": 0.4052734375,
+              "capthick": 0.400390625,
+              "y2": "probe:FigureSpec.panels[0].layers[0].y2:한글 Ω 😀 <&>",
+              "value": 0.3818359375,
+              "text": "probe:FigureSpec.panels[0].layers[0].text:한글 Ω 😀 <&>",
+              "at": [
+                0.37890625,
+                0.3798828125
+              ],
+              "to": [
+                0.392578125,
+                0.3935546875
+              ],
+              "bins": [
+                0.376953125,
+                0.3779296875
+              ],
+              "density": true,
+              "histogram": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].histogram.stat:한글 Ω 😀 <&>",
+                "weights": "probe:FigureSpec.panels[0].layers[0].histogram.weights:한글 Ω 😀 <&>",
+                "common_norm": false,
+                "cumulative": true,
+                "multiple": "probe:FigureSpec.panels[0].layers[0].histogram.multiple:한글 Ω 😀 <&>",
+                "element": "probe:FigureSpec.panels[0].layers[0].histogram.element:한글 Ω 😀 <&>"
+              },
+              "kde": {
+                "weights": "probe:FigureSpec.panels[0].layers[0].kde.weights:한글 Ω 😀 <&>",
+                "bw_method": 0.4033203125,
+                "bw_adjust": 1.3828125,
+                "gridsize": 204,
+                "cut": 3.40234375,
+                "clip": [
+                  0.3857421875,
+                  0.38671875
+                ],
+                "common_norm": false,
+                "common_grid": true,
+                "cumulative": true,
+                "fill": true,
+                "warn_singular": false
+              },
+              "kde2d": {
+                "weights": "probe:FigureSpec.panels[0].layers[0].kde2d.weights:한글 Ω 😀 <&>",
+                "bw_method": 0.3984375,
+                "bw_adjust": 1.3779296875,
+                "gridsize": 110,
+                "cut": 3.3974609375,
+                "clip": [
+                  [
+                    0.3955078125,
+                    0.396484375
+                  ],
+                  [
+                    0.396484375,
+                    0.3974609375
+                  ]
+                ],
+                "common_norm": false,
+                "common_grid": true,
+                "levels": [
+                  0.390625,
+                  0.3916015625
+                ],
+                "fill": true,
+                "warn_singular": false
+              },
+              "gridsize": 52,
+              "mincnt": 23,
+              "degree": 26,
+              "confidence": 0.3828125,
+              "regression": {
+                "model": "probe:FigureSpec.panels[0].layers[0].regression.model:한글 Ω 😀 <&>",
+                "residual": true,
+                "frac": 1.0621744791666665,
+                "iterations": 21
+              },
+              "width": 0.384765625,
+              "whis": [
+                0.3916015625,
+                0.392578125
+              ],
+              "components": {
+                "body": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.body.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.body.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.body.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.380859375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.body.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.body.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.404296875,
+                  "marker_edge_width": 0.3857421875,
+                  "alpha": 0.3935546875,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.body.hatch:한글 Ω 😀 <&>"
+                },
+                "whisker": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.whisker.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.whisker.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.whisker.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.4052734375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.whisker.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.whisker.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.3984375,
+                  "marker_edge_width": 0.3798828125,
+                  "alpha": 0.3876953125,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.whisker.hatch:한글 Ω 😀 <&>"
+                },
+                "cap": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.cap.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.cap.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.cap.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.3828125,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.cap.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.cap.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.3759765625,
+                  "marker_edge_width": 0.3876953125,
+                  "alpha": 0.3955078125,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.cap.hatch:한글 Ω 😀 <&>"
+                },
+                "median": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.median.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.median.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.median.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.38671875,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.median.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.median.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.3798828125,
+                  "marker_edge_width": 0.3916015625,
+                  "alpha": 0.3994140625,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.median.hatch:한글 Ω 😀 <&>"
+                },
+                "mean": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.mean.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.mean.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.mean.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.3984375,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.mean.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.mean.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.3916015625,
+                  "marker_edge_width": 0.4033203125,
+                  "alpha": 0.380859375,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.mean.hatch:한글 Ω 😀 <&>"
+                },
+                "flier": {
+                  "color": "probe:FigureSpec.panels[0].layers[0].components.flier.color:한글 Ω 😀 <&>",
+                  "edge_color": "probe:FigureSpec.panels[0].layers[0].components.flier.edge_color:한글 Ω 😀 <&>",
+                  "face_color": "probe:FigureSpec.panels[0].layers[0].components.flier.face_color:한글 Ω 😀 <&>",
+                  "line_width": 0.3876953125,
+                  "line_style": "probe:FigureSpec.panels[0].layers[0].components.flier.line_style:한글 Ω 😀 <&>",
+                  "marker": "probe:FigureSpec.panels[0].layers[0].components.flier.marker:한글 Ω 😀 <&>",
+                  "marker_size": 0.380859375,
+                  "marker_edge_width": 0.392578125,
+                  "alpha": 0.400390625,
+                  "hatch": "probe:FigureSpec.panels[0].layers[0].components.flier.hatch:한글 Ω 😀 <&>"
+                }
+              },
+              "notch": false,
+              "showmeans": false,
+              "showfliers": false,
+              "showmedians": false,
+              "showextrema": false,
+              "bw_method": 0.390625,
+              "points": 12,
+              "inner": "probe:FigureSpec.panels[0].layers[0].inner:한글 Ω 😀 <&>",
+              "split": true,
+              "density_norm": "probe:FigureSpec.panels[0].layers[0].density_norm:한글 Ω 😀 <&>",
+              "common_norm": true,
+              "bw_adjust": 0.400390625,
+              "cut": 0.3896484375,
+              "clip": [
+                0.4033203125,
+                0.404296875
+              ],
+              "weights": "probe:FigureSpec.panels[0].layers[0].weights:한글 Ω 😀 <&>",
+              "warn_thresh": 0.37890625,
+              "k_depth": 16,
+              "width_method": "probe:FigureSpec.panels[0].layers[0].width_method:한글 Ω 😀 <&>",
+              "outlier_prop": 0.3818359375,
+              "trust_alpha": 0.380859375,
+              "c": "probe:FigureSpec.panels[0].layers[0].c:한글 Ω 😀 <&>",
+              "cmap_kind": "probe:FigureSpec.panels[0].layers[0].cmap_kind:한글 Ω 😀 <&>",
+              "colorbar": true,
+              "clabel": "probe:FigureSpec.panels[0].layers[0].clabel:한글 Ω 😀 <&>",
+              "matrix": "probe:FigureSpec.panels[0].layers[0].matrix:한글 Ω 😀 <&>",
+              "heatmap": {
+                "norm": "probe:FigureSpec.panels[0].layers[0].heatmap.norm:한글 Ω 😀 <&>",
+                "vmin": 0.3828125,
+                "vmax": 0.384765625,
+                "center": 0.3955078125,
+                "robust": true,
+                "annot": true,
+                "fmt": "probe:FigureSpec.panels[0].layers[0].heatmap.fmt:한글 Ω 😀 <&>",
+                "mask": [
+                  [
+                    true,
+                    false
+                  ],
+                  [
+                    true,
+                    false
+                  ]
+                ],
+                "xlabels": [
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.xlabels[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.xlabels[1]:한글 Ω 😀 <&>"
+                ],
+                "ylabels": [
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.ylabels[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].heatmap.ylabels[1]:한글 Ω 😀 <&>"
+                ],
+                "square": true
+              },
+              "cluster": {
+                "method": "probe:FigureSpec.panels[0].layers[0].cluster.method:한글 Ω 😀 <&>",
+                "metric": "probe:FigureSpec.panels[0].layers[0].cluster.metric:한글 Ω 😀 <&>",
+                "row_cluster": false,
+                "col_cluster": false,
+                "z_score": "probe:FigureSpec.panels[0].layers[0].cluster.z_score:한글 Ω 😀 <&>",
+                "standard_scale": "probe:FigureSpec.panels[0].layers[0].cluster.standard_scale:한글 Ω 😀 <&>",
+                "optimal_ordering": true,
+                "row_linkage": [
+                  [
+                    0.3994140625,
+                    0.400390625
+                  ],
+                  [
+                    0.400390625,
+                    0.4013671875
+                  ]
+                ],
+                "col_linkage": [
+                  [
+                    0.404296875,
+                    0.4052734375
+                  ],
+                  [
+                    0.4052734375,
+                    0.3759765625
+                  ]
+                ],
+                "row_colors": [
+                  "probe:FigureSpec.panels[0].layers[0].cluster.row_colors[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].cluster.row_colors[1]:한글 Ω 😀 <&>"
+                ],
+                "col_colors": [
+                  "probe:FigureSpec.panels[0].layers[0].cluster.col_colors[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].cluster.col_colors[1]:한글 Ω 😀 <&>"
+                ],
+                "dendrogram_ratio": 0.600390625,
+                "tree_width": 1.19453125,
+                "tree_color": "probe:FigureSpec.panels[0].layers[0].cluster.tree_color:한글 Ω 😀 <&>"
+              },
+              "levels": [
+                0.3828125,
+                0.3837890625
+              ],
+              "axis": "probe:FigureSpec.panels[0].layers[0].axis:한글 Ω 😀 <&>",
+              "u": "probe:FigureSpec.panels[0].layers[0].u:한글 Ω 😀 <&>",
+              "v": "probe:FigureSpec.panels[0].layers[0].v:한글 Ω 😀 <&>",
+              "quiver_scale": 0.3798828125,
+              "quiver_width": 0.4033203125,
+              "z": "probe:FigureSpec.panels[0].layers[0].z:한글 Ω 😀 <&>"
+            }
+          ],
+          "x": {
+            "label": "probe:FigureSpec.panels[0].x.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].x.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.396484375,
+              0.3974609375
+            ],
+            "share_id": "probe:FigureSpec.panels[0].x.share_id:한글 Ω 😀 <&>"
+          },
+          "y": {
+            "label": "probe:FigureSpec.panels[0].y.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.3974609375,
+              0.3984375
+            ],
+            "share_id": "probe:FigureSpec.panels[0].y.share_id:한글 Ω 😀 <&>"
+          },
+          "y2": {
+            "label": "probe:FigureSpec.panels[0].y2.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y2.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.3857421875,
+              0.38671875
+            ],
+            "share_id": "probe:FigureSpec.panels[0].y2.share_id:한글 Ω 😀 <&>"
+          },
+          "z": {
+            "label": "probe:FigureSpec.panels[0].z.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].z.scale:한글 Ω 😀 <&>",
+            "limits": [
+              0.3984375,
+              0.3994140625
+            ],
+            "share_id": "probe:FigureSpec.panels[0].z.share_id:한글 Ω 😀 <&>"
+          },
+          "projection": "probe:FigureSpec.panels[0].projection:한글 Ω 😀 <&>",
+          "title": "probe:FigureSpec.panels[0].title:한글 Ω 😀 <&>",
+          "title_position": [
+            0.3857421875,
+            0.38671875
+          ],
+          "title_citation": "probe:FigureSpec.panels[0].title_citation:한글 Ω 😀 <&>",
+          "title_href": "probe:FigureSpec.panels[0].title_href:한글 Ω 😀 <&>",
+          "label": "probe:FigureSpec.panels[0].label:한글 Ω 😀 <&>",
+          "legend": {
+            "bbox_to_anchor": [
+              0.3876953125,
+              0.388671875
+            ],
+            "show": false,
+            "title": "probe:FigureSpec.panels[0].legend.title:한글 Ω 😀 <&>",
+            "location": "probe:FigureSpec.panels[0].legend.location:한글 Ω 😀 <&>",
+            "frame": true
+          },
+          "filters": {
+            "probe κ": {
+              "tag": "FigureSpec.panels[0].filters.probe κ",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          },
+          "dropna": [
+            "probe:FigureSpec.panels[0].dropna[0]:한글 Ω 😀 <&>",
+            "probe:FigureSpec.panels[0].dropna[1]:한글 Ω 😀 <&>"
+          ]
+        }
+      ],
+      "layout": [
+        2,
+        3
+      ],
+      "share_x": "probe:FigureSpec.share_x:한글 Ω 😀 <&>",
+      "share_y": "probe:FigureSpec.share_y:한글 Ω 😀 <&>",
+      "journal": "probe:FigureSpec.journal:한글 Ω 😀 <&>",
+      "reference_measure_text": "probe:FigureSpec.reference_measure_text:한글 Ω 😀 <&>"
+    },
+    {
+      "version": "0.1",
+      "size": [
+        0.646484375,
+        0.6474609375
+      ],
+      "dpi": 307,
+      "theme": {
+        "name": "probe:FigureSpec.theme.name:한글 Ω 😀 <&>",
+        "font": {
+          "family": "probe:FigureSpec.theme.font.family:한글 Ω 😀 <&>",
+          "size": 10.6396484375,
+          "title_size": 11.6298828125,
+          "label_size": 10.626953125,
+          "tick_size": 9.134765625,
+          "use_tex": true
+        },
+        "axes": {
+          "line_width": 1.4337890625,
+          "spines": "probe:FigureSpec.theme.axes.spines:한글 Ω 😀 <&>",
+          "spine_offset": 0.638671875
+        },
+        "grid": {
+          "show": true,
+          "axis": "probe:FigureSpec.theme.grid.axis:한글 Ω 😀 <&>",
+          "line_width": 1.1533203125,
+          "alpha": 1.1357421875
+        },
+        "ticks": {
+          "direction": "probe:FigureSpec.theme.ticks.direction:한글 Ω 😀 <&>",
+          "major_size": 3.630859375,
+          "minor_size": 2.142578125,
+          "width": 1.426953125,
+          "minor_visible": true,
+          "top": true,
+          "right": true
+        },
+        "palette": {
+          "kind": "probe:FigureSpec.theme.palette.kind:한글 Ω 😀 <&>",
+          "preset": null,
+          "lightness": 65.6484375,
+          "chroma": 55.646484375,
+          "hue_start": 20.646484375,
+          "cvd_safe": false
+        },
+        "redundant_encoding": false,
+        "markers": [
+          "probe:FigureSpec.theme.markers[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.markers[1]:한글 Ω 😀 <&>"
+        ],
+        "line_styles": [
+          "probe:FigureSpec.theme.line_styles[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.line_styles[1]:한글 Ω 😀 <&>"
+        ],
+        "hatches": [
+          "probe:FigureSpec.theme.hatches[0]:한글 Ω 😀 <&>",
+          "probe:FigureSpec.theme.hatches[1]:한글 Ω 😀 <&>"
+        ]
+      },
+      "data": {
+        "columns": {
+          "probe κ": [
+            {
+              "tag": "FigureSpec.data.columns.probe κ[0]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            },
+            {
+              "tag": "FigureSpec.data.columns.probe κ[1]",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          ]
+        },
+        "matrices": {
+          "probe κ": [
+            [
+              0.6494140625,
+              0.650390625
+            ],
+            [
+              0.650390625,
+              0.6513671875
+            ]
+          ]
+        }
+      },
+      "suptitle": "probe:FigureSpec.suptitle:한글 Ω 😀 <&>",
+      "auto_label_panels": true,
+      "width_ratios": null,
+      "height_ratios": null,
+      "panels": [
+        {
+          "layers": [
+            {
+              "type": "probe:FigureSpec.panels[0].layers[0].type:한글 Ω 😀 <&>",
+              "x": "probe:FigureSpec.panels[0].layers[0].x:한글 Ω 😀 <&>",
+              "y": "probe:FigureSpec.panels[0].layers[0].y:한글 Ω 😀 <&>",
+              "group": null,
+              "semantics": {
+                "scale_id": null,
+                "hue": null,
+                "hue_kind": "probe:FigureSpec.panels[0].layers[0].semantics.hue_kind:한글 Ω 😀 <&>",
+                "hue_order": null,
+                "hue_norm": null,
+                "size": null,
+                "size_kind": "probe:FigureSpec.panels[0].layers[0].semantics.size_kind:한글 Ω 😀 <&>",
+                "size_order": null,
+                "size_norm": null,
+                "sizes": [
+                  0.6533203125,
+                  0.654296875
+                ],
+                "style": null,
+                "style_order": null,
+                "markers": [
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[0]:한글 Ω 😀 <&>",
+                  "probe:FigureSpec.panels[0].layers[0].semantics.markers[1]:한글 Ω 😀 <&>"
+                ],
+                "dashes": null,
+                "legend": false
+              },
+              "label": null,
+              "citation": null,
+              "href": null,
+              "references": null,
+              "color": null,
+              "line_width": null,
+              "line_style": null,
+              "drawstyle": "probe:FigureSpec.panels[0].layers[0].drawstyle:한글 Ω 😀 <&>",
+              "marker": null,
+              "marker_size": null,
+              "jitter": null,
+              "alpha": 1.6396484375,
+              "bar_width": null,
+              "baseline": null,
+              "edge_color": null,
+              "stat": {
+                "estimator": "probe:FigureSpec.panels[0].layers[0].stat.estimator:한글 Ω 😀 <&>",
+                "errorbar": null,
+                "level": null,
+                "n_boot": 1010,
+                "seed": 3,
+                "weights": null,
+                "units": null,
+                "normalize": "probe:FigureSpec.panels[0].layers[0].stat.normalize:한글 Ω 😀 <&>"
+              },
+              "sort": false,
+              "error_style": null,
+              "error_alpha": null,
+              "ecdf": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].ecdf.stat:한글 Ω 😀 <&>",
+                "complementary": true,
+                "weights": null
+              },
+              "dodge": null,
+              "orient": "probe:FigureSpec.panels[0].layers[0].orient:한글 Ω 😀 <&>",
+              "native_scale": true,
+              "stat_scale": "probe:FigureSpec.panels[0].layers[0].stat_scale:한글 Ω 😀 <&>",
+              "order": null,
+              "hue_order": null,
+              "gap": null,
+              "stack": true,
+              "value_labels": true,
+              "label_format": "probe:FigureSpec.panels[0].layers[0].label_format:한글 Ω 😀 <&>",
+              "yerr": null,
+              "xerr": null,
+              "y_lower": null,
+              "y_upper": null,
+              "error_color": null,
+              "error_line_width": null,
+              "capsize": null,
+              "capthick": null,
+              "y2": null,
+              "value": null,
+              "text": null,
+              "at": null,
+              "to": null,
+              "bins": 40,
+              "density": true,
+              "histogram": {
+                "stat": "probe:FigureSpec.panels[0].layers[0].histogram.stat:한글 Ω 😀 <&>",
+                "weights": null,
+                "common_norm": false,
+                "cumulative": true,
+                "multiple": "probe:FigureSpec.panels[0].layers[0].histogram.multiple:한글 Ω 😀 <&>",
+                "element": "probe:FigureSpec.panels[0].layers[0].histogram.element:한글 Ω 😀 <&>"
+              },
+              "kde": {
+                "weights": null,
+                "bw_method": "probe:FigureSpec.panels[0].layers[0].kde.bw_method:한글 Ω 😀 <&>",
+                "bw_adjust": 1.6328125,
+                "gridsize": 205,
+                "cut": 3.65234375,
+                "clip": null,
+                "common_norm": false,
+                "common_grid": true,
+                "cumulative": true,
+                "fill": true,
+                "warn_singular": false
+              },
+              "kde2d": {
+                "weights": null,
+                "bw_method": "probe:FigureSpec.panels[0].layers[0].kde2d.bw_method:한글 Ω 😀 <&>",
+                "bw_adjust": 1.6279296875,
+                "gridsize": 111,
+                "cut": 3.6474609375,
+                "clip": null,
+                "common_norm": false,
+                "common_grid": true,
+                "levels": [
+                  0.640625,
+                  0.6416015625
+                ],
+                "fill": true,
+                "warn_singular": false
+              },
+              "gridsize": 53,
+              "mincnt": null,
+              "degree": 27,
+              "confidence": null,
+              "regression": {
+                "model": "probe:FigureSpec.panels[0].layers[0].regression.model:한글 Ω 😀 <&>",
+                "residual": true,
+                "frac": 1.3121744791666665,
+                "iterations": 22
+              },
+              "width": null,
+              "whis": null,
+              "components": {
+                "body": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                },
+                "whisker": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                },
+                "cap": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                },
+                "median": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                },
+                "mean": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                },
+                "flier": {
+                  "color": null,
+                  "edge_color": null,
+                  "face_color": null,
+                  "line_width": null,
+                  "line_style": null,
+                  "marker": null,
+                  "marker_size": null,
+                  "marker_edge_width": null,
+                  "alpha": null,
+                  "hatch": null
+                }
+              },
+              "notch": null,
+              "showmeans": null,
+              "showfliers": null,
+              "showmedians": null,
+              "showextrema": null,
+              "bw_method": null,
+              "points": null,
+              "inner": null,
+              "split": true,
+              "density_norm": "probe:FigureSpec.panels[0].layers[0].density_norm:한글 Ω 😀 <&>",
+              "common_norm": true,
+              "bw_adjust": null,
+              "cut": null,
+              "clip": null,
+              "weights": null,
+              "warn_thresh": null,
+              "k_depth": null,
+              "width_method": null,
+              "outlier_prop": null,
+              "trust_alpha": null,
+              "c": null,
+              "cmap_kind": "probe:FigureSpec.panels[0].layers[0].cmap_kind:한글 Ω 😀 <&>",
+              "colorbar": true,
+              "clabel": null,
+              "matrix": null,
+              "heatmap": {
+                "norm": "probe:FigureSpec.panels[0].layers[0].heatmap.norm:한글 Ω 😀 <&>",
+                "vmin": null,
+                "vmax": null,
+                "center": null,
+                "robust": true,
+                "annot": true,
+                "fmt": "probe:FigureSpec.panels[0].layers[0].heatmap.fmt:한글 Ω 😀 <&>",
+                "mask": null,
+                "xlabels": null,
+                "ylabels": null,
+                "square": true
+              },
+              "cluster": {
+                "method": "probe:FigureSpec.panels[0].layers[0].cluster.method:한글 Ω 😀 <&>",
+                "metric": "probe:FigureSpec.panels[0].layers[0].cluster.metric:한글 Ω 😀 <&>",
+                "row_cluster": false,
+                "col_cluster": false,
+                "z_score": null,
+                "standard_scale": null,
+                "optimal_ordering": true,
+                "row_linkage": null,
+                "col_linkage": null,
+                "row_colors": null,
+                "col_colors": null,
+                "dendrogram_ratio": 0.850390625,
+                "tree_width": 1.44453125,
+                "tree_color": "probe:FigureSpec.panels[0].layers[0].cluster.tree_color:한글 Ω 😀 <&>"
+              },
+              "levels": null,
+              "axis": "probe:FigureSpec.panels[0].layers[0].axis:한글 Ω 😀 <&>",
+              "u": null,
+              "v": null,
+              "quiver_scale": null,
+              "quiver_width": null,
+              "z": null
+            }
+          ],
+          "x": {
+            "label": "probe:FigureSpec.panels[0].x.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].x.scale:한글 Ω 😀 <&>",
+            "limits": null,
+            "share_id": null
+          },
+          "y": {
+            "label": "probe:FigureSpec.panels[0].y.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y.scale:한글 Ω 😀 <&>",
+            "limits": null,
+            "share_id": null
+          },
+          "y2": {
+            "label": "probe:FigureSpec.panels[0].y2.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].y2.scale:한글 Ω 😀 <&>",
+            "limits": null,
+            "share_id": null
+          },
+          "z": {
+            "label": "probe:FigureSpec.panels[0].z.label:한글 Ω 😀 <&>",
+            "scale": "probe:FigureSpec.panels[0].z.scale:한글 Ω 😀 <&>",
+            "limits": null,
+            "share_id": null
+          },
+          "projection": "probe:FigureSpec.panels[0].projection:한글 Ω 😀 <&>",
+          "title": "probe:FigureSpec.panels[0].title:한글 Ω 😀 <&>",
+          "title_position": null,
+          "title_citation": null,
+          "title_href": null,
+          "label": null,
+          "legend": {
+            "bbox_to_anchor": null,
+            "show": false,
+            "title": null,
+            "location": "probe:FigureSpec.panels[0].legend.location:한글 Ω 😀 <&>",
+            "frame": true
+          },
+          "filters": {
+            "probe κ": {
+              "tag": "FigureSpec.panels[0].filters.probe κ",
+              "values": [
+                null,
+                true,
+                1208925819614629174706177,
+                -1208925819614629174706177,
+                0.5,
+                "한글 Ω 😀 <&>"
+              ]
+            }
+          },
+          "dropna": [
+            "probe:FigureSpec.panels[0].dropna[0]:한글 Ω 😀 <&>",
+            "probe:FigureSpec.panels[0].dropna[1]:한글 Ω 😀 <&>"
+          ]
+        }
+      ],
+      "layout": null,
+      "share_x": "probe:FigureSpec.share_x:한글 Ω 😀 <&>",
+      "share_y": "probe:FigureSpec.share_y:한글 Ω 😀 <&>",
+      "journal": null,
+      "reference_measure_text": null
+    }
+  ]
+}

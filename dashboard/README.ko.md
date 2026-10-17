@@ -48,6 +48,9 @@ x/y/z scale·고정/자동 limits·보조 y축, 라벨/reference 등을 폼으�
 `Cache-Control: no-store`를 적용합니다. Native 폼에도 명시적 POST action이 있어
 JS가 없거나 아직 연결되지 않았을 때 입력을 GET URL에 넣지 않습니다. Referrer는
 same-origin 정책(외부 전송 없음)을 사용하며 Origin/cross-site 차단을 완화하지 않습니다.
+요청 body는 최대16MiB의 Content-Length framing을 지원하고 Transfer-Encoding/chunked·
+중복 길이·불완전 body는 action 전에 거부합니다. 새 chunked decoder를 추가한 것은
+아니며 정상적인 bodyless 로컬 action은 그대로 지원합니다.
 빠른 폼 외에도 `capabilities.LAYER_TYPES` 기반 checked-JSON 폼으로
 등록된 모든 레이어를 추가하고, 저장된 `.mplot.json`을 열거나
 JSON/PNG/PDF/SVG로 내보낼 수 있습니다. 화면 preview는 어느 축이든

@@ -15,10 +15,23 @@ MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
 
 <http://127.0.0.1:8766/>을 연다. `--bind LOOPBACK:PORT`, `--python PATH`
 또는 `MUDPLOT_BIND`, `MUDPLOT_PYTHON`으로 기본값을 바꿀 수 있다.
+Interpreter 우선순위는 `--python` > `MUDPLOT_PYTHON` > PATH의 `python3`이다.
+실행 파일과 인수를 shell 해석 없이 전달하며 잘못된 명시 경로는 다른 Python으로
+fallback하지 않고 실패한다. Windows 실행 예:
+
+```powershell
+cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/Scripts/python.exe"
+```
+
+`uv run python scripts/check_python_bridge_paths.py`는 실행/임시 데이터 경로에
+한글·공백·`&`가 있는 별도 venv를 검증한다. 같은 render 버전을 그 임시 venv에만
+내려받을 수 있고 프로젝트 의존성은 유지한다. 로컬 Windows는 실행했지만 Linux CI
+통과는 아직 관찰하지 않았다.
 
 인증이 없는 로컬 단일 사용자 도구이며 non-loopback bind 주소/HTTP Host와
-cross-origin browser mutation을 거부하며 모든 response를 `no-store`로
-보내고 제한적인 CSP/browser security header를 적용한다.
+cross-origin browser mutation을 거부하며 이 거부를 포함한 application response를
+`no-store`/CSP/browser security header로 보낸다. Same-origin과 Origin 없는 로컬 agent는
+지원하며 원격 사용자 인증 기능은 아니다.
 
 ## 계약과 현재 범위
 
@@ -34,14 +47,20 @@ cross-origin browser mutation을 거부하며 모든 response를 `no-store`로
   보존 계약이며 renderer 부동소수점 범위를 넘는 좌표/style 값은 명확히 실패한다.
 - reducer/validator의 단일 source는 `python -m mudplot apply`, renderer는
   `python -m mudplot render`로 유지한다.
-- 실패한 action/import/render는 현재 spec과 history를 변경하지 않는다.
+- 실패한 action/import/render는 현재 spec과 history를 변경하지 않는다. Rust의
+  정상 open/reset은 undo 가능한 snapshot이며 Python open/reset은 새 이력을 시작한다.
+  두 editor 모두 정상적인 새 편집 후 redo를 지운다.
 - capability에서 전체 layer selector/field reference와 theme/projection
   control을 생성하고 title·정확한 figure size도 같은 JSON action으로 변경한다.
 - 저장 spec 열기와 정확한 크기의 PDF/SVG/JSON export를 지원한다. cached
   PNG preview는 어느 축이든 2000 pixel을 넘을 때만 DPI를 낮추며
   spec/final export는 바꾸지 않는다.
 - htmx와 0BSD license는 `dashboard/static/`에서 재사용하며 복제하지 않는다.
-  request body 상한은 16 MiB, Python bridge subprocess timeout은 120초다.
+  request body 상한은 16 MiB, Python bridge subprocess timeout은 120초다. 선언한
+  Content-Length가16 MiB를 넘으면 body frame을 기다리기 전에 거부한다. 기존 limited
+  Bytes extractor로 undo/reset을 포함한 모든 handler 전에 decoded body 한도를 적용하며
+  한도 내 chunked를 지원한다. 로컬 N-1/N/N+1과 서버 PID의 수명 peak RSS를 관찰했지만
+  렌더 자식/전체 앱 메모리·CPU·동시 부하 보장은 아니며 정확한 범위는 리뷰 대장에 있다.
 
 Route: `GET /`, `/fig.{png,pdf,svg}`, `/spec.json`,
 `/static/htmx.min.js`; `POST /action`은 action JSON object를 받는다. visual

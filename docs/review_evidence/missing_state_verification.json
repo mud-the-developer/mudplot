@@ -1,0 +1,262 @@
+{
+  "scope": "local worktree including uncommitted phase6; phase7 missing-data/state/history checks, not full release gates",
+  "head": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "backend": "Agg",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "abc641a5b2e6d71a4bf50e64ec00e7eb79990dac09ca9d39f892ade114fa9655",
+    "mudplot/_render.py": "076bdb7b9dd9bab86ba26a46a82b7a84f91ebb7316e6278d2a2ca29095e20280",
+    "tests/test_review_missing_data.py": "3111d18ebd41a90e7765c421c94cc77832e72d8b23a26587f46b21ae77b4504d",
+    "tests/test_review_state_contracts.py": "bb4e6fbb0da60e040260e314d98cd32a69e11d1dc10770c91a7c0986abcc80df",
+    "scripts/rust_editor_smoke_test.py": "0ebdfc5be0bf0f89a474f30ca1248208481a15177ac01044f0ae8cb39899624a",
+    "scripts/check_minimum_versions.py": "8bb0d75d95f645fdec6242e774dc9fa0cef6b730f3e0de148c00df8bf088b2c0"
+  },
+  "limits": "Focused Python set, minimum subset and real Rust HTTP/browser smoke only. Actual PyArrow/polars skipped. Not full suite, MSRV, Linux, security audit or release approval.",
+  "pre_fix": {
+    "categorical_missing_x_failed": 10,
+    "history_probe": "Incorrect assumption that Rust open starts fresh history was corrected in the test harness; production history semantics were not changed."
+  },
+  "checks": [
+    {
+      "name": "python-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "859 passed, 4 skipped in 296.94s (0:04:56)"
+      ],
+      "log_text_sha256": "5b834db0061bcb4cfe7effd035f93339955cd1b62b935ed91367857b2345d6f6"
+    },
+    {
+      "name": "minimum-data-state",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTEST_ADDOPTS": "-k \"test_review_missing_data or test_review_state_contracts or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "98 passed, 2 skipped, 2142 deselected, 13 warnings in 35.79s"
+      ],
+      "log_text_sha256": "6f3b753cb27cd45298cff832202cbfb304b90e9ed7ef57a8da296ee82bc0bbb8"
+    },
+    {
+      "name": "rust-http-browser",
+      "argv": [
+        "python",
+        "scripts/rust_editor_smoke_test.py",
+        "--browser"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_text_sha256": "5471a421c5e6482939ab7bd78b6d8fad914f78b8c28d9f894f98dd25d97f7168"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "201 files already formatted"
+      ],
+      "log_text_sha256": "f36b4fb3218f12e3995320c733435e653e7140d30f5d071fbadca31291aa1fdc"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "ac430cde543df8c658d4e9210d38ba24167207dbd34b0fc532afa95b88ee0aeb"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "7559d9fa36b6f3044815e99764ed6a5e9946b26e6e2e4aa8e3f8ec3d9f1d2615"
+    }
+  ],
+  "history_cursor_sample": {
+    "fixture": "default FigureSpec; canonical sorted-key UTF-8 JSON hash; supplements nested-state regression assertions",
+    "states": [
+      {
+        "operation": "initial",
+        "cursor": 0,
+        "spec_sha256": "cabb35450de66f3564d7998b95d40c1331391e6ff62a784eda7272cb8495bae2"
+      },
+      {
+        "operation": "SetTitle",
+        "cursor": 1,
+        "spec_sha256": "723711f4c4a7a61cef652e3fa64d26dcfcb138c792f576f8a697aee6e6e67602"
+      },
+      {
+        "operation": "SetSize",
+        "cursor": 2,
+        "spec_sha256": "1b8d37eb0d576ed4862d1ca26e91fcec02125c7026d77c6c9196b51590afdb8e"
+      },
+      {
+        "operation": "SetPalette",
+        "cursor": 3,
+        "spec_sha256": "c5278bd45fd50b4afac16b7440248194c850783390d22062d15abeafc961b229"
+      },
+      {
+        "operation": "undo",
+        "cursor": 2,
+        "spec_sha256": "1b8d37eb0d576ed4862d1ca26e91fcec02125c7026d77c6c9196b51590afdb8e"
+      },
+      {
+        "operation": "undo",
+        "cursor": 1,
+        "spec_sha256": "723711f4c4a7a61cef652e3fa64d26dcfcb138c792f576f8a697aee6e6e67602"
+      },
+      {
+        "operation": "undo",
+        "cursor": 0,
+        "spec_sha256": "cabb35450de66f3564d7998b95d40c1331391e6ff62a784eda7272cb8495bae2"
+      },
+      {
+        "operation": "undo",
+        "cursor": 0,
+        "spec_sha256": "cabb35450de66f3564d7998b95d40c1331391e6ff62a784eda7272cb8495bae2"
+      },
+      {
+        "operation": "redo",
+        "cursor": 1,
+        "spec_sha256": "723711f4c4a7a61cef652e3fa64d26dcfcb138c792f576f8a697aee6e6e67602"
+      },
+      {
+        "operation": "redo",
+        "cursor": 2,
+        "spec_sha256": "1b8d37eb0d576ed4862d1ca26e91fcec02125c7026d77c6c9196b51590afdb8e"
+      },
+      {
+        "operation": "redo",
+        "cursor": 3,
+        "spec_sha256": "c5278bd45fd50b4afac16b7440248194c850783390d22062d15abeafc961b229"
+      },
+      {
+        "operation": "redo",
+        "cursor": 3,
+        "spec_sha256": "c5278bd45fd50b4afac16b7440248194c850783390d22062d15abeafc961b229"
+      }
+    ]
+  }
+}

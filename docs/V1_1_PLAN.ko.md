@@ -120,6 +120,156 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 11차에서 관찰한 요청 body 경계 matrix를 마무리했습니다.** FIND-011은
+Python이 미지원 Transfer-Encoding·중복 길이·짧은 body를 무시하던 문제이며 수정 전
+6개 실패를 확보했습니다. Content-Length만 정확히 읽고 잘못된 framing은 action 전에
+거부합니다. Python chunked는 새 decoder 없이 명시적으로 거부합니다.
+
+FIND-012는 Rust undo가 unknown-size body 확인 전에 상태를 바꾸던 문제입니다.
+계획16MiB+1 중393216bytes를 넘긴 뒤 끊겼으므로 전체 초과 body 수용으로 과장하지
+않습니다. 기존 limited Bytes 추출을 모든 handler 앞에 적용하며 parts/기존 한도/
+header는 유지합니다. Form/JSON/chunked·undo/reset을 포함한 로컬 순차39case 통과입니다.
+
+Windows venv launcher가 아닌 실제 worker PID의 수명 peak는 Python252.14MiB/
+Rust30.40MiB였습니다. Native 렌더 자식은 제외하며 request별 reset/전체 앱 메모리·
+CPU hard bound·동시 부하 보장은 아닙니다. 소유한 process tree/listener 정리도 확인했습니다.
+SEC-03은 PASS, 계산량/성능인 SEC-04/PERF는 남깁니다.
+
+기록한 대상 **993통과/20skip**, 브라우저 **31통과**, 최소 대상 **232통과/18skip/
+2142deselected/경고481**, native Rust **15통과/helper1ignored**입니다. 실제 Rust
+HTTP/browser·Clippy/fmt·Ruff209파일·Pyright·LSP7경로·계약·clean sdist→wheel을
+포함한13명령/39관찰은 [11차 증거](review_evidence/body_boundary_verification.json)에
+있습니다. CI는 구성만 했고 Linux/MSRV 결과가 아닙니다. 의존성/lock/버전/tag/배포는
+유지하며 [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS28/RUNNING14/OPEN108**입니다.
+더 넓은 릴리스/자원/보안 gate가 완료된 것은 아닙니다.
+
+### 이전 리뷰 10차
+
+**리뷰 10차에서 실제 형식 동등성과 SQL 소유권을 마무리했습니다.** PyArrow26.0.0/
+Polars2.0.0을 임시 환경에만 설치해 **114개 모두 통과/skip0**, 추가한 CI 명령도
+같은114개가 로컬 통과했습니다(228개 고유 검사로 합산하지 않습니다). Arrow chunks/
+dictionary·Polars categorical·borrowed SQL cursor·generic to_dict를 포함한14입력 경로와
+정수/boolean/Unicode/null·UTC microseconds·empty/duplicate·Decimal/무한대 거부를
+확인했습니다. 모든 optional 버전/정밀도/timezone/OS 인증은 아니며 DATA-01을 해당 범위에서 PASS 처리합니다.
+
+FIND-010의 내부 cursor cleanup 누락은 수정 전5개 실패를 확보했습니다. Connection+
+query로 만든 cursor만 지원 시 성공/실패 뒤 닫으며 borrowed cursor/connection과
+transaction 제어는 호출자에게 남깁니다. Close 오류/context도 전파하고 minimal duck
+cursor도 유지합니다. 소유권10개 검사 통과, DATA-07은 PASS입니다. 의존성/버전은 유지합니다.
+
+프로젝트 대상 **980통과/20skip**(선택 전용18·Windows2), 최소 data-only 대상
+**95통과/선택18skip/2266deselected/경고13**입니다. 과거의 더 넓은 최소 환경 반복이
+아니며 실제 optional 검사는 별도로 skip 없이 수행했습니다. Ruff207파일/format·
+Pyright·LSP6경로·계약·clean sdist→wheel을 포함한9명령과 정리 결과는
+[10차 증거](review_evidence/table_sql_verification.json)에 있습니다. 전용 venv는 제거했고
+프로젝트의 optional 부재/의존성·lock 비변경을 확인했습니다. 아래 browser/Rust 결과는
+새 실행이 아니며 원격 optional CI도 구성만 했습니다.
+
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS27/RUNNING15/OPEN108**입니다. 원문/버전/
+tag/배포는 유지하며 전체 suite/최소환경/MSRV/Linux/보안/body memory/릴리스 gate는 남아 있습니다.
+
+### 이전 리뷰 9차
+
+**리뷰 9차에서 모델 필드 JSON과 Windows interpreter 경로를 확인했습니다.**
+24모델/272필드의 nondefault·대체 union·null fixture와 nested type/JSON 기본 타입을
+검사했습니다. Schema-valid지만 옵션 충돌을 의도한 직렬화 fixture이며 렌더/기능
+동등성 주장은 아닙니다. 등록37예제 spec은 따로 검사합니다. 실제 Python→Rust→Python
+artifact의3figure 값/타입/배열 순서를 보존하여 JSON-01을 PASS 처리했습니다.
+
+별도 한글/공백/`&` venv에서 PATH/env/flag 우선순위와 실제12개 child의 executable/
+prefix/version/argv를 검증했고 잘못된 명시 flag는 fallback하지 않았습니다. 첫 offline
+준비는 캐시 부족으로 중단됐고, 준비 변경을 명시한 뒤 같은 render 버전만 임시 venv에
+내려받아 정리했습니다. 프로젝트 패키지/lock은 유지하며 recorder도 해당 venv 안에만
+exclusive 생성합니다. 실제 Windows는 통과했지만 Linux CI는 구성만 한 상태여서
+RUST-02는 RUNNING입니다.
+
+기록된 대상 **968통과/4skip**, 최소 환경 **207통과/2skip/2142deselected/경고481**,
+Rust native **15통과/helper1ignored**입니다. Ruff205파일/format·Pyright·LSP6경로·
+Clippy/fmt·계약·packaging도 통과했습니다. 기본12명령과 QA-isolation/style/package
+후속5명령의 source revision을 [9차 증거](review_evidence/codec_path_verification.json)에
+분리했으며 아래 브라우저31개는 과거 결과이지 새 실행이 아닙니다. 이번에 제품 결함이나
+runtime 재작성이 필요했던 것은 아닙니다.
+
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS25/RUNNING16/OPEN109**입니다. 원문/버전/
+core 의존성/tag/배포는 그대로이며 전체 suite/최소환경/Linux/MSRV/보안감사/릴리스
+gate가 완료된 것은 아닙니다.
+
+### 이전 리뷰 8차
+
+**리뷰 8차에서 공통 상태/실패/로컬 HTTP 경계를 확인했습니다.** FIND-008은 Rust
+Host/Origin 거부 응답에 공통 no-store/CSP가 빠지는 문제를 수정했으며 접근 조건은
+그대로입니다. FIND-009는 선언 Content-Length>16MiB의 업로드 전 거부를 추가하고
+기존 streaming 한도를 유지합니다. 무제한 payload 우회나 content type/chunked/RSS
+검증 완료를 뜻하지 않습니다.
+
+공통10작업 fixture로 fluent/functional/Store/CLI/Python/Rust agent·지원 form의
+매 상태를 비교했습니다. Log 축/layout/style/reference/typed heatmap과 실제
+validation/JSON/render 실패 뒤 양 editor의 spec/PNG/redo 보존을 확인했습니다.
+실제 native IPv6 listener/HTTP·Host/Origin matrix·application header·브라우저
+CSP 관찰은 [8차 실행 요약](review_evidence/editor_boundary_verification.json)에 있습니다.
+
+최종 **899통과/4skip**, Python 브라우저 **31통과**, 최소 환경 대상 **138통과/
+2skip/2142deselected/경고481**입니다. 별도 경고 가시화 조사에서 이전 Matplotlib/
+최신 pyparsing의 deprecation/diagnostic을 확인했으며 zero-warning 주장은 아닙니다.
+Rust native **14통과/helper1ignored**, 실제 HTTP/browser·Clippy/fmt·Ruff203파일/
+format·Pyright·LSP7경로·계약·clean sdist→wheel·IPv6를 포함한13명령이 최종
+exit0입니다. MSRV1.88 검증은 아닙니다.
+
+이전 묶음은 body 포함 조기 거부의 Windows10053 및 log decode 실패로 중단되어
+완료로 세지 않았습니다. 거부 Origin은 업로드/해석 전403을 요구하는 header-only로
+분리하고 정상 origin은 실제 payload를 사용합니다. Transport 원인이 해결됐다고
+주장하지 않습니다. [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS24/RUNNING16/OPEN110**,
+SEC-03은 진행 중입니다. 원문/버전/tag/배포/core 의존성은 유지하며 전체 suite/최소환경/
+Linux/MSRV/보안 감사/릴리스 gate는 남아 있습니다.
+
+### 이전 리뷰 7차
+
+**리뷰 7차에서 raw 범주 x 결측 표시와 중첩 상태/이력을 확인했습니다.** FIND-007은
+null x가 literal None 범주가 되는 문제이며 수정 전10개 실패를 확보했습니다.
+공통 `_x_values`가 결측 행 위치에 NaN을 남겨 선을 끊고 점을 mask하며 실제
+`"None"` label·shared/y2 좌표를 보존합니다. 연속 날짜 축/새 통계 정책은 아닙니다.
+
+기록한 대상 검사는 **859통과, 4skip**(실제 PyArrow/polars 부재2·Windows조건2),
+최소 Python3.10/NumPy1.23 대상은 **98통과, 선택 의존성2skip, 2142deselected,
+경고13**입니다. 실제 Rust HTTP/browser의 단계별 spec/PNG·이력 경계/분기·JSON
+corpus도 통과했습니다. Ruff201파일/format·Pyright·LSP5경로 확인·계약·clean
+sdist→wheel도 통과합니다. 이번에 native Rust unit/MSRV 전체를 새로 실행한 것은 아닙니다.
+
+중첩 reducer 입력/action·snapshot/history/listener 격리·전체 undo/redo·분기를 확인해
+STATE-01/02·HIST-01/02·DATA-03을 PASS 처리했습니다. 실제 PyArrow/polars가 없는
+DATA-01, 더 넓은 reset/dirty/저장 대상을 검토해야 하는 HIST-04는 RUNNING입니다.
+첫 Rust probe의 open=이력초기화 가정은 잘못되어 테스트만 고쳤습니다. 제품 이력 코드는
+바꾸지 않고 Python open/reset의 fresh history와 Rust의 undoable 정책을 문서화했습니다.
+
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS17/RUNNING15/OPEN118**입니다.
+[7차 검증 요약](review_evidence/missing_state_verification.json)에 명령 범위·소스/log
+지문·canonical 커서 해시도 남겼습니다. 전체 suite/최소환경/MSRV/Linux/보안/릴리스
+gate는 남아 있고 원문 체크리스트·package/editor/spec version·tag/배포는 유지합니다.
+
+### 이전 리뷰 6차
+
+**리뷰 6차에서 DATA-02 입력 구조 검증을 마쳤습니다.** FIND-006은 혼합 record의
+위치 없는 AttributeError와 문자열/bytes/dict 행이 문자/key 열로 바뀌는 문제이며
+수정 전19개 실패를 확보했습니다. Record mapping/index 검사와 공통 row 값 검증으로
+pivot 전에 거부하고 sparse-record null/열 순서·sqlite3.Row는 유지합니다. 열 길이
+불일치는 원값을 유지한 채 semantic validation에서 거부하며 자동 resize/coercion은 없습니다.
+
+커밋한 스냅샷96a8592 위의 대상 검사 **677통과, Windows조건2skip**, 최소
+Python3.10/NumPy1.23 adapter **66통과, 2142deselected, 경고13**입니다.
+Ruff200파일/format·Pyright·계약·clean sdist→wheel도 통과합니다. Active LSP는2경로
+중1확인/1inconclusive이며 clean으로 세지 않았습니다(두 변경 경로의 명시적 Pyright는
+통과). 없는 x/y/group·실제 pandas 중복 열·잘못된 protocol 열·editor import/action
+실패 뒤 state/history/PNG/redo·CLI 입력/출력 bytes 보존을 검사했습니다. 실제
+PyArrow/polars는 설치하지 않았고 전체 호환성으로 확대하지 않습니다.
+
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS12/RUNNING13/OPEN125**입니다.
+[6차 검증 요약](review_evidence/data_shape_verification.json)으로 로컬 temp log 외에도
+결과/소스 지문을 보존합니다. 원문 체크리스트·version/tag/release 상태는 유지합니다.
+아래 Rust/전체 브라우저 결과는 이번 Python 변경 이전이며 전체 suite/최소환경/MSRV/
+Linux/보안 감사는 아직 남아 있습니다.
+
+### 이전 리뷰 5차
+
 **리뷰 5차에서 Rust JSON 계약 차이 두 건을 수정했습니다.** FIND-004는 serde
 arbitrary_precision이 literal 예약-key object를 숫자로 바꾸는 문제, FIND-005는
 Python이 현재 기본값으로 처리하는 version 생략을 Rust가 거부하는 문제입니다.

@@ -69,7 +69,10 @@ needing a separate `dashboard build` process.
   uses — there is no separate editor-only state model. Native forms also have
   explicit POST actions, so missing/not-yet-wired JavaScript cannot put input
   values in GET URLs. Referrer policy is same-origin (none to external sites),
-  without relaxing Origin/cross-site mutation rejection.
+  without relaxing Origin/cross-site mutation rejection. Request bodies use
+  Content-Length framing up to16MiB; unsupported Transfer-Encoding (including
+  chunked), duplicate lengths and incomplete bodies are rejected before actions.
+  No new chunked decoder is implied; normal bodyless local actions still work.
 - Load sample data; tweak theme/journal/palette; edit the grid, active panel,
   Cartesian/polar/3-D projection, x/y/z scales and fixed/automatic limits, secondary y-axis,
   labels, references, suptitle, and size; add common

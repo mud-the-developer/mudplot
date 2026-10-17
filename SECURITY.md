@@ -36,3 +36,19 @@ The Python and Rust editors are unauthenticated, single-user local tools. They
 enforce loopback binds/HTTP Hosts and reject cross-origin mutations, but they
 must not be exposed through a reverse proxy, tunnel, or public port. Use an
 authenticated service designed for remote access if that need arises.
+
+Same-origin browser mutations and local agent requests without an Origin header
+are supported; cross-site fetch metadata or a mismatching/null Origin is rejected.
+This policy is not authentication. Application responses, including rejected
+Host/Origin requests, carry no-store/CSP headers. Malformed HTTP rejected before
+application routing is a separate transport boundary.
+
+Declared bodies over 16 MiB are rejected before upload/read. Python accepts
+Content-Length framing only: unsupported Transfer-Encoding, duplicate lengths
+and incomplete bodies fail before actions. Rust caps decoded bodies before all
+handlers (including undo/reset) and accepts bounded chunked requests.
+
+Sequential local form/JSON boundary probes cover N-1/N/N+1 and record server-PID
+RSS/lifetime peaks; native renderer descendants are excluded. These observations
+are not hard memory/CPU limits, concurrent-load guarantees or proof on every OS.
+See [the review ledger](docs/REVIEW_CHECKLIST_STATUS.md) for exact scope/results.

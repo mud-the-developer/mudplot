@@ -1,0 +1,407 @@
+{
+  "scope": "dirty tree including phases6/7; phase8 common state/editor failure/HTTP boundary checks, not full release gates",
+  "head": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "backend": "Agg",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1",
+    "playwright": "1.62.0"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "abc641a5b2e6d71a4bf50e64ec00e7eb79990dac09ca9d39f892ade114fa9655",
+    "mudplot/_render.py": "076bdb7b9dd9bab86ba26a46a82b7a84f91ebb7316e6278d2a2ca29095e20280",
+    "mudplot-editor/src/lib.rs": "dafaba620fe6dacb6c986078dd85d322308bea3341180a76c02e7bc8ace1a5c0",
+    "scripts/rust_editor_smoke_test.py": "b2212984803b2ee68b42dcdc6ad05f529d1839ddb1fecebcab9334213c8ce1c7",
+    "scripts/check_minimum_versions.py": "f9dfbb3378d927614c48704271f9049524487b9955b4b7ec73bbb56739ebb7a8",
+    "scripts/check_wheel.py": "b09a2623d684045e537d30945252f1b039b0a842153a808df64ae87d22862cfb",
+    "tests/test_review_editor_paths.py": "f0dfd840e5abd3eb9d7186d6a070b53ac4748806fd09b9b5d6be3d7b764ebad7",
+    "tests/test_review_http_boundaries.py": "ac4a8379eb7fec3a51aee16b386f080f2f17dc0a16e45acee541dfc3ff4d1099",
+    "tests/test_editor_browser.py": "d0ee53ca35218db7d3ae96566ff8e5e55370e1868ebb0cc4d988f185d81ccac1",
+    "tests/fixtures/review_state_paths.json": "bb2b325d13b6c428341f9cc21267170faf4b32f0f866f554257e690af5336925",
+    "tests/fixtures/review_http_boundaries.json": "7e044b2fed8cc146c6e8a3928699af1bcc1a0a4690b241a514632972e37dfc6a"
+  },
+  "limits": {
+    "review": "focused contracts/browser/minimum subset; not full suite, MSRV, Linux, audit or release approval",
+    "body_limit": "pre-upload declared oversize checked; full content-type size/chunked/RSS matrix remains incomplete",
+    "origin_probes": "header-only denied POST requires403 before decoding/upload. Valid same-origin/CLI probes send state-changing payloads; Python browser also rejects a full-body null-Origin request.",
+    "warnings": "minimum run reports481warnings; a separate visible-warning10-test probe found Matplotlib3.8/pyparsing deprecation and diagnostic warnings, not a zero-warning claim.",
+    "transport": "prior failed attempt on both servers observed WinError10053 on body-carrying early rejection; cause not claimed fixed; prior failures retained separately. Final header probes and all other checks passed, without retry/fallback assertions."
+  },
+  "bridge_arguments": {
+    "apply": [
+      "python",
+      "-m",
+      "mudplot",
+      "apply",
+      "<spec>",
+      "<action>",
+      "-o",
+      "<next>"
+    ],
+    "preview": [
+      "python",
+      "-m",
+      "mudplot",
+      "render",
+      "<spec>",
+      "<png>",
+      "--preview"
+    ],
+    "vector": [
+      "python",
+      "-m",
+      "mudplot",
+      "render",
+      "<spec>",
+      "<pdf-or-svg>"
+    ],
+    "inspected_source_sha256": {
+      "mudplot-editor/src/python.rs": "a237f1e104576cb6141cc1012fe7047d37713aa40c933d868d643c708aa69637",
+      "mudplot/__main__.py": "de22b085891e7dc9de27a1780ee5446b727bf83d29de4e6d0f0bbd5a81a00a0f"
+    }
+  },
+  "checks": [
+    {
+      "name": "python-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "899 passed, 4 skipped in 313.06s (0:05:13)"
+      ],
+      "log_text_sha256": "8a959c531f2b5b339b75bf89d32092115edd007a7804cfb856787589318b6047"
+    },
+    {
+      "name": "python-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_editor_browser.py",
+        "--junitxml=<evidence>/browser.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "31 passed in 157.81s (0:02:37)"
+      ],
+      "log_text_sha256": "d68278676424c7cfedca8de530809058e292e3d7822c5e18b482019eca335686"
+    },
+    {
+      "name": "minimum-editor-data",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_editor_paths or test_review_http_boundaries or test_review_missing_data or test_review_state_contracts or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "138 passed, 2 skipped, 2142 deselected, 481 warnings in 88.75s (0:01:28)"
+      ],
+      "log_text_sha256": "63bbb5945036c365cd8b35e1ec2c12a6c5ad24a581c447bb57f764603124d465"
+    },
+    {
+      "name": "rust-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 13 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.11s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s"
+      ],
+      "log_text_sha256": "9d39c8e1b34b4b97faecbacf80106d85ea50ac6f940736883aa90df498b1a83a"
+    },
+    {
+      "name": "rust-http-browser",
+      "argv": [
+        "python",
+        "scripts/rust_editor_smoke_test.py",
+        "--browser"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "Cross-path state OK (supported forms/agent): 926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+        "Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo",
+        "HTTP boundary OK: Host/Origin/16MiB rejection and security headers",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_text_sha256": "cc082a3c4ebdeebef0fc4564182af051126c8e9be42f5dd2ff270daf888123d2"
+    },
+    {
+      "name": "rust-ipv6-loopback",
+      "argv": [
+        "python",
+        "-c",
+        "\nimport http.client,json,socket,subprocess,sys,time\nfrom pathlib import Path\nwith socket.socket(socket.AF_INET6,socket.SOCK_STREAM) as reservation:\n    reservation.bind(('::1',0));port=reservation.getsockname()[1]\nbinary=Path('mudplot-editor/target/debug')/('mudplot-editor.exe' if sys.platform=='win32' else 'mudplot-editor')\nprocess=subprocess.Popen([str(binary),'--bind',f'[::1]:{port}','--python',sys.executable],stdout=subprocess.DEVNULL,stderr=subprocess.PIPE,text=True)\ntry:\n    deadline=time.monotonic()+30\n    while True:\n        if process.poll() is not None:raise RuntimeError('IPv6 editor exited before readiness')\n        connection=http.client.HTTPConnection('::1',port,timeout=1)\n        try:\n            connection.request('GET','/spec.json');response=connection.getresponse()\n            assert response.status==200\n            assert response.headers['Cache-Control']=='no-store'\n            assert json.loads(response.read())['version']=='0.1'\n            break\n        except OSError:\n            if time.monotonic()>=deadline:raise\n            time.sleep(0.1)\n        finally:connection.close()\n    print('Native Rust IPv6 loopback bind/HTTP/headers: PASS')\nfinally:\n    if process.poll() is None:process.terminate()\n    process.communicate(timeout=10)\n"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Native Rust IPv6 loopback bind/HTTP/headers: PASS"
+      ],
+      "log_text_sha256": "8cd30b9bf2d7b8e54bdae82e69a638558a88c02d10a6c7b20e2c32cbe267a08a"
+    },
+    {
+      "name": "rust-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "ffa515029ac997acbdbddb6ffe65be4f783adb147a7ff0bf962d9c8e85fc3a22"
+    },
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--check",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "203 files already formatted"
+      ],
+      "log_text_sha256": "b5440adc36860e6f7ae6b6ce188412d110e98814ba4cd83bc02324d2121e27be"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "2c1dd63bb924d14bfee9351c49a477256aded414e3cae13e54576c7fe58d3777"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "1e59b6c4026517e6c0ce0c9d0a06e0286660459ca3cc82aeccb0d1475f897b15"
+    }
+  ],
+  "shared_state_fixture": {
+    "source": "tests/fixtures/review_state_paths.json",
+    "comparison": "per-step normalized full FigureSpec equality; final canonical Rust form/agent JSON also equal",
+    "steps": [
+      {
+        "action": "SetTheme",
+        "expected_spec_sha256": "53518e0fb0cef6a73adda11032867f0de1e20fc580cc92ae56112bc74c883787"
+      },
+      {
+        "action": "SetSize",
+        "expected_spec_sha256": "b6db63b34c4b270de231cdc60b4658253411d68615a46fca051fa3762895cff1"
+      },
+      {
+        "action": "SetLayout",
+        "expected_spec_sha256": "6ff421f5c4aaf3208f900b6560c3e95f1a8d7aeddbba26b281052ebc02309b72"
+      },
+      {
+        "action": "SetTitle",
+        "expected_spec_sha256": "373b85250ba854576c9f835d63d50be6586e3dcf1c6370e6f24e0b637fa37089"
+      },
+      {
+        "action": "SetAxisLabel",
+        "expected_spec_sha256": "a9c5f744d790f43d32bb85be2d2979a8f1cfb7304eb3d05c60cccf1ab06cc88a"
+      },
+      {
+        "action": "SetScale",
+        "expected_spec_sha256": "2946b13b829180e4dcbcb91afd5c33d742b3fc753c7f625a6c0ea9ca735428b5"
+      },
+      {
+        "action": "SetLimits",
+        "expected_spec_sha256": "30a9e601f5c85c02fccf12342340dc6855e7a1335280ba5400aa6e992226b925"
+      },
+      {
+        "action": "AddLayer",
+        "expected_spec_sha256": "9cc1fae720588c7f315913b76928b50a11a82d697091a6375259fdaf6e2a8540"
+      },
+      {
+        "action": "AddLayer",
+        "expected_spec_sha256": "3bc7fb3312230adb0db07ee5e435ee407670cc6464d739d685d2e4d1296c02bd"
+      },
+      {
+        "action": "SetTitle",
+        "expected_spec_sha256": "926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9"
+      }
+    ]
+  }
+}

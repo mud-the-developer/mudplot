@@ -126,9 +126,11 @@ def _is_dbapi_cursor(data: Any) -> bool:
 
 def _records_to_columns(records: list[Mapping]) -> dict[str, list]:
     normalized = []
-    for record in records:
+    for index, record in enumerate(records):
+        if not isinstance(record, Mapping):
+            raise TypeError(f"record {index} must be a mapping")
         items = list(record.items())
-        names = _column_names((key for key, _value in items), "record")
+        names = _column_names((key for key, _value in items), f"record {index}")
         normalized.append(
             {
                 name: _plain_value(value)
@@ -144,9 +146,19 @@ def _records_to_columns(records: list[Mapping]) -> dict[str, list]:
     return {key: [record.get(key) for record in normalized] for key in keys}
 
 
+def _row_values(row, where: str) -> list:
+    message = f"{where} must be a sequence of values, not {type(row).__name__}"
+    if isinstance(row, (str, bytes, Mapping)):
+        raise TypeError(message)
+    try:
+        return list(row)
+    except TypeError as error:
+        raise TypeError(message) from error
+
+
 def _rows_to_columns(rows) -> dict[str, list]:
     # rows: iterable of equal-length sequences -> c0, c1, ...
-    as_lists = [list(r) for r in rows]
+    as_lists = [_row_values(row, f"row {index}") for index, row in enumerate(rows)]
     if not as_lists:
         return {}
     ncols = len(as_lists[0])
@@ -161,7 +173,7 @@ def _cursor_to_columns(cur) -> dict[str, list]:
     rows = cur.fetchall() if hasattr(cur, "fetchall") else list(cur)
     cols: dict[str, list] = {name: [] for name in names}
     for index, row in enumerate(rows):
-        values = list(row)
+        values = _row_values(row, f"DB result row {index}")
         if len(values) != len(names):
             raise ValueError(
                 f"DB result row {index} has {len(values)} values; expected {len(names)}"
@@ -181,10 +193,15 @@ def to_columns(
     """
     if query is not None:
         cur = data.cursor()
-        # The local caller supplies the statement; dynamic values stay in params.
-        # pi-lens-ignore: python-sql-injection
-        cur.execute(query, params)
-        return _cursor_to_columns(cur)
+        try:
+            # The local caller supplies the statement; dynamic values stay in params.
+            # pi-lens-ignore: python-sql-injection
+            cur.execute(query, params)
+            return _cursor_to_columns(cur)
+        finally:
+            close = getattr(cur, "close", None)
+            if callable(close):
+                close()
 
     if data is None:
         return {}

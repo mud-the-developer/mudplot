@@ -6,6 +6,52 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Rejected unsupported Transfer-Encoding, duplicate Content-Length and truncated
+  bodies before Python editor mutations. Content-Length bodies retain the16MiB
+  boundary; no chunked decoder or normal-bodyless-action regression was added.
+- Applied Rust's existing limited Bytes extractor before every route, including
+  bodyless undo/reset, so unknown-size requests cannot mutate state before their
+  byte bound is checked. Added sequential real-size form/JSON/chunked probes and
+  observed server-PID lifetime RSS peaks, explicitly excluding renderer children,
+  hard memory/CPU bounds, concurrency and universal-platform security claims.
+- Fixed connection+query ingestion leaving internally created DB cursors open
+  on success/failure. Close is honored when supported; caller-owned executed
+  cursors/connections and transaction commit/rollback remain untouched. Cleanup
+  errors are not silently swallowed and minimal duck cursors remain supported.
+- Verified real PyArrow26/Polars2 adapters in isolated tests, including chunks/
+  dictionaries/categorical groups, exact signed64 integers, Unicode/nulls,
+  microsecond UTC values and strict Decimal/infinity rejection. Added targeted
+  CI coverage without adding runtime dependencies or changing package versions.
+- Added structural codec coverage for all24spec model types/272modeled fields,
+  alternate unions/nulls/Unicode/big integers and nested types, with direct
+  Python→Rust→Python value/type/order comparison. The stress fixture is not a
+  renderable feature-parity claim; registered example specs are checked apart.
+- Added a disposable Unicode/spaced-path interpreter probe for PATH/env/flag
+  precedence, real child argv/prefix/version and invalid-flag no-fallback behavior.
+  Same-version render packages are installed only in the test venv. Added Windows/
+  Linux CI configuration while retaining unobserved Linux verification as pending.
+  No application behavior, mandatory dependency or version change was needed.
+- Fixed Rust Host/Origin rejection responses bypassing shared CSP/no-store
+  headers, preserving the existing access checks. Added early rejection of
+  declared Content-Length above16MiB without removing streaming body limits.
+- Added shared state/UI/agent fixtures across fluent/Store/CLI/Python/Rust paths,
+  actual validation/JSON/render failures preserving preview and redo, loopback
+  Host/Origin matrices, IPv6 HTTP checks and real-browser CSP observations.
+  Payload/chunked/RSS completion and the observed Windows transport abort are
+  explicitly not claimed resolved by the header-only rejection probes.
+- Fixed missing categorical/date-string x coordinates becoming a literal `None`
+  category in raw plots. Shared conversion now preserves line gaps and scatter
+  masks while retaining actual `"None"` labels, row alignment and source JSON.
+- Added nested reducer/snapshot isolation, undo/redo boundary and branch checks,
+  including real Rust HTTP spec/PNG comparisons. Documented existing Python
+  fresh-history versus Rust undoable open/reset policies without changing them.
+  Added adapter/cohort comparisons; absent PyArrow/polars stay explicit skips.
+- Rejected malformed mixed records and positional/DB row types before table
+  conversion: text/bytes/dict rows no longer become character/key columns, and
+  non-mapping records/key collisions identify their record index. Sparse-record
+  null filling, first-seen column order and valid sqlite3.Row inputs stay intact.
+  Completed DATA-02 length/required-column/duplicate checks, including editor
+  state/history/preview/redo and CLI output preservation on invalid data.
 - Fixed Rust strict-JSON reserved-key reinterpretation under arbitrary-precision
   serde numbers. Original decoded key tokens are now checked without converting
   large integers to float or rejecting ordinary string values. Added failing

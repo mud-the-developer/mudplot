@@ -1,0 +1,829 @@
+{
+  "scope": "phase11 local dirty tree; Python framing and Rust all-route request limits; sequential local boundary/memory observations, not full release/OS/concurrent/CPU/RSS hard limits",
+  "head": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "dashboard/editor_server.py": "441b93e4fe9a1f77aec3af44ec283f7fa35e60dd2aff3e67cf7618f272e3ac62",
+    "mudplot-editor/src/lib.rs": "4ba41baf5f24fd1d7807b1f3cccb7ef0ab647bce6cadeda795c3e3691fd931b8",
+    "tests/test_review_body_framing.py": "af1139941ea739a48fa31dda52e25b618df445400e2c7da64b2d57e9788c7d78",
+    "scripts/check_request_body_limits.py": "97ab949a88c3642cbde9f66d5f5230ef0aaaca291c43c54f2e7120853ed72db3",
+    ".github/workflows/ci.yml": "54afa5724c377f979bd9b9537c9c87ca397a33c0c4aed75de539a0d91e68e013",
+    "scripts/check_minimum_versions.py": "ca707c748fbcf06b922653c4017048c231ede206b1fe7014cbdc8c46c8492e4a",
+    "scripts/check_wheel.py": "7064393a01074c43107976ff3f7121c388671a4a61e3990e7bb0f26206e6eb62"
+  },
+  "framing_policy": {
+    "python": "Content-Length only; Transfer-Encoding and duplicate lengths explicitly rejected before read; short body rejected before action dispatch",
+    "rust": "existing limited Bytes extractor applied before every handler; chunked decoded-size cap also guards undo/reset; original extractor layer retained",
+    "declared_oversize": "rejected before upload, not falsely described as an uploaded whole N+1 body"
+  },
+  "observation_limits": "Sequential local cases only; server PID RSS and lifetime peak from Windows API, not per-request reset or a hard bound. Python worker os.getpid confirmed separately from venv launcher. Native renderer descendants excluded. CPU/concurrency/other OS/network reliability not certified.",
+  "body_probes": {
+    "limit_bytes": 16777216,
+    "memory_scope": "server PID RSS and lifetime peak only; excludes native renderer descendants; no hard CPU/memory or concurrent-load claim",
+    "results": [
+      {
+        "server": "python",
+        "baseline_memory": {
+          "rss_bytes": 84803584,
+          "lifetime_peak_rss_bytes": 223502336
+        },
+        "server_pid_matches_popen": false,
+        "cases": [
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 90071040,
+              "lifetime_peak_rss_bytes": 248025088
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 90873856,
+              "lifetime_peak_rss_bytes": 253325312
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 90877952,
+              "lifetime_peak_rss_bytes": 253325312
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 95608832,
+              "lifetime_peak_rss_bytes": 254054400
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 96489472,
+              "lifetime_peak_rss_bytes": 258940928
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 96497664,
+              "lifetime_peak_rss_bytes": 258940928
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101117952,
+              "lifetime_peak_rss_bytes": 259698688
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          },
+          {
+            "path": "/reset",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 400,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 101941248,
+              "lifetime_peak_rss_bytes": 264388608
+            }
+          }
+        ],
+        "recovery": true
+      },
+      {
+        "server": "rust",
+        "baseline_memory": {
+          "rss_bytes": 8683520,
+          "lifetime_peak_rss_bytes": 8712192
+        },
+        "server_pid_matches_popen": true,
+        "cases": [
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 8798208,
+              "lifetime_peak_rss_bytes": 29384704
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9220096,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9265152,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9273344,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9478144,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9486336,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9498624,
+              "lifetime_peak_rss_bytes": 29827072
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9527296,
+              "lifetime_peak_rss_bytes": 30294016
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9527296,
+              "lifetime_peak_rss_bytes": 30294016
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "content-length",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9551872,
+              "lifetime_peak_rss_bytes": 30294016
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "content-length",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9523200,
+              "lifetime_peak_rss_bytes": 30806016
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "content-length",
+            "decoded_size": 16777217,
+            "payload_yielded": 0,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9523200,
+              "lifetime_peak_rss_bytes": 30806016
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "chunked",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9613312,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "chunked",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9687040,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/action",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9715712,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "chunked",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9781248,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "chunked",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9740288,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/action/raw",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9793536,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "chunked",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9805824,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "chunked",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9801728,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/open",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9814016,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "chunked",
+            "decoded_size": 16777215,
+            "payload_yielded": 16777215,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9842688,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "chunked",
+            "decoded_size": 16777216,
+            "payload_yielded": 16777216,
+            "status": 200,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9949184,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/control/title",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9887744,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/undo",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9846784,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          },
+          {
+            "path": "/reset",
+            "encoding": "chunked",
+            "decoded_size": 16777217,
+            "payload_yielded": 16777217,
+            "status": 413,
+            "send_error": null,
+            "memory": {
+              "rss_bytes": 9842688,
+              "lifetime_peak_rss_bytes": 31875072
+            }
+          }
+        ],
+        "recovery": true
+      }
+    ]
+  },
+  "pre_fix": {
+    "python_failed": 6,
+    "python_passed": 4,
+    "rust_unknown_size_undo": {
+      "planned_decoded_bytes": 16777217,
+      "payload_yielded_before_abort": 393216,
+      "response_status": null,
+      "state_preserved": false
+    },
+    "discarded_memory_probe": "initial Python launcher5MB sample is not credited; only corrected worker-PID run used"
+  },
+  "checks": [
+    {
+      "name": "body-boundaries",
+      "argv": [
+        "python",
+        "scripts/check_request_body_limits.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "4bbdbc0217d9e466d8536e22cf72285b45bf8771d0f3a88189a7eee86b9e377a"
+    },
+    {
+      "name": "python-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_body_framing.py",
+        "tests/test_review_sql_ownership.py",
+        "tests/test_review_table_formats.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "993 passed, 20 skipped in 309.73s (0:05:09)"
+      ],
+      "log_text_sha256": "cf39359f759c66c2e0f64ec4229709afc1eaaf324270f8cf5ac4636171e53d21"
+    },
+    {
+      "name": "python-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_editor_browser.py",
+        "--junitxml=<evidence>/browser.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "31 passed in 152.16s (0:02:32)"
+      ],
+      "log_text_sha256": "d0eeaf0d5264135f5d7c47e34e8ddad41e222fe2aa5ee7b8f1a52fb69d03718f"
+    },
+    {
+      "name": "minimum-body-data",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_body_framing or test_review_sql_ownership or test_review_table_formats or test_review_editor_paths or test_review_http_boundaries or test_review_full_spec_fields or test_review_state_contracts or test_review_missing_data or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "232 passed, 18 skipped, 2142 deselected, 481 warnings in 86.91s (0:01:26)"
+      ],
+      "log_text_sha256": "99c0f60b97d889362d4b9dd11a4d5b4fc58be551b8385a2d8c838ad545deab03"
+    },
+    {
+      "name": "rust-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 14 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.02s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "82bff31ccbca50048e82da59c5efb53a593876b5ff5ef41508f731854e821492"
+    },
+    {
+      "name": "rust-http-browser",
+      "argv": [
+        "python",
+        "scripts/rust_editor_smoke_test.py",
+        "--browser"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "Cross-path state OK (supported forms/agent): 926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+        "Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo",
+        "HTTP boundary OK: Host/Origin/16MiB rejection and security headers",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_text_sha256": "cc082a3c4ebdeebef0fc4564182af051126c8e9be42f5dd2ff270daf888123d2"
+    },
+    {
+      "name": "rust-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "4f4dfed97aa7de2e2b63ea33e0d3d7670e8fc0ba01a7015629c12e719b328e86"
+    },
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--check",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "209 files already formatted"
+      ],
+      "log_text_sha256": "8d6404e6e9a4ded6d6582abd979392f3a840b5e7abe8b95c4c5109590d84da89"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "94049f6f1ead03b8723487cb62d1609e4ed27ea2b18da0619be14df1d36b9b2f"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "eeebcdedaac7e1c209d369f40795de9ecf95cfa7cace3cef79007ef89c0dd020"
+    }
+  ]
+}

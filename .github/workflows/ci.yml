@@ -70,6 +70,23 @@ jobs:
         run: uv run pyright
       - name: Pytest
         run: uv run pytest -q
+      - name: Optional table adapters with real libraries
+        if: matrix.python-version == '3.12'
+        run: |
+          uv run --no-sync --with pyarrow==26.0.0 \
+            --with polars==2.0.0 python - <<'PY'
+          import pyarrow
+          import polars
+          import pytest
+          print(f"PyArrow {pyarrow.__version__}; Polars {polars.__version__}")
+          raise SystemExit(pytest.main([
+              "-q", "tests/test_review_table_formats.py",
+              "tests/test_review_missing_data.py",
+              "tests/test_review_sql_ownership.py",
+              "tests/test_review_data_contracts.py", "tests/test_data.py",
+              "tests/test_no_deps.py",
+          ]))
+          PY
       - name: Minimum render dependency contract
         if: matrix.python-version == '3.10'
         run: >-
@@ -88,8 +105,14 @@ jobs:
         run: uv run python scripts/check_wheel.py
 
   rust-editor:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 20
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -115,3 +138,15 @@ jobs:
         run: cargo test --locked --manifest-path mudplot-editor/Cargo.toml
       - name: Rust/Python editor bridge smoke test
         run: uv run python scripts/rust_editor_smoke_test.py
+      - name: Interpreter selection and Unicode/spaced paths
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+          MPLBACKEND: Agg
+        run: uv run --no-sync python scripts/check_python_bridge_paths.py
+      - name: Sequential request-body boundaries and server RSS
+        env:
+          PYTHONUTF8: "1"
+          PYTHONIOENCODING: "utf-8"
+          MPLBACKEND: Agg
+        run: uv run --no-sync python scripts/check_request_body_limits.py

@@ -73,7 +73,10 @@ spec/action 데이터의 defensive snapshot입니다. 반환 snapshot을 직접 
 **batch transaction이 아닙니다**. listener는 commit 이후 실행되고, listener
 exception은 전파되지만 commit을 되돌리지 않습니다. editor는 반대로 후보 상태를
 검증·렌더링한 뒤 state와 preview를 commit합니다. `validate()` / `assert_valid()`는
-명시적 계약 검사이며 render는 자동으로 검증합니다.
+명시적 계약 검사이며 render는 자동으로 검증합니다. Python editor는 open/reset 때
+새 이력을 시작하고, Rust editor는 기존처럼 open/reset도 undo 가능한 snapshot 전이로
+보존합니다. 새 정상 편집은 둘 다 redo를 지웁니다. 서로 다른 기존 UI 이력 정책을
+동일한 동작으로 보장하거나 이번에 변경한 것은 아닙니다.
 
 ## JSON과 버전
 
@@ -102,7 +105,18 @@ package release마다 spec version을 올릴 필요는 없습니다.
   조용히 변환하지 않으며 중복 열 이름은 거부합니다. Positional row 너비는 첫 행,
   DB result row는 cursor description과 같아야 하며 불일치 시 pivot 전에 행 index/
   기대 너비를 포함한 오류를 냅니다. 추가 값을 잘라내거나 짧은 행을 채우지 않습니다.
+  각 record는 mapping이어야 하며 positional/DB 행에 문자열·bytes·mapping을 넣으면
+  문자·key 데이터로 바꾸지 않고 해당 행 index를 포함한 오류를 냅니다. Record의
+  누락 key는 기존처럼 첫 등장 열 순서와 null 채우기를 유지합니다. 열 길이 불일치는
+  입력 단계에서 원값을 보존하고 렌더/editor commit 전 validation에서 거부합니다.
+- Raw line/scatter의 범주 x 변환에서 null은 결측으로 유지해 선을 끊고 점을 mask하며
+  가짜 `"None"` 범주를 만들지 않습니다. 실제 문자열 `"None"`은 범주로 유지합니다.
+  ISO 날짜 문자열도 여기서는 같은 범주 경로이며 연속 날짜 축 계약을 추가한 것은 아닙니다.
+  통계 layer는 사용 가능한 관측을 별도로 선택하며 원자료 행/결측은 spec에 남깁니다.
 - SQL 값은 DB-API `params=`로 전달하며 mudplot이 query에 보간하지 않습니다.
+  Connection+query로 내부 생성한 cursor만 close를 지원하면 성공/실패 뒤 정리합니다.
+  호출자가 넘긴 executed cursor와 connection의 소유권은 호출자에게 있고 commit/
+  rollback도 하지 않습니다. Close 오류는 숨기지 않고 전파하며 이전 실패는 예외 context에 남습니다.
 
 ## 의존성과 배포
 

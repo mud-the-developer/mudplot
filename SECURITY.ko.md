@@ -34,3 +34,17 @@ Python/Rust editor는 인증 없는 단일 사용자 로컬 도구입니다. loo
 bind/HTTP Host를 강제하고 cross-origin mutation을 거부하지만 reverse proxy,
 tunnel, public port로 노출하면 안 됩니다. 원격 사용이 필요하면 인증을 갖춘
 별도 서비스를 사용하세요.
+
+Same-origin browser mutation과 Origin 없는 로컬 agent 요청은 지원하며 cross-site
+fetch metadata 또는 불일치/null Origin은 거부합니다. 이는 인증 기능이 아닙니다.
+Host/Origin 거부를 포함한 application 응답에도 no-store/CSP를 적용합니다.
+Application routing 이전의 malformed HTTP 거부는 별도 transport 경계입니다.
+
+선언한 body가16 MiB를 넘으면 업로드/읽기 전에 거부합니다. Python은 Content-Length
+framing만 지원하며 Transfer-Encoding·중복 길이·불완전 body는 action 전에 거부합니다.
+Rust는 undo/reset을 포함한 모든 handler 전에 decoded body 한도를 적용하며 한도 내
+chunked 요청을 지원합니다.
+
+로컬 순차 form/JSON N-1/N/N+1 probe와 서버 PID RSS/수명 peak를 관찰했으며 native
+렌더 자식은 제외했습니다. 이는 메모리/CPU hard limit·동시 부하·모든 OS 보장이 아닙니다.
+정확한 범위/결과는 [리뷰 대장](docs/REVIEW_CHECKLIST_STATUS.md)을 확인하세요.

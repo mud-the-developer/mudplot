@@ -15,11 +15,25 @@ MUDPLOT_PYTHON="$PWD/.venv/bin/python" \
 
 Open <http://127.0.0.1:8766/>. Override the defaults with `--bind
 LOOPBACK:PORT` and `--python PATH`, or `MUDPLOT_BIND` / `MUDPLOT_PYTHON`.
+Interpreter precedence is `--python` > `MUDPLOT_PYTHON` > `python3` on PATH.
+The executable and each argument are passed directly, not evaluated by a shell;
+a bad explicit executable fails rather than falling back to another Python.
+On Windows, for example:
+
+```powershell
+cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/Scripts/python.exe"
+```
+
+`uv run python scripts/check_python_bridge_paths.py` verifies a separate venv
+with Unicode/spaces/`&` in executable and temporary data paths. It may download
+same-version render wheels into that disposable venv; project dependencies stay
+unchanged. Windows was executed locally; Linux CI still needs an observed run.
 
 This is a local single-user tool with no authentication. Non-loopback bind
 addresses, non-loopback HTTP Hosts, and cross-origin browser mutations are
-rejected; all responses are `no-store` and carry restrictive CSP and browser
-security headers.
+rejected; application responses (including these rejections) are `no-store`
+and carry restrictive CSP/browser headers. Same-origin requests and local agents
+without an Origin remain supported; this is not remote-user authentication.
 
 ## Contract and current scope
 
@@ -37,7 +51,8 @@ security headers.
 - The Python dependency-free core remains the only reducer/validator via
   `python -m mudplot apply`; rendering uses `python -m mudplot render`.
 - Failed actions, imports, or renders do not mutate the current spec or
-  history.
+  history. Successful open/reset are undoable snapshots in this Rust editor;
+  Python open/reset instead start fresh history. Successful new edits clear redo.
 - Capabilities generate the all-layer selector/field reference plus theme and
   projection controls; title and exact figure-size controls use the same JSON
   actions as agents.
@@ -46,7 +61,13 @@ security headers.
   2000 pixels, without changing the spec or final exports.
 - htmx and its 0BSD license are reused from `dashboard/static/` rather than
   vendored a second time. Request bodies are bounded at 16 MiB, and Python
-  bridge subprocesses time out after 120 seconds.
+  bridge subprocesses time out after 120 seconds. A declared Content-Length over
+  16 MiB is rejected before waiting for body frames. The existing limited Bytes
+  extractor caps decoded bodies before every handler, including undo/reset,
+  rather than relying only on routes that happen to read the body. Bounded
+  chunked requests are supported. Local N-1/N/N+1 probes record server-PID
+  lifetime peak RSS, not renderer-child/whole-app memory, CPU or concurrent-load
+  guarantees; see the review ledger for observed scope.
 
 Routes: `GET /`, `/fig.{png,pdf,svg}`, `/spec.json`,
 `/static/htmx.min.js`; `POST /action` accepts an action JSON object. Visual

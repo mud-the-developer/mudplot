@@ -13,19 +13,40 @@
 - Typed heatmap·선택 고급 회귀/residual effect·원자료/metadata를 정렬하는 clustermap.
 - Python/Rust editor·브라우저 import/edit·한영 가이드·schema/capability/reference와
   실행 가능한 시각 예제 갱신.
-- 행 너비 불일치의 값 잘림, Windows 읽기 전용 staging 누수, Rust 예약-key 재해석,
-  생략된 spec version 처리 차이 수정. 상세 finding은 증거 대장에 있습니다.
+- 잘못된 행 타입/너비 불일치의 값 왜곡, Windows 읽기 전용 staging 누수, Rust 예약-key 재해석,
+  생략된 spec version 처리 차이·범주 x 결측의 가짜 label 표시를 수정했습니다. Rust 거부
+  응답 header와 선언 body 크기의 선행 거부도 보강했습니다. Query로 만든 cursor만
+  정리하며 borrowed cursor/connection/transaction은 보존합니다. Python framing을 명시하고
+  Rust는 모든 handler 전 unknown-size body도 검사합니다. 상세 finding/제한은 대장에 있습니다.
 
 ## 검증과 리뷰 상태
 
-- 최신 기록된 Python 대상 검사: **597 통과, Windows 조건 2 skip**.
-- Rust native **14 통과, 의도한 helper 1 ignored**; 실제 HTTP/브라우저 smoke·
-  Clippy/fmt 통과. Compiler **1.99.0** 결과이며 MSRV 결과가 아닙니다.
+- 최신 프로젝트 대상 **993통과/20skip**(선택 전용18·Windows2), 실제 PyArrow26/
+  Polars2 격리 환경 **114통과/skip0**이며 CI 명령도 같은 범위에서 로컬 통과했습니다.
+  서로 겹치는 범위를 합산하지 않습니다.
+- 최신 최소 대상 **232통과/선택18skip/경고481**, 이번11차 브라우저 **31통과**이며
+  전체/zero-warning 최소 환경 주장은 아닙니다.
+- 최신 Rust **15통과/helper1ignored** 및 실제 HTTP/브라우저도 통과했습니다.
+  Form/JSON/chunked39순차 body case와 실제 서버 PID 수명 peak를 관찰했지만 native
+  렌더 자식/전체 앱 CPU·메모리·동시 부하 상한은 아닙니다. Compiler **1.99.0**이지
+  MSRV 검증이 아니며 이전 Windows transport 중단 원인이 해결됐다는 주장은 하지 않습니다.
 - Ruff/Pyright·생성 계약 sync·clean sdist→wheel 검사 통과.
 - [휴대 가능한 검증 요약](review_evidence/verification_receipts.json)에 경로를 제외한
   결과·환경/소스 지문·원본 log hash를 보존했습니다. Raw log는 로컬에 있으며 이 요약은
   새 실행 결과가 아닙니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 11 / RUNNING 14 / OPEN 125**.
+- [Adapter 요약](review_evidence/data_shape_verification.json)과 최신
+  [결측/상태 검증 요약](review_evidence/missing_state_verification.json)에 소스 지문·명령 범위·
+  결과·커서 표를 보존했습니다.
+- [최신 editor 경계 요약](review_evidence/editor_boundary_verification.json)에 최종13개
+  성공 명령·공통 상태 해시를 보존하고 이전 실패/제한도 별도 기록했습니다.
+- [Codec/경로 요약](review_evidence/codec_path_verification.json)에24모델/272필드·
+  typed Python→Rust→Python 왕복과 Windows 별도 venv child argv를 경로 제거해 보존합니다.
+  Linux CI는 구성만 했으며 실행은 아직 관찰하지 않았습니다.
+- [Table/SQL 요약](review_evidence/table_sql_verification.json)에 실제 optional 버전·
+  형식/소유권 범위·격리 venv 정리를 기록했습니다. 프로젝트 패키지/lock은 유지합니다.
+- [Body 경계 요약](review_evidence/body_boundary_verification.json)에 framing/크기/status/
+  상태 보존과 올바른 worker-PID 메모리 관찰을 보존합니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 28 / RUNNING 14 / OPEN 108**.
   미검증 항목을 통과로 취급하지 않습니다.
 
 이전 기능/최소환경/브라우저 결과는 각자의 범위이며 후속 변경 이전 결과입니다.

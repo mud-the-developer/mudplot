@@ -69,6 +69,37 @@ uv run python scripts/rust_editor_smoke_test.py
 uv run python scripts/rust_editor_smoke_test.py --browser
 ```
 
+## Focused codec and interpreter checks
+
+```bash
+uv run pytest -q tests/test_review_full_spec_fields.py
+# Only when modeled fields change: regenerate the structural fixture explicitly.
+uv run python tests/test_review_full_spec_fields.py
+uv run python scripts/check_python_bridge_paths.py
+uv run python scripts/check_request_body_limits.py
+```
+
+The codec stress fixture is schema-valid but intentionally non-renderable;
+registered examples are checked separately. The interpreter probe creates and
+removes a Unicode/spaced-path venv, may download the same NumPy/Matplotlib
+versions, and checks PATH/environment/flag selection without changing project
+packages/locks. Its startup recorder is created exclusively inside that venv.
+CI config runs this probe on Windows and Linux; local Windows success is not
+proof of an unobserved Linux job. The body probe runs sequential local
+N-1/N/N+1 cases and records only actual server-PID RSS/lifetime peaks, excluding
+native renderer descendants; it is not a load test or hard resource guarantee.
+
+To exercise actual optional table libraries rather than skipped protocols:
+
+```bash
+uv run --no-sync --with pyarrow==26.0.0 --with polars==2.0.0 python -m pytest -q tests/test_review_table_formats.py tests/test_review_missing_data.py tests/test_review_sql_ownership.py
+```
+
+These are isolated test requirements, not core dependencies or lock changes.
+Record the tested optional-library versions; normal/minimum environments may
+skip them. The CI step imports both libraries before pytest to prevent missing
+libraries from masquerading as a successful optional-adapter run.
+
 ## Project rules
 
 - Keep the declarative core dependency-free. `spec`, actions, reducer, store, IO,

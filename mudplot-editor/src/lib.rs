@@ -5,8 +5,8 @@ use std::net::{IpAddr, SocketAddr};
 use std::sync::{Arc, Mutex, MutexGuard};
 
 use askama::Template;
-use axum::body::Bytes;
-use axum::extract::{DefaultBodyLimit, Form, Request, State};
+use axum::body::{Body, Bytes};
+use axum::extract::{DefaultBodyLimit, Form, FromRequest, Request, State};
 use axum::http::{HeaderMap, HeaderValue, Method, StatusCode, header, uri::Authority};
 use axum::middleware::{self, Next};
 use axum::response::{Html, IntoResponse, Response};
@@ -313,17 +313,38 @@ pub async fn serve(
 }
 
 async fn protect_local_boundary(request: Request, next: Next) -> Response {
-    if !has_loopback_host(request.headers()) {
-        return (StatusCode::FORBIDDEN, "non-loopback Host is not allowed").into_response();
-    }
-    if request.method() == Method::POST && is_cross_origin(request.headers()) {
-        return (
+    let mut response = if !has_loopback_host(request.headers()) {
+        (StatusCode::FORBIDDEN, "non-loopback Host is not allowed").into_response()
+    } else if request.method() == Method::POST && is_cross_origin(request.headers()) {
+        (
             StatusCode::FORBIDDEN,
             "cross-origin mutations are not allowed",
         )
-            .into_response();
-    }
-    let mut response = next.run(request).await;
+            .into_response()
+    } else if request
+        .headers()
+        .get(header::CONTENT_LENGTH)
+        .and_then(|value| value.to_str().ok())
+        .and_then(|value| value.parse::<u64>().ok())
+        .is_some_and(|length| length > MAX_BODY_BYTES as u64)
+    {
+        (
+            StatusCode::PAYLOAD_TOO_LARGE,
+            "request body exceeds the 16 MiB limit",
+        )
+            .into_response()
+    } else {
+        let (parts, body) = request.into_parts();
+        let mut limited = Request::new(body);
+        DefaultBodyLimit::max(MAX_BODY_BYTES).apply(&mut limited);
+        match Bytes::from_request(limited, &()).await {
+            Ok(bytes) => {
+                next.run(Request::from_parts(parts, Body::from(bytes)))
+                    .await
+            }
+            Err(rejection) => rejection.into_response(),
+        }
+    };
     let headers = response.headers_mut();
     headers.insert(
         header::CONTENT_SECURITY_POLICY,
@@ -751,8 +772,12 @@ mod tests {
 
     #[test]
     fn editor_rejects_non_loopback_bind_addresses() {
-        assert!(ensure_loopback("127.0.0.1:8766".parse().unwrap()).is_ok());
-        assert!(ensure_loopback("0.0.0.0:8766".parse().unwrap()).is_err());
+        for address in ["127.0.0.1:8766", "[::1]:8766"] {
+            assert!(ensure_loopback(address.parse().unwrap()).is_ok());
+        }
+        for address in ["0.0.0.0:8766", "[::]:8766", "[2001:db8::1]:8766"] {
+            assert!(ensure_loopback(address.parse().unwrap()).is_err());
+        }
     }
 
     #[test]

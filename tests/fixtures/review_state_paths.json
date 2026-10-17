@@ -1,0 +1,22 @@
+{
+  "initial": {
+    "version": "0.1",
+    "size": [4, 3],
+    "data": {
+      "columns": {"x": [1, 2, 1, 2], "y": [2, 4, 8, 16], "g": ["A", "A", "B", "B"]},
+      "matrices": {"m": [[1, 2], [3, 4]]}
+    }
+  },
+  "steps": [
+    {"action": {"type": "SetTheme", "name": "boxed"}, "python_form": {"type": "set_theme", "name": "boxed"}, "rust_form": {"path": "/control/theme", "fields": {"name": "boxed"}}},
+    {"action": {"type": "SetSize", "width": 8.0, "height": 3.0}, "python_form": {"type": "set_size", "width": "8", "height": "3"}, "rust_form": {"path": "/control/size", "fields": {"width": "8", "height": "3"}}},
+    {"action": {"type": "SetLayout", "rows": 1, "cols": 2}, "python_form": {"type": "set_layout", "rows": "1", "cols": "2"}},
+    {"action": {"type": "SetTitle", "text": "Cross-path series", "panel": 0}, "python_form": {"type": "set_title", "text": "Cross-path series", "panel": "0"}, "rust_form": {"path": "/control/title", "fields": {"text": "Cross-path series", "panel": "0"}}},
+    {"action": {"type": "SetAxisLabel", "axis": "x", "text": "Time", "panel": 0}, "python_form": {"type": "set_axis_label", "axis": "x", "text": "Time", "panel": "0"}},
+    {"action": {"type": "SetScale", "axis": "y", "scale": "log", "panel": 0}, "python_form": {"type": "set_scale", "axis": "y", "scale": "log", "panel": "0"}},
+    {"action": {"type": "SetLimits", "axis": "x", "lo": 0.5, "hi": 2.5, "panel": 0}, "python_form": {"type": "set_limits", "axis": "x", "lo": "0.5", "hi": "2.5", "panel": "0"}},
+    {"action": {"type": "AddLayer", "layer": {"type": "line", "x": "x", "y": "y", "group": "g", "line_width": 1.4, "references": {"A": {"citation": "method_2026"}, "B": {"href": "https://example.invalid/source"}}}, "panel": 0}},
+    {"action": {"type": "AddLayer", "layer": {"type": "heatmap", "matrix": "m", "colorbar": false, "heatmap": {"annot": true, "fmt": ".1f", "xlabels": ["u", "v"], "ylabels": ["r", "s"]}}, "panel": 1}},
+    {"action": {"type": "SetTitle", "text": "Matrix", "panel": 1}, "python_form": {"type": "set_title", "text": "Matrix", "panel": "1"}, "rust_form": {"path": "/control/title", "fields": {"text": "Matrix", "panel": "1"}}}
+  ]
+}

@@ -278,9 +278,12 @@ def _x_values(ax, data_cols, name):
             f"column {name!r} contains a number outside the floating-point range"
         ) from error
     except (ValueError, TypeError):
-        str_values = [str(v) for v in raw]
+        present = np.asarray([value is not None for value in raw], dtype=bool)
+        str_values = [str(value) for value in raw if value is not None]
         ax.xaxis.update_units(str_values)
-        return np.asarray(ax.convert_xunits(str_values), dtype=float)
+        positions = np.full(len(raw), np.nan)
+        positions[present] = np.asarray(ax.convert_xunits(str_values), dtype=float)
+        return positions
 
 
 def _series_masks(data_cols, layer: LayerSpec):

@@ -179,6 +179,29 @@ mod tests {
     }
 
     #[test]
+    fn full_field_fixture_preserves_types_values_and_array_order() {
+        let fixture: Value = from_json_strict(include_str!(
+            "../../tests/fixtures/review_full_spec_fields.json"
+        ))
+        .expect("shared full-field fixture");
+        let figures = fixture["figures"].as_array().expect("fixture figures");
+        assert_eq!(figures.len(), 3);
+        let mut restored = Vec::new();
+        for (index, original) in figures.iter().enumerate() {
+            let text = serde_json::to_string(original).unwrap();
+            let spec: FigureSpec = from_json_strict(&text).unwrap();
+            let encoded = serde_json::to_string(&spec).unwrap();
+            let actual: Value = from_json_strict(&encoded).unwrap();
+            assert_eq!(&actual, original, "structural fixture {index}");
+            restored.push(actual);
+        }
+        if let Ok(path) = std::env::var("MUDPLOT_CODEC_PROBE_OUT") {
+            std::fs::write(path, serde_json::to_vec(&restored).unwrap())
+                .expect("write explicitly requested test-only round-trip artifact");
+        }
+    }
+
+    #[test]
     fn figure_spec_round_trip_preserves_arbitrary_precision_json_integers() {
         let integer = "1234567890123456789012345678901234567890";
         let json = format!(r#"{{"version":"0.1","future_id":{integer}}}"#);

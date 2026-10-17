@@ -75,7 +75,10 @@ and long histories therefore have a documented performance ceiling.
 listener exception propagates and does not roll it back. The editors instead
 validate and render prospective transitions before committing their state and
 cached previews. `validate()` / `assert_valid()` remain the explicit contract
-checks; rendering validates automatically.
+checks; rendering validates automatically. The Python editor starts a fresh
+history on open/reset. The Rust editor retains open/reset as undoable snapshot
+transitions; new successful edits clear redo in both editors. These existing
+history policies differ and are not a promise of identical UI history.
 
 ## JSON and versions
 
@@ -106,8 +109,23 @@ independent. A package release does not require a spec-version bump.
   Positional row widths must match the first row; DB result row widths must
   match cursor description. Malformed rows fail with their index/expected width
   before pivoting, never silently truncating extra values or padding short rows.
+  Every record must be a mapping; strings/bytes/mappings are not positional or
+  DB row sequences. Wrong row types report their index, not character/key data.
+  Sparse record keys still use first-seen column order and fill missing values
+  with null. Unequal column lengths remain intact at ingestion and are rejected
+  by validation before rendering or an editor commit, rather than resized.
+- In raw line/scatter categorical x conversion, null coordinates remain missing:
+  lines break and scatter rows are masked, without a fabricated `"None"` category.
+  An actual string `"None"` remains a category. ISO date strings follow the same
+  categorical path here, not a newly introduced continuous date-axis contract.
+  Statistical layers select their usable observations separately; source rows
+  and missing values remain in the spec.
 - SQL values are forwarded through DB-API `params=`; mudplot does not
-  interpolate them into a query.
+  interpolate them into a query. For connection+query ingestion, the adapter
+  closes the cursor it creates (when close is supported), including failures.
+  A caller-provided executed cursor and its connection remain caller-owned.
+  The adapter does not commit or roll back; close errors propagate rather than
+  silently succeeding, with an earlier failure retained as exception context.
 
 ## Dependencies and distribution
 

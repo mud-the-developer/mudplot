@@ -124,6 +124,177 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 11 completes the observed request-body boundary matrix.**
+FIND-011 fixes Python ignoring unsupported Transfer-Encoding, duplicate lengths
+and short bodies; six cases failed before the fix. Content-Length bodies are
+read exactly, and bad framing fails before actions. Python chunked remains
+unsupported and is explicitly rejected, not decoded by new custom code.
+
+FIND-012 was Rust undo mutating before checking an unknown-size body. The probe
+planned16MiB+1 but aborted after393216bytes yielded; it was not a complete
+oversized-body acceptance claim. Existing limited Bytes extraction now runs
+before every handler, retaining request parts, downstream limits and headers.
+Form/JSON/chunked boundaries including undo/reset pass39sequential local cases.
+
+Correct worker-PID observations (not the Windows venv launcher) show lifetime
+server peaks of Python252.14MiB/Rust30.40MiB. Native renderer children are excluded;
+these are not per-request resets, hard whole-app memory/CPU or concurrency bounds.
+Owned process trees/listeners are closed. SEC-03 is PASS; SEC-04/PERF remain open.
+
+Recorded results: **993 passed/20 skipped**, Python browser **31 passed**;
+minimum subset **232 passed/18 skipped/2142 deselected/481 warnings**; native Rust
+**15 passed/1 helper ignored**, actual Rust HTTP/browser, Clippy/fmt, Ruff209/
+Pyright/LSP7paths/contracts/clean sdist→wheel pass.13commands and39observations
+are in [phase11 receipts](review_evidence/body_boundary_verification.json).
+CI is configured, not a remote/Linux/MSRV result. No runtime dependency/lock/
+version/tag/deploy changes. [Tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS28/RUNNING14/OPEN108**; broader release/resource/security gates remain open.
+
+### Earlier review phase 10
+
+**Review phase 10 completes observed-format equivalence and SQL ownership.**
+Real PyArrow 26.0.0/Polars 2.0.0 were installed only in a disposable environment.
+All **114 targeted checks passed without skips**; the configured CI command also
+passed the same114 locally (not228unique tests). Fourteen ingestion paths include
+Arrow chunks/dictionaries, Polars categorical, borrowed SQL cursor and generic
+to_dict. Extra scalar/empty/duplicate cases verify values/types/source fidelity,
+UTC microseconds and strict Decimal/infinity rejection. This is not every optional
+version/precision/timezone/OS combination. DATA-01 is PASS for its documented scope.
+
+FIND-010 reproduced five missing cleanup cases before the fix. Connection+query
+now closes only the cursor it creates, on success and failure when supported;
+borrowed cursor/connection and transaction control stay with the caller. Cleanup
+errors propagate with exception context; minimal duck cursors still work. Ten
+SQL ownership checks pass. DATA-07 is PASS; no package dependency or version changed.
+
+Project regression subset: **980 passed/20 skipped** (18 optional-only,2Windows).
+Minimum data-only subset: **95 passed/18 optional skips/2266 deselected/13warnings**,
+not a repeat of the broader earlier minimum suite. The actual optional tests ran
+separately without skips. Ruff207formatted/Pyright/LSP6paths/contracts/clean
+sdist→wheel pass;9commands and environment cleanup are in [phase10 receipts](review_evidence/table_sql_verification.json).
+The dedicated venv was removed, original project optional imports remain absent,
+and project dependencies/locks remain unchanged. Browser/native Rust below are
+historical, not new runs. Remote optional CI is configured, not observed.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS27/RUNNING15/OPEN108**. Source checklist,
+versions/tags/deploy remain unchanged. Full suite/minimum/MSRV/Linux/security/
+body-memory/release gates remain incomplete.
+
+### Earlier review phase 9
+
+**Review phase 9 completes modeled-field JSON coverage and Windows interpreter
+path verification.**24model types/272fields have nondefault/alternate-union/null
+structural fixtures plus nested-type and JSON primitive checks. These intentionally
+incompatible options are schema-valid, not renderable feature-parity claims.
+The37registered example specs are checked separately. A real Python→Rust→Python
+artifact preserves3fixture figures, values/types/array order. JSON-01 is PASS.
+
+A separate disposable Unicode/spaces/`&` venv verifies PATH/env/flag priority:
+12real capabilities/apply/render children have the expected executable/prefix/
+version/argv, while a bad explicit flag does not fall back. An offline setup
+initially lacked cached wheels; preparation was explicitly allowed to download
+same-version render packages only in that temporary venv. Project packages/locks
+stay untouched; the test-only recorder is isolated and exclusively created.
+RUST-02 stays RUNNING: actual Windows passed, Linux CI is configured but unobserved.
+
+Recorded focused results: **968 passed/4 skipped**, minimum subset **207 passed/
+2 skipped/2142 deselected/481 warnings**, native Rust **15 passed/1helper ignored**.
+Ruff205formatted/Pyright/LSP6paths/Clippy/fmt/contracts/packaging pass.12primary
+commands and5QA-isolation/style/package followups have separate source revisions
+in [phase9 receipts](review_evidence/codec_path_verification.json). Browser31below
+is historical, not a new run. No product bug or runtime rewrite was needed.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS25/RUNNING16/OPEN109**. Source checklist,
+versions/core dependencies/tags/deploy remain unchanged. Full suite/minimum/
+Linux/MSRV/audit/release gates are not claimed complete.
+
+### Earlier review phase 8
+
+**Review phase 8 verifies cross-path state/failure/local HTTP boundaries.**
+FIND-008 fixes Rust Host/Origin rejections missing shared no-store/CSP headers;
+access conditions are unchanged. FIND-009 adds pre-upload Content-Length>16MiB
+rejection while retaining streaming limits. It is not proof of an unlimited
+payload bypass or completion of content-type/chunked/RSS testing.
+
+Shared10-step state fixtures compare fluent/functional/Store/CLI/Python/Rust
+agent and supported forms at every state, including log axes, layout, styles,
+references and typed heatmap. Both editors retain spec/PNG/redo across invalid
+actions, damaged JSON and real rendering failures. Native IPv6 listener/HTTP,
+Host/Origin matrices, all application-response headers and actual browser CSP
+observations are recorded in [phase8 receipts](review_evidence/editor_boundary_verification.json).
+
+Final results: **899 passed/4 skipped**, Python browser **31 passed**; minimum
+subset **138 passed/2 skipped/2142 deselected/481 warnings**. A visible-warning
+probe found old Matplotlib/modern pyparsing deprecation/diagnostic messages;
+this is not a zero-warning claim. Native Rust **14 passed/1 helper ignored**,
+real HTTP/browser, Clippy/fmt, Ruff203formatted/Pyright/LSP7paths/schema/clean
+sdist→wheel and IPv6 checks all passed in13 recorded commands. Not MSRV1.88.
+
+An earlier combined attempt failed with Windows10053 during body-carrying early
+rejection, then log decoding failed; it was not credited as complete. Denied
+Origin probes now separately require403 before body upload/decoding; allowed
+origins still send real payloads. The transport cause is not claimed fixed.
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS24/RUNNING16/OPEN110**, with SEC-03
+still RUNNING. Original checklist/version/tag/deploy and core dependencies stay
+unchanged; full suite/minimum/Linux/MSRV/security audit/release gates are open.
+
+### Earlier review phase 7
+
+**Review phase 7 fixes missing raw categorical x coordinates and verifies nested
+state/history contracts.** FIND-007 turned null x values into a literal None
+category. Ten cases failed before shared `_x_values` conversion was fixed to
+leave missing rows as NaN. Lines break, scatter points are masked, real `"None"`
+labels and shared/y2 positions remain intact; no continuous date-axis feature
+or new statistics policy is implied.
+
+Recorded focused checks: **859 passed, 4 skipped** (PyArrow/polars absent2,
+Windows-specific2). Minimum Python3.10/NumPy1.23 subset: **98 passed, 2 optional
+skips, 2142 deselected, 13 warnings**. Real Rust HTTP/browser smoke verifies
+all history steps/PNG caches, boundaries and new branches as well as the JSON
+corpus. Ruff201formatted/Pyright/LSP5paths/schema/clean sdist→wheel pass.
+Native Rust unit/MSRV counts are not new runs in this phase.
+
+Nested reducer inputs/actions, public snapshots/history/listeners, complete
+undo/redo and post-undo branches are now evidenced; STATE-01/02, HIST-01/02 and
+DATA-03 are PASS. DATA-01 remains RUNNING because actual PyArrow/polars are not
+installed. HIST-04 remains RUNNING for wider reset/dirty/save-target cases.
+An initial Rust probe incorrectly treated open as clearing history; the probe
+was corrected, not the product. Python open/reset starts fresh history; Rust
+open/reset is undoable. Existing behavior is now explicitly documented.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS17/RUNNING15/OPEN118**. The portable
+[phase7 receipt](review_evidence/missing_state_verification.json) includes source/
+log fingerprints, exact command scopes and canonical cursor hashes. Full suite/
+minimum/MSRV/Linux/security/release gates remain open. Original checklist,
+package/editor/spec versions, tags and deployment are unchanged.
+
+### Earlier review phase 6
+
+**Review phase 6 completes DATA-02 input-shape checks.** FIND-006 was mixed
+records raising unlocated AttributeError and text/bytes/dict rows silently
+becoming character/key columns. Nineteen cases failed before the fix. Record
+mapping/index checks plus shared row-value validation now reject those inputs
+before pivoting while sparse-record nulls/order and sqlite3.Row remain supported.
+Column lengths still remain intact at ingestion and fail semantic validation;
+no automatic resizing or new data coercion is introduced.
+
+Starting from committed snapshot96a8592, the recorded focused run is **677 passed,
+2 Windows-specific skips**. Minimum Python3.10/NumPy1.23 adapter checks report
+**66 passed, 2142 deselected, 13 warnings**. Ruff200formatted/Pyright/contract sync/
+clean sdist→wheel pass. Active LSP confirmed1 of2 paths; the other is inconclusive,
+not a clean LSP result (explicit Pyright on both changed paths passed). New checks
+include required x/y/group errors, pandas duplicate columns, malformed protocol
+columns, and invalid editor import/action preserving state/history/PNG/redo plus
+CLI source/output bytes. Actual PyArrow/polars are not installed or certified.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS12/RUNNING13/OPEN125**. A path-redacted
+[phase6 receipt](review_evidence/data_shape_verification.json) preserves results/
+source hashes beyond local temp logs. Original checklist/version/tag/release state
+is unchanged. Rust/full-browser counts below predate this Python-only change;
+full suite/minimum/MSRV/Linux/security audit remain incomplete.
+
+### Earlier review phase 5
+
 **Review phase 5 fixes two Rust JSON contract mismatches.** FIND-004 is serde
 arbitrary_precision reinterpreting a literal reserved-key object as a number;
 FIND-005 is rejecting an omitted version which Python defaults to current.

@@ -1,0 +1,278 @@
+{
+  "scope": "phase10 local dirty tree; current Windows real optional adapters and SQL ownership; not full release/OS/memory/optional-version-floor coverage",
+  "head": "96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f",
+  "os": "Windows-11-10.0.26300-SP0",
+  "project_python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "b49957090f2b079bc97fae05548aacc3ff0d0b97e3f7a471384ee94be27fc23c",
+    "tests/test_review_missing_data.py": "a0eb3ce0cf108e64a1ddec7ab8464886ea5b7ee67cd15be53155345cfd28c431",
+    "tests/test_review_sql_ownership.py": "c22d31048a84e69c29132111e2fa278b43ea89160454ce411669009822b5b153",
+    "tests/test_review_table_formats.py": "8ab7a339ba8c0ef9c1db73772cefe6b13dc4db088fab69b04ffa511c2ce91965",
+    ".github/workflows/ci.yml": "b2c5f3ab8593c65dc76365ed00acebfde2d0621c5baecabcdf95abb1d03ca256",
+    "scripts/check_minimum_versions.py": "1a894a48c72046f01b0e3918c6d4af16470fdab0ead3e48f37aa93107c648f7b"
+  },
+  "optional_environment": {
+    "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+    "prefix": "<isolated-venv>",
+    "versions": {
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.1",
+      "pandas": "3.0.5",
+      "pytest": "9.1.1",
+      "jsonschema": "4.26.0",
+      "pyarrow": "26.0.0",
+      "polars": "2.0.0"
+    }
+  },
+  "limits": "Observed Windows/Python3.12/PyArrow26/Polars2 plus existing formats only; not all optional versions/precision/timezones/OS, full suite, or release gates. Minimal/project environments intentionally do not install these libraries and skips are separate from the isolated114-pass run.",
+  "sql_ownership": {
+    "pre_fix_failed": 5,
+    "pre_fix_passed": 2,
+    "fixed": "query path closes internally created cursor when supported, including failures; borrowed cursor/connection/transaction unchanged; cleanup failures propagate with original error context",
+    "new_tests": 10
+  },
+  "adapter_coverage": {
+    "cohort_formats": 14,
+    "real_optional_scalar_cases": 13,
+    "features": [
+      "values and source nonmutation",
+      "line/scatter/stat missing cohorts",
+      "Arrow chunks/dictionary",
+      "Polars categorical",
+      "signed64 integers above2^53",
+      "boolean/Unicode/null",
+      "date/time UTC microseconds",
+      "reject infinity/Decimal at strict JSON boundary"
+    ]
+  },
+  "checks": [
+    {
+      "name": "optional-adapters",
+      "argv": [
+        "<isolated-python>",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_table_formats.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_sql_ownership.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_no_deps.py",
+        "--junitxml=<evidence>/optional.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "114 passed in 27.66s"
+      ],
+      "log_text_sha256": "9ea8acfdce9ce33952fafdffad8e7e24d60155ca3b4f1e5562dd6e790bea1111"
+    },
+    {
+      "name": "ci-command-local",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "--with",
+        "pyarrow==26.0.0",
+        "--with",
+        "polars==2.0.0",
+        "python",
+        "-c",
+        "import pyarrow,polars,pytest; print(\"Actual optional libraries:\",pyarrow.__version__,polars.__version__); raise SystemExit(pytest.main([\"-q\",\"tests/test_review_table_formats.py\",\"tests/test_review_missing_data.py\",\"tests/test_review_sql_ownership.py\",\"tests/test_review_data_contracts.py\",\"tests/test_data.py\",\"tests/test_no_deps.py\"]))"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Actual optional libraries: 26.0.0 2.0.0",
+        "114 passed in 27.58s"
+      ],
+      "log_text_sha256": "fb67e600227c0824d13bad43e6c1924eb9dac534e4bc6abf7a6585e29bed5d6c"
+    },
+    {
+      "name": "project-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_sql_ownership.py",
+        "tests/test_review_table_formats.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/project.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "980 passed, 20 skipped in 308.45s (0:05:08)"
+      ],
+      "log_text_sha256": "71b467699cab3290ea376e1b9e5c7247a49ef7fa76dd208b8dc2069c35871fbd"
+    },
+    {
+      "name": "minimum-data",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_sql_ownership or test_review_table_formats or test_review_missing_data or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "95 passed, 18 skipped, 2266 deselected, 13 warnings in 25.85s"
+      ],
+      "log_text_sha256": "4f2d5e17cf829ab4c6da81aeaa9c79bffee78f72a5825528b19cd07e166eb385"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "207 files already formatted"
+      ],
+      "log_text_sha256": "8f485afdff0bd8ee2565c955dd978868c94d264cb548bb6ebcfa0d7a6c6ec864"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "3288bb70451fc6be58d25308a4302101a28cc98f9bd11b12bbb69cd220099a7d"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "acf42c0147fad02fae340214e43f68ed844011acecf55229dfa7a6250cf66d79"
+    }
+  ],
+  "cleanup": {
+    "isolated_venv_removed": true,
+    "project_optional_imports_unchanged": true,
+    "project_dependency_files_unchanged": true,
+    "logs_and_receipts_retained": true
+  }
+}

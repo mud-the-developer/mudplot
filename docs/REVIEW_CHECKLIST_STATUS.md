@@ -18,6 +18,206 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 11차 — 실제 body 경계·framing·서버 PID 메모리
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-body-boundaries-3c7c1_st`,
+  [경로 제거 body/메모리/실행 요약](review_evidence/body_boundary_verification.json)도 보존합니다.
+- 순차 probe **39개 통과**(Python13/Rust26). 실제 form·nested JSON form·JSON
+  endpoint의 N-1/N 본문을 전송했고, 알려진 N+1 선언은 업로드 전에 거부했습니다.
+  Rust unknown-length chunked는 N-1/N/N+1 및 `/undo`·`/reset` 초과에서 상태/PNG
+  보존을 확인했습니다. Python은 미지원 Transfer-Encoding을 읽기 전 거부합니다.
+- **FIND-011 (Python framing):** Transfer-Encoding 무시·중복 Content-Length 사용·짧은
+  body를 그대로 반환하는 경계에서 수정 전6fail/4pass를 확보했습니다. `_read_body`가
+  지원하지 않는 framing/중복 길이를 거부하고 실제 읽은 길이가 다르면 action 전에 실패합니다.
+  실제 HTTP의 reset/잘린 action prefix3사례도 상태/history/PNG를 보존했습니다.
+- **FIND-012 (Rust 전역 body 경계):** 본문을 추출하지 않는 `/undo`가 unknown-size
+  chunked의 한도 확인 전에 상태를 바꿨습니다. 계획16MiB+1 중393216byte를 client가
+  넘긴 뒤 연결이 중단됐으므로 전체 초과 body 수용/무제한 할당으로 과장하지 않습니다.
+  기존 Axum limited Bytes extractor를 모든 handler 앞에 적용하고 request parts를
+  보존해 넘깁니다. 새 parser/의존성은 없고 기존 DefaultBodyLimit도 유지합니다.
+- Windows venv launcher와 실제 Python server PID가 달라 최초5MiB launcher 수치는
+  폐기했습니다. 현재 Python worker의 `os.getpid`를 확인해 측정했고, 소유한 process tree
+  종료와 listener 폐쇄도 확인했습니다. 기록된 server PID 수명 peak는 Python252.14MiB/
+  Rust30.40MiB였습니다. 시작 후 수명 peak이지 request별 reset 값/전체 앱 hard limit이
+  아니며 native 렌더 자식은 제외합니다. 동시 부하/렌더 CPU/모든 OS 보장은 아닙니다.
+- 본문/fault unit13개와 지원 content-type/전송 경계 및 위 메모리 관찰을 근거로 SEC-03을
+  **PASS** 처리합니다. 계산량/RSS hard cap인 SEC-04/PERF와 원격 OS gate는 그대로 남습니다.
+- 최종 대상 **993통과/20skip**, Python 브라우저 **31통과**, native Rust **15통과/
+  helper1ignored**, 실제 Rust HTTP/browser도 통과했습니다. 최소 대상은 **232통과/
+  선택18skip/2142deselected/경고481**이며 전체 matrix/zero-warning 주장은 아닙니다.
+  Ruff209파일/format·Pyright·LSP7경로·Clippy/fmt·계약·clean sdist→wheel까지13기록
+  명령이 exit0입니다. MSRV/Linux 실행 결과로 세지 않습니다.
+- 새 순차 probe를 Windows/Linux Rust CI에 구성했지만 원격 실행은 관찰하지 않았습니다.
+  원문 체크리스트·core 의존성/lock·package/editor/spec version·tag/배포는 유지합니다.
+
+## 10차 — 실제 optional table·SQL cursor 소유권
+
+- 실제 PyArrow26.0.0/Polars2.0.0을 별도 venv에서 실행했습니다. 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-data-libs-_bgvxl_h`,
+  [경로 제거 형식/SQL 실행 요약](review_evidence/table_sql_verification.json)도 보존합니다.
+- 격리 환경의 **114개 전부 통과/skip0**, 추가한 CI 명령도 로컬 **114통과**입니다.
+  두 결과는 같은 범위의 별도 실행이므로228개 고유 검사로 합산하지 않습니다.
+  Mapping/records/rows/NumPy2D/structured/pandas/SQL query/cursor/generic to_dict/
+  Arrow·chunks·dictionary/Polars·categorical14경로에서 값/결측/그룹/행 순서와
+  원본 비변경·line/scatter/lineplot의 사용 관측을 비교했습니다. DATA-01은 **PASS**입니다.
+- 실제 테이블의 signed64 범위에서2^53초과 정수·boolean·Unicode·null·UTC microsecond,
+  empty named columns와 중복 Arrow 이름을 확인했습니다. Decimal/무한대는 유효 JSON으로
+  coercion하지 않습니다. 모든 optional 버전/정밀도/timezone/OS를 인증한 결과는 아닙니다.
+- **FIND-010 (DATA-07 resource):** connection+query의 내부 생성 cursor를 success/
+  execute/fetch/shape/duplicate 실패 뒤 명시적으로 닫지 않음을 수정 전5fail/2pass로
+  확보했습니다. `to_columns`의 해당 경로만 finally로 close(지원 시)하고 caller-owned
+  executed cursor/connection은 보존합니다. Query/params를 그대로 넘기며 commit/rollback
+  하지 않고 close 실패/예외 context도 전파합니다. 새 SQL 회귀10개 통과, DATA-07은 **PASS**입니다.
+- 프로젝트 기본 환경은 **980통과/20skip**, 최소 data 대상은 **95통과/18skip/
+  2266deselected/경고13**입니다. 기본20skip은 선택 라이브러리18·Windows조건2이며
+  선택 검사 추가로 skip 수가 늘어난 것이지, 실제114-pass 검증을 생략한 것이 아닙니다.
+  최소 환경에는 최신 optional 라이브러리를 설치하지 않아 그 버전 floor를 주장하지 않습니다.
+- Ruff207파일/format·Pyright·LSP6경로·계약 sync·clean sdist→wheel을 포함해9기록
+  명령이 exit0입니다. 새 CI step은 optional 라이브러리를 upfront import한 뒤 실행하도록
+  구성했지만 원격 CI 성공으로 세지 않습니다. 이번 browser/Rust native 새 실행도 없습니다.
+- 설치했던 전용 venv는 결과·버전·지문을 남긴 후 제거했습니다. 원래 프로젝트에서는
+  pyarrow/polars import가 계속 불가함과 pyproject/uv.lock 비변경을 확인했습니다.
+  로그/receipt만 보존하며 원문 체크리스트·버전/tag/배포는 유지합니다.
+
+## 9차 — 모든 모델 필드 codec·Python 실행 경로
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-codec-paths-2t3d4dl_`;
+  [경로 제거 실행/child argv/codec 요약](review_evidence/codec_path_verification.json)도 보존합니다.
+  기반96a8592와 기존 로컬 변경은 유지했으며 이번에는 새 제품 결함/수정이 재현되지 않았습니다.
+- 전체 dataclass 탐색으로 **24모델/272필드**의 nondefault·대체 union·null/Unicode/
+  big integer fixture3개를 생성했습니다. Schema-valid지만 호환되지 않는 옵션을 함께 채운
+  **직렬화 전용 fixture**이며 렌더 가능성/모든 옵션 조합 동등성을 뜻하지 않습니다.
+- `test_review_full_spec_fields.py` **69개**가 필드 누락/기본값으로 가려진 손실·JSON
+  기본 타입·배열 순서·nested model 복원을 검사합니다. 등록37예제의 정상 spec/JSON
+  왕복도 별도로 확인했습니다. Raw NumPy float64→JSON builtin float는 허용된 정규화로
+  값 동등성을 확인하며, 초기5개 dtype-identity 실패를 제품 버그로 세지 않았습니다.
+- 실제 Python 생성 JSON→Rust strict FigureSpec→JSON 파일→Python 모델 복원을 실행해
+  fixture3개 전체를 비교했습니다. Field introspection/checked-in snapshot으로 새 필드가
+  조용히 미검증 상태가 되지 않게 하며 버전은 기존0.1을 유지합니다. JSON-01은 **PASS**입니다.
+- Interpreter probe는 별도 한글/공백/`&` venv·임시 경로에서 PATH default/env/flag
+  세 경우 각4개의 실제 capabilities/apply/render child를 확인했습니다. `sys.executable`,
+  prefix/version/원본 argv와 PNG를 검증하고, 잘못된 명시 flag는 env의 정상 Python으로
+  fallback하지 않았습니다. Startup recorder는 그 임시 venv 안에만 exclusive 생성합니다.
+- 첫 offline setup은 캐시 부족으로 중단되어 성공/제품 결함으로 세지 않았습니다. 명시한
+  준비 변경 후 같은 NumPy/Matplotlib 버전을 임시 venv에만 내려받고 정리했습니다.
+  프로젝트 패키지/의존성/lock은 바꾸지 않았습니다. 실제 Windows만 실행했으며 추가한
+  Windows/Linux CI matrix는 아직 실행을 관찰하지 않아 RUST-02는 **RUNNING**입니다.
+- 기록된 대상 **968통과/4skip**, native Rust **lib14+main1통과/helper1ignored**,
+  최소 환경 **207통과/2skip/2142deselected/경고481**. Clippy/fmt·Ruff205파일/format·
+  Pyright·LSP6경로·계약 sync·clean sdist→wheel도 통과했습니다. 이 phase의 browser
+  새 실행은 없고 이전31개는 그대로 과거 결과입니다. MSRV/Linux 전체 실행도 아닙니다.
+- 12개 기본 명령 뒤 QA startup-hook의 target/exclusive-create 검증을 보강하고 그
+  스크립트·Ruff/format/Pyright/packaging을 별도로5명령 재실행했습니다. 변경 없는 core/
+  codec 대상968개를 새 QA 변경까지 검증한 것으로 확대하지 않으며 source revision과
+  17개 성공 receipt를 구분합니다. 원문 체크리스트·배포/version/tag는 유지합니다.
+
+## 8차 — 공통 상태 경로·실패 격리·HTTP 경계
+
+- 기반96a8592 위의 로컬 변경(6/7차 포함)을 확인했습니다. 최종 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-editor-boundary-final-hdtdgy50`,
+  [경로 제거 실행/상태 해시/argv 요약](review_evidence/editor_boundary_verification.json)도 보존합니다.
+- 최종 대상 **899 통과, 4 skip**, Python 실제 브라우저 **31 통과**. 최소 환경 대상은
+  **138 통과, 2 skip, 2142 deselected, 경고481**입니다. Skip은 기존 선택 의존성/
+  Windows 조건이며, 경고는 별도10-case 가시화 조사에서 Matplotlib3.8/pyparsing
+  deprecation/diagnostic을 확인했습니다. zero-warning 또는 전체 경고 조사를 주장하지 않습니다.
+- Rust native **lib13+main1 통과/보조 helper1 ignored**, 실제 HTTP/browser의 상태·
+  실패·Host/Origin·CSP·선언 크기 검사 통과. Native IPv6 `::1` listener도 실제 실행해
+  HTTP/Host/header를 확인했습니다. Clippy/fmt·Ruff203파일/format·Pyright·LSP7경로·
+  계약 sync·clean sdist→wheel까지13개 기록 명령이 최종 exit0입니다. MSRV1.88 결과는 아닙니다.
+
+| ID | 판정 | 실행한 근거 |
+|---|---|---|
+| STATE-03 | PASS | 공통 fixture10작업의 fluent/functional/Store/CLI/Python session·HTTP/Rust agent·지원 form에서 중간/최종 FigureSpec 비교 |
+| EDIT-01 | PASS | Python _build_action 및 실제 양 editor 폼/agent의 theme·size·title·layer metadata 비교; 없는 Rust UI는 agent로 수행했다고 구분 |
+| RUST-01 | PASS | PythonBridge apply/render argv와 CLI source를 대조; preview만 --preview, vector는 원본 export; 실제 공통 상태 JSON 비교 |
+| HIST-03 | PASS | validation/손상 JSON/실제 Matplotlib render 실패에서 양 editor spec/history/PNG/redo 보존과 후속 정상 요청 확인 |
+| SEC-01 | PASS | IPv4/IPv6 bind guard와 실제 loopback listener·localhost/IPv4/IPv6 Host matrix, malformed/forwarded Host 거부 |
+| SEC-02 | PASS | scheme/host/port/null/cross-site 거부·Origin 없는 CLI 및 same-origin 정상 payload 허용; 브라우저 null-Origin payload 거부 |
+| SEC-05 | PASS | 정상/error/static/PNG/PDF/SVG·403/404/413 application header와 실제 htmx swap의 console/CSP event 확인 |
+| SEC-03 | RUNNING | 선언16MiB+1을 업로드 전 거부하는 경계만 확인; 실제 한도 전후·content type·chunked·peak RSS matrix는 남음 |
+
+### 재현한 보완점과 실패 실행의 처리
+
+- **FIND-008 (application 응답 계약):** Rust의 기존 Host/Origin 거부는 차단 자체는
+  성공했지만 공통 no-store/CSP header 처리를 우회했습니다. 실제 smoke의403 header
+  assert 실패를 먼저 확보한 뒤 거부도 같은 header 경로로 보냈습니다. 접근 조건은 그대로입니다.
+- **FIND-009 (선행 경계 보강):** 선언 Content-Length16MiB+1만 보냈을 때 body를
+  기다려5초 timeout이 났습니다. middleware가 이를413으로 먼저 거부하고 기존 streaming
+  DefaultBodyLimit은 유지합니다. 무제한 payload 수용이 확인된 것도, SEC-03 전체가 끝난 것도 아닙니다.
+- 처음 묶음 `mudplot-review-editor-boundary-mu7xq2yn`은 Rust Origin 거부의 Windows
+  WinError10053 및 로그 reader의 UTF-8 decode 오류로 중단했습니다. 뒤 검사는 실행하지
+  않았고 성공으로 세지 않았습니다. 원본 실패 로그는 그대로 보존했습니다.
+- 현재 거부 matrix는 body decode/upload 이전에403이어야 하는 **header-only** 요청으로
+  분리하고, 정상 same-origin/agent 및 브라우저 null-Origin은 실제 payload로 확인합니다.
+  Windows 연결 중단의 원인/일반 네트워크 신뢰성이 해결됐다고 주장하지 않습니다. 최종
+  재실행은 명시한 UTF-8 로그 환경을 사용했으며 테스트 안의 retry/fallback은 추가하지 않았습니다.
+
+공통 fixture는 `tests/fixtures/review_state_paths.json`과 `review_http_boundaries.json`에
+있고 sdist 포함도 검사합니다. 최종 상태 canonical hash는 native form/agent 모두
+`926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9`였습니다.
+이 통과를 전체 UI 동등성/보안 인증/전체 suite/OS/릴리스 gate로 확대하지 않습니다.
+
+## 7차 — 결측 좌표·중첩 상태·이력 경계
+
+- 현재 기반96a8592 위의 로컬 변경(6차 포함)을 검사했습니다. 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-missing-history-btis6dds`, 저장소 내
+  [경로 제거 검증/커서 해시 표](review_evidence/missing_state_verification.json)도 보존합니다.
+- 대상 **859 통과, 4 skip**: 실제 PyArrow/polars 부재2·Windows 조건2입니다. 최소
+  Python3.10/NumPy1.23 대상 **98 통과, 선택 의존성2 skip, 2142 deselected, 경고13**.
+  실제 Rust HTTP/browser의 단계별 spec/PNG·branch·JSON corpus가 통과했습니다.
+  Ruff201파일/format·Pyright·LSP5경로 확인·계약 sync·clean sdist→wheel도 exit0입니다.
+  Native Rust unit/MSRV 전체를 이번에 다시 실행한 결과로 보고하지 않습니다.
+- **FIND-007 (DATA-03 production):** 범주/ISO 날짜 문자열 x의 null이 문자열 `None`
+  범주가 되며 결측 관측을 정상 점처럼 표시했습니다. 수정 전10개 실패를 확보했습니다.
+  `_x_values`가 non-null 범주만 등록하고 원래 행 위치에는 NaN을 남기도록 수정했습니다.
+  Raw line은 단절, scatter는 mask하며 실제 문자열 `"None"`·shared/y2 정렬·JSON 원행은
+  유지합니다. 새 날짜 축/통계 정규화 정책은 추가하지 않았습니다.
+
+| ID | 판정 | 실제 확인한 경계 |
+|---|---|---|
+| STATE-01 | PASS | 중첩 data/matrix/theme/reference의 성공·실패 입력 비변경, 반환값과 AddLayer action 분리 |
+| STATE-02 | PASS | Plot.spec/Store.state/dispatch/history·listener별 중첩 mutation 격리 및 replay 유지 |
+| HIST-01 | PASS | Store와 시작 직후 Rust session의 끝까지 undo/redo·빈 경계; 단계별 spec/PNG·커서 해시 비교 |
+| HIST-02 | PASS | Python/Rust A→B→C→undo→D 뒤 C redo 불가, history/저장 spec/PNG는 D branch 유지 |
+| DATA-03 | PASS | None/NaN/nullable/NaT의 정규화와 raw line 단절·scatter mask·lineplot 사용 표본을 분리 검증 |
+| DATA-01 | RUNNING | mapping/records/rows/NumPy2D/structured/pandas/SQL의 값·순서·그룹·원본 비변경은 확인했으나 실제 PyArrow/polars는 미실행 |
+| HIST-04 | RUNNING | Python open/reset fresh와 Rust undoable snapshot 차이를 확인·문서화; 전체 dirty/저장 대상/reset 조합 검토는 남음 |
+
+이력 코드의 제품 수정은 없었습니다. 첫 Rust probe는 open을 이력 초기화로 잘못 가정해
+실패했습니다. 구현을 읽어 기존 정책을 확인한 뒤 빈 경계 검사를 서버 시작 직후로 옮기고
+Rust open의 undo/redo를 따로 확인했습니다. 잘못된 probe를 제품 결함으로 세지 않았으며
+재현한 결측 좌표 문제와 구분해 기록합니다. 모든 항목/OS/접근성/보안/릴리스 완료는 아닙니다.
+
+## 6차 — DATA-02 입력 구조 검증 마무리
+
+- 기반 commit은 `96a85922293fac14f5aa5e3dcb45b7c9ec66ff1f`이며 그 위의 로컬 변경을
+  검사했습니다. 원문 기준 SHA와 현재 검토 기반을 혼동하지 않습니다. 버전/릴리스는 유지합니다.
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-data-shapes-f2y9mmx2`.
+  [경로 제거 검증 요약](review_evidence/data_shape_verification.json)에 명령/환경/
+  소스·원문 지문/원본 log hash와 결과를 별도 보존합니다.
+- 실제 결과: **677 통과, Windows 조건 2 skip**, 최소 Python3.10/NumPy1.23 adapter
+  **66 통과, 2142 deselected, 경고13**. Ruff200파일/format·Pyright·계약 sync·clean
+  sdist→wheel도 exit0입니다. 이 대상 결과를 전체 suite/MSRV/Linux로 확대하지 않습니다.
+- **FIND-006 (DATA-02 production):** 혼합 입력의 record가 mapping이 아니면 위치 없는
+  AttributeError가 났고 positional/DB 행의 문자열/bytes/dict는 문자/key 열로 조용히
+  바뀌었습니다. 수정 전19fail/9pass를 확보했습니다. `_records_to_columns`가 record
+  타입/중복 key의 index를 검사하고 `_row_values`가 두 row 경로에서 잘못된 타입을
+  pivot 전에 거부합니다. 유효한 row와 sqlite3.Row·record 누락-key/null 동작은 유지합니다.
+
+| 검증 범위 | 실제 테스트·결과 |
+|---|---|
+| 잘못된 record/positional/DB row·너비 | test_review_data_contracts.py의 index/expected/타입 검사, 입력 비변경 확인 |
+| 열 길이 불일치 | mapping/DataFrame·Arrow·to_dict duck protocol에서 값 그대로 보존 후 validate/assert_valid가 이름별 길이로 거부 |
+| 없는 x/y/group | line/scatter에서 panel/layer/column 위치 오류와 validation 입력 비변경 확인 |
+| 중복 열/충돌 | 실제 pandas duplicate/string-conversion collision과 기존 mapping/record/DataFrame/Arrow/DB 중복 거부 검사 |
+| 실패 격리 | 잘못된 editor import/SetData 뒤 state/history/PNG/redo 보존; CLI apply의 입력·기존 출력 보존 |
+| 정상 호환 | sparse-record 첫 등장 열 순서/null, 정상 positional/DB row, sqlite3.Row·caller connection 재사용 |
+
+DATA-02를 **PASS**로 닫습니다. 직접 실행한 새/기존 DATA-02 회귀 파일은49개이고
+최소 환경에서도 전부 실행했습니다. 실제 PyArrow/polars는 설치하지 않았으며 그 라이브러리
+전체 호환성이나 DATA-01의 형식 간 동등성을 완료한 것으로 세지 않습니다. Arrow 등은
+이 항목의 malformed-input duck protocol만 확인했습니다. 새 성능/결측/정렬 정책은 없습니다.
+
 ## 5차 — 같은 corpus로 Python/Rust JSON 경계 대조
 
 - 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-cross-json-65s92n46`.
@@ -142,24 +342,24 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | BASE-05 | P1 | RUNNING | 기존 테스트와 체크리스트 매핑 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-06 | P1 | RUNNING | fixture와 증거 데이터 분리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-07 | P1 | RUNNING | 문서 계약 충돌 처리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| STATE-01 | P0 | OPEN | reducer의 입력 비변경 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| STATE-02 | P0 | OPEN | 공개 스냅샷의 격리 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| STATE-03 | P0 | OPEN | 상태 변경 경로의 일관성 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-01 | P0 | PASS | reducer의 입력 비변경 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-02 | P0 | PASS | 공개 스냅샷의 격리 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-03 | P0 | PASS | 상태 변경 경로의 일관성 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-04 | P0 | PASS | mp.apply의 실패 격리 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-05 | P0 | PASS | 비트랜잭션 배치 API의 계약 보존 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-06 | P0 | PASS | listener 예외의 commit 시점 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-07 | P1 | OPEN | 결정성과 암묵적 전역 상태 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-08 | P1 | OPEN | 잘못된 참조와 경계 인덱스 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-09 | P1 | OPEN | 검증과 부수효과 경계 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| HIST-01 | P0 | OPEN | 기본 undo/redo와 경계 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-02 | P0 | OPEN | undo 이후 분기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-03 | P0 | OPEN | 편집기 action/import/render 실패 원자성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-04 | P1 | OPEN | reset과 open의 이력 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-01 | P0 | PASS | 기본 undo/redo와 경계 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-02 | P0 | PASS | undo 이후 분기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-03 | P0 | PASS | 편집기 action/import/render 실패 원자성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-04 | P1 | RUNNING | reset과 open의 이력 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-05 | P1 | OPEN | no-op action의 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-06 | P1 | OPEN | 긴 이력의 재생 정확성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-07 | P2 | OPEN | 연속 드래그 action 합치기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-08 | P2 | OPEN | 체크포인트와 이력 제한 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| JSON-01 | P0 | RUNNING | 공식 지원 필드의 손실 없는 왕복 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-01 | P0 | PASS | 공식 지원 필드의 손실 없는 왕복 | io.py/spec.py; model.rs::full_field_fixture_preserves_types_values_and_array_order | test_review_full_spec_fields.py(69); Python→Rust→Python 9차 artifact |
 | JSON-02 | P0 | PASS | 비유한 숫자의 경계 분리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-03 | P0 | PASS | 재귀 중복 키 거부 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-04 | P0 | PASS | 큰 정수의 구조적 보존 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
@@ -171,13 +371,13 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | JSON-10 | P1 | OPEN | canonical serialization과 해시 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-11 | P1 | RUNNING | 스키마·capabilities·문서 동기화 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-12 | P1 | OPEN | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| DATA-01 | P0 | OPEN | 입력 형식 간 동일 데이터의 동등성 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-02 | P0 | RUNNING | 열 길이·필수 열·중복 열 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-03 | P0 | OPEN | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-01 | P0 | PASS | 입력 형식 간 동일 데이터의 동등성 | data.py::to_columns/_to_list/_mapping_to_columns | test_review_missing_data.py(14formats); test_review_table_formats.py(13); 실제 optional114-pass 실행 |
+| DATA-02 | P0 | PASS | 열 길이·필수 열·중복 열 | data.py::_records_to_columns/_row_values; validate.py::_check_data_integrity/_check_column | test_review_data_contracts.py(49); test_data.py; test_validate_hardening.py; 6차 증거 |
+| DATA-03 | P0 | PASS | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-04 | P1 | OPEN | 혼합 그룹 식별자 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-05 | P1 | OPEN | 날짜·시간·timezone | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-06 | P1 | OPEN | NumPy scalar와 지원하지 않는 객체 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-07 | P1 | OPEN | SQL 파라미터와 연결 소유권 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-07 | P1 | PASS | SQL 파라미터와 연결 소유권 | data.py::to_columns query finally | test_review_sql_ownership.py(10); named/tuple params·transaction·borrowed cursor·cleanup failures |
 | DATA-08 | P1 | OPEN | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-09 | P1 | OPEN | 행 순서·정렬·중복 x의 정책 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | PLOT-01 | P0 | OPEN | 전체 등록 레이어의 실행·계약 커버리지 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
@@ -229,7 +429,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | OUT-08 | P1 | OPEN | TeX 컴파일로 참조 확인 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-09 | P1 | OPEN | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-10 | P2 | OPEN | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| EDIT-01 | P0 | OPEN | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-01 | P0 | PASS | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-02 | P1 | OPEN | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-03 | P1 | OPEN | htmx 교체 이후 상태·이벤트 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-04 | P1 | OPEN | 지연 응답과 최신 preview | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -238,18 +438,18 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-07 | P1 | OPEN | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-09 | P1 | OPEN | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| RUST-01 | P0 | OPEN | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-02 | P0 | OPEN | Python 실행 파일 선택과 quoting | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-02 | P0 | RUNNING | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows4cases/12children; Linux CI 미실행 |
 | RUST-03 | P1 | OPEN | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-04 | P1 | OPEN | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-05 | P1 | OPEN | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-06 | P1 | OPEN | Rust history와 캐시의 commit 순서 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-07 | P1 | OPEN | 공유 static 자산·버전 정합성 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| SEC-01 | P0 | OPEN | loopback bind와 Host 검증 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-02 | P0 | OPEN | Origin과 mutation 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-03 | P0 | OPEN | 16 MiB 요청 한도 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-01 | P0 | PASS | loopback bind와 Host 검증 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-02 | P0 | PASS | Origin과 mutation 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-03 | P0 | PASS | 16 MiB 요청 한도 | _Handler._read_body; protect_local_boundary limited Bytes | test_review_body_framing.py(13); check_request_body_limits.py(39); 실제 PID RSS/peak·상태 보존 11차 기록 |
 | SEC-04 | P1 | OPEN | 작은 요청의 과도한 계산 방어 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-05 | P1 | OPEN | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-05 | P1 | PASS | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-06 | P1 | OPEN | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-07 | P1 | OPEN | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-08 | P1 | OPEN | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
@@ -288,8 +488,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 11, RUNNING 14, OPEN 125, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005를 재현 후 수정했습니다. FIND-001은 별도 연결 검사 결함입니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 28, RUNNING 14, OPEN 108, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012를 재현 후 수정했습니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

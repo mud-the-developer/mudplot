@@ -68,6 +68,34 @@ uv run python scripts/rust_editor_smoke_test.py
 uv run python scripts/rust_editor_smoke_test.py --browser
 ```
 
+## Codec·interpreter 집중 검사
+
+```bash
+uv run pytest -q tests/test_review_full_spec_fields.py
+# 모델 필드를 바꿀 때만 structural fixture를 명시적으로 재생성합니다.
+uv run python tests/test_review_full_spec_fields.py
+uv run python scripts/check_python_bridge_paths.py
+uv run python scripts/check_request_body_limits.py
+```
+
+Codec stress fixture는 schema-valid지만 옵션 충돌을 의도해 렌더용이 아닙니다.
+등록 예제는 따로 검사합니다. Interpreter probe는 한글/공백 경로의 venv를 만들고
+정리하며 같은 NumPy/Matplotlib 버전을 내려받을 수 있습니다. PATH/env/flag 선택을
+검사하되 프로젝트 패키지/lock은 바꾸지 않고 recorder도 그 venv 안에만 새로 만듭니다.
+CI는 Windows/Linux 양쪽을 구성했지만 로컬 Windows 성공을 미실행 Linux 통과로 세지 않습니다.
+Body probe는 로컬 N-1/N/N+1을 순차 실행하고 실제 서버 PID의 RSS/수명 peak만 기록하며
+native 렌더 자식은 제외합니다. 부하 테스트나 hard resource 보장은 아닙니다.
+
+Protocol skip이 아니라 실제 optional table 라이브러리를 검사하려면:
+
+```bash
+uv run --no-sync --with pyarrow==26.0.0 --with polars==2.0.0 python -m pytest -q tests/test_review_table_formats.py tests/test_review_missing_data.py tests/test_review_sql_ownership.py
+```
+
+격리된 테스트 요구사항이며 core 의존성/lock 변경은 아닙니다. 실제 optional 버전을
+기록하고 기본/최소 환경의 skip과 구분하세요. CI는 pytest 전에 두 라이브러리를 직접
+import하여 부재를 정상 optional 검사 성공으로 오인하지 않도록 합니다.
+
 ## 프로젝트 규칙
 
 - 선언적 core는 의존성 0을 유지합니다. spec, action, reducer, store, IO,

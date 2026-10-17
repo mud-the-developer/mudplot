@@ -537,15 +537,23 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def _read_body(self) -> bytes:
+        if self.headers.get_all("Transfer-Encoding"):
+            raise ValueError("Transfer-Encoding is not supported; send Content-Length")
+        lengths = self.headers.get_all("Content-Length", [])
+        if len(lengths) > 1:
+            raise ValueError("multiple Content-Length headers are not allowed")
         try:
-            length = int(self.headers.get("Content-Length", 0))
+            length = int(lengths[0]) if lengths else 0
         except (TypeError, ValueError) as e:
             raise ValueError("Content-Length must be an integer") from e
         if length < 0:
             raise ValueError("Content-Length must not be negative")
         if length > _MAX_BODY_BYTES:
             raise ValueError("request body exceeds the 16 MiB limit")
-        return self.rfile.read(length) if length else b""
+        body = self.rfile.read(length) if length else b""
+        if len(body) != length:
+            raise ValueError("incomplete request body")
+        return body
 
     def _respond_after_action(
         self, session: EditorSession, *, draft_json: str = ""
