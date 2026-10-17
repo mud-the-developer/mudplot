@@ -109,6 +109,12 @@ package release마다 spec version을 올릴 필요는 없습니다.
   문자·key 데이터로 바꾸지 않고 해당 행 index를 포함한 오류를 냅니다. Record의
   누락 key는 기존처럼 첫 등장 열 순서와 null 채우기를 유지합니다. 열 길이 불일치는
   입력 단계에서 원값을 보존하고 렌더/editor commit 전 validation에서 거부합니다.
+- 알려진 NumPy floating/temporal 및 pandas missing scalar만 null로 정규화하며
+  임의 객체의 self-inequality와 Decimal NaN은 결측 sentinel로 보지 않습니다.
+  `.item()`은 지원 plain/date 표현으로 변환될 때만 이어가고 미지원 same-type/순환
+  객체 chain을 따라가지 않습니다. Complex/extended precision 등 미지원 값은
+  반올림/문자열/null/무한 재귀 대신 strict JSON에서 명시적으로 거부합니다.
+  호출자가 제공한 Python method를 sandbox하는 기능은 아닙니다.
 - NumPy datetime64 scalar/column/row는 ISO 변환 전 dtype을 유지해 ns/ps/fs/as와
   NaT→null을 보존하고 epoch 정수로 바꾸지 않습니다. 기존 coarse 형식과 실제 숫자
   epoch 열은 유지합니다. Polars datetime(ns)는 native formatter와 parse/equality로

@@ -1,0 +1,419 @@
+{
+  "scope": "phase13 scalar rejection/progress and non-shadowed test provenance; current Windows, not full OS/release/sandbox guarantees",
+  "head": "914a402c24a4adb1f450b426848d16eebf374306",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "tests/test_review_scalar_boundaries.py": "583e446452b6781b01260803a44fbfbc9682cd62fe95a6a67f31517673042378",
+    "scripts/check_python_bridge_paths.py": "e07f89b43449e63423b5726ea26d5914a4983db447f4059419383ea10e8976dc",
+    ".github/workflows/ci.yml": "5a01beec0b085ceeb4949cc1580dba6d32c41b484e1e1a77e389e2eddff72851",
+    "scripts/check_minimum_versions.py": "e82ed900bfeb1d68370f39abec070ba6b248a5036f35611ffaf7022edb1c3c3b"
+  },
+  "pre_fix": {
+    "failed": 7,
+    "passed": 50,
+    "scalar_failures": [
+      "unsupported Decimal/custom self-inequality silently became null",
+      "signaling Decimal NaN leaked InvalidOperation",
+      "fresh/alternating item results and NumPy longdouble recursed"
+    ],
+    "not_claimed": "arbitrary Python object sandboxing; generic item protocol can invoke one caller-provided method"
+  },
+  "policy": {
+    "missing": "builtin float NaN and recognized NumPy floating/temporal0D or pandas NA/NaT only",
+    "item": "follow only supported plain containers/scalars/date representations; unsupported cyclic or extended-precision results remain unsupported",
+    "unsupported": "no forced float/str/null conversion; strict JSON rejects unsupported types; caller data preserved"
+  },
+  "ci_observation": {
+    "run": 39048096708,
+    "commit": "914a402c24a4adb1f450b426848d16eebf374306",
+    "linux_job": 117440805789,
+    "observed": "advanced-effect smoke now passed; interpreter probe failed missing default.jsonl; Windows cancelled",
+    "not_proven": "wrong interpreter or exact remote sitecustomize origin",
+    "qa_change": "unique module loaded via exclusive .pth inside disposable venv; controlled foreign sitecustomize preserved; original identity/argv assertions retained. Local Windows pass is not remote Linux success.",
+    "sanitized_job_log_sha256": "cda44fd4d61b71e4edf3971adfb2e0ef8a6f45528a34aeb84dbcb5f23e247c0c"
+  },
+  "interpreter_probe": {
+    "platform": "win32",
+    "python": "3.12.15",
+    "selection": [
+      {
+        "mode": "default",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "\ud55c\uae00 bridge & (space)\\Scripts\\python3.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmp7gL9EY\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmp7gL9EY\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmp7RQJvD\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmp7RQJvD\\action.json",
+            "-o",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmp7RQJvD\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpTwReGm\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpTwReGm\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "environment",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "\ud55c\uae00 bridge & (space)\\Scripts\\python.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpDlJB2a\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpDlJB2a\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpr8wADC\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpr8wADC\\action.json",
+            "-o",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpr8wADC\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpUpnRZe\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpUpnRZe\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "flag",
+        "child_count": 4,
+        "separate_prefix": true,
+        "executable": "\ud55c\uae00 bridge & (space)\\Scripts\\python.exe",
+        "commands": [
+          "apply",
+          "capabilities",
+          "render"
+        ],
+        "unicode_argument_paths": true,
+        "version": "3.12.15",
+        "argv_samples": [
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "capabilities"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpAzB9Xe\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpAzB9Xe\\figure.png",
+            "--preview"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "apply",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpnk17Vj\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpnk17Vj\\action.json",
+            "-o",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpnk17Vj\\next.json"
+          ],
+          [
+            "<runtime-python>",
+            "-m",
+            "mudplot",
+            "render",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpxm0gJE\\spec.json",
+            "<temp>\\\uc784\uc2dc data & (bridge)\\.tmpxm0gJE\\figure.png",
+            "--preview"
+          ]
+        ]
+      },
+      {
+        "mode": "invalid-flag",
+        "rejected_without_fallback": true
+      }
+    ],
+    "foreign_sitecustomize_preserved": true
+  },
+  "checks": [
+    {
+      "name": "optional-scalars",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "--with",
+        "pyarrow==26.0.0",
+        "--with",
+        "polars==2.0.0",
+        "python",
+        "-c",
+        "import pyarrow,polars,pytest; print(\"Actual optional libraries:\",pyarrow.__version__,polars.__version__); raise SystemExit(pytest.main([\"-q\",\"--tb=short\",\"tests/test_review_scalar_boundaries.py\",\"tests/test_review_temporal_precision.py\",\"tests/test_review_ci_effects.py\",\"tests/test_review_table_formats.py\",\"tests/test_review_missing_data.py\",\"tests/test_review_sql_ownership.py\",\"tests/test_review_data_contracts.py\",\"tests/test_data.py\",\"tests/test_no_deps.py\"]))"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Actual optional libraries: 26.0.0 2.0.0",
+        "244 passed in 29.25s"
+      ],
+      "log_text_sha256": "da3e913635f5a35e47422a65d292b284cb2d4a558623cd176dd050bf7a56dcf3"
+    },
+    {
+      "name": "project-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_scalar_boundaries.py",
+        "tests/test_review_temporal_precision.py",
+        "tests/test_review_ci_effects.py",
+        "tests/test_review_body_framing.py",
+        "tests/test_review_sql_ownership.py",
+        "tests/test_review_table_formats.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "1116 passed, 27 skipped in 309.46s (0:05:09)"
+      ],
+      "log_text_sha256": "2bdf6cdd7e2f19df14b0ce8ac3c63b5585372da5496085d88ab21f477ba85908"
+    },
+    {
+      "name": "minimum-scalars",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_scalar_boundaries or test_review_temporal_precision or test_review_body_framing or test_review_sql_ownership or test_review_table_formats or test_review_editor_paths or test_review_http_boundaries or test_review_full_spec_fields or test_review_state_contracts or test_review_missing_data or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "354 passed, 25 skipped, 2142 deselected, 481 warnings in 88.34s (0:01:28)"
+      ],
+      "log_text_sha256": "d2f37074329b6bf2d5ae6180f7fb415bfeea642b1a8d51c9b3890ff149f659bf"
+    },
+    {
+      "name": "python-paths",
+      "argv": [
+        "python",
+        "scripts/check_python_bridge_paths.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "a986259db0706a7602835f4b17b6c1236dae55dc2cb2db3a4643c25cd683bd63"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "212 files already formatted"
+      ],
+      "log_text_sha256": "92100405e0065b954fa416a1dd6d858c2a46e79ca278425917fcc710495dff8d"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "dc75d605fc132e1d68e78934f33cd1caba7456a91bd4a860d7e4f75a51f8073f"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "6021fe0c692a43a479e6366bc0294469043fc089a8ca93906ad0fdc0897a3799"
+    }
+  ]
+}

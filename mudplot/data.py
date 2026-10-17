@@ -34,13 +34,18 @@ def _plain_value(value):
     if isinstance(value, float):
         return None if math.isnan(value) else value
     value_type = type(value)
-    if value_type.__name__ == "NAType" and value_type.__module__.startswith("pandas"):
+    if value_type.__name__ in (
+        "NAType",
+        "NaTType",
+    ) and value_type.__module__.startswith("pandas"):
         return None
-    try:
-        if bool(value != value):  # pandas/NumPy NaT and similar sentinels
-            return None
-    except (TypeError, ValueError):
-        pass
+    if (
+        value_type.__module__.startswith("numpy")
+        and getattr(value, "ndim", None) == 0
+        and getattr(getattr(value, "dtype", None), "kind", None) in ("f", "M", "m")
+        and bool(value != value)
+    ):
+        return None
     if isinstance(value, (date, time)):
         return value.isoformat()
     item = getattr(value, "item", None)
@@ -56,7 +61,11 @@ def _plain_value(value):
                 and type(converted) is int
             ):
                 return str(value)
-            if converted is not value:
+            if converted is not value and (
+                type(converted)
+                in (bool, int, float, str, bytes, list, tuple, dict, type(None))
+                or isinstance(converted, (date, time))
+            ):
                 return _plain_value(converted)
     return value
 

@@ -22,9 +22,9 @@
 
 ## 검증과 리뷰 상태
 
-- 최신 프로젝트 대상 **1045통과/27skip**(선택 전용25·Windows2), PyArrow26/Polars2
-  overlay **173통과/skip0**이며 겹치는 범위를 합산하지 않습니다. 최소 대상은
-  **283통과/선택25skip/경고481**로 전체/zero-warning matrix가 아닙니다.
+- 최신 프로젝트 대상 **1116통과/27skip**(선택 전용25·Windows2), PyArrow26/Polars2
+  overlay **244통과/skip0**이며 겹치는 범위를 합산하지 않습니다. 최소 대상은
+  **354통과/선택25skip/경고481**로 전체/zero-warning matrix가 아닙니다.
 - Browser **31통과**와 native Rust **15통과/helper1ignored**는 이전11차 결과이며
   새 count가 아닙니다. 이번12차 격리 all-extra Rust smoke는 로컬 통과했습니다.
   Form/JSON/chunked39순차 body case와 실제 서버 PID 수명 peak를 관찰했지만 native
@@ -49,7 +49,10 @@
 - [Temporal/CI 요약](review_evidence/temporal_ci_verification.json)에 정밀도/CI 의존성 수정을
   기록했습니다. 359277c의 Python jobs는 성공했지만 Linux Rust smoke 실패·Windows
   취소였으며 수정 후 원격 재통과는 아직 관찰하지 않았습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 29 / RUNNING 14 / OPEN 107**.
+- [Scalar/계측 요약](review_evidence/scalar_provenance_verification.json)에 미지원 값의
+  명시적 거부와 가려지지 않는 recorder를 기록합니다. Linux914a402 smoke는 통과 후
+  provenance에서 실패했으며 보강 후 재실행은 아직 관찰하지 않았습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 30 / RUNNING 14 / OPEN 106**.
   미검증 항목을 통과로 취급하지 않습니다.
 
 이전 기능/최소환경/브라우저 결과는 각자의 범위이며 후속 변경 이전 결과입니다.

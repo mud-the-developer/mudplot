@@ -18,6 +18,34 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 13차 — 미지원 scalar 거부·가려지지 않는 probe 계측
+
+- 기반914a402 위에서 진행했습니다. 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-scalars-j2l4rnhk`,
+  [경로 제거 scalar/계측 요약](review_evidence/scalar_provenance_verification.json)도 보존합니다.
+- **FIND-015 (DATA-06):** Decimal NaN/일부 custom 객체의 self-inequality가 null로
+  바뀌고 sNaN은 InvalidOperation, longdouble/새 same-type·순환 item은 RecursionError로
+  끝남을 수정 전7fail/50pass로 확보했습니다. Missing 판정은 알려진 NumPy/pandas
+  floating/temporal scalar에 한정하고 item은 지원 plain/date 표현일 때만 재귀합니다.
+  정상 numeric/bool/Unicode/NaN/NaT·기존 item→기본값 변환은 유지합니다.
+- 새71개 검사에서 mapping/records/object dtype의 값/타입·미지원 원객체 보존·strict
+  JSON ValueError·비반사 custom 객체 비교/문자열화 방지·한 번만 수행하는 item·pandas
+  NA/NaT를 확인했습니다. Unsupported extended precision을 float로 강제변환하지 않으며
+  arbitrary Python method sandbox는 아닙니다. DATA-06은 이 범위에서 **PASS**입니다.
+- 914a402의 CI run39048096708 Linux job117440805789는 MSRV/lint/unit과 advanced
+  smoke를 통과했지만 경로 probe의 default.jsonl provenance가 없어 실패했고 Windows는
+  취소됐습니다. 잘못된 interpreter 선택이나 실제 remote customizer 경로는 증명되지 않았습니다.
+  **FIND-016 (QA 가정 보강):** venv sitecustomize lookup을 전제하지 않고 임시 전용
+  module/.pth로 recorder를 로드합니다. 별도 shadow sitecustomize를 그대로 유지해도
+  recorder가 실행됨을 self-check했고 원래 executable/prefix/version/argv assertion은 유지합니다.
+- Optional overlay **244통과/skip0**, 프로젝트 대상 **1116통과/27skip**, 최소 대상
+  **354통과/선택25skip/2142deselected/경고481**입니다. 실제 Windows 경로4case/
+  12child와 foreign-customizer 보존도 통과했습니다. Ruff212파일/format·Pyright·LSP5경로·
+  계약·clean sdist→wheel까지9명령이 exit0이며 새로운 browser/native-unit count나 Linux
+  재통과로 세지 않습니다. RUST-02는 계속 RUNNING입니다.
+- 프로젝트 의존성/lock·원문 체크리스트·버전/tag/배포는 유지합니다. 기존 실패 로그는
+  ANSI 제거 후 읽어 SHA를 보존했으며 원격 CI 재실행은 후속 푸시 후 별도 관찰해야 합니다.
+
 ## 12차 — 커밋/푸시 후 timestamp 정밀도·CI 환경
 
 - 6~11차 변경46파일을 `359277c6c7ee6862a85a158eb32ba9d4cf4dcf87`로 커밋하고
@@ -405,7 +433,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | DATA-03 | P0 | PASS | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-04 | P1 | OPEN | 혼합 그룹 식별자 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-05 | P1 | PASS | 날짜·시간·timezone | data.py::_plain_value/_to_list/2D datetime path | test_review_temporal_precision.py(58); 실제 optional/일반/minimum 12차 기록 |
-| DATA-06 | P1 | OPEN | NumPy scalar와 지원하지 않는 객체 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-06 | P1 | PASS | NumPy scalar와 지원하지 않는 객체 | data.py::_plain_value missing/item guards | test_review_scalar_boundaries.py(71); optional/project/minimum 13차 기록 |
 | DATA-07 | P1 | PASS | SQL 파라미터와 연결 소유권 | data.py::to_columns query finally | test_review_sql_ownership.py(10); named/tuple params·transaction·borrowed cursor·cleanup failures |
 | DATA-08 | P1 | OPEN | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-09 | P1 | OPEN | 행 순서·정렬·중복 x의 정책 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
@@ -517,8 +545,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 29, RUNNING 14, OPEN 107, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 30, RUNNING 14, OPEN 106, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015를 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

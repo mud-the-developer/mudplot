@@ -83,7 +83,9 @@ The codec stress fixture is schema-valid but intentionally non-renderable;
 registered examples are checked separately. The interpreter probe creates and
 removes a Unicode/spaced-path venv, may download the same NumPy/Matplotlib
 versions, and checks PATH/environment/flag selection without changing project
-packages/locks. Its startup recorder is created exclusively inside that venv.
+packages/locks. Its startup recorder uses an exclusive .pth/module pair inside
+that venv and self-checks that a foreign sitecustomize remains untouched; it does
+not assume a venv-local sitecustomize wins module lookup.
 CI config runs this probe on Windows and Linux; local Windows success is not
 proof of an unobserved Linux job. The body probe runs sequential local
 N-1/N/N+1 cases and records only actual server-PID RSS/lifetime peaks, excluding

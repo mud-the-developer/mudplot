@@ -82,6 +82,7 @@ jobs:
           raise SystemExit(pytest.main([
               "-q", "tests/test_review_table_formats.py",
               "tests/test_review_temporal_precision.py",
+              "tests/test_review_scalar_boundaries.py",
               "tests/test_review_missing_data.py",
               "tests/test_review_sql_ownership.py",
               "tests/test_review_data_contracts.py", "tests/test_data.py",

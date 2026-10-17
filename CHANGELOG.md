@@ -6,6 +6,14 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Restricted missing-scalar normalization to recognized NumPy/pandas cases so
+  Decimal NaNs and custom non-reflexive objects do not silently become null.
+  Bounded item conversion to supported representations, preventing longdouble
+  and unsupported object-chain recursion without lossy float/string coercion.
+- Loaded disposable interpreter-probe provenance through an exclusive .pth/module
+  pair rather than assuming sitecustomize lookup reaches a venv-local file.
+  Added a foreign-customizer preservation self-check; exact Linux CI cause and
+  remote rerun success remain unconfirmed rather than inferred from local passes.
 - Preserved NumPy datetime64 fine-unit ISO values/NaT through scalar, column,
   structured and row paths instead of silently storing epoch integers. Preserved
   Polars nanoseconds/offsets with native formatting and a lossless round-trip check;

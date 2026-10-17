@@ -114,6 +114,13 @@ independent. A package release does not require a spec-version bump.
   Sparse record keys still use first-seen column order and fill missing values
   with null. Unequal column lengths remain intact at ingestion and are rejected
   by validation before rendering or an editor commit, rather than resized.
+- Only recognized floating/temporal NumPy or pandas missing scalars normalize
+  to null; arbitrary object self-inequality and Decimal NaNs are not sentinels.
+  A scalar `.item()` conversion follows only supported plain/date representations,
+  not unsupported same-type or alternating object chains. Complex/extended-
+  precision unsupported values remain objects and fail strict JSON rather than
+  rounding, stringifying, becoming null or recursing indefinitely. This is not
+  a sandbox for caller-provided Python methods.
 - NumPy datetime64 scalars/columns/rows retain their dtype until ISO conversion,
   including ns/ps/fs/as precision and NaT→null, rather than becoming epoch integers.
   Existing coarse formats and actual numeric epoch columns remain unchanged.

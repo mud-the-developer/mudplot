@@ -231,7 +231,9 @@ def main() -> int:
         )
         assert site.resolve().is_relative_to(prefix.resolve())
         assert not prefix.samefile(Path(sys.prefix))
-        with (site / "sitecustomize.py").open("x", encoding="utf-8") as handle:
+        with (site / "_mudplot_interpreter_probe.py").open(
+            "x", encoding="utf-8"
+        ) as handle:
             handle.write(
                 "import json,os,sys\n"
                 "path=os.environ.get('MUDPLOT_PATH_PROBE_LOG')\n"
@@ -241,6 +243,33 @@ def main() -> int:
                 "'argv':sys.orig_argv,'version':sys.version.split()[0]}\n"
                 "        log.write(json.dumps(record,ensure_ascii=False)+'\\n')\n"
             )
+        with (site / "_mudplot_interpreter_probe.pth").open(
+            "x", encoding="utf-8"
+        ) as handle:
+            handle.write("import _mudplot_interpreter_probe\n")
+        shadow = root / "other customizer"
+        shadow.mkdir()
+        with (shadow / "sitecustomize.py").open("x", encoding="utf-8") as handle:
+            handle.write("marker='other customizer preserved'\n")
+        shadow_log = root / "shadow.jsonl"
+        subprocess.run(
+            [
+                str(executable),
+                "-c",
+                "import sitecustomize; "
+                "assert sitecustomize.marker=='other customizer preserved'",
+            ],
+            env={
+                **env,
+                "PYTHONPATH": str(shadow),
+                "MUDPLOT_PATH_PROBE_LOG": str(shadow_log),
+            },
+            check=True,
+            timeout=20,
+        )
+        assert shadow_log.is_file() and '"executable"' in shadow_log.read_text(
+            encoding="utf-8"
+        )
         results = [
             _probe(binary, executable, prefix, root, mode)
             for mode in ("default", "environment", "flag", "invalid-flag")
@@ -251,6 +280,7 @@ def main() -> int:
                     "platform": sys.platform,
                     "python": sys.version.split()[0],
                     "selection": results,
+                    "foreign_sitecustomize_preserved": True,
                 },
                 ensure_ascii=False,
                 indent=2,

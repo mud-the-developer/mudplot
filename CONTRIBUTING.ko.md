@@ -81,7 +81,8 @@ uv run python scripts/check_request_body_limits.py
 Codec stress fixture는 schema-valid지만 옵션 충돌을 의도해 렌더용이 아닙니다.
 등록 예제는 따로 검사합니다. Interpreter probe는 한글/공백 경로의 venv를 만들고
 정리하며 같은 NumPy/Matplotlib 버전을 내려받을 수 있습니다. PATH/env/flag 선택을
-검사하되 프로젝트 패키지/lock은 바꾸지 않고 recorder도 그 venv 안에만 새로 만듭니다.
+검사하되 프로젝트 패키지/lock은 바꾸지 않고 recorder의 .pth/module 쌍도 그 venv 안에만
+새로 만듭니다. 외부 sitecustomize를 보존하는 self-check로 lookup 우선순위 가정을 피합니다.
 CI는 Windows/Linux 양쪽을 구성했지만 로컬 Windows 성공을 미실행 Linux 통과로 세지 않습니다.
 Body probe는 로컬 N-1/N/N+1을 순차 실행하고 실제 서버 PID의 RSS/수명 peak만 기록하며
 native 렌더 자식은 제외합니다. 부하 테스트나 hard resource 보장은 아닙니다.

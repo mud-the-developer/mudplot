@@ -124,6 +124,32 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 13 fixes unsupported scalar coercion/recursion.** FIND-015 had
+Decimal/custom NaNs becoming null, signaling NaN leaking InvalidOperation, and
+longdouble/same-type/alternating item chains recursing. Seven cases failed before
+restricting missing detection to recognized NumPy/pandas scalars and item progress
+to supported plain/date values. Seventy-one scalar checks retain supported types,
+object identity and strict rejection without lossy float/string/null conversion.
+DATA-06 is PASS, not a sandbox for caller Python methods.
+
+The914a402 Linux CI passed its advanced-effect smoke, then failed missing default
+provenance; Windows cancelled. Wrong interpreter selection and the exact remote
+customizer origin are unproven. A unique disposable .pth/module recorder now
+self-checks operation alongside a preserved foreign sitecustomize, retaining
+all executable/prefix/version/argv assertions. Windows local4cases/12children
+pass; RUST-02 stays RUNNING pending observed Linux rerun.
+
+Recorded target **1116 passed/27 skipped**, optional overlay **244 passed/no
+skips**, minimum subset **354 passed/25 skipped/2142 deselected/481warnings**;
+Ruff212formatted/Pyright/LSP5paths/contracts/packaging and path probe pass in9
+commands. [Phase13 evidence](review_evidence/scalar_provenance_verification.json)
+preserves exact scope and sanitized failed-job-log digest. No new browser/native
+unit counts are claimed. [Tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS30/RUNNING14/OPEN106**. Original checklist/versions/locks/tag/deploy stay
+unchanged; whole-suite/OS/MSRV/audit/resource/release completion is not implied.
+
+### Earlier review phase 12
+
 **Committed/pushed snapshot359277c, then continued with temporal precision and
 CI fixture setup.** FIND-013 fixes NumPy fine-unit datetime64 becoming integer
 epochs and Polars datetime(ns) losing nanoseconds. Thirty-six cases failed before

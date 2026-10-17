@@ -28,9 +28,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
-- Latest project subset: **1045 passed,27 skips** (25 optional-only,2Windows).
-  Real PyArrow26/Polars2 overlays: **173 passed,no skips**. Do not sum overlapping
-  scopes. Minimum subset: **283 passed,25 optional skips,481warnings**, not full/
+- Latest project subset: **1116 passed,27 skips** (25 optional-only,2Windows).
+  Real PyArrow26/Polars2 overlays: **244 passed,no skips**. Do not sum overlapping
+  scopes. Minimum subset: **354 passed,25 optional skips,481warnings**, not full/
   zero-warning coverage. Last browser **31 passed** is from phase11, not a new run.
 - Phase12 isolated all-extra Rust smoke passes locally. Last native-unit run
   **15 passed,1 helper ignored** and browser/HTTP are earlier phase11 receipts.
@@ -59,8 +59,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - [Temporal/CI receipt](review_evidence/temporal_ci_verification.json) records
   precision and CI dependency fixes. Published359277c CI had successful Python
   jobs but failed Linux Rust smoke/cancelled Windows; remote rerun is pending.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS 29 / RUNNING 14 /
-  OPEN 107**. Unchecked items are not silently considered verified.
+- [Scalar/provenance receipt](review_evidence/scalar_provenance_verification.json)
+  records explicit unsupported-value rejection and the non-shadowed test recorder.
+  Linux914a402 passed smoke then failed provenance; corrected rerun is unobserved.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS 30 / RUNNING 14 /
+  OPEN 106**. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
 changes. They do not validate this entire combined worktree. A full Python /

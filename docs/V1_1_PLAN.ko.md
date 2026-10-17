@@ -120,6 +120,28 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 13차에서 미지원 scalar의 조용한 coercion/재귀를 수정했습니다.** FIND-015는
+Decimal/custom NaN→null, sNaN의 InvalidOperation, longdouble/same-type/순환 item의
+재귀이며 수정 전7개 실패를 확보했습니다. 알려진 NumPy/pandas scalar만 결측으로
+판정하고 item은 지원 plain/date 값으로 진행할 때만 변환합니다. Scalar71개 검사가
+지원 타입/원객체/strict 거부를 확인하며 손실 float/문자열/null 변환을 하지 않습니다.
+DATA-06은 PASS지만 임의 Python method sandbox는 아닙니다.
+
+914a402의 Linux CI는 advanced-effect smoke를 통과한 뒤 default provenance 부재로
+실패했고 Windows는 취소됐습니다. 잘못된 interpreter나 실제 remote customizer 경로는
+증명되지 않았습니다. 임시 .pth/module recorder와 외부 sitecustomize 보존 self-check로
+lookup 가정을 피하고 기존 executable/prefix/version/argv assertion은 유지합니다.
+로컬 Windows4case/12children은 통과했지만 Linux 재실행 전 RUST-02는 RUNNING입니다.
+
+기록한 대상 **1116통과/27skip**, optional **244통과/skip0**, 최소 대상 **354통과/
+25skip/2142deselected/경고481**, Ruff212파일/format·Pyright·LSP5경로·계약·
+packaging·경로 probe의9명령은 [13차 증거](review_evidence/scalar_provenance_verification.json)에
+있습니다. 새 browser/native unit count를 주장하지 않습니다. [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS30/RUNNING14/OPEN106**이며 원문/버전/lock/tag/배포는 유지합니다. 전체 suite/OS/
+MSRV/보안감사/자원/릴리스 완료는 아닙니다.
+
+### 이전 리뷰 12차
+
 **누적 변경을359277c로 커밋/푸시한 뒤 temporal 정밀도·CI 환경을 이어서 수정했습니다.**
 FIND-013은 NumPy fine-unit datetime64가 epoch 정수가 되고 Polars ns가 microsecond로
 잘리는 문제이며 수정 전36개 실패를 확보했습니다. dtype/native formatter를 유지하고
