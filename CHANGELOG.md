@@ -6,6 +6,14 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Preserved NumPy datetime64 fine-unit ISO values/NaT through scalar, column,
+  structured and row paths instead of silently storing epoch integers. Preserved
+  Polars nanoseconds/offsets with native formatting and a lossless round-trip check;
+  retained coarse/numeric formats and explicit unsupported date-axis handling.
+- Aligned Rust smoke CI with its advanced regression/clustering fixtures by
+  installing the optional all extra in the test job, not making effects mandatory
+  at runtime. Reproduced the published Linux render-only smoke failure and added
+  a regression guard; remote rerun success is not inferred from local passes.
 - Rejected unsupported Transfer-Encoding, duplicate Content-Length and truncated
   bodies before Python editor mutations. Content-Length bodies retain the16MiB
   boundary; no chunked decoder or normal-bodyless-action regression was added.

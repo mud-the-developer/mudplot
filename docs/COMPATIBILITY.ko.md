@@ -109,6 +109,12 @@ package release마다 spec version을 올릴 필요는 없습니다.
   문자·key 데이터로 바꾸지 않고 해당 행 index를 포함한 오류를 냅니다. Record의
   누락 key는 기존처럼 첫 등장 열 순서와 null 채우기를 유지합니다. 열 길이 불일치는
   입력 단계에서 원값을 보존하고 렌더/editor commit 전 validation에서 거부합니다.
+- NumPy datetime64 scalar/column/row는 ISO 변환 전 dtype을 유지해 ns/ps/fs/as와
+  NaT→null을 보존하고 epoch 정수로 바꾸지 않습니다. 기존 coarse 형식과 실제 숫자
+  epoch 열은 유지합니다. Polars datetime(ns)는 native formatter와 parse/equality로
+  검증하며 손실 있는 timezone 표현은 반올림 값 대신 오류를 냅니다. 모호한 2-D datetime
+  column은 거부하므로 2-D 배열을 row 입력으로 넘기세요. Arrow는 upstream의 안전한
+  temporal 변환을 따르며 ns에 pandas가 필요할 수 있습니다. 미지원 변환은 잘라내지 않고 실패합니다.
 - Raw line/scatter의 범주 x 변환에서 null은 결측으로 유지해 선을 끊고 점을 mask하며
   가짜 `"None"` 범주를 만들지 않습니다. 실제 문자열 `"None"`은 범주로 유지합니다.
   ISO 날짜 문자열도 여기서는 같은 범주 경로이며 연속 날짜 축 계약을 추가한 것은 아닙니다.

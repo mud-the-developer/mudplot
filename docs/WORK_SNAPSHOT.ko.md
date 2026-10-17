@@ -17,16 +17,16 @@
   생략된 spec version 처리 차이·범주 x 결측의 가짜 label 표시를 수정했습니다. Rust 거부
   응답 header와 선언 body 크기의 선행 거부도 보강했습니다. Query로 만든 cursor만
   정리하며 borrowed cursor/connection/transaction은 보존합니다. Python framing을 명시하고
-  Rust는 모든 handler 전 unknown-size body도 검사합니다. 상세 finding/제한은 대장에 있습니다.
+  Rust는 모든 handler 전 unknown-size body도 검사합니다. NumPy/Polars fine-unit 날짜
+  정밀도와 Rust smoke CI의 선택 의존성도 보강했습니다. 상세 finding/제한은 대장에 있습니다.
 
 ## 검증과 리뷰 상태
 
-- 최신 프로젝트 대상 **993통과/20skip**(선택 전용18·Windows2), 실제 PyArrow26/
-  Polars2 격리 환경 **114통과/skip0**이며 CI 명령도 같은 범위에서 로컬 통과했습니다.
-  서로 겹치는 범위를 합산하지 않습니다.
-- 최신 최소 대상 **232통과/선택18skip/경고481**, 이번11차 브라우저 **31통과**이며
-  전체/zero-warning 최소 환경 주장은 아닙니다.
-- 최신 Rust **15통과/helper1ignored** 및 실제 HTTP/브라우저도 통과했습니다.
+- 최신 프로젝트 대상 **1045통과/27skip**(선택 전용25·Windows2), PyArrow26/Polars2
+  overlay **173통과/skip0**이며 겹치는 범위를 합산하지 않습니다. 최소 대상은
+  **283통과/선택25skip/경고481**로 전체/zero-warning matrix가 아닙니다.
+- Browser **31통과**와 native Rust **15통과/helper1ignored**는 이전11차 결과이며
+  새 count가 아닙니다. 이번12차 격리 all-extra Rust smoke는 로컬 통과했습니다.
   Form/JSON/chunked39순차 body case와 실제 서버 PID 수명 peak를 관찰했지만 native
   렌더 자식/전체 앱 CPU·메모리·동시 부하 상한은 아닙니다. Compiler **1.99.0**이지
   MSRV 검증이 아니며 이전 Windows transport 중단 원인이 해결됐다는 주장은 하지 않습니다.
@@ -46,7 +46,10 @@
   형식/소유권 범위·격리 venv 정리를 기록했습니다. 프로젝트 패키지/lock은 유지합니다.
 - [Body 경계 요약](review_evidence/body_boundary_verification.json)에 framing/크기/status/
   상태 보존과 올바른 worker-PID 메모리 관찰을 보존합니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 28 / RUNNING 14 / OPEN 108**.
+- [Temporal/CI 요약](review_evidence/temporal_ci_verification.json)에 정밀도/CI 의존성 수정을
+  기록했습니다. 359277c의 Python jobs는 성공했지만 Linux Rust smoke 실패·Windows
+  취소였으며 수정 후 원격 재통과는 아직 관찰하지 않았습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 29 / RUNNING 14 / OPEN 107**.
   미검증 항목을 통과로 취급하지 않습니다.
 
 이전 기능/최소환경/브라우저 결과는 각자의 범위이며 후속 변경 이전 결과입니다.

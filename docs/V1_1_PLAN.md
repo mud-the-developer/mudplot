@@ -124,6 +124,33 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Committed/pushed snapshot359277c, then continued with temporal precision and
+CI fixture setup.** FIND-013 fixes NumPy fine-unit datetime64 becoming integer
+epochs and Polars datetime(ns) losing nanoseconds. Thirty-six cases failed before
+preserving dtype/native formatting; native parse/equality prevents lossy output.
+Coarse formats, real numeric epochs, NaT and generic2D protocols stay supported.
+Fifty-eight temporal checks include UTC/offset/DST, child TZ/C locale, nested input
+shapes and explicit unsupported numeric date-axis handling. Arrow follows upstream
+safe conversion requirements; this is not every temporal history/OS/axis feature.
+
+FIND-014 is a CI environment mismatch, not a new mandatory runtime dependency.
+Run39045121490 for359277c completed: Python3.10/3.12 jobs succeeded; Linux Rust
+MSRV/lint/unit succeeded but advanced-regression smoke failed400; Windows cancelled.
+Source/logs plus a render-only reproduction identify missing optional effects.
+The smoke job now installs extra all and has a pre-fix-failing static guard.
+An isolated all-extra smoke passes locally; remote rerun success remains pending.
+
+Recorded target **1045 passed/27 skipped**, optional overlays **173 passed/no
+skips**, minimum subset **283 passed/25 skipped/2142 deselected/481warnings**.
+Ruff211formatted/Pyright/LSP5paths/contracts/packaging also pass. Nine receipts
+are in [phase12 evidence](review_evidence/temporal_ci_verification.json). New
+browser/native-unit counts are not inferred. [Tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS29/RUNNING14/OPEN107**, with DATA-05 closed for the observed conversion scope.
+Original checklist/versions/core dependencies/locks/tag/deploy stay unchanged;
+full current suite/OS/MSRV/resource/security/release gates remain incomplete.
+
+### Earlier review phase 11
+
 **Review phase 11 completes the observed request-body boundary matrix.**
 FIND-011 fixes Python ignoring unsupported Transfer-Encoding, duplicate lengths
 and short bodies; six cases failed before the fix. Content-Length bodies are

@@ -23,16 +23,17 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   are rejected before upload. Query ingestion now closes its own cursor without
   closing borrowed cursors/connections or committing the transaction. Python
   framing is explicit; Rust checks unknown-size bodies before every handler. See the
-  detailed findings and limits in the tracker.
+  detailed findings and limits in the tracker. Fine-unit NumPy/Polars timestamps
+  now preserve ISO precision; the Rust smoke CI installs its optional effects.
 
 ## Verification and review state
 
-- Latest project subset: **993 passed, 20 skips** (18 optional-only,2Windows).
-  Real PyArrow26/Polars2 in isolation: **114 passed, no skips**, also reproduced
-  by the configured CI command locally. Do not sum these overlapping scopes.
-- Latest minimum subset: **232 passed,18 optional skips,481warnings**; browser
-  **31 passed** in phase11. This is not a full/zero-warning minimum matrix.
-- Latest Rust tests: **15 passed, 1 helper ignored** and actual HTTP/browser pass.
+- Latest project subset: **1045 passed,27 skips** (25 optional-only,2Windows).
+  Real PyArrow26/Polars2 overlays: **173 passed,no skips**. Do not sum overlapping
+  scopes. Minimum subset: **283 passed,25 optional skips,481warnings**, not full/
+  zero-warning coverage. Last browser **31 passed** is from phase11, not a new run.
+- Phase12 isolated all-extra Rust smoke passes locally. Last native-unit run
+  **15 passed,1 helper ignored** and browser/HTTP are earlier phase11 receipts.
   Form/JSON/chunked body probes cover39sequential cases with server-PID lifetime
   peak observations, not native-renderer-child/whole-app CPU/memory/concurrent
   limits. Compiler **1.99.0** is not MSRV verification. The earlier Windows
@@ -55,8 +56,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   isolated venv, without changing project packages/locks.
 - [Body-boundary receipt](review_evidence/body_boundary_verification.json)
   preserves framing/size/status/state and corrected worker-PID observations.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS 28 / RUNNING 14 /
-  OPEN 108**. Unchecked items are not silently considered verified.
+- [Temporal/CI receipt](review_evidence/temporal_ci_verification.json) records
+  precision and CI dependency fixes. Published359277c CI had successful Python
+  jobs but failed Linux Rust smoke/cancelled Windows; remote rerun is pending.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS 29 / RUNNING 14 /
+  OPEN 107**. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
 changes. They do not validate this entire combined worktree. A full Python /

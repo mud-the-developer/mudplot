@@ -1,0 +1,277 @@
+{
+  "scope": "phase12 after committed/pushed359277c; temporal precision and CI effect-fixture setup; current Windows plus optional overlays, not all precision/timezone/OS or full release gates",
+  "head": "359277c6c7ee6862a85a158eb32ba9d4cf4dcf87",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "files_sha256": {
+    "mudplot/data.py": "38bf4270d91695e0214ebca5ab9060a1ba13413cd6c27f4f3decf819ce402c3c",
+    "tests/test_review_temporal_precision.py": "f0ea2a63f85f7e8cac11a7a402e106ce5edeb39718559776edcf4cbfcf14c218",
+    "tests/test_review_ci_effects.py": "b22c73847a9531b4bc0fc475752de53ee680ff3ea349fbf77199442f42fb7368",
+    ".github/workflows/ci.yml": "6df563092203806f35048072f163906a55b93ae56318cf453436016e93600af2",
+    "scripts/check_minimum_versions.py": "c7ecc2bfb15baf210f015fda046304219e213b475bb939a0957cac332e21f6f8"
+  },
+  "limits": "Current Windows/NumPy/Pandas and optional PyArrow26/Polars2; not all temporal precision/timezone histories/OS combinations. No continuous date-axis feature or new core dependency. Arrow nanosecond conversion may safely reject upstream without pandas instead of silently truncating.",
+  "pre_fix": {
+    "temporal_failed": 36,
+    "temporal_passed": 16,
+    "causes": [
+      "NumPy datetime64 fine units converted to epoch integer",
+      "Polars datetime(ns) converted through Python microseconds"
+    ],
+    "ci_static_failed": 1,
+    "ci_observed_run": 39045121490,
+    "ci_commit": "359277c6c7ee6862a85a158eb32ba9d4cf4dcf87",
+    "ci_linux_job": 117432201128,
+    "ci_observed": "Rust Linux MSRV/lint/native tests succeeded, advanced-regression smoke action failed400; Windows job cancelled. Render-only environment reproduced missing optional regression ImportError. Workflow now installs all effects for its fixtures; no claim of remote rerun success."
+  },
+  "conversion_policy": {
+    "numpy": "preserve datetime dtype until scalar ISO conversion; ns/ps/fs/as and NaT; existing coarse format/numeric arrays unchanged; generic2D protocol still accepted",
+    "polars": "native ns formatter plus native parse/equality check; nonlossless formatting rejected, not emitted",
+    "scope": "scalar/0D/columns/object arrays/records/rows/2D/structured; pandas/optional timezone offsets/DST; process TZ/C locale; unsupported numeric date lineplot rejected"
+  },
+  "remote_log": {
+    "sanitized_log_sha256": "5e28b6e3a0cf4dda4a883a4b2b19a18e2d843436f897320e9ad540e6261f1e78",
+    "log_type": "completed Linux job log, ANSI/control codes removed before reading; no terminal escape output permitted",
+    "run_conclusion": "failure",
+    "jobs": {
+      "lint-and-test (3.10)": "success",
+      "lint-and-test (3.12)": "success",
+      "rust-editor (ubuntu-latest)": "failure at smoke",
+      "rust-editor (windows-latest)": "cancelled"
+    }
+  },
+  "checks": [
+    {
+      "name": "optional-temporal",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "--with",
+        "pyarrow==26.0.0",
+        "--with",
+        "polars==2.0.0",
+        "python",
+        "-c",
+        "import pyarrow,polars,pytest; print(\"Actual optional libraries:\",pyarrow.__version__,polars.__version__); raise SystemExit(pytest.main([\"-q\",\"tests/test_review_temporal_precision.py\",\"tests/test_review_ci_effects.py\",\"tests/test_review_table_formats.py\",\"tests/test_review_missing_data.py\",\"tests/test_review_sql_ownership.py\",\"tests/test_review_data_contracts.py\",\"tests/test_data.py\",\"tests/test_no_deps.py\"]))"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Actual optional libraries: 26.0.0 2.0.0",
+        "173 passed in 28.89s"
+      ],
+      "log_text_sha256": "60bea70e27e0ebbe12d3fa64e8e9e93e10272f1501cb07b07a5873aaf39f128e"
+    },
+    {
+      "name": "project-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_review_temporal_precision.py",
+        "tests/test_review_ci_effects.py",
+        "tests/test_review_body_framing.py",
+        "tests/test_review_sql_ownership.py",
+        "tests/test_review_table_formats.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_missing_data.py",
+        "tests/test_review_data_contracts.py",
+        "tests/test_data.py",
+        "tests/test_validate_hardening.py",
+        "tests/test_completeness.py",
+        "tests/test_review_json_boundary_paths.py",
+        "tests/test_review_render_contracts.py",
+        "tests/test_review_json_contracts.py",
+        "tests/test_review_windows_output.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_lineplot.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_no_deps.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py",
+        "tests/test_schema_export.py",
+        "tests/test_stabilization.py",
+        "tests/test_dashboard_editor.py",
+        "--junitxml=<evidence>/contracts.xml"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "1045 passed, 27 skipped in 308.58s (0:05:08)"
+      ],
+      "log_text_sha256": "4146b57057b4316df75b76568a9f37082e958f7656662b76a5e18a4eaeeb2abd"
+    },
+    {
+      "name": "minimum-temporal",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
+        "PYTEST_ADDOPTS": "-k \"test_review_temporal_precision or test_review_body_framing or test_review_sql_ownership or test_review_table_formats or test_review_editor_paths or test_review_http_boundaries or test_review_full_spec_fields or test_review_state_contracts or test_review_missing_data or test_review_data_contracts or test_data\""
+      },
+      "exit_code": 0,
+      "results": [
+        "283 passed, 25 skipped, 2142 deselected, 481 warnings in 90.59s (0:01:30)"
+      ],
+      "log_text_sha256": "6129ed9adce6b34a4e806191dff6c5909b5f1f91b0d64dea243696bb785ca52b"
+    },
+    {
+      "name": "ci-smoke-isolated",
+      "argv": [
+        "uv",
+        "run",
+        "--isolated",
+        "--extra",
+        "all",
+        "python",
+        "scripts/rust_editor_smoke_test.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "Cross-path state OK (supported forms/agent): 926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+        "Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo",
+        "HTTP boundary OK: Host/Origin/16MiB rejection and security headers",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_text_sha256": "94bca0841f45d2e4238c9c0603830185a19ce4581dba4dacbfc5afad05c01a3a"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "211 files already formatted"
+      ],
+      "log_text_sha256": "a8f2267c8f86187fe855b6c5b72db28a98f8d05a5aaddb426317a28f387455d8"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "1238f26f26d30a07531751e97e6d94c44508b66cd17bf0004ddedc94f49c2c4c"
+    },
+    {
+      "name": "packaging",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "env_overrides": {
+        "MPLBACKEND": "Agg",
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8"
+      },
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "0ffda8daf8bad86035971198d9e296ee7f2f34c2b41fecfb905509d3b285e2ce"
+    }
+  ]
+}

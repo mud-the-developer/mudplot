@@ -114,6 +114,14 @@ independent. A package release does not require a spec-version bump.
   Sparse record keys still use first-seen column order and fill missing values
   with null. Unequal column lengths remain intact at ingestion and are rejected
   by validation before rendering or an editor commit, rather than resized.
+- NumPy datetime64 scalars/columns/rows retain their dtype until ISO conversion,
+  including ns/ps/fs/as precision and NaT→null, rather than becoming epoch integers.
+  Existing coarse formats and actual numeric epoch columns remain unchanged.
+  Polars datetime(ns) uses its native formatter and parse/equality verification;
+  a non-lossless timezone representation fails instead of emitting rounded values.
+  Ambiguous 2-D datetime columns fail; pass a 2-D array as row input instead.
+  Arrow temporal conversion follows upstream safe conversion rules (nanoseconds
+  may require pandas); an unsupported conversion can fail rather than truncate.
 - In raw line/scatter categorical x conversion, null coordinates remain missing:
   lines break and scatter rows are masked, without a fabricated `"None"` category.
   An actual string `"None"` remains a category. ISO date strings follow the same

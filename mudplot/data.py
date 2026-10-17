@@ -50,6 +50,12 @@ def _plain_value(value):
         except (TypeError, ValueError, OverflowError):
             pass
         else:
+            if (
+                value_type.__name__ == "datetime64"
+                and value_type.__module__.startswith("numpy")
+                and type(converted) is int
+            ):
+                return str(value)
             if converted is not value:
                 return _plain_value(converted)
     return value
@@ -59,6 +65,26 @@ def _to_list(v) -> list:
     """Coerce a column-ish value to a plain JSON-compatible list."""
     if isinstance(v, (list, tuple)):
         out = list(v)
+    elif (
+        type(v).__module__.startswith("polars")
+        and type(getattr(v, "dtype", None)).__name__ == "Datetime"
+        and v.dtype.time_unit == "ns"
+    ):
+        zone = v.dtype.time_zone
+        fmt = "%Y-%m-%dT%H:%M:%S%.9f" + ("%:z" if zone else "")
+        text = v.dt.to_string(fmt)
+        restored = text.str.to_datetime(format=fmt, time_unit="ns", time_zone=zone)
+        if not restored.equals(v):
+            raise ValueError(
+                "nanosecond datetime formatting is not lossless for this timezone"
+            )
+        out = text.to_list()
+    elif getattr(getattr(v, "dtype", None), "kind", None) == "M":
+        if getattr(v, "ndim", 0) > 1:
+            raise ValueError(
+                "datetime columns must be scalar or 1-D; pass 2-D arrays as row data"
+            )
+        out = list(v) if getattr(v, "ndim", 0) else [v[()]]
     elif hasattr(v, "tolist"):  # numpy array / pandas Series / polars Series
         out = v.tolist()
         if isinstance(out, tuple):
@@ -253,7 +279,12 @@ def to_columns(
         )
 
     if _is_ndarray_2d(data):
-        return _rows_to_columns(data.tolist())
+        rows = (
+            data
+            if getattr(getattr(data, "dtype", None), "kind", None) == "M"
+            else data.tolist()
+        )
+        return _rows_to_columns(rows)
 
     if hasattr(data, "to_dict"):  # generic, keep last (broad)
         d = data.to_dict()

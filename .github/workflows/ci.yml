@@ -81,6 +81,7 @@ jobs:
           print(f"PyArrow {pyarrow.__version__}; Polars {polars.__version__}")
           raise SystemExit(pytest.main([
               "-q", "tests/test_review_table_formats.py",
+              "tests/test_review_temporal_precision.py",
               "tests/test_review_missing_data.py",
               "tests/test_review_sql_ownership.py",
               "tests/test_review_data_contracts.py", "tests/test_data.py",
@@ -117,12 +118,12 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
-      - name: Install uv and Python render bridge
+      - name: Install uv and complete Python effects for smoke fixtures
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
           python-version: "3.12"
           cache-dependency-glob: "uv.lock"
-      - run: uv sync --locked --extra render
+      - run: uv sync --locked --extra all
       - name: Rust 1.88 MSRV
         run: |
           rustup toolchain install 1.88.0 --profile minimal

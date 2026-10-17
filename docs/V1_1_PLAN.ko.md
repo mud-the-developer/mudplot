@@ -120,6 +120,30 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**누적 변경을359277c로 커밋/푸시한 뒤 temporal 정밀도·CI 환경을 이어서 수정했습니다.**
+FIND-013은 NumPy fine-unit datetime64가 epoch 정수가 되고 Polars ns가 microsecond로
+잘리는 문제이며 수정 전36개 실패를 확보했습니다. dtype/native formatter를 유지하고
+parse/equality로 손실 없는 출력만 허용합니다. Coarse 형식/실제 숫자 epoch/NaT/generic
+2D는 유지하고 temporal58개로 UTC/offset/DST·child TZ/C locale·여러 입력 경로와
+미지원 numeric 날짜 축을 확인했습니다. Arrow upstream 안전 변환 조건도 유지하며
+모든 과거 timezone/OS/날짜 축 구현을 주장하지 않습니다.
+
+FIND-014는 CI fixture 환경 불일치입니다. 359277c의 run39045121490은 완료됐고
+Python3.10/3.12는 성공, Linux Rust MSRV/lint/unit도 성공했지만 advanced 회귀 smoke가
+400으로 실패하고 Windows는 취소됐습니다. Log/source와 render-only 재현으로 선택
+의존성 누락을 확인해 job만 extra all로 맞추고 수정 전 실패하는 static guard를 추가했습니다.
+격리 all-extra smoke는 로컬 통과했지만 수정 후 원격 CI 재통과는 아직 관찰하지 않았습니다.
+
+기록한 대상 **1045통과/27skip**, optional overlay **173통과/skip0**, 최소 대상
+**283통과/25skip/2142deselected/경고481**, Ruff211파일/format·Pyright·LSP5경로·
+계약·packaging을 포함한9명령은 [12차 증거](review_evidence/temporal_ci_verification.json)에
+있습니다. Browser/native unit의 새 count로 확대하지 않습니다. [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS29/RUNNING14/OPEN107**, DATA-05는 관찰한 변환 범위에서 PASS입니다.
+원문/버전/core 의존성/lock/tag/배포는 유지하며 현재 전체 suite/OS/MSRV/자원/보안/릴리스
+gate는 여전히 남아 있습니다.
+
+### 이전 리뷰 11차
+
 **리뷰 11차에서 관찰한 요청 body 경계 matrix를 마무리했습니다.** FIND-011은
 Python이 미지원 Transfer-Encoding·중복 길이·짧은 body를 무시하던 문제이며 수정 전
 6개 실패를 확보했습니다. Content-Length만 정확히 읽고 잘못된 framing은 action 전에

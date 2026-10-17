@@ -18,6 +18,35 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 12차 — 커밋/푸시 후 timestamp 정밀도·CI 환경
+
+- 6~11차 변경46파일을 `359277c6c7ee6862a85a158eb32ba9d4cf4dcf87`로 커밋하고
+  origin/main에 푸시한 뒤 진행했습니다. 태그/버전/릴리스 상태는 바꾸지 않았습니다.
+  현재 phase의 로컬 증거는 `C:\Users\mud\AppData\Local\Temp\mudplot-review-temporal-9n9cnwba`,
+  [경로 제거 temporal/CI 요약](review_evidence/temporal_ci_verification.json)도 보존합니다.
+- **FIND-013 (DATA-05):** NumPy datetime64 ns/ps/fs/as가 epoch 정수로 바뀌고 Polars
+  ns가 microsecond로 잘리는 것을 수정 전36fail/16pass로 확보했습니다. dtype을 유지해
+  scalar ISO로 변환하고, Polars native formatter/parse/equality가 lossless임을 확인합니다.
+  Coarse 형식/실제 숫자 epoch/NaT와 dtype 없는 2-D array protocol은 유지합니다.
+- 새 temporal58개가 scalar/0D/column/object/record/row/2D/structured·UTC/offset/DST·
+  process TZ/C locale·비손실 formatter 거부·미지원 numeric date axis를 확인했습니다.
+  모호한 mapping2D datetime column은 오류로 처리하고 실제 2D row 입력은 지원합니다.
+  Arrow ns는 upstream safe conversion을 따르며 pandas 부재 등은 명시적으로 실패할 수
+  있습니다. 모든 과거 timezone/precision/OS를 인증한 것이 아니며 DATA-05는 이 범위에서 **PASS**입니다.
+- **FIND-014 (CI fixture 환경):** 359277c의 CI run39045121490은 Python3.10/3.12 jobs가
+  성공했지만 Linux Rust smoke가 advanced regression action400에서 실패했고 Windows는
+  취소됐습니다. Linux MSRV/lint/native unit은 성공했으나 전체 workflow는 failure입니다.
+  Job117432201128 로그(ANSI 제거)·render-only 재현의 optional regression ImportError·
+  설치 목록을 대조해 CI가 render만 설치한 불일치를 확인했습니다. Smoke job만 extra all로
+  고치고 수정 전 실패하는 static guard를 추가했습니다. Runtime 필수 의존성은 유지합니다.
+- Optional PyArrow26/Polars2를 포함해 **173개 모두 통과**, 프로젝트 대상은 **1045통과/
+  27skip**, 최소 대상 **283통과/선택25skip/2142deselected/경고481**입니다. 격리된 all
+  환경의 실제 Rust smoke와 Ruff211파일/format·Pyright·LSP5경로·계약·clean sdist→wheel을
+  포함한9기록 명령이 exit0입니다. Browser/native unit 새 count나 수정 후 원격 CI 성공으로
+  세지 않습니다. 개발 중 dtype 없는 fake-array 회귀도 별도 test로 잡아 수정 후 확인했습니다.
+- 원문 체크리스트·프로젝트/lock·package/editor/spec 버전·tag/배포는 유지합니다.
+  날짜는 ISO 저장이며 새로운 continuous date-axis 구현을 뜻하지 않습니다.
+
 ## 11차 — 실제 body 경계·framing·서버 PID 메모리
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-body-boundaries-3c7c1_st`,
@@ -375,7 +404,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | DATA-02 | P0 | PASS | 열 길이·필수 열·중복 열 | data.py::_records_to_columns/_row_values; validate.py::_check_data_integrity/_check_column | test_review_data_contracts.py(49); test_data.py; test_validate_hardening.py; 6차 증거 |
 | DATA-03 | P0 | PASS | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-04 | P1 | OPEN | 혼합 그룹 식별자 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-05 | P1 | OPEN | 날짜·시간·timezone | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-05 | P1 | PASS | 날짜·시간·timezone | data.py::_plain_value/_to_list/2D datetime path | test_review_temporal_precision.py(58); 실제 optional/일반/minimum 12차 기록 |
 | DATA-06 | P1 | OPEN | NumPy scalar와 지원하지 않는 객체 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-07 | P1 | PASS | SQL 파라미터와 연결 소유권 | data.py::to_columns query finally | test_review_sql_ownership.py(10); named/tuple params·transaction·borrowed cursor·cleanup failures |
 | DATA-08 | P1 | OPEN | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
@@ -488,8 +517,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 28, RUNNING 14, OPEN 108, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012를 재현 후 수정했습니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 29, RUNNING 14, OPEN 107, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.
