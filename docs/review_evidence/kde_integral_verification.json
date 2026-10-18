@@ -1,0 +1,806 @@
+{
+  "source_sha256": {
+    "mudplot/_kde.py": "bc3e4c38c40c4c21b20bc4b51f24653b2cd02c0256aafb9299d5216f41b8d77a",
+    "mudplot/_kde2d.py": "140e9446f4cfd6d3ef04f1b6dc916e9dd44f20af94eb90554daca5cb516a0ef9",
+    "tests/test_kde_options.py": "eb566760c3f8818a917efd3b30b66541d435c7e9b612dbfcf76d03bad7021006",
+    "tests/test_kde2d.py": "ca9e28759a30339089277cc54281586bd2df9951f5c2ecca968a49e23ccf941d",
+    "tests/test_grid_kde.py": "6590984c1117b57872ecdd5496b355ba5f2cb6b72880131b0927ed139a51df87",
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29"
+  },
+  "independent_reference": {
+    "data": {
+      "x": [
+        -1,
+        2,
+        4,
+        10,
+        10,
+        null
+      ],
+      "w": [
+        1,
+        2,
+        3,
+        2,
+        2,
+        999
+      ],
+      "g": [
+        "A",
+        "A",
+        "A",
+        "S",
+        "S",
+        "A"
+      ]
+    },
+    "mean": "5/2",
+    "unbiased_relative_weight_variance": "117/22",
+    "effective_n": "18/7",
+    "singular_mass": 4,
+    "full_mass": 10,
+    "rows": [
+      {
+        "method": "scott",
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -15.318844107059677,
+          "last": 18.318844107059675,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3eec3f5f58a6dbc999e850b897975a959cd205dd65aa5de4e61f35d89b0ea7ba"
+        },
+        "max_abs_reference_error": 5.551115123125783e-17,
+        "trapezoid_integral": 0.9999999993407748,
+        "analytic_visible_mass": 0.9999999993408709,
+        "cdf_endpoints": null,
+        "curve_sha256": "3d165d531b8097f79decf6355b4c025294660c4169ec9a4e07c30e6ff7035510"
+      },
+      {
+        "method": "scott",
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 5.551115123125783e-17,
+        "trapezoid_integral": 0.4350382861326264,
+        "analytic_visible_mass": 0.4350382950687815,
+        "cdf_endpoints": null,
+        "curve_sha256": "f6160c399843eb475615804c40a62c0433b367c479478e3e715cac1cbc9f6ffd"
+      },
+      {
+        "method": "scott",
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -15.318844107059677,
+          "last": 18.318844107059675,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3eec3f5f58a6dbc999e850b897975a959cd205dd65aa5de4e61f35d89b0ea7ba"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          1.6449733750542778e-10,
+          0.9999999995053682
+        ],
+        "curve_sha256": "5eeb5c2e97f1583b405d3cb936579664f53b44528c11ddf852676a46d8cde73d"
+      },
+      {
+        "method": "scott",
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.1802532131982028,
+          0.6152915082669843
+        ],
+        "curve_sha256": "d307f984e932a8f131dd6163f0103cf8d63f080baabf8543629015a1a830e90a"
+      },
+      {
+        "method": "scott",
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -15.318844107059677,
+          "last": 18.318844107059675,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3eec3f5f58a6dbc999e850b897975a959cd205dd65aa5de4e61f35d89b0ea7ba"
+        },
+        "max_abs_reference_error": 4.163336342344337e-17,
+        "trapezoid_integral": 0.5999999996044649,
+        "analytic_visible_mass": 0.5999999996045225,
+        "cdf_endpoints": null,
+        "curve_sha256": "51f31d5b55450c8845074b2c616800f0736047d96d41eadd2a8a6d3ed218e108"
+      },
+      {
+        "method": "scott",
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 4.163336342344337e-17,
+        "trapezoid_integral": 0.2610229716795759,
+        "analytic_visible_mass": 0.26102297704126887,
+        "cdf_endpoints": null,
+        "curve_sha256": "fe9c5d2d7d203412881b732315cf13376584ae33381c76264825d5d1769f687f"
+      },
+      {
+        "method": "scott",
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -15.318844107059677,
+          "last": 18.318844107059675,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3eec3f5f58a6dbc999e850b897975a959cd205dd65aa5de4e61f35d89b0ea7ba"
+        },
+        "max_abs_reference_error": 2.220446049250313e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          9.869840250325667e-11,
+          0.5999999997032209
+        ],
+        "curve_sha256": "bb24dcc4e1f89f64e0625e4b00f6c31ff68cca9dcbfbc68bac4753a5758f95e8"
+      },
+      {
+        "method": "scott",
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 2.3864740178432795,
+        "actual_bandwidth": 2.3864740178432795,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.1081519279189217,
+          0.3691749049601906
+        ],
+        "curve_sha256": "cf5c4034c71c2614135000c033f03294a0ab130e5d4d29821e7017eefe298f2e"
+      },
+      {
+        "method": "silverman",
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -16.166861054458902,
+          "last": 19.166861054458902,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3daaf1ad36b6eb5925c3f99e3b57348f049d34b69e549896a78d31dea458947d"
+        },
+        "max_abs_reference_error": 4.163336342344337e-17,
+        "trapezoid_integral": 0.9999999993402158,
+        "analytic_visible_mass": 0.9999999993403105,
+        "cdf_endpoints": null,
+        "curve_sha256": "b1e2bd0000baa5fe5b4333eb8131a77952354891bba091bfa44cb46f8d8d8f15"
+      },
+      {
+        "method": "silverman",
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 5.551115123125783e-17,
+        "trapezoid_integral": 0.42420729565135606,
+        "analytic_visible_mass": 0.4242073041395089,
+        "cdf_endpoints": null,
+        "curve_sha256": "7c34d49658f8d637c12b03c1a18626f2e260c84730be4cbff4fd188bd676b5a1"
+      },
+      {
+        "method": "silverman",
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -16.166861054458902,
+          "last": 19.166861054458902,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3daaf1ad36b6eb5925c3f99e3b57348f049d34b69e549896a78d31dea458947d"
+        },
+        "max_abs_reference_error": 2.220446049250313e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          1.645421933925392e-10,
+          0.9999999995048526
+        ],
+        "curve_sha256": "0fd8eae07a01bdd10b790481afd5a8902c592fc616a12b09fe9643903a9aeb4e"
+      },
+      {
+        "method": "silverman",
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.1881871430413726,
+          0.6123944471808815
+        ],
+        "curve_sha256": "a20d7a55b8c078b237eabf6fc22f095b7c50e64ce58b0a18b6aba054fdedeae6"
+      },
+      {
+        "method": "silverman",
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -16.166861054458902,
+          "last": 19.166861054458902,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3daaf1ad36b6eb5925c3f99e3b57348f049d34b69e549896a78d31dea458947d"
+        },
+        "max_abs_reference_error": 4.163336342344337e-17,
+        "trapezoid_integral": 0.5999999996041295,
+        "analytic_visible_mass": 0.5999999996041863,
+        "cdf_endpoints": null,
+        "curve_sha256": "0fba0f691de819a99420342b269d3dfc879fcad8313c185831742a791a57271d"
+      },
+      {
+        "method": "silverman",
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 4.163336342344337e-17,
+        "trapezoid_integral": 0.2545243773908137,
+        "analytic_visible_mass": 0.25452438248370535,
+        "cdf_endpoints": null,
+        "curve_sha256": "3394731076ec01a760fd5389a074f667a2b96f44539120df08188e3b77112769"
+      },
+      {
+        "method": "silverman",
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -16.166861054458902,
+          "last": 19.166861054458902,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "3daaf1ad36b6eb5925c3f99e3b57348f049d34b69e549896a78d31dea458947d"
+        },
+        "max_abs_reference_error": 2.220446049250313e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          9.872531603552353e-11,
+          0.5999999997029116
+        ],
+        "curve_sha256": "f2edfe8da0f0b4ee47dfc2e02166d75a545f4bd209506a9568fcda9d4426d3bc"
+      },
+      {
+        "method": "silverman",
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 2.5278101757431504,
+        "actual_bandwidth": 2.5278101757431504,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.11291228582482357,
+          0.36743666830852895
+        ],
+        "curve_sha256": "d71fe5ae33620dea5c654b0321244233faf0ec2f627bfa163d3ec5a2b39824e6"
+      },
+      {
+        "method": 0.5,
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -9.647943791340333,
+          "last": 12.647943791340333,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "e591376986119a0a755b9b7c664e66cf98a9fd282029bc6aeb17d184d23bf6c1"
+        },
+        "max_abs_reference_error": 8.326672684688674e-17,
+        "trapezoid_integral": 0.9999999993421345,
+        "analytic_visible_mass": 0.9999999993422498,
+        "cdf_endpoints": null,
+        "curve_sha256": "18bf3aab17b7ebc91b498fa9db449fac2afa4ff674b080d0032938c14ff74f1c"
+      },
+      {
+        "method": 0.5,
+        "common_norm": false,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 8.326672684688674e-17,
+        "trapezoid_integral": 0.4953667567519897,
+        "analytic_visible_mass": 0.4953667642474126,
+        "cdf_endpoints": null,
+        "curve_sha256": "1bba45f8282b0c26ffa8e119009a28209da2449864c2c100ef409fb5239648ee"
+      },
+      {
+        "method": 0.5,
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -9.647943791340333,
+          "last": 12.647943791340333,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "e591376986119a0a755b9b7c664e66cf98a9fd282029bc6aeb17d184d23bf6c1"
+        },
+        "max_abs_reference_error": 2.220446049250313e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          1.6443138086883974e-10,
+          0.9999999995066812
+        ],
+        "curve_sha256": "4c1492fa80fdf8faa4d994c489d3e97f91459ab4d3f50c7f859d3c9fb1bcdb06"
+      },
+      {
+        "method": 0.5,
+        "common_norm": false,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.1369812352094421,
+          0.6323479994568547
+        ],
+        "curve_sha256": "a56722b167cc0075e14f67bd1e5209b2055bc5b6c1f7de2b7e4904e692f8b056"
+      },
+      {
+        "method": 0.5,
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": false,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -9.647943791340333,
+          "last": 12.647943791340333,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "e591376986119a0a755b9b7c664e66cf98a9fd282029bc6aeb17d184d23bf6c1"
+        },
+        "max_abs_reference_error": 5.551115123125783e-17,
+        "trapezoid_integral": 0.5999999996052807,
+        "analytic_visible_mass": 0.5999999996053498,
+        "cdf_endpoints": null,
+        "curve_sha256": "c76e9f59335b8e69e04348f698a1a85786adf90b5d8b26f0bf9941a6ea49b884"
+      },
+      {
+        "method": 0.5,
+        "common_norm": true,
+        "cumulative": false,
+        "clipped": true,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 6.938893903907228e-17,
+        "trapezoid_integral": 0.29722005405119384,
+        "analytic_visible_mass": 0.2972200585484476,
+        "cdf_endpoints": null,
+        "curve_sha256": "451706cb88a649428c774988fe51827f8ab8469acd837239aad6b82c5cefac64"
+      },
+      {
+        "method": 0.5,
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": false,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -9.647943791340333,
+          "last": 12.647943791340333,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "e591376986119a0a755b9b7c664e66cf98a9fd282029bc6aeb17d184d23bf6c1"
+        },
+        "max_abs_reference_error": 2.220446049250313e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          9.865882852130386e-11,
+          0.5999999997040087
+        ],
+        "curve_sha256": "a3e2ccc865ed6acc3401f96042bc9799cb079a15b0639cdbe1bba7cb173f2d8a"
+      },
+      {
+        "method": 0.5,
+        "common_norm": true,
+        "cumulative": true,
+        "clipped": true,
+        "expected_bandwidth": 1.441323965223389,
+        "actual_bandwidth": 1.441323965223389,
+        "grid": {
+          "n": 2049,
+          "first": -0.25,
+          "last": 3.5,
+          "formula": "linspace(low,high) via convex combination",
+          "sha256": "d7ea79269cc602d8ab1ddd4831c2843c1a5dc620d947d2d0e8d0d095c412af8b"
+        },
+        "max_abs_reference_error": 1.1102230246251565e-16,
+        "trapezoid_integral": null,
+        "analytic_visible_mass": null,
+        "cdf_endpoints": [
+          0.08218874112566528,
+          0.37940879967411284
+        ],
+        "curve_sha256": "ed9aaf6c3aabe99995a852fc1b5f16228869893a2cd4c153856fa1e2ca1d7ea6"
+      }
+    ],
+    "bimodal": {
+      "x": [
+        -3.1,
+        -3,
+        -2.9,
+        2.9,
+        3,
+        3.1
+      ],
+      "bandwidth": 0.13150209123812442,
+      "maxima": [
+        -2.9998782669223214,
+        2.9998782669223205
+      ],
+      "grid_first": -3.889012547428747,
+      "grid_last": 3.889012547428747,
+      "grid_n": 4095,
+      "heights_sha256": "809a37d41302330d103da977a417b9f2c21800e897d9e5d06de2268e49fce786"
+    }
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 317,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 35
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 101
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 66
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "reference_policy": "ExactFractionmean5/2/unbiasedrelativeweightvariance117/22/neff18/7. Scott/Silverman/explicit.5factor\u00d7adjust1.25vsactualbandwidth;NormalDistGaussianmixtureCDF/PDFatall2049points. AnalyticvisibleCDFdifferenceversusmanualtrapezoid;24clipped/unclipped/PDF/CDF/common-or-individualsettings. Singularmass4of10retainedincommondenominatorwithoutfakefit. Bimodal[-3.1,-3,-2.9,2.9,3,3.1],sigma\u00b21351/125\u00d7factor.04,4095gridpoints,exactlytwomaximanear\u00b13.",
+  "existing_coverage": "Reuse285existingKDE1D/2D/gridtests:samplecount/empty/constants/weights/bandwidth/noisefreeorcollinearcovariance/clipsupport/extremeunitproducts/chunking/rowpermutation/logunits/commonnorm/CDFtails/unsupportedgridweightsCdf/codec/editor/exports/RNG. No new bandwidth model or fallback; no duplicate permanent tests.",
+  "limits": "SupportedweightedGaussianandconditional2D/gridcorpusonly;finitecut/cliptailmassdistinguishedfromintegrationerror. Legacyuntypedconstantfallbackandtyped singularskipremainseparatecontracts. 2D/isobandmassbeyondfinitegridisnotcertifiedallviewersorunregisteredkernels.",
+  "qa_note": "InitialindependentprobespecifiedorderforKDEwhichpublicvalidationrejects;readactualexistingtestandusedhue_order. No unsupported-internal-onlyresultdeclaredproductbug. Initialfailedself-checkdidnotrunpytestorproduceatestpass. Warningcollectorprivatehelperreusedratherthannewproductclassifier.",
+  "floor_environment_overrides": {
+    "floor-kde": {
+      "PYTEST_ADDOPTS": "-k \"test_kde_options or test_kde2d or test_grid_kde\" --tb=short",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-warnings": {
+      "PYTEST_ADDOPTS": "-k \"test_kde_options or test_kde2d or test_grid_kde\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "kde-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_kde_options.py",
+        "tests/test_kde2d.py",
+        "tests/test_grid_kde.py",
+        "tests/test_statistical_scales.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "359 passed in 108.93s (0:01:48)"
+      ],
+      "log_text_sha256": "bf8b20d9e9517876995b2df61cf5f96e0bd0dbe6318f413b1eb30b0027275915"
+    },
+    {
+      "name": "floor-kde",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "285 passed, 2802 deselected, 317 warnings in 80.84s (0:01:20)"
+      ],
+      "log_text_sha256": "d68f8935baea318251dfff1e74292a4b44578ef4cbf51a06538d3a6819b95004"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "71bafff2c24d50bc26dc3773a6e34225eebb2d14dfd9b3d927336369fed549ce"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "2f4b61c67cb2f2117a57608e7143278f8ec287b188c25c8b970dec1a79800520"
+    },
+    {
+      "name": "floor-warnings",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "285 passed, 2802 deselected, 317 warnings in 80.91s (0:01:20)"
+      ],
+      "log_text_sha256": "313be33b3594d9f9e0f490354f9ef5bf4923410574fcca798e30896dd9075bba"
+    }
+  ],
+  "raw_probe_sha256": {
+    "reference.json": "bc925a3bf774586783adf57dac94adda7bb217af093dfdc748bc8e4f667870a1",
+    "floor_warning_counts.json": "28693dcc13ef515201f6c930a925c4b3e368c3fc93df59ebceefb9cc5bc184d0",
+    "results.xml": "301bcb5d5078c6612c9e9c25ffff8a543cc1424ac17273aa25e7a5dec03846c0",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

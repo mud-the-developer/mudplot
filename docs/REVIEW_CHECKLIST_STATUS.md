@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 50차 — KDEbandwidth/적분/퇴화입력의독립대조
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-kde-review-7k93qkbn`와
+  [분수moment·24mixture·grid/적분·두mode](review_evidence/kde_integral_verification.json)을 보존합니다.
+- Weightedx[-1,2,4]/w[1,2,3]의정확한분수mean5/2·unbiasedvariance117/22·neff18/7을
+  Scott/Silverman/명시factor.5×adjust1.25와대조했습니다. Common/개별·PDF/CDF·clip유무의
+  24설정/각2049grid를독립NormalDistmixture로비교해최대절대오차2.22e-16입니다.
+- 유한support의analyticCDF차와직접trapezoid오차최대8.94e-9를구분했습니다. Clip은
+  fitrow/bandwidth/꼬리질량을재정규화하지않고CDF시작도0으로rebasing하지않습니다.
+  Singulargroup질량4/총10은공통분모에남아유효group면적.6이며가짜Gaussian/grid를
+  만들지않습니다. Emptygroup은별도0표본으로구분했습니다.
+- Bimodal[-3.1,-3,-2.9,2.9,3,3.1]은분산1351/125·factor.04·4095grid에서두peak
+  -2.999878/+2.999878을확인했습니다. 기존285case의empty/constant/singular·극단bandwidth/
+  단위·1D/2D/grid·log·CDF·비지원weightedgrid·row순서/청크·export/RNG도재실행했습니다.
+- 관련359통과·실제floor285통과/2802deselected/경고317·별도warningcollector재실행도
+  285/317동일·양platformtype/Ruff241/생성계약/packaging9명령exit0입니다. 317은전부10종
+  PyparsingDeprecationWarning이며새수치runtime경고는없습니다. 최초order옵션probe는
+  지원거절을확인후기존hue_order로고친QA이지제품결함/실행test통과가아닙니다.
+- STAT-05는현재Gaussian/지원조합corpus에서PASS입니다. Typedskip와legacyconstantfallback,
+  상대weights정의는유지하며새커널/모델/normalizer/testfarm은없습니다. 기준efCI39162647649는
+  5job모두성공해대기수치수정+histogram+KDE를함께게시하고새효과CI를받습니다.
+  버전/의존성/lock/tag/배포·loop1은유지하며기준성공을새회귀수정전체검증으로소급하지않습니다.
+
 ## 49차 — histogram경계/weights/density독립질량대조
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-histogram-review-t8dyma2q`와
@@ -1312,7 +1335,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-03 | P1 | PASS | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-04 | P1 | PASS | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-05 | P1 | OPEN | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-05 | P1 | PASS | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-06 | P1 | OPEN | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-07 | P1 | OPEN | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-08 | P1 | OPEN | 통계 전처리의 관측 대응 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1404,7 +1427,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 105, RUNNING 5, OPEN 39, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 106, RUNNING 5, OPEN 38, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

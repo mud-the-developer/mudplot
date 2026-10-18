@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Revalidated Gaussian KDE bandwidth, PDF/CDF and finite-support integration
+  against exact weighted moments and independent mixtures, retaining singular
+  skip, clipped-tail and relative-weight contracts without a new fallback.
 - Revalidated supported weighted histogram boundaries, unequal-bin density areas
   and cumulative mass against independent high-precision Decimal expectations,
   reusing existing geometry/export regressions without changing normalization.

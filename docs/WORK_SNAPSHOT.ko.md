@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신KDE기존285/독립mixture24·두modegrid는bandwidth/PDF/CDF/꼬리/퇴화를대조해
+  관련359/floor285가통과했고317경고는재실행해모두Pyparsing으로분류했습니다. STAT-05는
+  지원범위PASS이지새kernel/fallback은아닙니다. 기준efCI5job모두성공해수치/histogram/KDE를
+  함께게시하고새효과소스CI를받습니다.
+
 - 최신histogram은기존186case/독립Decimal38행으로weights/경계/분모/면적/CDF/geometry/
   출력을대조했습니다. 관련269/floor186·257경고모두Pyparsing분류로STAT-04는범위내PASS이며
   runtime/newtest변경없이efCI마지막3.10Pytest/다른4성공을보호해수치+문서를로컬보존합니다.
@@ -295,7 +300,9 @@
   before/after·design조건수/rank·독립OLS공식을보존했습니다.
 - [Histogram 정규화 근거](review_evidence/histogram_normalization_verification.json)에
   독립bin/질량/면적과현재warning분류를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS105/RUNNING5/OPEN39/DEFERRED1**.
+- [KDE 적분 근거](review_evidence/kde_integral_verification.json)에정확moment/
+  유한support질량/singular·clip경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS106/RUNNING5/OPEN38/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

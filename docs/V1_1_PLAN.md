@@ -124,6 +124,22 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 50 checks KDE moments, finite tails and degenerate inputs.**
+Exact weighted mean5/2/variance117/22/neff18/7 match bandwidth and24Gaussian
+mixture settings at2049points(maxerror2.22e-16). Clipped-tail analytic mass and
+trapezoid error(max8.94e-9) are distinguished, not renormalized; singular mass4/10
+stays in the common denominator. A4095point bimodal curve has two peaks near±3.
+
+Existing285KDE1D/2D/grid cases rerun:359related/floor285passes/2802deselected/
+317warnings; repeat285floorcases classify all317as Pyparsing deprecations.
+Nine quality records pass. STAT-05 is PASS in supported corpus without new
+runtime/kernel/fallback/tests. [Evidence](review_evidence/kde_integral_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS106/RUNNING5/OPEN38/DEFERRED1**.
+BaselineefCI39162647649 is ALL5SUCCESS; publish queued numeric+histogram+KDE
+units for new effect-source CI. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 49
+
 **Review phase 49 reuses histogram coverage and checks independent mass.**
 Existing186cases cover weighted/unequal boundaries, raw widths, geometry, CDF,
 legacy/native comparison and exports/RNG. An80-digit Decimal reference checks

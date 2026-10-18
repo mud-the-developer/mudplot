@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰50차에서KDEmoment/유한꼬리/퇴화입력을대조했습니다.** 정확한mean5/2·분산117/22·
+neff18/7와24Gaussian설정/2049point오차2.22e-16이맞고절단질량/trapezoid오차8.94e-9를
+재정규화하지않습니다. Singular질량4/10은공통분모에남고4095grid의두peak는±3근처입니다.
+
+기존1D/2D/grid285case와관련359/floor285통과/2802deselected/경고317·품질9명령을확인했고
+floor285재실행으로317전부Pyparsingdeprecation으로분류했습니다. STAT-05는지원범위PASS이며
+새runtime/kernel/fallback/test는없습니다. [근거](review_evidence/kde_integral_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS106/RUNNING5/OPEN38/DEFERRED1**입니다.
+기준efCI39162647649는5job모두성공해대기수치/histogram/KDE를함께게시하고새효과CI를받으며
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰49차
+
 **리뷰49차에서기존histogram회귀와독립질량을대조했습니다.** 기존186case의경계/비균일
 bin·weights·원시폭·geometry·CDF·legacy/native/출력·RNG를재실행하고80자리Decimal로
 19지원설정/38행을검사했습니다. In-range질량15(A9/B6)/outside198제외·common-density면적
