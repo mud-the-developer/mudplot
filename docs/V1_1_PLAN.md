@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 40 fixes measured secondary-axis and repeated-guide collisions.**
+FIND-034 reproduced y2-label/outside-legend overlap in a two-panel/two-colorbar/
+shared-axis figure and repeated explicit-series labels. Physical measured spacing
+replaces the fixed1.35axes multiplier; matching explicit ungrouped point/line
+source/axis/reference identity shares one guide, not raw grouped/other identities.
+Manual anchors, data/style/source and physical canvas remain unchanged.
+
+Supported8x3.5/6x3bbox and actual PNG/PDF/SVG draw-event checks avoid data/label
+coverage; the4.5x2.8secondary limit still warns.14newcases/185related passes and
+floor14passes/2989deselected/13warnings plus8quality/package records pass. LAY-05
+is PASS in measured scope. [Evidence](review_evidence/mixed_guide_verification.json),
+[baseline](review_evidence/mixed_guides_baseline.png), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS87/RUNNING9/OPEN53/DEFERRED1**. Keep this effect unit local during current5caCI;
+versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 39
+
 **Review phase 39 records real system-font/glyph and CJK layout diagnostics.**
 Missing-family fallback and DejaVu Hangul warnings are observable without changing
 source fonts/text. Installed Malgun Gothic covers Hangul but lacks U+2212; selected

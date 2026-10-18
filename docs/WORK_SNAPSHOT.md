@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest mixed-guide bbox/actual renderer checks fix secondary-label/outside-legend
+  overlap and coalesce only matching explicit ungrouped point/line identities.
+ 185related/floor14passes retain raw identities/manual anchors/fixed canvas and
+  impossible-fit warnings. LAY-05 is PASS in scope; the effect unit stays local
+  during5caCI rather than cancelling that workflow.
+
 - Latest actual font files/glyph indices/bboxes distinguish available Hangul,
   missing minus/family and logged variable-weight fallback. CJK/long-group bounds
   plus earlier support/warning corpus make LAY-04/07 PASS in measured scope, not
@@ -277,7 +283,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains before/after bounds, actionable-warning and CLI/rollback controls.
 - [Font-boundary evidence](review_evidence/font_boundary_verification.json)
   retains actual family/glyph/bbox diagnostics without font binaries or broad promises.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS86/RUNNING9/OPEN54/
+- [Mixed-guide evidence](review_evidence/mixed_guide_verification.json) and
+  [visual baseline](review_evidence/mixed_guides_baseline.png) retain bounds and renderer events.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS87/RUNNING9/OPEN53/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -2181,7 +2181,7 @@ def _apply_axis(ax, axis_spec, set_label, set_scale, set_limits):
         set_limits(axis_spec.limits)
 
 
-def _legend_kwargs(leg, *, ax2_present: bool, fig) -> tuple[dict, bool]:
+def _legend_kwargs(leg, *, fig) -> tuple[dict, bool]:
     """Build ax.legend() placement kwargs, honouring a dragged/explicit
     ``bbox_to_anchor`` override in figure-fraction coordinates (independent
     of the axes' own position, so it stays put if the axes later resize).
@@ -2199,9 +2199,6 @@ def _legend_kwargs(leg, *, ax2_present: bool, fig) -> tuple[dict, bool]:
             "bbox_transform": fig.transFigure,
         }, False
     kw = dict(_OUTSIDE_LEGEND_LOCS.get(leg.location, {"loc": leg.location}))
-    if leg.location == "outside right" and ax2_present:
-        # leave room for the secondary axis's own ticks/label
-        kw["bbox_to_anchor"] = (1.35, 0.5)
     return kw, leg.location in _OUTSIDE_LEGEND_LOCS
 
 
@@ -2239,6 +2236,49 @@ def _apply_despine(ax, theme_axes):
             ax.spines[side].set_position(("outward", theme_axes.spine_offset))
 
 
+def _raw_legend_handles(ax, ax2=None):
+    handles, labels = ax.get_legend_handles_labels()
+    if ax2 is not None:
+        other_handles, other_labels = ax2.get_legend_handles_labels()
+        handles, labels = handles + other_handles, labels + other_labels
+    return handles, labels
+
+
+def _mark_legend_source(layer: LayerSpec, handles, previous) -> None:
+    if (
+        layer.type not in ("line", "scatter", "line3d", "scatter3d")
+        or not layer.label
+        or layer.group is not None
+        or layer.semantics is not None
+    ):
+        return
+    key = (
+        layer.axis,
+        layer.x,
+        layer.y,
+        layer.z,
+        layer.label,
+        layer.citation,
+        layer.href,
+    )
+    for handle in handles:
+        if id(handle) not in previous:
+            handle._mudplot_legend_source = key
+
+
+def _unique_legend_handles(handles, labels):
+    seen = set()
+    result_handles, result_labels = [], []
+    for handle, label in zip(handles, labels, strict=True):
+        key = getattr(handle, "_mudplot_legend_source", None)
+        if key is None or key not in seen:
+            result_handles.append(handle)
+            result_labels.append(label)
+            if key is not None:
+                seen.add(key)
+    return result_handles, result_labels
+
+
 def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
     import matplotlib.pyplot as plt
 
@@ -2246,7 +2286,9 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
     color_iter = itertools.cycle(prop)
 
     for layer in panel.layers:
+        previous = {id(handle) for handle in _raw_legend_handles(ax)[0]}
         _draw_3d_layer(ax, spec, layer, color_iter)
+        _mark_legend_source(layer, _raw_legend_handles(ax)[0], previous)
 
     _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
@@ -2254,10 +2296,10 @@ def _draw_panel_3d(ax, spec: FigureSpec, panel: PanelSpec):
         _apply_axis(ax, panel.z, ax.set_zlabel, ax.set_zscale, ax.set_zlim)
     _apply_title(ax, panel)
 
-    handles, labels = ax.get_legend_handles_labels()
+    handles, labels = _unique_legend_handles(*_raw_legend_handles(ax))
     leg = panel.legend
     if leg.show and handles:
-        kw, auto_margin = _legend_kwargs(leg, ax2_present=False, fig=ax.figure)
+        kw, auto_margin = _legend_kwargs(leg, fig=ax.figure)
         legend_artist = ax.legend(
             handles, labels, title=leg.title, frameon=leg.frame, **kw
         )
@@ -2291,6 +2333,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
     ax2 = ax.twinx() if panel.y2 is not None else None
 
     for layer in panel.layers:
+        previous = {id(handle) for handle in _raw_legend_handles(ax, ax2)[0]}
         if layer.type in ("scatter", "lineplot") and layer.semantics is not None:
             scale_id = layer.semantics.scale_id
             guide_key = (scale_id, layer.type)
@@ -2322,6 +2365,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
             _draw_pie_layer(ax, spec.data.columns, layer, color_iter)
         else:
             _draw_marker_layer(ax, ax2, layer, color_iter)
+        _mark_legend_source(layer, _raw_legend_handles(ax, ax2)[0], previous)
 
     _apply_axis(ax, panel.x, ax.set_xlabel, ax.set_xscale, ax.set_xlim)
     _apply_axis(ax, panel.y, ax.set_ylabel, ax.set_yscale, ax.set_ylim)
@@ -2331,19 +2375,16 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
     _apply_title(ax, panel)
     _apply_despine(ax, theme.axes)
 
-    handles, labels = ax.get_legend_handles_labels()
-    if ax2 is not None:
-        h2, l2 = ax2.get_legend_handles_labels()
-        handles, labels = handles + h2, labels + l2
+    handles, labels = _unique_legend_handles(*_raw_legend_handles(ax, ax2))
     leg = panel.legend
     if leg.show and handles:
-        kw, auto_margin = _legend_kwargs(
-            leg, ax2_present=ax2 is not None, fig=ax.figure
-        )
+        kw, auto_margin = _legend_kwargs(leg, fig=ax.figure)
         legend_artist = ax.legend(
             handles, labels, title=leg.title, frameon=leg.frame, **kw
         )
         legend_artist._mudplot_auto_margin = auto_margin
+        if ax2 is not None and auto_margin and leg.location == "outside right":
+            legend_artist._mudplot_secondary_axis = ax2
         _link_legend_texts(legend_artist, panel)
 
 
@@ -2498,13 +2539,46 @@ def _link_named_axes(axes, panels, axis: str) -> None:
             (ax.sharex if axis == "x" else ax.sharey)(base)
 
 
+def _align_secondary_legends(fig, pad_px: float) -> bool:
+    from matplotlib.transforms import ScaledTranslation
+
+    renderer = fig.canvas.get_renderer()
+    moved = False
+    for ax in fig.axes:
+        legend = ax.get_legend()
+        secondary = getattr(legend, "_mudplot_secondary_axis", None)
+        if secondary is None or ax.bbox.width <= 0:
+            continue
+        texts = [
+            secondary.yaxis.label,
+            secondary.yaxis.get_offset_text(),
+            *secondary.get_yticklabels(),
+        ]
+        edge = max(
+            (
+                text.get_window_extent(renderer).x1
+                for text in texts
+                if text.get_visible() and text.get_text()
+            ),
+            default=ax.bbox.x1,
+        )
+        shift = edge + pad_px - legend.get_window_extent(renderer).x0
+        if shift > 1:
+            # Keep the decoration gap physical while constrained layout resizes axes.
+            offset = (edge + pad_px - ax.bbox.x1) / fig.dpi
+            transform = ax.transAxes + ScaledTranslation(offset, 0, fig.dpi_scale_trans)
+            legend.set_bbox_to_anchor((1, 0.5), transform=transform)
+            moved = True
+    return moved
+
+
 def _autofit(fig, pad_px: float = 6.0) -> None:
     """Fit automatic text where possible and warn about remaining bounds/overlaps,
     while keeping the figure at its exact configured size (needed for TeX
     column-width placement -- see ``mudplot.tex``).
 
-    Two passes, using matplotlib's own accurate text-measurement renderer
-    (the same role a browser's font engine plays for web text layout):
+    Two stages, using matplotlib's own accurate text-measurement renderer.
+    Secondary right-axis legend gaps settle in at most three preliminary draws:
 
     1. Reserve canvas space for any *named* "outside ..." legend (not an
        explicit/dragged ``bbox_to_anchor``, which is trusted as-is) by
@@ -2515,7 +2589,10 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
        width via matplotlib's native text layout; this only needs to ask
        for a redraw after step 1 changes that width.
     """
-    fig.canvas.draw()
+    for _ in range(3):
+        fig.canvas.draw()
+        if not _align_secondary_legends(fig, pad_px):
+            break
     renderer = fig.canvas.get_renderer()
     fig_w, fig_h = fig.bbox.width, fig.bbox.height
 
@@ -2550,6 +2627,8 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
     # Re-draw so wrapped titles measure against the (possibly now smaller)
     # available width; harmless no-op if nothing changed above.
     fig.canvas.draw()
+    if _align_secondary_legends(fig, pad_px):
+        fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
     automatic = [ax.title for ax in fig.axes if ax.title.get_text()]
     if fig._suptitle is not None and fig._suptitle.get_text():

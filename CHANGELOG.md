@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Measured outside-right legend spacing beside secondary-axis decorations instead
+  of a fixed axes multiplier, and coalesced repeated explicit ungrouped point/line
+  guides only when source/axis/reference identity matches. Raw grouped identities
+  and manual anchors remain distinct; real PNG/PDF/SVG mixed-guide bounds are checked.
 - Verified installed/missing font families, Hangul/minus/math glyph coverage and
   narrow CJK/group layout with actual font-file fingerprints and diagnostics.
   Kept requested text/fonts unchanged and avoided bundled fonts, downloads or

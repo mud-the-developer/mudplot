@@ -73,6 +73,19 @@ moved. The warning is a measured bbox diagnostic, not universal legibility or
 all-artist collision detection. Callers may promote warnings to errors; failed
 single-file exports then retain the previous output and close owned Figures.
 
+## Mixed guides
+
+Named outside-right legends beside a secondary y-axis use measured visible tick/
+label/offset-text space with a physical offset, not a fixed axes-width multiplier.
+Manual anchors remain caller-owned. Constrained layout still allocates the fixed
+canvas; dense combinations may need a wider figure and impossible fits warn.
+
+Repeated explicit ungrouped point/line guides (2-D/3-D) with the same axis, x/y/z,
+label and citation/href share the first legend handle. Grouped/semantic guides keep
+their existing identity handling: raw `1` and `"1"`, different data columns, axes,
+references and marker sources are not merged just because visible strings match.
+No spec/source/style fields are rewritten by this guide policy.
+
 ## State and action semantics
 
 `FigureSpec` remains a mutable dataclass/list graph. `reduce()` preserves its

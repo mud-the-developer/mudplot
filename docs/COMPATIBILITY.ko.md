@@ -69,6 +69,17 @@ Manual/draggedtext·명시legendanchor는caller소유로강제이동하지않습
 진단이지보편가독성/모든artist충돌검사가아닙니다. Caller가warning을error로승격하면
 single-fileexport실패시이전출력과소유Figure정리도유지합니다.
 
+## 복합 guide
+
+Secondaryy축옆namedoutside-rightlegend는고정axes폭배율이아닌실제tick/label/offsettext
+bbox의물리간격을사용합니다. Manualanchor는caller소유이며constrainedlayout이fixedcanvas를
+배정합니다. Dense조합은더넓은figure가필요할수있고불가능fit은경고합니다.
+
+같은axis/x/y/z/label/citation/href를가진명시ungroupedpoint/line(2D/3D)은첫legendhandle을
+공유합니다. Grouped/semanticguide는기존identity처리를유지해raw1과string1·다른열/축/
+reference/marker를보이는문자가같다는이유로합치지않습니다. Spec/source/stylefield는
+이guide정책으로재작성하지않습니다.
+
 ## 상태와 action 의미
 
 `FigureSpec`은 계속 mutable dataclass/list graph입니다. `reduce()`는 입력을

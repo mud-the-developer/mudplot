@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 40차에서secondary축과반복guide의실제겹침을고쳤습니다.** FIND-034의2panel/
+2colorbar/share축/y2label/outsidelegend겹침과명시series범례반복을재현했습니다.
+고정1.35axes배율을실측물리간격으로바꾸고같은ungroupedpoint/line의source/axis/reference만
+guide를공유하며rawgroup/다른identity는유지합니다. 수동anchor/data/style/물리canvas는같습니다.
+
+8x3.5/6x3bbox·실제PNG/PDF/SVGdraw-event가data/label침범을피하고4.5x2.8secondary는
+한계를경고합니다. 새14/관련185통과·floor14통과/2989deselected/경고13·품질/packaging
+8명령을기록해LAY-05는측정범위PASS입니다. [근거](review_evidence/mixed_guide_verification.json)/
+[baseline](review_evidence/mixed_guides_baseline.png)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS87/RUNNING9/OPEN53/DEFERRED1**입니다. 현재5caCI중effect단위는로컬보존하고
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 39차
+
 **리뷰 39차에서실제systemfont/glyph와한글layout진단을기록했습니다.** 없는familyfallback/
 DejaVuHangul누락은원문font/text를바꾸지않고감지됩니다. MalgunGothic은한글은지원하지만
 U+2212가없고선택NotoSansKR은이corpus를지원하나weight100fallbacklog가있습니다.

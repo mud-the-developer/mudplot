@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 40차 — 외부legend/다중colorbar/share/y2 복합guide
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-mixed-layout-pjwb8yt3`와
+  [before/after bbox·실제출력renderer](review_evidence/mixed_guide_verification.json),
+  [visualbaseline](review_evidence/mixed_guides_baseline.png)을 보존합니다.
+- **FIND-034:** 동일ungroupedseries의line/scatter범례가반복됐고6x3의2panel+2colorbar+
+  sharex/y+secondaryy에서label/외부legend가겹쳤습니다. 초기6회귀가중복으로실패했고그수정
+  뒤남은1case가실제y2label겹침을드러냈습니다. 고정1.35axes배율을지우고실측tick/label/
+  offsettext와물리ScaledTranslation으로gap을유지해axes축소후재겹침도막았습니다.
+- 같은axis/x/y/z/label/citation/href의명시ungroupedpoint/line(2D/3D)만첫guide를공유합니다.
+  Rawgroup1/str1·semanticguide·다른열/축/reference/marker는그대로유지합니다. Legend표현
+  처리이지원문/기하/style데이터변경이나문자열만으로모든guide를합치는정책은아닙니다.
+- 8x3.5/6x3조합의data/축label/legendbbox는침범하지않고PNG/PDF/SVG실제draw_eventrenderer
+  에서도labeloverlap0입니다. 최초vector저장뒤Aggcachedrenderer를재사용한QA는측정이
+  틀려실제saveevent로교정했습니다. 4.5x2.8secondary조합은한계경고를유지하며canvas를
+  늘리거나font를줄이지않습니다. Baseline은dense진단이지보편aesthetic최적값은아닙니다.
+- 새14case·관련185통과·실제floor14통과/2989deselected/경고13·양platformglobaltype·
+  Ruff234/format·계약·packaging8명령exit0·변경3경로LSP clean입니다. Privatecollector의
+  작은nonsecondary에도경고를가정/privatesave에spec누락한실패는control수정이지제품결과가아닙니다.
+- LAY-05는이측정corpus에서PASS입니다. 모든artist/폰트/guide배치보장은아니며manualanchor는
+  신뢰합니다. 현재5caCI39142799672를취소하지않고renderer단위는로컬보존하며버전/의존성/
+  lock/tag/배포·loop1은유지합니다.
+
 ## 39차 — systemfont/glyph/fallback과한글 layout
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-font-scope-kguux7cu`와
@@ -1117,7 +1140,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | LAY-02 | P0 | PASS | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-03 | P1 | PASS | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-04 | P1 | PASS | 긴 제목·suptitle·범례 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-05 | P1 | OPEN | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-05 | P1 | PASS | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-06 | P1 | PASS | 배치 불가능 상태의 처리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-07 | P1 | PASS | 폰트 부재·fallback·한글 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-08 | P1 | OPEN | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
@@ -1191,8 +1214,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 86, RUNNING 9, OPEN 54, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 87, RUNNING 9, OPEN 53, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

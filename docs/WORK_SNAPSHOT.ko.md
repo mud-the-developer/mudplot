@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신복합guidebbox/실제renderer검사는y2label/outsidelegend겹침과같은명시ungrouped
+  point/lineidentity반복을해소했습니다. 관련185/floor14통과이며rawidentity/수동anchor/
+  fixedcanvas/불가능경고는유지해LAY-05는범위내PASS입니다. 5caCI취소없이단위는로컬보존합니다.
+
 - 최신실제fontfile/glyphindex/bbox가한글지원·minus/family부재·weightfallback진단을
   구분합니다. 한글/긴그룹bbox와기존지원·경고corpus로LAY-04/07은범위내PASS이며
   관련97/floor5통과입니다. 모든systemtypography가아니며runtime치환/다운로드도없습니다.
@@ -232,7 +236,9 @@
   bbox·행동가능warning·CLI/rollbackcontrol을기록했습니다.
 - [Font경계 근거](review_evidence/font_boundary_verification.json)에 실제family/
   glyph/bbox진단을폰트binary나보편보장없이보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS86/RUNNING9/OPEN54/DEFERRED1**.
+- [복합guide 근거](review_evidence/mixed_guide_verification.json)와
+  [visualbaseline](review_evidence/mixed_guides_baseline.png)에bbox/renderer event를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS87/RUNNING9/OPEN53/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
