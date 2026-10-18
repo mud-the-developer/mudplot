@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added isolated intentional-drift regressions for schema, capabilities and
+  generated reference artifacts, including restored-copy success and actionable
+  regeneration hints. Cross-checked registered action fields and layer vocabulary
+  without tightening the structural layer-type schema contract.
 - Verified Windows read-only/deny-delete output failures, synthetic ENOSPC and
   unsupported extensions without losing prior bytes, plus open-Figure ownership
   and bounded caller-close/GC/handle traces. Kept long-session/native limits explicit.

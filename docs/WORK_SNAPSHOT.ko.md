@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신격리drift/복구회귀는실제syncchecker와action36/layer37등록표를대조합니다.
+  관련231/floor4가통과해JSON-11은범위내PASS이며runtime/generatedbytes/schema강화는
+  없습니다. BASE/nullable감사는별도로남기고161CI중test/doc은로컬보존합니다.
+
 - 최신Windowsreadonly/locked·ENOSPC/확장자실패는bytes/staging/Figure를보존합니다.
   성공open/callerclose/weakref·80effect자원시계열과관련128/OS6skip/floor17이통과해
   OUT-04/05는bounded범위PASS이지모든ACL/장시간native누수부재인증은아닙니다.
@@ -265,7 +269,9 @@
   [comparison](review_evidence/one_column_encoding.png)에pattern/물리설정/한계를보존했습니다.
 - [Outputlifecycle 근거](review_evidence/output_lifecycle_verification.json)에OS실패와
   bounded소유권/RSS/handle관찰을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS98/RUNNING8/OPEN43/DEFERRED1**.
+- [Generateddrift 근거](review_evidence/generated_drift_verification.json)에실제
+  checker실패/복구·registrycoverage를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS99/RUNNING7/OPEN43/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

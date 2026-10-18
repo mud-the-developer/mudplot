@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰45차에서repo를깨지않고generateddrift감지를확인했습니다.** 기존synccheck를
+먼저실행하고3artifact격리사본의정상통과→의도drift실패/재생성안내→복구통과를검사했습니다.
+Action36/field·layer37/생성표현도일치하고kind는구조적string/별도semantic검증을유지해
+새enum제약으로schema계약을좁히지 않았습니다.
+
+관련231/floor4통과/3052deselected/경고13·품질8명령으로JSON-11은sync/registry범위PASS이며
+모든nullableUI의미/BASE매핑·privacy감사까지완료한것은아닙니다.
+[근거](review_evidence/generated_drift_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS99/RUNNING7/OPEN43/DEFERRED1**입니다. Runtime/artifact내용변경없이161CI중
+unit은로컬보존하고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰44차
+
 **리뷰44차에서통제출력실패와Figure소유권을확인했습니다.** Windows읽기전용/deny-delete
 잠금의JSON/PNG/PDF/SVG는이전bytes를보존하고ENOSPC/잘못된확장자도정리됩니다.
 성공Figure는callerclose전까지열려있고GC뒤weakref가해제됐습니다. 80effect반복의

@@ -124,6 +124,22 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 45 proves generated drift is detected without corrupting the repo.**
+Existing sync checker runs first; three isolated artifact copies pass, deliberate
+schema/capabilities/reference drift fails with a regeneration hint, and restored
+bytes pass again. Action36/fields, layer37 and generated declarations agree.
+Layer kind remains a structural string in JSON Schema with separate semantic
+validation, not a newly tightened enum contract.
+
+Related231/floor4passes/3052deselected/13warnings and8quality/package records pass.
+JSON-11 is PASS for sync/registry corpus, not all nullable UI meanings or BASE
+mapping/privacy audits. [Evidence](review_evidence/generated_drift_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS99/RUNNING7/OPEN43/DEFERRED1**.
+Runtime/artifact contents are unchanged; keep test/docs local during161CI.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 44
+
 **Review phase 44 verifies controlled output failures and Figure ownership.**
 Actual Windows read-only/deny-delete targets fail without replacing prior JSON/
 PNG/PDF/SVG bytes; synthetic ENOSPC/unsupported-extension controls preserve cleanup.

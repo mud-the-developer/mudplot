@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 45차 — 생성표현의의도적drift회귀
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-generated-drift-hejhydoe`와
+  [drift/registry/복구 요약](review_evidence/generated_drift_verification.json)을 보존합니다.
+- 먼저기존check_schema_sync.py를실행했습니다. 세생성artifact만소유tmp사본에복사해
+  baselineexit0→의도json/textdriftexit1+artifact별재생성명령→원bytes복구exit0을검사했습니다.
+  Realrepoartifact를깨거나generated를수동패치해통과시키지않았습니다.
+- Action36개/field목록·layer37개·LayerSpec공식field·capabilities·generatedreference가
+  일치합니다. LayerSpec.type은기존구조적string/default등록kind이며kindsemantic검증은
+  별도입니다. Enum이라고가정한최초QA를실제계약에맞췄고schema강화는하지않았습니다.
+- 새4case·관련231통과·실제floor4통과/3052deselected/경고13·양platformtype/Ruff239/
+  packaging8명령exit0·변경2경로LSP clean입니다. JSON-11은이생성/등록corpus에서PASS이며
+  JSON-09의모든nullable의미나BASE05/06/07감사까지완료했다고하지않습니다.
+- Productruntime/생성파일의내용은바꾸지않고test/floor추가만로컬보존합니다. 진행중
+  161CI39155483298을취소하지않으며버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 44차 — 출력권한/잠금과callerFigure소유권
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-output-lifecycle-1cdspizk`와
@@ -1185,7 +1201,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | JSON-08 | P1 | PASS | 알 수 없는 필드의 명시된 처리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-09 | P1 | RUNNING | 생략·null·자동값·기본값 구분 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-10 | P1 | PASS | canonical serialization과 해시 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-11 | P1 | RUNNING | 스키마·capabilities·문서 동기화 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-11 | P1 | PASS | 스키마·capabilities·문서 동기화 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-12 | P1 | PASS | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | DATA-01 | P0 | PASS | 입력 형식 간 동일 데이터의 동등성 | data.py::to_columns/_to_list/_mapping_to_columns | test_review_missing_data.py(14formats); test_review_table_formats.py(13); 실제 optional114-pass 실행 |
 | DATA-02 | P0 | PASS | 열 길이·필수 열·중복 열 | data.py::_records_to_columns/_row_values; validate.py::_check_data_integrity/_check_column | test_review_data_contracts.py(49); test_data.py; test_validate_hardening.py; 6차 증거 |
@@ -1304,7 +1320,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 98, RUNNING 8, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 99, RUNNING 7, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

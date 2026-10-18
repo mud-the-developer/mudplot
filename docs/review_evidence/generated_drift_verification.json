@@ -1,0 +1,399 @@
+{
+  "source_sha256": {
+    "scripts/check_schema_sync.py": "0a2051617725f0a478cb58906dc75295edde081205d0a38c246606d30ea4ab54",
+    "tests/test_review_generated_drift.py": "714a474ed2b517da7633882dc63a3e1e1f77e10fb0fb4c9e6d173287704e3c43",
+    "scripts/check_minimum_versions.py": "84c4883b774edc6125adbe2aa6e7d44c9b352c7e7a970dcdf17ea0fd609b2334",
+    "mudplot/actions.py": "e3e05dd14a4746c708f3abc61eeeaf93cb1ed9bdf293f4dcce385d661fa3f34d",
+    "mudplot/capabilities.py": "b71dbf142de62471aa5bb3a37b22762a3a546b5cc42053bfd6e5c490e3684869",
+    "mudplot/schema.py": "2af0a68a6a497b7f13d633331dabc394bfdc92baca693152d44c8385ac8d7484",
+    "schemas/figure_spec.schema.json": "9f10da048cea5c17706eb31195a3eb049fa58dd85e1ee16d19af9566a09e2cca",
+    "schemas/capabilities.json": "3cdb2f0b4a2de25ebc5ead198dfb9a895196df5a9b090d33d1a777bde62ac1df",
+    "docs/REFERENCE.md": "eb73238645fa82654f26b8e00b0faff65e9e610d969124c8ca84948814c94f5c"
+  },
+  "drift_cases_passed": [
+    "test_checker_rejects_drift_then_accepts_restored_copy[schemas/figure_spec.schema.json]",
+    "test_checker_rejects_drift_then_accepts_restored_copy[schemas/capabilities.json]",
+    "test_checker_rejects_drift_then_accepts_restored_copy[docs/REFERENCE.md]",
+    "test_layer_action_registry_schema_capabilities_and_reference_agree"
+  ],
+  "registry": {
+    "actions": [
+      "AddLayer",
+      "AddPanel",
+      "RemoveLayer",
+      "SetAutoLabel",
+      "SetAxesStyle",
+      "SetAxisLabel",
+      "SetAxisShare",
+      "SetColorbar",
+      "SetData",
+      "SetDpi",
+      "SetEncoding",
+      "SetFacets",
+      "SetFont",
+      "SetGridStyle",
+      "SetJointGrid",
+      "SetJournal",
+      "SetLayerAt",
+      "SetLayout",
+      "SetLegend",
+      "SetLimits",
+      "SetMatrix",
+      "SetPairGrid",
+      "SetPalette",
+      "SetPanelLabel",
+      "SetProjection",
+      "SetReferenceMeasureText",
+      "SetScale",
+      "SetSecondaryAxis",
+      "SetShare",
+      "SetSize",
+      "SetSuptitle",
+      "SetTheme",
+      "SetTicksStyle",
+      "SetTitle",
+      "SetTitlePosition",
+      "SetZAxis"
+    ],
+    "layers": [
+      "annotate",
+      "band",
+      "bar",
+      "barplot",
+      "box",
+      "boxenplot",
+      "clustermap",
+      "contour",
+      "contourf",
+      "countplot",
+      "ecdf",
+      "errorbar",
+      "heatmap",
+      "hexbin",
+      "hist",
+      "hist2d",
+      "hline",
+      "kde",
+      "kde2d",
+      "line",
+      "line3d",
+      "lineplot",
+      "pie",
+      "pointplot",
+      "quiver",
+      "regplot",
+      "rug",
+      "scatter",
+      "scatter3d",
+      "stackplot",
+      "stripplot",
+      "surface",
+      "swarmplot",
+      "text",
+      "violin",
+      "vline",
+      "wireframe"
+    ],
+    "action_field_names": {
+      "AddLayer": [
+        "layer",
+        "panel"
+      ],
+      "AddPanel": [],
+      "RemoveLayer": [
+        "layer_index",
+        "panel"
+      ],
+      "SetAutoLabel": [
+        "enabled"
+      ],
+      "SetAxesStyle": [
+        "params"
+      ],
+      "SetAxisLabel": [
+        "axis",
+        "text",
+        "panel"
+      ],
+      "SetAxisShare": [
+        "axis",
+        "share_id",
+        "panel"
+      ],
+      "SetColorbar": [
+        "layer_index",
+        "show",
+        "label",
+        "panel"
+      ],
+      "SetData": [
+        "columns"
+      ],
+      "SetDpi": [
+        "dpi"
+      ],
+      "SetEncoding": [
+        "params"
+      ],
+      "SetFacets": [
+        "row",
+        "col",
+        "row_order",
+        "col_order",
+        "col_wrap",
+        "share_x",
+        "share_y"
+      ],
+      "SetFont": [
+        "params"
+      ],
+      "SetGridStyle": [
+        "params"
+      ],
+      "SetJointGrid": [
+        "bins",
+        "ratio",
+        "marginal_stat",
+        "marginal_kind",
+        "kde"
+      ],
+      "SetJournal": [
+        "name"
+      ],
+      "SetLayerAt": [
+        "layer_index",
+        "at",
+        "panel"
+      ],
+      "SetLayout": [
+        "rows",
+        "cols",
+        "width_ratios",
+        "height_ratios"
+      ],
+      "SetLegend": [
+        "show",
+        "title",
+        "location",
+        "frame",
+        "panel",
+        "bbox_to_anchor"
+      ],
+      "SetLimits": [
+        "axis",
+        "lo",
+        "hi",
+        "panel"
+      ],
+      "SetMatrix": [
+        "name",
+        "values"
+      ],
+      "SetPairGrid": [
+        "columns",
+        "group",
+        "hue_order",
+        "bins",
+        "diag_stat",
+        "diag_kind",
+        "kde"
+      ],
+      "SetPalette": [
+        "kind",
+        "params"
+      ],
+      "SetPanelLabel": [
+        "label",
+        "panel"
+      ],
+      "SetProjection": [
+        "projection",
+        "panel"
+      ],
+      "SetReferenceMeasureText": [
+        "text"
+      ],
+      "SetScale": [
+        "axis",
+        "scale",
+        "panel"
+      ],
+      "SetSecondaryAxis": [
+        "label",
+        "scale",
+        "limits",
+        "panel"
+      ],
+      "SetShare": [
+        "x",
+        "y"
+      ],
+      "SetSize": [
+        "width",
+        "height"
+      ],
+      "SetSuptitle": [
+        "text"
+      ],
+      "SetTheme": [
+        "name"
+      ],
+      "SetTicksStyle": [
+        "params"
+      ],
+      "SetTitle": [
+        "text",
+        "panel",
+        "citation",
+        "href"
+      ],
+      "SetTitlePosition": [
+        "position",
+        "panel"
+      ],
+      "SetZAxis": [
+        "label",
+        "scale",
+        "limits",
+        "panel"
+      ]
+    }
+  },
+  "procedure": "Run existing checker first;copyonlythreeartifactsintoownedtmp;usecurrentmoduleviaexplicitPYTHONPATH;setcheckerREPO_ROOTtotmp. Unchangedcopy main0,mutatedjsonextra/drifttextmain1withartifact/regeneratehint,restoredcopy main0. Realrepoartifactsnevermodifiedforthedriftcontrol.",
+  "schema_boundary": "LayerSpec.typeisstructuralstring(defaultregisteredline),notregisteredkind-enum. Testpreservesknowncontract;semanticvalidatehandlesunsupportedlayers. No schema tightening or manualgeneratedpatch.",
+  "limits": "Actualchecker/action/layer/generatedreferencecorpus,currentJSON11synconly;notJSON09allnullablemeaningornativecompleteUIparity. BASEmapping/fixtureprivacy/designconflictauditsremainseparate.",
+  "qa_note": "InitialtestassumedenumforLayerSpec.type;readactualschemaandusedstructuralfieldcoverage+capabilityregistry/referencechecks.Notproductdrift.",
+  "checks": [
+    {
+      "name": "schema-first",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "5f35bb8831f78277188e77bae6428a51adc66fb7d50f36f1425f6d8bacf76cb3"
+    },
+    {
+      "name": "generated-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_generated_drift.py",
+        "tests/test_schema_export.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "231 passed in 50.69s"
+      ],
+      "log_text_sha256": "f8ba1e05c7ad0a2e25af88c601335f1bd393ef3da0447119f185788ccae8f4a8"
+    },
+    {
+      "name": "floor-generated",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "4 passed, 3052 deselected, 13 warnings in 42.78s"
+      ],
+      "log_text_sha256": "c149cdb84146cfeeb81a53ec9fe50154981585fedaa2b922e0df087cc3796121"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "239 files already formatted"
+      ],
+      "log_text_sha256": "68d1dc72195af503d4d0bc80908b4d51f60bb7bf57ca76a05d13667bb2905509"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "a4f5909cebdfb14ffd56774942c619648faec1e5c6779d3cfdccb4e1863b8afc"
+    }
+  ],
+  "junit_sha256": "c387cbee163178db0ea14fc5cfa62970c8fab634c1b42a25e4e31c51da30fa8e"
+}

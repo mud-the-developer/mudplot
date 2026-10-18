@@ -72,6 +72,7 @@ TESTS = (
     "tests/test_review_string_boundaries.py",
     "tests/test_dashboard.py",
     "tests/test_schema_export.py",
+    "tests/test_review_generated_drift.py",
     "tests/test_visual_quality.py",
     "tests/test_bar_uncertainty.py",
     "tests/test_statistics.py",
