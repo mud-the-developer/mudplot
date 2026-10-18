@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest histogram check reuses186existing cases and38independent Decimal rows:
+  weighted boundaries/in-range denominators/density area/CDF/geometry/exports agree.
+ 269related/floor186passes and warning classification(all257Pyparsingdeprecations)
+  make STAT-04 PASS in scope, without runtime/newtest changes. Numeric+docs units
+  stay local duringefCI(last3.10Pytestrunning/other4success).
+
 - Latest FIND-037 fixes legacy polynomial covariance under/overflow and explicit
   rank/arithmetic errors in the shared helper, with independent mean-fit OLS
   bands/original units/file cleanup intact.201related/floor19passes make STAT-03
@@ -349,7 +355,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains independent coordinates, explicit domains and unsupported-case boundaries.
 - [Regression-boundary evidence](review_evidence/regression_degenerate_verification.json)
   retains before/after values, normalized design condition/rank and closed-form OLS.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS104/RUNNING5/OPEN40/
+- [Histogram normalization evidence](review_evidence/histogram_normalization_verification.json)
+  retains independent bins/mass/area and current scoped warning classifications.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS105/RUNNING5/OPEN39/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

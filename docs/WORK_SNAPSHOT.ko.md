@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신histogram은기존186case/독립Decimal38행으로weights/경계/분모/면적/CDF/geometry/
+  출력을대조했습니다. 관련269/floor186·257경고모두Pyparsing분류로STAT-04는범위내PASS이며
+  runtime/newtest변경없이efCI마지막3.10Pytest/다른4성공을보호해수치+문서를로컬보존합니다.
+
 - 최신FIND-037은legacycovarianceunder/overflow와rank/산술경계를공통helper에서고쳐
   독립OLSmean-fitband/원단위/파일복구를유지합니다. 관련201/floor19로STAT-03은범위내
   PASS이지모든거대축렌더보장은아닙니다. efCI중효과unit은로컬보존합니다.
@@ -289,7 +293,9 @@
   독립좌표/명시범위/미지원경계를보존했습니다.
 - [Regression경계 근거](review_evidence/regression_degenerate_verification.json)에
   before/after·design조건수/rank·독립OLS공식을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS104/RUNNING5/OPEN40/DEFERRED1**.
+- [Histogram 정규화 근거](review_evidence/histogram_normalization_verification.json)에
+  독립bin/질량/면적과현재warning분류를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS105/RUNNING5/OPEN39/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

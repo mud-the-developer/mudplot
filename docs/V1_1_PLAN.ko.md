@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰49차에서기존histogram회귀와독립질량을대조했습니다.** 기존186case의경계/비균일
+bin·weights·원시폭·geometry·CDF·legacy/native/출력·RNG를재실행하고80자리Decimal로
+19지원설정/38행을검사했습니다. In-range질량15(A9/B6)/outside198제외·common-density면적
+.6/.4·개별1/1이맞고높이합/도지그림면적과통계원래폭을혼동하지않습니다. 금지frequencyCDF도유지합니다.
+
+관련269/floor186통과/2901deselected/경고257·품질9명령이며별도floor186재통과로257전부
+Pyparsingdeprecation임을확인했습니다. Normalizer/runtime/newtest를바꾸지않고STAT-04는
+지원범위PASS입니다. [근거](review_evidence/histogram_normalization_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS105/RUNNING5/OPEN39/DEFERRED1**입니다.
+기준efCI4성공/3.10Pytest진행을보호해대기수치/문서단위는로컬보존하고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰48차
+
 **리뷰48차에서퇴화다항회귀의confidence수치를고쳤습니다.** FIND-037은legacyresponse
 1e-250covarianceunderflow/0폭·1e250nonfinite/소실band와rank3/11design의경고후
 4.67e10예측을재현했습니다(관측최대121·수정전4/19실패). 공통predictor/response정규화와

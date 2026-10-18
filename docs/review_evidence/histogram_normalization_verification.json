@@ -1,0 +1,1125 @@
+{
+  "source_sha256": {
+    "mudplot/_histogram.py": "4b66085ba4c4678b040b04320159372be35df571ded9da94ebd54cea52a2f13d",
+    "tests/test_histogram_statistics.py": "7927bd74254562b8c2890935715b0f473ef46fd4b5de5e554d288e9605841459",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "mudplot/_ecdf.py": "093b86087a5c85da34a6b98b9c79c305c3edccc008bcfdaa7d98ff900c03b899",
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29"
+  },
+  "decimal_reference": {
+    "data": {
+      "x": [
+        -1,
+        0,
+        1,
+        2,
+        3,
+        6,
+        7,
+        null
+      ],
+      "w": [
+        99,
+        1,
+        3,
+        2,
+        4,
+        5,
+        99,
+        999
+      ],
+      "g": [
+        "A",
+        "A",
+        "A",
+        "B",
+        "B",
+        "A",
+        "B",
+        "B"
+      ]
+    },
+    "edges": [
+      0,
+      1,
+      3,
+      6
+    ],
+    "half_open_except_closed_final": true,
+    "selected_rows_before_bin_range": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "in_range_rows": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "excluded_outside_weight_mass": 198,
+    "missing_row": 7,
+    "precision": 80,
+    "rows": [
+      {
+        "stat": "count",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "1",
+          "3",
+          "5"
+        ],
+        "actual": [
+          1.0,
+          3.0,
+          5.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "count",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "2",
+          "4"
+        ],
+        "actual": [
+          0.0,
+          2.0,
+          4.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "count",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "1",
+          "4",
+          "9"
+        ],
+        "actual": [
+          1.0,
+          4.0,
+          9.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "count",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "2",
+          "6"
+        ],
+        "actual": [
+          0.0,
+          2.0,
+          6.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "frequency",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "1",
+          "1.5",
+          "1.6666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          1.0,
+          1.5,
+          1.6666666666666667
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "frequency",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "1",
+          "1.3333333333333333333333333333333333333333333333333333333333333333333333333333333"
+        ],
+        "actual": [
+          0.0,
+          1.0,
+          1.3333333333333333
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.55555555555555555555555555555555555555555555555555555555555555555555555555555556"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.3333333333333333,
+          0.5555555555555556
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.66666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          0.3333333333333333,
+          0.6666666666666666
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.44444444444444444444444444444444444444444444444444444444444444444444444444444444",
+          "1"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.4444444444444445,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "1"
+        ],
+        "actual": [
+          0.0,
+          0.3333333333333333,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.2",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.19999999999999998,
+          0.3333333333333333
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.13333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.26666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          0.13333333333333333,
+          0.26666666666666666
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.26666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.6"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.26666666666666666,
+          0.6
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "probability",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.13333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.4"
+        ],
+        "actual": [
+          0.0,
+          0.13333333333333333,
+          0.4000000000000001
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.55555555555555555555555555555555555555555555555555555555555555555555555555555556"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.3333333333333333,
+          0.5555555555555556
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.66666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          0.3333333333333333,
+          0.6666666666666666
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.44444444444444444444444444444444444444444444444444444444444444444444444444444444",
+          "1"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.4444444444444445,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "1"
+        ],
+        "actual": [
+          0.0,
+          0.3333333333333333,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.2",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.19999999999999998,
+          0.3333333333333333
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.13333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.26666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          0.13333333333333333,
+          0.26666666666666666
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.26666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.6"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.26666666666666666,
+          0.6
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "proportion",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.13333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.4"
+        ],
+        "actual": [
+          0.0,
+          0.13333333333333333,
+          0.4000000000000001
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "11.111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "33.333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "55.555555555555555555555555555555555555555555555555555555555555555555555555555556"
+        ],
+        "actual": [
+          11.111111111111112,
+          33.33333333333333,
+          55.55555555555556
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "33.333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "66.666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          33.33333333333333,
+          66.66666666666666
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "11.111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "44.444444444444444444444444444444444444444444444444444444444444444444444444444444",
+          "100"
+        ],
+        "actual": [
+          11.111111111111112,
+          44.44444444444445,
+          100.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "33.333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "100"
+        ],
+        "actual": [
+          0.0,
+          33.33333333333333,
+          100.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "6.6666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "20.0",
+          "33.333333333333333333333333333333333333333333333333333333333333333333333333333333"
+        ],
+        "actual": [
+          6.666666666666667,
+          20.0,
+          33.33333333333333
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "13.333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "26.666666666666666666666666666666666666666666666666666666666666666666666666666667"
+        ],
+        "actual": [
+          0.0,
+          13.333333333333334,
+          26.666666666666668
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "6.6666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "26.666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "60.0"
+        ],
+        "actual": [
+          6.666666666666667,
+          26.666666666666668,
+          60.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "percent",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "13.333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "40.0"
+        ],
+        "actual": [
+          0.0,
+          13.333333333333334,
+          40.00000000000001
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "density",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.16666666666666666666666666666666666666666666666666666666666666666666666666666666",
+          "0.18518518518518518518518518518518518518518518518518518518518518518518518518518519"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.16666666666666666,
+          0.1851851851851852
+        ],
+        "density_integral": "1.00000000000000004"
+      },
+      {
+        "stat": "density",
+        "common_norm": false,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.16666666666666666666666666666666666666666666666666666666666666666666666666666666",
+          "0.22222222222222222222222222222222222222222222222222222222222222222222222222222222"
+        ],
+        "actual": [
+          0.0,
+          0.16666666666666666,
+          0.2222222222222222
+        ],
+        "density_integral": "0.99999999999999992"
+      },
+      {
+        "stat": "density",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111",
+          "0.44444444444444444444444444444444444444444444444444444444444444444444444444444444",
+          "1"
+        ],
+        "actual": [
+          0.11111111111111112,
+          0.4444444444444445,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "density",
+        "common_norm": false,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.33333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "1"
+        ],
+        "actual": [
+          0.0,
+          0.3333333333333333,
+          1.0
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "density",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.1",
+          "0.11111111111111111111111111111111111111111111111111111111111111111111111111111111"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.09999999999999999,
+          0.1111111111111111
+        ],
+        "density_integral": "0.59999999999999995"
+      },
+      {
+        "stat": "density",
+        "common_norm": true,
+        "cumulative": false,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666665",
+          "0.08888888888888888888888888888888888888888888888888888888888888888888888888888889"
+        ],
+        "actual": [
+          0.0,
+          0.06666666666666667,
+          0.08888888888888889
+        ],
+        "density_integral": "0.40000000000000001"
+      },
+      {
+        "stat": "density",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "A",
+        "counts": [
+          "1",
+          "3",
+          "5"
+        ],
+        "exact_expected": [
+          "0.066666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.26666666666666666666666666666666666666666666666666666666666666666666666666666667",
+          "0.6"
+        ],
+        "actual": [
+          0.06666666666666667,
+          0.26666666666666666,
+          0.6
+        ],
+        "density_integral": null
+      },
+      {
+        "stat": "density",
+        "common_norm": true,
+        "cumulative": true,
+        "group": "B",
+        "counts": [
+          "0",
+          "2",
+          "4"
+        ],
+        "exact_expected": [
+          "0",
+          "0.13333333333333333333333333333333333333333333333333333333333333333333333333333333",
+          "0.4"
+        ],
+        "actual": [
+          0.0,
+          0.13333333333333333,
+          0.4000000000000001
+        ],
+        "density_integral": null
+      }
+    ]
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 257,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 20
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 71
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 51
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "reference_policy": "80digitDecimalweight/binmembership/cumulative/formulaindependentofNumPyhistogram. Halfopenexceptclosedfinaledge,excludedoutsidemass198notdenominator15. Acounts1/3/5(total9),B0/2/4(total6). Common-normalizeddensityareas.6/.4,separateareas1/1;CDFterminalmasssharesorseparate1/100.",
+  "existing_coverage": "Reusedexisting186histogramcasesincludingunequalbins/selectedhues/rawlogobservations/stack-dodgegeometry/bars-step/emptygroups/rawmassoverflow/normalizedwideweights/monotoneprefixes/legacyhist/nativeNumPyreferences/actionJSON/editor/sameenvironmentexports+RNG. No duplicate permanent fixture/test farm or new histogram API.",
+  "limits": "STAT04supportedtypedweightedhistogramandlegacycomparisoncorpusonly. Cumulativefrequencyunsupportedandnooprawnormalizationchoicesrejectedbyvalidation\u2014not helper-onlysyntheticbug. DensityheightusesORIGINALbinwidthindodge:drawnareaintentionallychangeswithdodgegeometry,notdatanormalizationerror. Logaxisconstantpositiveautoedgescanexplicitlyfail;no silentrebin.",
+  "qa_note": "Initialcommandguessednonexistenttests/test_histplot.py;pytestexit4,no testsran. Correctedrosterusesexistinghistogram_statistics/test_layers/statistical_scales/nodeps. Initialfailedattemptretainedprivatelynotcountedasa testpass. Extra floorwarningcollectionreran186casesandclassifiedall257deprecations,notproductruntimewarnings.",
+  "floor_environment_overrides": {
+    "floor-histogram": {"PYTEST_ADDOPTS": "-k \"test_histogram_statistics\" --tb=short", "MPLBACKEND": "Agg"},
+    "floor-warnings": {"PYTEST_ADDOPTS": "-k \"test_histogram_statistics\" -p _qa_hist_warnings --tb=short", "PYTHONPATH": "<owned-evidence>", "MPLBACKEND": "Agg"}
+  },
+  "checks": [
+    {
+      "name": "histogram-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_histogram_statistics.py",
+        "tests/test_layers.py",
+        "tests/test_statistical_scales.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "269 passed in 112.24s (0:01:52)"
+      ],
+      "log_text_sha256": "bb13d73dd7074b73877e25d5dcaade15bb764e40c8696f351a73b739a25ae757"
+    },
+    {
+      "name": "floor-histogram",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "186 passed, 2901 deselected, 257 warnings in 82.26s (0:01:22)"
+      ],
+      "log_text_sha256": "05ab516b708afbd800019c05408663a6c45a76400fd8083a25017a283eb49ce9"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "d1cda3b7363c54999cf0235eb0cb8c9a8d7a681658b42d456b05e3c8721d0c8d"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "387ddc41e8b3d9d00754612a4559f396e4d529fbd8177d3e13abce7f3ccc796d"
+    },
+    {
+      "name": "floor-warnings",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "186 passed, 2901 deselected, 257 warnings in 81.71s (0:01:21)"
+      ],
+      "log_text_sha256": "7566d937c6247dab4ba1659b4efea54dd23cd4618734bda832b4d8254126db70"
+    }
+  ],
+  "raw_probe_sha256": {
+    "decimal_reference.json": "9562437ca8245a02f310fc95182b311351e248a5576848458f005177e7ed2fd6",
+    "floor_warning_counts.json": "3a0db756ffbb6839e6c432180f0ea62f660c0650306b143b4b57d0a2eb898393",
+    "results.xml": "e1057f444b96586ba19ac3728dbc88185ee7db93e443afec9f5290825065c7f7",
+    "_qa_hist_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

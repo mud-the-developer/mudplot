@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 49 reuses histogram coverage and checks independent mass.**
+Existing186cases cover weighted/unequal boundaries, raw widths, geometry, CDF,
+legacy/native comparison and exports/RNG. An80-digit Decimal reference checks
+38rows/19supported configurations: in-range mass15(A9/B6), outside198excluded,
+common-density areas.6/.4 and separate1/1. Density is area, not a height sum;
+dodge uses original statistical bin widths and unsupported frequency CDF stays rejected.
+
+Related269/floor186passes/2901deselected/257warnings and9quality records pass.
+A second186case floor pass classifies all257as Pyparsing deprecations, not product
+numeric warnings. No normalization/runtime/newtest change. STAT-04 is PASS in
+scope. [Evidence](review_evidence/histogram_normalization_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS105/RUNNING5/OPEN39/DEFERRED1**.
+BaselineefCI has4success/3.10Pytestrunning; retain queued numeric/docs units locally.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 48
+
 **Review phase 48 fixes degenerate polynomial confidence computation.** FIND-037
 reproduces legacy raw-response covariance underflow(collapse) at1e-250 and
 nonfinite/empty bands at1e250; a rank3/11 clustered design warned then returned

@@ -18,6 +18,26 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 49차 — histogram경계/weights/density독립질량대조
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-histogram-review-t8dyma2q`와
+  [Decimal38행·기존회귀·경고분류](review_evidence/histogram_normalization_verification.json)을 보존합니다.
+- 중복test를추가하지않고기존histogram186case의경계값/비균일bins/선택hue/원시log폭/
+  stack·dodge·bars·step/빈곡선/큰weights/단조CDF/legacyNumPy대조/codec/editor/3format·RNG를
+  현재코드로재실행했습니다. 새로운normalizer/API/default는없습니다.
+- 별도80자리Decimal은edges0/1/3/6·weights·좌우경계/마지막포함·범위밖행·결측을직접합산해
+  지원19설정×2group=38행을대조했습니다. In-range질량15(A9/B6)만분모이고outside198은
+  제외합니다. CountA1/3/5·B0/2/4에서common-density적분.6/.4·개별적분1/1이며높이합이
+  아닙니다. 누적은질량prefix/정규화확률이며미지원cumulativefrequency를helper에직접넣어
+  결함으로세지않습니다. Dodge그림면적과원래bin폭의통계정규화도구분했습니다.
+- 관련269통과·실제floor186통과/2901deselected/경고257·별도warningcollector재실행도186/
+  257동일·양platformtype/Ruff241/생성계약/packaging9명령exit0입니다. 257은모두10종
+  PyparsingDeprecationWarning이며제품수치RuntimeWarning이아닙니다. 초기없는histplot.py
+  filename명령은pytestexit4/no testsran으로보존하고실제test_layers로수정해통과와구분했습니다.
+- STAT-04는현재지원weighted/legacycorpus에서PASS입니다. Constantpositive로그autoedge
+  명시실패·rawmassoverflow·빈범주/금지조합의기존규칙을유지합니다. 원격기준efCI는4성공/
+  3.10Pytest진행중이라대기수치수정과문서unit을로컬보존합니다. 버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 48차 — 퇴화회귀와covariance단위손실복구
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-regression-degenerate-hpq0st5v`와
@@ -1291,7 +1311,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-03 | P1 | PASS | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-04 | P1 | OPEN | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-04 | P1 | PASS | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-05 | P1 | OPEN | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-06 | P1 | OPEN | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-07 | P1 | OPEN | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1384,7 +1404,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 104, RUNNING 5, OPEN 40, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 105, RUNNING 5, OPEN 39, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

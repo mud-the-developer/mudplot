@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Revalidated supported weighted histogram boundaries, unequal-bin density areas
+  and cumulative mass against independent high-precision Decimal expectations,
+  reusing existing geometry/export regressions without changing normalization.
 - Fixed polynomial covariance underflow/overflow that could silently collapse or
   omit legacy confidence bands. Normalize predictor/response units in the shared
   helper and reject rank/arithmetic/nonfinite failures with causes, retaining the
