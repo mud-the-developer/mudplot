@@ -22,16 +22,21 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 foreground 자손 timeout은 보유 Windows tree/새Unix group·정리 도구2초 예산과
+  정리 실패 진단을 유지합니다. Windows21통과/helper6ignored·정상 native bridge는
+  통과했으나 새Unix/MSRV가 필요해 RUST-04는 RUNNING입니다. Detached worker는 미지원입니다.
+- 기준e728CI39122032427은5job 모두 성공했습니다. 새 cleanup runtime 이전 결과라
+  소급하지 않고 대기 로컬 단위와 게시한 뒤 새로운 CI로 CI-01을 판단합니다.
+
 - 실제e728 Linux floor2872통과/26선택·TeXskip/경고3906을 완료했습니다. 정확한 소스와
   완전한 skip 요약이4staging symlink 통과를 뒷받침하고 양native19통과/helper3ignored/
   HTTP path도 확인해 SEC-06은 관찰 정책 범위에서 PASS입니다. Sandbox/모든OS 보장은
-  아니며 full Python2job은 진행 중입니다. CI-01과 나중 privacy-only 회귀는 구분합니다.
+  아니며 앞선 full Python2job은 이제 성공했습니다. 나중 privacy/cleanup 변경은 구분합니다.
 
 - 최신 양 editor 기본 stdout/stderr에 합성 입력 marker/traceback이 없고 state/PNG를
   보존했습니다. 같은 client draft/진단 응답은 의도된 편집 기능입니다. Runtime 변경 없이
   관련211·최소1통과이며3Python-lock/69Cargo-registry OSV snapshot의 알려진 advisory는
-  없습니다. SEC-08은 범위 내 PASS이지 보안 인증은 아닙니다. 새5job CI를 보호해 로컬
-  test/doc 게시는 보류합니다.
+  없습니다. SEC-08은 범위 내 PASS이지 보안 인증은 아닙니다. 게시 보류는 기준 CI 완료까지 유지했습니다.
 
 - 최신 full/floor 분리는 ordered60파일 floor와 full/browser/Rust 범위를 유지하며
  3Python job 각60분·Rust2job 각20분의 유한 예산을 둡니다. 같은 TeX/system-font
@@ -142,6 +147,8 @@
   합성 log probe·정확한 lock snapshot과 audit 한계를 기록했습니다.
 - [원격 floor/native 근거](review_evidence/remote_floor_verification.json)에 완료job
   log hash·skip 범위·소스 기반 symlink 판단 근거를 보존합니다.
+- [자손 정리 근거](review_evidence/descendant_cleanup_verification.json)에 controlled
+  Windows timeout/실패/복구와 한계·변경 이전 CI 성공을 기록했습니다.
 - [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.

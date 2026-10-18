@@ -28,18 +28,25 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest foreground descendant timeout now uses a held Windows tree/fresh Unix
+  process group, bounded cleanup command and explicit cleanup-error diagnostics.
+  Windows21tests/6helpers ignored and normal native bridge pass; new Unix/MSRV
+  still need CI, so RUST-04 remains RUNNING. Detached workers are not supported.
+- Baselinee728CI39122032427 is ALL5SUCCESS. It predates the cleanup change; queued
+  local units can publish, but CI-01 is not retroactive proof of this new runtime.
+
 - Actuale728Linux floor completed2872passes/26optional+TeXskips/3906warnings;
   exact source and complete skip summary support4staging symlink passes. Both OS
   native jobs passed19tests/3helpers ignored plus HTTP path checks. SEC-06 is now
-  PASS for measured policies, not a sandbox/all-OS guarantee. Full Python2jobs
-  still run, so CI-01 remains RUNNING and the later privacy-only case is separate.
+  PASS for measured policies, not a sandbox/all-OS guarantee. The later privacy/
+  cleanup changes retain their own evidence; the earlier full jobs have now succeeded.
 
 - Latest default-log probes preserve state/PNG and do not record synthetic input
   markers or tracebacks in Python/Rust stdout/stderr. Same-client draft/diagnostic
   output remains intentional.211related/floor1checks pass; runtime code is unchanged.
 - Current3Python-lock audits and69Cargo-registry OSV queries report no known
   advisory within their scoped snapshots, not security certification. SEC-08 is
-  PASS. Hold the local test/docs unit whilee728five-job CI remains active.
+  PASS. The local test/docs publication hold protectede728CI until it completed.
 
 - Latest CI full/floor separation retains the ordered60-file floor and complete
   full/browser/Rust checks under3finite60minute Python jobs and2Rust20minute jobs.
@@ -167,6 +174,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records default synthetic log probes, exact lock snapshots and audit limitations.
 - [Remote floor/native evidence](review_evidence/remote_floor_verification.json)
   retains completed-job log hashes, skip scopes and source-based symlink inference.
+- [Descendant cleanup evidence](review_evidence/descendant_cleanup_verification.json)
+  records controlled Windows timeout/failure/recovery plus limits and pre-change CI.
 - [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 

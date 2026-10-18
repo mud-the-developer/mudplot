@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 28차 — foreground 자손 timeout 정리
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-descendant-lj9xrjfm`,
+  [child tree·정리 실패·복구 요약](review_evidence/descendant_cleanup_verification.json)도 보존합니다.
+- **FIND-028:** controlled parent의2초 timeout 뒤 직접 child는 끝났지만 추가 child가
+ 4초 완료 marker를 계속 기록하는 회귀1개가 수정 전 실패했습니다. 실패 raw는 harness
+  기록이며 이 폴더의 성공 receipt로 꾸미지 않습니다. 실제120초를 기다리지 않았습니다.
+- 공통 run에서 Unix child에 새 process group을 주고 timeout/wait 오류 때만 보유 PID에
+  대응하는 group을 /bin/kill로 정리합니다. Windows는 SystemRoot/System32 taskkill의
+  /T/F로 소유 tree를 정리합니다. Shell 문자열/PATH 탐색/다른 interpreter 대체는 없습니다.
+  Cleanup command는 null stdio·별도2초 예산이며 직접 child kill/reap도 시도하고 정리
+  실패는 원래 오류에 남깁니다. Detached/reparented worker는 지원하지 않는 명시 한계입니다.
+- Windows에서 descendant marker가 남지 않고 다음 child가 성공했습니다. 별도 child의
+  SystemRoot만 잘못 지정한 정리 도구 부재도 진단에 남기고 직접 child 종료/후속 성공을
+  확인했으며 전역 환경을 바꾸지 않았습니다. 기존100ms stub은 cleanup 예산을 반영한
+  유한4초 관찰 한도로 유지하며 제품120초/HTTP16MiB는 그대로입니다.
+- 현재 local native lib20+main1통과/helper6ignored·Clippy/fmt·build와 정상 실제 bridge/
+  HTTP path 집중 smoke가 통과했습니다. Ruff222/format·Pyright·계약·packaging9명령은
+  exit0이고 변경Rust LSP clean입니다. Local compiler는 stable만 설치되어 새MSRV/Unix
+  실행으로 세지 않으며 RUST-04는 다음 CI 전 RUNNING입니다.
+- 기준e728CI39122032427은 이제5job 모두 성공했지만 이번 runtime 변경 이전 결과입니다.
+  새 cleanup code로 소급해 CI-01을 닫지 않습니다. 완료된 기준 실행을 더 기다리지 않고
+  로컬 privacy/원격증거 단위와 이 수정을 함께 게시해 다음 원격 검증을 받습니다.
+  버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 27차 — 실제 Linux floor·양OS native 완료 증거
 
 - CI39122032427/e728의 minimum job117659400040은11:08:28Z→11:25:16Z에 성공했습니다.
@@ -914,7 +939,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 ## 판정 범위와 다음 순서
 
 - 현재 상태: PASS 72, RUNNING 9, OPEN 68, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

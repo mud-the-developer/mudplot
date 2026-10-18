@@ -65,7 +65,13 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   PNG preview는 어느 축이든 2000 pixel을 넘을 때만 DPI를 낮추며
   spec/final export는 바꾸지 않는다.
 - htmx와 0BSD license는 `dashboard/static/`에서 재사용하며 복제하지 않는다.
-  request body 상한은 16 MiB, Python bridge subprocess timeout은 120초다. 선언한
+  request body 상한은16 MiB, Python bridge subprocess timeout은120초다. Timeout/
+  wait 실패 시 Windows는 보유 child tree에 System32 taskkill을, Unix는 새 child process
+  group에만 /bin/kill을 적용한다. 정리 command는 별도2초 예산이며 이후 직접 child
+  kill/reap을 시도하고 정리 실패도 반환 오류에 남긴다. Foreground 소유 tree/group의
+  범위이지 detached/reparented worker·CPU/disk hard limit·즉시 OS wait 보장은 아니다.
+  현재 Windows의 controlled descendant/실패/복구는 통과했고 후속 Unix/MSRV 결과는
+  별도 확인해야 한다. 선언한
   Content-Length가16 MiB를 넘으면 body frame을 기다리기 전에 거부한다. 기존 limited
   Bytes extractor로 undo/reset을 포함한 모든 handler 전에 decoded body 한도를 적용하며
   한도 내 chunked를 지원한다. 로컬 N-1/N/N+1과 서버 PID의 수명 peak RSS를 관찰했지만

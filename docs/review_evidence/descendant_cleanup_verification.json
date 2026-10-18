@@ -1,0 +1,208 @@
+{
+  "head": "10489b9dcbe256dd7a85907025308239df4aa0d2",
+  "source_sha256": {
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+    "mudplot-editor/README.md": "41ad7217aa9405b48a93397b4a66e4741ea8b694c734cd99c07259324848cc0a",
+    "mudplot-editor/README.ko.md": "03a1c3e8cd26082d6cb16575626d0f89a6b3777ee476eb1efd95cb8c58445b18"
+  },
+  "rust_version": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "local_platform": "Windows",
+  "local_installed_toolchains": "stable-x86_64-pc-windows-msvc (active, default)",
+  "msrv_local_verified": false,
+  "pre_fix_in_harness_failed": 1,
+  "pre_fix_reason": "Controlled timed parent was killed but its four-second owned descendant still created the completion marker. Old direct-child kill/reap was not tree cleanup.",
+  "pre_fix_scope": "Observed in harness test output; that raw failing attempt is not a local receipt in this folder.",
+  "new_controlled_tests": {
+    "owned_descendant_timeout_and_next_child": true,
+    "windows_missing_cleanup_tool_is_reported_and_next_child": true,
+    "configuration_failure_is_child_local": true,
+    "test_helper_children_bounded_seconds": [
+      4,
+      10
+    ]
+  },
+  "cleanup_policy": "Timeout/wait failures only: held child PID and WindowsSystem32taskkill/T/F, or freshly created Unixprocessgroup plus /bin/kill-KILL--negativePID. Cleanup utility has2second budget/null stdio; direct-child kill/reap attempted; unknown cleanup remains in BridgeError. No shell/interpreter mixing/default120second or16MiB change.",
+  "limits": "Only current Windows branch executed locally; installed local rust toolchain is stable, not MSRV1.88. Unix/process-group/currentMSRV await a new CI. Detached/reparented workers, hardwall OS wait/CPU/disk and general server-shutdown descendant lifetimes are not guaranteed. RUST04 stays RUNNING.",
+  "baseline_e728_ci": {
+    "run": 39122032427,
+    "head": "e728708eeaa254756d0c431798d9b5b8452269aa",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117659399818,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117659399968,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117659400000,
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "id": 117659400040,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117659400047,
+        "conclusion": "success"
+      }
+    ],
+    "scope": "All5baseline jobs succeeded before this cleanup production change; do not retroactively treat them as its validation."
+  },
+  "native_focused": {
+    "exit_code": 0,
+    "current_binary_sha256": "0c84000c1f53310e8db9db4cdcecae0c1d23872f7397c65da7421f1cf54dae94",
+    "normal_capabilities_apply_render_recover": true,
+    "http_boundary_helper": true,
+    "spec_sha256": "e5c1df66464d3a14bdbb4fee5a6633de4e65e7cc8db82612265ce9e87fe46aed",
+    "png_sha256": "a08beeda1e3767719c473c3c522a1c1df7856dc74250c60254691104c95878ad",
+    "scope": "Current Windows focused real bridge, not browser/full smoke/Unix/MSRV or production server-shutdown tree lifetime."
+  },
+  "native_logs_sha256": {
+    "native.stdout": "273607776ce1aef05cc91db28144c1c642e8d3017b3422e74442fa856c53cf75",
+    "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-probe.log": "85db1c21d40fd2675fa93b790ebc34ea233fc3736e3214211e40f38d42595d7b"
+  },
+  "checks": [
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--check",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "ba278e5d0de3e5cd2e03318ec06875f257d02627256424bc64dc0e016a891e44"
+    },
+    {
+      "name": "rust-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 20 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 5.38s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "0da09e6a121a47a6739ee7ea816c90335f84c2ea8915c58f3579ebe7d15fbb63"
+    },
+    {
+      "name": "native-build",
+      "argv": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "d0c71cc587b82e79de2a9a9d88505c74f500645215651be75a6dfa7b5f3ef485"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "222 files already formatted"
+      ],
+      "log_text_sha256": "65bfe43104bb2e6b62e2cf2e427ada9b13e1c43c71d8a87decbb75061f04e5f6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "cb7a9feee6de0914627d271a92a2598a31c432af457a0b5bd446e9c00ecef218"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "f3aa23a82828d5aa435a728c02a98069a166a2111003f35120ed88db30e20191"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ use std::fmt;
 use std::fs;
 use std::io::{Read, Seek};
 use std::path::Path;
-use std::process::Command;
+use std::process::{Child, Command, Stdio};
 use std::thread;
 use std::time::{Duration, Instant};
 
@@ -108,29 +108,30 @@ impl PythonBridge {
         let child_stderr = stderr
             .try_clone()
             .map_err(error("capture Python bridge stderr"))?;
-        let mut child = Command::new(&self.executable)
-            .args(args)
-            .stdout(child_stdout)
-            .stderr(child_stderr)
-            .spawn()
-            .map_err(error("start Python bridge"))?;
+        let mut command = Command::new(&self.executable);
+        command.args(args).stdout(child_stdout).stderr(child_stderr);
+        #[cfg(unix)]
+        {
+            use std::os::unix::process::CommandExt;
+            command.process_group(0);
+        }
+        let mut child = command.spawn().map_err(error("start Python bridge"))?;
         let started = Instant::now();
         let status = loop {
             if started.elapsed() >= self.timeout {
-                let _ = child.kill();
-                let _ = child.wait();
-                return Err(BridgeError(format!(
-                    "Python bridge timed out after {:?}",
-                    self.timeout
-                )));
+                return Err(stop_with_error(
+                    &mut child,
+                    format!("Python bridge timed out after {:?}", self.timeout),
+                ));
             }
             match child.try_wait() {
                 Ok(Some(status)) => break status,
                 Ok(None) => thread::sleep(Duration::from_millis(10)),
                 Err(e) => {
-                    let _ = child.kill();
-                    let _ = child.wait();
-                    return Err(error("wait for Python bridge")(e));
+                    return Err(stop_with_error(
+                        &mut child,
+                        format!("wait for Python bridge: {e}"),
+                    ));
                 }
             }
         };
@@ -164,6 +165,71 @@ impl PythonBridge {
             if truncated { " [stderr truncated]" } else { "" }
         )))
     }
+}
+
+// shortcut: detached workers need OS jobs/subreapers if they become supported.
+fn stop_with_error(child: &mut Child, mut reason: String) -> BridgeError {
+    let tree_result = (|| -> std::io::Result<()> {
+        let pid = child.id().to_string();
+        #[cfg(windows)]
+        let mut command = {
+            let root = std::env::var_os("SystemRoot")
+                .ok_or_else(|| std::io::Error::other("SystemRoot is missing"))?;
+            let mut command = Command::new(Path::new(&root).join("System32/taskkill.exe"));
+            command.args(["/PID", &pid, "/T", "/F"]);
+            command
+        };
+        #[cfg(unix)]
+        let mut command = {
+            let mut command = Command::new("/bin/kill");
+            command.args(["-KILL", "--", &format!("-{pid}")]);
+            command
+        };
+        let mut cleanup = command
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .stderr(Stdio::null())
+            .spawn()?;
+        let started = Instant::now();
+        loop {
+            match cleanup.try_wait() {
+                Ok(Some(status)) if status.success() => return Ok(()),
+                Ok(Some(status)) => {
+                    return Err(std::io::Error::other(format!(
+                        "cleanup exited with {status}"
+                    )));
+                }
+                Ok(None) if started.elapsed() < Duration::from_secs(2) => {
+                    thread::sleep(Duration::from_millis(10))
+                }
+                result => {
+                    if cleanup.kill().is_ok() {
+                        let _ = cleanup.wait();
+                    }
+                    return Err(match result {
+                        Err(e) => e,
+                        _ => std::io::Error::new(
+                            std::io::ErrorKind::TimedOut,
+                            "cleanup exceeded two seconds",
+                        ),
+                    });
+                }
+            }
+        }
+    })();
+    // Keep the child handle until tree cleanup, so only this owned PID/group is targeted.
+    let wait_result = match child.kill() {
+        Ok(()) => child.wait().map(|_| ()),
+        Err(e) => match child.try_wait() {
+            Ok(Some(_)) => Ok(()),
+            Ok(None) => Err(e),
+            Err(e) => Err(e),
+        },
+    };
+    if let Err(e) = tree_result.and(wait_result) {
+        reason.push_str(&format!("; process-tree cleanup failed: {e}"));
+    }
+    BridgeError(reason)
 }
 
 fn write_json(path: &Path, value: &impl serde::Serialize) -> Result<(), BridgeError> {
@@ -214,12 +280,125 @@ mod tests {
             ])
             .expect_err("slow controlled child must time out");
         assert!(error.to_string().contains("timed out"));
-        assert!(started.elapsed() < Duration::from_secs(2));
+        assert!(started.elapsed() < Duration::from_secs(4));
         let healthy = PythonBridge {
             executable: executable.into(),
             timeout: Duration::from_secs(5),
         };
         assert!(!healthy.run(["--help"]).unwrap().is_empty());
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn cleanup_failure_is_reported_without_blocking_next_child() {
+        let dir = tempfile::tempdir().unwrap();
+        let output = Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_cleanup_failure_helper",
+                "--nocapture",
+            ])
+            .env("SystemRoot", dir.path().join("missing-system-root"))
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+    }
+
+    #[cfg(windows)]
+    #[test]
+    #[ignore]
+    fn bridge_cleanup_failure_helper() {
+        let executable = std::env::current_exe().unwrap();
+        let bridge = PythonBridge {
+            executable: executable.clone().into(),
+            timeout: Duration::from_millis(100),
+        };
+        let error = bridge
+            .run([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_slow_output_helper",
+                "--nocapture",
+            ])
+            .unwrap_err()
+            .to_string();
+        assert!(error.contains("timed out") && error.contains("process-tree cleanup failed"));
+        let healthy = PythonBridge {
+            executable: executable.into(),
+            timeout: Duration::from_secs(5),
+        };
+        assert!(!healthy.run(["--help"]).unwrap().is_empty());
+    }
+
+    #[test]
+    fn timeout_stops_owned_descendant_and_bridge_recovers() {
+        let dir = tempfile::tempdir().unwrap();
+        let ready = dir.path().join("descendant.txt");
+        let argument = format!("--skip={}", ready.display());
+        let executable = std::env::current_exe().unwrap();
+        let bridge = PythonBridge {
+            executable: executable.clone().into(),
+            timeout: Duration::from_secs(2),
+        };
+        let error = bridge
+            .run([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_parent_descendant_helper",
+                "--nocapture",
+                &argument,
+            ])
+            .expect_err("controlled parent must time out");
+        assert!(error.to_string().contains("timed out"));
+        assert!(!error.to_string().contains("cleanup failed"));
+        assert!(
+            ready.exists(),
+            "controlled helper never spawned its descendant"
+        );
+        thread::sleep(Duration::from_secs(3));
+        assert!(
+            !ready.with_extension("done").exists(),
+            "owned descendant survived timeout"
+        );
+        let healthy = PythonBridge {
+            executable: executable.into(),
+            timeout: Duration::from_secs(5),
+        };
+        assert!(!healthy.run(["--help"]).unwrap().is_empty());
+    }
+
+    #[test]
+    #[ignore]
+    fn bridge_parent_descendant_helper() {
+        let argument = std::env::args().find(|s| s.starts_with("--skip=")).unwrap();
+        let ready = argument.strip_prefix("--skip=").unwrap();
+        let mut child = Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_descendant_output_helper",
+                "--nocapture",
+                &argument,
+            ])
+            .spawn()
+            .unwrap();
+        fs::write(ready, format!("{} {}", std::process::id(), child.id())).unwrap();
+        thread::sleep(Duration::from_secs(10));
+        child.wait().unwrap();
+    }
+
+    #[test]
+    #[ignore]
+    fn bridge_descendant_output_helper() {
+        let argument = std::env::args().find(|s| s.starts_with("--skip=")).unwrap();
+        let ready = Path::new(argument.strip_prefix("--skip=").unwrap());
+        thread::sleep(Duration::from_secs(4));
+        fs::write(ready.with_extension("done"), "descendant completed").unwrap();
     }
 
     #[test]

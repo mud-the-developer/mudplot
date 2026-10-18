@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 28 fixes owned foreground descendant timeout cleanup.**
+FIND-028 reproduced a grandchild surviving direct-child timeout. Shared transport
+now targets only the held Windows tree or a fresh Unix process group; no shell or
+interpreter fallback is introduced. The cleanup utility has a separate2second
+budget, direct-child kill/reap is attempted, and failure remains diagnostic.
+Detached/reparented workers remain outside this foreground policy.
+
+Current Windows lib20+main1passes/6ignored helpers, controlled cleanup-tool failure/
+recovery and a normal focused native bridge pass;9format/lint/type/contract/package
+records pass. Unix/current MSRV remain unexecuted locally, so RUST-04 stays RUNNING.
+Baselinee728CI39122032427 is now ALL5SUCCESS before this change, not its validation.
+Publish the queued local units and inspect a new run. [Evidence](review_evidence/descendant_cleanup_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/DEFERRED1**.
+Library timeout/body limits, versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 27
+
 **Review phase 27 records the completed e728 Linux floor and both native jobs.**
 Job117659400040 passed the entire ordered60-file floor:2872passes/26skips/
 3906warnings in943.69s. Skips are25optional adapters and1biber, not staging symlink

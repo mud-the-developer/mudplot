@@ -74,7 +74,14 @@ without an Origin remain supported; this is not remote-user authentication.
   2000 pixels, without changing the spec or final exports.
 - htmx and its 0BSD license are reused from `dashboard/static/` rather than
   vendored a second time. Request bodies are bounded at 16 MiB, and Python
-  bridge subprocesses time out after 120 seconds. A declared Content-Length over
+  bridge subprocesses time out after 120 seconds. On timeout/wait failure, Windows
+  uses its System32 taskkill on the held child tree; Unix creates a fresh child
+  process group and signals only that group via /bin/kill. The cleanup command has
+  a separate two-second budget, then direct-child kill/reap is attempted. Cleanup
+  failure stays in the returned error. This covers foreground owned trees/groups,
+  not detached/reparented workers, hard CPU/disk limits or instantaneous OS waits.
+  Current Windows controlled descendant/failure/recovery checks pass; later Unix/
+  MSRV execution still needs its own result. A declared Content-Length over
   16 MiB is rejected before waiting for body frames. The existing limited Bytes
   extractor caps decoded bodies before every handler, including undo/reset,
   rather than relying only on routes that happen to read the body. Bounded

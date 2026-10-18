@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 28차에서 foreground 자손 timeout 정리를 고쳤습니다.** FIND-028의 직접child
+종료 뒤 살아남은 grandchild를 재현했습니다. 공통 transport가 Windows 보유 tree 또는
+새Unix process group만 정리하며 shell/interpreter fallback은 없습니다. 정리 도구의
+별도2초 예산·직접 child kill/reap·실패 진단을 유지하고 detached/reparented worker는
+정책 밖으로 명시합니다.
+
+현재Windows lib20+main1통과/helper6ignored·정리 도구 부재/복구·정상 집중 native bridge와
+fmt/lint/type/계약/packaging9명령이 통과했습니다. 새Unix/MSRV는 로컬 실행하지 않아
+RUST-04는 RUNNING입니다. 기준e728CI39122032427은 이제5job 전부 성공했지만 후속
+runtime 검증은 아니므로 소급하지 않습니다. 로컬 대기 단위와 함께 게시해 새 CI를 받습니다.
+[근거](review_evidence/descendant_cleanup_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS72/RUNNING9/OPEN68/DEFERRED1**이며 제품한도/버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 27차
+
 **리뷰 27차에서 실제e728 Linux floor·양native 완료 log를 확인했습니다.** Job117659400040의
 ordered60파일 전체는2872통과/26skip/경고3906,943.69초입니다. Skip은 선택adapter25와
 biber1이며 staging symlink skip은 없습니다. 정확한 소스·전체 성공·완전한 skip 요약으로

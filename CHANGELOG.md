@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed bridge timeout/wait cleanup leaving an owned foreground descendant alive:
+  target the held Windows child tree or a fresh Unix child process group, bound
+  the cleanup command and keep cleanup failure in the returned diagnostic.
+  Controlled Windows descendant/failure/recovery tests pass; current Unix/MSRV
+  validation remains separate, and detached workers are not supported.
 - Verified default editor error logs with synthetic privacy probes and current
   Python-lock/registry-crate advisory snapshots; documented same-client draft
   responses and audit limitations without claiming security certification.
