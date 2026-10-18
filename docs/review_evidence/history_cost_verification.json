@@ -1,0 +1,773 @@
+{
+  "environment": {
+    "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD"
+  },
+  "source_sha256": {
+    "mudplot/store.py": "17b941a995d43aa8b53f4fac5d23b442278d675779005f36525fc6e5871f54ee",
+    "mudplot/reducer.py": "0e34e8e5bc41add420941b739903602b184aa45d7024613424d3ef93390ad72a",
+    "mudplot/spec.py": "0cec837f31e597df9bfd46da86b2d56176b294d6ee5ab9ad8ec461021d13ecab",
+    "scripts/check_request_body_limits.py": "97ab949a88c3642cbde9f66d5f5230ef0aaaca291c43c54f2e7120853ed72db3",
+    "scripts/profile_history_costs.py": "a98afbeefb68fb9383e30d11fbf133f7516810be87a758414db84fbf1cdddcec"
+  },
+  "budgets": {
+    "per_child_seconds": 12,
+    "dispatch_seconds": 2.5,
+    "rss_observation_bytes": 536870912
+  },
+  "scope": "Each core-only child has its own process lifetime RSS/peak; no renderer descendants, concurrent/cold startup comparison, OS hard RSS limit or long-lived GUI leak guarantee. First dispatch is retained; timings exclude child import/startup. Incomplete/timeout checkpoints retain unknown times as null, never zero.",
+  "cases": [
+    {
+      "rows": 1000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "undo_ms": 5.24050000240095,
+      "redo_ms": 5.110700003569946,
+      "process_seconds": 0.9379999999946449,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 1000,
+          "target_history": 10,
+          "before": {
+            "rss_bytes": 27533312,
+            "lifetime_peak_rss_bytes": 27533312
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 1000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0083176999760326,
+          "latency": {
+            "samples": 10,
+            "median_ms": 0.8219000010285527,
+            "p95_nearest_rank_ms": 0.8549999911338091
+          },
+          "memory": {
+            "rss_bytes": 27602944,
+            "lifetime_peak_rss_bytes": 27602944
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 1000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0083176999760326,
+          "latency": {
+            "samples": 10,
+            "median_ms": 0.8219000010285527,
+            "p95_nearest_rank_ms": 0.8549999911338091
+          },
+          "memory": {
+            "rss_bytes": 27602944,
+            "lifetime_peak_rss_bytes": 27602944
+          },
+          "undo_ms": 5.24050000240095,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 1000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0083176999760326,
+          "latency": {
+            "samples": 10,
+            "median_ms": 0.8219000010285527,
+            "p95_nearest_rank_ms": 0.8549999911338091
+          },
+          "memory": {
+            "rss_bytes": 27623424,
+            "lifetime_peak_rss_bytes": 27623424
+          },
+          "undo_ms": 5.24050000240095,
+          "redo_ms": 5.110700003569946
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 1000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "undo_ms": 41.873900016071275,
+      "redo_ms": 43.10320000513457,
+      "process_seconds": 1.875,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 1000,
+          "target_history": 100,
+          "before": {
+            "rss_bytes": 27467776,
+            "lifetime_peak_rss_bytes": 27467776
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 1000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.08351900000707246,
+          "latency": {
+            "samples": 100,
+            "median_ms": 0.8015000057639554,
+            "p95_nearest_rank_ms": 0.8682000043336302
+          },
+          "memory": {
+            "rss_bytes": 27889664,
+            "lifetime_peak_rss_bytes": 27889664
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 1000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.08351900000707246,
+          "latency": {
+            "samples": 100,
+            "median_ms": 0.8015000057639554,
+            "p95_nearest_rank_ms": 0.8682000043336302
+          },
+          "memory": {
+            "rss_bytes": 27889664,
+            "lifetime_peak_rss_bytes": 27889664
+          },
+          "undo_ms": 41.873900016071275,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 1000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.08351900000707246,
+          "latency": {
+            "samples": 100,
+            "median_ms": 0.8015000057639554,
+            "p95_nearest_rank_ms": 0.8682000043336302
+          },
+          "memory": {
+            "rss_bytes": 27914240,
+            "lifetime_peak_rss_bytes": 27914240
+          },
+          "undo_ms": 41.873900016071275,
+          "redo_ms": 43.10320000513457
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 1000,
+      "target_history": 1000,
+      "completed_actions": 1000,
+      "undo_ms": 402.3490999825299,
+      "redo_ms": 404.44539999589324,
+      "process_seconds": 3.359000000025844,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 1000,
+          "target_history": 1000,
+          "before": {
+            "rss_bytes": 27418624,
+            "lifetime_peak_rss_bytes": 27418624
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 1000,
+          "target_history": 1000,
+          "completed_actions": 1000,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.8332295000145677,
+          "latency": {
+            "samples": 1000,
+            "median_ms": 0.7972999883349985,
+            "p95_nearest_rank_ms": 0.9657000191509724
+          },
+          "memory": {
+            "rss_bytes": 29687808,
+            "lifetime_peak_rss_bytes": 29687808
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 1000,
+          "target_history": 1000,
+          "completed_actions": 1000,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.8332295000145677,
+          "latency": {
+            "samples": 1000,
+            "median_ms": 0.7972999883349985,
+            "p95_nearest_rank_ms": 0.9657000191509724
+          },
+          "memory": {
+            "rss_bytes": 29687808,
+            "lifetime_peak_rss_bytes": 29687808
+          },
+          "undo_ms": 402.3490999825299,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 1000,
+          "target_history": 1000,
+          "completed_actions": 1000,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.8332295000145677,
+          "latency": {
+            "samples": 1000,
+            "median_ms": 0.7972999883349985,
+            "p95_nearest_rank_ms": 0.9657000191509724
+          },
+          "memory": {
+            "rss_bytes": 29863936,
+            "lifetime_peak_rss_bytes": 29863936
+          },
+          "undo_ms": 402.3490999825299,
+          "redo_ms": 404.44539999589324
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 10000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "undo_ms": 36.75810000277124,
+      "redo_ms": 41.054500004975125,
+      "process_seconds": 1.8599999999860302,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 10000,
+          "target_history": 10,
+          "before": {
+            "rss_bytes": 29732864,
+            "lifetime_peak_rss_bytes": 29732864
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 10000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0667896999802906,
+          "latency": {
+            "samples": 10,
+            "median_ms": 6.73609999648761,
+            "p95_nearest_rank_ms": 7.024899998214096
+          },
+          "memory": {
+            "rss_bytes": 30027776,
+            "lifetime_peak_rss_bytes": 30027776
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 10000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0667896999802906,
+          "latency": {
+            "samples": 10,
+            "median_ms": 6.73609999648761,
+            "p95_nearest_rank_ms": 7.024899998214096
+          },
+          "memory": {
+            "rss_bytes": 30027776,
+            "lifetime_peak_rss_bytes": 30027776
+          },
+          "undo_ms": 36.75810000277124,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 10000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.0667896999802906,
+          "latency": {
+            "samples": 10,
+            "median_ms": 6.73609999648761,
+            "p95_nearest_rank_ms": 7.024899998214096
+          },
+          "memory": {
+            "rss_bytes": 30228480,
+            "lifetime_peak_rss_bytes": 30228480
+          },
+          "undo_ms": 36.75810000277124,
+          "redo_ms": 41.054500004975125
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 10000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "undo_ms": 336.30050002830103,
+      "redo_ms": 339.29140001419,
+      "process_seconds": 3.0460000000020955,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 10000,
+          "target_history": 100,
+          "before": {
+            "rss_bytes": 29040640,
+            "lifetime_peak_rss_bytes": 29040640
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 10000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6632422999828123,
+          "latency": {
+            "samples": 100,
+            "median_ms": 6.521799979964271,
+            "p95_nearest_rank_ms": 7.100999995600432
+          },
+          "memory": {
+            "rss_bytes": 29753344,
+            "lifetime_peak_rss_bytes": 29753344
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 10000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6632422999828123,
+          "latency": {
+            "samples": 100,
+            "median_ms": 6.521799979964271,
+            "p95_nearest_rank_ms": 7.100999995600432
+          },
+          "memory": {
+            "rss_bytes": 29753344,
+            "lifetime_peak_rss_bytes": 29753344
+          },
+          "undo_ms": 336.30050002830103,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 10000,
+          "target_history": 100,
+          "completed_actions": 100,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6632422999828123,
+          "latency": {
+            "samples": 100,
+            "median_ms": 6.521799979964271,
+            "p95_nearest_rank_ms": 7.100999995600432
+          },
+          "memory": {
+            "rss_bytes": 30015488,
+            "lifetime_peak_rss_bytes": 30015488
+          },
+          "undo_ms": 336.30050002830103,
+          "redo_ms": 339.29140001419
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 10000,
+      "target_history": 1000,
+      "completed_actions": 375,
+      "undo_ms": null,
+      "redo_ms": null,
+      "process_seconds": 4.219000000011874,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "stopped",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 10000,
+          "target_history": 1000,
+          "before": {
+            "rss_bytes": 29753344,
+            "lifetime_peak_rss_bytes": 29753344
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 10000,
+          "target_history": 1000,
+          "completed_actions": 375,
+          "target_reached": false,
+          "stop_reason": "dispatch_time_budget",
+          "seconds": 2.5056735999824014,
+          "latency": {
+            "samples": 375,
+            "median_ms": 6.550799997057766,
+            "p95_nearest_rank_ms": 7.265599997481331
+          },
+          "memory": {
+            "rss_bytes": 31055872,
+            "lifetime_peak_rss_bytes": 31055872
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 100000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "undo_ms": 362.6081000256818,
+      "redo_ms": 392.945100000361,
+      "process_seconds": 3.35999999998603,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "completed",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 100000,
+          "target_history": 10,
+          "before": {
+            "rss_bytes": 44298240,
+            "lifetime_peak_rss_bytes": 49033216
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 100000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6567719000158831,
+          "latency": {
+            "samples": 10,
+            "median_ms": 65.64429998979904,
+            "p95_nearest_rank_ms": 66.36590001289733
+          },
+          "memory": {
+            "rss_bytes": 47083520,
+            "lifetime_peak_rss_bytes": 52391936
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        },
+        {
+          "stage": "undo",
+          "rows": 100000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6567719000158831,
+          "latency": {
+            "samples": 10,
+            "median_ms": 65.64429998979904,
+            "p95_nearest_rank_ms": 66.36590001289733
+          },
+          "memory": {
+            "rss_bytes": 47083520,
+            "lifetime_peak_rss_bytes": 52391936
+          },
+          "undo_ms": 362.6081000256818,
+          "redo_ms": null
+        },
+        {
+          "stage": "completed",
+          "rows": 100000,
+          "target_history": 10,
+          "completed_actions": 10,
+          "target_reached": true,
+          "stop_reason": null,
+          "seconds": 0.6567719000158831,
+          "latency": {
+            "samples": 10,
+            "median_ms": 65.64429998979904,
+            "p95_nearest_rank_ms": 66.36590001289733
+          },
+          "memory": {
+            "rss_bytes": 53506048,
+            "lifetime_peak_rss_bytes": 53571584
+          },
+          "undo_ms": 362.6081000256818,
+          "redo_ms": 392.945100000361
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 100000,
+      "target_history": 100,
+      "completed_actions": 39,
+      "undo_ms": null,
+      "redo_ms": null,
+      "process_seconds": 4.48399999999674,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "stopped",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 100000,
+          "target_history": 100,
+          "before": {
+            "rss_bytes": 45604864,
+            "lifetime_peak_rss_bytes": 49319936
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 100000,
+          "target_history": 100,
+          "completed_actions": 39,
+          "target_reached": false,
+          "stop_reason": "dispatch_time_budget",
+          "seconds": 2.563807300000917,
+          "latency": {
+            "samples": 39,
+            "median_ms": 65.65400000545196,
+            "p95_nearest_rank_ms": 67.8034000156913
+          },
+          "memory": {
+            "rss_bytes": 48082944,
+            "lifetime_peak_rss_bytes": 51077120
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    },
+    {
+      "rows": 100000,
+      "target_history": 1000,
+      "completed_actions": 38,
+      "undo_ms": null,
+      "redo_ms": null,
+      "process_seconds": 4.453000000008615,
+      "exit_code": 0,
+      "timed_out": false,
+      "status": "stopped",
+      "checkpoints": [
+        {
+          "stage": "ready",
+          "rows": 100000,
+          "target_history": 1000,
+          "before": {
+            "rss_bytes": 44789760,
+            "lifetime_peak_rss_bytes": 48992256
+          }
+        },
+        {
+          "stage": "dispatch",
+          "rows": 100000,
+          "target_history": 1000,
+          "completed_actions": 38,
+          "target_reached": false,
+          "stop_reason": "dispatch_time_budget",
+          "seconds": 2.518829500011634,
+          "latency": {
+            "samples": 38,
+            "median_ms": 66.02795000071637,
+            "p95_nearest_rank_ms": 68.4320000000298
+          },
+          "memory": {
+            "rss_bytes": 47128576,
+            "lifetime_peak_rss_bytes": 51544064
+          },
+          "undo_ms": null,
+          "redo_ms": null
+        }
+      ],
+      "incomplete_last_line": false,
+      "invalid_checkpoint": null,
+      "stderr": ""
+    }
+  ],
+  "test_source_sha256": "91382fd140f546f639ef4b7de6b2bf5c7acca73cf4eb2b4508333fd6f7c811a5",
+  "measurement_exit_code": 0,
+  "measurement_seconds": 28.562000000005355,
+  "raw_matrix_sha256": "1bcb228a6cbb29880858bb5134bfa6d0177c0472a3a34a29f9d190c45a358e5c",
+  "completed_targets": 6,
+  "budget_stops": 3,
+  "timeout_or_child_error_count": 0,
+  "scope_notes": "RSS is the isolated core worker PID working set/lifetime peak including import/baseline; not tracemalloc or renderer descendants.512MiB is an observation stop, not an OS enforced limit. No actual timeout/OOM occurred in this run; unit stubs test timeout/child-error/partial-or-malformed checkpoints.",
+  "decision": "Keep snapshot isolation and current replay structure; linear history replay is visible but incomplete high-row/history cells are not extrapolated as successful measurements. No automatic checkpoint/zero-copy optimization or new latency SLA.",
+  "label_inspection": "Existing _series_masks/_decorate/_apply_axis/_apply_panel_label already distinguish None/empty where meaningful; no unrelated label rewrite added.",
+  "checks": [
+    {
+      "name": "history-tests",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_history_profile.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_spec_roundtrip.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "62 passed, 2 skipped in 4.84s"
+      ],
+      "log_text_sha256": "f612ca52d8b1d2456023afaafa85ffeea3cf4d22b56852274203a8b9f209fef5"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "225 files already formatted"
+      ],
+      "log_text_sha256": "f936c74fefa08bd51f45d6287f8f45923b82a323cf57edb9773406aad73a7479"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "c36f795ca055e4b544e50c3d11844102d35a8eb276d001532e91e7cc56e8199c"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "013e0fc77ecfc4ff0eb7680041a72768ad471796d57894977e6de91ebd6de514"
+    }
+  ]
+}

@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 31차에서 bounded rows×history core matrix를 기록했습니다.**
+`uv run --no-sync python scripts/profile_history_costs.py`는3행크기×3이력목표를
+독립 core worker로 실행하며 child12초/dispatch2.5초/RSS관찰512MiB 예산입니다. OS
+sandbox가 아닙니다.6목표 완료·3조합375/39/38action 중단이며 미측정 undo/redo는 null입니다.
+실제 timeout/OOM은 없고3stub 회귀가 partial/error checkpoint를 보존합니다. 1천×1000의
+undo/redo402.35/404.45ms·10만×10의362.61/392.95ms는 관찰값이지 SLO가 아닙니다.
+Worker peak53,571,584bytes도 baseline 포함이며 renderer RSS는 아닙니다.
+
+PERF-02는 bounded corpus에서 PASS이며 alias/replay/checkpoint를 재설계하거나 미완료
+셀을 extrapolate하지 않습니다. 기존 label None/empty도 불필요하게 고치지 않았습니다.
+관련62통과/OS2skip·품질/packaging6명령은 [근거](review_evidence/history_cost_verification.json)에
+보존했고 [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS76/RUNNING8/OPEN65/DEFERRED1**입니다.
+31eCI 동안 새script/test/doc은 로컬 보존하고 core/버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 30차
+
 **리뷰 30차에서 명시 빈 render token을 auto/null과 구분했습니다.** FIND-029의
 6artist 불일치는 schema/codec이 유지한 빈문자열을 renderer가 fallback하던 문제입니다.
 이제 None만 자동값을 선택하고 지원 no-marker/no-line·기존0/default와 layer별 제한은

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added a bounded rows×history core profile with per-worker RSS/peak observations,
+  explicit partial targets and null unmeasured undo/redo timings. Timeout/error/
+  truncated-output tests preserve checkpoints without inventing zero-cost results.
 - Preserved explicit empty marker/line-style tokens rather than treating them as
   automatic defaults. Added representative schema/CLI/Rust/raw-editor agreement
   cases while retaining omission/null/numeric-zero and layer-specific restrictions.

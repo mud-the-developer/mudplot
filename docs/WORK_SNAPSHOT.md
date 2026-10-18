@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest independent-worker rows×history matrix completed6targets and explicitly
+  stopped3at dispatch budgets; unknown undo/redo remains null, not zero. Core-PID
+  RSS/peak is observed, not whole-app/native-renderer or hard-limit proof. PERF-02
+  is PASS in scope;62related tests/2OSskips and6quality/package checks pass.
+  No replay/alias optimization. Hold the new script/test/docs unit during31eCI.
+
 - Latest renderer keeps supported empty marker/style values rather than automatic
   fallback.20representative cases agree across schema/Python/CLI/typedRust and
   both rawJSON editors40times; JSON-09 remains partial for other nullable meanings.
@@ -197,7 +203,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   exact source/MSRV/controlled cases on both OSes without all-job completion claims.
 - [Render-token evidence](review_evidence/render_token_verification.json) retains
   explicit normalization, CLI/codec/rawUI scopes and the remaining all-field gap.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS75/RUNNING8/OPEN66/
+- [History-cost evidence](review_evidence/history_cost_verification.json) retains
+  completed/stopped targets, exact budgets/RSS scopes and checkpoint-error tests.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS76/RUNNING8/OPEN65/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

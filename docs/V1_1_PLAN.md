@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 31 records a bounded rows×history core matrix.**
+Run `uv run --no-sync python scripts/profile_history_costs.py`:3row sizes×3history
+targets use independent core workers with12second child/2.5second dispatch and
+512MiB RSS observation budgets, not an OS resource sandbox. Six targets completed;
+three stopped at375/39/38actions before larger targets and retain null undo/redo.
+No actual timeout/OOM occurred;3stub regressions preserve partial/error checkpoints.
+1k×1000undo/redo402.35/404.45ms and100k×10at362.61/392.95ms are observations, not SLOs.
+Peak observed worker working set53,571,584bytes includes baseline, not renderer RSS.
+
+PERF-02 is PASS for this bounded corpus. No alias/replay/checkpoint rewrite or
+unmeasured-cell extrapolation is added; existing label None/empty handling also
+needed no rewrite. Related62passes/2OSskips and6quality/package checks pass.
+[Evidence](review_evidence/history_cost_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS76/RUNNING8/OPEN65/DEFERRED1**. Keep the local script/test/docs unit while31eCI
+runs; core runtime/versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 30
+
 **Review phase 30 keeps explicit empty render tokens distinct from auto/null.**
 FIND-029 reproduced6artist mismatches while schema/codecs kept the empty string.
 Shared renderer fallback now uses None, retaining supported no-marker/no-line

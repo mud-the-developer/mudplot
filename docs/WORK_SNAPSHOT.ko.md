@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 독립worker rows×history는6목표 완료·3개 조합 시간예산 중단이며 unknown undo/redo는
+  null로 보존합니다. Core PID RSS/peak 관찰이지 전체앱/renderer/hard-limit 보장은
+  아닙니다. PERF-02는 범위 내 PASS, 관련62통과/OS2skip·품질/packaging6명령도 통과했습니다.
+  Replay/alias 구조는 유지하며 새script/test/doc은31eCI 중 로컬 보존합니다.
+
 - 최신 renderer는 지원 빈 marker/style을 자동값으로 바꾸지 않습니다. 대표20case의
   schema/Python/CLI/typedRust·양rawJSON editor40회가 일치했지만 다른 nullable 의미는
   남아 JSON-09는 부분 검증입니다. 관련266·최소79·native22통과이며 기존0/default는 유지합니다.
@@ -166,7 +171,9 @@
   양OS 정확한 소스/MSRV/control을 확인하되 전체job 완료로 확대하지 않습니다.
 - [Render-token 근거](review_evidence/render_token_verification.json)에 명시 정규화/
   CLI/codec/rawUI 범위와 남은 전 필드 의미 격차를 보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS75/RUNNING8/OPEN66/DEFERRED1**.
+- [이력비용 근거](review_evidence/history_cost_verification.json)에 완료/중단 목표·
+  정확한 예산/RSS 범위와 checkpoint 오류 회귀를 보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS76/RUNNING8/OPEN65/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

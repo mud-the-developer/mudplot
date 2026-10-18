@@ -18,6 +18,30 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 31차 — bounded rows×history와 worker RSS
+
+- 실행: `uv run --no-sync python scripts/profile_history_costs.py`.
+  로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-history-verified-9637jcvy`와
+  [matrix/checkpoint 요약](review_evidence/history_cost_verification.json)을 보존합니다.
+- 1천/1만/10만 행×10/100/1000 action의9조합을 독립 core-only child로 실행했습니다.
+  Child12초·dispatch2.5초·RSS관찰512MiB 예산이며 OS hard memory/CPU 한도가 아닙니다.
+  총6개 목표 완료·3개 조합은 시간 예산에서 중단됐고 실제 timeout/child failure/OOM은 없었습니다.
+- 완료한1천×1000의 undo/redo는402.35/404.45ms,1만×100은336.30/339.29ms,
+ 10만×10은362.61/392.95ms입니다. 1만×1000은375action,10만×100/1000은39/38action에서
+  멈춰 목표 미달이며 undo/redo는 null입니다. 중단 데이터를 성공한 목표나0ms로 세지 않습니다.
+- 각 worker PID의 working set/lifetime peak를 기존 _memory helper로 읽었습니다. 최종
+  측정 peak최대53,571,584bytes이며 초기 import/baseline 포함, renderer 자손·장시간
+  GUI leak·동시성·모든 OS·cross-hardware latency 보장이 아닙니다. RSS handle은 기존
+  helper가 정리하고 core-only timeout child도 수집기가 종료/reap합니다.
+- 3회귀는 합성 timeout의 마지막 잘린 JSON/child 오류/잘못된 complete checkpoint에서
+  앞선 단계와 unknown/null·원인을 보존합니다. 실제 OOM을 냈다는 뜻은 아닙니다.
+  현재 matrix와 관련62통과/OS2skip·Ruff225/format·Pyright·계약·packaging6명령이
+  exit0이며 새2Python경로 LSP clean입니다. Core/alias/replay 구조는 바꾸지 않았습니다.
+- PERF-02는 이 bounded matrix에서 PASS입니다. 미완료 셀은 extrapolate하지 않고
+  snapshot 안전성/기존 checkpoint shortcut을 유지합니다. label 경로도 정적 확인상 이미
+  None/empty를 구분해 불필요하게 고치지 않았습니다. 새 script/doc은 진행 중인31e CI를
+  취소하지 않도록 로컬 보존하며 원문/버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 30차 — 명시 빈 marker/style의 의미 보존
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-render-token-probe-r9gzppx_`,
@@ -956,7 +980,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-08 | P1 | PASS | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | PERF-01 | P1 | PASS | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-02 | P1 | OPEN | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-02 | P1 | PASS | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-03 | P1 | PASS | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-04 | P1 | OPEN | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-05 | P1 | OPEN | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -990,7 +1014,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 75, RUNNING 8, OPEN 66, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 76, RUNNING 8, OPEN 65, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
