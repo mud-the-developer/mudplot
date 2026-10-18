@@ -124,6 +124,29 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 21 verifies installed extras and outside-checkout CLI behaviour.**
+FIND-024 reproduced9missing-install-hint surfaces. Expected NumPy/Matplotlib/
+cycler absence now explains the colour/render extra without masking unrelated
+transitive/compiled errors or making Matplotlib mandatory for colour operations.
+The fresh installed-wheel environment progresses through7extras states;98console/
+module CLI calls agree outside the checkout. Package-only browser installation is
+separate from its controlled missing Chromium binary. PKG-02/04 are PASS.
+
+Current82related and floor11cases pass, with2833deselected/13warnings on the floor;
+Ruff221/types/contracts/packaging and installed/source/wheel hashes agree. The first
+4point robust fixture correctly failed convergence; QA used the existing40point
+regression fixture without loosening the product fit limit. Windows PowerShell7.6.7
+short-cwd93/336character paths/locks/recovery pass, but long-cwd launcher startup
+failed and a native long-TEMP readiness probe was incomplete; PKG-06 stays RUNNING.
+
+Baselinee14CI39111782233 succeeded in all4jobs, including Python3.10/3.12 and
+Rust Linux/Windows. It predates these optional-error guards, not current all-green
+proof. CI-01 remains RUNNING pending the next integrated run. [Evidence](review_evidence/installed_matrix_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS66/RUNNING10/OPEN73/DEFERRED1**.
+Versions/dependencies/locks/tag/deploy and broader completion limits remain unchanged.
+
+### Earlier review phase 20
+
 **Review phase 20 preserves marker zero and verifies bounded JSON recovery.**
 FIND-022 reproduced9artist failures: truthy fallbacks discarded explicit marker0,
 while3Dlines ignored positive/zero sizes. Seven None checks plus forwarding3Dline

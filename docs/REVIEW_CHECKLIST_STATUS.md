@@ -18,6 +18,38 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 21차 — 설치 wheel·extras·외부 CLI 경계
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-installed-hvei5uef`,
+  [설치 matrix/경로 제한 요약](review_evidence/installed_matrix_verification.json)도 보존합니다.
+- **FIND-024:** core6surface와 color-only CLI/adapter3surface가 설치 extra 안내 없이
+  missing-module만 내던 회귀를 재현했습니다. 기대한 numpy/matplotlib/cycler 부재만
+  해당 effect 경계에서 ImportError 안내로 바꾸고 다른 transitive/compiled 오류는 그대로
+  유지합니다. Figure 저장 후 기존과 같이 close하고 core import/기본 의존성은 바꾸지 않습니다.
+- 실제 sdist→wheel을 새 uv venv에 설치한 뒤 core→color→render→cluster→regression→
+  dev→browser의 **7점진 단계**를 검증했습니다. 서로 다른7venv라는 주장이 아닙니다.
+  단계별 installed 패키지/모듈 부재·색 계산·PNG/PDF/SVG·고급 효과를 확인했습니다.
+  Browser package와 비어 있는 browser-binary 경로의 별도 설치 안내를 구분해 PKG-02는 PASS입니다.
+- 저장소 밖7명령×2진입점×7단계=**98CLI**에서 stdout/stderr/exit가 같고 예상 optional
+  오류·기존 출력 보존도 확인해 PKG-04는 PASS입니다. Wheel5package파일·실제 설치파일·
+  현재 source bytes가 일치합니다. 허용 범위 최신 의존성은 NP2.5.4/MPL3.11.2/SciPy1.18.1/
+  statsmodels0.15/pandas3.0.6/Playwright1.64이며 project lock을 바꾸지 않았습니다.
+- 4점 robust positive fixture는 정당한50iteration 수렴 오류였습니다. 실패 receipt를
+  보존하고 기존40점 sinusoidal test 데이터로 설치 성공을 확인했으며 제품 한도를 완화하거나
+  추가 제품 결함으로 세지 않습니다. 새 최소 extra 오류 회귀11개와 관련82개도 통과했습니다.
+- PowerShell7.6.7·LongPathsEnabled1에서93/336문자 파일 경로, 한글/공백/괄호/&·상대/
+  절대 API/console/module 저장·실제 exclusive lock 거부·출력 보존·staging 정리·해제 후
+  복구·PNG가 통과했습니다. 긴 CWD의 console 시작 실패는 별도 보존합니다. 긴TEMP native
+  bridge는40초 ready budget 내 확인되지 않아 통과로 세지 않았고 검증한 자기 fixture
+  process tree를 정리했습니다. 원인 미확인·자손 정리 보장 미완료로 PKG-06은 RUNNING입니다.
+- 최종 관련82통과·최소11통과/2833deselected/경고13·Ruff221/format·Pyright·계약·
+  packaging의7기록 명령은 exit0입니다. Source7hash/최종 matrix·artifact hash도 보존합니다.
+  LSP6경로는5clean/1inconclusive이며 새 전체/native/browser-binary/Linux/macOS/보안감사
+  성공으로 확대하지 않습니다. PKG-07도 이번 Windows 결과만으로 닫지 않습니다.
+- 기준e14 CI39111782233은 Python3.10/3.12·Rust Linux/Windows **4job success**입니다.
+  이는 해당 commit의60분/전체 검사 통과이며 후속 optional 안내 변경을 소급 검증하지 않습니다.
+  CI-01은 후속 실행 전 RUNNING·CI-07은 DEFERRED, 버전/의존성/lock/tag/배포는 유지합니다.
+
 ## 20차 — optional 의미·손상 JSON 복구·CI 시간 진단
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-json-semantics-harf1qd7`,
@@ -709,9 +741,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PERF-07 | P2 | OPEN | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-08 | P2 | OPEN | 대형 데이터 지원 범위의 명문화 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PKG-01 | P0 | PASS | 깨끗한 wheel의 코어 독립성 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-02 | P1 | OPEN | optional extras의 기능 경계 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-02 | P1 | PASS | optional extras의 기능 경계 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-03 | P0 | PASS | sdist와 wheel 내용·메타데이터 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-04 | P1 | OPEN | 저장소 밖 CLI 실행 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-04 | P1 | PASS | 저장소 밖 CLI 실행 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-05 | P0 | PASS | 최소 지원 버전 검사 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-06 | P1 | RUNNING | Windows 한글·공백·긴 경로 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-07 | P1 | OPEN | GUI 없는 Linux와 OS 차이 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
@@ -735,8 +767,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 64, RUNNING 10, OPEN 75, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 66, RUNNING 10, OPEN 73, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

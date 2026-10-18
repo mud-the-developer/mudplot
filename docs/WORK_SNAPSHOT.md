@@ -28,6 +28,14 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest82optional-related and floor11passes/13warnings plus installed-wheel7
+  progressive extras stages/98CLI calls pass outside checkout. Missing effects
+  now explain the right extra without masking other imports. Browser binary
+  absence is distinct from package installation; PKG-02/04 are PASS.
+- Baselinee14CI39111782233 succeeded in all4Python/Rust OS jobs; these later guards
+  still need their own integrated run. Windows93/336character file/lock paths pass
+  from short cwd; long-cwd console and long-TEMP bridge limits keep PKG-06 RUNNING.
+
 - Latest249field/marker+169connected passes, floor174passes/13warnings and native
   JSON recovery18boundary cases retain explicit marker0 without changing automatic
   defaults.139nullable schema/Python field states pass; JSON-09 broader parity is
@@ -106,7 +114,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records reference/type failures, cross-process hashes and current/floor checks.
 - [JSON semantics evidence](review_evidence/json_semantics_verification.json)
   records139field meanings, marker forwarding, bounded input recovery and CI timeout.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS64/RUNNING10/OPEN75/
+- [Installed matrix evidence](review_evidence/installed_matrix_verification.json)
+  connects actual extras, wheel/source hashes, outside CLI and bounded Windows paths.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS66/RUNNING10/OPEN73/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

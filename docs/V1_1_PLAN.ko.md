@@ -120,6 +120,25 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 21차에서 설치 extras와 저장소 밖 CLI를 확인했습니다.** FIND-024의9안내 누락
+surface를 고쳐 기대한 NumPy/Matplotlib/cycler 부재만 colour/render extra로 안내하고
+무관한 transitive/compiled 진단은 유지합니다. Color에 Matplotlib을 강제하지 않습니다.
+새 설치 wheel 환경의7점진 extra 단계·98console/module CLI가 통과했고 browser package와
+별도 Chromium binary도 구분해 PKG-02/04는 PASS입니다.
+
+관련82·최소11통과/2833deselected/경고13과 Ruff221/타입/계약/packaging·설치/source/
+wheel hash를 확인했습니다. 4점 robust fixture의 정당한 수렴 오류는 QA에서 기존40점
+fixture를 사용했으며 제품 한도는 바꾸지 않았습니다. PowerShell7.6.7의93/336문자 파일
+경로·lock·복구는 짧은 CWD에서 통과했지만 긴 CWD console 실패와 longTEMP bridge
+ready probe 미완료가 남아 PKG-06은 RUNNING입니다.
+
+기준e14CI39111782233은 Python3.10/3.12·양OS Rust의4job 모두 성공했습니다.
+후속 optional 오류 안내의 원격 검증은 아니므로 CI-01은 다음 통합 실행 전 RUNNING입니다.
+[근거](review_evidence/installed_matrix_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS66/RUNNING10/OPEN73/DEFERRED1**이며 버전/의존성/lock/tag/배포·미완료 범위는 유지합니다.
+
+### 이전 리뷰 20차
+
 **리뷰 20차에서 marker0 의미와 손상 JSON 복구를 확인했습니다.** FIND-022의9실패는
 명시0을 기본 크기로 바꾸는7경로와3D line의 크기 무시였습니다. None 검사/전달만 바꿔
 생략/null 기본은 유지합니다.27artist와 nullable139 schema/Python field가 통과했지만

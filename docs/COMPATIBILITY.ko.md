@@ -155,7 +155,16 @@ package release마다 spec version을 올릴 필요는 없습니다.
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는
-NumPy, 렌더링에는 NumPy와 Matplotlib이 필요합니다. Unreleased robust/logistic/
+NumPy, 렌더링에는 NumPy와 Matplotlib이 필요합니다. 공개 colour/render/save/preview·
+CLI render·palette의 Matplotlib adapter에서 기대한 의존성이 없으면 `mudplot[color]` 또는
+`mudplot[render]` 설치를 안내합니다. 무관한 transitive/compiled import 오류는 진단과
+exception cause를 유지합니다. Color extra가 Matplotlib을 강제하지 않고 browser extra도
+Playwright 패키지만 설치하므로 `playwright install chromium`은 별도 단계입니다.
+
+관찰한 PowerShell7.6.7/LongPathsEnabled1 Windows에서 짧은 CWD+336문자 절대 파일
+경로의 API/console/module/lock/render는 통과했지만260문자 초과 CWD의 console 시작은
+실패했습니다. 짧은 CWD와 절대 경로를 사용하세요. Native bridge의 긴TEMP 시작 probe는
+미완료이며 모든 긴 경로를 보장하거나 OS 설정을 바꾸지 않습니다. Unreleased robust/logistic/
 LOWESS effect는 optional `regression` extra(statsmodels>=0.14.1; all/dev 포함)를
 fit 때만 불러옵니다. 일반 polynomial/residual/log-x는 statsmodels가 필요 없습니다.
 이 extra는 Python3.10/NumPy1.23/Matplotlib3.8/statsmodels0.14.1에서 확인했으며

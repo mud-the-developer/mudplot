@@ -202,8 +202,15 @@ def tex_preview(
     """
     import io as _io
 
-    import matplotlib.pyplot as plt
-    from matplotlib.patches import Rectangle
+    try:
+        import matplotlib.pyplot as plt
+        from matplotlib.patches import Rectangle
+    except ModuleNotFoundError as error:
+        if error.name not in ("numpy", "matplotlib"):
+            raise
+        raise ImportError(
+            "preview requires 'mudplot[render]'; install it first"
+        ) from error
 
     from ._render import render
 

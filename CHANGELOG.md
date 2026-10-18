@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added actionable colour/render-extra hints at missing optional effect boundaries,
+  including CLI render and palette adapters, while retaining unrelated transitive
+  diagnostics and causes. Installed-wheel progressive7-stage/98CLI checks cover
+  core, colour, rendering, advanced extras, dev and browser-package boundaries.
 - Preserved explicit marker size0 instead of replacing it with default6/4 in raw
   scatter/regression/strip/errorbar/3D paths, and forwarded marker size for3Dlines.
   Omitted/null defaults remain unchanged. Added139nullable-field structural checks

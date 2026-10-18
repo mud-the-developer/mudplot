@@ -53,12 +53,26 @@ class Palette:
         return self.hex[i]
 
     def as_mpl_cycler(self):
-        from cycler import cycler
+        try:
+            from cycler import cycler
+        except ModuleNotFoundError as error:
+            if error.name != "cycler":
+                raise
+            raise ImportError(
+                "cycler adapter requires 'mudplot[render]'; install it first"
+            ) from error
 
         return cycler("color", list(self.hex))
 
     def to_cmap(self, name: str | None = None):
-        from matplotlib.colors import ListedColormap
+        try:
+            from matplotlib.colors import ListedColormap
+        except ModuleNotFoundError as error:
+            if error.name != "matplotlib":
+                raise
+            raise ImportError(
+                "colormap adapter requires 'mudplot[render]'; install it first"
+            ) from error
 
         return ListedColormap(
             np.clip(self.srgb, 0, 1), name=name or f"mudplot_{self.kind}"

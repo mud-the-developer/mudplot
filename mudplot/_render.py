@@ -17,7 +17,12 @@ from dataclasses import replace
 from statistics import NormalDist
 from typing import Any, cast
 
-import numpy as np
+try:
+    import numpy as np
+except ModuleNotFoundError as error:
+    if error.name != "numpy":
+        raise
+    raise ImportError("rendering requires NumPy; install 'mudplot[render]'") from error
 
 from ._categorical import (
     DISTRIBUTION_TYPES,
@@ -2529,7 +2534,14 @@ def render(spec: FigureSpec, *, fmt: str = ""):
     Raises ``ValueError`` (with all issues listed) if ``spec`` is invalid —
     see :mod:`mudplot.validate`.
     """
-    import matplotlib.pyplot as plt
+    try:
+        import matplotlib.pyplot as plt
+    except ModuleNotFoundError as error:
+        if error.name not in ("numpy", "matplotlib"):
+            raise
+        raise ImportError(
+            "rendering requires 'mudplot[render]'; install it first"
+        ) from error
 
     assert_valid(spec)
     domains = shared_scale_domains(spec)
@@ -2679,8 +2691,15 @@ def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """
     import pathlib
 
-    import matplotlib as mpl
-    import matplotlib.pyplot as plt
+    try:
+        import matplotlib as mpl
+        import matplotlib.pyplot as plt
+    except ModuleNotFoundError as error:
+        if error.name not in ("numpy", "matplotlib"):
+            raise
+        raise ImportError(
+            "rendering requires 'mudplot[render]'; install it first"
+        ) from error
 
     from .io import _atomic_destination
 

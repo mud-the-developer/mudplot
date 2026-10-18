@@ -171,6 +171,18 @@ independent. A package release does not require a spec-version bump.
 
 The declarative/state/JSON core has no required third-party dependencies.
 Colour operations require NumPy; rendering requires NumPy and Matplotlib.
+Missing dependencies at public colour/render/save/preview, CLI render and palette
+Matplotlib-adapter boundaries raise an install hint for `mudplot[color]` or
+`mudplot[render]`. Only the expected missing module is relabelled; unrelated
+transitive/compiled-import errors keep their original diagnosis and exception cause.
+The colour extra does not force Matplotlib. The browser extra installs Playwright,
+not its browser binary; `playwright install chromium` remains a separate step.
+
+On the observed Windows host(PowerShell7.6.7,LongPathsEnabled1), short cwd plus
+336-character absolute file paths passed API/console/module/lock/render checks.
+Console startup from a>260-character cwd failed; use a short cwd with absolute
+paths. A native bridge long-TEMP startup probe remains incomplete, not a universal
+long-path guarantee. No system long-path setting is changed by mudplot.
 Unreleased advanced robust/logistic/LOWESS effects use the optional `regression`
 extra with statsmodels>=0.14.1 (also included by all/dev), loaded only at fit time.
 Ordinary polynomial/residual/log-x rendering needs no statsmodels. This extra

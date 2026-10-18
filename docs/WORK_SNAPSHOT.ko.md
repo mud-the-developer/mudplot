@@ -22,6 +22,13 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 optional 관련82·최소11통과/경고13과 설치 wheel7점진 extra 단계/98CLI가
+  통과했습니다. 기대한 missing module만 설치 extra를 안내하고 browser package/binary는
+  구분해 PKG-02/04는 PASS입니다. 무관한 import 진단은 유지합니다.
+- 기준e14CI39111782233의4job은 모두 성공했지만 후속 guard의 새 통합 검증은 필요합니다.
+  짧은 CWD의93/336문자 파일·lock은 통과했으나 long-CWD console·longTEMP bridge
+  제한/미완료가 있어 PKG-06은 RUNNING입니다.
+
 - 최신249field/marker+169연결 검사·최소174통과/경고13과 native18경계가 통과했습니다.
   명시 marker0을 유지하고139nullable schema/Python 의미도 확인했습니다. JSON-09의
   넓은 언어 간 의미 대조는 남기고 JSON-12는 제한 API/CLI/HTTP 복구 corpus에서 PASS입니다.
@@ -89,7 +96,9 @@
   새 프로세스 hash·현재/최소 검사를 기록했습니다.
 - [JSON 의미 근거](review_evidence/json_semantics_verification.json)에139field 표·
   marker 전달·제한 손상 입력 복구·CI timeout을 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS64/RUNNING10/OPEN75/DEFERRED1**.
+- [설치 matrix 근거](review_evidence/installed_matrix_verification.json)에 실제 extra·
+  wheel/source hash·외부 CLI·제한된 Windows 경로 결과를 연결했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS66/RUNNING10/OPEN73/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
