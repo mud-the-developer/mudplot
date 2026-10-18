@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 29차 — 편집/직렬화/렌더 비용 측정·자손 정리 원격 확인
+
+- 실행: `uv run --no-sync python scripts/profile_state_costs.py`.
+  로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-state-profile-e02g_zfu`와
+  [성능 요약](review_evidence/performance_verification.json)을 보존합니다. Synthetic3열
+  1천/1만/10만 행·4x3inch/72DPI·warm 경로이며 core20회/render10회·nearest-rank p95입니다.
+- Title dispatch median/p95(ms)는0.803/0.841,6.993/7.687,67.867/69.090입니다.
+  같은10만 행 JSON encode174.954/177.742·decode182.815/186.273,
+  model→figure/close503.747/507.971·전체 PNG save/close533.225/554.047입니다.
+  첫 import/font discovery·cold process/장기 이력·동시성·native RSS/SLO는 아닙니다.
+- 별도10action/1noop listener cProfile7.783초 중 deepcopy누적7.777초(99.923%)이며
+  render/validation 호출은0입니다. 계측 overhead가 실제 dispatch latency와 다르고 public
+  pstats 시간은 ms 반올림입니다. 별도1dispatch tracemalloc peak4,828,472bytes는 Python
+  할당일 뿐 RSS가 아닙니다. Counting listener21회·data/spec 보존·Figure 정리도 assert했습니다.
+- PERF-01/03은 이 측정 범위에서 PASS입니다. Snapshot alias 안전성을 유지하며 immutable/
+  zero-copy rewrite·validation 제거·장기 이력 checkpoint를 근거 없이 추가하지 않습니다.
+  초기 QA script의 잘못된 mp.SetTitle 접근은 성공 측정으로 세지 않았으며 기존 mp.actions로
+  수정했습니다. 관련59통과/OS2skip·Ruff223/format·Pyright·계약·packaging6명령이 통과했습니다.
+- [현재 자손 정리 원격 근거](review_evidence/remote_cleanup_verification.json)도 확인했습니다.
+  정확한ea1 소스에 Linuxjob117669271500(lib19+main1통과/helper5ignored), Windowsjob
+ 117669271625(lib20+main1통과/helper6ignored)의 controlled descendant와 MSRV step이
+  성공했습니다. Windows 정리 도구 부재/복구도 성공해 RUST-04는 이 foreground policy에서
+  PASS입니다. Detached/reparented/hard-resource 경계는 유지합니다.
+- Full Python/floor CI는 여전히 실행 중이므로 CI-01은 RUNNING이며 이 새 script/doc은
+  로컬 commit으로 보존합니다. 제품 core·버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 28차 — foreground 자손 timeout 정리
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-descendant-lj9xrjfm`,
@@ -891,7 +917,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-02 | P0 | PASS | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows/Linux CI jobs success for781f3f5; 14차 remote snapshot |
 | RUST-03 | P1 | PASS | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-04 | P1 | RUNNING | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-04 | P1 | PASS | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-05 | P1 | PASS | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-06 | P1 | PASS | Rust history와 캐시의 commit 순서 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-07 | P1 | OPEN | 공유 static 자산·버전 정합성 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
@@ -903,9 +929,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-06 | P1 | PASS | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-08 | P1 | PASS | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| PERF-01 | P1 | OPEN | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-01 | P1 | PASS | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-02 | P1 | OPEN | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-03 | P1 | OPEN | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-03 | P1 | PASS | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-04 | P1 | OPEN | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-05 | P1 | OPEN | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-06 | P1 | OPEN | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -938,7 +964,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 72, RUNNING 9, OPEN 68, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 75, RUNNING 8, OPEN 66, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

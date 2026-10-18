@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 29 separates measured state/JSON/render costs.**
+Run `uv run --no-sync python scripts/profile_state_costs.py` for the bounded warm
+synthetic1k/10k/100k-row workload. Title dispatch medians are0.803/6.993/67.867ms;
+100k JSON encode/decode174.954/182.815ms and full PNG save533.225ms. Median/p95,
+repeat counts and environment/source hashes accompany the data. A separate profile
+attributes99.923%of measured dispatch profile time to deepcopy, with no render/
+validation calls; Python-only allocation peak4,828,472bytes is not native RSS.
+PERF-01/03 are PASS for these bounded observations, not a new latency threshold.
+Snapshot safety stays; no speculative zero-copy or long-history rewrite is added.
+
+Exactea1Linux/Windows logs now pass foreground descendant/MSRV controls (20/21tests,
+5/6helpers ignored), including Windows cleanup-tool failure recovery. RUST-04 is
+PASS only for that supported foreground policy. [Performance](review_evidence/performance_verification.json)
+and [cleanup evidence](review_evidence/remote_cleanup_verification.json) retain limits.
+Related59passes/2OSskips and6quality/package checks pass. [Tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS75/RUNNING8/OPEN66/DEFERRED1**. Full current CI still runs; save this script/docs
+unit locally without cancelling it. Core runtime/versions/locks/releases remain unchanged.
+
+### Earlier review phase 28
+
 **Review phase 28 fixes owned foreground descendant timeout cleanup.**
 FIND-028 reproduced a grandchild surviving direct-child timeout. Shared transport
 now targets only the held Windows tree or a fresh Unix process group; no shell or

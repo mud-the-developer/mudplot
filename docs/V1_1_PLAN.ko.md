@@ -120,6 +120,23 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 29차에서 편집/JSON/렌더 비용을 실제로 분리했습니다.**
+`uv run --no-sync python scripts/profile_state_costs.py`는 synthetic1천/1만/10만 행의
+bounded warm workload입니다. Title dispatch median0.803/6.993/67.867ms,10만 행의
+JSON encode/decode174.954/182.815ms·PNG save533.225ms를 측정했습니다. 반복 수/
+median/p95와 환경·source hash도 보존합니다. 별도 profile의 deepcopy누적 비중99.923%,
+render/validation호출0이며 Python 할당 peak4,828,472bytes는 native RSS가 아닙니다.
+PERF-01/03은 관찰 범위에서 PASS이며 snapshot 안전성·기존 구조를 유지합니다.
+
+정확한ea1의 Linux/Windows foreground 자손/MSRV control도20/21통과(helper5/6ignored),
+Windows 도구 부재/복구까지 확인해 RUST-04는 지원 policy에서 PASS입니다. [성능](review_evidence/performance_verification.json)/
+[정리 근거](review_evidence/remote_cleanup_verification.json)에 한계를 구분합니다. 관련59통과/OS2skip·
+품질/packaging6명령도 통과했으며 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS75/RUNNING8/OPEN66/DEFERRED1**입니다. Full CI를 취소하지 않도록 새script/doc은
+로컬에 보존하고 core runtime/버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 28차
+
 **리뷰 28차에서 foreground 자손 timeout 정리를 고쳤습니다.** FIND-028의 직접child
 종료 뒤 살아남은 grandchild를 재현했습니다. 공통 transport가 Windows 보유 tree 또는
 새Unix process group만 정리하며 shell/interpreter fallback은 없습니다. 정리 도구의

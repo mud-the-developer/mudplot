@@ -28,10 +28,18 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest bounded warm1k/10k/100k-row cost profile separates core editing, JSON and
+  render/save. Title dispatch medians0.803/6.993/67.867ms; measured copying dominates
+  a separate instrumented profile, not a guarantee on all hardware. PERF-01/03 PASS.
+  No core optimization/alias-safety reduction; only the reproducible script is new.
+- Exactea1Linux/Windows foreground descendant and currentMSRV checks passed20/21
+  tests (5/6helpers ignored), so RUST-04 is PASS in its documented non-detached scope.
+  Full current CI remains active; hold this script/docs unit locally.
+
 - Latest foreground descendant timeout now uses a held Windows tree/fresh Unix
   process group, bounded cleanup command and explicit cleanup-error diagnostics.
-  Windows21tests/6helpers ignored and normal native bridge pass; new Unix/MSRV
-  still need CI, so RUST-04 remains RUNNING. Detached workers are not supported.
+  Windows21tests/6helpers ignored and normal native bridge pass; later remote
+  Unix/MSRV controls above now confirm that scope. Detached workers remain unsupported.
 - Baselinee728CI39122032427 is ALL5SUCCESS. It predates the cleanup change; queued
   local units can publish, but CI-01 is not retroactive proof of this new runtime.
 
@@ -176,7 +184,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains completed-job log hashes, skip scopes and source-based symlink inference.
 - [Descendant cleanup evidence](review_evidence/descendant_cleanup_verification.json)
   records controlled Windows timeout/failure/recovery plus limits and pre-change CI.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/
+- [Performance evidence](review_evidence/performance_verification.json) retains
+  stage median/p95, repeat counts and separate Python allocation/profile caveats.
+- [Current remote cleanup](review_evidence/remote_cleanup_verification.json) checks
+  exact source/MSRV/controlled cases on both OSes without all-job completion claims.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS75/RUNNING8/OPEN66/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -6,11 +6,14 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added a bounded, reproducible warm state/JSON/render cost profile with synthetic
+  1k/10k/100k rows, median/p95 and separate Python allocation/cProfile evidence.
+  Kept snapshot safety and avoided unmeasured zero-copy or streaming promises.
 - Fixed bridge timeout/wait cleanup leaving an owned foreground descendant alive:
   target the held Windows child tree or a fresh Unix child process group, bound
   the cleanup command and keep cleanup failure in the returned diagnostic.
-  Controlled Windows descendant/failure/recovery tests pass; current Unix/MSRV
-  validation remains separate, and detached workers are not supported.
+  Controlled foreground tests and current MSRV checks passed on Linux/Windows;
+  detached workers and hard OS resource guarantees remain outside support.
 - Verified default editor error logs with synthetic privacy probes and current
   Python-lock/registry-crate advisory snapshots; documented same-client draft
   responses and audit limitations without claiming security certification.

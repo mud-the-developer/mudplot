@@ -1,0 +1,462 @@
+{
+  "environment": {
+    "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "processor": "AMD64 Family 26 Model 68 Stepping 0, AuthenticAMD",
+    "versions": {
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.1",
+      "mudplot": "1.0.0"
+    }
+  },
+  "source_sha256": {
+    "mudplot/store.py": "17b941a995d43aa8b53f4fac5d23b442278d675779005f36525fc6e5871f54ee",
+    "mudplot/reducer.py": "0e34e8e5bc41add420941b739903602b184aa45d7024613424d3ef93390ad72a",
+    "mudplot/spec.py": "0cec837f31e597df9bfd46da86b2d56176b294d6ee5ab9ad8ec461021d13ecab",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/_render.py": "7a31d6e31ed3dfb9f8e06cba8b76be839a03e14976f27c973b3a01d6bafc0766",
+    "scripts/profile_state_costs.py": "0f9c30f00c878f4ae73c48caff68823999bc6e061cc12d36a6f4712152752b63"
+  },
+  "scope": "Warm single-process synthetic three-column line plot; short history. No cold startup, native RSS, long-history matrix, concurrency or latency promise. Close is included in render/save timing; tracemalloc/cProfile are separate instrumented trials.",
+  "rows": [
+    {
+      "count": 1000,
+      "json_bytes": 64017,
+      "stages": {
+        "reducer_title": {
+          "samples": 20,
+          "median_ms": 0.40455000998917967,
+          "p95_nearest_rank_ms": 0.7203000131994486
+        },
+        "reducer_font": {
+          "samples": 20,
+          "median_ms": 0.4048999981023371,
+          "p95_nearest_rank_ms": 0.4130000015720725
+        },
+        "store_dispatch_title_no_listener": {
+          "samples": 20,
+          "median_ms": 0.8034000056795776,
+          "p95_nearest_rank_ms": 0.8411000017076731
+        },
+        "store_dispatch_font_no_listener": {
+          "samples": 20,
+          "median_ms": 0.8038499945541844,
+          "p95_nearest_rank_ms": 0.8363999950233847
+        },
+        "store_dispatch_one_counting_listener": {
+          "samples": 20,
+          "median_ms": 1.2137499870732427,
+          "p95_nearest_rank_ms": 1.6925999952945858
+        },
+        "store_snapshot": {
+          "samples": 20,
+          "median_ms": 0.40764998993836343,
+          "p95_nearest_rank_ms": 0.5829999863635749
+        },
+        "validation": {
+          "samples": 20,
+          "median_ms": 0.01514999894425273,
+          "p95_nearest_rank_ms": 0.020299979951232672
+        },
+        "to_json": {
+          "samples": 20,
+          "median_ms": 1.76830000418704,
+          "p95_nearest_rank_ms": 1.8964000046253204
+        },
+        "from_json": {
+          "samples": 20,
+          "median_ms": 3.059749986277893,
+          "p95_nearest_rank_ms": 3.725599992321804
+        },
+        "model_to_figure_and_close": {
+          "samples": 10,
+          "median_ms": 492.40390000340994,
+          "p95_nearest_rank_ms": 503.0677999893669
+        },
+        "public_png_save_and_close": {
+          "samples": 10,
+          "median_ms": 522.8684500034433,
+          "p95_nearest_rank_ms": 528.2231000019237
+        }
+      },
+      "history_length_end": 42,
+      "listener_calls": 21
+    },
+    {
+      "count": 10000,
+      "json_bytes": 623149,
+      "stages": {
+        "reducer_title": {
+          "samples": 20,
+          "median_ms": 3.460549996816553,
+          "p95_nearest_rank_ms": 3.8600999978370965
+        },
+        "reducer_font": {
+          "samples": 20,
+          "median_ms": 3.5303000040585175,
+          "p95_nearest_rank_ms": 3.826700005447492
+        },
+        "store_dispatch_title_no_listener": {
+          "samples": 20,
+          "median_ms": 6.993450006120838,
+          "p95_nearest_rank_ms": 7.687000004807487
+        },
+        "store_dispatch_font_no_listener": {
+          "samples": 20,
+          "median_ms": 6.8839000014122576,
+          "p95_nearest_rank_ms": 7.485899986932054
+        },
+        "store_dispatch_one_counting_listener": {
+          "samples": 20,
+          "median_ms": 10.598499997286126,
+          "p95_nearest_rank_ms": 10.956599988276139
+        },
+        "store_snapshot": {
+          "samples": 20,
+          "median_ms": 3.534949995810166,
+          "p95_nearest_rank_ms": 3.952999977627769
+        },
+        "validation": {
+          "samples": 20,
+          "median_ms": 0.014999997802078724,
+          "p95_nearest_rank_ms": 0.019500002963468432
+        },
+        "to_json": {
+          "samples": 20,
+          "median_ms": 17.173099986393936,
+          "p95_nearest_rank_ms": 17.76889999746345
+        },
+        "from_json": {
+          "samples": 20,
+          "median_ms": 19.52660000824835,
+          "p95_nearest_rank_ms": 20.14979999512434
+        },
+        "model_to_figure_and_close": {
+          "samples": 10,
+          "median_ms": 491.6810500144493,
+          "p95_nearest_rank_ms": 496.47290000575595
+        },
+        "public_png_save_and_close": {
+          "samples": 10,
+          "median_ms": 522.6273500011303,
+          "p95_nearest_rank_ms": 540.3121999988798
+        }
+      },
+      "history_length_end": 42,
+      "listener_calls": 21
+    },
+    {
+      "count": 100000,
+      "json_bytes": 6303915,
+      "stages": {
+        "reducer_title": {
+          "samples": 20,
+          "median_ms": 33.91564999765251,
+          "p95_nearest_rank_ms": 35.28919999371283
+        },
+        "reducer_font": {
+          "samples": 20,
+          "median_ms": 34.44534998561721,
+          "p95_nearest_rank_ms": 35.371300007682294
+        },
+        "store_dispatch_title_no_listener": {
+          "samples": 20,
+          "median_ms": 67.86680000368506,
+          "p95_nearest_rank_ms": 69.0896000014618
+        },
+        "store_dispatch_font_no_listener": {
+          "samples": 20,
+          "median_ms": 68.1075499887811,
+          "p95_nearest_rank_ms": 69.93420000071637
+        },
+        "store_dispatch_one_counting_listener": {
+          "samples": 20,
+          "median_ms": 100.56219999387395,
+          "p95_nearest_rank_ms": 103.55020000133663
+        },
+        "store_snapshot": {
+          "samples": 20,
+          "median_ms": 33.945700008189306,
+          "p95_nearest_rank_ms": 35.037800000282004
+        },
+        "validation": {
+          "samples": 20,
+          "median_ms": 0.015500001609325409,
+          "p95_nearest_rank_ms": 0.018399994587525725
+        },
+        "to_json": {
+          "samples": 20,
+          "median_ms": 174.95405000227038,
+          "p95_nearest_rank_ms": 177.7418999990914
+        },
+        "from_json": {
+          "samples": 20,
+          "median_ms": 182.81465000472963,
+          "p95_nearest_rank_ms": 186.27289999858476
+        },
+        "model_to_figure_and_close": {
+          "samples": 10,
+          "median_ms": 503.7472499971045,
+          "p95_nearest_rank_ms": 507.97129998682067
+        },
+        "public_png_save_and_close": {
+          "samples": 10,
+          "median_ms": 533.2254000095418,
+          "p95_nearest_rank_ms": 554.0470000123605
+        }
+      },
+      "history_length_end": 42,
+      "listener_calls": 21,
+      "dispatch_profile": {
+        "actions": 10,
+        "listeners": 1,
+        "total_seconds": 7.783,
+        "deepcopy_cumulative_seconds": 7.777,
+        "deepcopy_fraction": 0.9992290890402158,
+        "render_calls": 0,
+        "validation_calls": 0,
+        "hot_paths": [
+          {
+            "file": "store.py",
+            "line": 62,
+            "function": "dispatch",
+            "calls": "10",
+            "self_seconds": 0.0,
+            "cumulative_seconds": 7.783
+          },
+          {
+            "file": "copy.py",
+            "line": 118,
+            "function": "deepcopy",
+            "calls": "9012370/50",
+            "self_seconds": 3.695,
+            "cumulative_seconds": 7.777
+          },
+          {
+            "file": "copy.py",
+            "line": 247,
+            "function": "_reconstruct",
+            "calls": "410/50",
+            "self_seconds": 0.001,
+            "cumulative_seconds": 7.777
+          },
+          {
+            "file": "copy.py",
+            "line": 217,
+            "function": "_deepcopy_dict",
+            "calls": "500/50",
+            "self_seconds": 0.002,
+            "cumulative_seconds": 7.776
+          },
+          {
+            "file": "copy.py",
+            "line": 191,
+            "function": "_deepcopy_list",
+            "calls": "300/240",
+            "self_seconds": 1.441,
+            "cumulative_seconds": 7.771
+          },
+          {
+            "file": "store.py",
+            "line": 53,
+            "function": "_dispatch",
+            "calls": "10",
+            "self_seconds": 0.006,
+            "cumulative_seconds": 5.186
+          },
+          {
+            "file": "store.py",
+            "line": 43,
+            "function": "state",
+            "calls": "20",
+            "self_seconds": 0.0,
+            "cumulative_seconds": 5.182
+          },
+          {
+            "file": "reducer.py",
+            "line": 50,
+            "function": "reduce",
+            "calls": "10",
+            "self_seconds": 0.0,
+            "cumulative_seconds": 2.594
+          },
+          {
+            "file": "~",
+            "line": 0,
+            "function": "<method 'get' of 'dict' objects>",
+            "calls": "18025150",
+            "self_seconds": 1.272,
+            "cumulative_seconds": 1.272
+          },
+          {
+            "file": "~",
+            "line": 0,
+            "function": "<built-in method builtins.id>",
+            "calls": "9014840",
+            "self_seconds": 0.485,
+            "cumulative_seconds": 0.485
+          },
+          {
+            "file": "~",
+            "line": 0,
+            "function": "<method 'append' of 'list' objects>",
+            "calls": "9001830",
+            "self_seconds": 0.454,
+            "cumulative_seconds": 0.454
+          },
+          {
+            "file": "copy.py",
+            "line": 172,
+            "function": "_deepcopy_atomic",
+            "calls": "9011160",
+            "self_seconds": 0.427,
+            "cumulative_seconds": 0.427
+          }
+        ]
+      },
+      "python_allocations_one_separate_dispatch": {
+        "current_bytes": 4819896,
+        "peak_bytes": 4828472,
+        "not_native_or_rss": true,
+        "hot_lines": [
+          {
+            "location": "<home>\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\copy.py:196",
+            "bytes": 4806080,
+            "count": 18
+          },
+          {
+            "location": "<home>\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\copy.py:268",
+            "bytes": 12104,
+            "count": 39
+          },
+          {
+            "location": "<home>\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\copyreg.py:99",
+            "bytes": 1296,
+            "count": 27
+          },
+          {
+            "location": "<home>\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\copy.py:218",
+            "bytes": 384,
+            "count": 6
+          },
+          {
+            "location": "<home>\\AppData\\Roaming\\uv\\python\\cpython-3.12-windows-x86_64-none\\Lib\\tracemalloc.py:551",
+            "bytes": 72,
+            "count": 1
+          },
+          {
+            "location": "<home>\\Desktop\\repo\\mudplot\\scripts\\profile_state_costs.py:138",
+            "bytes": 56,
+            "count": 2
+          },
+          {
+            "location": "<home>\\Desktop\\repo\\mudplot\\mudplot\\store.py:57",
+            "bytes": 32,
+            "count": 1
+          }
+        ]
+      }
+    }
+  ],
+  "measurement_exit_code": 0,
+  "elapsed_seconds": 60.14100000000326,
+  "raw_measurements_sha256": "93ca7acd0cea5c9b9a800ea97afe72b393635ee982b7933f0d783dd1a78c9c96",
+  "profiling_caveats": "Public pstats StatsProfile times round to milliseconds and instrumentation slows deepcopy; fraction describes that profile, not uninstrumented dispatch latency. Stage listener counts calls, profile listener is a no-op. tracemalloc is Python allocation only, not native/whole-app RSS. Unpinned CPU/background load, one Windows run; no latency SLO or cross-hardware/floor promise.",
+  "decision": "Keep snapshot/alias safety. Existing short-history costs and JSON vs render boundaries are now measured; no immutable/zero-copy/checkpoint rewrite, validation removal, long-history/concurrency optimization is justified by these snapshots alone.",
+  "initial_qa_failure": "The first private run used non-exported mp.SetTitle; it failed before measurement, was not a product bug and is not counted as successful data. The script now uses existing mp.actions.",
+  "checks": [
+    {
+      "name": "state-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_spec_roundtrip.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "59 passed, 2 skipped in 4.83s"
+      ],
+      "log_text_sha256": "8a60bd98fb00d181d408245f3bee98b15027af36fe8b7128d2ece887cb4f085a"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "223 files already formatted"
+      ],
+      "log_text_sha256": "1c0028d26b0eb2bbffd35e8f3ea2957a6a46019184711c82fa05404d700618f4"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "ebd658f0b1e71e250cf93810913318986cead28c624cefc925c075f867db6083"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "8d290d0252956d67da4956509023358a2104308ea1e640c8148adf1334260538"
+    }
+  ]
+}
