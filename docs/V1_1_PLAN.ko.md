@@ -120,6 +120,26 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 24차에서 staging 소유권과 offline sink를 확인했습니다.** FIND-026은 충돌한
+기존 entry를 JSON 실패 cleanup이 지우고 PNG/PDF/SVG가 덮어쓰던 문제입니다. 공통
+helper가 cleanup 전에 exclusive 예약하고 text도 그 파일만 씁니다. File/directory/
+hardlink는 통과, Windows 권한 symlink4skip은 남겨 SEC-06은 RUNNING입니다. 고정
+Python/native HTTP route/query 대조도 파일 노출이나 state 변경 없이 통과했습니다.
+
+일반 PNG/PDF/SVG에서 JSON/reference 문자열은 object 복원·네트워크/shell/pickle
+sink를 시도하지 않았고 위험 href/citation은 거부해 SEC-07은 이 지원 경로에서 PASS입니다.
+명시 TeX/PGF·사용자 export directory는 별도 신뢰 경계입니다. 관련128통과/OS6skip,
+최소80통과/4skip/2814deselected/경고13·native집중HTTP·스타일/타입/계약/packaging
+7명령은 [근거](review_evidence/file_sink_verification.json)에 기록했습니다.
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS70/RUNNING10/OPEN69/DEFERRED1**입니다.
+
+기준621CI의3.10은 Pytest36분 성공 뒤 최소환경 step이 남은23분을 쓰다1h job 한도로
+취소됐습니다. Annotation117639290243을 확인했으며 다른3job은 성공입니다. 다음 단위에서
+검사를 줄이지 않고 별도 유한 최소환경 job 구조를 검토하되 이번 CI는 아직 바꾸지 않았습니다.
+수정은 로컬에 먼저 보존하고 버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 23차
+
 **리뷰 23차에서 Windows venv/TMP 시작 경계를 분리했습니다.** Print/capabilities·
 pipe/file·base/venv·site·TMP/TEMP의12대조를 각각6초로 제한했습니다. 관찰한 venv는
 321문자TMP에서 print 전부터 멈추고-S도 같았으나 base Python과 긴TEMP/짧은TMP는

@@ -48,3 +48,19 @@ chunked 요청을 지원합니다.
 로컬 순차 form/JSON N-1/N/N+1 probe와 서버 PID RSS/수명 peak를 관찰했으며 native
 렌더 자식은 제외했습니다. 이는 메모리/CPU hard limit·동시 부하·모든 OS 보장이 아닙니다.
 정확한 범위/결과는 [리뷰 대장](docs/REVIEW_CHECKLIST_STATUS.md)을 확인하세요.
+
+## 파일과 실행 경계
+
+HTTP static/export route는 고정 bundled 자산이나 현재 figure bytes만 선택합니다.
+URL/query 경로가 서버 파일이나 출력 목적지를 고르지 않습니다. Local API/CLI export는
+지원 symlink 해석을 포함해 호출자가 명시한 경로를 유지하므로 신뢰하는 출력 directory를
+선택하세요. JSON/PNG/PDF/SVG staging은 생성 이름을 배타적으로 소유한 뒤 쓰기/정리를
+하며 기존 entry면 실패합니다. 적대적인 shared directory sandbox나 PGF sidecar 묶음의
+atomic transaction을 보장하는 것은 아닙니다.
+
+JSON은 pickle/object 복원이 아닌 plain data입니다. DOI/arXiv/reference는 offline 문자열
+정규화이며 일반 PNG/PDF/SVG 링크는 output annotation이지 서버 fetch가 아닙니다.
+실행 가능한 위험 scheme/citation escape는 validation이 거부하며 허용 링크를 누르는
+동작은 viewer 사용자의 명시적 행동입니다. 명시적 TeX/PGF는 설정한 local TeX engine을
+실행하므로 신뢰하는 입력/도구만 사용하세요. 임의 Python 호출이나 untrusted TeX의
+sandbox를 제공하지 않습니다.

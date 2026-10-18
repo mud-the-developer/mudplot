@@ -15,6 +15,53 @@ from mudplot import io
 
 
 @pytest.mark.parametrize("extension", ["json", "png", "pdf", "svg"])
+@pytest.mark.parametrize("existing", ["file", "directory", "hardlink", "symlink"])
+def test_unowned_staging_collision_is_never_removed_or_overwritten(
+    tmp_path, monkeypatch, extension, existing
+):
+    destination = tmp_path / f"previous.{extension}"
+    destination.write_bytes(b"previous complete output")
+    external = tmp_path / "external.txt"
+    external.write_bytes(b"not owned by this export")
+    collision = tmp_path / f".{destination.name}.collision.tmp"
+    if existing == "directory":
+        collision.mkdir()
+        (collision / "keep.txt").write_bytes(b"directory data")
+    elif existing == "hardlink":
+        try:
+            collision.hardlink_to(external)
+        except (OSError, NotImplementedError):
+            pytest.skip("hardlink creation is not supported by this host")
+    elif existing == "symlink":
+        try:
+            collision.symlink_to(external)
+        except (OSError, NotImplementedError):
+            pytest.skip("symlink creation requires host privileges")
+    else:
+        collision.write_bytes(b"pre-existing staging file")
+    monkeypatch.setattr(io.secrets, "token_hex", lambda _length: "collision")
+    plot = mp.plot({"x": [1, 2], "y": [2, 3]}).line("x", "y").size(4, 3)
+    figures = set(plt.get_fignums())
+    with pytest.raises(OSError if existing == "directory" else FileExistsError):
+        if extension == "json":
+            mp.save_spec(plot.spec, destination)
+        else:
+            mp.save(plot.spec, destination)
+    assert destination.read_bytes() == b"previous complete output"
+    assert external.read_bytes() == b"not owned by this export"
+    assert set(plt.get_fignums()) == figures
+    if existing == "directory":
+        assert (collision / "keep.txt").read_bytes() == b"directory data"
+    elif existing == "hardlink":
+        assert collision.read_bytes() == external.read_bytes()
+        assert collision.stat().st_ino == external.stat().st_ino
+    elif existing == "symlink":
+        assert collision.is_symlink() and collision.resolve() == external
+    else:
+        assert collision.read_bytes() == b"pre-existing staging file"
+
+
+@pytest.mark.parametrize("extension", ["json", "png", "pdf", "svg"])
 @pytest.mark.parametrize("kind", ["missing_parent", "directory_target"])
 def test_out_04_invalid_output_location_has_no_partial_output(
     tmp_path, extension, kind
@@ -115,7 +162,7 @@ def test_out_03_atomic_failure_retains_previous_bytes_and_cleans_staging(
 
         def partial_open(path, *args, **kwargs):
             handle = original_open(path, *args, **kwargs)
-            if args and args[0] == "x" and path.suffix == ".tmp":
+            if args and args[0] == "w" and path.suffix == ".tmp":
                 return PartialTextWrite(handle)
             return handle
 

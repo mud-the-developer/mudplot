@@ -124,6 +124,29 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 24 fixes staging ownership and verifies offline input sinks.**
+FIND-026 reproduced JSON collision cleanup deleting another entry and PNG/PDF/SVG
+overwriting it. Shared staging now reserves an exclusive entry before its cleanup
+scope; text writing uses only that reservation. File/directory/hardlink controls
+pass;4symlink cases are privilege-skipped on Windows, so SEC-06 stays RUNNING.
+Fixed Python/native HTTP route/query tests retain state and do not expose file paths.
+
+Plain JSON/reference metadata survives without object restoration; network/shell/
+pickle sink guards show zero attempts for normal PNG/PDF/SVG after backend warmup.
+Unsafe link/citation input is rejected. SEC-07 is PASS for these supported paths;
+explicit TeX/PGF and caller-chosen export directories retain separate trust limits.
+Related128passes/6OSskips, floor80passes/4skips/2814deselected/13warnings, native
+focused HTTP and7style/type/contract/package records pass. [Evidence](review_evidence/file_sink_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/DEFERRED1**.
+
+Baseline621CI cancelled after1hour in3.10: full Pytest already passed in36minutes,
+then minimum step exhausted its remaining23minutes; annotation117639290243 confirms
+budget exhaustion. Other3jobs passed. Next examine a separate finite-budget floor
+job without dropping coverage; this source unit does not change CI yet. Save the
+fix locally before that follow-up. Versions/deps/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 23
+
 **Review phase 23 isolates the Windows venv/TMP startup boundary.**
 Twelve six-second controls separate print/capabilities, pipe/file capture, base/
 venv, site and TMP/TEMP. The observed venv fails before its print program with

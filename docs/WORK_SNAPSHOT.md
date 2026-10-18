@@ -28,17 +28,25 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest staging ownership and fixed HTTP path/query guards pass; normal PNG/PDF/
+  SVG references stay offline data. Related128passes/6OSskips and floor80passes/
+  4symlink skips are scoped, not full security or sandbox approval. SEC-06 remains
+  partial; SEC-07 is PASS. The exclusive reservation prevents collision deletion.
+- Baseline621CI ended cancelled at1hour during floor checks after3.10Pytest passed;
+  other3jobs succeeded. Preserve the local fix while examining separate finite
+  minimum-job execution, rather than dropping coverage or calling this all-green.
+
 - Latest Windows TMP controls12cases distinguish observed venv startup limits from
   core/capture. ShortTMP/longTEMP on the same interpreter passes native open/action/
   PNG and long source preservation; related47checks pass. PKG-06 is PASS only for
   this supported host configuration and documented limits, not general descendant
-  cleanup or all long paths. Product runtime is unchanged; docs stay local during621CI.
+  cleanup or all long paths. That earlier diagnostic did not change product runtime.
 
 - Latest locked43-package snapshot/repeat sync, separate isolated PEP517 backend,
   equal55-member observed wheel builds and an independent core consumer pass.
   Both matching-checkout source editors start with expected shared assets; PKG-08/
   09 are PASS. Runtime code is unchanged; this is not release or universal-byte approval.
-  Current docs remain local while621CI runs to avoid cancelling its jobs.
+  The earlier documentation publication hold protected621CI until it settled.
 
 - Latest82optional-related and floor11passes/13warnings plus installed-wheel7
   progressive extras stages/98CLI calls pass outside checkout. Missing effects
@@ -132,7 +140,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   separates lock, fresh-range drift, isolated backend and actual matching-source startup.
 - [Windows TMP boundary evidence](review_evidence/windows_tmp_boundary_verification.json)
   records interpreter/capture/environment controls and the same-interpreter bridge result.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS69/RUNNING9/OPEN71/
+- [File/sink evidence](review_evidence/file_sink_verification.json) records owned
+  staging, route policies, offline sink controls and separate CI budget exhaustion.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

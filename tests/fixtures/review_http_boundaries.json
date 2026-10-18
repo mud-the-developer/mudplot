@@ -11,5 +11,6 @@
     {"Origin": "{base}", "Sec-Fetch-Site": "cross-site"},
     {"Sec-Fetch-Site": "cross-site"}
   ],
+  "rejected_file_paths": ["/private.txt", "/static/private.txt", "/../SECURITY.md", "/static/../editor_server.py", "/static/%2e%2e/editor_server.py", "/static/..%2feditor_server.py", "/static/%252e%252e/editor_server.py", "/static/..%5ceditor_server.py", "/static/%00/htmx.min.js", "/static/htmx.min.js/../../editor_server.py"],
   "accepted_origins": [{}, {"Origin": "{base}"}, {"Origin": "{base}", "Sec-Fetch-Site": "same-origin"}]
 }

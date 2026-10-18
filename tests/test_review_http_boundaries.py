@@ -144,6 +144,43 @@ def test_normal_static_preview_and_export_headers_are_consistent(path, local_edi
         assert response.read()
 
 
+@pytest.mark.parametrize("path", CASES["rejected_file_paths"])
+def test_routes_do_not_turn_dot_encoded_or_static_paths_into_file_reads(
+    path, local_editor, tmp_path, monkeypatch
+):
+    monkeypatch.chdir(tmp_path)
+    protected = tmp_path / "private.txt"
+    protected.write_bytes(b"private route probe")
+    (tmp_path / "static").mkdir()
+    (tmp_path / "static" / "private.txt").write_bytes(b"private route probe")
+    before = _snapshot(local_editor)
+    parsed = urlparse(local_editor)
+    connection = http.client.HTTPConnection(parsed.hostname, parsed.port, timeout=10)
+    try:
+        connection.request("GET", path)
+        response = connection.getresponse()
+        assert response.status in (400, 404)
+        _headers(response.headers)
+        assert b"private route probe" not in response.read()
+    finally:
+        connection.close()
+    assert protected.read_bytes() == b"private route probe"
+    assert _snapshot(local_editor) == before
+
+
+def test_http_export_query_cannot_choose_a_server_output_path(local_editor, tmp_path):
+    protected = tmp_path / "private.txt"
+    protected.write_bytes(b"private export probe")
+    before = _snapshot(local_editor)
+    query = urlencode({"out": str(protected), "path": str(protected)})
+    with urllib.request.urlopen(
+        local_editor + "/fig.svg?" + query, timeout=20
+    ) as response:
+        assert response.status == 200 and b"<svg" in response.read()
+    assert protected.read_bytes() == b"private export probe"
+    assert _snapshot(local_editor) == before
+
+
 def test_oversized_declared_body_is_rejected_before_body_upload(local_editor):
     before = _snapshot(local_editor)
     parsed = urlparse(local_editor)

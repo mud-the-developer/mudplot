@@ -22,15 +22,22 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 staging 소유권·고정 HTTP path/query와 일반PNG/PDF/SVG offline sink가 통과했습니다.
+  관련128통과/OS6skip·최소80통과/권한4skip은 한정 범위이며 보안 인증/sandbox 보장은
+  아닙니다. SEC-06은 부분 확인, SEC-07은 PASS이고 exclusive 예약이 충돌 삭제를 막습니다.
+- 기준621CI는3.10Pytest 성공 뒤 최소환경 중1h 한도로 취소됐고 다른3job은 성공했습니다.
+  검사를 줄이거나 전체 green으로 세지 않고 별도 유한 최소 job 구조를 검토하며 수정은
+  로컬에 보존합니다.
+
 - 최신 WindowsTMP12대조가 관찰 venv 시작 한계를 core/capture와 구분했습니다. 같은
   interpreter의 짧은TMP/긴TEMP bridge·한글/긴source 보존과 관련47개가 통과했습니다.
   PKG-06은 이 지원 host 구성/명시 한계에서 PASS이며 모든 긴 경로나 일반 자손 정리
-  보장은 아닙니다. Runtime 변경은 없고621CI 중에는 문서 게시를 보류합니다.
+  보장은 아닙니다. 그 앞선 진단은 runtime을 바꾸지 않았습니다.
 
 - 최신 locked43package/반복 sync·별도 PEP517 backend·관찰한 동일55member wheel과
   새 무의존 consumer가 통과했습니다. Matching source 두 editor도 공유 자산과 함께
   시작해 PKG-08/09는 PASS입니다. Runtime 변경·릴리스 승인·모든 bytes 재현 보장은 아닙니다.
-  이 문서 단위는621CI를 취소하지 않도록 실행 중에는 로컬에 보존합니다.
+  앞선 문서 게시 보류는 기준621CI가 끝날 때까지 유지했습니다.
 
 - 최신 optional 관련82·최소11통과/경고13과 설치 wheel7점진 extra 단계/98CLI가
   통과했습니다. 기대한 missing module만 설치 extra를 안내하고 browser package/binary는
@@ -112,7 +119,9 @@
   lock·허용 범위 drift·격리 backend·실제 matching-source 시작을 구분했습니다.
 - [WindowsTMP 경계 근거](review_evidence/windows_tmp_boundary_verification.json)에
   interpreter/capture/환경 대조와 같은 interpreter bridge 결과를 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS69/RUNNING9/OPEN71/DEFERRED1**.
+- [File/sink 근거](review_evidence/file_sink_verification.json)에 staging 소유·route·
+  offline sink와 별도 CI 실행 예산 소진을 기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

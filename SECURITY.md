@@ -52,3 +52,19 @@ Sequential local form/JSON boundary probes cover N-1/N/N+1 and record server-PID
 RSS/lifetime peaks; native renderer descendants are excluded. These observations
 are not hard memory/CPU limits, concurrent-load guarantees or proof on every OS.
 See [the review ledger](docs/REVIEW_CHECKLIST_STATUS.md) for exact scope/results.
+
+## File and execution boundaries
+
+HTTP static/export routes select fixed bundled assets or return current figure
+bytes; URL/query paths do not select server files or output destinations. Local
+API/CLI exports still use the caller's explicit path, including supported symlink
+resolution; choose a trusted output directory. JSON/PNG/PDF/SVG staging exclusively
+claims its generated file before writing/cleanup and fails on an existing entry.
+This is not an adversarial shared-directory sandbox or an atomic PGF sidecar bundle.
+
+JSON is plain data, not pickle/object restoration. DOI/arXiv/reference handling is
+offline normalization; ordinary PNG/PDF/SVG links are output annotations, not server
+fetch requests. Unsafe active link schemes/citation escapes are rejected by
+validation. Clicking a permitted output link is the viewer's explicit action.
+Explicit TeX/PGF workflows run a configured local TeX engine and are not a sandbox
+for untrusted TeX or arbitrary Python callers; keep those inputs/tools trusted.

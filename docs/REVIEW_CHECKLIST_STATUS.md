@@ -18,6 +18,34 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 24차 — staging 소유권·HTTP 경로·offline sink
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-file-sinks-_n7m1pz3`.
+- **FIND-026:** 강제 nonce 충돌4case에서 JSON 실패 cleanup이 기존 파일을 삭제하고
+  PNG/PDF/SVG가 덮어쓰는 것을 재현했습니다. 공통 atomic helper에서 cleanup 범위 전에
+  exclusive touch로 소유한 entry를 예약하고 text writer는 그 파일에 쓰도록 바꿨습니다.
+  기존 text partial-write 주입도 실제 writer mode에 맞췄습니다. 기존 파일·directory·
+  hardlink 보존12case가 통과하며 symlink4case는 Windows 권한으로 skip입니다.
+- PythonHTTP는10개 ..·percent/double-encoded·backslash·NUL·알 수 없는 static 경로를
+  거부하고 export query가 server output path를 선택하지 못함을 확인했습니다. 같은
+  corpus의 native focused helper도 기존 Host/Origin/16MiB/header/state 보호와 함께
+  통과했습니다. Static route는 Python 고정 bytes/Rust include_bytes+고정 router이며
+  임의 server file 경로를 만들지 않습니다. Local export 경로는 sandbox로 제한하지 않았습니다.
+- JSON→dataclass/metadata→reference 정규화→href/citation validation→기본 renderer를
+  추적했습니다. DOI/arXiv/url·객체복원처럼 보이는 JSON·code처럼 보이는 label에서
+  PNG/PDF/SVG의 socket/urllib/os.system/subprocess/pickle sink 시도가0이고 잘못된
+  href scheme/TeX citation escape는 거부해 SEC-07은 이 supported corpus에서 PASS입니다.
+  Backend/font 초기 discovery 뒤 입력별 audit를 적용했으며 명시 TeX/PGF의 신뢰 경계는
+  별도입니다. Security 문서는 shared-directory/PGF bundle/임의Python sandbox를 보장하지 않습니다.
+- 관련128통과/OS6skip·최소80통과/권한4skip/2814deselected/경고13과7기록 명령이
+  exit0입니다. Ruff222/format·Pyright·계약·packaging 통과, 변경Python6경로 LSP clean입니다.
+  SEC-06은 새 POSIX symlink 실행 등 후속 확인을 남겨 RUNNING으로만 올립니다.
+- 기준621CI39115133320은3.12/양Rust 성공이지만3.10은1h job 한도 초과로 취소됐습니다.
+  Annotation117639290243을 확인했고 Pytest는36분에 이미 성공, 다음 최소환경 step이
+  남은23분을 쓰다 취소됐습니다. 테스트 실패·전체 green으로 세지 않습니다. 다음 단위에서
+  최소환경 job 분리 등 전체 검사를 유지한 실행 구조를 검토하며 이번 소유권 수정은 로컬
+  commit으로 먼저 보존합니다. 버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 23차 — Windows 긴 TMP의 interpreter/capture 분리
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-longtmp-epe7glbh`,
@@ -781,8 +809,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-03 | P0 | PASS | 16 MiB 요청 한도 | _Handler._read_body; protect_local_boundary limited Bytes | test_review_body_framing.py(13); check_request_body_limits.py(39); 실제 PID RSS/peak·상태 보존 11차 기록 |
 | SEC-04 | P1 | OPEN | 작은 요청의 과도한 계산 방어 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-05 | P1 | PASS | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-06 | P1 | OPEN | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-07 | P1 | OPEN | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-06 | P1 | RUNNING | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-08 | P1 | OPEN | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | PERF-01 | P1 | OPEN | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-02 | P1 | OPEN | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -819,8 +847,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 69, RUNNING 9, OPEN 71, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 70, RUNNING 10, OPEN 69, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

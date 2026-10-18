@@ -6,6 +6,11 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Reserved atomic JSON/PNG/PDF/SVG staging entries exclusively before writing or
+  cleanup, preventing a name collision from deleting/overwriting another file.
+  Added file/directory/hardlink/symlink collision and fixed HTTP path-policy probes.
+- Verified offline reference/data handling with blocked network/shell/pickle sinks
+  for ordinary PNG/PDF/SVG, while documenting explicit trusted TeX/PGF boundaries.
 - Documented the measured Windows venv/TMP startup boundary independently of
   mudplot and capture mode, with a same-interpreter short-TMP bridge control.
   Long absolute data paths remain distinct from unsupported launcher cwd/TMP

@@ -11,6 +11,7 @@ import socket
 import struct
 import subprocess
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.parse
@@ -346,6 +347,25 @@ def _review_http_boundaries(base: str) -> None:
     before = capture()
     parsed = urllib.parse.urlparse(base)
     assert parsed.hostname is not None and parsed.port is not None
+    for path in cases["rejected_file_paths"]:
+        connection = http.client.HTTPConnection(parsed.hostname, parsed.port, timeout=5)
+        try:
+            connection.request("GET", path)
+            response = connection.getresponse()
+            assert response.status in (400, 404), path
+            headers(response.headers)
+            assert b"private route probe" not in response.read()
+        finally:
+            connection.close()
+        assert capture() == before
+    with tempfile.TemporaryDirectory(prefix="mudplot-http-export-") as directory:
+        protected = Path(directory) / "private.txt"
+        protected.write_bytes(b"private export probe")
+        query = urllib.parse.urlencode({"out": str(protected), "path": str(protected)})
+        with _request(f"{base}/fig.svg?{query}") as response:
+            assert response.status == 200 and b"<svg" in response.read()
+        assert protected.read_bytes() == b"private export probe"
+        assert capture() == before
     for host in cases["rejected_hosts"]:
         try:
             _request(
@@ -410,7 +430,7 @@ def _review_http_boundaries(base: str) -> None:
         assert error.code == 404
         headers(error.headers)
     _submit(base, "/open", {"json": json.dumps(before[0])})
-    print("HTTP boundary OK: Host/Origin/16MiB rejection and security headers")
+    print("HTTP boundary OK: Host/Origin/16MiB/path policies and security headers")
 
 
 def _review_json_boundaries(base: str) -> None:

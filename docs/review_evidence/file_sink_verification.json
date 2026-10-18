@@ -1,0 +1,211 @@
+{
+  "head": "5e220402a535ecfa55a8b01c71afc09c0b2a9da7",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "tests/test_review_output_contracts.py": "c7eb07b01fbb024c8a8fb234701e25910fea91962b88622be07a90cbec56c58d",
+    "tests/test_review_http_boundaries.py": "155cf1091e0ad9e9e065a66e1e42737d0aa56c9d349a77dab54ed861255efba7",
+    "tests/fixtures/review_http_boundaries.json": "4a1d004a1c255d657e8925c3a8ff03596a49a1e400eaad0b1b0cbe85c3712071",
+    "scripts/rust_editor_smoke_test.py": "b87dd1ce8c356a873aecf05f4ca8efd419b8d7a7106f66c33e9f3964c8b5cf44",
+    "tests/test_review_offline_execution.py": "ce9db61d80927a199a9a3dc6be8bfa53a6010fadc55ba61181a909b2bbfa68b0",
+    "scripts/check_minimum_versions.py": "606b85c69e77b31716fed1d9db33035e05e26ee78411c3dabc2d68b78faebfbe"
+  },
+  "trace_sources_sha256": {
+    "mudplot/bib.py": "dda22b7689de7ddf4bc8aebb521ee9d8f46043cf55f6190c922da1d45afa28fe",
+    "mudplot/spec.py": "0cec837f31e597df9bfd46da86b2d56176b294d6ee5ab9ad8ec461021d13ecab",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "dashboard/editor_server.py": "441b93e4fe9a1f77aec3af44ec283f7fa35e60dd2aff3e67cf7618f272e3ac62",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/python.rs": "49baaca99635642d0769609f4d7f0b11df82ff3bff06dc5f1c099484a0994567"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "pre_fix": {
+    "unsafe_file_cases_failed": 4,
+    "existing_directory_cases_passed": 4,
+    "windows_symlink_cases_skipped": 4,
+    "impact": "save_spec failure removed an unowned collision entry; PNG/PDF/SVG overwrote it",
+    "qa_adjustment": "Existing directory rejection accepts OSError rather than assuming a specific Windows errno; not a separate product bug."
+  },
+  "fix": "Reserve the generated staging entry exclusively outside the cleanup scope; text writer writes only that reserved entry. Existing entries fail without unlink/write; original output/figure lifecycle and explicit local path semantics retained.",
+  "ownership_limits": "Caller chooses a trusted output directory. This is not adversarial directory-race sandboxing or atomic PGF sidecar support; existing explicit symlink-target export semantics retained.",
+  "offline_proof": [
+    {
+      "format": "png",
+      "reference_resolution_offline": true,
+      "sink_attempts": [],
+      "metadata_not_restored_as_objects": true,
+      "unsafe_links_rejected": true,
+      "source_unchanged": true
+    },
+    {
+      "format": "pdf",
+      "reference_resolution_offline": true,
+      "sink_attempts": [],
+      "metadata_not_restored_as_objects": true,
+      "unsafe_links_rejected": true,
+      "source_unchanged": true
+    },
+    {
+      "format": "svg",
+      "reference_resolution_offline": true,
+      "sink_attempts": [],
+      "metadata_not_restored_as_objects": true,
+      "unsafe_links_rejected": true,
+      "source_unchanged": true
+    }
+  ],
+  "native_http_proof": {
+    "exit_code": 0,
+    "path_cases": 10,
+    "export_query_cannot_choose_files": true,
+    "state_png_preserved": true,
+    "private_files_preserved": true,
+    "existing_host_origin_size_guards_retained": true,
+    "helper_source_sha256": "b87dd1ce8c356a873aecf05f4ca8efd419b8d7a7106f66c33e9f3964c8b5cf44",
+    "corpus_sha256": "4a1d004a1c255d657e8925c3a8ff03596a49a1e400eaad0b1b0cbe85c3712071"
+  },
+  "sink_trace": [
+    "JSON loader and typed SpecBase hydrate plain data; metadata py/object and __reduce__ strings are not class/pickle restoration.",
+    "Bib DOI/arXiv normalization is offline; from_bib reads only an explicit local caller path.",
+    "validate checks href schemes and citation escaping before normal draw/export; raster/vector links are annotations.",
+    "Python fixed cached static bytes and Rust include_bytes/router do not join request paths; HTTP output queries do not choose destinations.",
+    "Native bridge uses Command with argument arrays; explicit configured TeX/PGF is a separate trusted local effect, not untrusted-TeX sandboxing."
+  ],
+  "limits": "Current Windows file/directory/hardlink and loopback subset only; four new symlink cases skipped for privilege. SEC06 remains RUNNING pending broader execution; no full security certification, whole-suite/browser/nativeunit/OS or dependency-audit claim.",
+  "baseline_ci": {
+    "run": 39115133320,
+    "head": "62128a4637af0375c5bf1009df44f183ca06b838",
+    "python310_check": 117639290243,
+    "conclusion": "cancelled",
+    "other3jobs": "success",
+    "annotation": "The job has exceeded the maximum execution time of 1h0m0s",
+    "python310_pytest_started": "2026-10-18T09:24:44Z",
+    "python310_pytest_completed": "2026-10-18T10:00:44Z",
+    "minimum_started": "2026-10-18T10:00:44Z",
+    "minimum_cancelled": "2026-10-18T10:23:39Z",
+    "follow_up": "Keep full/floor coverage but examine separate finite-budget minimum job; not implemented in this source unit."
+  },
+  "checks": [
+    {
+      "name": "security-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_review_offline_execution.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_review_export_determinism.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "128 passed, 6 skipped in 44.46s"
+      ],
+      "log_text_sha256": "66c7135811bbac44fa967199670930041b52f04ec06bcba7f21c247edf5a8c02"
+    },
+    {
+      "name": "minimum-security",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "80 passed, 4 skipped, 2814 deselected, 13 warnings in 33.53s"
+      ],
+      "log_text_sha256": "a5d3a782bd497da433406a2e1084d0a93d07e905d37a587374e1983e7b6fcac0"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "222 files already formatted"
+      ],
+      "log_text_sha256": "65bfe43104bb2e6b62e2cf2e427ada9b13e1c43c71d8a87decbb75061f04e5f6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "d95631c3650c5d132b9ca9f365cd590a7bc6536247d6423b76b54ac07bc89d67"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "b4d0fe40bbf734278761793c3bfc4b22c55c207775c5f4a7a7fe953b7113524e"
+    }
+  ],
+  "native_logs_sha256": {
+    "native_probe.log": "85db1c21d40fd2675fa93b790ebc34ea233fc3736e3214211e40f38d42595d7b",
+    "native.stdout": "3730676edb3c7da567159f35ee7fccada68cc2b644bdb86b0bf144ffd1af45be",
+    "native.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

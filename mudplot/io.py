@@ -109,6 +109,8 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
         f".{destination.name}.{secrets.token_hex(16)}.tmp"
     )
     mode = stat.S_IMODE(destination.stat().st_mode) if destination.exists() else None
+    # Claim before cleanup scope: a collision must leave the other entry untouched.
+    temporary.touch(exist_ok=False)
     try:
         yield temporary
         with temporary.open("rb+") as handle:
@@ -126,7 +128,7 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
 def _atomic_write_text(path: str | Path, text: str) -> None:
     with (
         _atomic_destination(path) as temporary,
-        temporary.open("x", encoding="utf-8", newline="\n") as handle,
+        temporary.open("w", encoding="utf-8", newline="\n") as handle,
     ):
         handle.write(text)
 
