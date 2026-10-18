@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 소유 Matplotlib effect는2serial/concurrent 출력 불일치 뒤 공통 재진입 직렬화를
+  사용합니다.3format exact hash·독립session preview/layout·중첩 호출과 관련231/site9/
+  최소6검사가 통과해 PERF-06은 소유 호출 범위에서 PASS입니다. 외부 Figure/pyplot은
+  caller가 조정해야 하며 처리량 보장은 아닙니다. 단위는31eCI 중 로컬 보존합니다.
+
 - 최신 독립worker rows×history는6목표 완료·3개 조합 시간예산 중단이며 unknown undo/redo는
   null로 보존합니다. Core PID RSS/peak 관찰이지 전체앱/renderer/hard-limit 보장은
   아닙니다. PERF-02는 범위 내 PASS, 관련62통과/OS2skip·품질/packaging6명령도 통과했습니다.
@@ -173,7 +178,9 @@
   CLI/codec/rawUI 범위와 남은 전 필드 의미 격차를 보존했습니다.
 - [이력비용 근거](review_evidence/history_cost_verification.json)에 완료/중단 목표·
   정확한 예산/RSS 범위와 checkpoint 오류 회귀를 보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS76/RUNNING8/OPEN65/DEFERRED1**.
+- [소유동시성 근거](review_evidence/concurrent_render_verification.json)에 exact
+  serial/concurrent bytes·현재/최소검사와 소유권 한계를 보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING8/OPEN64/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

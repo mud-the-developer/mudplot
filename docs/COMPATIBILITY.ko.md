@@ -96,6 +96,18 @@ Raw line은 행 순서/중복 x를 유지하고 lineplot은 x별 집계와 명�
 빈 raw line/scatter는 유효할 수 있으나 통계 layer는 usable 관측 부재를 거부하고 singleton의
 정의되지 않는 interval은 만들지 않습니다.
 
+## 소유 render의 동시성 경계
+
+mudplot 소유 Matplotlib effect는 같은 process에서 하나의 재진입 lock으로 직렬화합니다.
+API render/save·TeX preview·Python editor preview/placeholder/export·site/gallery가
+대상이며 서로 다른 요청의 serial state/bytes를 유지합니다. 병렬 처리량 보장이 아닙니다.
+Rust 요청에는 session 직렬화와 별도 Python child process 경계도 있습니다.
+
+함수가 lock을 해제한 뒤 반환된 open Figure는 계속 호출자 소유입니다. 직접 pyplot/
+Figure draw/save/close·Store mutation·같은 directory로의 동시 build·외부 Matplotlib
+호출은 호출자가 조정해야 합니다. 병렬 작업은 독립 spawned process를 우선하고 threaded
+render 도중 fork나 mutable Figure 공유의 안전성으로 확대하지 마세요.
+
 ## JSON과 버전
 
 package/editor **1.0.0**과 serialized spec **0.1**은 독립된 버전입니다.

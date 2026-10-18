@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest owned Matplotlib effects use shared reentrant serialization after2serial/
+  concurrent export mismatches. Three-format exact hashes, independent session
+  previews/layout and nested calls pass:231connected/9site/floor6checks. PERF-06
+  is PASS within owned calls; external Figures/pyplot remain caller-coordinated.
+  This effect unit stays local during current31eCI, with no throughput promise.
+
 - Latest independent-worker rows×history matrix completed6targets and explicitly
   stopped3at dispatch budgets; unknown undo/redo remains null, not zero. Core-PID
   RSS/peak is observed, not whole-app/native-renderer or hard-limit proof. PERF-02
@@ -205,7 +211,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   explicit normalization, CLI/codec/rawUI scopes and the remaining all-field gap.
 - [History-cost evidence](review_evidence/history_cost_verification.json) retains
   completed/stopped targets, exact budgets/RSS scopes and checkpoint-error tests.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS76/RUNNING8/OPEN65/
+- [Owned-concurrency evidence](review_evidence/concurrent_render_verification.json)
+  records exact serial/concurrent bytes, current/floor checks and ownership limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING8/OPEN64/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

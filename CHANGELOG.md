@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Serialized owned Matplotlib effects with a shared reentrant stdlib lock after
+  concurrent PNG/SVG exports differed from serial output. API/preview/editor and
+  gallery effects retain deterministic bytes without claiming arbitrary Figure/
+  pyplot thread safety or parallel throughput; dependency-free core stays lazy.
 - Added a bounded rows×history core profile with per-worker RSS/peak observations,
   explicit partial targets and null unmeasured undo/redo timings. Timeout/error/
   truncated-output tests preserve checkpoints without inventing zero-cost results.

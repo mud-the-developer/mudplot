@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 32차 — owned Matplotlib effect 직렬화
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-concurrent-proof-wdl6qvz2`,
+  [동시/단독 byte 비교](review_evidence/concurrent_render_verification.json)를 보존합니다.
+- **FIND-030:** 서로 다른font/제목 그림의 동시 public PNG/SVG save2case가 serial
+  bytes와 달랐습니다. 별도 rc/font 관찰1case는 현재 버전에서 통과했으므로 특정 font
+  값/Matplotlib 내부 원인으로 단정하지 않습니다. Session별 lock만으로 전체 process의
+  API/다른 session/preview effect를 격리할 수 없어 공통 경계를 추가했습니다.
+- 새 stdlib-only RLock context는 APIrender/save·tex_preview·Python editor의 preview/
+  placeholder/export·site/gallery effect를 직렬화합니다. 중첩 호출은 reentrant이며
+  같은 session의 기존 state lock/반환 Figure 소유권은 유지합니다. Caller가 직접 하는
+  Figure/pyplot/Store 조작·동일출력경로 경합·thread중fork·crossprocess는 보장하지 않습니다.
+- Controlled2entrypoint interleaving·PNG/PDF/SVG3format의 서로 다른2그림 serial/
+  concurrent byte/hash·독립 editor2session PNG/SVG/layout의6case가 통과했습니다.
+  Core optional import를 앞당기지 않았고 NoDeps/TeX 중첩·실패 rollback regression도
+  포함한 관련231통과·site9통과·실제floor6통과/2937deselected/경고13과8기록 명령이 exit0입니다.
+  Ruff227/format·Pyright·계약·packaging·변경8경로 LSP clean이며 floor roster도 포함했습니다.
+- PERF-06은 이 supported owned-call corpus에서 PASS입니다. 처리량 개선/임의Matplotlib
+  thread-safe 인증은 아니며 직접 받은Figure는 함수가 끝난 뒤 caller가 조정해야 합니다.
+  이전 failing raw는 harness 기록이고 처음 mp.apply 인수 순서 QA 오류도 성공으로 세지 않습니다.
+- 현재31e의 full CI는 진행 중이므로 새 effect 코드가 이전 결과로 검증됐다고 하지 않고
+  로컬 commit으로 보존합니다. 선언적core/state·버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 31차 — bounded rows×history와 worker RSS
 
 - 실행: `uv run --no-sync python scripts/profile_history_costs.py`.
@@ -984,7 +1007,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PERF-03 | P1 | PASS | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-04 | P1 | OPEN | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-05 | P1 | OPEN | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-06 | P1 | OPEN | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-06 | P1 | PASS | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-07 | P2 | OPEN | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-08 | P2 | OPEN | 대형 데이터 지원 범위의 명문화 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PKG-01 | P0 | PASS | 깨끗한 wheel의 코어 독립성 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
@@ -1014,8 +1037,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 76, RUNNING 8, OPEN 65, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 77, RUNNING 8, OPEN 64, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

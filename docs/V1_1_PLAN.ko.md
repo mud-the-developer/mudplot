@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 32차에서 소유 Matplotlib effect를 직렬화했습니다.** FIND-030은 동시 PNG/SVG
+save가 serial bytes와 달라진2회귀입니다. 새stdlib-only 재진입 lock이 render/save·TeX
+preview·Python editor effect·site/gallery를 감싸며 optional import를 앞당기지 않습니다.
+격리이지 병렬 처리량/임의 Figure·pyplot·Store thread-safe 보장이 아닙니다. 반환Figure는
+caller 소유이며 병렬 drawing은 독립 spawned process를 우선합니다.
+
+Controlled/nested/3format/2session6case·관련231·site9·최소6통과/2937deselected/
+경고13과 품질/packaging8명령·LSP8경로가 통과하고 exact serial/concurrent hash도 같습니다.
+PERF-06은 소유 호출 범위에서 PASS이며 [근거](review_evidence/concurrent_render_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS77/RUNNING8/OPEN64/DEFERRED1**입니다.
+진행 중31eCI는 이 effect 변경 이전이므로 단위는 로컬 보존하고 state/선언적core·버전/
+의존성/lock/tag/배포는 유지하며 후속 current-source CI를 받습니다.
+
+### 이전 리뷰 31차
+
 **리뷰 31차에서 bounded rows×history core matrix를 기록했습니다.**
 `uv run --no-sync python scripts/profile_history_costs.py`는3행크기×3이력목표를
 독립 core worker로 실행하며 child12초/dispatch2.5초/RSS관찰512MiB 예산입니다. OS

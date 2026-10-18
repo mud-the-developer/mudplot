@@ -100,6 +100,20 @@ Raw line paths retain row order and duplicate x; lineplot aggregates per x and
 applies its explicit sort policy. Empty raw line/scatter can be valid, whereas
 statistical layers reject no usable observations and singletons omit undefined intervals.
 
+## Owned rendering concurrency
+
+mudplot serializes its Matplotlib effects within a process with one reentrant
+lock: API render/save, TeX preview, Python editor preview/placeholder/export and
+site/gallery rendering. Different owned requests keep their serial state/bytes;
+this is isolation, not parallel rendering throughput. Rust requests also have
+session serialization and separate Python child processes.
+
+A returned open Figure remains caller-owned after the function releases the lock.
+Direct pyplot/Figure draw/save/close, Store mutations, concurrent builds targeting
+the same directory and arbitrary external Matplotlib calls need caller coordination.
+For parallel rendering prefer independent spawned processes; do not infer safety
+for forking during threaded rendering or sharing mutable Figures.
+
 ## JSON and versions
 
 Package/editor version **1.0.0** and serialized spec version **0.1** are

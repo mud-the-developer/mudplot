@@ -25,6 +25,7 @@ from urllib.parse import parse_qs, urlparse
 
 import mudplot as mp
 from mudplot import actions as A
+from mudplot._mpl_context import matplotlib_context
 from mudplot.capabilities import LAYER_TYPES
 from mudplot.io import _loads_json
 from mudplot.spec import FigureSpec, LayerSpec
@@ -163,6 +164,7 @@ class EditorSession:
         except Exception as e:
             raise ValueError(f"invalid figure spec: {e}") from e
 
+    @matplotlib_context()
     def _render_preview(
         self, spec: FigureSpec, active_panel: int
     ) -> tuple[bytes, dict]:
@@ -183,6 +185,7 @@ class EditorSession:
         finally:
             plt.close(fig)
 
+    @matplotlib_context()
     def refresh(self) -> None:
         """Re-render the current figure, using a placeholder on failure."""
         import matplotlib.pyplot as plt
@@ -204,6 +207,7 @@ class EditorSession:
         finally:
             plt.close(fig)
 
+    @matplotlib_context()
     def export(self, fmt: str) -> bytes:
         """Render the current spec to a vector format at its exact configured
         size -- the whole point of the engine, so the editor must not only

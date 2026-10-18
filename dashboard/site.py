@@ -20,6 +20,8 @@ import html
 import shutil
 from pathlib import Path
 
+from mudplot._mpl_context import matplotlib_context
+
 from .markdown_lite import markdown_to_html
 from .plot_gallery import (
     GALLERY_CATEGORIES,
@@ -327,6 +329,7 @@ def _plot_gallery_html() -> str:
     return "".join(sections)
 
 
+@matplotlib_context()
 def build_site(out_dir: str = "dashboard/site_build") -> Path:
     """Generate the static docs+gallery site into ``out_dir``. Returns its path."""
     import mudplot as mp

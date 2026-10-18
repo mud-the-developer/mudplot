@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 32 serializes owned Matplotlib effects.**
+FIND-030 reproduced concurrent PNG/SVG saves differing from their serial bytes.
+A stdlib-only shared reentrant lock now covers render/save, TeX preview, Python
+editor owned effects and site/gallery generation without eager optional imports.
+This is isolation, not parallel throughput or arbitrary caller Figure/pyplot/Store
+thread safety. Returned Figures remain caller-owned; independent spawned processes
+are preferable for parallel drawing, not fork-during-threaded-render assumptions.
+
+Six controlled/nested/three-format/two-session cases,231connected passes,9site
+passes and floor6passes/2937deselected/13warnings pass in8recorded quality checks.
+LSP8paths confirm clean; exact PNG/PDF/SVG serial/concurrent hashes agree. PERF-06
+is PASS for this supported owned-call corpus. [Evidence](review_evidence/concurrent_render_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING8/OPEN64/DEFERRED1**.
+Current31eCI still runs before this effect change; keep the local unit, preserve
+state/core dependencies/versions/locks/releases, and obtain later current-source CI.
+
+### Earlier review phase 31
+
 **Review phase 31 records a bounded rows×history core matrix.**
 Run `uv run --no-sync python scripts/profile_history_costs.py`:3row sizes×3history
 targets use independent core workers with12second child/2.5second dispatch and

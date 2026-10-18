@@ -1,0 +1,192 @@
+{
+  "head": "435786e7555f77bf21df54c751d5fb5bce47e6fd",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "mudplot/_mpl_context.py": "212111a65fb93b0ac36b6b49d91965b2ff271e720b944831fbd3bf7eea1b1a2a",
+    "mudplot/_render.py": "e20a43e3bf7c6ee62fc5b0ee142ccd496a57767fbb5092ca912a407fb2838464",
+    "mudplot/tex.py": "bf0bf5abb0ba3eea3ff81aa36c6e08833b05dac2c807497c666af3639027e1c8",
+    "dashboard/editor_server.py": "d525a49659606d7b79c90e42739c93ebb49677ba02e7518506fb0d20a35b2258",
+    "dashboard/site.py": "2ed74483adf99ef9e513dd09bf1361206092d49613672fed08193088d8052cca",
+    "dashboard/plot_gallery.py": "8212678fd4ccdf92c787848b27bbeed813ed382e2ca64586b28a0c75e8c00d22",
+    "scripts/check_minimum_versions.py": "4e9911e1c6741fdd34bfa82248140960bf94c1c554908d23082503bc0c7fd3a4",
+    "tests/test_review_concurrent_render.py": "7a329fd5205895dff650d9deb3e74f9a406a32c94a86bbb357bbbdac00d3a1d7"
+  },
+  "pre_fix_in_harness_failures": 2,
+  "pre_fix_context_probe_passed": 1,
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1"
+  },
+  "failure_scope": "Before fix two distinct concurrent public saves(PNG/SVG) differed from serial bytes; current-version controlled rc/font context probe passed. No unproven specific Matplotlib internal cause is asserted. Raw failing attempts were harness output, not preserved local successful-check logs.",
+  "fix": "One stdlib-only RLock/context decorator serializes owned render/save/tex_preview, Python editor render/placeholder/export and site/gallery effects. Nested same-thread calls are reentrant. Store/session state and returned Figure ownership remain unchanged.",
+  "limits": "Not arbitrary pyplot/caller-owned Figure draw/save/close thread safety, same-file export transactions, multi-process synchronization, fork-during-threaded-render safety, Store thread safety or a parallel throughput promise. Prefer isolated spawned processes for independent parallel rendering.",
+  "output_pairs": [
+    {
+      "format": "png",
+      "serial_sha256": [
+        "c8ca677357426f3dbb829e63ed3280adcc287403cdb9d4dbbdb15bbe02de35e6",
+        "c77c45508c4113e669ed88f443742f5a55b2443acb45aba4974fcf7b055ff747"
+      ],
+      "concurrent_sha256": [
+        "c8ca677357426f3dbb829e63ed3280adcc287403cdb9d4dbbdb15bbe02de35e6",
+        "c77c45508c4113e669ed88f443742f5a55b2443acb45aba4974fcf7b055ff747"
+      ],
+      "owned_figures_closed_after_threads": true
+    },
+    {
+      "format": "pdf",
+      "serial_sha256": [
+        "b414feb2e344c97235101b2980fa4ef408c921f5e973810e39cc243e8a810fbf",
+        "1150ec77dd6128ff3454f4f573043617f4c1215d7cff4fd218e98824bed247bb"
+      ],
+      "concurrent_sha256": [
+        "b414feb2e344c97235101b2980fa4ef408c921f5e973810e39cc243e8a810fbf",
+        "1150ec77dd6128ff3454f4f573043617f4c1215d7cff4fd218e98824bed247bb"
+      ],
+      "owned_figures_closed_after_threads": true
+    },
+    {
+      "format": "svg",
+      "serial_sha256": [
+        "4bca52f9ff66362b8d803cdaa340bfb8d4231bdc287e6dc258a68f20f3c4b68b",
+        "e5a91a5f035da4b8ca84874ebd428a2c99e97b513bd82fdf1c70ac9450b243c2"
+      ],
+      "concurrent_sha256": [
+        "4bca52f9ff66362b8d803cdaa340bfb8d4231bdc287e6dc258a68f20f3c4b68b",
+        "e5a91a5f035da4b8ca84874ebd428a2c99e97b513bd82fdf1c70ac9450b243c2"
+      ],
+      "owned_figures_closed_after_threads": true
+    }
+  ],
+  "test_scope": "Two-entrypoint controlled interleaving; three-format exact serial/concurrent byte pairs; independent editor session PNG/SVG/layout identity; dependency-free core and nested TeX preview regressions.",
+  "checks": [
+    {
+      "name": "concurrent-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_concurrent_render.py",
+        "tests/test_no_deps.py",
+        "tests/test_tex.py",
+        "tests/test_stabilization.py",
+        "tests/test_bugfixes.py",
+        "tests/test_dashboard_editor.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "231 passed in 173.21s (0:02:53)"
+      ],
+      "log_text_sha256": "ef75c3501ab374ca2677c8e5d4ae2bd199d76a76b5f6ac81b2d67783fe42f650"
+    },
+    {
+      "name": "dashboard-site",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_dashboard.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "9 passed in 34.09s"
+      ],
+      "log_text_sha256": "dad65ef23ade7885991faae1e322a8688faf3b497bb4d088f0907c2723f866e6"
+    },
+    {
+      "name": "minimum-concurrent",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 2937 deselected, 13 warnings in 17.59s"
+      ],
+      "log_text_sha256": "8c256615fe3289e91ea0b3dab3a4da3185d91793fc21f0daca4b1c53c79ee2d8"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "227 files already formatted"
+      ],
+      "log_text_sha256": "fdc4fec2dafaac25e2fdf79ec49bc1f55b2a24a994eb2d979adc3b5a1f865415"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "6926bbb5d98e1004771db1d6731abf7d319cd75b66dfe5875302fcd5b49b2bc6"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "798a7f3c5c7a13645ad99ab56f6d3eefa0c63332f06e54a5c508e9675c1a39de"
+    }
+  ],
+  "output_hashes_sha256": "72452d1053c758e013ea314fe6ec0bb20930fa03cf7aa23f35230d65c83bb7a2"
+}

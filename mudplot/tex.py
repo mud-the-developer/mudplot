@@ -12,6 +12,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from . import actions as A
+from ._mpl_context import matplotlib_context
 from .reducer import reduce_all
 from .spec import FigureSpec
 
@@ -182,6 +183,7 @@ def _resolve_ctx(tex) -> TexContext:
     )
 
 
+@matplotlib_context()
 def tex_preview(
     spec: FigureSpec,
     tex=None,

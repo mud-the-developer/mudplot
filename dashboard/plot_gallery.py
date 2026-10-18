@@ -7,6 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
+from mudplot._mpl_context import matplotlib_context
+
 if TYPE_CHECKING:
     from mudplot.api import Plot
 
@@ -341,6 +343,7 @@ def build_example(example: GalleryExample) -> Plot:
         ) from error
 
 
+@matplotlib_context()
 def render_plot_gallery(directory: str | Path, *, write_specs: bool = False) -> Path:
     """Render every example to PNG, optionally writing editable specs too."""
     import matplotlib

@@ -36,6 +36,7 @@ from ._facet import RAW_HUE_TYPES, ordered_group_columns, panel_columns
 from ._histogram import histogram_groups, histogram_rows, histogram_summary
 from ._kde import kde_groups, kde_rows, kde_summary
 from ._kde2d import kde2d_config, kde2d_groups, kde2d_rows, kde2d_summary
+from ._mpl_context import matplotlib_context
 from ._semantics import (
     category_key,
     semantic_levels,
@@ -2546,6 +2547,7 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
     fig.canvas.draw()
 
 
+@matplotlib_context()
 def render(spec: FigureSpec, *, fmt: str = ""):
     """Build and return a matplotlib Figure for ``spec``.
 
@@ -2703,6 +2705,7 @@ def _save_figure(fig, spec: FigureSpec, destination, fmt: str, *, tight=False) -
         fig.savefig(destination, **kwargs)
 
 
+@matplotlib_context()
 def save(spec: FigureSpec, path: str, *, tight: bool = False):
     """Save at the exact spec size; ``tight=True`` opts into content cropping.
 
