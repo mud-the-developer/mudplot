@@ -1,0 +1,493 @@
+{
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot/_render.py": "769f715eed647bedf246934d2038695562ae39597fa489031e1bcc1ca8209dcb",
+    "mudplot/_mpl_context.py": "212111a65fb93b0ac36b6b49d91965b2ff271e720b944831fbd3bf7eea1b1a2a",
+    "mudplot/store.py": "17b941a995d43aa8b53f4fac5d23b442278d675779005f36525fc6e5871f54ee",
+    "tests/test_review_shared_session_browser.py": "9f321f3ea68a3d67c3ef5e7dde7293ba6d44b39a6cb4ec697d1602fc84159904",
+    "tests/test_review_concurrent_render.py": "7a329fd5205895dff650d9deb3e74f9a406a32c94a86bbb357bbbdac00d3a1d7"
+  },
+  "shared_timeline": {
+    "arrivals": [
+      "tab-a",
+      "tab-b",
+      "raw"
+    ],
+    "commits": [
+      {
+        "actor": "tab-a",
+        "action": {
+          "type": "SetTitle",
+          "text": "tab-a",
+          "panel": 0,
+          "citation": null,
+          "href": null
+        },
+        "spec_sha256": "a1c4d2a1941c5801ceeaf07110348fd42f29c26ededf3699c60bda3bf416f3c0",
+        "png_sha256": "d2f653d717687168e1f0aa34cb4cd6ab277c7c58625f2f6f6cc068511f1ed8a5"
+      },
+      {
+        "actor": "tab-b",
+        "action": {
+          "type": "SetSuptitle",
+          "text": "tab-b"
+        },
+        "spec_sha256": "f70513f1c15329db4f7924c26a85988286de1e93932ecedeac24738f973684c1",
+        "png_sha256": "08422247cf346f0417ec85795cd1adf04da6ddb07ee2063bfc8ce5adb661a6ef"
+      },
+      {
+        "actor": "raw",
+        "action": {
+          "type": "SetSize",
+          "width": 5,
+          "height": 3
+        },
+        "spec_sha256": "f50483873c464ef4d90c85e480537fc083396b74b3627baf6eccbdc7f755b4a7",
+        "png_sha256": "f2f142e5418a034e33ce35740f3cea198237dc83fb199e9dd69aa11900c34db7"
+      }
+    ],
+    "raw_response": {
+      "status": 200,
+      "content_type": "text/html",
+      "generation": "3",
+      "body_length": 25451
+    },
+    "final_spec": {
+      "version": "0.1",
+      "size": [
+        5,
+        3
+      ],
+      "dpi": 100,
+      "theme": {
+        "name": "paper",
+        "font": {
+          "family": "sans-serif",
+          "size": 10.0,
+          "title_size": 11.0,
+          "label_size": 10.0,
+          "tick_size": 8.5,
+          "use_tex": false
+        },
+        "axes": {
+          "line_width": 0.8,
+          "spines": "LB",
+          "spine_offset": 0.0
+        },
+        "grid": {
+          "show": false,
+          "axis": "both",
+          "line_width": 0.5,
+          "alpha": 0.5
+        },
+        "ticks": {
+          "direction": "out",
+          "major_size": 3.0,
+          "minor_size": 1.5,
+          "width": 0.8,
+          "minor_visible": false,
+          "top": false,
+          "right": false
+        },
+        "palette": {
+          "kind": "qualitative",
+          "preset": null,
+          "lightness": 65.0,
+          "chroma": 55.0,
+          "hue_start": 20.0,
+          "cvd_safe": true
+        },
+        "redundant_encoding": true,
+        "markers": [
+          "o",
+          "s",
+          "^",
+          "D",
+          "v",
+          "P",
+          "X",
+          "*"
+        ],
+        "line_styles": [
+          "-",
+          "--",
+          "-.",
+          ":"
+        ],
+        "hatches": [
+          "",
+          "//",
+          "xx",
+          "..",
+          "\\\\",
+          "oo"
+        ]
+      },
+      "data": {
+        "columns": {
+          "x": [
+            0,
+            1,
+            2
+          ],
+          "y": [
+            1,
+            3,
+            2
+          ]
+        },
+        "matrices": {}
+      },
+      "suptitle": "tab-b",
+      "auto_label_panels": false,
+      "width_ratios": null,
+      "height_ratios": null,
+      "panels": [
+        {
+          "layers": [
+            {
+              "type": "line",
+              "x": "x",
+              "y": "y",
+              "group": null,
+              "semantics": null,
+              "label": null,
+              "citation": null,
+              "href": null,
+              "references": null,
+              "color": null,
+              "line_width": null,
+              "line_style": null,
+              "drawstyle": "default",
+              "marker": null,
+              "marker_size": null,
+              "jitter": null,
+              "alpha": 1.0,
+              "bar_width": null,
+              "baseline": null,
+              "edge_color": null,
+              "stat": null,
+              "sort": true,
+              "error_style": null,
+              "error_alpha": null,
+              "ecdf": null,
+              "dodge": null,
+              "orient": "v",
+              "native_scale": false,
+              "stat_scale": "data",
+              "order": null,
+              "hue_order": null,
+              "gap": null,
+              "stack": false,
+              "value_labels": false,
+              "label_format": "g",
+              "yerr": null,
+              "xerr": null,
+              "y_lower": null,
+              "y_upper": null,
+              "error_color": null,
+              "error_line_width": null,
+              "capsize": null,
+              "capthick": null,
+              "y2": null,
+              "value": null,
+              "text": null,
+              "at": null,
+              "to": null,
+              "bins": 20,
+              "density": false,
+              "histogram": null,
+              "kde": null,
+              "kde2d": null,
+              "gridsize": 30,
+              "mincnt": null,
+              "degree": 1,
+              "confidence": null,
+              "regression": null,
+              "width": null,
+              "whis": null,
+              "components": null,
+              "notch": null,
+              "showmeans": null,
+              "showfliers": null,
+              "showmedians": null,
+              "showextrema": null,
+              "bw_method": null,
+              "points": null,
+              "inner": "legacy",
+              "split": false,
+              "density_norm": "width",
+              "common_norm": false,
+              "bw_adjust": null,
+              "cut": null,
+              "clip": null,
+              "weights": null,
+              "warn_thresh": null,
+              "k_depth": null,
+              "width_method": null,
+              "outlier_prop": null,
+              "trust_alpha": null,
+              "c": null,
+              "cmap_kind": "sequential",
+              "colorbar": false,
+              "clabel": null,
+              "matrix": null,
+              "heatmap": null,
+              "cluster": null,
+              "levels": null,
+              "axis": "y",
+              "u": null,
+              "v": null,
+              "quiver_scale": null,
+              "quiver_width": null,
+              "z": null
+            }
+          ],
+          "x": {
+            "label": "",
+            "scale": "linear",
+            "limits": null,
+            "share_id": null
+          },
+          "y": {
+            "label": "",
+            "scale": "linear",
+            "limits": null,
+            "share_id": null
+          },
+          "y2": null,
+          "z": null,
+          "projection": "2d",
+          "title": "tab-a",
+          "title_position": null,
+          "title_citation": null,
+          "title_href": null,
+          "label": null,
+          "legend": {
+            "bbox_to_anchor": null,
+            "show": true,
+            "title": null,
+            "location": "best",
+            "frame": false
+          },
+          "filters": {},
+          "dropna": []
+        }
+      ],
+      "layout": null,
+      "share_x": "none",
+      "share_y": "none",
+      "journal": null,
+      "reference_measure_text": null
+    },
+    "final_png_sha256": "f2f142e5418a034e33ce35740f3cea198237dc83fb199e9dd69aa11900c34db7",
+    "tabs_refreshed": 2,
+    "policy": "Session-serialized; no live collaboration/FIFO claim."
+  },
+  "real_browser_cases": [
+    "test_two_tabs_and_raw_action_have_serial_commits_without_lost_fields",
+    "test_late_old_fragment_cannot_overwrite_latest_successful_state",
+    "test_secondary_data_drag_matches_log_inverted_transform_and_history",
+    "test_editing_targets_the_selected_panel"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "controlled_policy": "Holdfirstcandidate_render_previewBEFOREcommitunderexistingsessionlock;observeotherTab+rawformarrivalsat_read_body. Whileheld,commitsEMPTY/storeinitial/pnginitial. ReleasepermitsAfirstthenB/rawinEITHERorder\u2014notFIFOfairnesspromise. Disjointfieldscomposeidenticallytopureapply;3historyactionsretained;finalPNGEXACTfreshEditorSessionfromfinalspec. Reloadbothpagesverifieslatestsharedstate.",
+  "raw_action_contract": "Agent-likeclientPOST/action/rawFORMjsoncommonActionSetSize,HX-Requesttrue,getsHTTP200text/htmlviewgeneration2or3. Thisisdocumentedraw-actionUIenvelope,NOTinventedapplication/jsonRPCendpoint. EDIT09machine-contractreviewseparate.",
+  "scope_limits": "OneLOCALEditorSession/sharedselectedpanel0;activepanelisseSSion-wide,notper-tabindependent. Serialservercommitsandlastcommittedsame-fieldsemantics,noreject-on-revisionAPI. Pagesnotlive-broadcast:reload/nextrequestfetchesupdatedstate. No remoteauthentication/distributedcollaboration/persistedmultiusermodelintroduced. EDIT02zoom/highDPIandlongresourcegatesremainseparate.",
+  "qa_note": "No productdefectfound/newsourceenginechange. Controlledread/render/commitspiesobserveandcallREALmethods;no fakePNGorstate. Guessedmp.to_dictexportinartifactbuildercorrectedtoexistingSpec.to_dictafteractualbehaviorassertions;notproductionAPIchange. OneRufflonglineandexpiredwriteguardresolvedbyreread,targetededitonly.",
+  "environment_overrides": {
+    "floor-shared": {
+      "PYTEST_ADDOPTS": "-k \"test_review_concurrent_render or test_review_response_generation\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "shared-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_concurrent_render.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_review_response_generation.py",
+        "tests/test_memory_probe.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_memory_probe.py:26: non-Windows API guard",
+        "169 passed, 1 skipped in 179.88s (0:02:59)"
+      ],
+      "log_text_sha256": "8091fd712a28356783316c9b329cd8cd940877dc6aa9b14936e6e8a1816d5c28"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\browser-pytest",
+        "tests/test_review_shared_session_browser.py",
+        "tests/test_review_response_order_browser.py",
+        "tests/test_review_coordinate_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "two_tabs or late_old_fragment or secondary_data_drag or editing_targets",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "4 passed, 31 deselected in 27.94s"
+      ],
+      "log_text_sha256": "9626cdd39b996c26672c530fb11154993bcf2fb7088627511e93b9dd6611f684"
+    },
+    {
+      "name": "floor-shared",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "8 passed, 3098 deselected, 13 warnings in 22.91s"
+      ],
+      "log_text_sha256": "2953061d17f50d29c7f9a8a7f0f89079cfbb6eba58458f254a234ad495047972"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "247 files already formatted"
+      ],
+      "log_text_sha256": "e194b7ef1e83f1a8628937b0eccdf53bb0121c85ee8614e5506383e9484dfbc8"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "83c217ecb0d37ddda4e66cad2204c25f1ee49e28bc91dea84f8fa441d5309934"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "a8917ac8ecda43dcda979830d2da14e125801927cb5deec84cf00ae026e3d5db"
+    }
+  ],
+  "raw_probe_sha256": {
+    "shared_timeline.json": "74363d00097e4d4d6eba3fbc990969b666f3ee5bdb8b109770c9593d6b580b6b",
+    "qa.py": "30a7c4b8393ef3c31420b72bb0af3030a91418cb4c54fd6481fa354463383cc5",
+    "environment_overrides.json": "d8e27a42a2d64bf01d6152db5ecf9f615aab5cb924903cf1c9ceccb38ea587ff",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "ae9a06224d7dfc24fd8a0b7f80703e898636b6c4234c8071dc3fdad4d25f699c",
+    "browser.xml": "105302a3963129de5049b0fd4e73a7419a6c3fa9f715b1864195e9c6fa10c8d9",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

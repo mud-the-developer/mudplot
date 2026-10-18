@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 57차 — 두tab/rawaction의공유session직렬화
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-shared-session-jmjawfeq`와
+  [도착/commit/spec·PNGtimeline](review_evidence/shared_session_verification.json)을 보존합니다.
+- 실제browser두page와rawJSONactionformclient를같은session에연결했습니다. 첫후보render를
+  lock안에서보류한동안B/rawbody도착은관찰됐지만commit0/state·PNG초기는그대로입니다.
+  Release뒤허용순서[A,B,raw]/[A,raw,B]중하나로만3commit하고서로다른title/suptitle/size
+  field가모두남아순수apply와같습니다. FIFO공정성은가정하지않습니다.
+- 최종cachePNG는최종spec을다른EditorSession에서렌더한bytes와같고두tab은새로고침후
+  최신title/size를읽었습니다. Activepanel0을공유하는범위이며tab별독립selection/livebroadcast/
+  원격협업/충돌거절revision을추가하지않았습니다. 같은field의commit순서정책은그대로입니다.
+- Rawclient는실제/action/rawform의JSONSetSize를보내HTTP200text/html/UIgeneration을
+  받았습니다. 이를JSONRPC라고가정하지않고EDIT-09machinecontract검토와구분했습니다.
+- 새실제browser1·관련169통과/non-WindowsAPIguard1skip·실제browser선택4통과/31deselected
+  (새case포함/no skip)·floor8통과/3098deselected/경고13·양platformtype/Ruff247/생성계약/
+  packaging9명령exit0·변경testactiveLSPclean입니다. 13은모두3종Pyparsing입니다.
+  기존privatefixtures/render/read/commitspy는실제함수를호출하며PNG/state를가짜로대체하지않았습니다.
+- EDIT-05는현재로컬공유sessioncorpus에서PASS입니다. 추측한mp.to_dict는기존Spec.to_dict로
+  고친테스트출력코드문제이며제품API를바꾸지않았습니다. Runtime변경/FIND추가없고4bcCI
+  양Rust/min성공·양Python진행을보호해대기응답순서효과와함께로컬보존합니다. 버전/의존성/
+  lock/tag/배포·loop1과새효과의별도전체CI경계는유지합니다.
+
 ## 56차 — 늦은HTMLfragment의최신view덮어쓰기복구
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-response-order-gz8ecguk`와
@@ -1517,7 +1539,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-02 | P1 | OPEN | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-03 | P1 | PASS | htmx 교체 이후 상태·이벤트 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-04 | P1 | PASS | 지연 응답과 최신 preview | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-05 | P1 | OPEN | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-05 | P1 | PASS | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-06 | P1 | OPEN | open·export·실패 후 회복 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-07 | P1 | OPEN | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1572,7 +1594,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 116, RUNNING 5, OPEN 28, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 117, RUNNING 5, OPEN 27, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

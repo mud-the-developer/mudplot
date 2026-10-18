@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest shared-session test observes two tabs/raw-action arrivals and serial
+  commits without lost fields or partial preview, matching pure state and fresh
+  PNG.169related/1OSskip,4actualbrowser/floor8passes make EDIT-05 PASS in local
+  scope, not live collaboration/independent tab panels. No new runtime changes;
+  keep tests/docs with queued response-order effect local during4bcCI.
+
 - Latest FIND-040 protects newer HTML inspector state from late older replies
   using ephemeral UI response generations, not new spec/history revisions. Actual
   delayed-route DOM/spec/preview pixel hashes agree;179related/8browser/floor2
@@ -415,7 +421,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains axis-specific metadata, actual browser drag and previous-state boundaries.
 - [Response-order evidence](review_evidence/response_order_verification.json)
   retains actual delivery/commit/DOM/pixel timelines and internal generation limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS116/RUNNING5/OPEN28/
+- [Shared-session evidence](review_evidence/shared_session_verification.json)
+  retains request/commit order, allowed outcomes and final cache/spec equivalence.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS117/RUNNING5/OPEN27/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

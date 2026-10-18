@@ -111,6 +111,17 @@ Undo/reset/open/오류뒤에도historycursor가아닌reply순서는증가합니�
 뒤에는page를새로고침하세요. Header없는응답은기존처리이고JSON/spec/content-type계약은
 유지합니다. 실패/지연렌더는기존후보state/preview transaction경계를유지합니다.
 
+## 공유로컬editorsession
+
+두page와raw-actionformclient는한로컬Store/activepanel/cachepreview를공유합니다.
+Sessionlock은후보render/commit을직렬화하며동시도착의FIFO공정성을가정하지않습니다.
+독립fieldaction은이전commit을잃지않고합성하며같은field는commit순서를따릅니다.
+후보가성공할때까지state/PNG는이전commit상태입니다.
+
+실시간broadcast협업은아니므로다른tab/client의변경은새로고침/후속요청으로읽습니다.
+Tab별독립panel선택·원격다중사용자충돌해결·새revision거절API가아닙니다. Python
+/action/rawform의JSONaction도기존HTML/redirectUI응답이지새JSONRPCroute가아닙니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

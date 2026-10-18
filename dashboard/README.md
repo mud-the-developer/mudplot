@@ -109,6 +109,10 @@ needing a separate `dashboard build` process.
   inspector. This is UI response ordering, not spec revision/authentication or
   a live-collaboration feature; requests still commit through the existing lock.
   Reload the page after restarting the local server.
+- **One shared local session**: tabs and raw-action clients share the Store,
+  selected panel and preview; render/commit is serialized, not FIFO collaboration.
+  Refresh a tab to read another client's latest changes. The raw JSON-action form
+  keeps its existing HTML/redirect response rather than becoming a JSON RPC API.
 - This is intentionally a *thin* UI: `editor_view.py` has no I/O (pure HTML
   string building, unit-testable on its own), and `editor_server.py` is
   just wiring around the engine's `Store` (plus caching the last render's

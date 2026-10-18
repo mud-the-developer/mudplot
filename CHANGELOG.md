@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified one local editor session across two pages and a raw-action client:
+  arrivals/serial commits, disjoint-field preservation and final preview match.
+  Documented shared panel state and refresh behavior, not live collaboration.
 - Fixed late Python editor HTML fragments replacing newer inspector state after
   out-of-order delivery. Added local UI reply generations without dropping actions
   or changing spec/JSON/history contracts; tested actual DOM and preview pixels.

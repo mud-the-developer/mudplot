@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신공유session은두tab/rawaction도착과직렬commit에서field유실/부분preview가없고
+  순수state/새PNG가맞습니다. 관련169/OS1skip·실제browser4/floor8로EDIT-05는로컬범위
+  PASS이지live협업/tab별panel은아닙니다. 새runtime없이4bcCI중대기응답효과와test/doc을로컬보존합니다.
+
 - 최신FIND-040은로컬UIreplygeneration으로늦은옛HTML이최신inspector를덮지않게합니다.
   Spec/historyrevision신설없이실제DOM/spec/previewpixel과관련179/browser8/floor2/
   activeLSP5clean이맞아EDIT-03/04는지원범위PASS입니다. 요청은commit되고서버재시작뒤
@@ -344,7 +348,9 @@
   축별metadata/실제browserdrag/이전상태경계를보존했습니다.
 - [Response순서 근거](review_evidence/response_order_verification.json)에실제
   전달/commit/DOM/pixeltimeline과내부generation범위를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS116/RUNNING5/OPEN28/DEFERRED1**.
+- [Sharedsession 근거](review_evidence/shared_session_verification.json)에
+  요청/commit순서·허용결과·최종cache/spec동등성을보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS117/RUNNING5/OPEN27/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

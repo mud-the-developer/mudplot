@@ -127,6 +127,20 @@ without the header keep legacy handling; JSON/spec/content-type contracts remain
 unchanged. Failed and delayed render cases still use the documented candidate
 state/preview transaction boundary.
 
+## Shared local editor session
+
+Two pages and raw-action form clients share one local Store, active-panel state
+and cached preview. The session lock serializes candidate render/commit; callers
+must not assume FIFO fairness among simultaneous arrivals. Disjoint actions
+compose without losing earlier committed fields; a same-field write follows
+commit order. State/PNG stay at the previous commit until a candidate succeeds.
+
+Pages are not live-broadcast collaborators: reload or make a subsequent request
+to read changes from another tab/client. This is not independent per-tab panel
+selection, remote multi-user conflict resolution or a new revision/reject API.
+The Python `/action/raw` form's JSON action still uses an HTML/redirect UI
+response, not an invented JSON RPC route.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside
