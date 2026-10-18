@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 46 inventories synthetic inputs and records contract decisions.**
+Five review fixtures and42shared JSON snapshots have provenance/hash/size and
+input-vs-result scope. Targeted profile-path/private-key/token checks have no hits,
+not a complete secret/privacy certificate; raw Temp logs/environment stay private.
+Fixed/random-seed generation and actual consumers are linked separately from logs.
+
+A conflict table explains preserved mutable snapshots/batch rules/ownership/size/
+journal/HEX/pattern/PGF/tool distribution/native subset/release boundaries without
+new compatibility authority. Existing313tests/2expected warnings and7quality checks
+pass;19explicit paths exist. BASE-06/07 are PASS in this bounded preparation scope;
+BASE-05's full150-ID symbol/test mapping remains RUNNING. [Preparation](REVIEW_PREPARATION.md),
+[evidence](review_evidence/preparation_audit_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS101/RUNNING5/OPEN43/DEFERRED1**. Keep this docs unit local duringb777CI;
+product runtime/versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 45
+
 **Review phase 45 proves generated drift is detected without corrupting the repo.**
 Existing sync checker runs first; three isolated artifact copies pass, deliberate
 schema/capabilities/reference drift fails with a regeneration hint, and restored

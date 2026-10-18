@@ -18,6 +18,26 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 46차 — fixture/evidence분리와계약결정기록
+
+- [준비감사표](REVIEW_PREPARATION.md)와 [inventory/검사](review_evidence/preparation_audit_verification.json),
+  로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-preparation-audit-hmenwe0p`를보존합니다.
+- 고정reviewfixture5개를실제consumer/생성방식/codec-only·renderable범위로분리했습니다.
+  SourceJSON과공유evidenceJSON42개의snapshotSHA/size/parse결과를보존했고profile절대경로/
+  대표privatekey/token패턴은0hit입니다. 이는모든임의텍스트의비밀부재인증이아니며입력scope도
+  읽어합성자료임을확인했습니다. LocalTemp원본로그/전체환경은공유물로복제하지않습니다.
+- Randomhistoryseed20261016/24301·고정fixture의noRNG를기록하고synthetic입력과결과receipt/
+  rawloghash를구분했습니다. 새판별기API/자동redaction으로원본이라고속이는정책은없습니다.
+- Mutable상태/snapshot·세batch경계·openFigure·명시crop·journal우선순위·최종HEXreport·
+  유한pattern·trustedPGF/sidecar·source-tools/wheel·Rustcontrolsubset·release권한의충돌표에
+  기존/수정주장과근거/선택이유를기록했습니다. 새runtime호환성변경승인을추론하지않습니다.
+- 기존관련313통과/명시smallgroupMPL경고2·양platformtype/Ruff239/생성계약/packaging7명령
+  exit0입니다. Prep문서의19개명시artifact/consumerlink도실제존재를검사했습니다. 초기잘못된
+  consumerfilename가정은실제fixtureloadgrep로고쳤고새coverage로세지않았습니다.
+- BASE-06/07은현재최소재현물/결정기록범위에서PASS이며BASE-05의150ID별symbol/test매핑은
+  여전히진행중입니다. Productruntime/artifact를바꾸지않고b777CI39159051900을취소하지않도록
+  문서unit은로컬보존하며버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 45차 — 생성표현의의도적drift회귀
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-generated-drift-hejhydoe`와
@@ -1172,8 +1192,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | BASE-03 | P0 | PASS | 검증 환경 명세 수집 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-04 | P0 | PASS | 변경 전 테스트 기준선 확보 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-05 | P1 | RUNNING | 기존 테스트와 체크리스트 매핑 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| BASE-06 | P1 | RUNNING | fixture와 증거 데이터 분리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| BASE-07 | P1 | RUNNING | 문서 계약 충돌 처리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
+| BASE-06 | P1 | PASS | fixture와 증거 데이터 분리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
+| BASE-07 | P1 | PASS | 문서 계약 충돌 처리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | STATE-01 | P0 | PASS | reducer의 입력 비변경 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-02 | P0 | PASS | 공개 스냅샷의 격리 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-03 | P0 | PASS | 상태 변경 경로의 일관성 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
@@ -1320,7 +1340,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 99, RUNNING 7, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 101, RUNNING 5, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

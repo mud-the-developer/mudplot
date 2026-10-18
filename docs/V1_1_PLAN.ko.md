@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰46차에서synthetic입력과계약결정을정리했습니다.** Reviewfixture5개와공유JSON42개
+snapshot의hash/size/provenance/입력·결과구분을보존했고제한된profilepath/privatekey/token
+검사는0hit이지만보편privacy인증은아닙니다. RawTemp로그/환경은비공유하고seed/consumer를연결했습니다.
+
+Mutable/snapshot·batch·Figure·size·journal·HEX/pattern·PGF·tool/wheel·native범위·release
+충돌표는기존선택/근거를기록할뿐새호환성권한을만들지않습니다. 기존313통과/예상경고2·품질
+7명령·명시19path존재를확인해BASE-06/07은bounded준비범위PASS이며BASE-05전체150ID
+symbol/test매핑은RUNNING입니다. [준비](REVIEW_PREPARATION.md)/ [근거](review_evidence/preparation_audit_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS101/RUNNING5/OPEN43/DEFERRED1**입니다.
+b777CI중문서는로컬보존하고제품runtime/버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰45차
+
 **리뷰45차에서repo를깨지않고generateddrift감지를확인했습니다.** 기존synccheck를
 먼저실행하고3artifact격리사본의정상통과→의도drift실패/재생성안내→복구통과를검사했습니다.
 Action36/field·layer37/생성표현도일치하고kind는구조적string/별도semantic검증을유지해

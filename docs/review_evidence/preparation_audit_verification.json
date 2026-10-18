@@ -1,0 +1,423 @@
+{
+  "source_sha256": {
+    "docs/REVIEW_PREPARATION.md": "08cd00c81fd95e08b80675a7c3270a1c312453f95907607f9946d4823893e3b7",
+    "tests/test_review_state_contracts.py": "bb4e6fbb0da60e040260e314d98cd32a69e11d1dc10770c91a7c0986abcc80df",
+    "tests/test_review_json_policies.py": "78732f796868716f88f5b033aa7a81b19a7a1378069744b74c045f07cce005ed",
+    "tests/test_review_editor_paths.py": "f0dfd840e5abd3eb9d7186d6a070b53ac4748806fd09b9b5d6be3d7b764ebad7",
+    "tests/test_review_full_spec_fields.py": "3b075484d37835110b52ac98fdc09bbb2726ee82a2254a9f6d1ec06fbe7d2444"
+  },
+  "inventory_snapshot": {
+    "fixtures": [
+      {
+        "path": "tests/fixtures/review_full_spec_fields.json",
+        "sha256": "3fef66ebbfffb670f37b6fab0acea8bd9d34fd98c1b3d5a04828e7b93c545e3a",
+        "bytes": 82185,
+        "root_keys": [
+          "scope",
+          "model_fields",
+          "figures"
+        ],
+        "string_values_and_keys": 1792,
+        "profile_paths": 0,
+        "credential_pattern_hits": 0,
+        "scope": "Structural/schema-valid codec stress only; mutually incompatible options are intentionally populated. Not renderable plot claims."
+      },
+      {
+        "path": "tests/fixtures/review_http_boundaries.json",
+        "sha256": "4a1d004a1c255d657e8925c3a8ff03596a49a1e400eaad0b1b0cbe85c3712071",
+        "bytes": 1061,
+        "root_keys": [
+          "rejected_hosts",
+          "accepted_hosts",
+          "rejected_origins",
+          "rejected_file_paths",
+          "accepted_origins"
+        ],
+        "string_values_and_keys": 52,
+        "profile_paths": 0,
+        "credential_pattern_hits": 0,
+        "scope": null
+      },
+      {
+        "path": "tests/fixtures/review_json_boundaries.json",
+        "sha256": "b193953f8ef3e250a77d854562b2f0d8907186f921160316cbe6816740d81341",
+        "bytes": 3469,
+        "root_keys": [
+          "invalid_specs",
+          "invalid_actions",
+          "valid_specs"
+        ],
+        "string_values_and_keys": 131,
+        "profile_paths": 0,
+        "credential_pattern_hits": 0,
+        "scope": null
+      },
+      {
+        "path": "tests/fixtures/review_render_tokens.json",
+        "sha256": "ecc615f7676b708e494b6bee12e8d450ad50b9132cdc88663ec757a8af4484f7",
+        "bytes": 19307,
+        "root_keys": [
+          "scope",
+          "cases"
+        ],
+        "string_values_and_keys": 610,
+        "profile_paths": 0,
+        "credential_pattern_hits": 0,
+        "scope": "Renderable representative token semantics; not all139nullable fields or all visual controls."
+      },
+      {
+        "path": "tests/fixtures/review_state_paths.json",
+        "sha256": "bb2b325d13b6c428341f9cc21267170faf4b32f0f866f554257e690af5336925",
+        "bytes": 2165,
+        "root_keys": [
+          "initial",
+          "steps"
+        ],
+        "string_values_and_keys": 200,
+        "profile_paths": 0,
+        "credential_pattern_hits": 0,
+        "scope": null
+      }
+    ],
+    "shared_evidence_json": [
+      {
+        "path": "docs/review_evidence/body_boundary_verification.json",
+        "sha256": "3b3a0e2aaed17c1671a03f7a3373973d95ee41b23f95de9ba21c5e41c962ec71",
+        "bytes": 26526
+      },
+      {
+        "path": "docs/review_evidence/bridge_fault_verification.json",
+        "sha256": "0c7ccdb6769647db83b52e875bd2ac1e0466d4b85a1f9153641fd101ba05d798",
+        "bytes": 8659
+      },
+      {
+        "path": "docs/review_evidence/bridge_preview_verification.json",
+        "sha256": "23819a2a6889366acd38744bbe3f5c393f657781b4778891dc167ca551733144",
+        "bytes": 5678
+      },
+      {
+        "path": "docs/review_evidence/ci_floor_split_verification.json",
+        "sha256": "3af3d4b96726ed21676715542af3fe6466fe47ac1e01e799c4baa962a16167be",
+        "bytes": 6944
+      },
+      {
+        "path": "docs/review_evidence/codec_path_verification.json",
+        "sha256": "80b9ff299ea7799486d94001aefe5361b25c210fcd5a9647f944aa7dec6e3383",
+        "bytes": 19097
+      },
+      {
+        "path": "docs/review_evidence/completion_p0_verification.json",
+        "sha256": "57b08e4a27215becfba1e8f8301c98d54c1baa245c8e5b13499907bcc71619ba",
+        "bytes": 34502
+      },
+      {
+        "path": "docs/review_evidence/concurrent_render_verification.json",
+        "sha256": "c76e470bd2d938ecd76b47b408d4ff6f62cfae45f17edbf958e26b774a0755f6",
+        "bytes": 7029
+      },
+      {
+        "path": "docs/review_evidence/core_boundary_verification.json",
+        "sha256": "85667b1f1292a118c1061be443f8a65d3bbc7f9a546103f62cc5889b4b99c15c",
+        "bytes": 5100
+      },
+      {
+        "path": "docs/review_evidence/data_json_policy_verification.json",
+        "sha256": "25280506c7f69369084164c98637253ce1ea40e54c8465e74a74fb1e56fdc475",
+        "bytes": 5632
+      },
+      {
+        "path": "docs/review_evidence/data_shape_verification.json",
+        "sha256": "79b8310baf4b255e66062dcae97364137ddd5f419fbfa6bc7f03841e60a6ec7b",
+        "bytes": 3619
+      },
+      {
+        "path": "docs/review_evidence/descendant_cleanup_verification.json",
+        "sha256": "dec4e4b5922d33045e1508f29e72bf6f03fcd47408a47d5077330f1545d56cbe",
+        "bytes": 7226
+      },
+      {
+        "path": "docs/review_evidence/editor_boundary_verification.json",
+        "sha256": "557506e2f7affef2a82edc5b23ba66feea8f565f7e9eea01da04d05b10a41883",
+        "bytes": 15025
+      },
+      {
+        "path": "docs/review_evidence/encoding_print_verification.json",
+        "sha256": "7a294c50073010fcef01e40a4331f07b212e25d0bf07ff6c70a8300e7df5041c",
+        "bytes": 48319
+      },
+      {
+        "path": "docs/review_evidence/file_sink_verification.json",
+        "sha256": "3fbeece365e11ff0d12d30749fc0bdfd15d508d87f4b28b261254b4b9982e039",
+        "bytes": 8952
+      },
+      {
+        "path": "docs/review_evidence/font_boundary_verification.json",
+        "sha256": "c4b6c6b464316c65a608ae331cdfc51e2eab0d6d54c8684abadeae4210b54732",
+        "bytes": 12177
+      },
+      {
+        "path": "docs/review_evidence/generated_drift_verification.json",
+        "sha256": "b4401c007ca4f73a7f598bebe1a875371261a582ceb09a05d81dd16c3d4987f4",
+        "bytes": 10043
+      },
+      {
+        "path": "docs/review_evidence/history_cost_verification.json",
+        "sha256": "f168e61d0cf6a285d2508f5607d7a3603d5f2e94115149537daba7ab3c048c8f",
+        "bytes": 23686
+      },
+      {
+        "path": "docs/review_evidence/history_policy_verification.json",
+        "sha256": "79a38aa1aeb75931323eb4cfb2d7a4ba27797d1a9201b4bc22cafe5af49a5564",
+        "bytes": 17503
+      },
+      {
+        "path": "docs/review_evidence/installed_matrix_verification.json",
+        "sha256": "01bc29a83e674d39258fd007672752b73cb03df0c20b6f6fef1ebd71b3d4b471",
+        "bytes": 13684
+      },
+      {
+        "path": "docs/review_evidence/isolation_source_editor_verification.json",
+        "sha256": "8fffd8e720a694002bd837de76cb88779af067827934ac42410164d34d60217a",
+        "bytes": 11426
+      },
+      {
+        "path": "docs/review_evidence/json_semantics_verification.json",
+        "sha256": "53b9db1adf71514db48ad5e612b19335cef0d34e456beb7ecc43f0e33d0cd527",
+        "bytes": 37424
+      },
+      {
+        "path": "docs/review_evidence/layout_boundary_verification.json",
+        "sha256": "f00928c5cdbfb9fdee2f5249b7631036e49dfd298db0493db44d6ed130bc0c89",
+        "bytes": 19322
+      },
+      {
+        "path": "docs/review_evidence/missing_state_verification.json",
+        "sha256": "c5d6a217bc2549e8f693cb8f549140016a725a5892ba5ffab793cab86db35318",
+        "bytes": 8614
+      },
+      {
+        "path": "docs/review_evidence/mixed_guide_verification.json",
+        "sha256": "36580ec18c77ead2ab42366cf50e0a4bbd27c09c2133aded4d00db823e84ca50",
+        "bytes": 25434
+      },
+      {
+        "path": "docs/review_evidence/output_lifecycle_verification.json",
+        "sha256": "335bdab1331a16b6da4190f26d96390703deb387182daec9845cb5c35348231e",
+        "bytes": 8814
+      },
+      {
+        "path": "docs/review_evidence/output_reference_verification.json",
+        "sha256": "5670d1ff13acc1fc6afcc8c7be7074b6a63f6775e0da45cdf6efe5ec2013ab15",
+        "bytes": 15106
+      },
+      {
+        "path": "docs/review_evidence/palette_report_verification.json",
+        "sha256": "e5a63ef4ef58284470fc90573ddae13bf67fab81b1b19e494a95b9899f5d1244",
+        "bytes": 39108
+      },
+      {
+        "path": "docs/review_evidence/performance_verification.json",
+        "sha256": "2722eee11b86ba8e0d133f28cbe02d541b6a7049ceaef63115d2e0850eb83659",
+        "bytes": 15522
+      },
+      {
+        "path": "docs/review_evidence/platform_guard_verification.json",
+        "sha256": "ea076cab0dd052869e7a357830868779a66f13bc3f3758f02d9453e6d7498013",
+        "bytes": 4877
+      },
+      {
+        "path": "docs/review_evidence/preset_geometry_verification.json",
+        "sha256": "894f222747773d1d66c9a93e964f0cedc3467d2b5f9362ce9a06918f8c5667c8",
+        "bytes": 18961
+      },
+      {
+        "path": "docs/review_evidence/privacy_audit_verification.json",
+        "sha256": "a36b1d3eebb9945726839f61b03d9866a571d0feb670fa02f826b5e9165e27c4",
+        "bytes": 13796
+      },
+      {
+        "path": "docs/review_evidence/remote_cleanup_verification.json",
+        "sha256": "cae2574050c38e938189c19a7a9c8b6bb9acdc6ab1b80c5777e59d72fe2b7075",
+        "bytes": 2439
+      },
+      {
+        "path": "docs/review_evidence/remote_floor_verification.json",
+        "sha256": "bd40ca3db76ac699b1badad6b69d51b7a40bc4f5f48d5bc788468e8a298675f1",
+        "bytes": 5855
+      },
+      {
+        "path": "docs/review_evidence/render_token_verification.json",
+        "sha256": "0edbefaf99bc6d69a122e32a43610e480329774fb7a57726e4a0c034848424f8",
+        "bytes": 17888
+      },
+      {
+        "path": "docs/review_evidence/scalar_provenance_verification.json",
+        "sha256": "9a2e56c81296655463cc8cd6a302cc5d489c84538ee239d89b525007038df7e6",
+        "bytes": 14304
+      },
+      {
+        "path": "docs/review_evidence/session_resource_verification.json",
+        "sha256": "2d26dd8d0b3c688d7e18f3703aa4c159de8cefc5e1d9952e2f2c4aa4f95dce50",
+        "bytes": 21543
+      },
+      {
+        "path": "docs/review_evidence/string_boundary_verification.json",
+        "sha256": "ea9450c505ab13993a99717977495ac841fbcae1beec0d27a78105f514728243",
+        "bytes": 10961
+      },
+      {
+        "path": "docs/review_evidence/style_dpi_verification.json",
+        "sha256": "52294e219d4f8dd046437b3d7bb8f6a2987ec81cbb56b44c619f5d0f8783de11",
+        "bytes": 16495
+      },
+      {
+        "path": "docs/review_evidence/table_sql_verification.json",
+        "sha256": "83d2159f2933600edfd02b7cc31f6e0470bba31ea05361e5d09b2cd014bd90c8",
+        "bytes": 9436
+      },
+      {
+        "path": "docs/review_evidence/temporal_ci_verification.json",
+        "sha256": "ca39427c9e3ac984c91fb56162f66b0083fa6ed65d3ef64574c1a8141765f961",
+        "bytes": 10543
+      },
+      {
+        "path": "docs/review_evidence/verification_receipts.json",
+        "sha256": "fd0f9373633f06e354e32add8eb557f1464d84ab6cea311f05d7137b1a5cf856",
+        "bytes": 52481
+      },
+      {
+        "path": "docs/review_evidence/windows_tmp_boundary_verification.json",
+        "sha256": "0c207cafe9badf337466978f2ea542207743daaa4ba9236fe2c262ae35018d8d",
+        "bytes": 10294
+      }
+    ],
+    "privacy_scope": "StaticJSONfixture/evidencesnapshotonly. Targetedprivatekey/token/profilepathpatternsandJSONparsearenotacompletesecurityclassifier. Inputsreadandsyntheticscopeverifiedseparately;rawlocalTempstdout/fullenvironmentarenotcopied. NoSecretValuesinthisreport.",
+    "raw_fixture_count": 5,
+    "shared_json_count": 42
+  },
+  "decisions_document": "docs/REVIEW_PREPARATION.md",
+  "fixture_policy": "Fiveexplicitchecked-inreviewinputsarefixedsyntheticexamplesorfieldgeneratoroutputs;notallrenderable. Randomhistorytestsdeclareseeds20261016/24301. RawownedTemplogsareprivate;publicevidenceboundedrelativesources/placeholders/hashes;noFontbinariesorunpublishedrows.",
+  "masking_scope": "Targetedprofilepath/private-key/tokenpatternscanandJSONparseproducednohitsinsnapshot\u2014notsecretfreedomproof. Do notprintcandidatevaluesorauto-redactandclaimoriginalrawlogevidence. MarkdownoperatorTemplocationsareexplicitprovenancelinksnotapplicationinputlogs.",
+  "compatibility_policy": "Conflictstablepreservesmutableisolatedsnapshots/distinctbatchboundaries/openFigures/explicitcrop/legacyjournalpriority/trustedPGF/separatesourcedistribution/nativecontrolscope/versionauthority. Document-onlyaccuracyfixesandobservedbugfixesarelinked;no newruntimecompatibilityapprovalinferred.",
+  "limits": "BASE05complete150IDsymbol/testmappingisnotclosed;thisinventorydoesnotscanallgit/history/arbitrarybinaries/third-partysecrets. BASE06/07passboundedprepared-input/evidence/decisionrecords,notsecurityorall-documentcertification.",
+  "qa_note": "Initialconsumerfilenameguessesinpreparationtablecorrectedbygrepactualfixtureloads(editor_paths/json_policies);all19explicitreferencedpathsnowexist. No inaccurate test counted as coverage.",
+  "checks": [
+    {
+      "name": "existing-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_state_contracts.py",
+        "tests/test_review_json_policies.py",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "313 passed, 2 warnings in 108.30s (0:01:48)"
+      ],
+      "log_text_sha256": "a36e8fe9de9f1e3886cd7c5679a53ff3dc222fc1825db3160a9129388f6caeca"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "c01618848e11758ab7b3d1eff90875ccf670e19180d605421383d4a2eadb8ae0"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "239 files already formatted"
+      ],
+      "log_text_sha256": "68d1dc72195af503d4d0bc80908b4d51f60bb7bf57ca76a05d13667bb2905509"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "c1782aada89a4348a3645f256166dc84471f5f2b74a768eb898c5c2f00e41235"
+    }
+  ],
+  "raw_probe_sha256": {
+    "inventory.json": "b53bad910c43171f725f77e3e53b7f9be1ec32bf35dd895ed1e231859f1eb5ae",
+    "results.xml": "2dd54e4b67a84f12d6182c470bca0f1edab22531eb7a171d2c655163c035cb79"
+  }
+}

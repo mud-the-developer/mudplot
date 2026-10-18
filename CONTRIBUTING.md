@@ -149,6 +149,11 @@ editable spec for every registered layer. Gallery coverage must exactly match
 seed random generators. Avoid committing regenerated binary assets unless the
 visible output intentionally changed.
 
+Review inputs, shared/private evidence and preserved contract decisions are listed
+in [review preparation](docs/REVIEW_PREPARATION.md). Keep synthetic fixture inputs
+separate from scoped result receipts; do not publish raw environment/Temp logs or
+unpublished research data. Targeted masking checks are not a secret-free certificate.
+
 ## Lock and isolated build checks
 
 `uv.lock` reproduces the checkout's dev environment; it does not constrain all

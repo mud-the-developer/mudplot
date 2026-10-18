@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Documented synthetic fixture/evidence separation and current contract-conflict
+  decisions with hashed input inventory and scoped masking review, without
+  presenting targeted scans as a complete secret/privacy certificate.
 - Added isolated intentional-drift regressions for schema, capabilities and
   generated reference artifacts, including restored-copy success and actionable
   regeneration hints. Cross-checked registered action fields and layer vocabulary

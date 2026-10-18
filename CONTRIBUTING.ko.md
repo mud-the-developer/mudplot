@@ -143,6 +143,10 @@ spec도 재생성합니다. Gallery coverage는 `capabilities.LAYER_TYPES`와 �
 화면 출력이 의도적으로 바뀐 경우가 아니면 재생성된 바이너리 자산을
 커밋하지 않습니다.
 
+입력·공유/비공유evidence·기존계약결정은 [review준비](docs/REVIEW_PREPARATION.md)에
+정리했습니다. Syntheticfixture입력과범위있는결과receipt를구분하고raw환경/Temp로그나
+미공개연구자료를게시하지마세요. 제한된masking검사가secret-free인증은아닙니다.
+
 ## Lock과 격리 build 검사
 
 `uv.lock`은 checkout의 dev 환경을 재현하며 wheel의 선언 의존성 범위로 설치하는 모든
