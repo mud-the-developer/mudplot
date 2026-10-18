@@ -1,0 +1,78 @@
+{
+  "head": "e728708eeaa254756d0c431798d9b5b8452269aa",
+  "run": 39122032427,
+  "minimum_job": {
+    "id": 117659400040,
+    "name": "minimum-render",
+    "conclusion": "success",
+    "started_at": "2026-10-18T11:08:28Z",
+    "completed_at": "2026-10-18T11:25:16Z"
+  },
+  "pytest": {
+    "passed": 2872,
+    "skipped": 26,
+    "warnings": 3906,
+    "seconds": 943.69,
+    "skip_scopes": {
+      "optional_pyarrow_polars": 25,
+      "biber": 1
+    },
+    "skip_lines": [
+      "2026-10-18T11:25:07.5583623Z SKIPPED [1] tests/test_review_table_formats.py:23: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5584200Z SKIPPED [1] tests/test_review_table_formats.py:23: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5584766Z SKIPPED [1] tests/test_review_table_formats.py:58: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5585461Z SKIPPED [1] tests/test_review_table_formats.py:58: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5586033Z SKIPPED [1] tests/test_review_table_formats.py:82: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5586589Z SKIPPED [1] tests/test_review_table_formats.py:82: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5587139Z SKIPPED [3] tests/test_review_table_formats.py:91: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5587702Z SKIPPED [3] tests/test_review_table_formats.py:91: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5588286Z SKIPPED [1] tests/test_review_table_formats.py:109: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5588857Z SKIPPED [3] tests/test_review_missing_data.py:137: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5589435Z SKIPPED [2] tests/test_review_missing_data.py:146: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5590018Z SKIPPED [3] tests/test_review_temporal_precision.py:200: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5590616Z SKIPPED [1] tests/test_review_temporal_precision.py:217: could not import 'polars': No module named 'polars'",
+      "2026-10-18T11:25:07.5591235Z SKIPPED [3] tests/test_review_temporal_precision.py:239: could not import 'pyarrow': No module named 'pyarrow'",
+      "2026-10-18T11:25:07.5591760Z SKIPPED [1] tests/test_references.py:619: needs ['biber'] for lualatex+biber"
+    ],
+    "warnings_scope": "Count retained; --disable-warnings suppresses category details in this log. Not all warnings classified or dismissed."
+  },
+  "source_sha256": {
+    "mudplot/io.py": "e917d0fd97e76cd6c37451c076fe17cd3e71a86ba900824a45159b5a1002a67e",
+    "tests/test_review_output_contracts.py": "c7eb07b01fbb024c8a8fb234701e25910fea91962b88622be07a90cbec56c58d",
+    "tests/fixtures/review_http_boundaries.json": "4a1d004a1c255d657e8925c3a8ff03596a49a1e400eaad0b1b0cbe85c3712071",
+    "scripts/rust_editor_smoke_test.py": "47dd1e8c2a04ab5b0ad43c2d02c012c93856c08c6fb7e78ebddc838e5ff3f6d2",
+    "scripts/check_minimum_versions.py": "7a39b33d9be0aa38fb949836bf11f1c68db8b315c7c0a7a24c5613bdee3c1045"
+  },
+  "symlink_inference": "Inference from exact parametrized source, whole suite success and complete skip summary; not individual verbose case log lines.",
+  "four_staging_symlink_cases_passed_by_source_and_complete_skip_summary": true,
+  "native": [
+    {
+      "name": "rust-editor (ubuntu-latest)",
+      "job_id": 117659399818,
+      "conclusion": "success",
+      "checks": [
+        "2026-10-18T11:09:30.4426616Z test result: ok. 18 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.13s",
+        "2026-10-18T11:09:30.4443661Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-18T11:09:30.8236860Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-18T11:14:22.3808317Z HTTP boundary OK: Host/Origin/16MiB/path policies and security headers"
+      ],
+      "log_sha256": "ba90ddbb577ef2136758426166ca114a2a801393a235bd3af31900a4ded4fadb"
+    },
+    {
+      "name": "rust-editor (windows-latest)",
+      "job_id": 117659400047,
+      "conclusion": "success",
+      "checks": [
+        "2026-10-18T11:10:03.1867419Z test result: ok. 18 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.14s",
+        "2026-10-18T11:10:03.1976398Z test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-18T11:10:03.7056883Z test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "2026-10-18T11:15:22.2459061Z HTTP boundary OK: Host/Origin/16MiB/path policies and security headers"
+      ],
+      "log_sha256": "8763fb67d15462673fa8bc5cbe6c9e279d4bc07f6be877cefea76d2d9187e41e"
+    }
+  ],
+  "minimum_log_sha256": "59f5519b5d38f44545211cbb81237e55aeaa4da3751dbefa592571a9844622a5",
+  "clean_log_text_sha256": "107fe13c839be8b06aa1ac3255904f0f229aced2b8ec6c7de19aa5ec4bbfdbab",
+  "scope": "Complete ordered60file e728floor run plus completed e728Rust jobs, not all5job success and not a run of the later privacy-only test. Library/runtime/corpus sources remain equal; local e728descendant process lifecycle work is still pending.",
+  "failed_fetch_notes": "Initial gh api refused terminal escapes; explicit --allow-escape-sequences fetch succeeded. A private source-decoding attempt used wrong Windows default encoding; UTF8 comparison then succeeded. Neither fetch/control failure is counted as a test result."
+}

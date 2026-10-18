@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 27 records the completed e728 Linux floor and both native jobs.**
+Job117659400040 passed the entire ordered60-file floor:2872passes/26skips/
+3906warnings in943.69s. Skips are25optional adapters and1biber, not staging symlink
+cases. Exact source plus whole-suite success/complete skip summary supports all
+4symlink cases; this is not an individual verbose-case log claim. Warning details
+are suppressed by the existing runner flag, so they are not all classified benign.
+
+Both completed Linux/Windows native logs show18lib+1main passes/3helpers ignored
+and the fixed HTTP path/header corpus. These complement prior Windows ownership/
+path probes, so SEC-06 is PASS for the measured supported policies and limits.
+The regular Python jobs still run; CI-01 remains RUNNING and no new privacy-only
+test is retroactively included. [Evidence](review_evidence/remote_floor_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/DEFERRED1**.
+Keep this evidence-only unit local during CI; runtime/versions/locks/releases stay.
+
+### Earlier review phase 26
+
 **Review phase 26 checks default error logging and current advisory snapshots.**
 Synthetic validation/import/render/unknown-route probes on Python/Rust editors
 leave no submitted token/research-row/traceback markers in default stdout/stderr,

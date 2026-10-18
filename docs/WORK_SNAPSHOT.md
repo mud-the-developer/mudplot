@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Actuale728Linux floor completed2872passes/26optional+TeXskips/3906warnings;
+  exact source and complete skip summary support4staging symlink passes. Both OS
+  native jobs passed19tests/3helpers ignored plus HTTP path checks. SEC-06 is now
+  PASS for measured policies, not a sandbox/all-OS guarantee. Full Python2jobs
+  still run, so CI-01 remains RUNNING and the later privacy-only case is separate.
+
 - Latest default-log probes preserve state/PNG and do not record synthetic input
   markers or tracebacks in Python/Rust stdout/stderr. Same-client draft/diagnostic
   output remains intentional.211related/floor1checks pass; runtime code is unchanged.
@@ -43,8 +49,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 - Latest staging ownership and fixed HTTP path/query guards pass; normal PNG/PDF/
   SVG references stay offline data. Related128passes/6OSskips and floor80passes/
-  4symlink skips are scoped, not full security or sandbox approval. SEC-06 remains
-  partial; SEC-07 is PASS. The exclusive reservation prevents collision deletion.
+  4symlink skips were local; the later Linux result above covers those cases.
+  SEC-07 is PASS. The exclusive reservation prevents collision deletion.
 - Baseline621CI ended cancelled at1hour during floor checks after3.10Pytest passed;
   other3jobs succeeded. The floor now has separate finite execution without
   dropping coverage; this prior cancelled run is not all-green.
@@ -159,7 +165,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records unchanged scope/prerequisites and local runner/critical-subset checks.
 - [Privacy/advisory evidence](review_evidence/privacy_audit_verification.json)
   records default synthetic log probes, exact lock snapshots and audit limitations.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS71/RUNNING10/OPEN68/
+- [Remote floor/native evidence](review_evidence/remote_floor_verification.json)
+  retains completed-job log hashes, skip scopes and source-based symlink inference.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 27차 — 실제 Linux floor·양OS native 완료 증거
+
+- CI39122032427/e728의 minimum job117659400040은11:08:28Z→11:25:16Z에 성공했습니다.
+  [원격 floor 요약](review_evidence/remote_floor_verification.json)과 로컬 raw log
+  `C:\Users\mud\AppData\Local\Temp\mudplot-ci-floor-proof-0no59qr_`를 보존합니다.
+- 정확한 checkout SHA와 Python3.10.22/NP1.23/MPL3.8/SM0.14.1/SciPy1.10 banner,
+  ordered60파일 완료 결과를 확인했습니다: **2872통과/26skip/경고3906,943.69초**입니다.
+  Skip은 pyarrow/polars 선택 adapter25개와 biber1개뿐이며 새 staging symlink skip은
+  없습니다. 경고 category는 --disable-warnings로 이 log에 없으므로 무해하다고 분류하지 않습니다.
+- e728의 정확한 parametrize 소스·전체 성공·완전한 skip 요약을 함께 읽어 staging4symlink
+  case 통과를 판단합니다. 개별 verbose case 로그가 있다는 주장은 아닙니다. Current
+  io/output-test/corpus/native-helper/floor-script가 그 commit과 같음을 비교했습니다.
+- 양OS Rust job117659399818/117659400047도 성공하며 각각 lib18+main1통과/helper3ignored,
+  Host/Origin/16MiB/path/header 회귀 통과를 실제 완료 log에서 확인했습니다. Windows
+  파일/directory/hardlink·이전 경로 probe와 함께 SEC-06은 이 관찰 범위에서 PASS입니다.
+  적대적인 shared-directory sandbox/모든 OS·경로·자손 정리 보장으로 확대하지 않습니다.
+- Full Python3.10/3.12는 여전히 실행 중이므로 CI-01은 RUNNING이며 새 privacy-only
+  회귀를 이 원격 floor가 실행한 것으로 소급하지 않습니다. 이번에는 runtime/test 코드를
+  바꾸지 않고 증거/status만 로컬 보존해 진행 중인 CI를 취소하지 않습니다.
+- 최초 gh log fetch의 escape 거부와 private source decode의 잘못된 Windows 기본 인코딩은
+  제어/취득 실패로 남깁니다. --allow-escape-sequences/UTF8로 완료한 읽기만 근거이며 테스트
+  실패/성공으로 집계하지 않습니다. 버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 26차 — 기본 오류 로그·현재 lock advisory 검토
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-private-errors-wb54fsyh`,
@@ -852,7 +875,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-03 | P0 | PASS | 16 MiB 요청 한도 | _Handler._read_body; protect_local_boundary limited Bytes | test_review_body_framing.py(13); check_request_body_limits.py(39); 실제 PID RSS/peak·상태 보존 11차 기록 |
 | SEC-04 | P1 | OPEN | 작은 요청의 과도한 계산 방어 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-05 | P1 | PASS | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-06 | P1 | RUNNING | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-06 | P1 | PASS | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-08 | P1 | PASS | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | PERF-01 | P1 | OPEN | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -890,7 +913,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 71, RUNNING 10, OPEN 68, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 72, RUNNING 9, OPEN 68, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

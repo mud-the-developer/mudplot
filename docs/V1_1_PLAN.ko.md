@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 27차에서 실제e728 Linux floor·양native 완료 log를 확인했습니다.** Job117659400040의
+ordered60파일 전체는2872통과/26skip/경고3906,943.69초입니다. Skip은 선택adapter25와
+biber1이며 staging symlink skip은 없습니다. 정확한 소스·전체 성공·완전한 skip 요약으로
+4symlink 통과를 판단하되 개별 verbose case log가 있다고 주장하지 않습니다. 경고 세부는
+기존 flag로 suppress되어 전부 무해하다고 분류하지 않습니다.
+
+양OS native lib18+main1통과/helper3ignored와 HTTP path/header corpus도 실제 log에서
+확인해 기존 Windows 파일/경로 probe와 함께 SEC-06은 관찰 범위에서 PASS입니다. Full
+Python2job은 여전히 실행 중이므로 CI-01은 RUNNING이며 후속 privacy-only 회귀도
+소급하지 않습니다. [근거](review_evidence/remote_floor_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS72/RUNNING9/OPEN68/DEFERRED1**입니다.
+증거 전용 단위는 CI 중 로컬에 보존하며 runtime/버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 26차
+
 **리뷰 26차에서 기본 오류 log와 현재 advisory snapshot을 확인했습니다.** 합성 token/
 연구 행만 사용한 양 editor의 validation/import/render/unknown-route 오류에서 기본
 stdout/stderr marker·traceback이 없고 state/PNG를 보존했습니다. 같은 client의 오류/

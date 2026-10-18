@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 실제e728 Linux floor2872통과/26선택·TeXskip/경고3906을 완료했습니다. 정확한 소스와
+  완전한 skip 요약이4staging symlink 통과를 뒷받침하고 양native19통과/helper3ignored/
+  HTTP path도 확인해 SEC-06은 관찰 정책 범위에서 PASS입니다. Sandbox/모든OS 보장은
+  아니며 full Python2job은 진행 중입니다. CI-01과 나중 privacy-only 회귀는 구분합니다.
+
 - 최신 양 editor 기본 stdout/stderr에 합성 입력 marker/traceback이 없고 state/PNG를
   보존했습니다. 같은 client draft/진단 응답은 의도된 편집 기능입니다. Runtime 변경 없이
   관련211·최소1통과이며3Python-lock/69Cargo-registry OSV snapshot의 알려진 advisory는
@@ -35,7 +40,7 @@
 
 - 최신 staging 소유권·고정 HTTP path/query와 일반PNG/PDF/SVG offline sink가 통과했습니다.
   관련128통과/OS6skip·최소80통과/권한4skip은 한정 범위이며 보안 인증/sandbox 보장은
-  아닙니다. SEC-06은 부분 확인, SEC-07은 PASS이고 exclusive 예약이 충돌 삭제를 막습니다.
+  아닙니다. 당시 local symlink skip은 위 후속 Linux 결과가 확인했으며 SEC-07도 PASS입니다.
 - 기준621CI는3.10Pytest 성공 뒤 최소환경 중1h 한도로 취소됐고 다른3job은 성공했습니다.
   검사를 줄이지 않고 floor의 별도 유한 job을 구성했으며 이전 취소 결과를 green으로 세지 않습니다.
 
@@ -135,7 +140,9 @@
   전제와 로컬 runner/핵심 subset 결과를 기록했습니다.
 - [Privacy/advisory 근거](review_evidence/privacy_audit_verification.json)에 기본
   합성 log probe·정확한 lock snapshot과 audit 한계를 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS71/RUNNING10/OPEN68/DEFERRED1**.
+- [원격 floor/native 근거](review_evidence/remote_floor_verification.json)에 완료job
+  log hash·skip 범위·소스 기반 symlink 판단 근거를 보존합니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS72/RUNNING9/OPEN68/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
