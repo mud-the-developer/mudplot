@@ -22,17 +22,23 @@
 
 ## 검증과 리뷰 상태
 
+- 최신HTML/SVG literal/draft decode-once·양raweditor4payload가데이터를유지하고active
+  node를추가하지않았습니다. 명시trustedPGFescaping/math도컴파일돼OUT-09는범위내PASS이며
+  untrustedTeXsandbox/모든font보장은아닙니다. 관련72/최소6통과·현재185upstream경고분류를기록했습니다.
+- 기준06dCI39131994074는5job모두성공했습니다. 대기도구/test의local검증과함께게시하되
+  후속CI도정확한현재commit의결과로판단합니다.
+
 - 최신 reference출력은 라벨/링크를 지우지 않고 날짜/ID가결정적이며 PGF이동/누락/
   실패와4실제TeX/bibliography 조합도 통과했습니다. PDF참조번호·각5embeddedfont·
   DOIannotation을 확인해 OUT-02/06/07/08은 범위내PASS입니다. 관련70통과/no skip·
-  최소6통과이며 PGF비트랜잭션/OS/font 한계는유지합니다. Runtime변경없이 test/doc은06dCI중 로컬보존합니다.
+  최소6통과이며PGF비트랜잭션/OS/font한계는유지합니다. 앞선로컬보존은06dCI완료까지유지했습니다.
 
 - 최신137초 세션은 GC후Figure0/고정handle·temp를 확인하고 의도한 history/cache를
   구분했습니다. RSS/native lifetime은 긴 관찰이 남아 PERF-04는 RUNNING입니다.
 - Sampler 자체의 ctypes 타입 재생성이 no-render20회에서 객체662증가를 만들었습니다.
   Binding/type 재사용으로 고치되 PID 값/handle을 cache하지 않고 전체 세션을 다시
   실행했습니다. 관련63/OS2skip·품질/packaging6명령 통과, 제품renderer/state 변경은
-  없으며 도구 단위는06dCI 중 로컬 보존합니다.
+  없으며앞선도구게시보류는06dCI완료까지유지했습니다.
 
 - 최신 소유 Matplotlib effect는2serial/concurrent 출력 불일치 뒤 공통 재진입 직렬화를
   사용합니다.3format exact hash·독립session preview/layout·중첩 호출과 관련231/site9/
@@ -196,7 +202,9 @@
   handle/Figure/cache와 observer 자체 증가를 구분했습니다.
 - [출력/참조 근거](review_evidence/output_reference_verification.json)에 hash/
   compiler·JUnit·sidecar검사와 실제 PDFfont/URI 관찰을 보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS81/RUNNING9/OPEN59/DEFERRED1**.
+- [문자열문맥 근거](review_evidence/string_boundary_verification.json)에 정확한
+  HTML/SVG값·실제trustedTeX컴파일·현재warning분류를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

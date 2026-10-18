@@ -86,9 +86,9 @@ _STANDALONE_TYPES = {"pie", "swarmplot"}
 #                           the *paper's* bibliography and hyperref resolve
 #                           them at compile time (see mudplot.tex.PREAMBLE)
 #
-# PGF text is escaped by matplotlib's pgf backend, so macros can't be
-# emitted directly: mark them with sentinels here and substitute the real
-# macros in the saved .pgf afterwards (see _substitute_pgf_references).
+# PGF text follows matplotlib's trusted TeX rules, not universal plain-text escaping.
+# Reference macros belong to the document, so measure short sentinels and substitute
+# them in the saved .pgf afterwards (see _substitute_pgf_references).
 _FMT: contextvars.ContextVar[str] = contextvars.ContextVar("mudplot_fmt", default="")
 # Markers must stay *short*: they sit in the text matplotlib measures while
 # laying the figure out, so embedding a full URL there blows up the legend
@@ -210,8 +210,8 @@ def _substitute_pgf_references(
 ) -> str:
     """Replace the sentinels left by ``_decorate`` with real LaTeX macros.
 
-    Runs on the saved .pgf source, after matplotlib's pgf backend has
-    escaped the surrounding (plain) text. A citation sentinel may be
+    Runs after matplotlib's PGF text processing; surrounding text still follows
+    the trusted TeX input rules, not a plain-text sandbox. A citation sentinel may be
     preceded by a measurement filler (see ``_mark``/``_REF_MEASURE``),
     which this strips out along with the sentinel itself -- it exists only
     to give matplotlib's layout pass a realistic width to measure against

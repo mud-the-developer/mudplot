@@ -167,6 +167,18 @@ package release마다 spec version을 올릴 필요는 없습니다.
   호출자가 넘긴 executed cursor와 connection의 소유권은 호출자에게 있고 commit/
   rollback도 하지 않습니다. Close 오류는 숨기지 않고 전파하며 이전 실패는 예외 context에 남습니다.
 
+## 문자열 문맥
+
+HTML editor value/draft와 SVG text/href는 data로 escape하며 한 번 decode하면 원래
+따옴표·ampersand·backslash·Unicode를 회복하고 script/event node가 추가되지 않습니다.
+허용한 Matplotlib 수식은 그대로 수식입니다.
+
+명시 PGF label은 보편 plain-text escaping이 아닌 backend의 신뢰하는 TeX 문법입니다.
+Raw `A & B`는 TeX 측정에서 실패하지만 `A \\& B`·명시한 무해 macro/수식은 컴파일됩니다.
+호출자/document의 TeX encoding·page 크기도 중요합니다. Citation key/href의 엄격한
+별도 검증이 임의 TeX macro를 허용하지 않으며 자동 전형식 rewriting이나 untrusted-TeX
+sandbox를 도입하지 않습니다.
+
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는

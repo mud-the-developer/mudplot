@@ -1,0 +1,296 @@
+{
+  "source_sha256": {
+    "tests/test_review_string_boundaries.py": "afb9b6ee7dd5727eb0fc4b5780efce1b06a946a8f8804f5b594377a5cfe47105",
+    "scripts/check_minimum_versions.py": "7e2ba338c2d17aeefb579ad87c4992b08f102b10894f49269f88732f4bde7b92",
+    "mudplot/_render.py": "ab3ed0828edb7f1a3ad92e3ecb530664eb1f4b3c9297e66aa089246ed5ef45d4",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "dashboard/editor_view.py": "69b33e51b389f48d233dd8b9bebfaf2eee4863b8026d9bfcd5095fd6e4f6e96b",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f"
+  },
+  "fixture_scope": "Two literal special/inert-script strings in PythonHTML drafts and SVGtext-mode XML; explicit escaped trusted PGF TeX+math and invalid reference macro case. Allsynthetic/local.",
+  "html_svg_policy": "HTMLdecode-once attributes/draft JSON and SVGtext/href recover exact data; script/event nodes are not introduced. Existing valid mathematics is not indiscriminately escaped.",
+  "pgf_policy": "Explicit PGF is trusted TeX text, not universal plain-text escaping. Raw A&B fails clearly; caller A\\&B and harmless TeX markup compile. T1 font encoding and a paper that fits the10inch fixture support literal PDF extraction. No untrusted-TeX sandbox claim.",
+  "ui_cases": [
+    {
+      "tool": "python",
+      "payload_index": 0,
+      "escaped_html": true,
+      "decoded_attribute_exact": true,
+      "scripts_unchanged": true,
+      "json_state_exact": true,
+      "html_sha256": "9413b7f5e2814d93d28c81ec9dc989c7a233caf8a01b63f88735c4a643573264"
+    },
+    {
+      "tool": "python",
+      "payload_index": 1,
+      "escaped_html": true,
+      "decoded_attribute_exact": true,
+      "scripts_unchanged": true,
+      "json_state_exact": true,
+      "html_sha256": "7c2e26e465aaa62c4faab6d44917ee86aa4b71f9ad34f796fba53ea9e2ed8e10"
+    },
+    {
+      "tool": "rust",
+      "payload_index": 0,
+      "escaped_html": true,
+      "decoded_attribute_exact": true,
+      "scripts_unchanged": true,
+      "json_state_exact": true,
+      "html_sha256": "e3a593ce4c8747264875c0ee67095eab8c20c5538f6785efd8f35e40d97c9f74"
+    },
+    {
+      "tool": "rust",
+      "payload_index": 1,
+      "escaped_html": true,
+      "decoded_attribute_exact": true,
+      "scripts_unchanged": true,
+      "json_state_exact": true,
+      "html_sha256": "52b9b832d19b5bc1b0baa6027fb8c93a9671d42f903df8c084d80e22ee3dc282"
+    }
+  ],
+  "compiled_pdf_text": {
+    "pdf_sha256": "1d7d2f7ceb0977ca9876a602de91633e7ca0a58a9c797c367ee7ecd632d6cf75",
+    "extracted_text_sha256": "98637b13ebcd5c1fe7f6d403566f60844c4981f7807941b967a27d59eb8051cf",
+    "literal_escaped_specials_present": true,
+    "inert_tex_markup_rendered": true,
+    "normalized_text": "amp & hash # percent % under _ backslash \\ inert x1 amp & hash # percent % under _ backslash \\ inert x1 3.0 2.8 2.6 2.4 2.2 2.0 1.0 1.2 1.4 1.6 1.8 2.0 1",
+    "font_encoding": "explicit T1",
+    "paper_fits_10inch_figure": true
+  },
+  "junit_sha256": "3bb316c809fc1f3c93a0fa4b384dd0a38fcfc21d9bcd0c0416a2a78ebb097680",
+  "warning_categories": [
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_fontconfig_pattern.py",
+      "message": "'parseString' deprecated - use 'parse_string'",
+      "count": 31
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_fontconfig_pattern.py",
+      "message": "'resetCache' deprecated - use 'reset_cache'",
+      "count": 31
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+      "count": 1
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'oneOf' deprecated - use 'one_of'",
+      "count": 5
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+      "count": 2
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'setName' deprecated - use 'set_name'",
+      "count": 45
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'setParseAction' deprecated - use 'set_parse_action'",
+      "count": 60
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+      "count": 1
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+      "count": 1
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'parseString' deprecated - use 'parse_string'",
+      "count": 4
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "util.py",
+      "message": "'parseAll' argument is deprecated, use 'parse_all'",
+      "count": 2
+    },
+    {
+      "category": "PyparsingDeprecationWarning",
+      "file": "_mathtext.py",
+      "message": "'resetCache' deprecated - use 'reset_cache'",
+      "count": 2
+    }
+  ],
+  "warning_scope": "All185observed floor warnings in this run are upstream PyparsingDeprecationWarning in oldMatplotlib font/math parsing, not suppressed or fixed by changing dependencies. Do not extrapolate this subset to all prior3906warnings.",
+  "baseline06d_ci": {
+    "run": 39131994074,
+    "head": "06d726948818f9f845c374390413113a03e2873d",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117688873309,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117688873465,
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "id": 117688873611,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117688873633,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117688873638,
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Product effect code unchanged here apart from explanatory comments; later tooling/tests have their separate local checks."
+  },
+  "limits": "Not allUnicode/fonts/OS/HTMLcontexts or malicious TeX validation. Client-returned current state/draft remains intentional local editing data. No new runtime coercion/escaping behavior or API/dependency change.",
+  "qa_control_notes": "Initial HTML test omitted explicit draft_json and saw an emptyeditor by design; corrected the actual contract. Default-widthOT1 paper was an unsuitable extraction fixture(underscore can be synthesized as rules and10inch image clipped); fitted T1 paper rerun retained all intended text. A private tempdir glob was corrected for pytest truncation. These were QA issues, not product fixes.",
+  "checks": [
+    {
+      "name": "current-string-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_string_boundaries.py",
+        "tests/test_references.py",
+        "tests/test_review_offline_execution.py",
+        "tests/test_review_pgf_bundle.py",
+        "--basetemp",
+        "<evidence>\\current-tests",
+        "--junitxml",
+        "<evidence>\\current-results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "72 passed in 56.41s"
+      ],
+      "log_text_sha256": "e78e7b148f92f7c3ad659fecb15e4d6ee4267948d153f7978288a7538d2c4f61"
+    },
+    {
+      "name": "current-floor-strings",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 2945 deselected, 185 warnings in 6.29s"
+      ],
+      "log_text_sha256": "eec996ff26064a818c0e34573470715413ca90f94acdcf2e7041bd370bdd9d84"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "230 files already formatted"
+      ],
+      "log_text_sha256": "586fb37ab03e326fd7d42974a2af011ba905524a2698a03c5a1b28499f83dd69"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "b5451f55d568abbfc7aadc1ab102981893f7ed354fee87315c51abf9ca361c37"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "27e054a98f3cf5f1cbee3be14be929a3baebe8acc665d0bf398c3cdee6b28195"
+    }
+  ],
+  "probe_logs_sha256": {
+    "compiled_text.txt": "98637b13ebcd5c1fe7f6d403566f60844c4981f7807941b967a27d59eb8051cf",
+    "ui_strings.json": "d6b92483518e757363bb42a4b1e5822317a2177d6b6e8c84c44af1afc11bf85d",
+    "floor_warning_categories.json": "ba9fb03db0ff26a0820a6767b4c7eb545fb34ec7e9c7519fcedbd859d95b9d40",
+    "warning-category-run.log": "e7e53ce4cb2e288932ebfd5a7cb25fd0568f78b15065b3926c95d5f603122dc4",
+    "python.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rust.stdout": "b694f8f12d30fa2798057250bafd59eb7ef261196c7635028a37dcd005b0b6b0",
+    "rust.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

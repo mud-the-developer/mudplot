@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified decode-once HTML/SVG special-character boundaries and actual raw-editor
+  responses; documented explicit trusted PGF TeX escaping rather than claiming a
+  universal plain-text sanitizer. Literal escaped PGF text/math compiles and unsafe
+  reference macros remain rejected; no runtime coercion was added.
 - Verified reference-bearing PNG/PDF/SVG deterministic metadata/IDs, four installed
   TeX/bibliography combinations with embedded fonts and actual DOI annotations,
   and PGF sidecar relocation/missing/postprocess failure limits without promising

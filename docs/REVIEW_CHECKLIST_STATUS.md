@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 35차 — HTML/SVG data·명시 PGF TeX 문자열 문맥
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-string-boundary-_1kovvmy`와
+  [문자열 경계/현재 경고 분류](review_evidence/string_boundary_verification.json)를 보존합니다.
+- &,<,>,따옴표,backslash,Ω·무해script문자열의 HTML attribute/draft JSON은 한번 decode해
+  원문/spec와 같고 trustedscript본문은늘지 않습니다. SVGtext-mode XML도 원문과href를
+  유지하고 script/event node가 생기지 않았습니다. 양실제editor GETHTML의4payload회도
+  attribute/state가같고script가변하지 않았습니다. Parser대조이지브라우저공격인증은 아닙니다.
+- RawPGF A&B는명확한TeX측정오류이며 A\\&B·명시무해macro/math는실제pdflatex로
+  컴파일됩니다. T1encoding과10inch그림을담는paper에서Poppler추출문자도 amp/hash/
+  percent/underscore/backslash/inert/math를 유지합니다. Citation의brace/backslash macro는
+  validation이거부합니다. PGFtext는신뢰TeX입력이라는기존정책을명확히하고 잘못된광범위
+  plain-text-escape주석만고쳤으며 runtimeescaping/공개API/수식지원은바꾸지 않았습니다.
+- 관련72case가skip없이통과·최소6통과/2945deselected/경고185·Ruff230/format·Pyright·
+  계약·packaging7명령이exit0이며변경3경로LSP clean입니다. 별도 pytest warning hook으로
+  현재185개가모두oldMatplotlib의font/mathparser PyparsingDeprecationWarning임을기록했습니다.
+  Suppress/dependency pin은추가하지않고이subset으로과거전체3906개를분류하지 않습니다.
+- OUT-09는이문맥/지원fixture에서PASS입니다. UntrustedTeXsandbox·모든Unicode/font/OS를
+  보장하지않습니다. 초기draft_json생략/너무좁은OT1paper·잘못된pytesttemp이름가정은
+  QAfixture/control문제로고쳐현재T1/fitted paper를다시실행했으며제품실패로세지 않습니다.
+- 기준06dCI39131994074는이제5job모두성공했습니다. 후속도구/test는별도local검증이며
+  대기하던sampler/출력단위와게시해새CI를받습니다. 버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 34차 — 실제 출력 metadata·PGF bundle·문서 참조
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-output-reference-45nnpl7g`와
@@ -1025,7 +1048,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | OUT-06 | P1 | PASS | PGF bundle 한계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-07 | P1 | PASS | 참조의 형식별 의미 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-08 | P1 | PASS | TeX 컴파일로 참조 확인 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-09 | P1 | OPEN | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-09 | P1 | PASS | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-10 | P2 | OPEN | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | EDIT-01 | P0 | PASS | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-02 | P1 | OPEN | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1086,7 +1109,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 81, RUNNING 9, OPEN 59, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 82, RUNNING 9, OPEN 58, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

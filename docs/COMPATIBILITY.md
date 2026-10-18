@@ -185,6 +185,19 @@ independent. A package release does not require a spec-version bump.
   The adapter does not commit or roll back; close errors propagate rather than
   silently succeeding, with an earlier failure retained as exception context.
 
+## String contexts
+
+HTML editor values/drafts and SVG text/href are escaped as data; a single decode
+recovers the original quotes, ampersands, backslashes and Unicode, not extra
+script/event nodes. Permitted Matplotlib mathematics remains mathematics.
+
+Explicit PGF labels follow the backend's trusted TeX grammar, not universal plain
+text escaping. For example raw `A & B` fails TeX measurement, while `A \\& B`,
+explicit harmless macros and math compile. Caller/document TeX encoding and page
+size still matter. Citation keys and hrefs have their separate strict validation;
+they do not admit arbitrary TeX macros. No implicit all-format rewriting or
+untrusted-TeX sandbox is introduced.
+
 ## Dependencies and distribution
 
 The declarative/state/JSON core has no required third-party dependencies.

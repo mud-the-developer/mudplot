@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 35차에서 literalHTML/SVG와명시trustedPGFTeX를구분했습니다.** 특수문자/
+Unicode/무해script문자열이decode-once value로남고script/eventnode가추가되지않았습니다.
+실제양raweditor4case도attribute/state가같고PGF의rawampersand는명확히실패하며
+escapedliteral/무해TeX/math는T1·fittedpaper에서컴파일/추출문자가맞았습니다. Reference
+macro탈출은계속거부하며runtime sanitizer/전형식문자변환은도입하지 않았습니다.
+
+관련72통과/no skip·최소6통과/2945deselected/경고185와품질/packaging7명령이통과했습니다.
+현재185경고는upstreamPyparsingDeprecationWarning으로기록하되suppress하거나과거전체로
+extrapolate하지않습니다. OUT-09는범위내PASS이며 [근거](review_evidence/string_boundary_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS82/RUNNING9/OPEN58/DEFERRED1**입니다.
+기준06dCI39131994074는5job전부성공했습니다. 대기도구/test는별도local검증과함께
+게시해새CI를받고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 34차
+
 **리뷰 34차에서 실제 reference 출력/문서 결과를 확인했습니다.** 같은 reference spec의
 PNG/PDF/SVG가 시간간격/새process에서도동일hash이고 DOI/라벨은 남으며 volatile
 metadata는 없고 SVG ID는 결정적입니다. PGF+상대sidecar를 함께 옮기면 컴파일되고 누락하면

@@ -28,12 +28,19 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest HTML/SVG literal/draft decode-once and actual raw-editor4payload checks
+  preserve data without added active nodes. Explicit trusted PGF escaping/math
+  compiles; OUT-09 is PASS, not an untrusted-TeX sandbox or all-font guarantee.
+  Connected72passes/floor6passes and185classified upstream deprecations retain scope.
+- Baseline06dCI39131994074 is ALL5SUCCESS. The queued tooling/tests have their own
+  local results and can now publish; later CI still needs its exact current result.
+
 - Latest reference-bearing deterministic exports retain labels/links without volatile
   dates/IDs. PGF relocation/missing/failure semantics and4real TeX/bibliography
   combinations pass; compiled PDFs retain resolved numbers,5embedded fonts each
   and actual DOI annotations. OUT-02/06/07/08 are PASS in this installed scope.
   Related70passes/no skips and floor6passes retain PGF non-transactional/OS/font
-  limits; runtime is unchanged and the test/docs unit stays local during06dCI.
+  limits; runtime is unchanged and the earlier local hold protected06dCI to completion.
 
 - Latest137second session trace reclaims owned Figures and keeps handles/temp
   counts flat while history/cache changes are explicit. RSS/native lifetime still
@@ -41,7 +48,7 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - The sampler itself recreated ctypes types;20no-render calls reproduced662object
   growth. Lazy Windows bindings now reuse types without caching PID measurements;
   corrected session rerun/63related checks/2OSskips and6quality/package receipts pass.
-  No product render/state change; hold the local tooling unit during06dCI.
+  No product render/state change; the earlier tooling hold protected06dCI to completion.
 
 - Latest owned Matplotlib effects use shared reentrant serialization after2serial/
   concurrent export mismatches. Three-format exact hashes, independent session
@@ -232,7 +239,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   separates current RSS/handle/Figure/cache observations from observer self-growth.
 - [Output/reference evidence](review_evidence/output_reference_verification.json)
   retains hashes, compiler/JUnit/sidecar cases and actual PDF font/URI inspection.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS81/RUNNING9/OPEN59/
+- [String-context evidence](review_evidence/string_boundary_verification.json)
+  records exact HTML/SVG values, compiled trusted TeX and current warning categories.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

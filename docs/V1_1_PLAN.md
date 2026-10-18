@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 35 separates literal HTML/SVG from explicit trusted PGF TeX.**
+Special characters/Unicode/inert script text recover once-decoded values without
+script/event nodes; actual Python/Rust raw pages preserve attributes/state in4cases.
+PGF raw ampersands fail clearly; escaped literals, harmless explicit TeX and math
+compile with fitted paper/T1 encoding and retain the expected extracted text.
+Reference keys/hrefs still reject TeX macro breakouts. No runtime sanitizer or
+cross-format mutation is introduced; backend text-policy comments are clarified.
+
+Connected72passes/no skips, floor6passes/2945deselected/185warnings and7quality/
+package checks pass. All185warnings in this observed subset are recorded upstream
+PyparsingDeprecationWarning, not globally suppressed or extrapolated to older runs.
+OUT-09 is PASS in scope. [Evidence](review_evidence/string_boundary_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/DEFERRED1**.
+Baseline06dCI39131994074 is ALL5SUCCESS; publish queued tooling/tests with their
+separate local checks and inspect a new run. Versions/deps/locks/tag/deploy stay.
+
+### Earlier review phase 34
+
 **Review phase 34 verifies real reference exports and document results.**
 Reference-bearing PNG/PDF/SVG repeat across time/fresh processes with equal hashes,
 without dropping DOI links/labels; volatile dates are absent and SVG IDs are stable.
