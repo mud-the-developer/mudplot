@@ -1,0 +1,537 @@
+{
+  "source_sha256": {
+    "scripts/check_request_body_limits.py": "8486520e8439705968babdce420092201e4f1ce2b66d0770347a1e766cef2bcc",
+    "tests/test_memory_probe.py": "6372b7a12d0e3d2623532c6d80c9f9e4e4e0fd19e76b0a30975cec4bba12db8d",
+    "mudplot/store.py": "17b941a995d43aa8b53f4fac5d23b442278d675779005f36525fc6e5871f54ee",
+    "dashboard/editor_server.py": "d525a49659606d7b79c90e42739c93ebb49677ba02e7518506fb0d20a35b2258",
+    "mudplot/_render.py": "e20a43e3bf7c6ee62fc5b0ee142ccd496a57767fbb5092ca912a407fb2838464",
+    "mudplot/_mpl_context.py": "212111a65fb93b0ac36b6b49d91965b2ff271e720b944831fbd3bf7eea1b1a2a"
+  },
+  "collector_source_sha256": "54ba4026f49ea0beb4e2623ac4c1be3b7e90de7028854849e08410174ff2f05e",
+  "collector_source": "import ctypes\nfrom ctypes import wintypes\nimport gc\nimport hashlib\nimport json\nimport os\nfrom pathlib import Path\nimport time\n\nimport matplotlib\nmatplotlib.use('Agg')\nimport matplotlib.pyplot as plt\nfrom matplotlib.figure import Figure\nimport mudplot as mp\nfrom mudplot.spec import LayerSpec\nfrom dashboard.editor_server import EditorSession\nfrom scripts.check_request_body_limits import _memory\n\nF = Path(__file__).parent\nkernel = ctypes.WinDLL('kernel32', use_last_error=True)\nkernel.GetCurrentProcess.restype = wintypes.HANDLE\nkernel.GetProcessHandleCount.argtypes = [wintypes.HANDLE, ctypes.POINTER(wintypes.DWORD)]\nkernel.GetProcessHandleCount.restype = wintypes.BOOL\nstarted = time.monotonic()\nrows = []\nbase = mp.plot({'x':list(range(500)), 'y':[i%17 for i in range(500)], 'notes':['synthetic']*500}).line('x','y').size(4,3).spec\nbase.dpi = 72\ntext = mp.to_json(base)\nsession = EditorSession()\nsession.load_spec(text)\n\ndef handles():\n    count = wintypes.DWORD()\n    if not kernel.GetProcessHandleCount(kernel.GetCurrentProcess(), ctypes.byref(count)):\n        raise ctypes.WinError(ctypes.get_last_error())\n    return count.value\n\ndef observed():\n    return {**_memory(os.getpid()), 'handles':handles(), 'gc_objects':len(gc.get_objects()), 'live_figures':sum(isinstance(o,Figure) for o in gc.get_objects()), 'open_figures':len(plt.get_fignums())}\n\ndef emit(phase, index):\n    before = observed()\n    gc.collect()\n    after = observed()\n    row = {'phase':phase,'iteration':index,'seconds':time.monotonic()-started,'history':len(session.store.history),'action_log_bytes':len(json.dumps(session.action_log()).encode()),'cache_png_bytes':len(session.png),'cache_layout_bytes':len(json.dumps(session.layout).encode()),'before_gc':before,'after_gc':after,'temp_files':sorted(str(p.relative_to(F/'tmp')) for p in (F/'tmp').rglob('*') if p.is_file())}\n    rows.append(row)\n    print(json.dumps(row), flush=True)\n    assert after['open_figures']==0\n    if after['rss_bytes'] > 512*1024*1024:\n        raise RuntimeError('observation RSS budget exceeded')\n\nfor i in range(3):\n    session.dispatch_safe(mp.actions.SetTitle(text=f'warm-{i}'))\n    session.undo();session.redo()\nfor fmt in ('pdf','svg'):\n    assert session.export(fmt)\nassert mp.to_json(session.store.state)\nsession.load_spec(text)\nemit('warm_baseline',0)\nfor phase in ('history_growth','fixed_history_replace'):\n    for i in range(1,31):\n        if phase=='fixed_history_replace':session.load_spec(text)\n        session.dispatch_safe(mp.actions.SetTitle(text=f'{phase}-{i}'))\n        assert session.error is None\n        session.undo();assert session.error is None\n        session.redo();assert session.error is None\n        assert session.store.state.panels[0].title==f'{phase}-{i}'\n        if i%5==0:\n            for fmt in ('pdf','svg'):\n                data=session.export(fmt);assert data\n            del data\n            emit(phase,i)\n    if phase=='history_growth':assert len(session.store.history)==30\n    else:assert len(session.store.history)==1\nfor i in range(10):\n    before_spec=mp.to_json(session.store.state);before_png=session.png\n    session.dispatch_safe(mp.actions.AddLayer(layer=LayerSpec(type='line',x='x',y='y',color='invalid-resource-probe-colour')))\n    assert session.error and mp.to_json(session.store.state)==before_spec and session.png==before_png\nemit('failed_effects_preserve_state',10)\nsession.load_spec(text)\nemit('reopen_clean',1)\nassert len(session.store.history)==0\nresult={'rows':rows,'elapsed_seconds':time.monotonic()-started,'phases':{'history_growth':30,'fixed_history_replace':30,'failed_effects':10},'warmups':3,'data_rows':500,'render_count_lower_bound':240,'final_spec_sha256':hashlib.sha256(mp.to_json(session.store.state).encode()).hexdigest(),'scope':'One Windows in-process PythonEditor session, owned figures and ownPID RSS/handles/temp directory only. Native RSS includes backend/cache/allocator effects. Not Rust/Python child lifetime/leak, hours-long GUI, hard memory cap, concurrency or all hardware guarantee.'}\n(F/'result.json').write_text(json.dumps(result,indent=2),encoding='utf-8')\nprint(json.dumps({'completed':True,'elapsed_seconds':result['elapsed_seconds']}),flush=True)\n",
+  "result": {
+    "rows": [
+      {
+        "phase": "warm_baseline",
+        "iteration": 0,
+        "seconds": 7.51600000000326,
+        "history": 0,
+        "action_log_bytes": 2,
+        "cache_png_bytes": 20069,
+        "cache_layout_bytes": 225,
+        "before_gc": {
+          "rss_bytes": 90726400,
+          "lifetime_peak_rss_bytes": 235311104,
+          "handles": 198,
+          "gc_objects": 101025,
+          "live_figures": 3,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 87904256,
+          "lifetime_peak_rss_bytes": 235311104,
+          "handles": 198,
+          "gc_objects": 92072,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 5,
+        "seconds": 16.578000000008615,
+        "history": 5,
+        "action_log_bytes": 470,
+        "cache_png_bytes": 20442,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 96694272,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115485,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 90005504,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92086,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 10,
+        "seconds": 25.719000000011874,
+        "history": 10,
+        "action_log_bytes": 941,
+        "cache_png_bytes": 20418,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 95555584,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115487,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 89726976,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92093,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 15,
+        "seconds": 34.828000000008615,
+        "history": 15,
+        "action_log_bytes": 1416,
+        "cache_png_bytes": 20394,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 97710080,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115527,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 90234880,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92100,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 20,
+        "seconds": 43.953000000008615,
+        "history": 20,
+        "action_log_bytes": 1891,
+        "cache_png_bytes": 20605,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 96075776,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115528,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 89903104,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92107,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 25,
+        "seconds": 53.125,
+        "history": 25,
+        "action_log_bytes": 2366,
+        "cache_png_bytes": 20597,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 95887360,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115529,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 90746880,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92114,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "history_growth",
+        "iteration": 30,
+        "seconds": 62.28100000001723,
+        "history": 30,
+        "action_log_bytes": 2841,
+        "cache_png_bytes": 20612,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 97484800,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 115536,
+          "live_figures": 8,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 90607616,
+          "lifetime_peak_rss_bytes": 243003392,
+          "handles": 198,
+          "gc_objects": 92121,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 5,
+        "seconds": 73.89100000000326,
+        "history": 1,
+        "action_log_bytes": 101,
+        "cache_png_bytes": 20698,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 101052416,
+          "lifetime_peak_rss_bytes": 245968896,
+          "handles": 198,
+          "gc_objects": 124336,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 91271168,
+          "lifetime_peak_rss_bytes": 245968896,
+          "handles": 198,
+          "gc_objects": 92094,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 10,
+        "seconds": 85.46900000001187,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20788,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 101199872,
+          "lifetime_peak_rss_bytes": 246374400,
+          "handles": 198,
+          "gc_objects": 124338,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 91979776,
+          "lifetime_peak_rss_bytes": 246374400,
+          "handles": 198,
+          "gc_objects": 92096,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 15,
+        "seconds": 97.06200000000536,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20744,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 99979264,
+          "lifetime_peak_rss_bytes": 246505472,
+          "handles": 198,
+          "gc_objects": 124340,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 92278784,
+          "lifetime_peak_rss_bytes": 246505472,
+          "handles": 198,
+          "gc_objects": 92098,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 20,
+        "seconds": 108.68700000000536,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20860,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 100007936,
+          "lifetime_peak_rss_bytes": 246505472,
+          "handles": 198,
+          "gc_objects": 124342,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 91828224,
+          "lifetime_peak_rss_bytes": 246505472,
+          "handles": 198,
+          "gc_objects": 92100,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 25,
+        "seconds": 120.29699999999139,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20864,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 100085760,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 124344,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 91885568,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 92102,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "fixed_history_replace",
+        "iteration": 30,
+        "seconds": 131.875,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20880,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 100225024,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 124346,
+          "live_figures": 11,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 91951104,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 92104,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "failed_effects_preserve_state",
+        "iteration": 10,
+        "seconds": 136.48399999999674,
+        "history": 1,
+        "action_log_bytes": 102,
+        "cache_png_bytes": 20880,
+        "cache_layout_bytes": 236,
+        "before_gc": {
+          "rss_bytes": 93323264,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 94983,
+          "live_figures": 2,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 96268288,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 92104,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      },
+      {
+        "phase": "reopen_clean",
+        "iteration": 1,
+        "seconds": 137.01600000000326,
+        "history": 0,
+        "action_log_bytes": 2,
+        "cache_png_bytes": 20069,
+        "cache_layout_bytes": 225,
+        "before_gc": {
+          "rss_bytes": 96378880,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 95072,
+          "live_figures": 1,
+          "open_figures": 0
+        },
+        "after_gc": {
+          "rss_bytes": 96428032,
+          "lifetime_peak_rss_bytes": 246550528,
+          "handles": 198,
+          "gc_objects": 92105,
+          "live_figures": 0,
+          "open_figures": 0
+        },
+        "temp_files": []
+      }
+    ],
+    "elapsed_seconds": 137.01600000000326,
+    "phases": {
+      "history_growth": 30,
+      "fixed_history_replace": 30,
+      "failed_effects": 10
+    },
+    "warmups": 3,
+    "data_rows": 500,
+    "render_count_lower_bound": 240,
+    "final_spec_sha256": "572390409d01ad349323b3937ccbf7baae7ca8192c332f69e25b901fe2a725a2",
+    "scope": "One Windows in-process PythonEditor session, owned figures and ownPID RSS/handles/temp directory only. Native RSS includes backend/cache/allocator effects. Not Rust/Python child lifetime/leak, hours-long GUI, hard memory cap, concurrency or all hardware guarantee."
+  },
+  "raw_result_sha256": "b13921496ce3a8c0aed1e4b3e1977ff8259bb6eafe65d45adf5e6da78275b5bc",
+  "progress_jsonl_sha256": "f58bb3f203914e0eee280ec624b54cbe7c41836658a0c51155b797f488a04053",
+  "sampler_before_control": {
+    "renderer_calls": 0,
+    "samples": 20,
+    "unique_counter_types": 20,
+    "gc_objects_before": 13161,
+    "gc_objects_after": 13823,
+    "growth": 662
+  },
+  "sampler_after_control": {
+    "renderer_calls": 0,
+    "samples": 20,
+    "new_unique_counter_types_after_warmup": 0,
+    "gc_objects_before": 13203,
+    "gc_objects_after": 13205
+  },
+  "sampler_fix": "Cache Windows Counter type/DLL function bindings once; do not cache sampled values/PID handles. Each query still opens/closes its own PID handle. Linux reader unchanged.",
+  "pre_fix_unit_failures": 1,
+  "observation": "Figure/open-handle/temp retention not observed in this bounded run. BeforeGC closedFigures remain collectable; afterGC Figure0. Native RSS rose87.9\u219296.4MB and lifetime peak246.6MB, so no universal no-native-leak conclusion.",
+  "interpretation": "History phase0\u219230 intentionally retains actions. Fixed-history phase keeps1; snapshot bookkeeping itself adds about2GC-tracked row objects per sample. Tooling ctypes leak controlled separately with20sampler-only calls. No zero-copy/history rewrite or warning filter change.",
+  "limits": "About137seconds/60edit-undo-redo-open cycles plus10failed effects on500synthetic rows. PERF04 remainsRUNNING for longer horizons/Rust process/other hardware/OS/native lifetime. No actual research data, hard-memory enforcement or all-long-session guarantee.",
+  "qa_failures": "Initial private collector guessed unsupported session.export(json), then non-exported mp.LayerSpec. Both failed control attempts/partial logs retained separately, not product bugs or successful full observations. The corrected collector uses explicit mp.to_json and mudplot.spec.LayerSpec.",
+  "checks": [
+    {
+      "name": "sampler-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_memory_probe.py",
+        "tests/test_history_profile.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_spec_roundtrip.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "63 passed, 2 skipped in 4.84s"
+      ],
+      "log_text_sha256": "7d44857ad1718d32d380ef134c21f60f170f7b59df58c215a929095f3cf504e0"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "228 files already formatted"
+      ],
+      "log_text_sha256": "bc4c8ec6f1dc727876d981f727b6d3308157440b75422206a33a24532dc7ddc9"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "ca136f6a5cc8d1a9dda34af379b7c4b708399879294f881872cf1b724949fc48"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "5121636d2c3e64b8a318aacae83d176345a23e34a4d741edf726cf36feed2e85"
+    }
+  ]
+}

@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 33차에서 세션 보관량과 observer 자체 증가를 분리했습니다.** 137초/500행의
+60edit/undo/redo/open cycle·실패effect10회·15자원점에서 GC후 Figure0/handle198/
+temp0이었습니다. History30/교체1은 의도된 보관량이며 RSS87.9→96.4MB/peak246.6MB를
+native leak 부재의 보편 증거로 해석하지 않습니다.
+
+FIND-031은 검증 도구 문제입니다. 렌더 없이 sampler20회가 ctypes 타입20/객체662를
+늘려 binding/type만 lazy reuse하고 sample값/PID handle은 fresh/close로 유지했습니다.
+수정 뒤 warm대조는 새타입0/객체2증가, 회귀·관련63통과/OS2skip·품질/packaging6명령과
+수정 sampler의 전체 세션 재실행도 완료했습니다. 제품renderer/state 변경은 없습니다.
+PERF-04는 긴시간축/다른 native workload가 남아 RUNNING이며 [근거](review_evidence/session_resource_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS77/RUNNING9/OPEN63/DEFERRED1**입니다.
+06dCI를 보호해 도구/doc은 로컬 보존하고 버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 32차
+
 **리뷰 32차에서 소유 Matplotlib effect를 직렬화했습니다.** FIND-030은 동시 PNG/SVG
 save가 serial bytes와 달라진2회귀입니다. 새stdlib-only 재진입 lock이 render/save·TeX
 preview·Python editor effect·site/gallery를 감싸며 optional import를 앞당기지 않습니다.

@@ -28,6 +28,14 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest137second session trace reclaims owned Figures and keeps handles/temp
+  counts flat while history/cache changes are explicit. RSS/native lifetime still
+  needs longer observation; PERF-04 is RUNNING, not leak-free certification.
+- The sampler itself recreated ctypes types;20no-render calls reproduced662object
+  growth. Lazy Windows bindings now reuse types without caching PID measurements;
+  corrected session rerun/63related checks/2OSskips and6quality/package receipts pass.
+  No product render/state change; hold the local tooling unit during06dCI.
+
 - Latest owned Matplotlib effects use shared reentrant serialization after2serial/
   concurrent export mismatches. Three-format exact hashes, independent session
   previews/layout and nested calls pass:231connected/9site/floor6checks. PERF-06
@@ -213,7 +221,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   completed/stopped targets, exact budgets/RSS scopes and checkpoint-error tests.
 - [Owned-concurrency evidence](review_evidence/concurrent_render_verification.json)
   records exact serial/concurrent bytes, current/floor checks and ownership limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING8/OPEN64/
+- [Session-resource evidence](review_evidence/session_resource_verification.json)
+  separates current RSS/handle/Figure/cache observations from observer self-growth.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING9/OPEN63/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

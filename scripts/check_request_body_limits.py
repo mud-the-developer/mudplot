@@ -18,6 +18,7 @@ import socket
 import subprocess
 import sys
 import time
+from functools import cache
 from pathlib import Path
 from urllib.parse import urlencode
 
@@ -33,40 +34,46 @@ SPEC = {
 }
 
 
+@cache
+def _windows_memory_bindings():
+    from ctypes import wintypes
+
+    class Counters(ctypes.Structure):
+        _fields_ = [
+            ("cb", wintypes.DWORD),
+            ("faults", wintypes.DWORD),
+            *(
+                (name, ctypes.c_size_t)
+                for name in (
+                    "peak_rss",
+                    "rss",
+                    "peak_paged",
+                    "paged",
+                    "peak_nonpaged",
+                    "nonpaged",
+                    "pagefile",
+                    "peak_pagefile",
+                )
+            ),
+        ]
+
+    kernel = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
+    kernel.OpenProcess.restype = wintypes.HANDLE
+    kernel.CloseHandle.argtypes = [wintypes.HANDLE]
+    api = ctypes.WinDLL("psapi", use_last_error=True)
+    api.GetProcessMemoryInfo.argtypes = [
+        wintypes.HANDLE,
+        ctypes.POINTER(Counters),
+        wintypes.DWORD,
+    ]
+    api.GetProcessMemoryInfo.restype = wintypes.BOOL
+    return Counters, kernel, api
+
+
 def _memory(pid):
     if os.name == "nt":
-        from ctypes import wintypes
-
-        class Counters(ctypes.Structure):
-            _fields_ = [
-                ("cb", wintypes.DWORD),
-                ("faults", wintypes.DWORD),
-                *(
-                    (name, ctypes.c_size_t)
-                    for name in (
-                        "peak_rss",
-                        "rss",
-                        "peak_paged",
-                        "paged",
-                        "peak_nonpaged",
-                        "nonpaged",
-                        "pagefile",
-                        "peak_pagefile",
-                    )
-                ),
-            ]
-
-        kernel = ctypes.WinDLL("kernel32", use_last_error=True)
-        kernel.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
-        kernel.OpenProcess.restype = wintypes.HANDLE
-        kernel.CloseHandle.argtypes = [wintypes.HANDLE]
-        api = ctypes.WinDLL("psapi", use_last_error=True)
-        api.GetProcessMemoryInfo.argtypes = [
-            wintypes.HANDLE,
-            ctypes.POINTER(Counters),
-            wintypes.DWORD,
-        ]
-        api.GetProcessMemoryInfo.restype = wintypes.BOOL
+        Counters, kernel, api = _windows_memory_bindings()
         handle = kernel.OpenProcess(0x1000 | 0x10, False, pid)
         if not handle:
             raise ctypes.WinError(ctypes.get_last_error())

@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 33 separates bounded session retention from observer artifacts.**
+A137second/500row Python editor run exercised60edit/undo/redo/open cycles and10
+failed effects, with15resource checkpoints. GC reclaimed owned Figures, handles
+stayed198 and temp files0; history growth30and replacement1were intentional.
+RSS87.9→96.4MB/lifetime peak246.6MB is not universal absence-of-native-leak proof.
+
+FIND-031 is tooling: the Windows sampler created20ctypes Counter types/662objects
+without rendering. Lazy binding/type reuse fixes that observer growth while each
+PID value/handle is still fresh/closed; warm control adds0types/2objects. A new
+regression and63related passes/2OSskips plus6quality/package records pass. The
+corrected whole session was rerun; product renderer/state are unchanged.
+PERF-04 remains RUNNING for longer horizons/other native workloads. [Evidence](review_evidence/session_resource_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING9/OPEN63/DEFERRED1**.
+Keep this local tooling/docs unit during06dCI; versions/dependencies/locks/releases stay.
+
+### Earlier review phase 32
+
 **Review phase 32 serializes owned Matplotlib effects.**
 FIND-030 reproduced concurrent PNG/SVG saves differing from their serial bytes.
 A stdlib-only shared reentrant lock now covers render/save, TeX preview, Python

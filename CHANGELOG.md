@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Reused Windows memory-observer Counter/DLL bindings so repeated samples do not
+  accumulate ctypes pointer types. PID values are still queried afresh and handles
+  closed; bounded editor resource traces remain separate from long-session proof.
 - Serialized owned Matplotlib effects with a shared reentrant stdlib lock after
   concurrent PNG/SVG exports differed from serial output. API/preview/editor and
   gallery effects retain deterministic bytes without claiming arbitrary Figure/

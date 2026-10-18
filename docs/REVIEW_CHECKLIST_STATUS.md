@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 33차 — bounded 세션 자원·observer 자체 누수 분리
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-session-resources-5uznsuts`,
+  [RSS/객체/handle/cache 시계열](review_evidence/session_resource_verification.json)을 보존합니다.
+- 500행·30history-growth+30fixed-history/open-replace cycle·실패 effect10회 등 최소
+ 240render의137.016초 관찰입니다. 15checkpoint에서 GC후 live/openFigure0·handle198·
+  temp file0이었고 history는0→30, replacement에서는1, final reopen은0입니다. 캐시 PNG는
+  마지막 한 그림20~21KB로 교체됐습니다. 장시간/모든OS 안정성 완료로 확대하지 않습니다.
+- **FIND-031 (검증 도구):** GC 객체 증가를 renderer 누수로 먼저 단정하지 않고 sampler
+  단독20회에서 Counter타입20개·객체662개 증가를 재현했고 새회귀1개가 실패했습니다.
+  Windows ctypes POINTER cache가 함수 내부의 새타입을 보관하므로 binding/type만
+  lazy-cache해 재사용했습니다. Sample값/PID handle을 cache하지 않으며 OpenProcess/
+  CloseHandle·Linux reader는 유지합니다. 수정 후 warm대조 새타입0·객체증가2였습니다.
+- 새sampler로 전체 cycle을 다시 실행했습니다. WarmRSS87,904,256→final96,428,032bytes,
+  lifetimepeak246,550,528bytes이며 이는 native backend/cache/allocator도 포함하는 ownPID
+  working set입니다. GC전 닫힌Figure는 collectable이고 history/측정 row 보관량도 구분합니다.
+  RSS 증가만으로 native leak이 없거나 있다고 단정하지 않습니다. 기존 server-PID RSS를
+  외부 observer에서 읽던 결과와 observer-own객체 증가는 같은 메모리 공간이 아닙니다.
+- Related63통과/OS2skip·Ruff228/format·Pyright·계약·packaging6명령이 exit0이며 변경2경로
+  LSP clean입니다. Product renderer/state를 바꾸지 않고 관찰 helper를 수정했습니다.
+- PERF-04는 OPEN→RUNNING이며 더 긴 시간축/다른 workload·Rust child/native lifetime
+  검증은 남습니다. 최초 잘못된 export(json)/mp.LayerSpec QA 접근은 실패/partial log로
+  보존하고 제품 결함이나 완료 관찰로 세지 않습니다. 새단위는 진행 중06dCI를 끊지 않도록
+  로컬 보존하며 원문/버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 32차 — owned Matplotlib effect 직렬화
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-concurrent-proof-wdl6qvz2`,
@@ -1005,7 +1030,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PERF-01 | P1 | PASS | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-02 | P1 | PASS | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-03 | P1 | PASS | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-04 | P1 | OPEN | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-04 | P1 | RUNNING | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-05 | P1 | OPEN | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-06 | P1 | PASS | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-07 | P2 | OPEN | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -1037,7 +1062,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 77, RUNNING 8, OPEN 64, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 77, RUNNING 9, OPEN 63, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

@@ -22,6 +22,13 @@
 
 ## 검증과 리뷰 상태
 
+- 최신137초 세션은 GC후Figure0/고정handle·temp를 확인하고 의도한 history/cache를
+  구분했습니다. RSS/native lifetime은 긴 관찰이 남아 PERF-04는 RUNNING입니다.
+- Sampler 자체의 ctypes 타입 재생성이 no-render20회에서 객체662증가를 만들었습니다.
+  Binding/type 재사용으로 고치되 PID 값/handle을 cache하지 않고 전체 세션을 다시
+  실행했습니다. 관련63/OS2skip·품질/packaging6명령 통과, 제품renderer/state 변경은
+  없으며 도구 단위는06dCI 중 로컬 보존합니다.
+
 - 최신 소유 Matplotlib effect는2serial/concurrent 출력 불일치 뒤 공통 재진입 직렬화를
   사용합니다.3format exact hash·독립session preview/layout·중첩 호출과 관련231/site9/
   최소6검사가 통과해 PERF-06은 소유 호출 범위에서 PASS입니다. 외부 Figure/pyplot은
@@ -180,7 +187,9 @@
   정확한 예산/RSS 범위와 checkpoint 오류 회귀를 보존했습니다.
 - [소유동시성 근거](review_evidence/concurrent_render_verification.json)에 exact
   serial/concurrent bytes·현재/최소검사와 소유권 한계를 보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING8/OPEN64/DEFERRED1**.
+- [세션 자원 근거](review_evidence/session_resource_verification.json)에 실제RSS/
+  handle/Figure/cache와 observer 자체 증가를 구분했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING9/OPEN63/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
