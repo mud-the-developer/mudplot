@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified locked-dev, allowed fresh-install and PEP517-isolated build scopes
+  separately, and clarified that engine wheels exclude source-tree editors.
+  Matching-checkout editor startup/assets and an isolated core consumer passed;
+  observed equal wheel bytes are not a universal dependency-reproducibility promise.
 - Added actionable colour/render-extra hints at missing optional effect boundaries,
   including CLI render and palette adapters, while retaining unrelated transitive
   diagnostics and causes. Installed-wheel progressive7-stage/98CLI checks cover

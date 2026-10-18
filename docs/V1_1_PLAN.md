@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 22 separates locked dev, fresh ranges and isolated builds.**
+A disposable locked-dev install has43packages matching the lock and repeating
+sync retains its version snapshot. Prior fresh range installs show16version
+changes, not a claim that every user must match the dev lock. A separate fresh
+PEP517 cache installed Hatchling1.32.0 plus its own transitive build dependencies;
+sdist→isolated wheel and active-env builds agree on55members and observed bytes.
+An independent no-dependency wheel consumer runs core outside the checkout.
+PKG-09 is PASS for this scope, not universal byte reproducibility.
+
+Both documented source-tree editor commands start from the matching621source/
+artifact snapshot; HTML/spec/PNG/htmx/0BSD assets pass and owned processes stop.
+The wheel deliberately lacks dashboard/Rust sources. PKG-08 is PASS. FIND-025
+corrects stale 'Linux CI not observed' README text by citing the actuale14run.
+No runtime code changed. Related12passes and style/types/contracts/final packaging
+pass; private build/consumer/editor receipts retain exact scope. [Evidence](review_evidence/isolation_source_editor_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS68/RUNNING10/OPEN71/DEFERRED1**.
+Keep the docs unit local while621CI is active; versions/deps/locks/tag/deploy stay.
+
+### Earlier review phase 21
+
 **Review phase 21 verifies installed extras and outside-checkout CLI behaviour.**
 FIND-024 reproduced9missing-install-hint surfaces. Expected NumPy/Matplotlib/
 cycler absence now explains the colour/render extra without masking unrelated

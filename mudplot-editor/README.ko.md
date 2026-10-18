@@ -2,7 +2,8 @@
 
 Python mudplot과 같은 `FigureSpec`·JSON action을 쓰는 로컬 axum + Askama +
 htmx editor다. 생성 계약의 drift를 막기 위해 이 저장소 안에서 Python
-package와 함께 versioning한다.
+package와 함께 versioning한다. 엔진 wheel에는 이 editor나 dashboard 자산이 없다.
+같은 source checkout과 그 checkout의 Python 환경에서 빌드해야 한다.
 
 ## 실행
 
@@ -25,8 +26,9 @@ cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/
 
 `uv run python scripts/check_python_bridge_paths.py`는 실행/임시 데이터 경로에
 한글·공백·`&`가 있는 별도 venv를 검증한다. 같은 render 버전을 그 임시 venv에만
-내려받을 수 있고 프로젝트 의존성은 유지한다. 로컬 Windows는 실행했지만 Linux CI
-통과는 아직 관찰하지 않았다.
+내려받을 수 있고 프로젝트 의존성은 유지한다. 로컬 Windows와 기준e14의
+CI39111782233 Linux/Windows job에서 이 probe 통과를 관찰했다. 후속 변경은
+별도 CI가 필요하며 모든 checkout을 검증했다는 뜻은 아니다.
 
 인증이 없는 로컬 단일 사용자 도구이며 non-loopback bind 주소/HTTP Host와
 cross-origin browser mutation을 거부하며 이 거부를 포함한 application response를

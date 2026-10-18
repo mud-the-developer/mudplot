@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest locked43-package snapshot/repeat sync, separate isolated PEP517 backend,
+  equal55-member observed wheel builds and an independent core consumer pass.
+  Both matching-checkout source editors start with expected shared assets; PKG-08/
+  09 are PASS. Runtime code is unchanged; this is not release or universal-byte approval.
+  Current docs remain local while621CI runs to avoid cancelling its jobs.
+
 - Latest82optional-related and floor11passes/13warnings plus installed-wheel7
   progressive extras stages/98CLI calls pass outside checkout. Missing effects
   now explain the right extra without masking other imports. Browser binary
@@ -116,7 +122,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records139field meanings, marker forwarding, bounded input recovery and CI timeout.
 - [Installed matrix evidence](review_evidence/installed_matrix_verification.json)
   connects actual extras, wheel/source hashes, outside CLI and bounded Windows paths.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS66/RUNNING10/OPEN73/
+- [Isolation/source editor evidence](review_evidence/isolation_source_editor_verification.json)
+  separates lock, fresh-range drift, isolated backend and actual matching-source startup.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS68/RUNNING10/OPEN71/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

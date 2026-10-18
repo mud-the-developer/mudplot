@@ -18,6 +18,33 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 22차 — lock/격리 build·matching source 편집기 실행
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-isolation-8zpvxkk4`,
+  [격리/source-editor 요약](review_evidence/isolation_source_editor_verification.json)도 보존합니다.
+- 별도 `UV_PROJECT_ENVIRONMENT`의 실제 `uv sync --locked --extra dev`43package가
+  lock 버전과 일치했고 같은 명령 반복 후 버전 snapshot도 같았습니다. 기존 개발 venv/
+  lock은 바꾸지 않았습니다. 이전 fresh 범위 설치의 NP2.5.4/MPL3.11.2 등과 현재 locked
+  NP2.5.2/MPL3.11.1 등16차이를 구분해 lock을 모든 사용자 설치 보장으로 설명하지 않습니다.
+- 비어 있는 private cache에서 PEP 517 격리 wheel을 sdist로부터 만들었습니다.
+  verbose log가 별도 build env와 Hatchling1.32.0을 확인했고 전이 build package는
+  pluggy1.7/tomlkit0.15.2 등으로 dev lock과 구분됩니다. 현재 환경 build와 관찰한
+  wheel55member/바이트/SHA가 같지만 다른 환경의 byte-identical을 보장하지 않습니다.
+- 그 wheel을 또 다른 무의존 consumer venv에 설치해 저장소 밖 core/schema/validate/
+  JSON·NumPy/dashboard 부재와 package source를 확인해 PKG-09는 이 범위에서 PASS입니다.
+- Matching621 source/artifact snapshot의 locked Python으로 실제 문서 command형태
+  dashboard serve와 cargo run editor를 시작했습니다. HTML/spec/PNG·공유htmx SHA·
+  라이선스·Python/docs route가 통과하고 소유 process tree를 끝내 PKG-08은 PASS입니다.
+  Released tag나 standalone editor 배포를 승인·생성했다는 뜻은 아닙니다.
+- **FIND-025 (문서):** Rust README의 'Linux CI 미관찰' 문구는 기준e14의 실제 양OS
+  성공과 맞지 않아 해당 commit/run 범위를 적었습니다. 양 editor README는 wheel에 UI/
+  source asset이 없음을 명시하고 기여 가이드는 locked/허용범위/격리 build를 구분했습니다.
+  이번에는 제품 runtime 코드를 바꾸지 않았습니다.
+- 관련12통과·Ruff221/format·Pyright·계약·최종 packaging6명령이 통과했습니다. 별도
+  locked/isolated 3receipt·verbose/반복/동일성/consumer/editor 결과도 보존했습니다.
+  새 전체/minimum/browser/nativeunit/OS 결과로 확대하지 않으며 CI621의 진행 중인
+  실행을 취소하지 않도록 로컬 commit하고 게시를 보류합니다. 버전/의존성/lock/tag/배포는 유지합니다.
+
 ## 21차 — 설치 wheel·extras·외부 CLI 경계
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-installed-hvei5uef`,
@@ -747,8 +774,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PKG-05 | P0 | PASS | 최소 지원 버전 검사 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-06 | P1 | RUNNING | Windows 한글·공백·긴 경로 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-07 | P1 | OPEN | GUI 없는 Linux와 OS 차이 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-08 | P1 | OPEN | source-tree 편집기의 실행 안내 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-09 | P1 | OPEN | lock·빌드 격리·설치 재현 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-08 | P1 | PASS | source-tree 편집기의 실행 안내 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-09 | P1 | PASS | lock·빌드 격리·설치 재현 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | CI-01 | P0 | RUNNING | 표준 검사 실제 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-02 | P1 | OPEN | 브라우저·TeX skip 가시성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-03 | P1 | OPEN | 속성 기반 상태 테스트 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
@@ -767,7 +794,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 66, RUNNING 10, OPEN 73, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 68, RUNNING 10, OPEN 71, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

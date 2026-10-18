@@ -120,6 +120,23 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 22차에서 locked dev·허용 범위·격리 build를 구분했습니다.** 별도 locked dev의
+43package가 lock과 같고 반복 sync 버전도 같았습니다. 이전 fresh 범위 설치의16차이를
+기록하되 모든 사용자가 dev lock과 같아야 한다고 설명하지 않습니다. 별도 fresh PEP517
+cache에 Hatchling1.32.0과 build 전이 의존성을 설치했고 sdist→격리 wheel과 현재 환경
+build의55member/관찰한 bytes가 같았습니다. 새 무의존 consumer의 외부 core도 통과해
+PKG-09는 PASS이며 모든 환경의 동일 bytes를 보장하는 것은 아닙니다.
+
+Matching621 source/artifact에서 문서 command로 두 편집기를 실제 시작해 HTML/spec/
+PNG/htmx/0BSD 자산·소유 process 정리를 확인했습니다. Wheel에 없는 UI/source 경계를
+명시해 PKG-08은 PASS이며 FIND-025는 'Linux CI 미관찰' 문구를 실제e14run 범위로 고쳤습니다.
+이번 runtime 변경은 없고 관련12·스타일/타입/계약/최종 packaging이 통과했습니다.
+[근거](review_evidence/isolation_source_editor_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS68/RUNNING10/OPEN71/DEFERRED1**입니다. 기준621CI가 실행 중일 때는 이 문서 단위를
+로컬에 보존하고 버전/의존성/lock/tag/배포도 유지합니다.
+
+### 이전 리뷰 21차
+
 **리뷰 21차에서 설치 extras와 저장소 밖 CLI를 확인했습니다.** FIND-024의9안내 누락
 surface를 고쳐 기대한 NumPy/Matplotlib/cycler 부재만 colour/render extra로 안내하고
 무관한 transitive/compiled 진단은 유지합니다. Color에 Matplotlib을 강제하지 않습니다.

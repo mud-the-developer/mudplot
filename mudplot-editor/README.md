@@ -3,6 +3,8 @@
 A local axum + Askama + htmx editor for the same `FigureSpec` and JSON actions
 used by Python mudplot. It is intentionally in this repository and versioned
 with the Python package so generated contracts cannot drift unnoticed.
+The engine wheel does not contain this editor or its dashboard assets. Build it
+from the matching source checkout with that checkout's Python environment.
 
 ## Run
 
@@ -27,7 +29,9 @@ cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/
 `uv run python scripts/check_python_bridge_paths.py` verifies a separate venv
 with Unicode/spaces/`&` in executable and temporary data paths. It may download
 same-version render wheels into that disposable venv; project dependencies stay
-unchanged. Windows was executed locally; Linux CI still needs an observed run.
+unchanged. Windows was executed locally; baselinee14 CI39111782233 also observed
+successful Linux/Windows jobs including this probe. Later changes still need their
+own CI result; the evidence is not a promise that every checkout was tested.
 
 This is a local single-user tool with no authentication. Non-loopback bind
 addresses, non-loopback HTTP Hosts, and cross-origin browser mutations are

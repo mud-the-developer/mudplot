@@ -4,7 +4,10 @@
 
 The human-facing tool, **separated from the `mudplot` engine**. The engine's
 dependency-free declarative core has no UI dependency; the dashboard imports
-the engine in one direction only.
+the engine in one direction only. The engine wheel deliberately excludes
+`dashboard/` and the Rust editor. Use a matching source checkout and its locked
+render/dev environment; a successful `pip install mudplot` is not a standalone
+editor installation.
 
 ```
 dashboard ──▶ mudplot   (one-way dependency)

@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 locked43package/반복 sync·별도 PEP517 backend·관찰한 동일55member wheel과
+  새 무의존 consumer가 통과했습니다. Matching source 두 editor도 공유 자산과 함께
+  시작해 PKG-08/09는 PASS입니다. Runtime 변경·릴리스 승인·모든 bytes 재현 보장은 아닙니다.
+  이 문서 단위는621CI를 취소하지 않도록 실행 중에는 로컬에 보존합니다.
+
 - 최신 optional 관련82·최소11통과/경고13과 설치 wheel7점진 extra 단계/98CLI가
   통과했습니다. 기대한 missing module만 설치 extra를 안내하고 browser package/binary는
   구분해 PKG-02/04는 PASS입니다. 무관한 import 진단은 유지합니다.
@@ -98,7 +103,9 @@
   marker 전달·제한 손상 입력 복구·CI timeout을 기록했습니다.
 - [설치 matrix 근거](review_evidence/installed_matrix_verification.json)에 실제 extra·
   wheel/source hash·외부 CLI·제한된 Windows 경로 결과를 연결했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS66/RUNNING10/OPEN73/DEFERRED1**.
+- [격리/source 편집기 근거](review_evidence/isolation_source_editor_verification.json)에
+  lock·허용 범위 drift·격리 backend·실제 matching-source 시작을 구분했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS68/RUNNING10/OPEN71/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

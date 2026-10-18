@@ -4,6 +4,9 @@
 
 `mudplot` **엔진과 분리된** 사람 대면 도구. 엔진의 의존성 없는 선언적
 core에는 UI 의존성이 없고, 대시보드는 엔진을 단방향으로 임포트한다.
+엔진 wheel은 의도적으로 `dashboard/`와 Rust editor를 포함하지 않는다. 같은 source
+checkout과 locked render/dev 환경을 사용해야 하며 `pip install mudplot`만으로
+독립 editor가 설치된다는 뜻이 아니다.
 
 ```
 dashboard ──▶ mudplot   (단방향 의존)

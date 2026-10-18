@@ -149,6 +149,25 @@ editable spec for every registered layer. Gallery coverage must exactly match
 seed random generators. Avoid committing regenerated binary assets unless the
 visible output intentionally changed.
 
+## Lock and isolated build checks
+
+`uv.lock` reproduces the checkout's dev environment; it does not constrain all
+users installing the wheel's declared dependency ranges. Keep fresh-install
+versions and build-backend/transitive versions separate in evidence. A pinned
+backend alone is not a universal byte-identical build guarantee.
+
+`scripts/check_wheel.py` is a fast contents/core check using the active build
+environment. Separately test PEP 517 isolation with fresh output directories:
+
+```bash
+uv build --sdist --out-dir dist-isolated
+uv build --wheel dist-isolated/mudplot-1.0.0.tar.gz --out-dir dist-isolated
+```
+
+Use a disposable `UV_PROJECT_ENVIRONMENT` for audit installs rather than replacing
+a developer's active environment. Run source-tree editors from the matching
+checkout; installing the engine wheel does not install dashboard/Rust source assets.
+
 ## Releases
 
 A `v*` release tag must be annotated, cryptographically signed, and reported as

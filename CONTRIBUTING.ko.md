@@ -143,6 +143,24 @@ spec도 재생성합니다. Gallery coverage는 `capabilities.LAYER_TYPES`와 �
 화면 출력이 의도적으로 바뀐 경우가 아니면 재생성된 바이너리 자산을
 커밋하지 않습니다.
 
+## Lock과 격리 build 검사
+
+`uv.lock`은 checkout의 dev 환경을 재현하며 wheel의 선언 의존성 범위로 설치하는 모든
+사용자 환경을 제한하지 않습니다. Fresh-install 버전과 build backend/전이 의존성 버전은
+근거에서 구분하세요. Backend pin만으로 모든 환경의 byte-identical build를 보장하지 않습니다.
+
+`scripts/check_wheel.py`는 현재 build 환경의 빠른 contents/core 검사입니다. 비어 있는
+출력 디렉터리에서 PEP 517 격리도 따로 확인하세요:
+
+```bash
+uv build --sdist --out-dir dist-isolated
+uv build --wheel dist-isolated/mudplot-1.0.0.tar.gz --out-dir dist-isolated
+```
+
+Audit 설치는 별도 `UV_PROJECT_ENVIRONMENT`를 써서 기존 개발 환경을 덮어쓰지 마세요.
+Source-tree editor는 matching checkout에서 실행하며 engine wheel 설치가 dashboard/
+Rust source asset까지 설치한다는 뜻은 아닙니다.
+
 ## Release
 
 `v*` release tag는 annotated tag이며 암호학적으로 서명되고 GitHub에서

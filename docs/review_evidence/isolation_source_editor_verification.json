@@ -1,0 +1,338 @@
+{
+  "head": "62128a4637af0375c5bf1009df44f183ca06b838",
+  "source_sha256": {
+    "pyproject.toml": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb",
+    "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df",
+    "dashboard/README.md": "c54c920729aff2afc13189f4209c4f0ec942ba0faf436f1ce6a9355579526c77",
+    "dashboard/README.ko.md": "65d49a9896e2aec8310aa9ae5fbe8e23bde8366890c4dbe32012b82e0fa6e888",
+    "mudplot-editor/README.md": "2d010fcbd9e44908371f27cc935cfe296f93ec58af0285477be2485e8d7d54ff",
+    "mudplot-editor/README.ko.md": "3128101162d95778d662aa9e4c2452119fa1457170e8a0106ade04fca84e84ac",
+    "CONTRIBUTING.md": "284a0761ae743b031eaaa98077c2c4957b17d32870d7a8a17bfbdb51cff30722",
+    "CONTRIBUTING.ko.md": "589b6d4a076b0af071a2c102a6d89bac79ad43b8d3a30d4527e3361c85bd8a00"
+  },
+  "runtime_source_sha256": {
+    "mudplot/__init__.py": "349d91132da9206cb22377e4a41c088e449fa708014c7fe3c69ee3aad09fe893",
+    "mudplot/_render.py": "7a31d6e31ed3dfb9f8e06cba8b76be839a03e14976f27c973b3a01d6bafc0766",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/spec.py": "0cec837f31e597df9bfd46da86b2d56176b294d6ee5ab9ad8ec461021d13ecab",
+    "dashboard/editor_server.py": "441b93e4fe9a1f77aec3af44ec283f7fa35e60dd2aff3e67cf7618f272e3ac62",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f"
+  },
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "lock_sha256": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df",
+  "pyproject_sha256": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb",
+  "backend": {
+    "requires": [
+      "hatchling==1.32.0"
+    ],
+    "build-backend": "hatchling.build"
+  },
+  "locked_packages": {
+    "attrs": "26.1.0",
+    "build": "1.6.1",
+    "colorama": "0.4.6",
+    "contourpy": "1.3.3",
+    "cycler": "0.12.1",
+    "fonttools": "4.64.0",
+    "formulaic": "1.2.2",
+    "hatchling": "1.32.0",
+    "hypothesis": "6.168.0",
+    "iniconfig": "2.3.0",
+    "interface-meta": "2.0.1",
+    "jsonschema": "4.26.0",
+    "jsonschema-specifications": "2025.9.1",
+    "kiwisolver": "1.5.1",
+    "matplotlib": "3.11.1",
+    "mudplot": "1.0.0",
+    "narwhals": "2.27.1",
+    "nodeenv": "1.10.0",
+    "numpy": "2.5.2",
+    "packaging": "26.3",
+    "pandas": "3.0.5",
+    "pathspec": "1.1.1",
+    "patsy": "1.0.3",
+    "pillow": "12.3.0",
+    "pluggy": "1.6.0",
+    "pygments": "2.21.0",
+    "pyparsing": "3.3.2",
+    "pyproject-hooks": "1.3.0",
+    "pyright": "1.1.414",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "referencing": "0.37.0",
+    "rpds-py": "2026.6.3",
+    "ruff": "0.16.7",
+    "scipy": "1.18.1",
+    "six": "1.17.0",
+    "sortedcontainers": "2.4.0",
+    "statsmodels": "0.15.0",
+    "tomlkit": "0.15.1",
+    "trove-classifiers": "2026.6.1.19",
+    "typing-extensions": "4.16.0",
+    "tzdata": "2026.4",
+    "wrapt": "2.5.1"
+  },
+  "locked_package_count": 43,
+  "locked_repeat_versions_equal": true,
+  "fresh_range_comparison": {
+    "contourpy": {
+      "locked": "1.3.3",
+      "fresh": "1.4.0"
+    },
+    "fonttools": {
+      "locked": "4.64.0",
+      "fresh": "4.67.0"
+    },
+    "hypothesis": {
+      "locked": "6.168.0",
+      "fresh": "6.170.1"
+    },
+    "iniconfig": {
+      "locked": "2.3.0",
+      "fresh": "2.3.1"
+    },
+    "matplotlib": {
+      "locked": "3.11.1",
+      "fresh": "3.11.2"
+    },
+    "nodeenv": {
+      "locked": "1.10.0",
+      "fresh": "1.11.0"
+    },
+    "numpy": {
+      "locked": "2.5.2",
+      "fresh": "2.5.4"
+    },
+    "pandas": {
+      "locked": "3.0.5",
+      "fresh": "3.0.6"
+    },
+    "pillow": {
+      "locked": "12.3.0",
+      "fresh": "13.0.0"
+    },
+    "pluggy": {
+      "locked": "1.6.0",
+      "fresh": "1.7.0"
+    },
+    "pyparsing": {
+      "locked": "3.3.2",
+      "fresh": "3.3.3"
+    },
+    "rpds-py": {
+      "locked": "2026.6.3",
+      "fresh": "2026.9.1"
+    },
+    "ruff": {
+      "locked": "0.16.7",
+      "fresh": "0.17.1"
+    },
+    "tomlkit": {
+      "locked": "0.15.1",
+      "fresh": "0.15.2"
+    },
+    "trove-classifiers": {
+      "locked": "2026.6.1.19",
+      "fresh": "2026.9.21.13"
+    },
+    "tzdata": {
+      "locked": "2026.4",
+      "fresh": "2026.5"
+    }
+  },
+  "fresh_comparison_source": "prior installed_matrix_verification.json; same unchanged dependency declarations, not a universal resolver outcome",
+  "isolated_build": {
+    "exit_code": 0,
+    "log_text_sha256": "3dd7641bfa6c238e134bdc1212346b4c9c7e2d254c67dc60beb73a3def834d7a",
+    "wheel_sha256": "8ac062cc16cda341a23acebc3faf45d80f193b88e95166fa22ebb7aaa8474a89",
+    "backend_isolation_disable_env_removed": true,
+    "package_sources_equal_checkout": true
+  },
+  "isolated_consumer": {
+    "core": true,
+    "dashboard_absent": true,
+    "numpy_absent": true
+  },
+  "build_comparison": {
+    "isolated_sha256": "8ac062cc16cda341a23acebc3faf45d80f193b88e95166fa22ebb7aaa8474a89",
+    "nonisolated_sha256": "8ac062cc16cda341a23acebc3faf45d80f193b88e95166fa22ebb7aaa8474a89",
+    "all_wheel_members_equal": true,
+    "member_count": 55,
+    "locked_repeat_versions_equal": true,
+    "locked_installed_count": 43,
+    "scope": "Observed same source/backend/host builds; not universal reproducible-byte promises for other transitive build versions or user installations."
+  },
+  "source_editors": [
+    {
+      "tool": "python-dashboard",
+      "matching_source_checkout": true,
+      "html_and_spec_and_png": true,
+      "htmx_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+      "license_present": true,
+      "png_sha256": "55540511bf152deb5a825bb23cfc05aa2786f9bfe8667fa23a1d56754a79bfd2"
+    },
+    {
+      "tool": "rust-editor",
+      "matching_source_checkout": true,
+      "html_and_spec_and_png": true,
+      "htmx_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+      "license_present": true,
+      "png_sha256": "a08beeda1e3767719c473c3c522a1c1df7856dc74250c60254691104c95878ad"
+    }
+  ],
+  "scope": "matching exact source/artifact621 snapshot, not a released-tag/PyPI/standalone-editor approval. Editors launched from source and stopped their owned process trees after successful HTTP checks.",
+  "limits": "Current Windows subset. No new whole Python/minimum/browser/nativeunit/OS run; source-editor scripts build/gates retain earlier separate scope. Observed55members and wheelbytes agree here; backend transitive drift can change other builds. LongTMP/descendant items remain open.",
+  "checks": [
+    {
+      "name": "locked-dev",
+      "argv": [
+        "uv",
+        "sync",
+        "--locked",
+        "--extra",
+        "dev",
+        "--python",
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "440cdd71e421ca04c6430756332d65fa37fc9a4535466f7b4e1a721dd5194114"
+    },
+    {
+      "name": "isolated-sdist",
+      "argv": [
+        "uv",
+        "build",
+        "--sdist",
+        "--out-dir",
+        "<evidence>\\isolated-sdist",
+        "--python",
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built C:\\Users\\mud\\AppData\\Local\\Temp\\mudplot-review-isolation-8zpvxkk4\\isolated-sdist\\mudplot-1.0.0.tar.gz"
+      ],
+      "log_text_sha256": "f78281f49adaf0881ebe3bfdf6c540674cac5b0db3678d8f605a4bb5f2716536"
+    },
+    {
+      "name": "isolated-wheel",
+      "argv": [
+        "uv",
+        "build",
+        "--wheel",
+        "<evidence>\\isolated-sdist\\mudplot-1.0.0.tar.gz",
+        "--out-dir",
+        "<evidence>\\isolated-wheel",
+        "--python",
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built C:\\Users\\mud\\AppData\\Local\\Temp\\mudplot-review-isolation-8zpvxkk4\\isolated-wheel\\mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "5e5803e8379f0af4c11c6beba9f4fdcd97bc96ca576c42d5f8655e0762f0446f"
+    },
+    {
+      "name": "contracts-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_no_deps.py",
+        "tests/test_release_preflight.py",
+        "tests/test_review_ci_effects.py",
+        "tests/test_schema_export.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "12 passed in 1.70s"
+      ],
+      "log_text_sha256": "8851dd84db52a4b86c8857965661030f5ce05788953d9bd03dac43f322d179b5"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "221 files already formatted"
+      ],
+      "log_text_sha256": "8e94ed78209e71558d9bcb04ee84a4a93b82507489ea08908162411df0aef622"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "97108950de0a9ba534d0a71448a1ca92f5c931e74199ad3eefc30125f658b6d6"
+    },
+    {
+      "name": "wheel-final",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "22818b944f66cb450dcc0f3bd60610245c1a032a109921b8f49a0362e44fad28"
+    }
+  ],
+  "additional_logs": {
+    "isolated-verbose.log": "3dd7641bfa6c238e134bdc1212346b4c9c7e2d254c67dc60beb73a3def834d7a",
+    "nonisolated.log": "595ed40f104d55677d39accec285052cbac2940b2565b6ceb1403a05d3c1094f",
+    "locked-repeat.log": "e57070e752018a176a643e78a168294849b8416ed5d12f21151c1e9a41851be8",
+    "python-dashboard.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-dashboard.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rust-editor.stdout": "182c8aaeb6f7ee576df9115e39f29c1559057d3ad6b7956ef3813a4386e054c9",
+    "rust-editor.stderr": "cd346f61d1e4656ba863569f14d09cd9e74ffdf945b6d8a90f99d7810fb518d0"
+  }
+}
