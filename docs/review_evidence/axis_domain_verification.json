@@ -1,0 +1,684 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "mudplot/_heatmap.py": "8608ca654892b4e15dfc2e5d1040095a9a4226ce4bea6df76d97e78d46a5f572",
+    "mudplot/_heatmap_render.py": "dc837fe55c2d30f2cd731e3fad3124490ca4169fdefbd41a1c1949398402c17a",
+    "tests/test_layout.py": "bd970bbbb867bf48426fe6228dfbb71ddb840f78cfc94814de4922ebe606cac3",
+    "tests/test_statistical_scales.py": "efe51e283ccf89bb87382da1db2a0b590c6e1553d27d889c3b269ceae85e192f",
+    "tests/test_heatmap_options.py": "334ecebe7603ce9d24fb1bca71a3f4e3244128410d73c95640a2ed5d0b34f84f"
+  },
+  "baseline_runtime_ci": {
+    "run": 39166807390,
+    "head": "3b83ee1f196c1d3c904ca4cf836be899b545bd32",
+    "conclusion": "success",
+    "jobs": 5,
+    "includes_f1_numeric_fix": true,
+    "scope": "Exact runtime-source whole workflow success, not a post-documentation revision result."
+  },
+  "axis_reference": {
+    "shared": [
+      {
+        "mode": "column",
+        "panel": 0,
+        "xlim": [
+          1.0,
+          100.0
+        ],
+        "ylim": [
+          0.0,
+          10.0
+        ],
+        "xticks": [
+          0.1,
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ],
+        "yticks": [
+          0.0,
+          2.0,
+          4.0,
+          6.0,
+          8.0,
+          10.0
+        ],
+        "xlabel": "x0",
+        "ylabel": "y0",
+        "xscale": "log",
+        "yscale": "linear",
+        "empty": false
+      },
+      {
+        "mode": "column",
+        "panel": 1,
+        "xlim": [
+          200.0,
+          2.0
+        ],
+        "ylim": [
+          50.0,
+          350.0
+        ],
+        "xticks": [
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ],
+        "yticks": [
+          50.0,
+          100.0,
+          150.0,
+          200.0,
+          250.0,
+          300.0,
+          350.0
+        ],
+        "xlabel": "x1",
+        "ylabel": "y1",
+        "xscale": "log",
+        "yscale": "linear",
+        "empty": false
+      },
+      {
+        "mode": "column",
+        "panel": 2,
+        "xlim": [
+          1.0,
+          100.0
+        ],
+        "ylim": [
+          0.0,
+          1.0
+        ],
+        "xticks": [
+          0.1,
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ],
+        "yticks": [
+          0.0,
+          0.2,
+          0.4,
+          0.6000000000000001,
+          0.8,
+          1.0
+        ],
+        "xlabel": "x2",
+        "ylabel": "y2",
+        "xscale": "log",
+        "yscale": "linear",
+        "empty": true
+      },
+      {
+        "mode": "column",
+        "panel": 3,
+        "xlim": [
+          200.0,
+          2.0
+        ],
+        "ylim": [
+          400.0,
+          800.0
+        ],
+        "xticks": [
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ],
+        "yticks": [
+          400.0,
+          500.0,
+          600.0,
+          700.0,
+          800.0
+        ],
+        "xlabel": "x3",
+        "ylabel": "y3",
+        "xscale": "log",
+        "yscale": "linear",
+        "empty": false
+      },
+      {
+        "mode": "secondary",
+        "panel": 0,
+        "ylim": [
+          1.0,
+          10000.0
+        ],
+        "ylabel": "sec",
+        "yscale": "log"
+      },
+      {
+        "mode": "named",
+        "panel": 0,
+        "xlim": [
+          1.0,
+          200.0
+        ],
+        "ylim": [
+          0.0,
+          10.0
+        ],
+        "xlabel": "x0",
+        "ylabel": "y0",
+        "xscale": "log",
+        "yscale": "linear"
+      },
+      {
+        "mode": "named",
+        "panel": 1,
+        "xlim": [
+          2.0,
+          200.0
+        ],
+        "ylim": [
+          50.0,
+          350.0
+        ],
+        "xlabel": "x1",
+        "ylabel": "y1",
+        "xscale": "log",
+        "yscale": "linear"
+      },
+      {
+        "mode": "named",
+        "panel": 2,
+        "xlim": [
+          0.8912509381337456,
+          11.220184543019636
+        ],
+        "ylim": [
+          0.0,
+          1.0
+        ],
+        "xlabel": "x2",
+        "ylabel": "y2",
+        "xscale": "log",
+        "yscale": "linear"
+      },
+      {
+        "mode": "named",
+        "panel": 3,
+        "xlim": [
+          1.0,
+          200.0
+        ],
+        "ylim": [
+          400.0,
+          800.0
+        ],
+        "xlabel": "x3",
+        "ylabel": "y3",
+        "xscale": "log",
+        "yscale": "linear"
+      }
+    ],
+    "conflicts": [
+      {
+        "case": "scale",
+        "issues": [
+          "shared x axes have conflicting scale declarations"
+        ]
+      },
+      {
+        "case": "named_limits",
+        "issues": [
+          "named shared x axes have conflicting limits"
+        ]
+      },
+      {
+        "case": "named_with_mode",
+        "issues": [
+          "named shared x axes cannot mix figure sharing modes",
+          "named shared x axes cannot mix figure sharing modes"
+        ]
+      }
+    ],
+    "log": [
+      {
+        "case": "line",
+        "raw_x": [
+          -1.0,
+          0.0,
+          1.0,
+          10.0
+        ],
+        "xlim": [
+          0.8912509381337456,
+          11.220184543019636
+        ],
+        "nonpositive_policy": "Matplotlib native transform clip off display, raw values unchanged",
+        "warning_count": 0
+      },
+      {
+        "case": "scatter",
+        "raw_x": [
+          -1.0,
+          0.0,
+          1.0,
+          10.0
+        ],
+        "xlim": [
+          0.8912509381337456,
+          11.220184543019636
+        ],
+        "nonpositive_policy": "Matplotlib native transform clip off display, raw values unchanged",
+        "warning_count": 0
+      },
+      {
+        "case": "wide_positive_axis_linear_colour",
+        "xlim": [
+          9.999999999999416e-221,
+          1.0000000000000584e+220
+        ],
+        "colour_clim": [
+          -1.0,
+          1.0
+        ],
+        "raw_x": [
+          1e-200,
+          1,
+          1e+200
+        ]
+      },
+      {
+        "case": "typed_nonpositive_derived_interval",
+        "error": "log-value estimate/interval endpoints must be positive; use axis statistics or another interval"
+      },
+      {
+        "case": "supported_heatmap_log_norm",
+        "clim": [
+          1e-200,
+          1e+200
+        ],
+        "masked_nonpositive": 2,
+        "normalized_values": [
+          0,
+          0.5,
+          1
+        ],
+        "cell_axes": "linear"
+      },
+      {
+        "case": "nonpositive_unmasked",
+        "issues": [
+          "panel 0 layer 0 (heatmap): log heatmap requires positive unmasked values"
+        ]
+      },
+      {
+        "case": "nonpositive_vmin",
+        "issues": [
+          "panel 0 layer 0 (heatmap): log heatmap bounds must be positive"
+        ]
+      },
+      {
+        "case": "unsupported_symlog_norm",
+        "issues": [
+          "panel 0 layer 0 (heatmap): heatmap norm must be linear or log"
+        ]
+      }
+    ]
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 1843,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 416
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 863
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 447
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      },
+      {
+        "category": "RuntimeWarning",
+        "message": "overflow encountered in double_scalars",
+        "count": 2
+      }
+    ]
+  },
+  "runtime_warning_locations": {
+    "exitstatus": 0,
+    "rows": [
+      {
+        "category": "RuntimeWarning",
+        "message": "overflow encountered in double_scalars",
+        "source_basename": "image.py",
+        "line": 463,
+        "nodeid": "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[linear-1e+308]",
+        "when": "runtest"
+      },
+      {
+        "category": "RuntimeWarning",
+        "message": "overflow encountered in double_scalars",
+        "source_basename": "image.py",
+        "line": 468,
+        "nodeid": "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[linear-1e+308]",
+        "when": "runtest"
+      }
+    ]
+  },
+  "large_constant_colour_probe": {
+    "pixels": [
+      {
+        "cell": 0,
+        "actual_rgb8": [
+          0,
+          154,
+          210
+        ],
+        "expected_rgb8": [
+          0.7691757126795393,
+          154.5366877407875,
+          210.5515508659812
+        ]
+      },
+      {
+        "cell": 1,
+        "actual_rgb8": [
+          0,
+          154,
+          210
+        ],
+        "expected_rgb8": [
+          0.7691757126795393,
+          154.5366877407875,
+          210.5515508659812
+        ]
+      }
+    ],
+    "runtime_warnings": [
+      {
+        "message": "overflow encountered in double_scalars",
+        "source": "image.py",
+        "line": 463
+      },
+      {
+        "message": "overflow encountered in double_scalars",
+        "source": "image.py",
+        "line": 468
+      },
+      {
+        "message": "overflow encountered in double_scalars",
+        "source": "image.py",
+        "line": 463
+      },
+      {
+        "message": "overflow encountered in double_scalars",
+        "source": "image.py",
+        "line": 468
+      }
+    ],
+    "strict_outcome": "backend RuntimeWarning promoted to error; previous bytes retained",
+    "spec_unchanged": true
+  },
+  "sharing_policy": "FigurecolsharingjoinsonlymatchingCartesiancolumns,emptyincluded;lastpanelwithEXPLICITboundsupdatesitsgroupwithnativeMatplotlibbehavior,invertedboundspreserved. Otheraxislabels/y2scales/ylimitsremainindependent. NamedsharelinksnonadjacentexplicitIDs,rejectslimit/scaleconflictsandmixingfiguremodes. Existingcategory/projection/densityscopechecksreexecuted.",
+  "log_policy": "Legacyline/scatterkeeprowsandrawnopositivexbutMPLnativeLogTransformclipsnonpositiveoffdisplay. Typedstatistical/nativecategorypositivecontractsrejectbadselecteddata/derivedintervalsbeforethedrawingboundary. LegacycNormalizeislinearindependentofmeasurementlogaxis;typedheatmapLogNormISsupportedwithpositiveunmaskedcells/clim,explicitmaskretainsrawnegative/zero. Heatmapcellaxesremainlinear;symlognormunsupported.",
+  "warning_policy": "Floor1843=1841Pyparsingdeprecations+2RuntimeWarningoverflowindouble_scalars;targeted8caseprobeidentifiesMPL3.8image.pylines463/468linearconstant1e308. Sourceguarddv*1e7overflowsbutdiscardsout-of-rangeclipbounds. ActualcellRGB8matchesnormwithin1codevalueandrawmatrixunchanged. Separateprobe4runtimewarningsfromrepeateddrawsarenot4badpixels. WerrorfailswithpreviousPNGbytes/ownedFigure/tmpretained/clean. No blanket suppression or upstream behavior patch.",
+  "limits": "PLOT05/10supportedaxis/log/normcorpusandcurrentenvironmentonly;notallfloatmaxranges/3Dcamera/mathdomain/viewerbehavior. Legacyprimitiveclippingnotchangedtostrictvalidation. Plot05legacyconflictingglobalboundsnotlastactionsemantics;panelrenderorderexplicitlyrecorded.",
+  "qa_note": "Initialprobeassumedheatmaplognormunsupported;readHeatmapSpec/rendererandcorrectedtosupportedLogNormcaseandinvalidsymlogcase. Notaproductbug. GuessedPlot.limits/bodylinenavigationnotfounddidnotchangeAPI/source. Sharedmanualprobe9contexts/3conflicts/log8andbackendpixelcontrolareassert-basedprivatechecks,no newpermanenttestframework.",
+  "environment_overrides": {
+    "manual": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-axis": {
+      "PYTEST_ADDOPTS": "-k \"(test_layout or test_new_layers or test_statistical_scales or test_categorical_scales or test_joint_grid or test_pair_grid or test_shared_semantics or test_heatmap_options or test_review_numeric_geometry or test_histogram_statistics or test_kde_options) and (share or log or scale or limit or constant_colour)\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    },
+    "runtime-warning-locations": {
+      "PYTEST_ADDOPTS": "-k \"pooled_constants or constant_colour_ranges\" -p _qa_warn_locations --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    },
+    "large-colour-probe": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg",
+      "interpreter": "samefloorpythonfromcapturedminimum_environment"
+    }
+  },
+  "checks": [
+    {
+      "name": "manual",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Shared column/named/empty/y2 labels and limits, 3 declaration conflicts, legacy/typed log and separate colour norm pass"
+      ],
+      "log_text_sha256": "7ac9b969c756b377c69e707495bc80fb5d92164b7ed59ccffc62258c974314ad"
+    },
+    {
+      "name": "axis-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_layout.py",
+        "tests/test_new_layers.py",
+        "tests/test_statistical_scales.py",
+        "tests/test_categorical_scales.py",
+        "tests/test_joint_grid.py",
+        "tests/test_pair_grid.py",
+        "tests/test_shared_semantics.py",
+        "tests/test_heatmap_options.py",
+        "tests/test_review_numeric_geometry.py",
+        "tests/test_histogram_statistics.py",
+        "tests/test_kde_options.py",
+        "-k",
+        "share or log or scale or limit or constant_colour",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "214 passed, 458 deselected in 93.67s (0:01:33)"
+      ],
+      "log_text_sha256": "703a4d606352bb476babeee249e1803368395b4eccfc7771d11c8d366db4fbe9"
+    },
+    {
+      "name": "floor-axis",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "214 passed, 2873 deselected, 1843 warnings in 103.83s (0:01:43)"
+      ],
+      "log_text_sha256": "add5d216b2ef97f7c293f18ce7da5e38cba6747a1816f36b3a1a17deb1079eb2"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "7b9272c2b9c7470a921ef1c1232be30c1e38abd5ab856332c91036280034965f"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "f88be32629d0c81cb4a978f89b2b118298912e5e344c2c95e1d7902567bfb237"
+    },
+    {
+      "name": "runtime-warning-locations",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "8 passed, 3079 deselected, 15 warnings in 7.17s"
+      ],
+      "log_text_sha256": "83711ac70401a06ce82c684888efb1edd8cdf3f381453b130baf49031a912b79"
+    },
+    {
+      "name": "large-colour-probe",
+      "argv": [
+        "<floor-python>",
+        "<evidence>\\large_colour_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "{\"runtime_count\": 4, \"pixels_match_norm\": true, \"strict_outcome\": \"backend RuntimeWarning promoted to error; previous bytes retained\"}"
+      ],
+      "log_text_sha256": "2f0fce8e077c6c37c5c865f37020adb2b9b4a07c18ff07a0af9d3ec2cddf717d"
+    }
+  ],
+  "raw_probe_sha256": {
+    "axis_reference.json": "222bdc2e6a548b5d1b7ca951114ea1e3fe5ea5f85065e3ebacbe8ad80a5e75dc",
+    "probe.py": "4a00b65ed08fce6604cdf9dc26393ed352efbd19ba434cd2ff69000fd50052e8",
+    "qa.py": "3227c45dd0219e406d81c2e243e342dba595c0aab9da7d7b33d4b4749c35548b",
+    "environment_overrides.json": "7d106ceacf8b9a45fc9bb0c7591e9a0d6c7272461c1a8bde9802e216849639be",
+    "floor_warning_counts.json": "0765d3ca3bd0f37843346676357290aecf42a2be1651b16f01d67f47de4fda31",
+    "results.xml": "031a4541f8c1e4aa189ebfe885b5c6b1db3d389fa50bc78ab8dd3a9d5ca315e8",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "runtime_warning_locations.json": "835c5e78cbaa4d56550cbd3f8e8a2d45dddd4b5b59c1e62b6302d53bf27f34f6",
+    "_qa_warn_locations.py": "4016b1c3176ff9a698b97fd953d4eebfb05790af7968ba3fe65ceee24a4e48b4",
+    "large_colour_result.json": "64dedbb175be31f387f27c20af932e761264f2cad2f39e85012574e44589f56f",
+    "large_colour_probe.py": "27bbf3dc62359cd1ace000bee13112a5e59708c9413e08a7240e7ca6eff95f85"
+  }
+}

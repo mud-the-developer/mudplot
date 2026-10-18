@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Revalidated shared axis scopes and log domains, including named conflicts,
+  independent secondary axes, native legacy clipping and typed LogNorm masks.
+  Documented the observed Matplotlib3.8 large-constant warning separately from
+  pixel correctness and warnings-as-errors output preservation.
 - Revalidated role-aware listwise statistical rows across weighted summaries,
   distributions and semantic line mappings, with exact original row/weight/unit
   traces and explicit invalid-input rejection rather than silent column drops.

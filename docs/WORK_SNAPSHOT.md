@@ -28,6 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest shared/log checks verify9axis tables/3conflicts and supported domain
+  policies:214selected/floor214passes.1841Pyparsing and2MPL3.8image warnings are
+  distinguished; pixel/strict-warning probes preserve RGB/data/previous output.
+  PLOT-05/10 are PASS in scope, not all extreme ranges. Exact3bCI39166807390 is
+  ALL5SUCCESS, validating the numerical effect runtime. Publish the three docs
+  units; no code/version/lock/release changes in these verification units.
+
 - Latest12role-aware original-row traces preserve values/weights/units and strict
   invalid-input boundaries.388boundary-selected/floor388passes plus489classified
   Pyparsing deprecations make STAT-08 PASS in scope. STAT01..08 are reviewed in
@@ -381,7 +388,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains hand summaries, paired rows, profile equations and process/RNG/hash scope.
 - [Observation-pair evidence](review_evidence/observation_pairs_verification.json)
   retains original indices, required-role columns, exact means and rejection policies.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS109/RUNNING5/OPEN35/
+- [Axis-domain evidence](review_evidence/axis_domain_verification.json)
+  retains per-panel settings, log outcomes and the actual backend warning limit.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS111/RUNNING5/OPEN33/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

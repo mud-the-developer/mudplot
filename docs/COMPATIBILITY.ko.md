@@ -63,6 +63,24 @@ Windows읽기전용/deny-delete잠금은격리된실패대조입니다. JSON/PNG
 성공Figure는callerclose전까지열려있고boundedclose/GC·handle/RSS관찰은모든nativebackend/
 장시간누수부재인증이아닙니다.
 
+## 공유축과log영역
+
+Figureall/row/col공유는nativeCartesian축연결이며마지막으로그린panel의명시bounds가
+해당공유group을갱신합니다(역방향포함). 독립y/y2설정과labels를공유하지않습니다.
+Namedshare_id는떨어진축도연결하지만limits/scale충돌과figure공유mode혼합은거절합니다.
+Polar/3D·grid의density축은문서화한별도범위를유지합니다.
+
+Legacyline/scatterlog축은원값을유지하고Matplotlibnative비양수clip에위임합니다.
+Typed통계/native범주는선택영역/파생interval이잘못되면양수로바꾸지않고거절합니다.
+Legacyc는측정log축과독립된linear정규화이고typedheatmapnorm=log는양수unmasked셀/
+bounds를지원합니다. 명시mask는비양수셀을제외하되원값을바꾸지않으며cell축은linear입니다.
+미지원colour norm은거절합니다.
+
+관찰한Matplotlib3.8의linear상수1e308image리샘플링은floor회귀에서overflowguard경고2개를
+냅니다. 표본pixel은norm/RGBA와맞고원값은그대로이며warnings-as-errors는export를중단해
+이전bytes와소유자원정리를유지합니다. Backend경계기록이지경고일괄무시/색자료변조/
+모든극단범위렌더보장은아닙니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

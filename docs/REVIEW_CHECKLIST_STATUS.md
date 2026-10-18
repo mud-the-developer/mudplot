@@ -18,6 +18,30 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 53차 — sharedaxes/독립축과log유효영역
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-axis-contracts-jrvsnxzu`와
+  [9축표·3충돌·8log결과·backendpixel](review_evidence/axis_domain_verification.json)을 보존합니다.
+- Col공유의0/2와1/3은limits/ticks가같고empty도같은group입니다. 마지막명시bounds의
+  역방향200..2는해당col만갱신하며독립y범위/labels/y2log1..10000을덮어쓰지않습니다.
+  Named0/3만연결하고다른축은별개이며scale/limits충돌·mode혼합3경계는거절합니다.
+  범주충돌/2D·3D·polar부분집합/griddensity분리는기존회귀도재실행했습니다.
+- Legacyline/scatter의비양수x는원자료에남고nativeLogTransform으로화면밖clip됩니다.
+  Typed파생interval비양수는그리기전에명시실패합니다. 양수1e-200..1e200측정log축과
+  legacylinearcolour-1..1은독립입니다. Typedheatmap의실제LogNorm은명시mask의-1/0을
+  제외해원값을유지하며양수norm0/.5/1이맞고cell축은linear입니다. 비양수unmasked/vmin·
+  미지원symlog는거절합니다. 초기logcolour미지원이라는QA가정은실제지원계약으로고쳤습니다.
+- 관련축선택214통과/458deselected·실제floor214통과/2873deselected/경고1843·
+  양platformtype/Ruff241/계약/packaging기본9명령exit0입니다. 1841은Pyparsingdeprecation,
+  2개는별도8casefloor대조로Matplotlib3.8image.py463/468상수linear1e308guard임을특정했습니다.
+- 별도floorpixelprobe는큰상수원값을보존하며2셀RGB가norm기대값과1code이내로일치했습니다.
+  반복draw라경고4개가났지만잘못된pixel4개가아닙니다. Werror저장실패는이전PNG/Figure/tmp를
+  보존/정리합니다. Nativeguard의dv×1e7intermediateoverflow는데이터손상으로세거나숨기지않고
+  명시backend한계로기록했습니다. 추가2대조까지총11명령exit0이며Runtime변경/FIND추가는없습니다.
+- PLOT-05/10은현재지원corpus에서PASS이며범용극단축/모든viewer보장은아닙니다.
+  기준3bCI39166807390은5job모두성공해FIND-037의실제runtime전체검증을확인했습니다.
+  대기분포/pairing/축문서를함께게시하고새문서sourceCI를받되버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 52차 — 통계전처리의관측index/원래쌍보존
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-observation-pairs-4tmw6l_y`와
@@ -1369,12 +1393,12 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PLOT-02 | P0 | PASS | 범주형 x의 레이어 간 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-03 | P0 | PASS | 그룹·패널 간 스타일 일관성 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-04 | P0 | PASS | 보조 y축 소속과 스케일 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-05 | P1 | OPEN | shared axes와 독립 설정 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-05 | P1 | PASS | shared axes와 독립 설정 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-06 | P0 | PASS | heatmap·surface 행렬 방향 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-07 | P1 | PASS | quiver·3D·polar의 좌표 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-08 | P1 | PASS | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-09 | P1 | OPEN | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-10 | P1 | OPEN | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-10 | P1 | PASS | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-11 | P1 | OPEN | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-12 | P1 | OPEN | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1473,7 +1497,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 109, RUNNING 5, OPEN 35, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 111, RUNNING 5, OPEN 33, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

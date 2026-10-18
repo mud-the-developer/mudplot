@@ -65,6 +65,29 @@ Synthetic ENOSPC checks do not exhaust real storage. Successful Figures remain
 open until the caller closes them; bounded caller-close/GC and handle/RSS traces
 are not universal native-backend or long-session leak-freedom certificates.
 
+## Shared axes and log domains
+
+Figure `all`/`row`/`col` sharing follows native Cartesian axis linking: the last
+panel drawn with explicit bounds updates that shared group, including inverted
+bounds. Independent y/y2 settings and labels are not shared. Named `share_id`
+links explicit nonadjacent axes and rejects conflicting limits/scales or mixing
+with figure sharing modes. Polar/3-D and grid density axes keep their documented
+separate scopes.
+
+Legacy line/scatter log axes retain raw values and delegate nonpositive clipping
+to Matplotlib's native transform. Typed statistics/native categories reject
+invalid selected domains or derived interval endpoints rather than substituting
+positive values. Legacy `c` normalization stays linear, independent of log
+measurement axes. Typed heatmap `norm="log"` supports positive unmasked cells and
+bounds; explicit masks exclude nonpositive cells without replacing raw values.
+Heatmap cell axes stay linear; unsupported colour norms are rejected.
+
+Observed Matplotlib3.8 linear constant1e308 image resampling emits two overflow
+guard warnings in the floor regression; sampled pixels still match norm/RGBA and
+raw values remain unchanged. Warnings-as-errors aborts export, retaining previous
+bytes and cleaning owned resources. This is a documented backend warning, not a
+blanket suppression, colour-data rewrite or all-extreme-range rendering promise.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside

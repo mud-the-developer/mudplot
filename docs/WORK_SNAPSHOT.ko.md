@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신shared/log9축표/3충돌·지원영역은선택214/floor214가통과했습니다. 1841Pyparsing과
+  2MPL3.8image경고를구분해pixel/Werror대조로RGB/원자료/이전출력을확인했고PLOT-05/10은
+  범위내PASS이지모든극단범위보장은아닙니다. 기준3bCI39166807390의5job모두성공해수치
+  효과runtime전체검증을확인했습니다. 세문서unit을게시하며여기서code/버전/lock/배포는바꾸지않습니다.
+
 - 최신12role별원행추적은value/weight/unit대응과필수값거절을유지합니다. 경계선택388/
   floor388·분류한Pyparsing489경고로STAT-08은범위내PASS이며STAT01..08의명시corpus검토를
   마쳤지만보편통계/API인증은아닙니다. Runtime/newtest없이3bCI양Rust성공/3Python진행을
@@ -316,7 +321,9 @@
   수작업/pairedrow/정규화식과process/RNG/hash범위를보존했습니다.
 - [Observationpair 근거](review_evidence/observation_pairs_verification.json)에원래
   index/필수role/정확mean/거절정책을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS109/RUNNING5/OPEN35/DEFERRED1**.
+- [Axisdomain 근거](review_evidence/axis_domain_verification.json)에panel별설정/
+  log결과와실제backend경고한계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS111/RUNNING5/OPEN33/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 53 checks shared scopes and log-domain outcomes.** Nine axis tables
+retain column/named grouping, empty-panel/tick consistency and independent y/y2/
+labels; three declaration conflicts reject. Legacy log clipping keeps raw values;
+typed intervals reject invalid domains. Positive wide axes, independent linear-c
+and supported heatmap LogNorm/masks agree without inventing unsupported symlog.
+
+Selected214/floor214passes/458and2873deselected and11commands pass. Floor1843
+warnings split1841Pyparsing+2Matplotlib3.8constant1e308image guard warnings.
+A targeted8case run locates them; a separate pixel probe confirms expected RGB/raw
+data and strict-warning output/resource preservation. Documented backend limit,
+not a new silent suppression or data rewrite. PLOT-05/10 are PASS in this scope.
+[Evidence](review_evidence/axis_domain_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS111/RUNNING5/OPEN33/DEFERRED1**. Exact3bCI39166807390 is ALL5SUCCESS
+including the numerical fix runtime. Publish queued distribution/pairing/axis docs;
+versions/dependencies/locks/tag/deploy stay unchanged and new docs CI is separate.
+
+### Earlier review phase 52
+
 **Review phase 52 traces role-aware statistical observations.** Twelve explicit
 row-index expectations match required x/y/hue/weight/unit/style/size roles;
 unused-column missing values are not dropped. Exact paired weighted means/n/
