@@ -124,6 +124,27 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 18 rejects empty artifacts and exercises actual bridge failures.**
+FIND-020 reproduced an exit0 child committing an empty PNG. Shared render transport
+now rejects empty artifacts before state/cache commit and before PDF/SVG export.
+It does not attempt complete binary decoding or add a CPU/disk resource guarantee.
+
+A private hook in an isolated Unicode-path venv exercises14output boundaries:
+empty/badJSON/nonzero capabilities, successful JSON with1MiBstderr,8action faults
+including real missing optional regression support, and empty PDF/SVG outputs.
+Spec/PNG/redo hashes and recovery agree. RUST-03 is PASS. A100ms controlled stub
+also times out then recovers, but RUST-04 descendant ownership remains RUNNING.
+
+Recorded native **19passed/3helpers ignored**, Clippy/fault checker/Ruff219/format/
+Pyright/contracts/packaging pass in8commands. The snapshot JSON exception diagnostic
+was marked false-positive because malformed verification snapshots must fail.
+[Evidence](review_evidence/bridge_fault_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS60/RUNNING11/OPEN78/DEFERRED1**. Baselinefe4449d CI39104961495 finished
+cancelled: both Rust and3.12 passed,3.10 cancelled. This is not later-change proof.
+Versions/dependencies/locks/tag/deploy stay unchanged; v1 is still unfinished.
+
+### Earlier review phase 17
+
 **Review phase 17 bounds bridge failure errors and verifies preview/cache contracts.**
 FIND-019 reproduced a1MiB stderr response becoming a giant UI error. Failed stderr
 now captures64KiB raw plus a truncation marker; successful stdout stays complete

@@ -49,6 +49,8 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   `python -m mudplot render`로 유지한다. 성공 stdout은 보존하고 실패 stderr는
   raw64KiB까지만 읽어 truncation 표시를 붙인다. UTF-8 대체 문자로 표시 byte는 늘 수
   있으며 디스크/CPU 제한이나 모든 자손 프로세스 격리를 보장하는 것은 아니다.
+  성공 종료했어도 render 파일이 없거나 비면 preview/cache commit·export 전에
+  거부한다. 이는 모든 binary format을 완전히 decode하는 검증은 아니다.
 - 실패한 action/import/render는 현재 spec과 history를 변경하지 않는다. Rust의
   정상 open/reset은 undo 가능한 snapshot이며 Python open/reset은 새 이력을 시작한다.
   두 editor 모두 정상적인 새 편집 후 redo를 지운다.

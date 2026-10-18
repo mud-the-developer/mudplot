@@ -92,7 +92,11 @@ impl PythonBridge {
                 path(&output_path)?,
             ])?;
         }
-        fs::read(output_path).map_err(error("read rendered figure"))
+        let bytes = fs::read(output_path).map_err(error("read rendered figure"))?;
+        if bytes.is_empty() {
+            return Err(BridgeError("empty rendered figure".into()));
+        }
+        Ok(bytes)
     }
 
     fn run<const N: usize>(&self, args: [&str; N]) -> Result<Vec<u8>, BridgeError> {
@@ -191,6 +195,37 @@ mod tests {
         };
         let error = bridge.run(["--help"]).expect_err("zero timeout must fail");
         assert!(error.to_string().contains("timed out"));
+    }
+
+    #[test]
+    fn controlled_slow_child_times_out_and_next_child_can_succeed() {
+        let executable = std::env::current_exe().unwrap();
+        let bridge = PythonBridge {
+            executable: executable.clone().into(),
+            timeout: Duration::from_millis(100),
+        };
+        let started = Instant::now();
+        let error = bridge
+            .run([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_slow_output_helper",
+                "--nocapture",
+            ])
+            .expect_err("slow controlled child must time out");
+        assert!(error.to_string().contains("timed out"));
+        assert!(started.elapsed() < Duration::from_secs(2));
+        let healthy = PythonBridge {
+            executable: executable.into(),
+            timeout: Duration::from_secs(5),
+        };
+        assert!(!healthy.run(["--help"]).unwrap().is_empty());
+    }
+
+    #[test]
+    #[ignore]
+    fn bridge_slow_output_helper() {
+        std::thread::sleep(Duration::from_secs(3));
     }
 
     #[test]

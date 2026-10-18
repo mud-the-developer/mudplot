@@ -22,9 +22,9 @@
 
 ## 검증과 리뷰 상태
 
-- 최신 native18통과/helper2ignored·focused HTTP preview6case가 통과해 JSON/물리
-  export 크기를 보존했습니다. 실패 stderr 제한과 모든 operation 실패 cache도 확인했습니다.
-  Full smoke240초 timeout은 통과로 세지 않았고 RUST-03/04는 부분 검증입니다.
+- 최신 native19통과/helper3ignored·출력14경계가 통과했습니다. 빈 render commit을
+  차단하고 optional 부재/실패 시 spec/PNG/redo/복구를 확인해 RUST-03은 PASS입니다.
+  Timeout 자손 소유권 RUST-04는 미완료이며 이전 preview6case는 기존 범위를 유지합니다.
 
 - 최신 데이터/JSON 대상 **291통과**, 최소 **61통과/경고201**, additive-capability를
   포함한 native **16통과/helper1ignored**입니다. 혼합 raw ID의 문자열 추론을 제거했습니다.
@@ -72,7 +72,9 @@
   empty/singleton/행 순서·구조 JSON 검사를 연결했습니다.
 - [Bridge/preview 근거](review_evidence/bridge_preview_verification.json)에 실패 출력 제한과
   실제 native preview/session 계약을 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS59/RUNNING12/OPEN78/DEFERRED1**.
+- [Bridge 실패 근거](review_evidence/bridge_fault_verification.json)에 격리 주입과
+  기준fe4449d CI cancelled(양 Rust/3.12 성공,3.10 취소)를 기록했습니다. 후속 guard의 증거는 아닙니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS60/RUNNING11/OPEN78/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

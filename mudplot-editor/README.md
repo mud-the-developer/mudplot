@@ -53,6 +53,8 @@ without an Origin remain supported; this is not remote-user authentication.
   Successful stdout remains complete; failed stderr captures at most64KiB raw
   plus a truncation marker before becoming a UI error. UTF-8 replacement can
   expand display bytes; this is not a disk/CPU or descendant-process hard bound.
+  Missing or empty render artifacts are rejected before preview/cache commit or
+  export, even if the child exited successfully; this is not a full binary decoder.
 - Failed actions, imports, or renders do not mutate the current spec or
   history. Successful open/reset are undoable snapshots in this Rust editor;
   Python open/reset instead start fresh history. Successful new edits clear redo.

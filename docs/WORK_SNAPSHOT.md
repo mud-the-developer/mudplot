@@ -28,10 +28,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
-- Latest native18tests passed/2helpers ignored and6focused HTTP preview cases
-  passed with unchanged JSON/export sizes. Failed stderr is bounded; all-operation
-  bridge failure cache invariants passed. Full smoke240s timeout was not credited.
-  RUST-03/04 fault/descendant coverage is still partial.
+- Latest native19tests passed/3helpers ignored and14controlled output boundaries
+  passed. Empty render artifacts no longer commit; spec/PNG/redo/recovery checks
+  cover missing optional effects and fault paths. RUST-03 is PASS, but timeout
+  descendant ownership remains partial in RUST-04. Prior6preview cases retain scope.
 
 - Latest data/JSON subset **291 passed**, floor subset **61 passed/201warnings**;
   native **16 passed/1helper ignored** includes additive-capability coverage.
@@ -86,7 +86,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   connects group identity, empty/singleton/order and structural JSON checks.
 - [Bridge/preview evidence](review_evidence/bridge_preview_verification.json)
   records bounded failure output and native preview/session contracts.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS59/RUNNING12/OPEN78/
+- [Bridge fault evidence](review_evidence/bridge_fault_verification.json) records
+  isolated failure injection and baselinefe4449d CI cancelled(3.10 cancelled;
+  both Rust/3.12 passed), not proof of the later artifact guard.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS60/RUNNING11/OPEN78/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

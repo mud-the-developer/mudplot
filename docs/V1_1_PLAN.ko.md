@@ -120,6 +120,25 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 18차에서 빈 산출물 commit을 막고 실제 bridge 실패를 주입했습니다.** FIND-020은
+exit0 child의 빈 PNG도 정상으로 commit하던 문제이며 공통 render transport에서
+빈 bytes를 거부합니다. PDF/SVG도 같고 전체 binary decode·CPU/disk 보장은 아닙니다.
+
+격리 Unicode 경로 venv의 private hook으로 empty/JSON/nonzero capabilities3,
+성공 JSON+1MiBstderr1·실제 regression extra 부재를 포함한 action8·빈 PDF/SVG2의
+**14경계**를 확인했습니다. Spec/PNG/redo hash와 정상 복구가 같아 RUST-03은 PASS입니다.
+100ms controlled stub timeout 뒤 복구도 통과했지만 자손 소유권 RUST-04는 RUNNING입니다.
+
+Native19통과/helper3ignored·Clippy·fault checker·Ruff219/format·Pyright·계약·
+packaging의8기록 명령이 통과했습니다. Snapshot JSON exception은 검증 실패를
+숨기지 않으려는 의도로 진단1건을 false-positive 분류했습니다.
+[증거](review_evidence/bridge_fault_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS60/RUNNING11/OPEN78/DEFERRED1**입니다. 기준fe4449d CI39104961495는 양 Rust/
+3.12 성공,3.10 취소로 전체 cancelled이며 후속 변경을 소급 검증하지 않습니다.
+버전/의존성/lock/tag/배포는 유지하며 v1은 아직 미완료입니다.
+
+### 이전 리뷰 17차
+
 **리뷰 17차에서 bridge 오류 크기와 preview/cache 계약을 확인했습니다.** FIND-019는
 실패 stderr1MiB가 거대한 UI 오류가 되던 문제입니다. 실패만 raw64KiB와 truncation
 표시로 제한하고 성공 stdout/stream 분리는 유지합니다. UTF-8 replacement가 표시 byte를

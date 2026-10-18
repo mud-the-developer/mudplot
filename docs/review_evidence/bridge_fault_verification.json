@@ -1,0 +1,240 @@
+{
+  "head": "fe4449dd783fa352703cfb4cefe78d59b70a5ce9",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot-editor/src/python.rs": "49baaca99635642d0769609f4d7f0b11df82ff3bff06dc5f1c099484a0994567",
+    "scripts/check_python_bridge_paths.py": "ba8b77996251e9fbcbf7de7aafc9ef7fb8404f18fa4819e1b54120c3b65ae75d"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "pre_fix": {
+    "mode": "render-empty",
+    "actual_http_status": 200,
+    "expected_http_status": 400,
+    "observed": "exit0 with empty output committed a broken preview; reproduced before the shared render guard"
+  },
+  "qa_correction": "Optional failure fixture initially used ignored kind instead of LayerSpec.type; corrected in QA, not a second product bug.",
+  "scope": "14 controlled output boundaries:3bad capability startups,1successfulcapabilities with1MiBstderr,8actionfaults including real optional regression absence,2empty PDF/SVG exports; retain4interpreter-selection checks.",
+  "limits": "Only empty artifact validation was added, not full binary format/decompression validation or CPU/disk/descendant guarantees.100ms timeout/directchild recovery is tested; RUST04 stays RUNNING. No new full Python/browser/minimum/OS claim.",
+  "case_rows": [
+    {
+      "mode": "apply-empty",
+      "error": "decode reduced spec",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "apply-json",
+      "error": "decode reduced spec",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "apply-exit",
+      "error": "exited with",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "apply-stderr",
+      "error": "stderr truncated",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "render-exit",
+      "error": "exited with",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "render-missing",
+      "error": "read rendered figure",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "render-empty",
+      "error": "empty rendered figure",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "missing-optional",
+      "error": "mudplot[regression]",
+      "state_png_redo_preserved": true,
+      "spec_sha256": "60ca4c3e8d865ba5d559c1951cf675de28009503f525cb42b68a44610a8a3e89",
+      "png_sha256": "db5ce725775ab96aaaa0dad653009a913ef6282ce03dafd98f4109508edd4778",
+      "redo_png_sha256": "7ae4fe35d4674c764804b09e8d63d9dc1d10e52b3ea707423d44be39ee3eaa50"
+    },
+    {
+      "mode": "empty-pdf",
+      "export_rejected_state_preserved": true
+    },
+    {
+      "mode": "empty-svg",
+      "export_rejected_state_preserved": true
+    }
+  ],
+  "startup_rows": [
+    {
+      "mode": "cap-empty",
+      "startup_error": "decode capabilities"
+    },
+    {
+      "mode": "cap-json",
+      "startup_error": "decode capabilities"
+    },
+    {
+      "mode": "cap-exit",
+      "startup_error": "exited with"
+    }
+  ],
+  "successful_noisy_capabilities": true,
+  "foreign_sitecustomize_preserved": true,
+  "baseline_remote_ci": {
+    "head": "fe4449dd783fa352703cfb4cefe78d59b70a5ce9",
+    "run": 39104961495,
+    "conclusion": "cancelled",
+    "jobs": {
+      "rust-editor (ubuntu-latest)": "success",
+      "rust-editor (windows-latest)": "success",
+      "lint-and-test (3.12)": "success",
+      "lint-and-test (3.10)": "cancelled"
+    },
+    "limit": "Predates empty artifact guard; cancellation cause not established; not all-green."
+  },
+  "checks": [
+    {
+      "name": "fault-matrix",
+      "argv": [
+        "python",
+        "-u",
+        "scripts/check_python_bridge_paths.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "732aca6b1556d3cde5606f1e29e7c64e031b5f1b586eec4b61cd7d962ae26d95"
+    },
+    {
+      "name": "native-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 18 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.39s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "cc1455cf3ce16f7af27682eef19656051809a550878509cc3b5e4c0f6b52f4b4"
+    },
+    {
+      "name": "native-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "8a2933ae25e59188be988ea6218274cb341f13d8bc4b533f57b12ececd4be8b3"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "219 files already formatted"
+      ],
+      "log_text_sha256": "c90f684ccee760f54bc3d79f420f5faafb24e12a103e375749fa94089852e5e6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "cf16f72e5524fb67dbac0f4c6c33dbc3733fa8abcdec95e6e74e204e26cf7afc"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "d1ec03712314a222822553977bfe54dc2c2992f2ad19ab32fcd1ff480871af4a"
+    }
+  ]
+}

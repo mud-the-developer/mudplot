@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Rejected empty native bridge render artifacts even after a successful child exit,
+  preventing empty previews from committing. Added controlled empty/malformed JSON,
+  exit/stderr, missing optional dependency and empty PNG/PDF/SVG probes that retain
+  state/cache/redo, plus short timeout recovery coverage without claiming process-tree containment.
 - Bounded failed Python-bridge stderr to64KiB raw with an explicit truncation
   marker, preserving complete successful stdout and stream separation. Added
   nonzero-output and all-operation state/cache failure regression checks.
