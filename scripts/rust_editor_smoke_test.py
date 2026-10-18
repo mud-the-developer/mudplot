@@ -8,6 +8,7 @@ import http.client
 import json
 import os
 import socket
+import struct
 import subprocess
 import sys
 import time
@@ -180,6 +181,38 @@ def _review_document_policies(base: str) -> None:
         "Document/no-op policies OK: open/reset snapshots, "
         "redo invalidation and current JSON/PNG"
     )
+
+
+def _review_preview_contracts(base: str) -> None:
+    with _request(f"{base}/spec.json") as response:
+        original = json.load(response)
+    rows = []
+    for size in ([4, 3], [3, 4]):
+        for dpi in (499, 500, 501):
+            plot = mp.plot({"x": [1, 2], "y": [2, 3]}).line("x", "y").size(*size)
+            plot.dispatch(mp.actions.SetDpi(dpi))
+            _submit(base, "/open", {"json": plot.to_json()})
+            with _request(f"{base}/spec.json") as response:
+                actual = json.load(response)
+            assert actual == plot.spec.to_dict()
+            with _request(f"{base}/fig.png") as response:
+                pixels = struct.unpack(">II", response.read()[16:24])
+            effective = min(dpi, 2000 / max(size))
+            assert pixels == tuple(int(value * effective) for value in size)
+            assert max(pixels) <= 2000
+            with _request(f"{base}/fig.svg") as response:
+                svg = response.read().decode("utf-8")
+            assert f'width="{size[0] * 72}pt" height="{size[1] * 72}pt"' in svg
+            with _request(f"{base}/fig.pdf") as response:
+                assert (
+                    f"/MediaBox [ 0 0 {size[0] * 72} {size[1] * 72} ]".encode()
+                    in response.read()
+                )
+            with _request(f"{base}/spec.json") as response:
+                assert json.load(response) == actual
+            rows.append({"size": size, "dpi": dpi, "preview_pixels": pixels})
+    _submit(base, "/open", {"json": json.dumps(original)})
+    print("Preview boundary contract OK: " + json.dumps(rows, sort_keys=True))
 
 
 def _review_state_paths(base: str) -> None:
@@ -536,6 +569,7 @@ def main(*, browser: bool = False) -> int:
 
         _review_history_contracts(base)
         _review_document_policies(base)
+        _review_preview_contracts(base)
         with _request(f"{base}/") as response:
             page = response.read()
             assert response.headers["X-Content-Type-Options"] == "nosniff"

@@ -46,7 +46,9 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   쓰지만 명시한 null/unknown version은 실패한다. 이는 JSON 구조
   보존 계약이며 renderer 부동소수점 범위를 넘는 좌표/style 값은 명확히 실패한다.
 - reducer/validator의 단일 source는 `python -m mudplot apply`, renderer는
-  `python -m mudplot render`로 유지한다.
+  `python -m mudplot render`로 유지한다. 성공 stdout은 보존하고 실패 stderr는
+  raw64KiB까지만 읽어 truncation 표시를 붙인다. UTF-8 대체 문자로 표시 byte는 늘 수
+  있으며 디스크/CPU 제한이나 모든 자손 프로세스 격리를 보장하는 것은 아니다.
 - 실패한 action/import/render는 현재 spec과 history를 변경하지 않는다. Rust의
   정상 open/reset은 undo 가능한 snapshot이며 Python open/reset은 새 이력을 시작한다.
   두 editor 모두 정상적인 새 편집 후 redo를 지운다.

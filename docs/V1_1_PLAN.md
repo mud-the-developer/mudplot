@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 17 bounds bridge failure errors and verifies preview/cache contracts.**
+FIND-019 reproduced a1MiB stderr response becoming a giant UI error. Failed stderr
+now captures64KiB raw plus a truncation marker; successful stdout stays complete
+and separate. UTF-8 replacement can expand text; disk/CPU/confidentiality/descendant
+containment are not implied. RUST-03/04 remain RUNNING for unfinished fault paths.
+
+Six real native HTTP preview cases cover both orientations at499/500/501DPI,
+retaining JSON size/DPI and PDF/SVG physical sizes while capping PNG at2000px.
+Apply/open/undo/redo/reset bridge failures preserve every session/cache field.
+RUST-05/06 are PASS. Native18tests passed with2helpers ignored; Clippy, focused
+preview, Ruff219/format/Pyright/clean packaging passed in7recorded commands.
+A full smoke foreground240s timeout is not credited as success.
+
+[Evidence](review_evidence/bridge_preview_verification.json) preserves scope.
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS59/RUNNING12/OPEN78/DEFERRED1**.
+Versions/dependencies/locks/tag/deploy remain unchanged; broader P1/P2 and v1
+completion remain unfinished. No current full/browser/OS rerun is inferred.
+
+### Earlier review phase 16
+
 **Review phase 16 fixes mixed raw-group identity and verifies data/JSON policies.**
 FIND-018 had string/numeric IDs merged by NumPy dtype inference, with null changing
 membership. Object-valued masks now match original Python equality; numeric

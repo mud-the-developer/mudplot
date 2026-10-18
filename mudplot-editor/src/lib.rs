@@ -810,6 +810,43 @@ mod tests {
     }
 
     #[test]
+    fn every_failed_bridge_operation_preserves_state_history_future_and_cache() {
+        fn snapshot(session: &Session) -> Value {
+            json!({"initial": session.initial, "spec": session.spec,
+                "history": session.history, "future": session.future,
+                "png": session.png, "error": session.error, "revision": session.revision})
+        }
+        let directory = tempfile::tempdir().unwrap();
+        let bridge = PythonBridge::new(directory.path().join("missing-python"));
+        let original: FigureSpec = serde_json::from_str(model::DEFAULT_SPEC).unwrap();
+        let mut changed = original.clone();
+        changed
+            .fields
+            .insert("suptitle".into(), json!("prospective"));
+        let mut session = Session {
+            initial: original.clone(),
+            spec: changed.clone(),
+            history: vec![original.clone()],
+            future: vec![changed.clone()],
+            png: vec![1, 2, 3],
+            error: Some("prior error".into()),
+            revision: 17,
+        };
+        let before = snapshot(&session);
+        let action: Action = serde_json::from_str(r#"{"type":"SetTitle","text":"new"}"#).unwrap();
+        assert!(session.apply(&bridge, &action).is_err());
+        assert_eq!(snapshot(&session), before);
+        assert!(session.open(&bridge, original).is_err());
+        assert_eq!(snapshot(&session), before);
+        assert!(session.undo(&bridge).is_err());
+        assert_eq!(snapshot(&session), before);
+        assert!(session.redo(&bridge).is_err());
+        assert_eq!(snapshot(&session), before);
+        assert!(session.reset(&bridge).is_err());
+        assert_eq!(snapshot(&session), before);
+    }
+
+    #[test]
     fn visual_form_numbers_fail_before_action_dispatch() {
         assert_eq!(parse_panel("").unwrap(), 0);
         assert!(parse_panel("-1").is_err());

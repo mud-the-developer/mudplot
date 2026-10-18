@@ -120,6 +120,23 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 17차에서 bridge 오류 크기와 preview/cache 계약을 확인했습니다.** FIND-019는
+실패 stderr1MiB가 거대한 UI 오류가 되던 문제입니다. 실패만 raw64KiB와 truncation
+표시로 제한하고 성공 stdout/stream 분리는 유지합니다. UTF-8 replacement가 표시 byte를
+늘릴 수 있고 disk/CPU/비밀 마스킹/자손 격리를 보장하지 않습니다. RUST-03/04는 RUNNING입니다.
+
+실제 native HTTP6case로 두 방향의499/500/501DPI에서 PNG2000px 상한과 JSON size/DPI·
+PDF/SVG 물리 크기를 확인했습니다. Apply/open/undo/redo/reset bridge 실패에서 모든
+session/cache 필드도 보존되어 RUST-05/06은 PASS입니다. Native18통과/helper2ignored,
+Clippy·focused preview·Ruff219파일/format·Pyright·packaging의7명령이 통과했습니다.
+Full smoke foreground240초 timeout은 통과로 세지 않았습니다.
+
+[증거](review_evidence/bridge_preview_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS59/RUNNING12/OPEN78/DEFERRED1**입니다. 버전/의존성/lock/tag/배포는 유지하며
+새 전체/browser/양 OS 실행이나 v1 완성을 주장하지 않습니다.
+
+### 이전 리뷰 16차
+
 **리뷰 16차에서 raw 혼합 그룹 식별과 데이터/JSON 정책을 확인했습니다.** FIND-018은
 NumPy dtype 추론이 문자열/숫자 ID를 합치고 null 존재로 membership이 달라지던 문제입니다.
 원래 object 값으로 mask를 계산하며 기본 numeric equality의1/1.0/True 통합과 ordered

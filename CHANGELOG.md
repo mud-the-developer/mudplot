@@ -6,6 +6,12 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Bounded failed Python-bridge stderr to64KiB raw with an explicit truncation
+  marker, preserving complete successful stdout and stream separation. Added
+  nonzero-output and all-operation state/cache failure regression checks.
+- Verified native preview pixels immediately below/at/above2000 in both
+  orientations while preserving JSON DPI/size and physical PDF/SVG exports.
+  Timeout descendants and the full malformed-output matrix are not implied complete.
 - Fixed raw mixed string/numeric group IDs being merged by NumPy string inference,
   with group identity changing merely when null was added. Masks now use original
   object values while preserving legacy numeric equality and ordered typed semantics.

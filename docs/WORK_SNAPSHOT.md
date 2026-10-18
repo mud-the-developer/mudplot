@@ -28,6 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest native18tests passed/2helpers ignored and6focused HTTP preview cases
+  passed with unchanged JSON/export sizes. Failed stderr is bounded; all-operation
+  bridge failure cache invariants passed. Full smoke240s timeout was not credited.
+  RUST-03/04 fault/descendant coverage is still partial.
+
 - Latest data/JSON subset **291 passed**, floor subset **61 passed/201warnings**;
   native **16 passed/1helper ignored** includes additive-capability coverage.
   Raw group masks no longer string-coerce mixed IDs. Earlier broad results below
@@ -79,7 +84,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   artifacts and baseline92238f3 CI success. Incomplete attempts are not counted.
 - [Data/JSON policy evidence](review_evidence/data_json_policy_verification.json)
   connects group identity, empty/singleton/order and structural JSON checks.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS57/RUNNING10/OPEN82/
+- [Bridge/preview evidence](review_evidence/bridge_preview_verification.json)
+  records bounded failure output and native preview/session contracts.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS59/RUNNING12/OPEN78/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 17차 — bridge stderr 제한·preview·실패 cache
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-bridge-c9w45r3t`,
+  [경로 제거 bridge/preview 근거](review_evidence/bridge_preview_verification.json)도 보존합니다.
+- **FIND-019:** 실패 child의1MiB stderr가 그대로 UI error에 들어감을 새 회귀1개 실패로
+  확보했습니다. 실패 출력만 raw64KiB+1 확인 뒤64KiB로 자르고 표시를 붙입니다. 성공 stdout은
+  그대로이며 stdout marker가 error에 섞이지 않았습니다. UTF-8 replacement가 표시 byte를
+  늘릴 수 있고 임시 디스크/CPU·비밀 마스킹·전체 자손 격리의 hard bound는 아닙니다.
+- Controlled missing executable로 apply/open/undo/redo/reset 모두 실패시켜 initial/spec/
+  history/future/PNG/error/revision이 바뀌지 않음을 확인해 RUST-06은 PASS입니다.
+  Native **lib17+main1통과/helper2ignored**이며 Clippy도 통과했습니다.
+- 실제 HTTP preview는 두 방향에서 DPI499/500/501의6case를 실행해 각각1996/2000/
+  capped2000px를 확인했습니다. JSON size/DPI·SVG points·PDF MediaBox는 변하지 않아
+  RUST-05는 PASS입니다. 이는 실제 최종2000px 이상 전체 PNG render를 한 것은 아닙니다.
+- 전체 smoke에 추가한 preview 호출을 포함한 foreground240초 시도는 timeout되어 통과로
+  세지 않았고, 별도 소유 process에서 focused preview를 다시 실행해 결과·정리를 기록했습니다.
+  7기록 명령(native tests/Clippy/preview/Ruff219/format/Pyright/wheel)은 exit0,
+  LSP3경로는 clean입니다. 새 full/browser/minimum/양 OS 성공을 주장하지 않습니다.
+- RUST-03의 empty/malformed 출력 전체 주입과 RUST-04 timeout의 모든 자손/자원 처리는
+  아직 남아 두 항목은 RUNNING으로만 올립니다. 초기 발표한 다른 optional/path 항목도
+  이번에 확인하지 않은 부분을 조용히 닫지 않습니다. 버전/의존성/lock/tag/배포는 유지합니다.
+
 ## 16차 — 혼합 그룹·데이터 경계·JSON 정책
 
 - 기반b16f1de 위에서 수행했습니다. 로컬 증거는
@@ -583,10 +605,10 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-09 | P1 | OPEN | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-02 | P0 | PASS | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows/Linux CI jobs success for781f3f5; 14차 remote snapshot |
-| RUST-03 | P1 | OPEN | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-04 | P1 | OPEN | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-05 | P1 | OPEN | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-06 | P1 | OPEN | Rust history와 캐시의 commit 순서 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-03 | P1 | RUNNING | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-04 | P1 | RUNNING | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-05 | P1 | PASS | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-06 | P1 | PASS | Rust history와 캐시의 commit 순서 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-07 | P1 | OPEN | 공유 static 자산·버전 정합성 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | SEC-01 | P0 | PASS | loopback bind와 Host 검증 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-02 | P0 | PASS | Origin과 mutation 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
@@ -631,8 +653,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 57, RUNNING 10, OPEN 82, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 59, RUNNING 12, OPEN 78, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019를 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

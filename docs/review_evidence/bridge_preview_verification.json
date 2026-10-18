@@ -1,0 +1,190 @@
+{
+  "head": "840f2fda67f96d1c5798bedb66657d00ab495493",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot-editor/src/python.rs": "b19f0ff508de341eb004a0c002d9d6605da7aebfc1510f4da07a6207b5449d93",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "scripts/rust_editor_smoke_test.py": "d48c37dcfba9e5ff6d2e203e425d25f0db39166bd4fcb42d60b0966ef29609a6"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "pre_fix": {
+    "stderr_helper_failed": 1,
+    "observed": "nonzero1MiB stderr became an enormous UI error; stdout marker remained separate"
+  },
+  "limits": "Failure stderr now reads at most64KiB raw plus truncation marker. UTF8 replacement can expand display bytes; successful stdout remains complete. This is not a disk/CPU/descendant-process or confidentiality hard bound. Full smoke attempt exceeded240s and is not credited. RUST03/04 incomplete; other P1 path/optional checks not silently closed.",
+  "checks": [
+    {
+      "name": "native-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 17 passed; 0 failed; 2 ignored; 0 measured; 0 filtered out; finished in 0.23s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "9156ad9b5e5c89033374102dadbdd8bdebd146341280fa131e976e738ce229cf"
+    },
+    {
+      "name": "native-clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "609eb82a9c1982508e38c0fd8fdc0323e6b44a60882f5a00aa941414dfc0278d"
+    },
+    {
+      "name": "preview-boundaries",
+      "argv": [
+        "python",
+        "-u",
+        "-c",
+        "import os,socket,subprocess,sys,time\nfrom pathlib import Path\nfrom scripts.rust_editor_smoke_test import _request,_review_preview_contracts\nsubprocess.run(['cargo','build','--locked','--manifest-path','mudplot-editor/Cargo.toml'],check=True)\nwith socket.socket() as held:held.bind(('127.0.0.1',0));port=held.getsockname()[1]\np=subprocess.Popen([str(Path('mudplot-editor/target/debug/mudplot-editor.exe')),'--bind',f'127.0.0.1:{port}','--python',sys.executable],env={**os.environ,'MPLBACKEND':'Agg'},stdout=subprocess.DEVNULL,stderr=subprocess.PIPE)\ntry:\n deadline=time.monotonic()+40;base=f'http://127.0.0.1:{port}'\n while True:\n  try:\n   with _request(base+'/spec.json') as response:response.read()\n   break\n  except OSError:\n   if time.monotonic()>deadline:raise\n   time.sleep(.1)\n _review_preview_contracts(base)\nfinally:\n if p.poll() is None:subprocess.run(['taskkill','/PID',str(p.pid),'/T','/F'],capture_output=True,check=True)\n p.communicate(timeout=10)\n"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "bfef7cd5eaea08c910796cdc4c267e2597cc45bdcb77551bf663c0e155aab66c"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "219 files already formatted"
+      ],
+      "log_text_sha256": "c90f684ccee760f54bc3d79f420f5faafb24e12a103e375749fa94089852e5e6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "01d3de48fc833c0b11d7fb079aa65a47d73cd70ad99f0d3d541d293c179ccae1"
+    }
+  ],
+  "preview_rows": [
+    {
+      "dpi": 499,
+      "preview_pixels": [
+        1996,
+        1497
+      ],
+      "size": [
+        4,
+        3
+      ]
+    },
+    {
+      "dpi": 500,
+      "preview_pixels": [
+        2000,
+        1500
+      ],
+      "size": [
+        4,
+        3
+      ]
+    },
+    {
+      "dpi": 501,
+      "preview_pixels": [
+        2000,
+        1500
+      ],
+      "size": [
+        4,
+        3
+      ]
+    },
+    {
+      "dpi": 499,
+      "preview_pixels": [
+        1497,
+        1996
+      ],
+      "size": [
+        3,
+        4
+      ]
+    },
+    {
+      "dpi": 500,
+      "preview_pixels": [
+        1500,
+        2000
+      ],
+      "size": [
+        3,
+        4
+      ]
+    },
+    {
+      "dpi": 501,
+      "preview_pixels": [
+        1500,
+        2000
+      ],
+      "size": [
+        3,
+        4
+      ]
+    }
+  ]
+}

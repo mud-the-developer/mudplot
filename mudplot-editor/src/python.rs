@@ -138,16 +138,26 @@ impl PythonBridge {
         output
             .rewind()
             .map_err(error("read Python bridge output"))?;
+        const MAX_ERROR_BYTES: usize = 64 * 1024;
+        let limit = if status.success() {
+            u64::MAX
+        } else {
+            (MAX_ERROR_BYTES + 1) as u64
+        };
         let mut bytes = Vec::new();
         output
+            .take(limit)
             .read_to_end(&mut bytes)
             .map_err(error("read Python bridge output"))?;
         if status.success() {
             return Ok(bytes);
         }
+        let truncated = bytes.len() > MAX_ERROR_BYTES;
+        bytes.truncate(MAX_ERROR_BYTES);
         Err(BridgeError(format!(
-            "Python bridge exited with {status}: {}",
-            String::from_utf8_lossy(&bytes).trim()
+            "Python bridge exited with {status}: {}{}",
+            String::from_utf8_lossy(&bytes).trim(),
+            if truncated { " [stderr truncated]" } else { "" }
         )))
     }
 }
@@ -200,6 +210,39 @@ mod tests {
             ])
             .expect("large output must not fill the child pipes");
         assert!(output.len() >= 1024 * 1024);
+    }
+
+    #[test]
+    fn bridge_failure_stderr_is_separate_and_bounded() {
+        let bridge = PythonBridge {
+            executable: std::env::current_exe().unwrap().into(),
+            timeout: Duration::from_secs(5),
+        };
+        let error = bridge
+            .run([
+                "--ignored",
+                "--exact",
+                "python::tests::bridge_failure_output_helper",
+                "--nocapture",
+            ])
+            .expect_err("nonzero helper must fail")
+            .to_string();
+        assert!(error.contains("exited with"));
+        assert!(!error.contains("stdout-only-marker"));
+        assert!(
+            error.len() < 70_000,
+            "stderr must not become an enormous UI error"
+        );
+        assert!(error.contains("truncated"));
+    }
+
+    #[test]
+    #[ignore]
+    fn bridge_failure_output_helper() -> std::io::Result<()> {
+        use std::io::Write;
+        std::io::stdout().write_all(b"stdout-only-marker")?;
+        std::io::stderr().write_all(&vec![b'e'; 1024 * 1024])?;
+        std::process::exit(7);
     }
 
     #[test]
