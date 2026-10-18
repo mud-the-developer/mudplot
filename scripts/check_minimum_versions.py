@@ -51,6 +51,7 @@ TESTS = (
     "tests/test_layout.py",
     "tests/test_review_preset_sizes.py",
     "tests/test_review_layout_boundaries.py",
+    "tests/test_review_font_boundaries.py",
     "tests/test_facets.py",
     "tests/test_joint_grid.py",
     "tests/test_pair_grid.py",

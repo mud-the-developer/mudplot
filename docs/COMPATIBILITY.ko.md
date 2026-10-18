@@ -191,6 +191,18 @@ package release마다 spec version을 올릴 필요는 없습니다.
   호출자가 넘긴 executed cursor와 connection의 소유권은 호출자에게 있고 commit/
   rollback도 하지 않습니다. Close 오류는 숨기지 않고 전파하며 이전 실패는 예외 context에 남습니다.
 
+## 폰트존재와Unicode
+
+Font검색은optionalrender effect이지zero-dependencycorevalidation이아닙니다. 요청font/
+text는spec에유지하며backend의family부재·weightfallback·glyph누락진단도출력과함께
+확인하세요. 설치family가모든glyph를지원한다는뜻은아닙니다. 관찰Windows에서Malgun
+Gothic은Hangul은있지만U+2212가없었고NotoSansKR은이corpus를지원하되normalweight대신
+100선택log가있었습니다. DejaVuSans의Hangul누락·없는familyfallback도감지됐습니다.
+
+Fontbinary/downloader·자동minus치환은추가하지않습니다. 선택systemCJK폰트가없으면
+테스트는명시skip하고family/glyph부재case는별도로유지합니다. 파일hash/glyphindex는
+해당환경의근거이지OS/fontversion간byteidentity나보편typography의보장이아닙니다.
+
 ## 문자열 문맥
 
 HTML editor value/draft와 SVG text/href는 data로 escape하며 한 번 decode하면 원래

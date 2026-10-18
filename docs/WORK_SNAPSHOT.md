@@ -28,13 +28,22 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest actual font files/glyph indices/bboxes distinguish available Hangul,
+  missing minus/family and logged variable-weight fallback. CJK/long-group bounds
+  plus earlier support/warning corpus make LAY-04/07 PASS in measured scope, not
+  typography across all systems.97related/floor5checks pass with expected warnings.
+  No runtime font rewriting/downloading; publish with queued layout diagnostics.
+- Baseline66feCI39139498998 is ALL5SUCCESS; it predates the local layout effect
+  change and does not replace the next current-source workflow result.
+
 - Latest automatic layout warns on remaining title/suptitle/named-legend bounds
   or mutual overlap and avoids negative solver rects. CLI/warning-as-error paths
   preserve canvas and owned cleanup.145related/floor9checks pass. LAY-06 is PASS;
-  LAY-04 remains partial for other fonts/CJK/combinations, not universal legibility.
+  LAY-04 was partial here; later installed-font/CJK observations above add that corpus,
+  still not universal legibility.
 - Previous805floor/native jobs completed successfully but the matrix failed its
-  known platform type check. Hotfix/preset units are published; fresh66feCI is
-  active before this layout change, so this local effect unit needs its own result.
+  known platform type check. Published hotfix/preset66feCI has now succeeded;
+  the later local layout effect still needs its own result.
 
 - Latest5TeX presets×2columns×2fractions match both previews and actual PNG/PDF/
   SVG boxes in20rows. Existing size/style priority is explicit; runtime behavior
@@ -266,7 +275,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains exact file boxes, TeX-unit definitions and current size/font priorities.
 - [Layout-boundary evidence](review_evidence/layout_boundary_verification.json)
   retains before/after bounds, actionable-warning and CLI/rollback controls.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS84/RUNNING10/OPEN55/
+- [Font-boundary evidence](review_evidence/font_boundary_verification.json)
+  retains actual family/glyph/bbox diagnostics without font binaries or broad promises.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS86/RUNNING9/OPEN54/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

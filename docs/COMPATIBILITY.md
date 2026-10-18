@@ -216,6 +216,21 @@ independent. A package release does not require a spec-version bump.
   The adapter does not commit or roll back; close errors propagate rather than
   silently succeeding, with an earlier failure retained as exception context.
 
+## Font availability and Unicode
+
+Font discovery is an optional render effect, not dependency-free core validation.
+Requested font/text values stay in the spec; the backend can log missing-family,
+weight fallback or missing-glyph diagnostics. Inspect those alongside the output.
+A family being installed does not mean it covers every glyph: on the measured
+Windows host Malgun Gothic covered Hangul but lacked U+2212, while Noto Sans KR
+covered this corpus and logged a normal-weight fallback to100. DejaVu Sans reported
+missing Hangul; a deliberately absent family fell back visibly in font logs.
+
+No font binaries/downloader or automatic minus substitution is added. Tests for
+selected system CJK fonts skip explicitly where unavailable, while missing-family/
+glyph cases remain separate. File hashes and glyph indices identify this measured
+environment, not cross-OS/font-version byte identity or universal typography.
+
 ## String contexts
 
 HTML editor values/drafts and SVG text/href are escaped as data; a single decode

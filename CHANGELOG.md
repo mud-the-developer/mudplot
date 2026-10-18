@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified installed/missing font families, Hangul/minus/math glyph coverage and
+  narrow CJK/group layout with actual font-file fingerprints and diagnostics.
+  Kept requested text/fonts unchanged and avoided bundled fonts, downloads or
+  cross-system byte/typography guarantees.
 - Added fixed-canvas diagnostics for automatic title/suptitle/outside-legend
   overflow or overlap, including unbroken text that previously clipped silently.
   Impossible legend margins no longer create negative solver rectangles. Manual

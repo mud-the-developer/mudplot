@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 39 records real system-font/glyph and CJK layout diagnostics.**
+Missing-family fallback and DejaVu Hangul warnings are observable without changing
+source fonts/text. Installed Malgun Gothic covers Hangul but lacks U+2212; selected
+Noto Sans KR covers this corpus but logs weight fallback to100. File hashes,
+glyph indices and measured bboxes identify the actual Windows environment, not
+all-font or cross-system guarantees. No font binary/download/minus rewrite is added.
+
+Two installed-family observations and narrow CJK/long-group outside-legend bounds
+complement English/multiline/unbroken support/warning fixtures. LAY-04/07 are PASS
+within this corpus; system-font tests skip explicitly if those families are absent.
+Related97passes/14expected glyph/layout warnings, floor5passes/2984deselected/
+26warnings and8quality/package records pass without product runtime change.
+[Evidence](review_evidence/font_boundary_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS86/RUNNING9/OPEN54/DEFERRED1**. Baseline66feCI39139498998 is ALL5SUCCESS before
+queued layout diagnostics; publish both units and inspect fresh CI, not retroactive
+proof. Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 38
+
 **Review phase 38 diagnoses automatic text that cannot fit a fixed canvas.**
 FIND-033 reproduced silent unbroken-title/suptitle clipping and an oversized
 outside-legend negative-rect solver path. Valid rects alone reach the solver;

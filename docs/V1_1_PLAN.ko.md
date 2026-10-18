@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 39차에서실제systemfont/glyph와한글layout진단을기록했습니다.** 없는familyfallback/
+DejaVuHangul누락은원문font/text를바꾸지않고감지됩니다. MalgunGothic은한글은지원하지만
+U+2212가없고선택NotoSansKR은이corpus를지원하나weight100fallbacklog가있습니다.
+Filehash/glyphindex/bbox는현재Windows근거이지모든font/OS보장이아닙니다. Binary/
+download/minus치환은추가하지 않았습니다.
+
+Installed2font·좁은한글/긴그룹outsidelegendbbox와이전English/멀티라인/무공백지원·경고를
+대조해LAY-04/07은이corpus에서PASS입니다. 해당systemfont부재는명시skip합니다.
+관련97통과/예상glyphlayout경고14·floor5통과/2984deselected/경고26·품질/packaging
+8명령은 [근거](review_evidence/font_boundary_verification.json)에보존했습니다.
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS86/RUNNING9/OPEN54/DEFERRED1**입니다.
+기준66feCI39139498998은5job전부성공했지만queuedlayout이전이라소급하지않고함께게시해
+새CI를받으며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 38차
+
 **리뷰 38차에서fixedcanvas에못드는자동text를진단했습니다.** FIND-033의unbrokentitle/
 suptitle무경고clipping과oversizedoutsidelegend의음수rectsolver경로를재현해유효rect만
 적용하고최종자동textbbox/겹침은행동가능한genericwarning을냅니다. 수동위치/spec/font/

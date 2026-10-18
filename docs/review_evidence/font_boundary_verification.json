@@ -1,0 +1,353 @@
+{
+  "source_sha256": {
+    "tests/test_review_font_boundaries.py": "edc1c4f2a79aced3b6b6978aa93ad263a850e40194e1ebf12b6e931c0fc0f2a2",
+    "scripts/check_minimum_versions.py": "92c3633084ad7408058dc701db147531cc0b2cc880350236c766878b8a49b139",
+    "mudplot/_render.py": "69467b3a63e823ddd5946d75ffdfdfa5b764542ca2dfd4e616e1d0450793f3a2",
+    "mudplot/theme.py": "b5e06c51bc1d90d08f5af283c07f4fc859b7974a696647a5a0c3dcc7a8bea51a"
+  },
+  "font_observations": [
+    {
+      "family": "Noto Sans KR",
+      "font_file": "NotoSansKR-VF.ttf",
+      "font_sha256": "018174e8cdd366aff67c8d366c7dc806a7babbe7f2819fc23b00d59f7b8353d0",
+      "coverage_char_indices": {
+        "\ud55c": 20904,
+        "\uae00": 10828,
+        "\uc81c": 17512,
+        "\ubaa9": 14069,
+        "\u2212": 831,
+        "\u03a9": 280
+      },
+      "title_bbox": [
+        0.44447222222222216,
+        0.9335174074074074,
+        0.6544722222222221,
+        0.98611
+      ],
+      "messages": [
+        "findfont: Failed to find font weight normal, now using 100."
+      ]
+    },
+    {
+      "family": "Malgun Gothic",
+      "font_file": "malgun.ttf",
+      "font_sha256": "7a183cf1c6c56b9609fcc16eda8b5229fbc11758a21e669ec00343239b02192f",
+      "coverage_char_indices": {
+        "\ud55c": 2846,
+        "\uae00": 788,
+        "\uc81c": 2239,
+        "\ubaa9": 1468,
+        "\u2212": 0,
+        "\u03a9": 538
+      },
+      "title_bbox": [
+        0.4326971571180555,
+        0.931470423900463,
+        0.6693638237847221,
+        0.98611
+      ],
+      "messages": [
+        "Font 'default' does not have a glyph for '\\u2212' [U+2212], substituting with a dummy symbol.",
+        "Glyph 8722 (\\N{MINUS SIGN}) missing from font(s) Malgun Gothic."
+      ]
+    }
+  ],
+  "initial_effect_probe": [
+    {
+      "family": "Malgun Gothic",
+      "resolved_file": "malgun.ttf",
+      "resolved_sha256": "7a183cf1c6c56b9609fcc16eda8b5229fbc11758a21e669ec00343239b02192f",
+      "warnings": [
+        "Glyph 8722 (\\N{MINUS SIGN}) missing from font(s) Malgun Gothic."
+      ],
+      "font_logs": [],
+      "title_bbox": [
+        0.36136382378472215,
+        0.9181370905671297,
+        0.7280304904513888,
+        0.98611
+      ],
+      "requested_family_on_artist": [
+        "Malgun Gothic"
+      ],
+      "png_sha256": "4f93446e8c6898e467da70c48aecbd0a4a418f60d71e03cc88fd22319a290631"
+    },
+    {
+      "family": "Noto Sans KR",
+      "resolved_file": "NotoSansKR-VF.ttf",
+      "resolved_sha256": "018174e8cdd366aff67c8d366c7dc806a7babbe7f2819fc23b00d59f7b8353d0",
+      "warnings": [],
+      "font_logs": [
+        "findfont: Failed to find font weight normal, now using 100."
+      ],
+      "title_bbox": [
+        0.3751388888888888,
+        0.9222211111111112,
+        0.7118055555555555,
+        0.98611
+      ],
+      "requested_family_on_artist": [
+        "Noto Sans KR"
+      ],
+      "png_sha256": "52fc1629c50422cab0a62707d0bddc62591ddd2398feeceb405f59c57d6a7622"
+    },
+    {
+      "family": "DejaVu Sans",
+      "resolved_file": "DejaVuSans.ttf",
+      "resolved_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+      "warnings": [
+        "Glyph 44032 (\\N{HANGUL SYLLABLE GA}) missing from font(s) DejaVu Sans.",
+        "Glyph 44536 (\\N{HANGUL SYLLABLE GEU}) missing from font(s) DejaVu Sans.",
+        "Glyph 44544 (\\N{HANGUL SYLLABLE GEUL}) missing from font(s) DejaVu Sans.",
+        "Glyph 47196 (\\N{HANGUL SYLLABLE RO}) missing from font(s) DejaVu Sans.",
+        "Glyph 47353 (\\N{HANGUL SYLLABLE RUB}) missing from font(s) DejaVu Sans.",
+        "Glyph 47785 (\\N{HANGUL SYLLABLE MOG}) missing from font(s) DejaVu Sans.",
+        "Glyph 49464 (\\N{HANGUL SYLLABLE SE}) missing from font(s) DejaVu Sans.",
+        "Glyph 51228 (\\N{HANGUL SYLLABLE JE}) missing from font(s) DejaVu Sans.",
+        "Glyph 52629 (\\N{HANGUL SYLLABLE CUG}) missing from font(s) DejaVu Sans.",
+        "Glyph 54620 (\\N{HANGUL SYLLABLE HAN}) missing from font(s) DejaVu Sans."
+      ],
+      "font_logs": [],
+      "title_bbox": [
+        0.38658658854166666,
+        0.9160980642361112,
+        0.7072532552083333,
+        0.98611
+      ],
+      "requested_family_on_artist": [
+        "DejaVu Sans"
+      ],
+      "png_sha256": "b5cd41c4dd18066379d832611d8ba8c795e2f39f1fa86ace7ce2ff60b1898cb3"
+    },
+    {
+      "family": "mudplot-font-not-installed-23913",
+      "resolved_file": "DejaVuSans.ttf",
+      "resolved_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+      "warnings": [
+        "Glyph 44032 (\\N{HANGUL SYLLABLE GA}) missing from font(s) DejaVu Sans.",
+        "Glyph 44536 (\\N{HANGUL SYLLABLE GEU}) missing from font(s) DejaVu Sans.",
+        "Glyph 44544 (\\N{HANGUL SYLLABLE GEUL}) missing from font(s) DejaVu Sans.",
+        "Glyph 47196 (\\N{HANGUL SYLLABLE RO}) missing from font(s) DejaVu Sans.",
+        "Glyph 47353 (\\N{HANGUL SYLLABLE RUB}) missing from font(s) DejaVu Sans.",
+        "Glyph 47785 (\\N{HANGUL SYLLABLE MOG}) missing from font(s) DejaVu Sans.",
+        "Glyph 49464 (\\N{HANGUL SYLLABLE SE}) missing from font(s) DejaVu Sans.",
+        "Glyph 51228 (\\N{HANGUL SYLLABLE JE}) missing from font(s) DejaVu Sans.",
+        "Glyph 52629 (\\N{HANGUL SYLLABLE CUG}) missing from font(s) DejaVu Sans.",
+        "Glyph 54620 (\\N{HANGUL SYLLABLE HAN}) missing from font(s) DejaVu Sans."
+      ],
+      "font_logs": [
+        "findfont: Font family 'mudplot-font-not-installed-23913' not found.",
+        "findfont: Font family ['mudplot-font-not-installed-23913'] not found. Falling back to DejaVu Sans."
+      ],
+      "title_bbox": [
+        0.38658658854166666,
+        0.9160980642361112,
+        0.7072532552083333,
+        0.98611
+      ],
+      "requested_family_on_artist": [
+        "mudplot-font-not-installed-23913"
+      ],
+      "png_sha256": "b5cd41c4dd18066379d832611d8ba8c795e2f39f1fa86ace7ce2ff60b1898cb3"
+    }
+  ],
+  "cjk_outside_group": {
+    "font_family": "Noto Sans KR",
+    "font_file": "NotoSansKR-VF.ttf",
+    "font_sha256": "018174e8cdd366aff67c8d366c7dc806a7babbe7f2819fc23b00d59f7b8353d0",
+    "legend_policy": "named outside right",
+    "title_legend_bbox": [
+      [
+        0.028185793138625067,
+        0.8421702020202021,
+        0.46936226372686035,
+        0.9810590909090909
+      ],
+      [
+        0.43861727944070367,
+        0.37099116161616175,
+        0.9877441176759977,
+        0.5552714646464647
+      ]
+    ],
+    "inside": true,
+    "warnings": [],
+    "canvas_inches": [
+      3.4,
+      2.2
+    ],
+    "spec_unchanged": true
+  },
+  "policy": "Core JSON validation does not inspect installed fonts. Effects preserve requested families/text and emit backend missing-family/glyph/weight diagnostics; no font binaries/downloader, automatic minus substitution or cross-environment byte claim. Explicitly missing DejaVu Hangul glyphs and unavailable-family fallback remain observable.",
+  "limits": "Windows installed Malgun/Noto observations only; optional installed-font tests skip when absent elsewhere. Missing-family and bundled missing-Hangul tests still run independently. Font availability/index does not guarantee every glyph in other strings, font weights, OS or TeX context. LAY04isboundedtext/groupcorpusnotuniversaltypography.",
+  "qa_note": "Initial fixtures used literal Unicode minus and import ordering that Ruff flagged; expressed the same U+2212 via Unicode escape without changing tested character. No product glyph substitution or new runtime behavior.",
+  "baseline66fe_ci": {
+    "run": 39139498998,
+    "head": "66fe1f794d5790df4d5d6ff2fb0fe60e4146e773",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117710808062,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117710808166,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117710808171,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117710808181,
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "id": 117710809112,
+        "conclusion": "success"
+      }
+    ],
+    "scope": "All5jobs before queued layout diagnostic production change; not its retroactive validation."
+  },
+  "checks": [
+    {
+      "name": "font-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_font_boundaries.py",
+        "tests/test_review_layout_boundaries.py",
+        "tests/test_layout.py",
+        "tests/test_references.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "97 passed, 14 warnings in 54.16s"
+      ],
+      "log_text_sha256": "c443203af740ed3f3fc690b174b282c929190ea42821b9abcf1d6a8d762df339"
+    },
+    {
+      "name": "floor-fonts",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "5 passed, 2984 deselected, 26 warnings in 4.17s"
+      ],
+      "log_text_sha256": "4a1fa79f16c8dfff5b06e2b21122c073bb34922749258daab483ce29c114678a"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "233 files already formatted"
+      ],
+      "log_text_sha256": "40e01630ab82541c8c551be8fb84d8347280ad2227aa15d2a065a4ba48dedd26"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "8171ecc775ba4e8678c98b5076ed5231353d52c6d0f8575b46065f1da3e42137"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "0664680d8660f6084b6916e3606a6ea83f1e3854de274a4b50e3962e69317a65"
+    }
+  ],
+  "raw_probe_sha256": {
+    "font_probe.json": "cd64dec34cbf9e7f3a6b9442551d50d4f13123fc5e786045ed58a1e0b347476d",
+    "cjk_outside_bbox.json": "eb87d06e22c2bccff8ef74d40cb68cb7aa61480a71d0e5d672fd7e7d82672cb3",
+    "results.xml": "99eb0f32cf7656ec23c629ed2ef7204adf3cc57233458ed3a6ca70211254ec8f"
+  }
+}
