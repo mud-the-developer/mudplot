@@ -18,6 +18,30 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 51차 — box/violin수작업기준과jitter재현성
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-distribution-jitter-320_pdy8`와
+  [8box/24profile·위치·hash/RNG](review_evidence/distribution_jitter_verification.json)을 보존합니다.
+- Odd[0,1,2,3,100]Q1/median/Q3=1/2/3·1.5IQRwhisker0/3·outlier100,even[0,1,2,3]
+  =.75/1.5/2.25·whisker0/3,단일7/상수4를수작업값과대조했습니다. 양orientation의실제
+  patchquartile/median/whisker/flier가맞고pairedmissing3행을제외한사용row0..12를보존하며
+  empty범주에가짜box를만들지않았습니다.
+- 서로다른5/4/10/12표본4cell의Fraction불편표본분산/Scott/NormalDistPDF·선형분위수와
+  area/width/count×common/local의24profile을대조해최대오차5.55e-16입니다. Area는
+  명시peak-reference정의이지유한cut/clippolygon면적을항상1로강제한것이아닙니다. Weighted
+  stepquantile/질량정의·inner/geometry는기존weightedviolin회귀로분리하며box지원으로확대하지않습니다.
+- 기존stripplotdefault_rng0±jitter(.15default/명시0)을독립16위치와대조했습니다. 다른random
+  layer의전후추가에도같은series위치가같고NumPy/Python전역RNG는변하지않았습니다.
+  PYTHONHASHSEED1/777두프로세스·반복PNG/PDF/SVGhash도같습니다. 서로다른spec의색상/
+  zorder까지같은이미지나통계적으로독립layerstream이라고주장하지않으며새seed옵션도없습니다.
+- 관련408통과·실제floor407통과/2680deselected/경고1649·양platformtype/Ruff241/생성계약/
+  packaging9명령exit0입니다. 1649는전부10종PyparsingDeprecationWarning으로같은floor
+  실행에서분류했습니다. 큰Windowsheredoc잘림SyntaxError는실행전실패라test결과로세지않고
+  privatefile로분리했으며LayerSpec실제import경로도바로잡았지제품API를바꾸지않았습니다.
+- STAT-06/07은현재지원corpus에서PASS입니다. Productruntime/새test/framework는없으며
+  진행중3bCI39166807390의양Rust성공/3Python진행을보호해문서unit은로컬보존합니다.
+  이전회귀수치효과의새전체CI가아직필요하며버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 50차 — KDEbandwidth/적분/퇴화입력의독립대조
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-kde-review-7k93qkbn`와
@@ -1336,8 +1360,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | STAT-03 | P1 | PASS | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-04 | P1 | PASS | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-05 | P1 | PASS | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-06 | P1 | OPEN | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-07 | P1 | OPEN | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-06 | P1 | PASS | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-07 | P1 | PASS | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-08 | P1 | OPEN | 통계 전처리의 관측 대응 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | COLOR-01 | P0 | PASS | 색 공간 변환의 기준값 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-02 | P0 | PASS | CIEDE2000의 독립 reference | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
@@ -1427,7 +1451,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 106, RUNNING 5, OPEN 38, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 108, RUNNING 5, OPEN 36, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

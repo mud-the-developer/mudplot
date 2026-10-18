@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 51 checks manual distribution summaries and jitter determinism.**
+Eight oriented box cells match hand quartiles/observed whiskers/fliers for odd/
+even/single/constant samples.24violin profiles for unequal cells match independent
+variance/Gaussian/normalization/quantile equations(max5.55e-16), without forcing
+finite clipped area1 or merging missing samples. Fixed jitter matches seed0
+positions under layer reordering; fresh PYTHONHASHSEED1/777processes retain
+PNG/PDF/SVG hashes and NumPy/Python global RNG state for the same spec/environment.
+
+Existing408related/floor407passes/2680deselected/1649warnings and9quality records
+pass. All1649are Pyparsing deprecations, collected in the same floor run.
+STAT-06/07 are PASS in supported scope, not every quantile convention/environment.
+[Evidence](review_evidence/distribution_jitter_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS108/RUNNING5/OPEN36/DEFERRED1**. No new runtime/API/tests/framework.
+Keep docs local during3bCI(2Rustsuccess/3Pythonrunning); numeric fix still needs
+that exact whole result. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 50
+
 **Review phase 50 checks KDE moments, finite tails and degenerate inputs.**
 Exact weighted mean5/2/variance117/22/neff18/7 match bandwidth and24Gaussian
 mixture settings at2049points(maxerror2.22e-16). Clipped-tail analytic mass and

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Revalidated box/violin quartiles, whiskers, profiles and degenerate cells against
+  manual expectations, plus fixed-seed jitter positions, matched-environment
+  cross-process exports and unchanged global RNG state. No new random API.
 - Revalidated Gaussian KDE bandwidth, PDF/CDF and finite-support integration
   against exact weighted moments and independent mixtures, retaining singular
   skip, clipped-tail and relative-weight contracts without a new fallback.

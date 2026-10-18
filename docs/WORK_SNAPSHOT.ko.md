@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신수작업8box/24violin과seed0jitter순서·새process·hash/RNG가일치합니다. 관련408/
+  floor407·분류한Pyparsing1649경고로STAT-06/07은지원범위PASS이며새runtime/randomAPI/
+  testframework는없습니다. 3bCI양Rust성공/3Python진행을보호해문서는로컬보존하고이전수치효과의
+  정확한새전체CI결과는아직남아있습니다.
+
 - 최신KDE기존285/독립mixture24·두modegrid는bandwidth/PDF/CDF/꼬리/퇴화를대조해
   관련359/floor285가통과했고317경고는재실행해모두Pyparsing으로분류했습니다. STAT-05는
   지원범위PASS이지새kernel/fallback은아닙니다. 기준efCI5job모두성공해수치/histogram/KDE를
@@ -302,7 +307,9 @@
   독립bin/질량/면적과현재warning분류를보존했습니다.
 - [KDE 적분 근거](review_evidence/kde_integral_verification.json)에정확moment/
   유한support질량/singular·clip경계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS106/RUNNING5/OPEN38/DEFERRED1**.
+- [Distribution/jitter 근거](review_evidence/distribution_jitter_verification.json)에
+  수작업/pairedrow/정규화식과process/RNG/hash범위를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS108/RUNNING5/OPEN36/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

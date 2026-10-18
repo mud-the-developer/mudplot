@@ -1,0 +1,1145 @@
+{
+  "source_sha256": {
+    "mudplot/_categorical.py": "594f8d472ba4455141b312ef4e67bb528f57ef46938708a31287c53e6196998f",
+    "mudplot/_violin.py": "839e9f3864232545f33149e0e521be9ffb636fd320788aea72e5c79f25b3d18a",
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29",
+    "tests/test_box_violin.py": "39e5d6d5c05e7f8966d3d11e769eb8cce2db125f16d611211217628394229eb1",
+    "tests/test_violin_options.py": "88779b082f002f45f0e616d3688cc295ce5e7eb8e509bb753879fd65a70b5f63",
+    "tests/test_weighted_violin.py": "86f7063d09ffde00ab5b2f7dab4e737227ebade8236218458cb0d263a82694ab",
+    "tests/test_swarm.py": "324506a575ca5b806d9508cc646182261e5b3a42a11682d993aaafe80e69c877"
+  },
+  "manual_reference": {
+    "data": {
+      "cat": [
+        "odd",
+        "odd",
+        "odd",
+        "odd",
+        "odd",
+        "even",
+        "even",
+        "even",
+        "even",
+        "single",
+        "constant",
+        "constant",
+        "constant",
+        "odd",
+        null,
+        "empty"
+      ],
+      "value": [
+        0,
+        1,
+        2,
+        3,
+        100,
+        0,
+        1,
+        2,
+        3,
+        7,
+        4,
+        4,
+        4,
+        null,
+        999,
+        null
+      ]
+    },
+    "used_rows": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "box": [
+      {
+        "orientation": "v",
+        "group": "odd",
+        "n": 5,
+        "manual": {
+          "q": [
+            1,
+            2,
+            3
+          ],
+          "whiskers": [
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "fliers": [
+            100
+          ]
+        },
+        "actual_median": [
+          2.0,
+          2.0
+        ],
+        "actual_whiskers": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            3.0,
+            3.0
+          ]
+        ],
+        "actual_fliers": [
+          100.0
+        ]
+      },
+      {
+        "orientation": "v",
+        "group": "even",
+        "n": 4,
+        "manual": {
+          "q": [
+            0.75,
+            1.5,
+            2.25
+          ],
+          "whiskers": [
+            [
+              0.75,
+              0
+            ],
+            [
+              2.25,
+              3
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          1.5,
+          1.5
+        ],
+        "actual_whiskers": [
+          [
+            0.75,
+            0.0
+          ],
+          [
+            2.25,
+            3.0
+          ]
+        ],
+        "actual_fliers": []
+      },
+      {
+        "orientation": "v",
+        "group": "single",
+        "n": 1,
+        "manual": {
+          "q": [
+            7,
+            7,
+            7
+          ],
+          "whiskers": [
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              7
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          7.0,
+          7.0
+        ],
+        "actual_whiskers": [
+          [
+            7.0,
+            7.0
+          ],
+          [
+            7.0,
+            7.0
+          ]
+        ],
+        "actual_fliers": []
+      },
+      {
+        "orientation": "v",
+        "group": "constant",
+        "n": 3,
+        "manual": {
+          "q": [
+            4,
+            4,
+            4
+          ],
+          "whiskers": [
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              4
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          4.0,
+          4.0
+        ],
+        "actual_whiskers": [
+          [
+            4.0,
+            4.0
+          ],
+          [
+            4.0,
+            4.0
+          ]
+        ],
+        "actual_fliers": []
+      },
+      {
+        "orientation": "h",
+        "group": "odd",
+        "n": 5,
+        "manual": {
+          "q": [
+            1,
+            2,
+            3
+          ],
+          "whiskers": [
+            [
+              1,
+              0
+            ],
+            [
+              3,
+              3
+            ]
+          ],
+          "fliers": [
+            100
+          ]
+        },
+        "actual_median": [
+          2.0,
+          2.0
+        ],
+        "actual_whiskers": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            3.0,
+            3.0
+          ]
+        ],
+        "actual_fliers": [
+          100.0
+        ]
+      },
+      {
+        "orientation": "h",
+        "group": "even",
+        "n": 4,
+        "manual": {
+          "q": [
+            0.75,
+            1.5,
+            2.25
+          ],
+          "whiskers": [
+            [
+              0.75,
+              0
+            ],
+            [
+              2.25,
+              3
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          1.5,
+          1.5
+        ],
+        "actual_whiskers": [
+          [
+            0.75,
+            0.0
+          ],
+          [
+            2.25,
+            3.0
+          ]
+        ],
+        "actual_fliers": []
+      },
+      {
+        "orientation": "h",
+        "group": "single",
+        "n": 1,
+        "manual": {
+          "q": [
+            7,
+            7,
+            7
+          ],
+          "whiskers": [
+            [
+              7,
+              7
+            ],
+            [
+              7,
+              7
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          7.0,
+          7.0
+        ],
+        "actual_whiskers": [
+          [
+            7.0,
+            7.0
+          ],
+          [
+            7.0,
+            7.0
+          ]
+        ],
+        "actual_fliers": []
+      },
+      {
+        "orientation": "h",
+        "group": "constant",
+        "n": 3,
+        "manual": {
+          "q": [
+            4,
+            4,
+            4
+          ],
+          "whiskers": [
+            [
+              4,
+              4
+            ],
+            [
+              4,
+              4
+            ]
+          ],
+          "fliers": []
+        },
+        "actual_median": [
+          4.0,
+          4.0
+        ],
+        "actual_whiskers": [
+          [
+            4.0,
+            4.0
+          ],
+          [
+            4.0,
+            4.0
+          ]
+        ],
+        "actual_fliers": []
+      }
+    ],
+    "violin": [
+      {
+        "mode": "area",
+        "common_norm": false,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.04138075094740461,
+        "max_abs_profile_error": 2.0816681711721685e-17
+      },
+      {
+        "mode": "area",
+        "common_norm": false,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "area",
+        "common_norm": false,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.048776502694969796,
+        "max_abs_profile_error": 2.0816681711721685e-17
+      },
+      {
+        "mode": "area",
+        "common_norm": false,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "area",
+        "common_norm": true,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.04012969007351613,
+        "max_abs_profile_error": 1.3877787807814457e-17
+      },
+      {
+        "mode": "area",
+        "common_norm": true,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 0.9697670814268552,
+        "max_abs_profile_error": 5.551115123125783e-16
+      },
+      {
+        "mode": "area",
+        "common_norm": true,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.048776502694969796,
+        "max_abs_profile_error": 2.0816681711721685e-17
+      },
+      {
+        "mode": "area",
+        "common_norm": true,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": false,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 4.440892098500626e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": false,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": false,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 2.220446049250313e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": false,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": true,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 4.440892098500626e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": true,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": true,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 2.220446049250313e-16
+      },
+      {
+        "mode": "width",
+        "common_norm": true,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": false,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": false,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 0.8,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": false,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.8333333333333334,
+        "max_abs_profile_error": 2.220446049250313e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": false,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": true,
+        "group": "A",
+        "category": "odd",
+        "n": 5,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.4166666666666667,
+        "max_abs_profile_error": 1.6653345369377348e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": true,
+        "group": "A",
+        "category": "even",
+        "n": 4,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 0.3333333333333333,
+        "max_abs_profile_error": 1.1102230246251565e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": true,
+        "group": "B",
+        "category": "odd",
+        "n": 10,
+        "manual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "actual_quartiles": [
+          1.0,
+          2.0,
+          3.0
+        ],
+        "max_profile": 0.8333333333333334,
+        "max_abs_profile_error": 2.220446049250313e-16
+      },
+      {
+        "mode": "count",
+        "common_norm": true,
+        "group": "B",
+        "category": "even",
+        "n": 12,
+        "manual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "actual_quartiles": [
+          0.75,
+          1.5,
+          2.25
+        ],
+        "max_profile": 1.0,
+        "max_abs_profile_error": 3.3306690738754696e-16
+      }
+    ],
+    "jitter": {
+      "global_rng_unchanged": true,
+      "hashes": {
+        "pdf": "d60e5eea8243d839cbe0ea99ac4377873983f9dbd61e4dfc40c2bbe0ae49abfc",
+        "png": "b5924184c4dfb757d8511a4799e0a7a184b184cba30b1fabd8509538a694883f",
+        "svg": "71fb2de71855618f20fe0fd3b82ff2b5bf09cc670ab7587a3c8447bfe184de23"
+      },
+      "offsets": [
+        [
+          0.054784674928581745,
+          0.0
+        ],
+        [
+          -0.09208531449445188,
+          1.0
+        ],
+        [
+          -0.18361059042552214,
+          2.0
+        ],
+        [
+          -0.19338894578858837,
+          3.0
+        ],
+        [
+          0.12530809568010898,
+          4.0
+        ],
+        [
+          0.16510223091108872,
+          5.0
+        ],
+        [
+          0.042654310306871945,
+          6.0
+        ],
+        [
+          0.09179862439359937,
+          7.0
+        ],
+        [
+          1.0174499965861692,
+          8.0
+        ],
+        [
+          1.1740289695151074,
+          9.0
+        ],
+        [
+          1.126341421648613,
+          10.0
+        ],
+        [
+          0.8010954000680592,
+          11.0
+        ],
+        [
+          1.1429617106350278,
+          12.0
+        ],
+        [
+          0.8134342301221857,
+          13.0
+        ],
+        [
+          1.0918621785719775,
+          14.0
+        ],
+        [
+          0.8702622482410236,
+          15.0
+        ]
+      ],
+      "ordered_positions_equal": true,
+      "seed": 0
+    },
+    "fresh_process_pythonhashseeds": [
+      1,
+      777
+    ]
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 1649,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 368
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 767
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 399
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "box_definition": "Unweightedlinearpercentilesat(n-1)*p;1.5IQRfenceswithwhiskersatobservedextremesinsidefences. Independentodd/even/single/constantvaluescomparedtorealboxpatchQ1/Q3,median/whisker/flierartistsbothorientations;listwiseusedrows0..12exclude3missingrowsandemptycategoryhasnofakebox.",
+  "violin_definition": "Fourunequalcells5/4/10/12rows,independentFractionunbiasedsamplevariance/Scottbandwidth/NormalDistPDFandlinearquartiles;24area-width-count\u00d7common/localprofilesmatch. Areausesdeclaredpeakreference,notclaimedunitphysicalpolygonareaforfiniteclip/cut. Weighteddefinitionsareindependentlycoveredbyexistingweighted_violin\u2014notexpandedtobox. PointmassesaredegeneratebodiesnotfabricatedGaussians.",
+  "jitter_definition": "Existingper-seriesdefault_rng0uniform\u00b1jitter(default.15orzeroexplicit). Positionsmatchseededexpectationacrossrepeat/before-afterrandomlayerorderingandfreshprocessesPYTHONHASHSEED1/777. NumPyglobalMTstateandPythonrandomstateunchanged. PNG/PDF/SVGbytehashesmatchsamematched-environmentspec/repeat/process\u2014notdifferentlayerordercompositions. No configurableuserseedintroduced;notstatisticallyindependentlayerstreamsclaim.",
+  "limits": "STAT06/07currentdeclarednative/typeddistributionandfixed-jittercorpusonly;notallquantileconventions/allrenderenvironmentsorallUInullablecontrols. Fullnativehours/resourcegatesremainseparate.",
+  "qa_note": "InitialoversizedWindowsheredocwastruncated/SyntaxErrorbeforeexecution\u2014notatestresult. Splitownedprivatescripts. Manualprobesinitiallyguessedmp.LayerSpecexport;correctfrommudplot.specimportLayerSpecbeforecompleteprobe\u2014noAPIchange/productbug. Missingguessedtest_stripplotsymbolwasnavigationonly,notcoverage. No new permanenttests/framework.",
+  "environment_overrides": {
+    "manual": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-distribution": {
+      "PYTEST_ADDOPTS": "-k \"test_box_violin or test_violin_options or test_weighted_violin or test_swarm or test_categorical_scales or test_layers\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "manual",
+      "argv": [
+        "python",
+        "<evidence>\\manual_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Manual reference:8 box cells,24 violin profiles, jitter repeat/layer/process/RNG/export pass"
+      ],
+      "log_text_sha256": "7c1374e63370b50c32bd37b7641159eb86a76925f2a0e865fca74028eeee767f"
+    },
+    {
+      "name": "distribution-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_box_violin.py",
+        "tests/test_violin_options.py",
+        "tests/test_weighted_violin.py",
+        "tests/test_swarm.py",
+        "tests/test_categorical_scales.py",
+        "tests/test_layers.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "408 passed in 124.54s (0:02:04)"
+      ],
+      "log_text_sha256": "376fc4ad6a00b05c573aa2d80a72209fbe2933f193d9cd6c417a3f418ec86a12"
+    },
+    {
+      "name": "floor-distribution",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "407 passed, 2680 deselected, 1649 warnings in 134.28s (0:02:14)"
+      ],
+      "log_text_sha256": "c85b96142cf672b325042005f3a59991ea4386849e8233cdd866d4242ec52126"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "029106b94ed2cf1e1ae552b7452cdd6c32c95996736dfc03d4a2d7d331fac123"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "de7482333a7f30a85fe44a0760b49e9794f54ac2eccf47d528a362aee7e86652"
+    }
+  ],
+  "raw_probe_sha256": {
+    "manual_reference.json": "e27ab58732e813e16dbd70015b669e3538d5aa2d7af1559b1825da720f5dc542",
+    "manual_probe.py": "428dca2cbd4526245966df5e40c1b5077504b207818eb099091514186b0c3f5b",
+    "jitter_probe.py": "f448fa4c363f389b2050a06327ec3ef524e8acf8ea0bd07bf2d0f3f2a9b2ed48",
+    "floor_warning_counts.json": "56d549a55105d5ad98ad0e18be3496d4542d73fb723018e881d221215e739b21",
+    "results.xml": "2b6557f1b698104f88757d70a1bc68ef6d89276ab68574ef1ce22895859bb402",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "qa.py": "afd0b26c2e2fb4b30dfb0b93d420a29aa037d1dcd3b5aa7fb65067ff7a233327"
+  }
+}

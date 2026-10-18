@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest8manual box/24violin checks and seed0jitter reordering/fresh-process
+  export/RNG observations agree.408related/floor407passes with1649classified
+  Pyparsing deprecations make STAT-06/07 PASS in supported scope. No new runtime/
+  random API/test framework. Docs stay local during3bCI(2Rustsuccess/3Pythonrunning);
+  prior numeric effect still needs the exact new whole CI result.
+
 - Latest KDE285existing/24independent mixtures and bimodal grid verify bandwidth/
   PDF/CDF/tail mass/singular behavior:359related/floor285passes,317Pyparsing
   deprecations classified in repeated floor run. STAT-05 is PASS in supported
@@ -365,7 +371,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains independent bins/mass/area and current scoped warning classifications.
 - [KDE integral evidence](review_evidence/kde_integral_verification.json)
   retains exact moments, finite-support mass and explicit singular/clip boundaries.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS106/RUNNING5/OPEN38/
+- [Distribution/jitter evidence](review_evidence/distribution_jitter_verification.json)
+  retains hand summaries, paired rows, profile equations and process/RNG/hash scope.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS108/RUNNING5/OPEN36/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

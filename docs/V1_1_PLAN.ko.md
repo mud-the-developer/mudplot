@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰51차에서분포수작업값과jitter재현성을확인했습니다.** Odd/even/single/constant의
+양방향8box는분위수/관측whisker/outlier가맞고표본수다른24violinprofile의독립분산/
+Gaussian/정규화/분위수오차는5.55e-16입니다. 유한clip면적1을강제하거나결측표본을섞지않습니다.
+기존seed0jitter위치는layer순서를바꿔도같고PYTHONHASHSEED1/777두프로세스·반복출력에서
+PNG/PDF/SVGhash와전역NumPy/PythonRNG비변경을확인했습니다(같은spec/환경범위).
+
+관련408/floor407통과/2680deselected/경고1649·품질9명령이며1649전부Pyparsing으로같은
+floor실행에서분류했습니다. STAT-06/07은지원범위PASS이지모든분위수법/환경보장은아닙니다.
+[근거](review_evidence/distribution_jitter_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS108/RUNNING5/OPEN36/DEFERRED1**입니다. 새runtime/API/test/framework없이3bCI
+양Rust성공/3Python진행을보호해문서는로컬보존하고회귀수치수정의그정확한전체결과는남깁니다.
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰50차
+
 **리뷰50차에서KDEmoment/유한꼬리/퇴화입력을대조했습니다.** 정확한mean5/2·분산117/22·
 neff18/7와24Gaussian설정/2049point오차2.22e-16이맞고절단질량/trapezoid오차8.94e-9를
 재정규화하지않습니다. Singular질량4/10은공통분모에남고4095grid의두peak는±3근처입니다.
