@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰43차에서유한pattern·명도·실제크기검토를분리했습니다.** 2panel의7fill/9linepoint그룹과
+범례가일치하며hatch6/marker8/style4(선조합8주기)가반복됩니다. EqualLCH·독립linearY흑백proxy는
+범주분리보장이아닙니다. 고정1-column컬러/흑백에서얇은선/작은marker/투명band를검토했고
+6band흑백구분이약해범주축소/경계/직접label/panel을권장하며인증으로해석하지않습니다.
+
+양언어/생성doc/docstring/gallery를유한주기·측정범위로좁히고paper5+정상/3CVD/흑백row로
+설명했습니다. 관련77/site9/floor8통과/3027deselected/경고13·품질9명령으로COLOR-06/07/09/10은
+이corpus/검토에서PASS입니다. [근거](review_evidence/encoding_print_verification.json)/
+[comparison](review_evidence/one_column_encoding.png)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS96/RUNNING10/OPEN43/DEFERRED1**입니다. 기준16aCI39148609011은5job모두성공해
+대기report/gallery단위를게시하고새CI를받으며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰42차
+
 **리뷰42차에서최종팔레트report지표/조건을고쳤습니다.** FIND-036은nominalLCHgap3을
 safe로표시하던paper7/vivid7의실제HEXgap2.79209/2.79726을재현했습니다. Float명도는
 mappedRGB,report는8-bitHEX를평가하고정상/CVD유형/model/fullseverity1/표현/기준을

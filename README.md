@@ -96,8 +96,8 @@ full/minimum/focused verification receipts and their scope.
 - [x] **Three named, pre-verified qualitative palette presets**
       (`paper`/`vivid`/`soft`) — measured (not assumed) CVD-safe and
       true-greyscale-safe up to a documented category count; bar/box/violin
-      fills cycle a hatch pattern per group by default so they stay
-      distinguishable in black & white print regardless of colour count
+      fills add finite repeating hatch patterns, which complement colour but
+      do not guarantee unlimited categories or readability at every print size
 - [x] Declarative spec model (`FigureSpec`) + lossless JSON round-trip +
       side-effect-free reducer + actions + store (`Store.undo()`/`redo()`) — effects
       (render/io/preview) kept at the edges
@@ -1100,7 +1100,7 @@ unique after string conversion; collisions are rejected rather than overwritten.
 ### Using palettes directly
 
 ```python
-pal = mp.color_palette(5, "qualitative")   # equal lightness, max contrast
+pal = mp.color_palette(5, "qualitative")   # lightness jitter + hue contrast
 print(pal.hex, pal.min_delta_e())
 print(pal.report())      # includes final HEX metrics and explicit evaluation conditions
 cmap = mp.color_palette(256, "sequential").to_cmap()
@@ -1111,8 +1111,8 @@ pal = mp.color_palette(6, "qualitative", preset="paper")   # or "vivid" / "soft"
 p = mp.plot(data).line("x", "y", group="g").palette(preset="paper")
 
 # Bar/box/violin fills also cycle a hatch pattern per group by default
-# (ThemeSpec.hatches), so grouped fills stay distinguishable in black &
-# white print regardless of how many colours are used.
+# (ThemeSpec.hatches). Patterns repeat after their finite cycle; inspect the
+# actual print size rather than treating colour/hatch count as a guarantee.
 p2 = mp.plot(data).bar("category", "value", group="g")  # colour + hatch
 p3 = p2.encoding(redundant_encoding=False)               # colour only
 ```

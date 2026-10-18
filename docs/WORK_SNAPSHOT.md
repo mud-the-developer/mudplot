@@ -28,11 +28,18 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest finite pattern/legend mappings and fixed one-column colour/grey review
+  distinguish luminance from category separation. Thin marks and6transparentbands
+  retain explicit limits; wording/gallery no longer promise unlimited distinction.
+ 77related/site9/floor8checks pass. COLOR-06/07/09/10 are PASS in this review scope,
+  not printer/observer certification. Baseline16aCI is ALL5SUCCESS; publish queued
+  report/doc/gallery units and inspect current-source CI.
+
 - Latest final-HEX report/mapped-float lightness fix preserves generation while
   exposing evaluated CVD conditions and nominal-vs-output differences. Reference
   matrices, N±1 metrics and deterministic ties/process outputs pass:141related/
   floor18checks. COLOR-03/04/05/08 are PASS in measured scope, not certification.
-  The palette effect unit stays local during16aCI; other colour gates remain open.
+  The earlier report hold protected16aCI to completion; later colour review is above.
 
 - Latest complete caller-rc restoration/alternating-style/fresh-process checks
   make LAY-08 PASS in equivalent ambient conditions. Physical0.02inch padding
@@ -302,7 +309,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   comparisons, physical padding measurements and explicit low-DPI residuals.
 - [Palette-report evidence](review_evidence/palette_report_verification.json)
   retains final RGB pairs, model/representation conditions and boundary measurements.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS92/RUNNING10/OPEN47/
+- [Encoding/print evidence](review_evidence/encoding_print_verification.json) and
+  [comparison](review_evidence/one_column_encoding.png) retain patterns/settings/limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS96/RUNNING10/OPEN43/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

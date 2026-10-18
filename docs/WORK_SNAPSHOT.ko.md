@@ -22,9 +22,14 @@
 
 ## 검증과 리뷰 상태
 
+- 최신유한pattern/범례와1-column컬러/흑백검토는명도와범주구분을분리합니다. 작은mark/
+  투명band6개의한계를남기고문구/gallery의무제한구분보장을지웠습니다. 관련77/site9/floor8통과로
+  COLOR-06/07/09/10은검토범위PASS이지printer/observer인증은아닙니다. 기준16aCI가전부성공해
+  대기report/doc/gallery를게시하고새CI를받습니다.
+
 - 최신HEXreport/mappedfloat명도수정은생성색을유지하고평가CVD조건과nominal/output차이를
   드러냅니다. Reference/N±1/tie/독립process와관련141/floor18이통과해COLOR-03/04/05/08은
-  측정범위PASS이지인증이아닙니다. 다른색상gate는남기고16aCI중unit은로컬보존합니다.
+  측정범위PASS이지인증이아닙니다. 이전report보류는16aCI완료를보호했고후속색상검토는위와같습니다.
 
 - 최신전체rc복구/번갈아style/독립process대조로LAY-08은같은ambient조건에서PASS입니다.
   0.02inchpad가150/300DPI차이를줄이지만75DPIdense잔차는남아LAY-09는RUNNING입니다.
@@ -251,7 +256,9 @@
   명시한저DPI잔차를보존했습니다.
 - [Palette report근거](review_evidence/palette_report_verification.json)에최종RGBpair/
   model·표현조건·범주경계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS92/RUNNING10/OPEN47/DEFERRED1**.
+- [Encoding/print근거](review_evidence/encoding_print_verification.json)와
+  [comparison](review_evidence/one_column_encoding.png)에pattern/물리설정/한계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS96/RUNNING10/OPEN43/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

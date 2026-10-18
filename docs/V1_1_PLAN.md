@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 43 separates finite patterns, luminance and real-size review.**
+Artist/legend mapping across two panels agrees for7fill/9line-point groups and
+shows hatch6/marker8/style4 cycles (paired line period8). Equal LCH and independent
+linear-Y greyscale proxy are not category-separation guarantees. Fixed one-column
+colour/grey plates expose thin/small-mark and alpha-band limits;6bands blend, so
+fewer categories/boundaries/direct labels/panels are recommended, not certified.
+
+Bilingual/generated/docstring/gallery claims now state finite cycles and measured
+scope. Gallery uses paper5 and correctly describes3CVDrows plus normal/grey, not
+all-row certification.77related/site9/floor8passes/3027deselected/13warnings and
+9quality records pass. COLOR-06/07/09/10 are PASS for this corpus/review.
+[Evidence](review_evidence/encoding_print_verification.json), [comparison](review_evidence/one_column_encoding.png),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS96/RUNNING10/OPEN43/DEFERRED1**.
+Baseline16aCI39148609011 is ALL5SUCCESS before queued report/gallery changes;
+publish both units and obtain current CI. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 42
+
 **Review phase 42 corrects final-palette report metrics and states conditions.**
 FIND-036 exposed nominal LCH gap3 reported safe while final HEX paper7/vivid7 gaps
 are2.79209/2.79726. Float lightness now uses mapped RGB; report uses exported8-bit

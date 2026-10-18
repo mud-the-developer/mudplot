@@ -90,7 +90,7 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
 - [x] **이름 붙은 검증된 qualitative 팔레트 프리셋 3종** (`paper`/`vivid`/
       `soft`) — 명시된 카테고리 수까지 CVD·진짜 흑백 안전성을 직접 측정;
       bar/box/violin도 기본적으로 그룹마다 해칭 패턴을 함께 사용해 색상
-      개수와 무관하게 흑백 인쇄에서 구별됨
+      유한주기로반복되며모든범주수/인쇄크기의식별성을보장하지않음
 - [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 부수효과 없는 reducer +
       action + store (`Store.undo()`/`redo()`) — render/io/preview 등
       effect는 가장자리로 분리
@@ -1023,7 +1023,7 @@ mp.plot(conn, query="SELECT x, y FROM t WHERE run = ?", params=(run_id,))
 ### 팔레트 직접 사용
 
 ```python
-pal = mp.color_palette(5, "qualitative")   # 등명도·최대대조
+pal = mp.color_palette(5, "qualitative")   # 명도 jitter·색상 대조
 print(pal.hex, pal.min_delta_e())
 print(pal.report())      # 최종 HEX 지표와 명시한 evaluation 조건을 포함
 cmap = mp.color_palette(256, "sequential").to_cmap()
@@ -1034,7 +1034,7 @@ pal = mp.color_palette(6, "qualitative", preset="paper")   # 또는 "vivid" / "s
 p = mp.plot(data).line("x", "y", group="g").palette(preset="paper")
 
 # bar/box/violin 도 기본적으로 그룹마다 해칭 패턴을 함께 사용해(ThemeSpec.hatches),
-# 색상 개수와 상관없이 흑백 인쇄에서도 그룹이 구별됩니다.
+# 유한한 패턴은 반복되므로 실제 인쇄 크기의 가독성을 따로 확인해야 합니다.
 p2 = mp.plot(data).bar("category", "value", group="g")  # 색상 + 해칭
 p3 = p2.encoding(redundant_encoding=False)               # 색상만
 ```

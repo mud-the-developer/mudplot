@@ -609,12 +609,12 @@ accounted for. x stays categorical in horizontal orientation. No RNG or jitter.
 
 LCH-based. Kinds: `qualitative`, `sequential`, `diverging`.
 
-- `qualitative`: equal(-ish) lightness, maximum hue contrast, worst-case ΔE00 across normal vision + protan/deutan CVD simulation maximised. A `lightness_jitter` (default 6) keeps true greyscale/B&W print distinguishable; see `Palette.report()` for measured safety, not an assumed guarantee.
+- `qualitative`: equal(-ish) lightness, maximum hue contrast, worst-case ΔE00 across normal vision + protan/deutan CVD simulation maximised. A `lightness_jitter` (default 6) adds lightness variation, not unlimited greyscale separation; `Palette.report()` measures final8-bitHEX under explicit CVD conditions, not printing/accessibility certification.
 - `sequential` / `diverging`: perceptually-uniform ramps, gamut-clipped.
 
 ### Named presets (`.palette(preset="...")`)
 
-Pre-tuned `qualitative` parameter sets, each measured (not assumed) CVD-safe (worst-case ΔE00 ≥ 8) and true-greyscale-safe (min L* gap ≥ 3) up to `max_verified_n` categories — see `tests/test_palette_presets.py`. Beyond that count, more colours are still generated but safety is no longer verified; pair with `.encoding(hatches=[...])` for bar/box/violin fills, which stays distinguishable in B&W print regardless of colour count.
+Pre-tuned `qualitative` parameter sets, each measured (not assumed) CVD-safe (worst-case ΔE00 ≥ 8) and true-greyscale-safe (min L* gap ≥ 3) up to `max_verified_n` categories — see `tests/test_palette_presets.py`. Beyond that count, more colours are still generated but safety is no longer verified; pair with `.encoding(hatches=[...])` for bar/box/violin fills. Hatch, marker and dash cycles are finite and repeat; inspect the actual print size rather than assuming every category remains distinguishable.
 
 | preset | max verified n | description |
 | --- | --- | --- |

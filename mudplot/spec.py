@@ -212,16 +212,16 @@ class ThemeSpec(SpecBase):
     ticks: TicksSpec = field(default_factory=TicksSpec)
     palette: PaletteSpec = field(default_factory=PaletteSpec)
     # redundant encoding: cycle marker/line-style per series *in addition* to
-    # colour, so series stay distinguishable in greyscale print or for CVD
-    # viewers even if two colours end up close together.
+    # colour. Finite cycles complement it; they do not guarantee unlimited
+    # categories or readability at every output size.
     redundant_encoding: bool = True
     markers: list[str] = field(
         default_factory=lambda: ["o", "s", "^", "D", "v", "P", "X", "*"]
     )
     line_styles: list[str] = field(default_factory=lambda: ["-", "--", "-.", ":"])
     # hatch patterns cycled per series for area fills (bar/box/violin), same
-    # purpose as markers/line_styles: keep grouped series distinguishable
-    # without relying on colour (black & white print, full achromatopsia).
+    # purpose as markers/line_styles: add cues when colours are similar.
+    # These finite cycles repeat; inspect the actual physical output.
     hatches: list[str] = field(
         default_factory=lambda: ["", "//", "xx", "..", "\\\\", "oo"]
     )

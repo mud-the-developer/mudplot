@@ -20,8 +20,8 @@ _ROWS = [
 
 def preview(pal: Palette, ax=None, show_cvd: bool = True):
     """Draw a palette as colour swatches with CVD- and greyscale-simulated
-    rows below (the greyscale row uses true relative luminance, not CIE L*,
-    matching black-and-white print / full achromatopsia).
+    rows below (greyscale is a linear-sRGB relative-luminance display proxy,
+    not a universal printer or viewer prediction).
 
     Returns the matplotlib Axes.
     """

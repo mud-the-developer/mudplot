@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 43차 — 유한pattern·1-column컬러/흑백·대외문구
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-print-review-iiok6ccg`와
+  [78group/pattern표·물리설정·검토](review_evidence/encoding_print_verification.json),
+  [컬러/흑백contact](review_evidence/one_column_encoding.png)을 보존합니다.
+- 기본hatch6종을7group의bar/box/violin·marker8/style4를9group의line/scatter에서2panel
+  artist/legend와대조해일치·반복을확인했습니다. Pairedmarker/style도LCM8이지32개독립
+  보장이아닙니다. Box(value,group)의범주axis모드에legend를가정한초기QA는명시cat/value/hue
+  fixture로고쳤고제품오류로세지않았습니다.
+- LCH등명도·linearY흑백proxy·범주구분을분리했습니다. IndependentIECdecode/Yweights/
+  encode와grayscale_srgb가맞고equalLCH팔레트는흑백metric을통과하지않습니다. 모든printer/
+  achromatopsiaviewer예측이라는docstring도측정proxy로한정했습니다.
+- IEEE1column(252/72.27inch),300DPI,font8/8/9/7pt의line0.6pt/marker2pt·좁은bar·alpha.18band
+  컬러/흑백4쌍을검토했습니다. 선/점/pattern은보완하지만작은marker/dash비교에는검토가
+  필요하고6band는흑백에서구분이약했습니다. 범주축소·경계선/직접label·분리panel을권장하며
+  swatch점수를그대로가독성판정으로삼지않습니다. Contact는비교용resize이고원물리plate는보존합니다.
+- README/한국어/생성REFERENCE/색상docstring/디자인gallery의무제한색상수보장을좁혔습니다.
+  Gallery는paper5preset·정상+3CVD+흑백proxyrow로설명하며모든row인증을주장하지않습니다.
+  Palette최적화/패턴주기/임계값은바꾸지않았고코드변경은sample선택/문구·회귀입니다.
+- 관련77통과·site9통과·실제floor8통과/3027deselected/경고13·Ruff237/양platformtype/
+  계약/packaging9명령exit0·변경7경로LSP clean입니다. COLOR-06/07/09/10은이측정·검토/
+  문구corpus에서PASS이지정식printer/관찰자접근성연구가아닙니다.
+- 기준16aCI39148609011은5job전부성공해대기bb75723report수정과함께게시하고새CI를받습니다.
+  버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 42차 — 최종RGB팔레트지표와평가조건
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-palette-report-u5wf2on9`와
@@ -1175,11 +1200,11 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | COLOR-03 | P1 | PASS | gamut 처리 이후 품질 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-04 | P1 | PASS | CVD 시뮬레이션 조건 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-05 | P1 | PASS | preset 범주 수의 경계 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| COLOR-06 | P1 | OPEN | 균일 명도와 흑백 구분의 분리 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| COLOR-07 | P1 | OPEN | 중복 표현의 일관성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-06 | P1 | PASS | 균일 명도와 흑백 구분의 분리 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-07 | P1 | PASS | 중복 표현의 일관성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-08 | P1 | PASS | 팔레트 결정성·seed·tie-break | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| COLOR-09 | P1 | OPEN | 실제 그림 크기의 가독성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| COLOR-10 | P2 | OPEN | 품질 report와 대외 문구 정합성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-09 | P1 | PASS | 실제 그림 크기의 가독성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-10 | P2 | PASS | 품질 report와 대외 문구 정합성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | LAY-01 | P0 | PASS | 최종 파일의 물리 크기 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-02 | P0 | PASS | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-03 | P1 | PASS | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
@@ -1258,7 +1283,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 92, RUNNING 10, OPEN 47, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 96, RUNNING 10, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

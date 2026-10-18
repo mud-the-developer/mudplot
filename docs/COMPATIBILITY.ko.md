@@ -247,6 +247,17 @@ mappedfloatsRGB를측정하며nominalLCH는출력품질이아닙니다. Floatcol
 실제metric에따라pass/fail할수있습니다. 결정적sampling은`hue_start`와동률의첫미선택
 candidate를쓰며새RNGseed옵션은추가하지않습니다.
 
+## 흑백과중복pattern
+
+흑백은linear-sRGBY가중치0.2126/0.7152/0.0722후sRGB로재encode한displayproxy이지
+모든printer/viewer예측이아닙니다. 같은nominalL*는흑백범주분리를뜻하지않습니다.
+기본hatch6/marker8/style4는유한하며marker/dash조합도32가아닌8group뒤반복됩니다.
+Artist와legend의cue를여러panel에서함께검사합니다.
+
+고정1-column에서0.6pt선/2ptmarker/hatch는색을보완하지만alpha.18band6개는흑백에서
+많이섞입니다. 실제크기를확인하고적은범주/band·경계선/직접label·분리panel을고려하세요.
+커밋comparison은synthetic렌더의agent시각검토이지printer/observer연구나접근성인증은아닙니다.
+
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는

@@ -188,16 +188,16 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
     import matplotlib.pyplot as plt
 
     fig, ax = plt.subplots(figsize=(6.5, 2.6))
-    preview(P.qualitative(5), ax=ax)
+    preview(P.preset_qualitative("paper", 5), ax=ax)
     fig.tight_layout()
     fig.savefig(gallery_dir / "palette_safety.png", dpi=140)
     plt.close(fig)
     items.append(
         (
             "palette_safety.png",
-            "Qualitative palette under normal vision, two CVD simulations, and "
-            "true greyscale — equal-ish lightness + a small jitter keeps every "
-            "swatch distinguishable in all four.",
+            "Paper preset: normal vision, three full-severity CVD simulations "
+            "and a luminance-only greyscale proxy. Report flags cover only the "
+            "explicitly evaluated types/thresholds, not every viewer or printer.",
         )
     )
 
@@ -222,9 +222,9 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
     items.append(
         (
             "redundant_encoding.png",
-            "Grouped series get a distinct marker and dash pattern in addition "
-            "to colour, so comparisons survive greyscale print or colour-vision "
-            "deficiency.",
+            "These three grouped series add markers/dashes to colour. Cycles "
+            "are finite and repeat; compare the actual output size rather than "
+            "assuming unlimited greyscale or CVD readability.",
         )
     )
 
@@ -284,9 +284,9 @@ def _generate_gallery_images(gallery_dir: Path) -> list[tuple[str, str]]:
     items.append(
         (
             "heatmap.png",
-            "Heatmap and colour-mapped scatter use the same LCH sequential / "
-            "diverging colormaps as the categorical palettes — perceptually "
-            "uniform end to end.",
+            "Heatmap and colour-mapped scatter use LCH-designed sequential / "
+            "diverging colormaps. Gamut mapping, output quantization, background "
+            "and print size still affect distinguishability.",
         )
     )
 

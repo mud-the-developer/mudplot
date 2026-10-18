@@ -2,13 +2,13 @@
 
 Design principles
 -----------------
-* **Equal lightness** (constant L*) for qualitative palettes, so categories
-  stay fair under greyscale printing and no colour dominates by brightness.
+* **Near-uniform design lightness** for qualitative palettes, with optional
+  jitter. Equal brightness alone does not separate categories in greyscale.
 * **Maximum contrast**: colours are chosen to maximise the *minimum*
   perceptual distance (CIEDE2000) between every pair.
 * **Colourblind-aware**: the pairwise distance that is maximised is the
   *worst case* across normal vision and CVD simulations (protan / deutan),
-  so palettes stay distinguishable for red-green colour blindness.
+  under those measured conditions, not universal accessibility certification.
 """
 
 from __future__ import annotations
@@ -83,11 +83,10 @@ class Palette:
         return _min_pairwise_worstcase(self.srgb, cvd_types)
 
     def grayscale_srgb(self) -> np.ndarray:
-        """This palette as it would print in true greyscale (luminance-only).
+        """Luminance-only display proxy from linear-sRGB relative Y.
 
-        Uses relative luminance Y (from linear sRGB), matching how a
-        black-and-white printer or a full achromatopsia viewer perceives it —
-        a stricter test than CIE L*, which most CVD simulations don't reach.
+        This is not a prediction of every printer/ink or achromatopsia viewer.
+        Equal design L* and useful category separation are different properties.
         """
         lin = cv.srgb_to_linear(self.srgb)
         y = lin @ np.array([0.2126, 0.7152, 0.0722])  # relative luminance

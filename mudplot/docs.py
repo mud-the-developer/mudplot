@@ -528,9 +528,10 @@ def _palettes_section(caps: dict) -> str:
     lines.append(
         "- `qualitative`: equal(-ish) lightness, maximum hue contrast, "
         "worst-case ΔE00 across normal vision + protan/deutan CVD "
-        "simulation maximised. A `lightness_jitter` (default 6) keeps true "
-        "greyscale/B&W print distinguishable; see `Palette.report()` for "
-        "measured safety, not an assumed guarantee.\n"
+        "simulation maximised. A `lightness_jitter` (default 6) adds "
+        "lightness variation, not unlimited greyscale separation; "
+        "`Palette.report()` measures final8-bitHEX under explicit CVD "
+        "conditions, not printing/accessibility certification.\n"
         "- `sequential` / `diverging`: perceptually-uniform ramps, gamut-clipped.\n"
     )
     lines.append('### Named presets (`.palette(preset="...")`)\n')
@@ -540,8 +541,9 @@ def _palettes_section(caps: dict) -> str:
         "≥ 3) up to `max_verified_n` categories — see "
         "`tests/test_palette_presets.py`. Beyond that count, more colours are "
         "still generated but safety is no longer verified; pair with "
-        "`.encoding(hatches=[...])` for bar/box/violin fills, which stays "
-        "distinguishable in B&W print regardless of colour count.\n"
+        "`.encoding(hatches=[...])` for bar/box/violin fills. Hatch, marker "
+        "and dash cycles are finite and repeat; inspect the actual print "
+        "size rather than assuming every category remains distinguishable.\n"
     )
     lines.append("| preset | max verified n | description |")
     lines.append("| --- | --- | --- |")

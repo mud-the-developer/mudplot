@@ -283,6 +283,20 @@ new preset guarantee outside the documented category count. An N+1palette can pa
 or fail its actual metrics. Deterministic farthest-point sampling uses `hue_start`
 and first remaining candidate on exact ties; no RNG seed parameter is added.
 
+## Greyscale and redundant patterns
+
+Greyscale is a linear-sRGB relative-luminance display proxy using Y weights
+0.2126/0.7152/0.0722, then sRGB re-encoding, not every printer/viewer prediction.
+Equal nominal L* does not give categorical greyscale separation. Default hatch6,
+marker8 and line-style4 cycles are finite; paired marker/dash sequences repeat
+after8groups, not32. Artist and legend cues are tested together across panels.
+
+At fixed one-column width,0.6pt strokes/2pt markers and hatches can complement
+colour;6alpha.18bands still blend strongly in greyscale. Inspect the real size,
+use fewer bands/categories, boundary strokes/direct labels or separate panels.
+The committed comparison is an agent visual review of synthetic renderings,
+not printer/observer testing or accessibility certification.
+
 ## Dependencies and distribution
 
 The declarative/state/JSON core has no required third-party dependencies.

@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified finite hatch/marker/dash and legend mapping, linear-luminance proxy
+  greyscale and fixed one-column colour/grey comparisons. Removed unlimited
+  colour-count/readability claims from bilingual/generated docs and gallery
+  captions, retaining visible transparency/small-size limitations.
 - Corrected palette quality reports to measure final8-bit HEX output and actual
   mapped-float lightness rather than nominal LCH. Added explicit CVD/model/severity/
   representation conditions, preserving generated colours and existing thresholds;
