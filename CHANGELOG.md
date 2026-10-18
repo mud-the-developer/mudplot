@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added fixed-canvas diagnostics for automatic title/suptitle/outside-legend
+  overflow or overlap, including unbroken text that previously clipped silently.
+  Impossible legend margins no longer create negative solver rectangles. Manual
+  positions, physical size and warning-as-error output rollback remain explicit.
 - Verified all five TeX presets at one/two columns and two fractions against real
   PNG/PDF/SVG boxes and both previews. Clarified existing journal rc-style versus
   last size-action priority, including clearing journal style for explicit font

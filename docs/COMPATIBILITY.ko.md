@@ -58,6 +58,17 @@ transaction으로 쓰지는 않습니다. floating-point 범위를 넘는 좌표
 조용히 바꿔서는 안 됩니다. 현재 `FigureSpec → renderer` 경계를 유지하기 위해
 실제 필요가 없는 backend interface를 미리 만들지는 않습니다.
 
+## 자동 layout 한계
+
+Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.
+Canvas초과/상호겹침이남으면요청canvas/spec/font크기를바꾸지않고행동가능한UserWarning을
+냅니다. 공백없는긴token은명시줄바꿈이필요할수있고내용이안들어가면figure를키우거나
+text/font를줄여야합니다. 음수workingrect는layoutsolver에넘기지 않습니다.
+
+Manual/draggedtext·명시legendanchor는caller소유로강제이동하지않습니다. 경고는측정bbox
+진단이지보편가독성/모든artist충돌검사가아닙니다. Caller가warning을error로승격하면
+single-fileexport실패시이전출력과소유Figure정리도유지합니다.
+
 ## 상태와 action 의미
 
 `FigureSpec`은 계속 mutable dataclass/list graph입니다. `reduce()`는 입력을

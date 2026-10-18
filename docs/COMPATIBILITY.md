@@ -59,6 +59,20 @@ Optional future Plotly/Cairo adapters must not silently change the existing
 default or the reducer/JSON contract. No speculative backend interface is
 required to retain the current `FigureSpec → renderer` boundary.
 
+## Automatic layout limits
+
+With adaptive layout enabled, automatic panel titles/suptitle and named outside
+legends are checked after drawing. Remaining canvas overflow or mutual overlap
+emits an actionable `UserWarning` without changing the requested canvas, spec or
+font size. Unbroken tokens may need explicit line breaks; enlarge the figure or
+reduce text/font size when content cannot fit. Negative working rectangles are
+not sent to the layout solver.
+
+Manual/dragged text or explicit legend anchors remain caller-owned, not forcibly
+moved. The warning is a measured bbox diagnostic, not universal legibility or
+all-artist collision detection. Callers may promote warnings to errors; failed
+single-file exports then retain the previous output and close owned Figures.
+
 ## State and action semantics
 
 `FigureSpec` remains a mutable dataclass/list graph. `reduce()` preserves its

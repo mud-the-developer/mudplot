@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 38차에서fixedcanvas에못드는자동text를진단했습니다.** FIND-033의unbrokentitle/
+suptitle무경고clipping과oversizedoutsidelegend의음수rectsolver경로를재현해유효rect만
+적용하고최종자동textbbox/겹침은행동가능한genericwarning을냅니다. 수동위치/spec/font/
+물리canvas는재작성하지않고CLI진단·warning-as-error의rollback/lifecycle도확인했습니다.
+
+관련145통과/명시impossiblefixture의MPL경고8·최소9통과/2975deselected/경고21과
+품질/packaging8명령이통과했습니다. LAY-06은감지정책에서PASS,LAY-04는CJK/font등이
+남아RUNNING이며 [근거](review_evidence/layout_boundary_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS84/RUNNING10/OPEN55/DEFERRED1**입니다.
+805기준run은알려진type실패·floor/양native성공으로완료됐고hotfix5918/preset66fe는
+게시했습니다. 현재CI39139498998은이번effect이전이므로단위는로컬보존하며버전/
+의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 37차
+
 **리뷰 37차에서 실제TeXpreset전부의filebox를확인했습니다.** 5preset×columns1/2×
 fraction.75/1의20행에서vector/mockpreview·spec/render·PNG/PDF/SVG크기가맞습니다.
 TeX72.27pt/in과vector72pt/in을구분하고100DPI양자화1pixel허용·preview원본보존을확인했습니다.

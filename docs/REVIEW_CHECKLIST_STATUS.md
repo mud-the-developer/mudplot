@@ -18,6 +18,27 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 38차 — automatic text의 불가능 layout 진단
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-layout-probe-izllqm3k`와
+  [bbox/경고/CLI/rollback 요약](review_evidence/layout_boundary_verification.json)을 보존합니다.
+- **FIND-033:** 공백없는긴자동title/suptitle이잘려도경고없던2case를재현했습니다. Tiny
+  multiline은기존Matplotlibwarning이있어별도새오류로세지않습니다. 추가outsidelegend는
+  음수workingrect로solver예외가나던기존경로를확인해유효rect만적용하도록고쳤습니다.
+- 최종draw뒤자동paneltitle/suptitle·namedoutsidelegend의canvas/상호bbox를1pixel허용으로
+  점검해generic UserWarning을냅니다. 입력문자열을log에복제하지않고명시줄바꿈/크기/
+  font조정안내를제공합니다. Canvas확대/font축소/원문변경은없고manualtitle/legend는caller소유입니다.
+- 지원English/multiline의두panelbbox는작은canvas안에서분리됐고,9before/after extreme
+  fixture도초과시진단합니다. CLI는경고stderr+원래PNG크기를유지하며warning-as-error는
+  이전출력/원문보존·Figure/staging정리를유지합니다. 새9test·관련145통과/명시impossible
+  fixture의MPLwarning8·실제floor9통과/2975deselected/경고21·양platformtype/Ruff232/
+  계약/packaging8명령exit0입니다. LSP3경로는2clean/1inconclusive이며type검사를별도보존합니다.
+- LAY-06은지원한감지/경고정책에서PASS입니다. LAY-04는CJK/다른font/긴group등이남아
+  OPEN→RUNNING만반영합니다. 모든가독성/artist충돌/외부수동위치보장은아닙니다.
+- 기준805CI는minimum/양Rust성공·3.10Pyright실패/3.12취소로완료됐고platformhotfix5918/
+  preset66fe를이번단위초기에게시했습니다. 새CI39139498998은진행중이며이renderer변경
+  이전결과로검증했다고하지않습니다. 단위는로컬보존하고버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 37차 — 전체 TeX preset·columns의 실제 출력 크기
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-preset-geometry-mteetbd9`와
@@ -1073,9 +1094,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | LAY-01 | P0 | PASS | 최종 파일의 물리 크기 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-02 | P0 | PASS | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-03 | P1 | PASS | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-04 | P1 | OPEN | 긴 제목·suptitle·범례 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-04 | P1 | RUNNING | 긴 제목·suptitle·범례 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-05 | P1 | OPEN | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-06 | P1 | OPEN | 배치 불가능 상태의 처리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-06 | P1 | PASS | 배치 불가능 상태의 처리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-07 | P1 | OPEN | 폰트 부재·fallback·한글 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-08 | P1 | OPEN | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-09 | P1 | OPEN | DPI·벡터 출력과 UI 위치의 일치 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
@@ -1148,8 +1169,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 83, RUNNING 9, OPEN 57, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 84, RUNNING 10, OPEN 55, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

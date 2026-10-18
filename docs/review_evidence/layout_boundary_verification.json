@@ -1,0 +1,631 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "69467b3a63e823ddd5946d75ffdfdfa5b764542ca2dfd4e616e1d0450793f3a2",
+    "tests/test_review_layout_boundaries.py": "aefae564e557ff7ea849a9124610694bcc0bca68e87fe54484bbef8ce9706dbb",
+    "scripts/check_minimum_versions.py": "4b134d7bb1026b7c80b6b497d40f8a684d2b360a74ae73c4bb4277d501bb861b"
+  },
+  "pre_fix_scope": "Two automatic unbroken title/suptitle cases silently overflowed; the tiny fixture already emitted Matplotlib warnings but lacked our actionable generic diagnostic. An oversized named legend produced an unsatisfiable negative layout rectangle. Harness assertions captured those failures, not preserved as successful raw local runs.",
+  "before_bbox_rows": [
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "normal",
+      "inside": true,
+      "horizontal_title_overlap_fraction": 0,
+      "boxes": [
+        [
+          0.0038599537037036827,
+          0.8634736429398149,
+          0.5417418981481481,
+          0.98611
+        ],
+        [
+          0.5544155092592593,
+          0.8634736429398149,
+          0.9911863425925926,
+          0.98611
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "horizontal_title_overlap_fraction": 1.7647309027777778,
+      "boxes": [
+        [
+          -0.853453414351852,
+          0.934986953125,
+          1.4112774884259258,
+          0.98611
+        ],
+        [
+          -0.35345341435185196,
+          0.934986953125,
+          1.9112774884259258,
+          0.98611
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "multiline",
+      "inside": true,
+      "horizontal_title_overlap_fraction": 0,
+      "boxes": [
+        [
+          0.19891203703703703,
+          0.8021554644097223,
+          0.3466898148148148,
+          0.98611
+        ],
+        [
+          0.6989120370370371,
+          0.8021554644097223,
+          0.8466898148148149,
+          0.98611
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "normal",
+      "inside": true,
+      "horizontal_title_overlap_fraction": 0,
+      "boxes": [
+        [
+          0.03377246732026146,
+          0.6465962989267676,
+          0.5143484477124184,
+          0.89744339291351
+        ],
+        [
+          0.5823937908496732,
+          0.6465962989267676,
+          0.9657271241830065,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "horizontal_title_overlap_fraction": 3.496583946078431,
+      "boxes": [
+        [
+          -1.7080550449346406,
+          0.9113458451704546,
+          2.2885289011437906,
+          0.9810590909090909
+        ],
+        [
+          -1.2080550449346403,
+          0.9113458451704546,
+          2.788528901143791,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "multiline",
+      "inside": true,
+      "horizontal_title_overlap_fraction": 0,
+      "boxes": [
+        [
+          0.1436683006535948,
+          0.7302119969223485,
+          0.404452614379085,
+          0.9810590909090909
+        ],
+        [
+          0.6436683006535948,
+          0.7302119969223485,
+          0.904452614379085,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "normal",
+      "inside": false,
+      "horizontal_title_overlap_fraction": 0.42393939393939395,
+      "boxes": [
+        [
+          -0.12219696969696975,
+          0.924768802703373,
+          0.7244696969696969,
+          3.288208937872025
+        ],
+        [
+          0.3005303030303029,
+          0.9247688027033734,
+          1.1471969696969697,
+          3.550156327504961
+        ]
+      ],
+      "warnings": [
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller."
+      ]
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "horizontal_title_overlap_fraction": 13.088385416666668,
+      "boxes": [
+        [
+          -6.475568527885323,
+          0.72137265625,
+          7.112816888781345,
+          0.9404714285714286
+        ],
+        [
+          -5.975568527885323,
+          0.72137265625,
+          7.612816888781345,
+          0.9404714285714286
+        ]
+      ],
+      "warnings": []
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "multiline",
+      "inside": false,
+      "horizontal_title_overlap_fraction": 0.13727272727272727,
+      "boxes": [
+        [
+          0.0211363636363636,
+          0.924768802703373,
+          0.5811363636363636,
+          2.5015219649057547
+        ],
+        [
+          0.4438636363636363,
+          0.924768802703373,
+          1.0038636363636364,
+          2.5015219649057547
+        ]
+      ],
+      "warnings": [
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller."
+      ]
+    }
+  ],
+  "after_bbox_rows": [
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "normal",
+      "inside": true,
+      "bbox_fraction": [
+        [
+          0.0038599537037036827,
+          0.8634736429398149,
+          0.5417418981481481,
+          0.98611
+        ],
+        [
+          0.5544155092592593,
+          0.8634736429398149,
+          0.9911863425925926,
+          0.98611
+        ]
+      ],
+      "warnings": [],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "bbox_fraction": [
+        [
+          -0.853453414351852,
+          0.934986953125,
+          1.4112774884259258,
+          0.98611
+        ],
+        [
+          -0.35345341435185196,
+          0.934986953125,
+          1.9112774884259258,
+          0.98611
+        ]
+      ],
+      "warnings": [
+        "automatic layout text cannot fit the fixed canvas without clipping or overlap; add explicit line breaks, increase figure size or reduce text/font size. Canvas size is unchanged; manual positions remain caller-owned."
+      ],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        6,
+        3
+      ],
+      "fixture": "multiline",
+      "inside": true,
+      "bbox_fraction": [
+        [
+          0.19891203703703703,
+          0.8021554644097223,
+          0.3466898148148148,
+          0.98611
+        ],
+        [
+          0.6989120370370371,
+          0.8021554644097223,
+          0.8466898148148149,
+          0.98611
+        ]
+      ],
+      "warnings": [],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "normal",
+      "inside": true,
+      "bbox_fraction": [
+        [
+          0.03377246732026146,
+          0.6465962989267676,
+          0.5143484477124184,
+          0.89744339291351
+        ],
+        [
+          0.5823937908496732,
+          0.6465962989267676,
+          0.9657271241830065,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": [],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "bbox_fraction": [
+        [
+          -1.7080550449346406,
+          0.9113458451704546,
+          2.2885289011437906,
+          0.9810590909090909
+        ],
+        [
+          -1.2080550449346403,
+          0.9113458451704546,
+          2.788528901143791,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": [
+        "automatic layout text cannot fit the fixed canvas without clipping or overlap; add explicit line breaks, increase figure size or reduce text/font size. Canvas size is unchanged; manual positions remain caller-owned."
+      ],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        3.4,
+        2.2
+      ],
+      "fixture": "multiline",
+      "inside": true,
+      "bbox_fraction": [
+        [
+          0.1436683006535948,
+          0.7302119969223485,
+          0.404452614379085,
+          0.9810590909090909
+        ],
+        [
+          0.6436683006535948,
+          0.7302119969223485,
+          0.904452614379085,
+          0.9810590909090909
+        ]
+      ],
+      "warnings": [],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "normal",
+      "inside": false,
+      "bbox_fraction": [
+        [
+          -0.12219696969696975,
+          0.924768802703373,
+          0.7244696969696969,
+          3.288208937872025
+        ],
+        [
+          0.3005303030303029,
+          0.9247688027033734,
+          1.1471969696969697,
+          3.550156327504961
+        ]
+      ],
+      "warnings": [
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "automatic layout text cannot fit the fixed canvas without clipping or overlap; add explicit line breaks, increase figure size or reduce text/font size. Canvas size is unchanged; manual positions remain caller-owned.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller."
+      ],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "unbroken",
+      "inside": false,
+      "bbox_fraction": [
+        [
+          -6.475568527885323,
+          0.72137265625,
+          7.112816888781345,
+          0.9404714285714286
+        ],
+        [
+          -5.975568527885323,
+          0.72137265625,
+          7.612816888781345,
+          0.9404714285714286
+        ]
+      ],
+      "warnings": [
+        "automatic layout text cannot fit the fixed canvas without clipping or overlap; add explicit line breaks, increase figure size or reduce text/font size. Canvas size is unchanged; manual positions remain caller-owned."
+      ],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    },
+    {
+      "size": [
+        1,
+        0.7
+      ],
+      "fixture": "multiline",
+      "inside": false,
+      "bbox_fraction": [
+        [
+          0.0211363636363636,
+          0.924768802703373,
+          0.5811363636363636,
+          2.5015219649057547
+        ],
+        [
+          0.4438636363636363,
+          0.924768802703373,
+          1.0038636363636364,
+          2.5015219649057547
+        ]
+      ],
+      "warnings": [
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "automatic layout text cannot fit the fixed canvas without clipping or overlap; add explicit line breaks, increase figure size or reduce text/font size. Canvas size is unchanged; manual positions remain caller-owned.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller.",
+        "constrained_layout not applied because axes sizes collapsed to zero.  Try making figure larger or Axes decorations smaller."
+      ],
+      "canvas_unchanged": true,
+      "spec_unchanged": true
+    }
+  ],
+  "policy": "Best-effort wrapping/reserved legend space keeps the exact figure. Only apply a positive working rectangle; after final draw inspect automatic panel titles/suptitle/named outside legends for canvas bounds or mutual overlap with1pixel tolerance. Warn generically without echoing input text; manual title/legend positions remain caller-owned. No automatic font shrink/newlines/canvas resize.",
+  "tests": "Seven bounds/manual/fit fixtures plus fresh CLI warning/exactPNGcanvas and warning-as-error rollback/lifecycle cases. Explicit tiny/oversized fixtures retain old Matplotlib warnings as well.",
+  "limits": "LAY06supported detectionpolicy passed;LAY04remainsRUNNINGforCJK/otherfont/group combinations. This is a measured bbox diagnostic, not universal aesthetic/legibility guarantee or arbitrary artist collision detection. Existing auto-layout-off/manual positions are not newly managed.",
+  "baseline805": "Completed failure:Pyright3.10WinDLLerrors;3.12cancelled;minimum+bothRustsuccess. Guardhotfix5918andpreset66fe were published before this new production change.",
+  "checks": [
+    {
+      "name": "current-layout-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_layout_boundaries.py",
+        "tests/test_layout.py",
+        "tests/test_review_preset_sizes.py",
+        "tests/test_references.py",
+        "tests/test_visual_quality.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\current-results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "145 passed, 8 warnings in 127.94s (0:02:07)"
+      ],
+      "log_text_sha256": "675bbd7a1094a5a366a20de90b77234ac467b6e6029fd73f144da685474fe661"
+    },
+    {
+      "name": "current-floor-boundary",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "9 passed, 2975 deselected, 21 warnings in 7.95s"
+      ],
+      "log_text_sha256": "bdc461a811539d2a880400118aab6d3f8022e502920d27fd927b4a4511b63460"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "232 files already formatted"
+      ],
+      "log_text_sha256": "5b7e073bcd77fc6e9dfe15ddde44425e672f58513e0f61417db7579c8b7de481"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "1dc2d2c3cb3b14a32f66b400f5e754cff13459fda4f0d0ed4d802b68d21f06b0"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "257837bbded659edd400eb1a26906c6f78b73f087e4b89b015d3b14ed65066e3"
+    }
+  ],
+  "raw_bbox_files_sha256": {
+    "rows.json": "b08d943a6099a89f00f7d749d4516cef41c644a6ca5c6b59fcfc90d10f6496bb",
+    "after_rows.json": "f1a406c5665abd8cc404b16b53249ea1835a0c17df2adf98718c6ef53d5e1b14",
+    "current-results.xml": "20ce946f8fe2f03ebab87217cebf8caf67cd30d84847271dec76abaea4b6a7fb"
+  }
+}

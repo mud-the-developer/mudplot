@@ -2499,7 +2499,7 @@ def _link_named_axes(axes, panels, axis: str) -> None:
 
 
 def _autofit(fig, pad_px: float = 6.0) -> None:
-    """Precompute layout so text never overlaps or gets silently clipped,
+    """Fit automatic text where possible and warn about remaining bounds/overlaps,
     while keeping the figure at its exact configured size (needed for TeX
     column-width placement -- see ``mudplot.tex``).
 
@@ -2539,12 +2539,47 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
             bottom = max(bottom, -bb.y0 + pad_px / fig_h)
             changed = True
 
-    if changed and fig.get_layout_engine() is not None:
+    if (
+        changed
+        and fig.get_layout_engine() is not None
+        and right > left
+        and top > bottom
+    ):
         fig.get_layout_engine().set(rect=(left, bottom, right - left, top - bottom))
 
     # Re-draw so wrapped titles measure against the (possibly now smaller)
     # available width; harmless no-op if nothing changed above.
     fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    automatic = [ax.title for ax in fig.axes if ax.title.get_text()]
+    if fig._suptitle is not None and fig._suptitle.get_text():
+        automatic.append(fig._suptitle)
+    for ax in fig.axes:
+        legend = ax.get_legend()
+        if legend is not None and getattr(legend, "_mudplot_auto_margin", False):
+            automatic.append(legend)
+    boxes = [artist.get_window_extent(renderer) for artist in automatic]
+    outside = any(
+        bb.x0 < fig.bbox.x0 - 1
+        or bb.y0 < fig.bbox.y0 - 1
+        or bb.x1 > fig.bbox.x1 + 1
+        or bb.y1 > fig.bbox.y1 + 1
+        for bb in boxes
+    )
+    overlap = any(
+        min(a.x1, b.x1) - max(a.x0, b.x0) > 1 and min(a.y1, b.y1) - max(a.y0, b.y0) > 1
+        for index, a in enumerate(boxes)
+        for b in boxes[index + 1 :]
+    )
+    if outside or overlap:
+        warnings.warn(
+            "automatic layout text cannot fit the fixed canvas without clipping or "
+            "overlap; add explicit line breaks, increase figure size or reduce text/"
+            "font size. Canvas size is unchanged; "
+            "manual positions remain caller-owned.",
+            UserWarning,
+            stacklevel=2,
+        )
 
 
 @matplotlib_context()

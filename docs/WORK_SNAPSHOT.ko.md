@@ -22,14 +22,19 @@
 
 ## 검증과 리뷰 상태
 
+- 최신자동layout은title/suptitle/namedlegend의남은경계/겹침을경고하고음수solverrect를
+  피합니다. CLI/warning-as-error가canvas/정리를유지하며관련145/floor9가통과해LAY-06은
+  PASS입니다. LAY-04는다른font/CJK/조합이남아부분검증이며보편가독성보장은아닙니다.
+- 이전805floor/양native는성공했지만matrix는알려진platformtype실패로끝났습니다.
+  Hotfix/preset게시뒤새66feCI가진행중이며이번layouteffect이전결과로소급하지 않습니다.
+
 - 최신5TeXpreset×2columns×2fraction의20행에서양preview와실제PNG/PDF/SVGbox가
   맞았습니다. 기존size/style우선을명시하고runtime교정은유지해LAY-03은registry범위PASS입니다.
-  관련58/floor24통과·품질8명령을기록하고남은baselinefloor동안test/doc과hotfix는로컬보존합니다.
+  관련58/floor24통과·품질8명령을기록했고이전floor완료뒤hotfix/preset을함께게시했습니다.
 
 - 최신805CI실패는추출Windowsfactory의LinuxPyright2오류이며renderer/test실패가
   아닙니다. 명시platformguard로복구하고양targetglobal검사0·runtime4통과/OS1skip을
-  확인했지만새Linux실행/CI는필요합니다. Layout보다실패를우선했고남은baselinejob중
-  hotfix는로컬에보존합니다.
+  확인했지만새Linux실행/CI는필요합니다. Toolinghotfix는이제게시됐습니다.
 
 - 최신HTML/SVG literal/draft decode-once·양raweditor4payload가데이터를유지하고active
   node를추가하지않았습니다. 명시trustedPGFescaping/math도컴파일돼OUT-09는범위내PASS이며
@@ -217,7 +222,9 @@
   실패CIstep과별도currentplatform검사를기록했습니다.
 - [Presetgeometry 근거](review_evidence/preset_geometry_verification.json)에 실제
   filebox·TeX단위정의·현재size/font우선순위를기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS83/RUNNING9/OPEN57/DEFERRED1**.
+- [Layout경계 근거](review_evidence/layout_boundary_verification.json)에before/after
+  bbox·행동가능warning·CLI/rollbackcontrol을기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS84/RUNNING10/OPEN55/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

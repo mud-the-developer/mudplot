@@ -28,17 +28,24 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest automatic layout warns on remaining title/suptitle/named-legend bounds
+  or mutual overlap and avoids negative solver rects. CLI/warning-as-error paths
+  preserve canvas and owned cleanup.145related/floor9checks pass. LAY-06 is PASS;
+  LAY-04 remains partial for other fonts/CJK/combinations, not universal legibility.
+- Previous805floor/native jobs completed successfully but the matrix failed its
+  known platform type check. Hotfix/preset units are published; fresh66feCI is
+  active before this layout change, so this local effect unit needs its own result.
+
 - Latest5TeX presets×2columns×2fractions match both previews and actual PNG/PDF/
   SVG boxes in20rows. Existing size/style priority is explicit; runtime behavior
   and calibration are unchanged. LAY-03 is PASS for current registry values.
-  Related58/floor24passes and8quality checks pass. Hold this unit with the platform
-  hotfix while the remaining prior floor job runs.
+  Related58/floor24passes and8quality checks pass. That earlier hold ended after
+  the prior floor completed and the hotfix/preset units published together.
 
 - Latest805CI exposed2Linux Pyright errors in the extracted Windows factory, not
   a renderer/test failure. Explicit platform guarding restores that boundary;
   both Linux/Windows global checks pass locally, with4runtime tests/1OSskip.
-  A fresh Linux guard execution/CI is still needed. Layout work was postponed;
-  hold this tooling fix while the remaining prior jobs settle.
+  A fresh Linux guard execution/CI is still needed; the tooling fix is now published.
 
 - Latest HTML/SVG literal/draft decode-once and actual raw-editor4payload checks
   preserve data without added active nodes. Explicit trusted PGF escaping/math
@@ -257,7 +264,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records the exact failed CI step and separate current platform checks.
 - [Preset geometry evidence](review_evidence/preset_geometry_verification.json)
   retains exact file boxes, TeX-unit definitions and current size/font priorities.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS83/RUNNING9/OPEN57/
+- [Layout-boundary evidence](review_evidence/layout_boundary_verification.json)
+  retains before/after bounds, actionable-warning and CLI/rollback controls.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS84/RUNNING10/OPEN55/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

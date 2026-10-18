@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 38 diagnoses automatic text that cannot fit a fixed canvas.**
+FIND-033 reproduced silent unbroken-title/suptitle clipping and an oversized
+outside-legend negative-rect solver path. Valid rects alone reach the solver;
+final automatic text bounds/overlap now warn generically with actionable choices.
+Manual positions, source text/font size and physical canvas are not rewritten.
+CLI diagnostics and warning-as-error rollback/lifecycle are verified.
+
+Related145passes/8expected impossible-fixture MPL warnings and floor9passes/
+2975deselected/21warnings pass with8quality/package records. LAY-06 is PASS for
+this detection policy; LAY-04 is RUNNING for CJK/fonts/other combinations.
+[Evidence](review_evidence/layout_boundary_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS84/RUNNING10/OPEN55/DEFERRED1**. The805run ended with the known type failure
+and successful floor/native jobs; hotfix5918/preset66fe are already published.
+Current CI39139498998 predates this effect change. Keep this unit local during it;
+versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 37
+
 **Review phase 37 checks every current TeX preset through real output boxes.**
 Five presets×one/two columns×.75/1fractions match vector/mock preview, spec/render
 and PNG/PDF/SVG dimensions in20recorded rows. TeX72.27pt/in and vector72pt/in are
