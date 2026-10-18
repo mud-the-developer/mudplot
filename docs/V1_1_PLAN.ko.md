@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 41차에서style소유권과DPI별pixelpadding을분리했습니다.** 번갈아그린theme/journal은
+callerrc전부를복구하고같은ambient환경의독립process와PNG/PDF/SVGSHA가같아LAY-08은
+범위내PASS입니다. FIND-035는pad를0.02inch로고정해기존300DPI6px를유지하면서dense
+150/300오차를0.02689→0.01041inch로줄이며spec/선폭은바꾸지않습니다.
+
+Editor600DPI/capped2000x1000preview는최대.00334inch차이·1.5pt선폭·720x360ptSVG를
+유지하지만75DPIdense의.14594inch잔차가남아LAY-09는RUNNING입니다. 관련88/floor6통과/
+3003deselected/경고13·품질8명령은 [근거](review_evidence/style_dpi_verification.json)에
+보존했고 [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS88/RUNNING10/OPEN51/DEFERRED1**입니다.
+기준5caCI39142799672는5job모두성공했으나queuedguide/pad이전이라함께게시해새CI를
+받으며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 40차
+
 **리뷰 40차에서secondary축과반복guide의실제겹침을고쳤습니다.** FIND-034의2panel/
 2colorbar/share축/y2label/outsidelegend겹침과명시series범례반복을재현했습니다.
 고정1.35axes배율을실측물리간격으로바꾸고같은ungroupedpoint/line의source/axis/reference만

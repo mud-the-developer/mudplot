@@ -22,9 +22,14 @@
 
 ## 검증과 리뷰 상태
 
+- 최신전체rc복구/번갈아style/독립process대조로LAY-08은같은ambient조건에서PASS입니다.
+  0.02inchpad가150/300DPI차이를줄이지만75DPIdense잔차는남아LAY-09는RUNNING입니다.
+  관련88/floor6통과·품질8명령이며source/state/vector크기는유지합니다.
+- 기준5caCI39142799672는5job전부성공했지만queuedguide/pad이전이라함께게시해새CI를받습니다.
+
 - 최신복합guidebbox/실제renderer검사는y2label/outsidelegend겹침과같은명시ungrouped
   point/lineidentity반복을해소했습니다. 관련185/floor14통과이며rawidentity/수동anchor/
-  fixedcanvas/불가능경고는유지해LAY-05는범위내PASS입니다. 5caCI취소없이단위는로컬보존합니다.
+  fixedcanvas/불가능경고는유지해LAY-05는범위내PASS입니다. 이전로컬보존으로5caCI완료를보호했습니다.
 
 - 최신실제fontfile/glyphindex/bbox가한글지원·minus/family부재·weightfallback진단을
   구분합니다. 한글/긴그룹bbox와기존지원·경고corpus로LAY-04/07은범위내PASS이며
@@ -238,7 +243,9 @@
   glyph/bbox진단을폰트binary나보편보장없이보존했습니다.
 - [복합guide 근거](review_evidence/mixed_guide_verification.json)와
   [visualbaseline](review_evidence/mixed_guides_baseline.png)에bbox/renderer event를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS87/RUNNING9/OPEN53/DEFERRED1**.
+- [Style/DPI 근거](review_evidence/style_dpi_verification.json)에rc/hash·물리padding과
+  명시한저DPI잔차를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS88/RUNNING10/OPEN51/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

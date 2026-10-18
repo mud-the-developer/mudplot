@@ -69,6 +69,16 @@ Manual/draggedtext·명시legendanchor는caller소유로강제이동하지않습
 진단이지보편가독성/모든artist충돌검사가아닙니다. Caller가warning을error로승격하면
 single-fileexport실패시이전출력과소유Figure정리도유지합니다.
 
+## Style소유권과preview해상도
+
+소유render/save는성공/실패뒤callerrcParams를복구합니다. 반복style/journal출력은같은
+ambientrc를설정한독립process와비교하며다른caller환경의byteidentity를약속하지않습니다.
+
+자동layoutpadding은모든DPI에서0.02inch(이전300DPI의6pixel)입니다. Cappedpreviewpixel과
+원래spec/DPI/선폭은독립이며150/300DPI densegeometry와600→200DPI simplepreview는이환경에서
+0.02inch내였습니다. 75DPI densegeometry에는더큰backend/layout잔차가남아모든DPI의정확한
+WYSIWYG로확대하지않으며충분한preview해상도를사용해야합니다.
+
 ## 복합 guide
 
 Secondaryy축옆namedoutside-rightlegend는고정axes폭배율이아닌실제tick/label/offsettext

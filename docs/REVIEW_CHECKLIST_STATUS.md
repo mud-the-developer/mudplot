@@ -18,6 +18,27 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 41차 — style격리와물리DPI간격
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-style-dpi-dgaoc39s`와
+  [rc/hash/DPI/preview 요약](review_evidence/style_dpi_verification.json)을 보존합니다.
+- Publication/minimal/paper-grid+journal을callerambientrc에서번갈아저장해전체rcParams의
+  changedkey0·실패복구를확인했습니다. PNG/PDF/SVG×3variant의반복/독립processSHA가
+  동일합니다. 초기freshprocess에callerambientrc를안넣은비교는다른환경이어서QA를맞췄고
+  제품styleleak으로세지않습니다. LAY-08은이owned/equivalent환경에서PASS입니다.
+- **FIND-035:** 같은dense guide의150/300DPI에서절대pixelpadding때문에물리위치가
+  0.02689395inch달랐습니다. Adaptivepad를0.02inch×figDPI로변환해default300DPI의6px는
+  유지하고차이는0.01041395inch로줄였습니다. 다른linewidth/data/spec크기는바꾸지않았습니다.
+- Editor600DPI10x5inch→2000x1000preview는원래state를유지하고finalpanel과최대
+  0.00333334inch차이·1.5pt선폭·SVG720x360pt를유지합니다. Rust는공유CLIpreview경로를
+  쓰지만이번단위의새native위치검증은없습니다. 75DPI dense잔차0.14594497inch는남아
+  LAY-09는OPEN→RUNNING만반영하며보편저해상도WYSIWYG보장으로세지않습니다.
+- 새6case/관련88통과·실제floor6통과/3003deselected/경고13·양platformtype/Ruff235/
+  계약/packaging8명령exit0·변경3경로LSP clean입니다. RC복구와geometry를섞어증명하지않고
+  oldfullsuite결과는새pad변경의검증으로소급하지않습니다.
+- 기준5caCI39142799672는5job모두성공해대기364guide수정과함께게시할수있습니다.
+  새sourceCI를받으며버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 40차 — 외부legend/다중colorbar/share/y2 복합guide
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-mixed-layout-pjwb8yt3`와
@@ -1143,8 +1164,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | LAY-05 | P1 | PASS | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-06 | P1 | PASS | 배치 불가능 상태의 처리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-07 | P1 | PASS | 폰트 부재·fallback·한글 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-08 | P1 | OPEN | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-09 | P1 | OPEN | DPI·벡터 출력과 UI 위치의 일치 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-08 | P1 | PASS | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-09 | P1 | RUNNING | DPI·벡터 출력과 UI 위치의 일치 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | OUT-01 | P0 | PASS | 동일 환경의 반복 출력 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-02 | P1 | PASS | volatile metadata·ID | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-03 | P0 | PASS | 단일 파일 저장의 원자성 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
@@ -1214,8 +1235,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 87, RUNNING 9, OPEN 53, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 88, RUNNING 10, OPEN 51, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

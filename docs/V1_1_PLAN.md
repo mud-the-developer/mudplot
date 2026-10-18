@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 41 verifies style ownership and fixes DPI-dependent pixel padding.**
+Alternating themes/journal retain all caller rcParams and match fresh-process
+PNG/PDF/SVG under equivalent ambient settings; failure cleanup restores rc as well.
+LAY-08 is PASS in this owned scope. FIND-035 replaces fixed pixel margins with
+0.02inch padding, retaining former6px at300DPI. Dense150/300position error drops
+0.02689→0.01041inch; source widths/state do not change.
+
+Editor600DPI source/capped2000x1000preview differs from final geometry by<=.00334inch
+and retains1.5pt lines/final720x360pt SVG. However75DPI dense layout still differs
+.14594inch: LAY-09 is RUNNING, not universal WYSIWYG certification. Related88/floor6
+passes/3003deselected/13warnings and8quality records pass. [Evidence](review_evidence/style_dpi_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS88/RUNNING10/OPEN51/DEFERRED1**.
+Baseline5caCI39142799672 is ALL5SUCCESS before queued guide/pad effects; publish
+both units and inspect fresh CI. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 40
+
 **Review phase 40 fixes measured secondary-axis and repeated-guide collisions.**
 FIND-034 reproduced y2-label/outside-legend overlap in a two-panel/two-colorbar/
 shared-axis figure and repeated explicit-series labels. Physical measured spacing

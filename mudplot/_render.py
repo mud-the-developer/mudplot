@@ -2572,7 +2572,7 @@ def _align_secondary_legends(fig, pad_px: float) -> bool:
     return moved
 
 
-def _autofit(fig, pad_px: float = 6.0) -> None:
+def _autofit(fig, pad_inches: float = 0.02) -> None:
     """Fit automatic text where possible and warn about remaining bounds/overlaps,
     while keeping the figure at its exact configured size (needed for TeX
     column-width placement -- see ``mudplot.tex``).
@@ -2589,6 +2589,7 @@ def _autofit(fig, pad_px: float = 6.0) -> None:
        width via matplotlib's native text layout; this only needs to ask
        for a redraw after step 1 changes that width.
     """
+    pad_px = pad_inches * fig.dpi
     for _ in range(3):
         fig.canvas.draw()
         if not _align_secondary_legends(fig, pad_px):

@@ -28,11 +28,18 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest complete caller-rc restoration/alternating-style/fresh-process checks
+  make LAY-08 PASS in equivalent ambient conditions. Physical0.02inch padding
+  improves150/300DPI geometry; low75DPI dense residual keeps LAY-09 RUNNING.
+ 88related/floor6passes and8quality checks retain source/state/vector sizing.
+- Baseline5caCI39142799672 is ALL5SUCCESS, before queued guide/padding changes.
+  Publish the pair and obtain exact current-source CI rather than retroactive proof.
+
 - Latest mixed-guide bbox/actual renderer checks fix secondary-label/outside-legend
   overlap and coalesce only matching explicit ungrouped point/line identities.
  185related/floor14passes retain raw identities/manual anchors/fixed canvas and
-  impossible-fit warnings. LAY-05 is PASS in scope; the effect unit stays local
-  during5caCI rather than cancelling that workflow.
+  impossible-fit warnings. LAY-05 is PASS in scope; the earlier local hold
+  protected5caCI until completion.
 
 - Latest actual font files/glyph indices/bboxes distinguish available Hangul,
   missing minus/family and logged variable-weight fallback. CJK/long-group bounds
@@ -285,7 +292,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains actual family/glyph/bbox diagnostics without font binaries or broad promises.
 - [Mixed-guide evidence](review_evidence/mixed_guide_verification.json) and
   [visual baseline](review_evidence/mixed_guides_baseline.png) retain bounds and renderer events.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS87/RUNNING9/OPEN53/
+- [Style/DPI evidence](review_evidence/style_dpi_verification.json) retains rc/hash
+  comparisons, physical padding measurements and explicit low-DPI residuals.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS88/RUNNING10/OPEN51/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

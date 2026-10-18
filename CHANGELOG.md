@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Preserved adaptive layout margins in physical inches across DPI instead of a
+  fixed pixel count, retaining default300DPI spacing. Verified complete caller-rc
+  restoration and independent equivalent-environment style output; recorded the
+  remaining low-DPI dense-layout residual rather than promising exact all-DPI WYSIWYG.
 - Measured outside-right legend spacing beside secondary-axis decorations instead
   of a fixed axes multiplier, and coalesced repeated explicit ungrouped point/line
   guides only when source/axis/reference identity matches. Raw grouped identities

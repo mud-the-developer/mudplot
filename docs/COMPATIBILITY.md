@@ -73,6 +73,18 @@ moved. The warning is a measured bbox diagnostic, not universal legibility or
 all-artist collision detection. Callers may promote warnings to errors; failed
 single-file exports then retain the previous output and close owned Figures.
 
+## Style ownership and preview resolution
+
+Owned render/save restores caller rcParams after both success and failure. Repeated
+style/journal output is compared with an independent process under equivalent
+ambient rc settings; a different caller environment is not a byte-identity promise.
+
+Automatic layout padding is0.02inch at every DPI (the former6pixels at300DPI).
+The original spec/DPI/line widths remain independent of capped editor pixels.
+Measured150/300DPI dense geometry and600→200DPI simple preview positions are within
+0.02inch here, while75DPI dense geometry still has larger backend/layout residuals.
+Do not infer exact all-DPI WYSIWYG from these bounds; use adequate preview resolution.
+
 ## Mixed guides
 
 Named outside-right legends beside a secondary y-axis use measured visible tick/

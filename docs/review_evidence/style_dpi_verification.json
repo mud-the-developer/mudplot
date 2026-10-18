@@ -1,0 +1,581 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "7153a2c8512e634ccf42a11db023a56f9240e0ec8d3cf08cff86cdc99b770bdb",
+    "tests/test_review_style_dpi.py": "004ef9d3a539027453ae02e355b31d25ac48202ac92ca7634485db69c5ddd33e",
+    "scripts/check_minimum_versions.py": "c95004c161699bca8648ae4830b4deca8aa9465444d1302722a06a13cc6d71b2",
+    "dashboard/editor_server.py": "d525a49659606d7b79c90e42739c93ebb49677ba02e7518506fb0d20a35b2258",
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18"
+  },
+  "caller_ambient_rc": {
+    "font.size": 17,
+    "axes.linewidth": 2.75,
+    "svg.hashsalt": "caller"
+  },
+  "style_hashes": [
+    {
+      "format": "png",
+      "solo_sha256": [
+        "5c5019b238326b5ebf4d8a7e69220da54b9cb9f2581e8f8ea45ac2ba3ec1351d",
+        "d7f86a7d401021dfcab762c5c51adfbf16b4c1007cd21c02197ef339d43930da",
+        "383f6abea23574c2c31b9ac9787a892946b31094ac94ae14ae0f5752d47444df"
+      ],
+      "fresh_sha256": [
+        "5c5019b238326b5ebf4d8a7e69220da54b9cb9f2581e8f8ea45ac2ba3ec1351d",
+        "d7f86a7d401021dfcab762c5c51adfbf16b4c1007cd21c02197ef339d43930da",
+        "383f6abea23574c2c31b9ac9787a892946b31094ac94ae14ae0f5752d47444df"
+      ],
+      "repeat_sequence": [
+        {
+          "variant": 2,
+          "sha256": "383f6abea23574c2c31b9ac9787a892946b31094ac94ae14ae0f5752d47444df"
+        },
+        {
+          "variant": 0,
+          "sha256": "5c5019b238326b5ebf4d8a7e69220da54b9cb9f2581e8f8ea45ac2ba3ec1351d"
+        },
+        {
+          "variant": 1,
+          "sha256": "d7f86a7d401021dfcab762c5c51adfbf16b4c1007cd21c02197ef339d43930da"
+        },
+        {
+          "variant": 0,
+          "sha256": "5c5019b238326b5ebf4d8a7e69220da54b9cb9f2581e8f8ea45ac2ba3ec1351d"
+        },
+        {
+          "variant": 2,
+          "sha256": "383f6abea23574c2c31b9ac9787a892946b31094ac94ae14ae0f5752d47444df"
+        }
+      ],
+      "caller_rc_changed_keys": []
+    },
+    {
+      "format": "pdf",
+      "solo_sha256": [
+        "4e4fdaf8401172b062344001c1b947ab46bc50af59dea54f0b7901a128eb5a4f",
+        "2db75d6abe52f8ec926f0faa0beab6f2c254ecb1ec71d332fb8fc29e48de9ef6",
+        "bbd883bc29a12ba0af8c283a5385242b074c52dbb8cfa9abcc8be1aea1cd890d"
+      ],
+      "fresh_sha256": [
+        "4e4fdaf8401172b062344001c1b947ab46bc50af59dea54f0b7901a128eb5a4f",
+        "2db75d6abe52f8ec926f0faa0beab6f2c254ecb1ec71d332fb8fc29e48de9ef6",
+        "bbd883bc29a12ba0af8c283a5385242b074c52dbb8cfa9abcc8be1aea1cd890d"
+      ],
+      "repeat_sequence": [
+        {
+          "variant": 2,
+          "sha256": "bbd883bc29a12ba0af8c283a5385242b074c52dbb8cfa9abcc8be1aea1cd890d"
+        },
+        {
+          "variant": 0,
+          "sha256": "4e4fdaf8401172b062344001c1b947ab46bc50af59dea54f0b7901a128eb5a4f"
+        },
+        {
+          "variant": 1,
+          "sha256": "2db75d6abe52f8ec926f0faa0beab6f2c254ecb1ec71d332fb8fc29e48de9ef6"
+        },
+        {
+          "variant": 0,
+          "sha256": "4e4fdaf8401172b062344001c1b947ab46bc50af59dea54f0b7901a128eb5a4f"
+        },
+        {
+          "variant": 2,
+          "sha256": "bbd883bc29a12ba0af8c283a5385242b074c52dbb8cfa9abcc8be1aea1cd890d"
+        }
+      ],
+      "caller_rc_changed_keys": []
+    },
+    {
+      "format": "svg",
+      "solo_sha256": [
+        "bd5d234269788be45516e69cb65d67a392919cfae8ba35e2a8dd42fa4c26d796",
+        "d015076930b8741f246fb5e401ecc3c62b733e03a9c74305a1d2dd7e695f6f58",
+        "3660bdcf24f301e58cdcc91826e4572b2441f812546f0aa8c9cf6e799324d0f1"
+      ],
+      "fresh_sha256": [
+        "bd5d234269788be45516e69cb65d67a392919cfae8ba35e2a8dd42fa4c26d796",
+        "d015076930b8741f246fb5e401ecc3c62b733e03a9c74305a1d2dd7e695f6f58",
+        "3660bdcf24f301e58cdcc91826e4572b2441f812546f0aa8c9cf6e799324d0f1"
+      ],
+      "repeat_sequence": [
+        {
+          "variant": 2,
+          "sha256": "3660bdcf24f301e58cdcc91826e4572b2441f812546f0aa8c9cf6e799324d0f1"
+        },
+        {
+          "variant": 0,
+          "sha256": "bd5d234269788be45516e69cb65d67a392919cfae8ba35e2a8dd42fa4c26d796"
+        },
+        {
+          "variant": 1,
+          "sha256": "d015076930b8741f246fb5e401ecc3c62b733e03a9c74305a1d2dd7e695f6f58"
+        },
+        {
+          "variant": 0,
+          "sha256": "bd5d234269788be45516e69cb65d67a392919cfae8ba35e2a8dd42fa4c26d796"
+        },
+        {
+          "variant": 2,
+          "sha256": "3660bdcf24f301e58cdcc91826e4572b2441f812546f0aa8c9cf6e799324d0f1"
+        }
+      ],
+      "caller_rc_changed_keys": []
+    }
+  ],
+  "dpi_metrics": {
+    "150_before_inches": 0.026893950000000055,
+    "150_after_inches": 0.010413949999999506,
+    "75_after_inches": 0.14594496809502988
+  },
+  "dense_primary_bbox_before": [
+    {
+      "kind": "mixed",
+      "dpi": 75,
+      "axes": [
+        [
+          0.05532462962962963,
+          0.08454737123842593,
+          0.1169293201336283,
+          0.98611
+        ],
+        [
+          0.5553246296296295,
+          0.08454737123842593,
+          0.6169293201336283,
+          0.98611
+        ],
+        [
+          0.05532462962962963,
+          0.08454737123842593,
+          0.1169293201336283,
+          0.98611
+        ],
+        [
+          0.40165849852456903,
+          0.35051461410721685,
+          0.41089920210016884,
+          0.7201427571312091
+        ],
+        [
+          0.5553246296296295,
+          0.08454737123842593,
+          0.6169293201336283,
+          0.98611
+        ],
+        [
+          0.901658498524569,
+          0.35051461410721463,
+          0.910899202100169,
+          0.7201427571312113
+        ]
+      ],
+      "legends": [
+        [
+          0.21441159733270237,
+          0.4647407588252315,
+          0.398578263999369,
+          0.6059166124131944
+        ],
+        [
+          0.7144115973327023,
+          0.4647407588252315,
+          0.898578263999369,
+          0.6059166124131944
+        ]
+      ],
+      "line_widths": [
+        1.5,
+        1.5,
+        1.5,
+        1.5
+      ]
+    },
+    {
+      "kind": "mixed",
+      "dpi": 150,
+      "axes": [
+        [
+          0.05310240740740741,
+          0.08333444444444443,
+          0.13434448981613362,
+          0.9861099999999999
+        ],
+        [
+          0.5531024074074073,
+          0.08333444444444443,
+          0.6343444898161336,
+          0.9861099999999999
+        ],
+        [
+          0.05310240740740741,
+          0.08333444444444443,
+          0.13434448981613362,
+          0.9861099999999999
+        ],
+        [
+          0.40116664891342174,
+          0.2909959749960441,
+          0.41335296127473065,
+          0.7784484694484002
+        ],
+        [
+          0.5531024074074073,
+          0.08333444444444443,
+          0.6343444898161336,
+          0.9861099999999999
+        ],
+        [
+          0.9011666489134217,
+          0.290995974996043,
+          0.9133529612747306,
+          0.7784484694484013
+        ]
+      ],
+      "legends": [
+        [
+          0.2229378781263188,
+          0.46857873987268517,
+          0.39710454479298546,
+          0.6008657045717591
+        ],
+        [
+          0.7229378781263189,
+          0.46857873987268517,
+          0.8971045447929855,
+          0.6008657045717591
+        ]
+      ],
+      "line_widths": [
+        1.5,
+        1.5,
+        1.5,
+        1.5
+      ]
+    },
+    {
+      "kind": "mixed",
+      "dpi": 300,
+      "axes": [
+        [
+          0.05254685185185185,
+          0.08333444444444443,
+          0.1388268148161336,
+          0.98611
+        ],
+        [
+          0.5525468518518517,
+          0.08333444444444443,
+          0.6388268148161336,
+          0.98611
+        ],
+        [
+          0.05254685185185185,
+          0.08333444444444443,
+          0.1388268148161336,
+          0.98611
+        ],
+        [
+          0.4009008679411995,
+          0.2758823333293778,
+          0.4138428623858417,
+          0.7935621111150667
+        ],
+        [
+          0.5525468518518517,
+          0.08333444444444443,
+          0.6388268148161336,
+          0.98611
+        ],
+        [
+          0.9009008679411995,
+          0.27588233332937667,
+          0.9138428623858418,
+          0.7935621111150678
+        ]
+      ],
+      "legends": [
+        [
+          0.22408686979298545,
+          0.46968985098379623,
+          0.39658686979298546,
+          0.5997545934606481
+        ],
+        [
+          0.7240868697929855,
+          0.46968985098379623,
+          0.8965868697929855,
+          0.5997545934606481
+        ]
+      ],
+      "line_widths": [
+        1.5,
+        1.5,
+        1.5,
+        1.5
+      ]
+    }
+  ],
+  "dense_primary_bbox_after": [
+    {
+      "dpi": 75,
+      "axes": [
+        [
+          0.05532462962962963,
+          0.08454737123842593,
+          0.11450265346696195,
+          0.98611
+        ],
+        [
+          0.5553246296296299,
+          0.08454737123842593,
+          0.614502653466962,
+          0.98611
+        ]
+      ]
+    },
+    {
+      "dpi": 150,
+      "axes": [
+        [
+          0.05310240740740741,
+          0.08333444444444443,
+          0.13709115648280035,
+          0.9861099999999999
+        ],
+        [
+          0.5531024074074072,
+          0.08333444444444443,
+          0.6370911564828003,
+          0.9861099999999999
+        ]
+      ]
+    },
+    {
+      "dpi": 300,
+      "axes": [
+        [
+          0.05254685185185185,
+          0.08333444444444443,
+          0.1388268148161336,
+          0.98611
+        ],
+        [
+          0.5525468518518517,
+          0.08333444444444443,
+          0.6388268148161336,
+          0.98611
+        ]
+      ]
+    }
+  ],
+  "editor_preview": {
+    "requested_dpi": 600,
+    "preview_pixels": [
+      2000,
+      1000
+    ],
+    "source_size_inches": [
+      10,
+      5
+    ],
+    "preview_panel_fraction": [
+      0.059139222222222225,
+      0.08895064496527777,
+      0.9958329999999999,
+      0.9509993333333334
+    ],
+    "final_panel_fraction": [
+      0.058972555555555556,
+      0.08888955555555555,
+      0.995833,
+      0.951666
+    ],
+    "absolute_position_errors_inches": [
+      0.0016666666666666913,
+      0.00030544704861107386,
+      1.1102230246251565e-15,
+      0.0033333333333329662
+    ],
+    "line_widths_points": [
+      1.5
+    ],
+    "final_svg_sha256": "b2e05b62dea3b55c6bb7e646961d61c0a2294482887c0bc532ea966487550de5",
+    "source_state_preserved": true
+  },
+  "fix": "Use0.02inch adaptive margin converted to current figure pixels, retaining previous6px at default300DPI, rather than6absolute pixels at everyDPI. Private caller-only _autofit signature updated and callers searched; line widths/data/size/state not changed.",
+  "limits": "LAY08passes testedthemes/journal/repeat/failure/freshprocessunderEQUIVALENTambientRC. LAY09remainsRUNNING:150/300and600\u2192200editor preview within.02inch but75DPI dense layout has larger residual. No allDPI/backend/font/OS exact-layout claim; Rust uses shared CLIpreview cap but no new native position proof in this unit.",
+  "qa_note": "Initial fresh-processstyle comparison omitted caller ambientRC; this was a different environment, not a style leak. Matched explicit3scalarcaller settings. Oldtests already had unchangedallRCvalues/alternateoutputs. Initialplaceholder linewidthassert replaced with actualcross-DPIline-widthlist equality before QA.",
+  "baseline5ca_ci": {
+    "run": 39142799672,
+    "head": "5ca6da53e0c9d6190788b055461466328c1d49b7",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117720486230,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117720486301,
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "id": 117720486396,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117720486434,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117720486440,
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Before queued mixed-guide/physical-paddingproduction effects, not retroactive validation."
+  },
+  "checks": [
+    {
+      "name": "floor-style-dpi",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 3003 deselected, 13 warnings in 29.70s"
+      ],
+      "log_text_sha256": "3e2bb70a71bdc13e6666a3fe4198461fdfa5276ec33d0eb20cf4088cf7f263b5"
+    },
+    {
+      "name": "style-dpi-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_style_dpi.py",
+        "tests/test_review_mixed_guides.py",
+        "tests/test_layout.py",
+        "tests/test_stabilization.py",
+        "tests/test_review_concurrent_render.py",
+        "tests/test_tex.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "88 passed in 79.94s (0:01:19)"
+      ],
+      "log_text_sha256": "89605c59510ea6b495bb9d9cce15fc1c2c3654806db41d377c565e9b243e8bce"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "235 files already formatted"
+      ],
+      "log_text_sha256": "28a62275631bd1465b8dbc1506809b573ce8ade5a6ad02cd73da816bab1230a4"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "97de9fae61de648eaa3fe37357eb6d8eeac3ca7a3cc2d604fd66dce174f55957"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "46f883eefdd2ed464306d8a839a8e421ff6491ac52ea2e1fc12b740cd3a8f927"
+    }
+  ],
+  "raw_probe_sha256": {
+    "dpi_before.json": "e38883de72ac626199898810f88e769da3b37f2d1865b0d0240098c9437019ef",
+    "dpi_after.json": "7e407d77e68de1fcefacaf260370650c934bfca623212571e55f02eece8b0a77",
+    "style_hashes.json": "97434dae4baee05ac2ff18cee5f3f63b8e9800a0c6189f915c012da7c4725e41",
+    "editor_dpi.json": "4d4c5f32d192b8fd038469497e94e8c2fc55e6348386f7e4258a7342da0a8809",
+    "results.xml": "a34383698c0a028c5f2ac0d2f55ed6949113d9afda23cbb4b932ebc50eab754d"
+  }
+}
