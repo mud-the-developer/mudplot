@@ -124,6 +124,33 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 15 consolidates the supported-scope P0 evidence.** New independent
+references cover all34Sharma pairs, adopted D65/IEC values, OLS mean-fit confidence
+intervals, categorical/y2 ownership and asymmetric matrix coordinates. Fresh-process,
+time-spaced PNG/PDF/SVG hashes and physical sizes agree; explicit tight preserves
+its separate meaning. No production numeric defaults or calibration changed.
+
+The full optional run recorded **3423 passed/2 OS skips/1 warning** before a
+QA-only contour API adaptation and minimum-environment banner. The corrected72P0
+cases separately pass on both current and floor stacks. Minimum coverage is
+**2573 passed/25 optional skips** across8file-disjoint batches covering all53script
+files, not a single ordered run. A real no-dependency wheel install outside the
+repository passed core/schema/validate/JSON and console/module CLI checks.
+
+[Evidence](review_evidence/completion_p0_verification.json) preserves toolchain,
+font/lock/artifact/log hashes and incomplete attempts. The initial interrupted
+minimum run and a timed-out native-browser attempt are not credited. Audit/style/
+types/schema/native units/clean packaging passed. Baseline92238f3 CI39057547031
+succeeded in all four jobs, but is not retroactive proof of later QA changes.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS52/RUNNING8/OPEN89/DEFERRED1**.
+CI-01 stays RUNNING pending a new integrated run; CI-07 exact release/tag/publish
+approval is explicitly deferred. Versions/core dependencies/locks/tags/deploy
+remain unchanged. Remaining P1/P2 and vague broader-parity roadmap items are not
+silently completed. This checkpoint is not a declaration that v1 is finished.
+
+### Earlier review phase 14
+
 **Review phase 14 verifies document/no-op/long-history policies.** Python opens/
 resets fresh history; Rust snapshots are undoable and reset to startup default.
 Downloads export the current state, not a bound imported filename; no new dirty-

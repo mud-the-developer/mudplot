@@ -13,6 +13,8 @@
 
 from __future__ import annotations
 
+import importlib.metadata
+import json
 import os
 import sys
 from pathlib import Path
@@ -34,6 +36,9 @@ TESTS = (
     "tests/test_review_http_boundaries.py",
     "tests/test_review_body_framing.py",
     "tests/test_review_full_spec_fields.py",
+    "tests/test_review_color_references.py",
+    "tests/test_review_numeric_geometry.py",
+    "tests/test_review_export_determinism.py",
     "tests/test_layers.py",
     "tests/test_layout.py",
     "tests/test_facets.py",
@@ -75,6 +80,27 @@ TESTS = (
 
 
 def main() -> int:
+    print(
+        json.dumps(
+            {
+                "minimum_environment": {
+                    "python": sys.version.split()[0],
+                    "executable": sys.executable,
+                    "versions": {
+                        name: importlib.metadata.version(name)
+                        for name in (
+                            "numpy",
+                            "matplotlib",
+                            "statsmodels",
+                            "scipy",
+                            "pytest",
+                        )
+                    },
+                }
+            }
+        ),
+        flush=True,
+    )
     os.chdir(ROOT)
     sys.path.insert(0, str(ROOT))
     return pytest.main(["-q", "--disable-warnings", "-m", "not browser", *TESTS])

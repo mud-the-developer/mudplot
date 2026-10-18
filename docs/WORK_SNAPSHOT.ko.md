@@ -22,9 +22,12 @@
 
 ## 검증과 리뷰 상태
 
-- 최신 이력 대상 **199통과**, 전체 Python browser **32통과** 및 실제 Rust HTTP/
-  browser도 통과했습니다. 최소 history-only **20통과/경고13**은 과거354case의 반복이
-  아닙니다. 이전1116/27·optional244는 과거의 겹치는 범위이지 새 전체 앱 검증은 아닙니다.
+- 로컬 optional 전체 **3423통과/OS조건2skip/경고1** 뒤 QA-only contour API/최소
+  환경 banner를 고쳤습니다. 수정된 신규72개는 현재/최소 stack에서 다시 통과했으며
+  이전 전체 실행을 후속 QA까지 검증한 새 실행으로 바꾸지 않습니다.
+- 최소53파일은 중복 없는8배치로 **2573통과/선택25skip**이며 단일 순서 실행과 다릅니다.
+  실제 무의존 wheel을 저장소 밖 uv venv에 설치해 core·console/module CLI도 확인했습니다.
+- 이전 이력199/browser32와 다른 집중 결과는 각각의 과거 범위로 유지합니다.
 - Browser **31통과**와 native Rust **15통과/helper1ignored**는 이전11차 결과이며
   새 count가 아닙니다. 이번12차 격리 all-extra Rust smoke는 로컬 통과했습니다.
   Form/JSON/chunked39순차 body case와 실제 서버 PID 수명 peak를 관찰했지만 native
@@ -55,7 +58,10 @@
 - [이력 정책 요약](review_evidence/history_policy_verification.json)에 문서/no-op/replay/UI와
   원격781f3f5 양 OS Rust·Python3.12 성공을 기록했습니다. Python3.10 취소로 전체는
   cancelled이며 이를 후속 UI 수정의 원격 통과로 소급하지 않습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS 34 / RUNNING 12 / OPEN 104**.
+- [P0 통합 증거](review_evidence/completion_p0_verification.json)에 독립 수학/좌표/출력·
+  최소 배치·실제 설치 artifact·기준92238f3 CI 성공을 연결하고 중단 시도는 제외했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS52/RUNNING8/OPEN89/DEFERRED1**.
+  CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
 이전 기능/최소환경/브라우저 결과는 각자의 범위이며 후속 변경 이전 결과입니다.

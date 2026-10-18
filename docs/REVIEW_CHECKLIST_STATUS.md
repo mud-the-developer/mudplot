@@ -18,6 +18,35 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 15차 — 지원 범위 P0 통합 검증
+
+- 기준92238f3의 CI run39057547031은 Python3.10/3.12·Rust Linux/Windows 네 job 모두
+  success였습니다. 이 원격 결과는 후속 QA 변경 이전 baseline으로만 기록합니다.
+- 실제 로컬 optional 전체는 **3423통과/Windows조건2skip/경고1**, exit0/JUnit을 확보했습니다.
+  이후 Matplotlib3.8 contour의 allsegs 중첩 API 차이는 public Path 좌표 검사로 고쳤고
+  신규 P0 **72개**를 현재/최소 stack에서 다시 통과시켰습니다. 제품 수치 코드는 바꾸지 않았습니다.
+  후속 QA 변경까지 포함한 새 단일 전체 실행이라고 확대하지 않습니다.
+- 최소 환경 Python3.10.22/NumPy1.23.0/Matplotlib3.8.0/statsmodels0.14.1/SciPy1.10.0에서
+  TESTS의53파일을 중복 없는8배치로 실행해 **2573통과/선택25skip/0fail/0error**를 확인했습니다.
+  단일 순서 실행과 다르며 처음 중단된 minimum-full은 통과로 세지 않았습니다.
+- [P0 통합 증거](review_evidence/completion_p0_verification.json)에 환경/backend/실제 font
+  파일 hash·lock hash·Sharma 원본34쌍·독립 OLS/mean-CI·범주/그룹/y2 소속·비대칭 행렬
+  xy/annotation·fresh-process PNG/PDF/SVG SHA와 물리 크기를 연결했습니다. 색 교정·기존
+  default·명시적 tight 의미는 유지합니다. 고정 환경 결정성이지 모든 환경의 동일 바이트 보장은 아닙니다.
+- 실제 sdist→wheel을 무의존 uv venv에 설치해 저장소 밖 core/schema/validate/JSON·console/
+  module CLI를 실행했습니다. NumPy/Matplotlib/pandas/SciPy/statsmodels 부재와 import 목록,
+  license/entrypoint/Requires-Dist·artifact SHA를 확인했습니다. ZIP 파일 존재만 본 결과가 아닙니다.
+- 현재 audit의 세 lock graph는 known vulnerability 없음이며 Ruff216파일/format·Pyright·
+  계약 sync·native unit15통과/helper1ignored·최종 clean sdist→wheel도 통과했습니다.
+  별도 native-browser foreground240초 시도는 완료 receipt가 없어 통과로 세지 않습니다.
+- 위 근거로 BASE-02/03/04, PLOT-01/02/03/04/06, STAT-01/02, COLOR-01/02,
+  LAY-01/02, OUT-01, PKG-01/03/05를 관찰한 지원 범위에서 PASS 처리합니다.
+  CI-01은 후속 변경의 새 통합 CI 확인 전 RUNNING이며, CI-07 exact publish/tag gate는
+  버전·릴리스 유지 요청에 따라 DEFERRED입니다. 태그 생성/배포를 승인·실행하지 않았습니다.
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-completion-mmo9xjlf`.
+  Runtime `.pi/loops`는 사용자 실행 상태이므로 커밋/삭제하지 않습니다. 반복 Loop1은 계속 유지합니다.
+  P1/P2와 vague broader-parity roadmap이 남아 있어 v1 전체 완료로 선언하지 않습니다.
+
 ## 14차 — 문서 이력·no-op·long replay와 원격 Rust 확인
 
 - 기반781f3f5 위에서 기존 정책을 검증했습니다. 로컬 증거는
@@ -425,9 +454,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | ID | 우선순위 | 상태 | 확인 항목 | 구현 후보 | 테스트/증거 후보 |
 |---|---|---|---|---|---|
 | BASE-01 | P0 | PASS | 커밋·태그·작업 트리의 기준선 기록 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| BASE-02 | P0 | RUNNING | 지원 범위와 비목표 확인 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| BASE-03 | P0 | RUNNING | 검증 환경 명세 수집 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
-| BASE-04 | P0 | RUNNING | 변경 전 테스트 기준선 확보 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
+| BASE-02 | P0 | PASS | 지원 범위와 비목표 확인 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
+| BASE-03 | P0 | PASS | 검증 환경 명세 수집 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
+| BASE-04 | P0 | PASS | 변경 전 테스트 기준선 확보 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-05 | P1 | RUNNING | 기존 테스트와 체크리스트 매핑 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-06 | P1 | RUNNING | fixture와 증거 데이터 분리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
 | BASE-07 | P1 | RUNNING | 문서 계약 충돌 처리 | docs/COMPATIBILITY.md; CONTRIBUTING.md; SECURITY.md | environment.json; git-status.txt; tracked-diff.patch |
@@ -469,28 +498,28 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | DATA-07 | P1 | PASS | SQL 파라미터와 연결 소유권 | data.py::to_columns query finally | test_review_sql_ownership.py(10); named/tuple params·transaction·borrowed cursor·cleanup failures |
 | DATA-08 | P1 | OPEN | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-09 | P1 | OPEN | 행 순서·정렬·중복 x의 정책 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| PLOT-01 | P0 | OPEN | 전체 등록 레이어의 실행·계약 커버리지 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-02 | P0 | OPEN | 범주형 x의 레이어 간 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-03 | P0 | OPEN | 그룹·패널 간 스타일 일관성 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-04 | P0 | OPEN | 보조 y축 소속과 스케일 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-01 | P0 | PASS | 전체 등록 레이어의 실행·계약 커버리지 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-02 | P0 | PASS | 범주형 x의 레이어 간 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-03 | P0 | PASS | 그룹·패널 간 스타일 일관성 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-04 | P0 | PASS | 보조 y축 소속과 스케일 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-05 | P1 | OPEN | shared axes와 독립 설정 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-06 | P0 | OPEN | heatmap·surface 행렬 방향 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-06 | P0 | PASS | heatmap·surface 행렬 방향 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-07 | P1 | OPEN | quiver·3D·polar의 좌표 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-08 | P1 | OPEN | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-09 | P1 | OPEN | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-10 | P1 | OPEN | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-11 | P1 | OPEN | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-12 | P1 | OPEN | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| STAT-01 | P0 | OPEN | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-02 | P0 | OPEN | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-03 | P1 | OPEN | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-04 | P1 | OPEN | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-05 | P1 | OPEN | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-06 | P1 | OPEN | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-07 | P1 | OPEN | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-08 | P1 | OPEN | 통계 전처리의 관측 대응 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| COLOR-01 | P0 | OPEN | 색 공간 변환의 기준값 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| COLOR-02 | P0 | OPEN | CIEDE2000의 독립 reference | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-01 | P0 | PASS | 색 공간 변환의 기준값 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
+| COLOR-02 | P0 | PASS | CIEDE2000의 독립 reference | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-03 | P1 | OPEN | gamut 처리 이후 품질 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-04 | P1 | OPEN | CVD 시뮬레이션 조건 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-05 | P1 | OPEN | preset 범주 수의 경계 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
@@ -499,8 +528,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | COLOR-08 | P1 | OPEN | 팔레트 결정성·seed·tie-break | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-09 | P1 | OPEN | 실제 그림 크기의 가독성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-10 | P2 | OPEN | 품질 report와 대외 문구 정합성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
-| LAY-01 | P0 | OPEN | 최종 파일의 물리 크기 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-02 | P0 | OPEN | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-01 | P0 | PASS | 최종 파일의 물리 크기 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-02 | P0 | PASS | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-03 | P1 | OPEN | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-04 | P1 | OPEN | 긴 제목·suptitle·범례 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-05 | P1 | OPEN | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
@@ -508,7 +537,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | LAY-07 | P1 | OPEN | 폰트 부재·fallback·한글 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-08 | P1 | OPEN | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-09 | P1 | OPEN | DPI·벡터 출력과 UI 위치의 일치 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| OUT-01 | P0 | RUNNING | 동일 환경의 반복 출력 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-01 | P0 | PASS | 동일 환경의 반복 출력 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-02 | P1 | OPEN | volatile metadata·ID | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-03 | P0 | PASS | 단일 파일 저장의 원자성 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-04 | P1 | RUNNING | 출력 실패·잠금·권한 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
@@ -550,11 +579,11 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PERF-06 | P1 | OPEN | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-07 | P2 | OPEN | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-08 | P2 | OPEN | 대형 데이터 지원 범위의 명문화 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PKG-01 | P0 | OPEN | 깨끗한 wheel의 코어 독립성 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-01 | P0 | PASS | 깨끗한 wheel의 코어 독립성 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-02 | P1 | OPEN | optional extras의 기능 경계 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-03 | P0 | OPEN | sdist와 wheel 내용·메타데이터 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-03 | P0 | PASS | sdist와 wheel 내용·메타데이터 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-04 | P1 | OPEN | 저장소 밖 CLI 실행 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-05 | P0 | OPEN | 최소 지원 버전 검사 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-05 | P0 | PASS | 최소 지원 버전 검사 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-06 | P1 | RUNNING | Windows 한글·공백·긴 경로 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-07 | P1 | OPEN | GUI 없는 Linux와 OS 차이 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-08 | P1 | OPEN | source-tree 편집기의 실행 안내 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
@@ -565,7 +594,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | CI-04 | P1 | OPEN | golden image의 역할과 오차 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-05 | P1 | OPEN | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-06 | P1 | OPEN | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-07 | P0 | OPEN | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-07 | P0 | DEFERRED | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-08 | P1 | OPEN | 체크섬·OIDC provenance 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-09 | P1 | OPEN | 공급망 권한·실패 정책 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | DOC-01 | P1 | OPEN | 한글·영문·생성 문서 정합성 | README.md; docs/COMPATIBILITY.md; docs/V1_1_PLAN.md | test_schema_export.py; scripts/check_schema_sync.py; manual claim review |
@@ -577,7 +606,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 34, RUNNING 12, OPEN 104, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 0. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 52, RUNNING 8, OPEN 89, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

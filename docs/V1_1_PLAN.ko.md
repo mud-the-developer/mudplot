@@ -120,6 +120,26 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 15차에서 현재 지원 범위 P0 근거를 통합했습니다.** Sharma 원본34쌍·D65/IEC
+기준값·독립 OLS mean-CI·범주/그룹/y2 소속·비대칭 행렬 좌표를 보강했고 고정 환경의
+fresh-process PNG/PDF/SVG 바이트와 물리 크기를 확인했습니다. 제품 수치/색 교정/default는
+바꾸지 않았습니다. 알려진 N/A·선택 의존성·릴리스 보류는 별도로 유지합니다.
+
+로컬 optional 전체 **3423통과/OS조건2skip/경고1** 뒤 QA-only contour API/최소 환경
+banner를 고쳤으며 신규72개를 현재/최소 stack에서 다시 통과시켰습니다. 후속 QA까지
+포함한 새 단일 전체 실행으로 확대하지 않습니다. 최소53파일을 중복 없는8배치로 실행해
+**2573통과/선택25skip**을 확인했으며 단일 순서 실행과는 다릅니다. 실제 무의존 wheel을
+저장소 밖 uv venv에 설치해 core/schema/validate/JSON·console/module CLI도 확인했습니다.
+
+[통합 증거](review_evidence/completion_p0_verification.json)에 toolchain/font/lock/artifact/
+log hash와 중단 시도를 구분했습니다. 92238f3 원격 CI는 네 job 모두 성공했지만 후속
+QA 변경을 소급 검증하지 않습니다. [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS52/RUNNING8/OPEN89/DEFERRED1**이며 CI-01은 새 통합 CI 전 RUNNING,
+CI-07 exact publish/tag는 명시적 보류입니다. 원문/버전/의존성/lock/tag/배포는 유지합니다.
+남은 P1/P2와 넓은 parity roadmap을 조용히 완료 처리하거나 v1 완성을 선언하지 않습니다.
+
+### 이전 리뷰 14차
+
 **리뷰 14차에서 문서/no-op/long-history 정책을 검증했습니다.** Python open/reset은
 새 이력, Rust는 undo 가능한 snapshot이고 reset은 시작 기본 문서로 돌아갑니다.
 다운로드는 현재 상태이며 import 파일명을 묶는 dirty-bit/save-target 기능을 추가하지

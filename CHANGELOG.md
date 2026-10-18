@@ -6,6 +6,13 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added independently sourced full34-pair CIEDE2000 references, adopted D65/IEC
+  calibration checks, OLS mean-CI math, categorical/y2 artist ownership and
+  asymmetric matrix-coordinate tests without changing numeric defaults.
+- Verified fresh-process/time-spaced output hashes and real dimensions, installed
+  engine-only wheel behavior outside the repository and disjoint minimum-version
+  coverage. Recorded incomplete attempts separately; no release/version/tag or
+  universal-parity approval is implied by these supported-scope P0 checks.
 - Prevented overlapping Rust control swaps from using detached app targets by
   disabling the current controls during htmx requests; kept official vendor bytes,
   access rules and history policy unchanged. Added real reset/undo/redo browser checks.

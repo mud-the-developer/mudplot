@@ -1,0 +1,1100 @@
+{
+  "head": "92238f30e0ed91dcd4375f1bac802077f657205a",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pandas": "3.0.5",
+    "pytest": "9.1.1",
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1"
+  },
+  "tex": {
+    "tectonic": "C:\\Users\\mud\\.local\\bin\\tectonic.EXE",
+    "pdflatex": "C:\\texlive\\2026\\bin\\windows\\pdflatex.EXE",
+    "lualatex": "C:\\texlive\\2026\\bin\\windows\\lualatex.EXE",
+    "biber": "C:\\texlive\\2026\\bin\\windows\\biber.EXE",
+    "bibtex": "C:\\texlive\\2026\\bin\\windows\\bibtex.EXE"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "scope": "P0 current supported-scope evidence; not full upstream parity or release approval",
+  "files_sha256": {
+    "tests/test_review_color_references.py": "e955d15cef50ff1b22a43036ecc721951a6c75fc1f9d2400a0c65632029fe909",
+    "tests/fixtures/sharma_ciede2000.txt": "3673614dae0c406c1df363db311f9be5b3ecf7a9bae339dfe601f09c8c9bda74",
+    "tests/test_review_numeric_geometry.py": "551126148f76c3e1518174d78ea1ec040cc35999baa24712591db57a919b3646",
+    "tests/test_review_export_determinism.py": "82baf18167eedd0b7f50303339a83f570389dd1a2bc94c1f4525cbae47ffb2ef",
+    "scripts/check_minimum_versions.py": "9a3d09bd404a3b775782c112aea57b2b4b6b2d1d986148c9913203a1b05c536c",
+    "scripts/check_wheel.py": "d920726f9581610d07b17af66f574629e6d953ff593c1bcafcaebffed8e92477"
+  },
+  "floor": {
+    "counts": {
+      "tests": 2598,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 25
+    },
+    "passed": 2573,
+    "files": [
+      "tests/test_data.py",
+      "tests/test_review_history_policies.py",
+      "tests/test_layers.py",
+      "tests/test_clustermap.py",
+      "tests/test_bar_uncertainty.py",
+      "tests/test_categorical_statistics.py",
+      "tests/test_statistical_scales.py",
+      "tests/test_review_sql_ownership.py",
+      "tests/test_review_editor_paths.py",
+      "tests/test_layout.py",
+      "tests/test_raw_group_order.py",
+      "tests/test_statistics.py",
+      "tests/test_box_violin.py",
+      "tests/test_ecdf.py",
+      "tests/test_review_table_formats.py",
+      "tests/test_review_http_boundaries.py",
+      "tests/test_facets.py",
+      "tests/test_new_layers.py",
+      "tests/test_statistical_plots.py",
+      "tests/test_swarm.py",
+      "tests/test_histogram_statistics.py",
+      "tests/test_review_data_contracts.py",
+      "tests/test_review_body_framing.py",
+      "tests/test_joint_grid.py",
+      "tests/test_stabilization.py",
+      "tests/test_lineplot.py",
+      "tests/test_boxen.py",
+      "tests/test_kde_options.py",
+      "tests/test_review_missing_data.py",
+      "tests/test_review_full_spec_fields.py",
+      "tests/test_pair_grid.py",
+      "tests/test_references.py",
+      "tests/test_line_semantics.py",
+      "tests/test_categorical_scales.py",
+      "tests/test_kde2d.py",
+      "tests/test_review_temporal_precision.py",
+      "tests/test_review_color_references.py",
+      "tests/test_grid_kde.py",
+      "tests/test_dashboard.py",
+      "tests/test_scatter_semantics.py",
+      "tests/test_violin_options.py",
+      "tests/test_review_scalar_boundaries.py",
+      "tests/test_review_numeric_geometry.py",
+      "tests/test_heatmap_options.py",
+      "tests/test_schema_export.py",
+      "tests/test_shared_semantics.py",
+      "tests/test_weighted_violin.py",
+      "tests/test_review_state_contracts.py",
+      "tests/test_review_export_determinism.py",
+      "tests/test_regression_models.py",
+      "tests/test_visual_quality.py",
+      "tests/test_weighted_statistics.py",
+      "tests/test_distribution_components.py"
+    ],
+    "parts": [
+      {
+        "name": "floor-part-0",
+        "files": [
+          "tests/test_data.py",
+          "tests/test_review_history_policies.py",
+          "tests/test_layers.py",
+          "tests/test_clustermap.py",
+          "tests/test_bar_uncertainty.py",
+          "tests/test_categorical_statistics.py",
+          "tests/test_statistical_scales.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_data.py",
+          "tests/test_review_history_policies.py",
+          "tests/test_layers.py",
+          "tests/test_clustermap.py",
+          "tests/test_bar_uncertainty.py",
+          "tests/test_categorical_statistics.py",
+          "tests/test_statistical_scales.py",
+          "--junitxml=<evidence>/floor-part-0.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-0.log",
+        "junit": "floor-part-0.xml",
+        "log_sha256": "63cbf193016083047a5377bb22623aac615f19fa5a89d6035537b63a25b75340"
+      },
+      {
+        "name": "floor-part-1",
+        "files": [
+          "tests/test_review_sql_ownership.py",
+          "tests/test_review_editor_paths.py",
+          "tests/test_layout.py",
+          "tests/test_raw_group_order.py",
+          "tests/test_statistics.py",
+          "tests/test_box_violin.py",
+          "tests/test_ecdf.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_sql_ownership.py",
+          "tests/test_review_editor_paths.py",
+          "tests/test_layout.py",
+          "tests/test_raw_group_order.py",
+          "tests/test_statistics.py",
+          "tests/test_box_violin.py",
+          "tests/test_ecdf.py",
+          "--junitxml=<evidence>/floor-part-1.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-1.log",
+        "junit": "floor-part-1.xml",
+        "log_sha256": "d2416c85e4a446e83fd17a405636dd755c672c11f85643a35ffe172d4ef808ac"
+      },
+      {
+        "name": "floor-part-2",
+        "files": [
+          "tests/test_review_table_formats.py",
+          "tests/test_review_http_boundaries.py",
+          "tests/test_facets.py",
+          "tests/test_new_layers.py",
+          "tests/test_statistical_plots.py",
+          "tests/test_swarm.py",
+          "tests/test_histogram_statistics.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_table_formats.py",
+          "tests/test_review_http_boundaries.py",
+          "tests/test_facets.py",
+          "tests/test_new_layers.py",
+          "tests/test_statistical_plots.py",
+          "tests/test_swarm.py",
+          "tests/test_histogram_statistics.py",
+          "--junitxml=<evidence>/floor-part-2.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-2.log",
+        "junit": "floor-part-2.xml",
+        "log_sha256": "2eac933758e337701927806f5b76f9abca005c2dd6facdad8e5c48de7ddfd03d"
+      },
+      {
+        "name": "floor-part-3",
+        "files": [
+          "tests/test_review_data_contracts.py",
+          "tests/test_review_body_framing.py",
+          "tests/test_joint_grid.py",
+          "tests/test_stabilization.py",
+          "tests/test_lineplot.py",
+          "tests/test_boxen.py",
+          "tests/test_kde_options.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_data_contracts.py",
+          "tests/test_review_body_framing.py",
+          "tests/test_joint_grid.py",
+          "tests/test_stabilization.py",
+          "tests/test_lineplot.py",
+          "tests/test_boxen.py",
+          "tests/test_kde_options.py",
+          "--junitxml=<evidence>/floor-part-3.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-3.log",
+        "junit": "floor-part-3.xml",
+        "log_sha256": "f1f28d73f52afcbc8c694df3cc16a9f2bbb411a71325b0a2fb52aa24187ef34a"
+      },
+      {
+        "name": "floor-part-4",
+        "files": [
+          "tests/test_review_missing_data.py",
+          "tests/test_review_full_spec_fields.py",
+          "tests/test_pair_grid.py",
+          "tests/test_references.py",
+          "tests/test_line_semantics.py",
+          "tests/test_categorical_scales.py",
+          "tests/test_kde2d.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_missing_data.py",
+          "tests/test_review_full_spec_fields.py",
+          "tests/test_pair_grid.py",
+          "tests/test_references.py",
+          "tests/test_line_semantics.py",
+          "tests/test_categorical_scales.py",
+          "tests/test_kde2d.py",
+          "--junitxml=<evidence>/floor-part-4.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-4.log",
+        "junit": "floor-part-4.xml",
+        "log_sha256": "bfc59dcde0dca7f78c6d52177169b03c85143dd68a103c70e8cfc663de680066"
+      },
+      {
+        "name": "floor-part-5",
+        "files": [
+          "tests/test_review_temporal_precision.py",
+          "tests/test_review_color_references.py",
+          "tests/test_grid_kde.py",
+          "tests/test_dashboard.py",
+          "tests/test_scatter_semantics.py",
+          "tests/test_violin_options.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_temporal_precision.py",
+          "tests/test_review_color_references.py",
+          "tests/test_grid_kde.py",
+          "tests/test_dashboard.py",
+          "tests/test_scatter_semantics.py",
+          "tests/test_violin_options.py",
+          "--junitxml=<evidence>/floor-part-5.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-5.log",
+        "junit": "floor-part-5.xml",
+        "log_sha256": "ac9a6d09b227d5ddcf1f7b7256573521f7ffda0d335c04880afdb9d31aed581d"
+      },
+      {
+        "name": "floor-part-6",
+        "files": [
+          "tests/test_review_scalar_boundaries.py",
+          "tests/test_review_numeric_geometry.py",
+          "tests/test_heatmap_options.py",
+          "tests/test_schema_export.py",
+          "tests/test_shared_semantics.py",
+          "tests/test_weighted_violin.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_scalar_boundaries.py",
+          "tests/test_review_numeric_geometry.py",
+          "tests/test_heatmap_options.py",
+          "tests/test_schema_export.py",
+          "tests/test_shared_semantics.py",
+          "tests/test_weighted_violin.py",
+          "--junitxml=<evidence>/floor-part-6.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-6.log",
+        "junit": "floor-part-6.xml",
+        "log_sha256": "0588ffdfd13fcf73ddf0b6af8ad58f3a1c0c7bb04a560681416de587ab980fd0"
+      },
+      {
+        "name": "floor-part-7",
+        "files": [
+          "tests/test_review_state_contracts.py",
+          "tests/test_review_export_determinism.py",
+          "tests/test_regression_models.py",
+          "tests/test_visual_quality.py",
+          "tests/test_weighted_statistics.py",
+          "tests/test_distribution_components.py"
+        ],
+        "argv": [
+          "<uv-managed-minimum-python>",
+          "-m",
+          "pytest",
+          "-q",
+          "--disable-warnings",
+          "--tb=short",
+          "tests/test_review_state_contracts.py",
+          "tests/test_review_export_determinism.py",
+          "tests/test_regression_models.py",
+          "tests/test_visual_quality.py",
+          "tests/test_weighted_statistics.py",
+          "tests/test_distribution_components.py",
+          "--junitxml=<evidence>/floor-part-7.xml"
+        ],
+        "exit_code": 0,
+        "log": "floor-part-7.log",
+        "junit": "floor-part-7.xml",
+        "log_sha256": "420fe391cc2aaa64bbca09045c51a9a93684016ae7a3ee39d897b17ec55499c8"
+      }
+    ],
+    "execution": "8 separate file-disjoint batches using the exact uv-managed floor environment, not one single ordered run",
+    "environment": {
+      "python": "3.10.22",
+      "executable": "<uv-managed-minimum-python>",
+      "versions": {
+        "numpy": "1.23.0",
+        "matplotlib": "3.8.0",
+        "statsmodels": "0.14.1",
+        "scipy": "1.10.0",
+        "pytest": "9.0.3"
+      }
+    }
+  },
+  "full_optional": {
+    "passed": 3423,
+    "skipped": 2,
+    "warnings": 1,
+    "exit_code": 0,
+    "log_sha256": "c84210881fede3b0b4e6d9fb417a156bbb0c6842bb09311c5bedbada10126eed",
+    "scope_note": "before QA-only contour API correction and floor banner; unchanged production source. Corrected72P0 cases separately pass on current/floor. Not a new final single full order run."
+  },
+  "installed_core": {
+    "version": "1.0.0",
+    "module": "<core-venv>/site-packages/mudplot/__init__.py",
+    "requires": [
+      "matplotlib>=3.8; extra == 'all'",
+      "numpy>=1.23; extra == 'all'",
+      "scipy>=1.10; extra == 'all'",
+      "statsmodels>=0.14.1; extra == 'all'",
+      "build>=1; extra == 'browser'",
+      "hatchling==1.32.0; extra == 'browser'",
+      "hypothesis>=6; extra == 'browser'",
+      "jsonschema>=4; extra == 'browser'",
+      "matplotlib>=3.8; extra == 'browser'",
+      "numpy>=1.23; extra == 'browser'",
+      "pandas>=2; extra == 'browser'",
+      "playwright>=1.40; extra == 'browser'",
+      "pyright>=1.1.390; extra == 'browser'",
+      "pytest>=9.0.3; extra == 'browser'",
+      "ruff>=0.6; extra == 'browser'",
+      "scipy>=1.10; extra == 'browser'",
+      "statsmodels>=0.14.1; extra == 'browser'",
+      "matplotlib>=3.8; extra == 'cluster'",
+      "numpy>=1.23; extra == 'cluster'",
+      "scipy>=1.10; extra == 'cluster'",
+      "numpy>=1.23; extra == 'color'",
+      "build>=1; extra == 'dev'",
+      "hatchling==1.32.0; extra == 'dev'",
+      "hypothesis>=6; extra == 'dev'",
+      "jsonschema>=4; extra == 'dev'",
+      "matplotlib>=3.8; extra == 'dev'",
+      "numpy>=1.23; extra == 'dev'",
+      "pandas>=2; extra == 'dev'",
+      "pyright>=1.1.390; extra == 'dev'",
+      "pytest>=9.0.3; extra == 'dev'",
+      "ruff>=0.6; extra == 'dev'",
+      "scipy>=1.10; extra == 'dev'",
+      "statsmodels>=0.14.1; extra == 'dev'",
+      "matplotlib>=3.8; extra == 'regression'",
+      "numpy>=1.23; extra == 'regression'",
+      "statsmodels>=0.14.1; extra == 'regression'",
+      "matplotlib>=3.8; extra == 'render'",
+      "numpy>=1.23; extra == 'render'"
+    ],
+    "loaded_modules": [
+      "__future__",
+      "__main__",
+      "_abc",
+      "_ast",
+      "_bisect",
+      "_blake2",
+      "_bz2",
+      "_codecs",
+      "_collections",
+      "_collections_abc",
+      "_compression",
+      "_csv",
+      "_datetime",
+      "_decimal",
+      "_frozen_importlib",
+      "_frozen_importlib_external",
+      "_functools",
+      "_hashlib",
+      "_imp",
+      "_io",
+      "_json",
+      "_locale",
+      "_lzma",
+      "_opcode",
+      "_operator",
+      "_random",
+      "_sha2",
+      "_signal",
+      "_sitebuiltins",
+      "_socket",
+      "_sre",
+      "_stat",
+      "_statistics",
+      "_string",
+      "_struct",
+      "_thread",
+      "_tokenize",
+      "_typing",
+      "_virtualenv",
+      "_warnings",
+      "_weakref",
+      "_weakrefset",
+      "_winapi",
+      "abc",
+      "ast",
+      "base64",
+      "binascii",
+      "bisect",
+      "builtins",
+      "bz2",
+      "calendar",
+      "codecs",
+      "collections",
+      "collections.abc",
+      "contextlib",
+      "copy",
+      "copyreg",
+      "csv",
+      "dataclasses",
+      "datetime",
+      "decimal",
+      "dis",
+      "email",
+      "email._encoded_words",
+      "email._parseaddr",
+      "email._policybase",
+      "email.base64mime",
+      "email.charset",
+      "email.encoders",
+      "email.errors",
+      "email.feedparser",
+      "email.header",
+      "email.iterators",
+      "email.message",
+      "email.parser",
+      "email.quoprimime",
+      "email.utils",
+      "encodings",
+      "encodings.aliases",
+      "encodings.utf_8",
+      "encodings.utf_8_sig",
+      "enum",
+      "errno",
+      "fnmatch",
+      "fractions",
+      "functools",
+      "genericpath",
+      "hashlib",
+      "hmac",
+      "importlib",
+      "importlib._abc",
+      "importlib._bootstrap",
+      "importlib._bootstrap_external",
+      "importlib.abc",
+      "importlib.machinery",
+      "importlib.metadata",
+      "importlib.metadata._adapters",
+      "importlib.metadata._collections",
+      "importlib.metadata._functools",
+      "importlib.metadata._itertools",
+      "importlib.metadata._meta",
+      "importlib.metadata._text",
+      "importlib.resources",
+      "importlib.resources._adapters",
+      "importlib.resources._common",
+      "importlib.resources._legacy",
+      "importlib.resources.abc",
+      "importlib.util",
+      "inspect",
+      "io",
+      "ipaddress",
+      "itertools",
+      "json",
+      "json.decoder",
+      "json.encoder",
+      "json.scanner",
+      "keyword",
+      "linecache",
+      "locale",
+      "lzma",
+      "marshal",
+      "math",
+      "mudplot",
+      "mudplot._categorical",
+      "mudplot._cluster",
+      "mudplot._components",
+      "mudplot._ecdf",
+      "mudplot._facet",
+      "mudplot._heatmap",
+      "mudplot._histogram",
+      "mudplot._kde",
+      "mudplot._kde2d",
+      "mudplot._letter_value",
+      "mudplot._lint",
+      "mudplot._regression",
+      "mudplot._semantics",
+      "mudplot._stat",
+      "mudplot._violin_options",
+      "mudplot.actions",
+      "mudplot.api",
+      "mudplot.bib",
+      "mudplot.capabilities",
+      "mudplot.data",
+      "mudplot.docs",
+      "mudplot.io",
+      "mudplot.reducer",
+      "mudplot.schema",
+      "mudplot.spec",
+      "mudplot.store",
+      "mudplot.tex",
+      "mudplot.theme",
+      "mudplot.validate",
+      "nt",
+      "ntpath",
+      "numbers",
+      "opcode",
+      "operator",
+      "os",
+      "os.path",
+      "pathlib",
+      "posixpath",
+      "quopri",
+      "random",
+      "re",
+      "re._casefix",
+      "re._compiler",
+      "re._constants",
+      "re._parser",
+      "reprlib",
+      "secrets",
+      "select",
+      "selectors",
+      "shutil",
+      "site",
+      "socket",
+      "stat",
+      "statistics",
+      "string",
+      "struct",
+      "sys",
+      "tempfile",
+      "textwrap",
+      "threading",
+      "time",
+      "token",
+      "tokenize",
+      "types",
+      "typing",
+      "typing.io",
+      "typing.re",
+      "urllib",
+      "urllib.parse",
+      "warnings",
+      "weakref",
+      "winreg",
+      "zipfile",
+      "zipfile._path",
+      "zipfile._path.glob",
+      "zipimport",
+      "zlib"
+    ]
+  },
+  "artifacts": {
+    "mudplot-1.0.0-py3-none-any.whl": {
+      "bytes": 228172,
+      "sha256": "c8a1babb3b62bcc427848183aaa1978910d9788addf08e61276adea8a0c65172"
+    },
+    "mudplot-1.0.0.tar.gz": {
+      "bytes": 13832898,
+      "sha256": "db34ed90d979040f5bc6f125fa0dfdf477fba672f93158a46db8582da6e3eab7"
+    }
+  },
+  "core_cli": [
+    {
+      "name": "entry-capabilities",
+      "exit_code": 0,
+      "argv": [
+        "mudplot.exe",
+        "capabilities"
+      ],
+      "log": "entry-capabilities.log"
+    },
+    {
+      "name": "module-capabilities",
+      "exit_code": 0,
+      "argv": [
+        "python.exe",
+        "-m",
+        "mudplot",
+        "capabilities"
+      ],
+      "log": "module-capabilities.log"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "argv": [
+        "mudplot.exe",
+        "schema",
+        "--out",
+        "schema.json"
+      ],
+      "log": "schema.log"
+    },
+    {
+      "name": "validate",
+      "exit_code": 0,
+      "argv": [
+        "python.exe",
+        "-m",
+        "mudplot",
+        "validate",
+        "sample.json"
+      ],
+      "log": "validate.log"
+    }
+  ],
+  "remote_baseline": {
+    "run": 39057547031,
+    "commit": "92238f30e0ed91dcd4375f1bac802077f657205a",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117468521494,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "success"
+          },
+          {
+            "name": "Minimum render dependency contract",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117468521714,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117468521735,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117468521741,
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Minimum render dependency contract",
+            "conclusion": "success"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "audit",
+      "exit_code": 0,
+      "results": [
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "Python dependency audits OK"
+      ],
+      "log_sha256": "ed6934a8ffa08fc1961b354e7432a5c973bfbb17acaa76a45124e4ac7bc8fb04"
+    },
+    {
+      "name": "p0-current",
+      "exit_code": 0,
+      "results": [
+        "72 passed in 19.24s"
+      ],
+      "log_sha256": "d49c9af9c28d83649158ba28f17ea64d3c372f7b101f129e15078fcda3c2dcc4"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "216 files already formatted"
+      ],
+      "log_sha256": "28616f479dcc341db5ca0e9b2e4e2cf2bb23f4ebb35f5645b22473a745a92f14"
+    },
+    {
+      "name": "pyright",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_sha256": "76d0de730288ded21a24f48c2996a7effc67d827b488cc8f2b6b9988af20b612"
+    },
+    {
+      "name": "minimum-p0-focus",
+      "exit_code": 0,
+      "results": [
+        "72 passed, 2526 deselected, 197 warnings in 20.23s"
+      ],
+      "log_sha256": "f399794142d434af514d14a8633ad2d59e4ae45d44f3932618fa328889cc98bd"
+    },
+    {
+      "name": "native-tests",
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 14 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.22s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "6fd3cdd086dce69b7d2ef17a7b7d98067dc4650e43f3b62d017517c5c1800222"
+    },
+    {
+      "name": "wheel-final",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "5d80dd8a43c82de8ea7e940b8edfe5655f5a8394d7441991f9fa5179a231c749"
+    }
+  ],
+  "limits": [
+    "initial full floor run interrupted; not passed",
+    "floor subsequently covered in8file-disjoint managed-environment batches, not one ordered run",
+    "native-browser foreground240s attempt timed out, no completion receipt; not passed",
+    "Monitor1/2 backend failed before launch, not test failures",
+    "release tag/exact published artifact approval deferred; no publish/tag/version changes"
+  ],
+  "toolchain_fonts_locks": {
+    "architecture": "AMD64",
+    "uv": "uv 0.12.23 (46b84fd0b 2026-10-03 x86_64-pc-windows-msvc)",
+    "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+    "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+    "backend": "Agg",
+    "font_files": [
+      {
+        "family": "sans-serif",
+        "file": "DejaVuSans.ttf",
+        "sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22"
+      },
+      {
+        "family": "serif",
+        "file": "DejaVuSerif.ttf",
+        "sha256": "107244956e9962b9e96faccdc551825e0ae0898ae13737133e1b921a2fd35ffa"
+      },
+      {
+        "family": "monospace",
+        "file": "DejaVuSansMono.ttf",
+        "sha256": "602ec86b8948cfcd956482fe64f94c36c867770149ef2f791d4613f443bcecb3"
+      }
+    ],
+    "lock_sha256": {
+      "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df",
+      "mudplot-editor/Cargo.lock": "ad078f75def3c7cbba51112c51f4348116c9a697487134cccbfc371c7f781e94",
+      "scripts/check_minimum_versions.py.lock": "720b9d4f80e019d8c324c2a7a6e9c7eb8e152c2115195c19c1d16e038c7ace34",
+      "scripts/audit_dependencies.py.lock": "a656981053bf92115fe25f2aba60d2d7a2e062dea0fc0516f2260685ad41b0da"
+    }
+  },
+  "clean_core_environment_removed": true
+}

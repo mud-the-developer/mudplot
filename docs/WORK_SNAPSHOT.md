@@ -28,10 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
-- Latest history-focused subset **199 passed**; full Python browser **32 passed**
-  and Rust HTTP/browser pass. Minimum history-only **20 passed,13warnings** is not
-  the broader earlier354-case minimum run. Earlier1116/27 and optional244-pass
-  receipts are historical, overlapping scopes rather than new whole-app proof.
+- Latest optional full run: **3423 passed,2 OS skips,1 warning**, before a QA-only
+  contour API adjustment and minimum-environment banner. Corrected72P0 cases
+  separately passed on both stacks; do not treat the prior run as a later rerun.
+- Minimum53files were covered exactly once in8batches: **2573 passed,25 optional
+  skips**. This is not a single ordered run. A real no-dependency wheel install
+  outside the repository passed core and console/module CLI checks.
+- Earlier history199/browser32 and other focused receipts retain their own scope.
 - Phase12 isolated all-extra Rust smoke passes locally. Last native-unit run
   **15 passed,1 helper ignored** and browser/HTTP are earlier phase11 receipts.
   Form/JSON/chunked body probes cover39sequential cases with server-PID lifetime
@@ -66,8 +69,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records current document/no-op/replay/UI checks. Remote781f3f5 Linux/Windows
   Rust jobs and Python3.12 passed; Python3.10 cancelled, so the full workflow
   was cancelled. Remote success is not retroactive proof of the later UI fix.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS 34 / RUNNING 12 /
-  OPEN 104**. Unchecked items are not silently considered verified.
+- [P0 completion evidence](review_evidence/completion_p0_verification.json)
+  connects independent numeric/geometry/export references, floor batches, installed
+  artifacts and baseline92238f3 CI success. Incomplete attempts are not counted.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS52/RUNNING8/OPEN89/
+  DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
 changes. They do not validate this entire combined worktree. A full Python /

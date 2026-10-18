@@ -29,6 +29,7 @@ SDIST_FILES = (
     "tests/fixtures/review_state_paths.json",
     "tests/fixtures/review_http_boundaries.json",
     "tests/fixtures/review_full_spec_fields.json",
+    "tests/fixtures/sharma_ciede2000.txt",
     "scripts/check_python_bridge_paths.py",
     "scripts/check_request_body_limits.py",
     "docs/PLOT_GALLERY.md",
