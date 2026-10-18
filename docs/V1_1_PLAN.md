@@ -124,6 +124,22 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 42 corrects final-palette report metrics and states conditions.**
+FIND-036 exposed nominal LCH gap3 reported safe while final HEX paper7/vivid7 gaps
+are2.79209/2.79726. Float lightness now uses mapped RGB; report uses exported8-bit
+HEX and adds explicit normal/CVD type/model/fullseverity1/representation/threshold
+conditions. Existing keys, thresholds and generated colours/algorithm are unchanged.
+
+Authors' Machado Table1 matrices, N-1/N/N+1 metrics/pairs and deterministic tie/
+fresh-process checks pass. This is measured scope, not broader certification;
+soft6 may measure pass beyond preverifiedN5. Related141/floor18passes/3009deselected/
+13warnings and8quality records pass. COLOR-03/04/05/08 are PASS; remaining colour
+pattern/readability/wording gates stay open. [Evidence](review_evidence/palette_report_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS92/RUNNING10/OPEN47/DEFERRED1**.
+Keep this effect unit local during16aCI; versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 41
+
 **Review phase 41 verifies style ownership and fixes DPI-dependent pixel padding.**
 Alternating themes/journal retain all caller rcParams and match fresh-process
 PNG/PDF/SVG under equivalent ambient settings; failure cleanup restores rc as well.

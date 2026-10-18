@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest final-HEX report/mapped-float lightness fix preserves generation while
+  exposing evaluated CVD conditions and nominal-vs-output differences. Reference
+  matrices, N±1 metrics and deterministic ties/process outputs pass:141related/
+  floor18checks. COLOR-03/04/05/08 are PASS in measured scope, not certification.
+  The palette effect unit stays local during16aCI; other colour gates remain open.
+
 - Latest complete caller-rc restoration/alternating-style/fresh-process checks
   make LAY-08 PASS in equivalent ambient conditions. Physical0.02inch padding
   improves150/300DPI geometry; low75DPI dense residual keeps LAY-09 RUNNING.
@@ -294,7 +300,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   [visual baseline](review_evidence/mixed_guides_baseline.png) retain bounds and renderer events.
 - [Style/DPI evidence](review_evidence/style_dpi_verification.json) retains rc/hash
   comparisons, physical padding measurements and explicit low-DPI residuals.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS88/RUNNING10/OPEN51/
+- [Palette-report evidence](review_evidence/palette_report_verification.json)
+  retains final RGB pairs, model/representation conditions and boundary measurements.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS92/RUNNING10/OPEN47/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

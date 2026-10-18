@@ -79,7 +79,7 @@ class Palette:
         )
 
     def min_delta_e(self, cvd_types=("protan", "deutan")) -> float:
-        """Worst-case minimum pairwise ΔE00 across normal + given CVD types."""
+        """Worst-case minimum ΔE00 on float sRGB across normal + given CVD types."""
         return _min_pairwise_worstcase(self.srgb, cvd_types)
 
     def grayscale_srgb(self) -> np.ndarray:
@@ -95,19 +95,22 @@ class Palette:
         return np.clip(cv.linear_to_srgb(y3), 0.0, 1.0)
 
     def min_lightness_gap(self) -> float:
-        """Smallest pairwise CIE L* gap — low values risk blending together in
-        greyscale print or for full achromatopsia, even if hues differ."""
-        L = self.lch[:, 0]
-        if len(L) < 2:
-            return math.inf
-        diffs = np.abs(L[:, None] - L[None, :])
-        np.fill_diagonal(diffs, np.inf)
-        return diffs.min().item()
+        """Smallest CIE L* gap on mapped float sRGB, not nominal design LCH.
+
+        Low values risk blending in greyscale even if hues differ.
+        """
+        return _min_lightness_gap(self.srgb)
 
     def report(self, cvd_types=("protan", "deutan")) -> dict:
-        """A human-readable distinguishability report for this palette."""
-        min_de = self.min_delta_e(cvd_types) if len(self) > 1 else None
-        min_l = self.min_lightness_gap() if len(self) > 1 else None
+        """Measured distinguishability of the exported 8-bit HEX colours.
+
+        Float sRGB methods can differ slightly through output quantization.
+        Conditions are measurements, not accessibility/printing certification.
+        """
+        cvd_types = tuple(cvd_types)
+        rgb = np.array([cv.hex_to_srgb(color) for color in self.hex])
+        min_de = _min_pairwise_worstcase(rgb, cvd_types) if len(self) > 1 else None
+        min_l = _min_lightness_gap(rgb) if len(self) > 1 else None
         grayscale_safe = min_l is None or min_l >= 3.0
         note = None
         if min_l is not None and not grayscale_safe:
@@ -124,7 +127,25 @@ class Palette:
             "cvd_safe": min_de is None or min_de >= 8.0,
             "grayscale_safe": grayscale_safe,
             "note": note,
+            "evaluation": {
+                "rgb_encoding": "hex_srgb8",
+                "normal_vision": True,
+                "cvd_types": list(cvd_types),
+                "cvd_model": "Machado2009" if cvd_types else None,
+                "severity": 1.0 if cvd_types else None,
+                "thresholds": {"delta_e_cvd": 8.0, "lightness_gap": 3.0},
+                "scope": "measured_palette_only",
+            },
         }
+
+
+def _min_lightness_gap(srgb: np.ndarray) -> float:
+    lightness = cv.srgb_to_lab(srgb)[:, 0]
+    if len(lightness) < 2:
+        return math.inf
+    diffs = np.abs(lightness[:, None] - lightness[None, :])
+    np.fill_diagonal(diffs, np.inf)
+    return diffs.min().item()
 
 
 # --------------------------------------------------------------------------

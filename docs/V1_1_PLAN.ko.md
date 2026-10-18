@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰42차에서최종팔레트report지표/조건을고쳤습니다.** FIND-036은nominalLCHgap3을
+safe로표시하던paper7/vivid7의실제HEXgap2.79209/2.79726을재현했습니다. Float명도는
+mappedRGB,report는8-bitHEX를평가하고정상/CVD유형/model/fullseverity1/표현/기준을
+추가하되기존key/threshold/생성색/알고리즘은유지합니다.
+
+저자MachadoTable1·N±1RGB/pair·결정적tie/독립process가통과했습니다. 측정범위이지
+인증이아니며soft6는사전N5밖에서도측정pass할수있습니다. 관련141/floor18통과/
+3009deselected/경고13·품질8명령을기록해COLOR-03/04/05/08은PASS이며나머지색상패턴/
+가독성/문구gate는남습니다. [근거](review_evidence/palette_report_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS92/RUNNING10/OPEN47/DEFERRED1**입니다.
+16aCI를보호해단위는로컬보존하고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 41차
+
 **리뷰 41차에서style소유권과DPI별pixelpadding을분리했습니다.** 번갈아그린theme/journal은
 callerrc전부를복구하고같은ambient환경의독립process와PNG/PDF/SVGSHA가같아LAY-08은
 범위내PASS입니다. FIND-035는pad를0.02inch로고정해기존300DPI6px를유지하면서dense

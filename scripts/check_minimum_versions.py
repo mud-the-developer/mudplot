@@ -45,6 +45,7 @@ TESTS = (
     "tests/test_review_body_framing.py",
     "tests/test_review_full_spec_fields.py",
     "tests/test_review_color_references.py",
+    "tests/test_review_palette_reports.py",
     "tests/test_review_numeric_geometry.py",
     "tests/test_review_export_determinism.py",
     "tests/test_layers.py",

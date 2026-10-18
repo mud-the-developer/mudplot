@@ -269,6 +269,20 @@ size still matter. Citation keys and hrefs have their separate strict validation
 they do not admit arbitrary TeX macros. No implicit all-format rewriting or
 untrusted-TeX sandbox is introduced.
 
+## Palette report scope
+
+`Palette.report()` evaluates the exported8-bit HEX sRGB colours, including final
+quantization, and exposes `evaluation` for representation, normal vision, selected
+CVD types, Machado2009 full severity1 and the existing ΔE00≥8/L*gap≥3 thresholds.
+Float `min_delta_e()`/`min_lightness_gap()` evaluate mapped float sRGB; nominal
+LCH design coordinates are not output quality. Float colormaps can differ slightly
+from the HEX report. Existing result keys remain, with additive conditions.
+
+These measured flags are not universal printing/accessibility certification or a
+new preset guarantee outside the documented category count. An N+1palette can pass
+or fail its actual metrics. Deterministic farthest-point sampling uses `hue_start`
+and first remaining candidate on exact ties; no RNG seed parameter is added.
+
 ## Dependencies and distribution
 
 The declarative/state/JSON core has no required third-party dependencies.

@@ -236,6 +236,17 @@ Raw `A & B`는 TeX 측정에서 실패하지만 `A \\& B`·명시한 무해 macr
 별도 검증이 임의 TeX macro를 허용하지 않으며 자동 전형식 rewriting이나 untrusted-TeX
 sandbox를 도입하지 않습니다.
 
+## 팔레트report 범위
+
+`Palette.report()`는최종양자화를포함한8-bitHEXsRGB를평가하고`evaluation`에표현·정상시각·
+선택CVD유형·Machado2009fullseverity1·기존ΔE00≥8/L*gap≥3조건을냅니다. Floatmetric은
+mappedfloatsRGB를측정하며nominalLCH는출력품질이아닙니다. Floatcolormap과HEXreport는
+작은차이가날수있고기존key는유지하며조건만추가했습니다.
+
+측정flag는보편인쇄/접근성인증이나문서의범주수를넘는새preset보장이아닙니다. N+1도
+실제metric에따라pass/fail할수있습니다. 결정적sampling은`hue_start`와동률의첫미선택
+candidate를쓰며새RNGseed옵션은추가하지않습니다.
+
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는

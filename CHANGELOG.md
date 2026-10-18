@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Corrected palette quality reports to measure final8-bit HEX output and actual
+  mapped-float lightness rather than nominal LCH. Added explicit CVD/model/severity/
+  representation conditions, preserving generated colours and existing thresholds;
+  beyond-verified-count results are measurements, not accessibility certification.
 - Preserved adaptive layout margins in physical inches across DPI instead of a
   fixed pixel count, retaining default300DPI spacing. Verified complete caller-rc
   restoration and independent equivalent-environment style output; recorded the

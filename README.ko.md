@@ -1025,7 +1025,7 @@ mp.plot(conn, query="SELECT x, y FROM t WHERE run = ?", params=(run_id,))
 ```python
 pal = mp.color_palette(5, "qualitative")   # 등명도·최대대조
 print(pal.hex, pal.min_delta_e())
-print(pal.report())      # {'cvd_safe': True, 'grayscale_safe': ..., 'note': ...}
+print(pal.report())      # 최종 HEX 지표와 명시한 evaluation 조건을 포함
 cmap = mp.color_palette(256, "sequential").to_cmap()
 
 # 이름 붙은 검증된 팔레트(명시된 카테고리 수까지 적색맹·녹색맹·진짜 흑백에서
@@ -1038,6 +1038,12 @@ p = mp.plot(data).line("x", "y", group="g").palette(preset="paper")
 p2 = mp.plot(data).bar("category", "value", group="g")  # 색상 + 해칭
 p3 = p2.encoding(redundant_encoding=False)               # 색상만
 ```
+
+`Palette.report()`는양자화를포함한최종 **8-bit HEX sRGB**를측정합니다. `evaluation`에는
+정상시각·선택CVD유형·Machado2009 fullseverity와기존ΔE00≥8/L*gap≥3기준이들어갑니다.
+Float `srgb` metric과작은차이가날수있으며측정flag이지접근성/인쇄인증이아닙니다.
+Preset사전검증범주수를넘으면새report를확인하세요. 결정적sampling의시작점은
+`hue_start`이며별도randomseed옵션은없습니다.
 
 ### 대시보드 (사람이 보는 문서 + 디자인 갤러리)
 

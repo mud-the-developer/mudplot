@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신HEXreport/mappedfloat명도수정은생성색을유지하고평가CVD조건과nominal/output차이를
+  드러냅니다. Reference/N±1/tie/독립process와관련141/floor18이통과해COLOR-03/04/05/08은
+  측정범위PASS이지인증이아닙니다. 다른색상gate는남기고16aCI중unit은로컬보존합니다.
+
 - 최신전체rc복구/번갈아style/독립process대조로LAY-08은같은ambient조건에서PASS입니다.
   0.02inchpad가150/300DPI차이를줄이지만75DPIdense잔차는남아LAY-09는RUNNING입니다.
   관련88/floor6통과·품질8명령이며source/state/vector크기는유지합니다.
@@ -245,7 +249,9 @@
   [visualbaseline](review_evidence/mixed_guides_baseline.png)에bbox/renderer event를보존했습니다.
 - [Style/DPI 근거](review_evidence/style_dpi_verification.json)에rc/hash·물리padding과
   명시한저DPI잔차를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS88/RUNNING10/OPEN51/DEFERRED1**.
+- [Palette report근거](review_evidence/palette_report_verification.json)에최종RGBpair/
+  model·표현조건·범주경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS92/RUNNING10/OPEN47/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

@@ -1102,7 +1102,7 @@ unique after string conversion; collisions are rejected rather than overwritten.
 ```python
 pal = mp.color_palette(5, "qualitative")   # equal lightness, max contrast
 print(pal.hex, pal.min_delta_e())
-print(pal.report())      # {'cvd_safe': True, 'grayscale_safe': ..., 'note': ...}
+print(pal.report())      # includes final HEX metrics and explicit evaluation conditions
 cmap = mp.color_palette(256, "sequential").to_cmap()
 
 # Named, pre-verified presets (measured CVD-safe + true-greyscale-safe up to
@@ -1116,6 +1116,13 @@ p = mp.plot(data).line("x", "y", group="g").palette(preset="paper")
 p2 = mp.plot(data).bar("category", "value", group="g")  # colour + hatch
 p3 = p2.encoding(redundant_encoding=False)               # colour only
 ```
+
+`Palette.report()` measures exported **8-bit HEX sRGB**, including quantization;
+its `evaluation` records normal vision, selected CVD types, Machado 2009 full
+severity, and existing ΔE00 ≥ 8 / L* gap ≥ 3 thresholds. The float `srgb` metric
+methods can differ slightly. These are measured flags, not accessibility/print
+certification; outside the preset's pre-verified count, inspect a fresh report.
+`hue_start` seeds deterministic sampling; there is no random-seed option.
 
 ### Dashboard (human-facing docs + design gallery)
 
