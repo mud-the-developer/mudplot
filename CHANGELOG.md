@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed late Python editor HTML fragments replacing newer inspector state after
+  out-of-order delivery. Added local UI reply generations without dropping actions
+  or changing spec/JSON/history contracts; tested actual DOM and preview pixels.
 - Fixed Python editor text/annotation handles using primary y coordinates for
   secondary-axis layers. Preserve actual y2 limits/scale through preview metadata
   and data dragging, retaining primary/title/legend frames and undo/redo.

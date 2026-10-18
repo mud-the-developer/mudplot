@@ -113,6 +113,20 @@ another. Drag/nudge dispatch existing actions and retains ordinary undo/redo/JSO
 Non-Cartesian layer restrictions and preview geometry limits remain separate;
 this does not add axes/figure annotation modes or native-editor control parity.
 
+## Python editor response delivery
+
+Rendering/commit remains serialized by the local session lock. HTMX HTML replies
+carry an additive `X-Mudplot-View-Generation` for UI delivery ordering; a page
+ignores fragments older than the latest generation it has already displayed.
+Requests/actions are not dropped or turned into a new reducer/spec revision API.
+Undo/reset/open/errors retain increasing reply order, not history-cursor order.
+
+Generation is ephemeral local view state, not authorization, persistence or live
+cross-tab collaboration. Reload the page after restarting the server. Replies
+without the header keep legacy handling; JSON/spec/content-type contracts remain
+unchanged. Failed and delayed render cases still use the documented candidate
+state/preview transaction boundary.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside

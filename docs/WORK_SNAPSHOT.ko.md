@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-040은로컬UIreplygeneration으로늦은옛HTML이최신inspector를덮지않게합니다.
+  Spec/historyrevision신설없이실제DOM/spec/previewpixel과관련179/browser8/floor2/
+  activeLSP5clean이맞아EDIT-03/04는지원범위PASS입니다. 요청은commit되고서버재시작뒤
+  page새로고침의한계는남깁니다. 4bcCI중효과unit을로컬보존하며이전CI를소급하지않습니다.
+
 - 최신FIND-039는Pythoneditory2datahandle이primaryy범위/scale을쓰던문제를고쳤습니다.
   15frame/newpure5/browser1·관련209/OS1skip·실제browser6/floor17이통과해primary/title/
   legend뜻과undo/redo를유지하며PLOT-11은지원범위PASS입니다. PLOT전체검토가nativeparity는
@@ -337,7 +342,9 @@
   [제한비교](review_evidence/annotation_alpha.png)에실제pixel/style경계를보존했습니다.
 - [Coordinateframe 근거](review_evidence/coordinate_frame_verification.json)에
   축별metadata/실제browserdrag/이전상태경계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS114/RUNNING5/OPEN30/DEFERRED1**.
+- [Response순서 근거](review_evidence/response_order_verification.json)에실제
+  전달/commit/DOM/pixeltimeline과내부generation범위를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS116/RUNNING5/OPEN28/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

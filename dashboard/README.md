@@ -104,6 +104,11 @@ needing a separate `dashboard build` process.
   text/annotation anchors remain data values on their selected primary/y2 axis,
   including its actual log/inverted limits. Size/DPI changes do not change those
   meanings. This does not add unsupported non-Cartesian annotation modes.
+- **Keep newer fragments visible**: committed HTMX replies carry an internal
+  view generation, so a delayed older reply cannot replace a newer displayed
+  inspector. This is UI response ordering, not spec revision/authentication or
+  a live-collaboration feature; requests still commit through the existing lock.
+  Reload the page after restarting the local server.
 - This is intentionally a *thin* UI: `editor_view.py` has no I/O (pure HTML
   string building, unit-testable on its own), and `editor_server.py` is
   just wiring around the engine's `Store` (plus caching the last render's

@@ -28,6 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-040 protects newer HTML inspector state from late older replies
+  using ephemeral UI response generations, not new spec/history revisions. Actual
+  delayed-route DOM/spec/preview pixel hashes agree;179related/8browser/floor2
+  passes and activeLSP5clean make EDIT-03/04 PASS in local scope. Requests remain
+  committed, page reload needed after server restart. Effect stays local during4bcCI;
+  older CI is not response-order effect proof.
+
 - Latest FIND-039 fixes Python editor y2 data handles incorrectly reusing primary
   y limits/scale.15frame comparisons/newpure5/browser1,209related/1OSskip,6actual
   browsercases/floor17passes preserve primary/title/legend meanings and undo/redo.
@@ -406,7 +413,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   [limited comparison](review_evidence/annotation_alpha.png) retain actual pixel/style boundaries.
 - [Coordinate-frame evidence](review_evidence/coordinate_frame_verification.json)
   retains axis-specific metadata, actual browser drag and previous-state boundaries.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS114/RUNNING5/OPEN30/
+- [Response-order evidence](review_evidence/response_order_verification.json)
+  retains actual delivery/commit/DOM/pixel timelines and internal generation limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS116/RUNNING5/OPEN28/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

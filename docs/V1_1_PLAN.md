@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 56 fixes late HTML replies replacing newer inspector state.**
+FIND-040 reproduces committedA/committedB with Bdeliveredfirst then Adeliveredlate:
+DOM reverted toA while spec/PNG stayedB. Private old-helper experiment fails as
+expected. Additive local HTMX view generations now ignore older-than-latest-seen
+fragments without dropping either action, changing spec or adding domain revisions.
+Undo/reset/open/errors retain reply order; server restart requires a page reload.
+
+New browser1/pureHTTP2 and179connected/8realbrowserpasses/26deselected/floor2passes/
+3104deselected/13Pyparsing warnings,9quality records and activeLSP5clean pass.
+Latest DOM/spec and real browser preview pixel SHA agree; focus/scroll/nudge/panel
+regressions remain intact. EDIT-03/04 are PASS in local supported scope, not live
+cross-tab collaboration or all zoom/highDPI access certification.
+[Evidence](review_evidence/response_order_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS116/RUNNING5/OPEN28/DEFERRED1**. Keep runtime effect local during4bcCI
+(2Rustsuccess/3Pythonrunning); versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 55
+
 **Review phase 55 fixes secondary data handles using the wrong y frame.**
 FIND-039 clamped y2log100 against primary limits; a real drag saved2.605instead
 of199.526. Per-rendered-secondary y metadata now reaches only its layer handle;

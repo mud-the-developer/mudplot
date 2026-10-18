@@ -93,6 +93,7 @@ class EditorSession:
         # UI state, not figure state, so it lives here rather than in the
         # spec (the spec must stay exactly what a script would produce).
         self.active_panel = 0
+        self._view_generation = 0
         self.refresh()
 
     def select_panel(self, index: int) -> None:
@@ -526,11 +527,15 @@ class _Handler(BaseHTTPRequestHandler):
                 return True
         return False
 
-    def _send_html(self, body: str, status: int = 200) -> None:
+    def _send_html(
+        self, body: str, status: int = 200, *, view_generation: int | None = None
+    ) -> None:
         data = body.encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "text/html; charset=utf-8")
         self.send_header("Content-Length", str(len(data)))
+        if view_generation is not None:
+            self.send_header("X-Mudplot-View-Generation", str(view_generation))
         self.end_headers()
         self.wfile.write(data)
 
@@ -572,6 +577,7 @@ class _Handler(BaseHTTPRequestHandler):
         navigation); ordinary form posts redirect. Failed imports instead
         retain their draft in a full page so submitted edits are not lost.
         """
+        session._view_generation += 1
         if self.headers.get("HX-Request") == "true":
             fragment = render_app_body(
                 session.store.state,
@@ -581,7 +587,7 @@ class _Handler(BaseHTTPRequestHandler):
                 active_panel=session._clamp_panel(),
                 draft_json=draft_json,
             )
-            self._send_html(fragment)
+            self._send_html(fragment, view_generation=session._view_generation)
         elif draft_json:
             self._send_html(
                 render_page(

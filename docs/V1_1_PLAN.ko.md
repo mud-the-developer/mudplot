@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰56차에서늦은HTML이최신inspector를덮는문제를고쳤습니다.** FIND-040은A/Bcommit뒤
+B를먼저전달하고A를나중에풀면DOM만A/spec·PNG는B인상태를재현했습니다. Oldhelper의도
+실패를따로보존하고로컬HTMXviewgeneration으로latest-seen보다옛fragment만무시합니다.
+요청/action/SpecJSON을버리거나도메인revision을만들지않으며undo/reset/open/오류도reply순서가
+증가합니다. 서버재시작뒤page새로고침의한계는명시합니다.
+
+새browser1/pureHTTP2·관련179/실제browser8통과/26deselected/floor2통과/3104deselected/
+Pyparsing13경고·품질9명령·activeLSP5clean입니다. 실제DOM/spec/previewpixelSHA와focus/
+scroll/nudge/panel이맞아EDIT-03/04는로컬지원범위PASS이지livecross-tab/모든zoom인증은아닙니다.
+[근거](review_evidence/response_order_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS116/RUNNING5/OPEN28/DEFERRED1**입니다. 4bcCI양Rust성공/3Python진행을보호해효과unit은
+로컬보존하며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰55차
+
 **리뷰55차에서보조datahandle의잘못된yframe을복구했습니다.** FIND-039는y2log100을
 primary범위로clamp하고실제drag에서199.526대신2.605를저장했습니다. 실제secondaryy
 metadata를해당layer에만전달해primarydata/titleaxes/legendfigure뜻을유지했습니다.

@@ -276,7 +276,18 @@ _DRAG_JS = """
   // (keyed by data-key, not summary text: the history section's label
   // contains a live action count, so its text changes on every swap.)
   var state = null;
-  document.body.addEventListener("htmx:beforeSwap", function () {
+  var latestViewGeneration = 0;
+  document.body.addEventListener("htmx:beforeSwap", function (ev) {
+    var generation = Number(
+      ev.detail.xhr.getResponseHeader("X-Mudplot-View-Generation")
+    );
+    if (Number.isSafeInteger(generation) && generation > 0) {
+      if (generation < latestViewGeneration) {
+        ev.detail.shouldSwap = false;
+        return;
+      }
+      latestViewGeneration = generation;
+    }
     var open = {};
     document.querySelectorAll("details[data-key]").forEach(function (d) {
       open[d.dataset.key] = d.open;

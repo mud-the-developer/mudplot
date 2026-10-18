@@ -100,6 +100,17 @@ axesfraction,명시legendanchor는figurefraction입니다. Size/DPI/panel변경�
 바꾸지않으며drag/nudge는기존action/undo/redo/JSON을유지합니다. Non-Cartesianlayer제약과
 previewgeometry한계는별개이며axes/figureannotationmode나nativeUI동등기능을추가한것은아닙니다.
 
+## Pythoneditor응답전달순서
+
+렌더/commit은기존로컬sessionlock으로직렬화합니다. HTMXHTML응답의추가header
+X-Mudplot-View-Generation은UI전달순서이며page는이미표시한최신generation보다오래된
+fragment를무시합니다. 요청/action을버리거나새reducer/spec revisionAPI를만들지않습니다.
+Undo/reset/open/오류뒤에도historycursor가아닌reply순서는증가합니다.
+
+이는일시적인로컬viewstate이지권한·영속성·실시간cross-tab협업토큰이아닙니다. Server재시작
+뒤에는page를새로고침하세요. Header없는응답은기존처리이고JSON/spec/content-type계약은
+유지합니다. 실패/지연렌더는기존후보state/preview transaction경계를유지합니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

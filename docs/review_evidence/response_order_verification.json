@@ -1,0 +1,289 @@
+{
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "dashboard/editor_view.py": "d651135d3ae387af651b52b0afe3334020bdf0cddd9d523e8c4b6765ac36a133",
+    "tests/test_review_response_generation.py": "bd3ef3fca6968cb9227b3e5738738a032f2f1361616f23b47e922c7a7a0039a3",
+    "tests/test_review_response_order_browser.py": "fc2a14cdf79c29dff107d0731a02af60fb275d1f0d0a00017ab98b3e848618df",
+    "scripts/check_minimum_versions.py": "4df3c92395ef9ae4167c3755ffaeebee4060300109e2120e894330687b7b4b1f"
+  },
+  "before_timeline": [
+    {
+      "event": "server_response",
+      "request": "older-first",
+      "generation": null,
+      "committed_title": "older-first",
+      "png_sha256": "da4bcd71bcb49ef78cfe0985908791d47ca73f3f1d12debc8c75ff663104d65d"
+    },
+    {
+      "event": "server_response",
+      "request": "newer-second",
+      "generation": null,
+      "committed_title": "newer-second",
+      "png_sha256": "6116e4cb0cb2d6be4c9d51f799f437ae1c37c0474576a1419b2a6a403e63e56e"
+    },
+    {
+      "event": "new_visible",
+      "dom_title": "newer-second",
+      "spec_title": "newer-second"
+    },
+    {
+      "event": "old_released",
+      "dom_title": "older-first",
+      "spec_title": "newer-second",
+      "actual_pixels": "fbc295b1a54a41c8c09fae9ec151a627f0c7898588f566dfd80e39a7a084635b",
+      "expected_pixels": "fbc295b1a54a41c8c09fae9ec151a627f0c7898588f566dfd80e39a7a084635b"
+    }
+  ],
+  "after_timeline": [
+    {
+      "event": "server_response",
+      "request": "older-first",
+      "generation": "1",
+      "status": 200,
+      "committed_title": "older-first",
+      "png_sha256": "da4bcd71bcb49ef78cfe0985908791d47ca73f3f1d12debc8c75ff663104d65d"
+    },
+    {
+      "event": "server_response",
+      "request": "newer-second",
+      "generation": "2",
+      "status": 200,
+      "committed_title": "newer-second",
+      "png_sha256": "6116e4cb0cb2d6be4c9d51f799f437ae1c37c0474576a1419b2a6a403e63e56e"
+    },
+    {
+      "event": "new_visible",
+      "dom_title": "newer-second",
+      "spec_title": "newer-second"
+    },
+    {
+      "event": "old_released",
+      "dom_title": "newer-second",
+      "spec_title": "newer-second",
+      "actual_pixels": "fbc295b1a54a41c8c09fae9ec151a627f0c7898588f566dfd80e39a7a084635b",
+      "expected_pixels": "fbc295b1a54a41c8c09fae9ec151a627f0c7898588f566dfd80e39a7a084635b",
+      "page_errors": [],
+      "console_errors": [
+        {
+          "text": "Failed to load resource: the server responded with a status of 404 (not found)",
+          "path": "/favicon.ico"
+        }
+      ],
+      "failed_requests": []
+    }
+  ],
+  "real_browser_cases": [
+    "test_late_old_fragment_cannot_overwrite_latest_successful_state",
+    "test_secondary_data_drag_matches_log_inverted_transform_and_history",
+    "test_dragging_the_legend_moves_it_and_persists",
+    "test_arrow_keys_nudge_the_title",
+    "test_swapping_does_not_nest_the_app_body",
+    "test_edits_keep_scroll_position_and_open_sections",
+    "test_a_burst_of_nudges_is_not_dropped",
+    "test_editing_targets_the_selected_panel"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "Thread-lockedservercommitsdidnotorderbrowserHTMLdelivery. Aolderfragmentheldafterserverresponse,Bnewercommitted/deliveredfirst,AthenoverwroteDOMinputswhilecache/spec/pixelswereB. Notchangedreducerstatebutstaleeditablecontrolsviolatedlatestviewconsistency.",
+  "fix": "PerlocalEditorSessionprivate_view_generationincrementsinsideexistingHTTPsessionlockforeachpost-actionviewresponse. HXHTMLhasadditiveX-Mudplot-View-Generation;beforeSwapignoresgenerationbelowlatestSEENviewbeforestate/focussnapshot. Missing/invalidheaderkeepslegacyfallback. Notdomain/spec/historyrevision/auth token;doesnotdropHTTPactionsoraddrequestqueue. Bothactionsremainhistory.",
+  "protocol_scope": "Countercontinuesacrossundo/redo/reset/open/import-error/panelselection;readonlyresponsecontenttypes/routesandSpecJSONunchanged. Ephemerallocalserver-sessionvieworderingonly:reloadpageafterserverrestart;notpersisted/reconnect/distributedtabcollaborationAPI. EDIT05simultaneousagent/tabpolicyremainsseparate.",
+  "coverage": "Real8browsercasescovercontrolleddelayedresponse/newcoordinateframe/legenddrag/titlekeyboardburst/selectedpanel/swapping/scroll-focus. Oldgeneration1deliveredlastcannotreplacenewer2;renderedBrowsercanvasSHAequalsdecodedlatestserverPNG. Primaryspec/actionsandactualhistory2preserved.",
+  "baseline_experiment": "Actualprivatepytestpluginextractsparent4bc_respond_after_actionASTandpatchesonlyprivateprocess;itomitsgenerationheader,newUIlegacyfallbackreproducesoldbehavior. Expectedexit1/Junitfailureisnotapasstest;before.log/before_timelinepreserved. No repo rollback or backend substitute.",
+  "diagnostics_scope": "PageJSerrors0/failedrequests0;bothactionresponses200. Oneconsole404EXACT/favicon.icoisrecordedasseparatenavigationnoise\u2014notactionfailure/blanketconsoleignore. Floor13warningsALLPyparsingdeprecation. RUFFJSlineformat/partialeditdriftcorrectedwithoutproductionrulechanges/casts/ignores.",
+  "environment_overrides": {
+    "floor-response": {
+      "PYTEST_ADDOPTS": "-k \"test_review_response_generation\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "response-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_response_generation.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_coordinate_frames.py",
+        "tests/test_review_annotation_alpha.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "179 passed in 181.92s (0:03:01)"
+      ],
+      "log_text_sha256": "940743430e9b79f31014ba57bd17753ac3d4df9eee07f7bfb62e75cb053fd444"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\after-browser",
+        "tests/test_review_response_order_browser.py",
+        "tests/test_review_coordinate_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "late_old_fragment or secondary_data_drag or dragging or nudge or scroll or swapping or editing_targets",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "8 passed, 26 deselected in 40.14s"
+      ],
+      "log_text_sha256": "988684351cc33ce266cbe1f1c684bee71fc30020a0c127b31103e803d785d81c"
+    },
+    {
+      "name": "floor-response",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "2 passed, 3104 deselected, 13 warnings in 7.71s"
+      ],
+      "log_text_sha256": "ad4df799bebaa87a817efddc85a7cc86bf6eecc1ead14b2ba1d6f3f9372f5577"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "246 files already formatted"
+      ],
+      "log_text_sha256": "8c3c73cce79068c1c7d2facbdcd6e28be5623ab9e03dc82c7181d60440886139"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "4ef1aae7f3e79fbc259d1dfb4b84a7be8da9071d9cce501f238255ead96a6229"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "246f23c242997e7cad405655296f9baa5da1252e16912e1744ce7e6628bf7630"
+    }
+  ],
+  "raw_probe_sha256": {
+    "before.log": "c41a25937dc24fb18d6f06f9a7bbfe21b66c7840e5624d428d6468414e0f30be",
+    "before.xml": "ecca3f792a4ae0c1473855abf20a258a013c3401afd933469dbfa3752fca7b6d",
+    "before_timeline.json": "de62c628790eb4cfc2966ce8d4e18e74d74e78106acfa2033efa6302ccd7f83e",
+    "_qa_old_fragment.py": "667b8e02a2f8af60de3c6ae7f573327951f0906f7a94840f3e80daa665c145c6",
+    "after_timeline.json": "756aba26243e94f2b05f4317fcb9ae8b4c1e7ef1047e4a60321150079631cefc",
+    "qa.py": "b0ac52089cdeb15d8ddd52130e488fbef4d36a5dd93686eef15a819a5b3bc340",
+    "environment_overrides.json": "1980d6e98b8fa692300230214fcf6c55517923ba9e86c97442cf103d7f1b40e9",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "fba9dfa097383dca727f96c665657bf262e7704a144dc3690067b0882fe7ab99",
+    "browser.xml": "3dc02f13ed323efcd770e857a0e16274f15934e6eeab3d461a319d851f0602d1",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}
