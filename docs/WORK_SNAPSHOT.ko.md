@@ -22,12 +22,16 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 full/floor 분리는 ordered60파일 floor와 full/browser/Rust 범위를 유지하며
+ 3Python job 각60분·Rust2job 각20분의 유한 예산을 둡니다. 같은 TeX/system-font
+  전제·timing을 보존하고 CI/릴리스7통과·핵심floor39통과/4skip을 확인했습니다.5job
+  원격 완료는 아직 아니며 대기 소유권/문서와 게시한 뒤 CI-01을 판단합니다.
+
 - 최신 staging 소유권·고정 HTTP path/query와 일반PNG/PDF/SVG offline sink가 통과했습니다.
   관련128통과/OS6skip·최소80통과/권한4skip은 한정 범위이며 보안 인증/sandbox 보장은
   아닙니다. SEC-06은 부분 확인, SEC-07은 PASS이고 exclusive 예약이 충돌 삭제를 막습니다.
 - 기준621CI는3.10Pytest 성공 뒤 최소환경 중1h 한도로 취소됐고 다른3job은 성공했습니다.
-  검사를 줄이거나 전체 green으로 세지 않고 별도 유한 최소 job 구조를 검토하며 수정은
-  로컬에 보존합니다.
+  검사를 줄이지 않고 floor의 별도 유한 job을 구성했으며 이전 취소 결과를 green으로 세지 않습니다.
 
 - 최신 WindowsTMP12대조가 관찰 venv 시작 한계를 core/capture와 구분했습니다. 같은
   interpreter의 짧은TMP/긴TEMP bridge·한글/긴source 보존과 관련47개가 통과했습니다.
@@ -121,6 +125,8 @@
   interpreter/capture/환경 대조와 같은 interpreter bridge 결과를 기록했습니다.
 - [File/sink 근거](review_evidence/file_sink_verification.json)에 staging 소유·route·
   offline sink와 별도 CI 실행 예산 소진을 기록했습니다.
+- [CI floor 분리 근거](review_evidence/ci_floor_split_verification.json)에 같은 범위/
+  전제와 로컬 runner/핵심 subset 결과를 기록했습니다.
 - [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.

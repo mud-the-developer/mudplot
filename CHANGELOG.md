@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Split the complete minimum-dependency contract into its own finite-budget CI
+  job after full Pytest plus floor checks exhausted a shared hour. Retained ordered
+  floor files, pinned TeX and matching system/font prerequisites; both paths report
+  slow tests. Full Python/browser and Rust coverage are unchanged.
 - Reserved atomic JSON/PNG/PDF/SVG staging entries exclusively before writing or
   cleanup, preventing a name collision from deleting/overwriting another file.
   Added file/directory/hardlink/symlink collision and fixed HTTP path-policy probes.

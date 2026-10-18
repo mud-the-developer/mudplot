@@ -89,11 +89,6 @@ jobs:
               "tests/test_no_deps.py",
           ]))
           PY
-      - name: Minimum render dependency contract
-        if: matrix.python-version == '3.10'
-        run: >-
-          uv run --python 3.10 --locked --script
-          scripts/check_minimum_versions.py
       - name: Schema/docs export is in sync (drift guard for Rust + humans)
         run: uv run python scripts/check_schema_sync.py
       - name: Dashboard site builds
@@ -105,6 +100,47 @@ jobs:
         run: uv run python scripts/rust_editor_smoke_test.py --browser
       - name: Sdist/wheel rebuild and contents are complete
         run: uv run python scripts/check_wheel.py
+
+  minimum-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Install uv for the isolated dependency floor
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
+        with:
+          python-version: "3.10"
+          cache-dependency-glob: |
+            uv.lock
+            scripts/check_minimum_versions.py.lock
+      - name: Install the same locked tooling as the full matrix
+        run: uv sync --locked --extra dev --extra browser
+      - name: Retain font/system dependencies without browser download
+        run: uv run --no-sync playwright install-deps chromium
+      - name: Install the same TeX prerequisites as the full matrix
+        env:
+          TECTONIC_VERSION: "0.15.0"
+          TECTONIC_SHA256: >-
+            875fbbc9ab48560d7776088c608e0beee49197b57ab4a2f6c5385b2c661c842f
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            texlive-latex-base texlive-latex-recommended texlive-pictures \
+            ghostscript
+          curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
+            "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
+          echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
+            | sha256sum --check --strict
+          tar xzf tectonic.tar.gz
+          sudo mv tectonic /usr/local/bin/
+          rm tectonic.tar.gz
+          tectonic --version
+      - name: Minimum render dependency contract
+        run: >-
+          uv run --python 3.10 --locked --script
+          scripts/check_minimum_versions.py
 
   rust-editor:
     runs-on: ${{ matrix.os }}

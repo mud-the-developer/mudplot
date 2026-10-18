@@ -18,6 +18,26 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 25차 — full/floor CI 실행 예산 분리
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-ci-floor-lxto_ug4`,
+  [동일성/runner/부분 실행 요약](review_evidence/ci_floor_split_verification.json)도 보존합니다.
+- **FIND-027 (CI 배치):** full Pytest 성공 뒤 최소환경이 남은 job 시간을 쓰다 취소된
+  기준621의1h annotation을 근거로 floor를 독립 Linux/Python3.10 job으로 옮겼습니다.
+  Full3.10/3.12는 그대로이며3Python job 각60분·양Rust 각20분의 유한 예산입니다.
+- Ordered floor TESTS60파일과 PEP723 의존성/lock·기존 not-browser filter는 바뀌지
+  않았습니다. Pdflatex/tectonic 설치 본문·고정 version/checksum hash가 이전과 같음을
+  비교했고 같은 locked tooling/Playwright install-deps로 font/system 전제도 유지합니다.
+  Floor만을 위한 browser binary는 받지 않으며 full matrix의 browser 검사는 유지합니다.
+- Floor에도 느린25개 timing을 출력하고 runner가 모든 파일과 pytest 실패 반환값을
+  전달함을 검사했습니다. 새 guard는 수정 전 실패·수정 후 CI/릴리스 계약7통과입니다.
+  실제 핵심 floor39통과/권한4skip/2855deselected/경고13과 Ruff222/format·Pyright·
+  계약·packaging7명령이 exit0, 변경3경로 LSP clean입니다. 전체 floor와 새로운 Linux
+  apt/font setup·5job 원격 실행 성공은 아직 아니므로 CI-01은 RUNNING입니다.
+- 이번에는 개별 검사/보안 한도·Native120초·HTTP16MiB·버전/의존성/lock/tag/배포를
+  바꾸지 않습니다. 로컬 queue의 staging 소유권 수정/문서와 함께 게시하고 다음 원격
+  결과로 job 분리 효과와 추가 timing을 확인합니다. Loop1은 계속 유지합니다.
+
 ## 24차 — staging 소유권·HTTP 경로·offline sink
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-file-sinks-_n7m1pz3`.

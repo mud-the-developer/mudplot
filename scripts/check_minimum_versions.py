@@ -110,7 +110,9 @@ def main() -> int:
     )
     os.chdir(ROOT)
     sys.path.insert(0, str(ROOT))
-    return pytest.main(["-q", "--disable-warnings", "-m", "not browser", *TESTS])
+    return pytest.main(
+        ["-q", "--disable-warnings", "--durations=25", "-m", "not browser", *TESTS]
+    )
 
 
 if __name__ == "__main__":

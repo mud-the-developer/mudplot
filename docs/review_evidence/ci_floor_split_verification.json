@@ -1,0 +1,203 @@
+{
+  "head": "5bff5c8130811a28f74cea1b2342a81c24066b33",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    ".github/workflows/ci.yml": "7efdcf1876593a3fb9a33bad4443486d06fa95f775451f718e33a06e1fa36ecf",
+    "scripts/check_minimum_versions.py": "4b00d67b61b364803e1cf4206e02015036e7673ea5ca0d1b5ca80c2f85fa65eb",
+    "tests/test_review_ci_effects.py": "033e8465c75eb993cbcb0711f72e4a8da3a479ce583a28b5006ecf2fafb89ef9"
+  },
+  "tex_install_script_equal": true,
+  "tex_script_sha256": "c7f37f7cb4ec75bf850ac17f8ef41fe5535e08dd9ffe199e5443501dfc7f3174",
+  "same_floor_test_files": [
+    "tests/test_data.py",
+    "tests/test_review_sql_ownership.py",
+    "tests/test_review_table_formats.py",
+    "tests/test_review_data_contracts.py",
+    "tests/test_review_data_edges.py",
+    "tests/test_review_group_identity.py",
+    "tests/test_review_json_policies.py",
+    "tests/test_review_missing_data.py",
+    "tests/test_review_temporal_precision.py",
+    "tests/test_review_scalar_boundaries.py",
+    "tests/test_review_state_contracts.py",
+    "tests/test_review_core_boundaries.py",
+    "tests/test_review_optional_errors.py",
+    "tests/test_review_history_policies.py",
+    "tests/test_review_editor_paths.py",
+    "tests/test_review_http_boundaries.py",
+    "tests/test_review_output_contracts.py",
+    "tests/test_review_offline_execution.py",
+    "tests/test_review_body_framing.py",
+    "tests/test_review_full_spec_fields.py",
+    "tests/test_review_color_references.py",
+    "tests/test_review_numeric_geometry.py",
+    "tests/test_review_export_determinism.py",
+    "tests/test_layers.py",
+    "tests/test_layout.py",
+    "tests/test_facets.py",
+    "tests/test_joint_grid.py",
+    "tests/test_pair_grid.py",
+    "tests/test_grid_kde.py",
+    "tests/test_heatmap_options.py",
+    "tests/test_regression_models.py",
+    "tests/test_clustermap.py",
+    "tests/test_raw_group_order.py",
+    "tests/test_new_layers.py",
+    "tests/test_stabilization.py",
+    "tests/test_references.py",
+    "tests/test_dashboard.py",
+    "tests/test_schema_export.py",
+    "tests/test_visual_quality.py",
+    "tests/test_bar_uncertainty.py",
+    "tests/test_statistics.py",
+    "tests/test_statistical_plots.py",
+    "tests/test_lineplot.py",
+    "tests/test_line_semantics.py",
+    "tests/test_scatter_semantics.py",
+    "tests/test_shared_semantics.py",
+    "tests/test_weighted_statistics.py",
+    "tests/test_categorical_statistics.py",
+    "tests/test_box_violin.py",
+    "tests/test_swarm.py",
+    "tests/test_boxen.py",
+    "tests/test_categorical_scales.py",
+    "tests/test_violin_options.py",
+    "tests/test_weighted_violin.py",
+    "tests/test_distribution_components.py",
+    "tests/test_statistical_scales.py",
+    "tests/test_ecdf.py",
+    "tests/test_histogram_statistics.py",
+    "tests/test_kde_options.py",
+    "tests/test_kde2d.py"
+  ],
+  "old_minimum_step_in_regular": true,
+  "new_minimum_step_in_regular": false,
+  "full_pytest_same": true,
+  "budgets_minutes": {
+    "full310": 60,
+    "full312": 60,
+    "floor310": 60,
+    "rust_linux": 20,
+    "rust_windows": 20
+  },
+  "no_package_or_lock_change": true,
+  "pre_fix_guard_failed": 1,
+  "reason": "Baseline621 full Python3.10Pytest succeeded in36minutes, then the same60minute job ran out during the floor step; separate budgets preserve all checks.",
+  "coverage": "Both full Python3.10/3.12 matrices remain. Identical ordered floor TESTS and PEP723 dependencies; not-browser marker unchanged. Same pinned pdflatex/tectonic commands/hash and locked Playwright system/font dependencies retained, without downloading a floor-only Chromium binary.",
+  "new_jobs": 5,
+  "runtime_limits_unchanged": {
+    "native_child_seconds": 120,
+    "http_body_bytes": 16777216
+  },
+  "limits": "Static/runner contracts and a real critical floor subset passed locally. New Ubuntu apt/Playwright dependency setup and complete five-job remote matrix are not yet observed successful; no all-green or CI01 closure claim.",
+  "checks": [
+    {
+      "name": "ci-contracts",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_ci_effects.py",
+        "tests/test_release_preflight.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "7 passed in 0.38s"
+      ],
+      "log_text_sha256": "04da4a1ef16d2966b66b717dcd535d2104616be8ba69a5d926074d78f2d8946f"
+    },
+    {
+      "name": "floor-critical",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "39 passed, 4 skipped, 2855 deselected, 13 warnings in 28.18s"
+      ],
+      "log_text_sha256": "3d4823fc71a3f360312bd49bb1ed5ce8df5756ce9473ebae83f6ac3f3fcaaa94"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "222 files already formatted"
+      ],
+      "log_text_sha256": "65bfe43104bb2e6b62e2cf2e427ada9b13e1c43c71d8a87decbb75061f04e5f6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "08e1b29895926afb3af5bb36cbbc97a4cb09e42e78f279e7cdcba17addbe6dea"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "2b4c8e5abbea954e75f22da5f6ad02f6f984a3d9256c989abe0dcc1f52fd3fee"
+    }
+  ]
+}

@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 25차에서 full/floor CI 예산을 분리했습니다.** FIND-027은 full Pytest 성공 뒤
+같은 job의 floor가 남은 시간을 쓰다 취소되던 배치 문제입니다. Ordered60파일 전체
+floor를 Linux/Python3.10 독립 job으로 옮기고 full3.10/3.12는 유지합니다.3Python job은
+각 유한60분·Rust는 기존20분이며 PEP723 의존성/lock/not-browser filter는 그대로입니다.
+고정 TeX 설치 본문/checksum은 byte 단위로 같고 locked Playwright system/font 전제도
+유지합니다. Floor의 browser binary만 받지 않으며 full browser 검사는 그대로입니다.
+
+두 경로의25slowest timing·runner 전체 argv/반환값 guard를 확인했고 CI/릴리스7통과,
+실제 핵심 floor39통과/4symlink skip/2855deselected/경고13·Ruff222/타입/계약/
+packaging·LSP3경로가 통과했습니다. 새로운5job 원격 완료는 아직 필요해 CI-01은 RUNNING입니다.
+[근거](review_evidence/ci_floor_split_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS70/RUNNING10/OPEN69/DEFERRED1**입니다. 대기하던 소유권 수정/문서와 함께 게시하되
+제품 한도·버전/의존성/lock/tag/배포는 유지하며 v1 완성은 아닙니다.
+
+### 이전 리뷰 24차
+
 **리뷰 24차에서 staging 소유권과 offline sink를 확인했습니다.** FIND-026은 충돌한
 기존 entry를 JSON 실패 cleanup이 지우고 PNG/PDF/SVG가 덮어쓰던 문제입니다. 공통
 helper가 cleanup 전에 exclusive 예약하고 text도 그 파일만 씁니다. File/directory/

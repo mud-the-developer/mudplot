@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 25 separates full and floor CI execution budgets.**
+FIND-027 addresses the observed combined-job exhaustion after successful full
+Pytest: the complete ordered60-file floor contract now has an independent Linux/
+Python3.10job. Full3.10/3.12 remain; all3Python jobs have finite60minute budgets,
+Rust jobs retain20minutes. The floor PEP723 dependencies/lock/not-browser filter
+are unchanged and pinned TeX install commands/checksum match byte-for-byte.
+Locked Playwright system/font dependencies remain without a floor browser download;
+the full matrix retains browser coverage. Both suites now report25slowest timings.
+
+New CI separation/runner guards pass, including complete argv and return-code
+propagation. Local CI/release7passes, real critical floor39passes/4symlink skips/
+2855deselected/13warnings, Ruff222/types/contracts/packaging and3pathLSP checks pass.
+The full new5job remote run is still required; CI-01 remains RUNNING. [Evidence](review_evidence/ci_floor_split_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/DEFERRED1**.
+Publish this with the queued ownership fix/docs; library/runtime/request limits,
+versions/dependencies/locks/tag/deploy stay unchanged. No v1 completion is claimed.
+
+### Earlier review phase 24
+
 **Review phase 24 fixes staging ownership and verifies offline input sinks.**
 FIND-026 reproduced JSON collision cleanup deleting another entry and PNG/PDF/SVG
 overwriting it. Shared staging now reserves an exclusive entry before its cleanup
