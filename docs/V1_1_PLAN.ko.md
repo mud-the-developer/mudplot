@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰44차에서통제출력실패와Figure소유권을확인했습니다.** Windows읽기전용/deny-delete
+잠금의JSON/PNG/PDF/SVG는이전bytes를보존하고ENOSPC/잘못된확장자도정리됩니다.
+성공Figure는callerclose전까지열려있고GC뒤weakref가해제됐습니다. 80effect반복의
+live/openFigure/tmp0·handle215→216/RSS85.5→90.8MB는bounded관찰이지모든native/
+장시간누수부재증거가아니며PERF-04는별도입니다.
+
+관련128통과/OS6skip/예상MPL경고8·floor17통과/3035deselected/경고13·품질8명령으로
+OUT-04/05는이corpus에서PASS이지모든OS/ACL인증은아닙니다. [근거](review_evidence/output_lifecycle_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS98/RUNNING8/OPEN43/DEFERRED1**입니다.
+Runtime변경없이161CI중unit은로컬보존하며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰43차
+
 **리뷰43차에서유한pattern·명도·실제크기검토를분리했습니다.** 2panel의7fill/9linepoint그룹과
 범례가일치하며hatch6/marker8/style4(선조합8주기)가반복됩니다. EqualLCH·독립linearY흑백proxy는
 범주분리보장이아닙니다. 고정1-column컬러/흑백에서얇은선/작은marker/투명band를검토했고

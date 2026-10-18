@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신Windowsreadonly/locked·ENOSPC/확장자실패는bytes/staging/Figure를보존합니다.
+  성공open/callerclose/weakref·80effect자원시계열과관련128/OS6skip/floor17이통과해
+  OUT-04/05는bounded범위PASS이지모든ACL/장시간native누수부재인증은아닙니다.
+  Runtime변경없이161CI중test/doc은로컬보존합니다.
+
 - 최신유한pattern/범례와1-column컬러/흑백검토는명도와범주구분을분리합니다. 작은mark/
   투명band6개의한계를남기고문구/gallery의무제한구분보장을지웠습니다. 관련77/site9/floor8통과로
   COLOR-06/07/09/10은검토범위PASS이지printer/observer인증은아닙니다. 기준16aCI가전부성공해
@@ -258,7 +263,9 @@
   model·표현조건·범주경계를보존했습니다.
 - [Encoding/print근거](review_evidence/encoding_print_verification.json)와
   [comparison](review_evidence/one_column_encoding.png)에pattern/물리설정/한계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS96/RUNNING10/OPEN43/DEFERRED1**.
+- [Outputlifecycle 근거](review_evidence/output_lifecycle_verification.json)에OS실패와
+  bounded소유권/RSS/handle관찰을보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS98/RUNNING8/OPEN43/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

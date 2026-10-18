@@ -1,0 +1,235 @@
+{
+  "source_sha256": {
+    "tests/test_review_output_lifecycle.py": "2cd4be93c27d65ce64141536fad745f0405a53ef36a94f8cc38457ddfe869e6f",
+    "scripts/check_minimum_versions.py": "f3f9ea0c82757bed496b434957ec9cccae6a12dc0f467a668f2e4c73d022f016",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/_render.py": "7153a2c8512e634ccf42a11db023a56f9240e0ec8d3cf08cff86cdc99b770bdb",
+    "scripts/check_request_body_limits.py": "7343ee23384f95ffe67c010fe6a6fa9807ae199d51b3fb963110e4a6647a87cb"
+  },
+  "windows_permission_cases_passed": [
+    "test_windows_readonly_or_locked_target_retains_old_bytes[read_only-json]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[read_only-png]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[read_only-pdf]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[read_only-svg]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[locked-json]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[locked-png]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[locked-pdf]",
+    "test_windows_readonly_or_locked_target_retains_old_bytes[locked-svg]",
+    "test_synthetic_disk_full_retains_previous_output_and_reports_cause[json]",
+    "test_synthetic_disk_full_retains_previous_output_and_reports_cause[png]",
+    "test_synthetic_disk_full_retains_previous_output_and_reports_cause[pdf]",
+    "test_synthetic_disk_full_retains_previous_output_and_reports_cause[svg]",
+    "test_unsupported_extension_fails_without_touching_destination",
+    "test_returned_figures_are_open_until_caller_closes_and_failure_is_clean[None]",
+    "test_returned_figures_are_open_until_caller_closes_and_failure_is_clean[png]",
+    "test_returned_figures_are_open_until_caller_closes_and_failure_is_clean[pdf]",
+    "test_returned_figures_are_open_until_caller_closes_and_failure_is_clean[svg]"
+  ],
+  "lifecycle": {
+    "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+    "data_rows": 3,
+    "cycles": 20,
+    "successful_figures": 80,
+    "rows": [
+      {
+        "phase": "warm",
+        "iteration": 0,
+        "elapsed_seconds": 1.7030000000086147,
+        "rss_bytes": 85491712,
+        "lifetime_peak_rss_bytes": 232312832,
+        "process_handles": 215,
+        "open_figures": 0,
+        "live_owned_figures": 0,
+        "tmp_files": 0
+      },
+      {
+        "phase": "owned_render_save_close",
+        "iteration": 5,
+        "elapsed_seconds": 12.203000000008615,
+        "rss_bytes": 90034176,
+        "lifetime_peak_rss_bytes": 244248576,
+        "process_handles": 215,
+        "open_figures": 0,
+        "live_owned_figures": 0,
+        "tmp_files": 0
+      },
+      {
+        "phase": "owned_render_save_close",
+        "iteration": 10,
+        "elapsed_seconds": 22.64100000000326,
+        "rss_bytes": 90886144,
+        "lifetime_peak_rss_bytes": 245039104,
+        "process_handles": 215,
+        "open_figures": 0,
+        "live_owned_figures": 0,
+        "tmp_files": 0
+      },
+      {
+        "phase": "owned_render_save_close",
+        "iteration": 15,
+        "elapsed_seconds": 33.125,
+        "rss_bytes": 91176960,
+        "lifetime_peak_rss_bytes": 245616640,
+        "process_handles": 216,
+        "open_figures": 0,
+        "live_owned_figures": 0,
+        "tmp_files": 0
+      },
+      {
+        "phase": "owned_render_save_close",
+        "iteration": 20,
+        "elapsed_seconds": 43.625,
+        "rss_bytes": 90804224,
+        "lifetime_peak_rss_bytes": 245747712,
+        "process_handles": 216,
+        "open_figures": 0,
+        "live_owned_figures": 0,
+        "tmp_files": 0
+      }
+    ],
+    "scope": "Bounded Windows ownPID/nativeworking-set/handle series, callerclose+gc;notlongsession/allOSleakfreedom."
+  },
+  "policy": "Successful render/save Figures are open/caller-owned. Callerclose+gc reclaims ownedFigures in bounded loop; failure paths retain target bytes and clean staging/ownedFigure. Windows readonly/deny-delete handles are real isolatedOScontrols; ENOSPC is injected, not disk exhaustion.",
+  "limits": "80successfulFigurerender/save/close cycles in one Windows ownPID do not certify allhours/nativebackends/OS. Handles215\u2192216notperFiguregrowth;working-set/cache/allocatorhighwaterincluded85.5\u219290.8MB,notno-native-leakproof.PGFbundleunsupportedatomicityunchanged. LinuxOSpermissioncoveragecomesfromconditionaltests/laterCI,notclaimedlocalWindowscontrol.",
+  "qa_note": "JSON writer usesatomic Path.open/write notjson.dump; initialwronginjectiondidnotraise and was corrected toENOSPCatowned.tmptext-open stage. The failedcontrolwasnotproductbug. PlatformguardinsideWinDLLtestpreservedLinuxPyrightboundary;noAny/cast/ignore.",
+  "checks": [
+    {
+      "name": "output-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_output_lifecycle.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_stabilization.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_review_layout_boundaries.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "128 passed, 6 skipped, 8 warnings in 58.69s"
+      ],
+      "log_text_sha256": "4c4410843df313ac46049eb2e0ec88263bcc5c636bafc6a3176e5f98d7829f65"
+    },
+    {
+      "name": "floor-lifecycle",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "17 passed, 3035 deselected, 13 warnings in 20.47s"
+      ],
+      "log_text_sha256": "30343c46477b1f19800ec7de7e32b6d6cf8ffd6a4924d2f386746223cbb195fa"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "238 files already formatted"
+      ],
+      "log_text_sha256": "f996212e7c06f8543d4212df37fbcbdd1355ae8e02ca1fbab1c9037817ec908c"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "91f621fadd7d303e80927c2fc124361878e56dbfe2fb0b188d95de17cddaa3e3"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "7e21239656b63fdd55271b45213b6a5aa5500e800ff01784bf923567cab1189f"
+    }
+  ],
+  "raw_probe_sha256": {
+    "lifecycle.json": "026fae5b1cdcac02fe4f9c6a644353bf634dd810e0f0379cf5def3cd581667b2",
+    "results.xml": "3958b3e5e492fc3b79a562b3fdf291f0a9ffcc6733405d928c29363febf7d85e"
+  }
+}

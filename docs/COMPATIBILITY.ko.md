@@ -58,6 +58,11 @@ transaction으로 쓰지는 않습니다. floating-point 범위를 넘는 좌표
 조용히 바꿔서는 안 됩니다. 현재 `FigureSpec → renderer` 경계를 유지하기 위해
 실제 필요가 없는 backend interface를 미리 만들지는 않습니다.
 
+Windows읽기전용/deny-delete잠금은격리된실패대조입니다. JSON/PNG/PDF/SVG교체오류는
+이전bytes를보존하고소유staging을정리합니다. ENOSPC주입은실제storage를소진하지않습니다.
+성공Figure는callerclose전까지열려있고boundedclose/GC·handle/RSS관찰은모든nativebackend/
+장시간누수부재인증이아닙니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

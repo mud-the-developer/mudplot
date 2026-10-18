@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified Windows read-only/deny-delete output failures, synthetic ENOSPC and
+  unsupported extensions without losing prior bytes, plus open-Figure ownership
+  and bounded caller-close/GC/handle traces. Kept long-session/native limits explicit.
 - Verified finite hatch/marker/dash and legend mapping, linear-luminance proxy
   greyscale and fixed one-column colour/grey comparisons. Removed unlimited
   colour-count/readability claims from bilingual/generated docs and gallery

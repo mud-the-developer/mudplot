@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest actual Windows readonly/locked targets and controlled ENOSPC/extension
+  failures preserve bytes/staging/Figures. Open success/caller-close/weakref and
+ 80effect resource traces pass bounded scope:128related/6OSskips/floor17passes.
+  OUT-04/05 are PASS, not all-ACL or long-session native-leak certification.
+  Runtime is unchanged; keep test/docs local during161CI.
+
 - Latest finite pattern/legend mappings and fixed one-column colour/grey review
   distinguish luminance from category separation. Thin marks and6transparentbands
   retain explicit limits; wording/gallery no longer promise unlimited distinction.
@@ -311,7 +317,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains final RGB pairs, model/representation conditions and boundary measurements.
 - [Encoding/print evidence](review_evidence/encoding_print_verification.json) and
   [comparison](review_evidence/one_column_encoding.png) retain patterns/settings/limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS96/RUNNING10/OPEN43/
+- [Output lifecycle evidence](review_evidence/output_lifecycle_verification.json)
+  retains OS failure cases and bounded ownership/RSS/handle measurements.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS98/RUNNING8/OPEN43/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -124,6 +124,22 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 44 verifies controlled output failures and Figure ownership.**
+Actual Windows read-only/deny-delete targets fail without replacing prior JSON/
+PNG/PDF/SVG bytes; synthetic ENOSPC/unsupported-extension controls preserve cleanup.
+Successful render/save Figures stay open until caller close; weakrefs clear after
+GC.80owned render/save/close effects keep live/open Figures and staging0, with
+handles215→216/RSS85.5→90.8MB. This bounded series is not native/long-session
+leak-freedom proof; PERF-04 remains separate.
+
+Related128passes/6OSskips/8expected MPL warnings and floor17passes/3035deselected/
+13warnings plus8quality records pass. OUT-04/05 are PASS in corpus, not every OS/
+ACL permission certification. [Evidence](review_evidence/output_lifecycle_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS98/RUNNING8/OPEN43/DEFERRED1**.
+Runtime is unchanged; keep this unit local during161CI. Versions/locks/releases stay.
+
+### Earlier review phase 43
+
 **Review phase 43 separates finite patterns, luminance and real-size review.**
 Artist/legend mapping across two panels agrees for7fill/9line-point groups and
 shows hatch6/marker8/style4 cycles (paired line period8). Equal LCH and independent

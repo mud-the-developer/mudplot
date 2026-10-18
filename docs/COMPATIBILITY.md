@@ -59,6 +59,12 @@ Optional future Plotly/Cairo adapters must not silently change the existing
 default or the reducer/JSON contract. No speculative backend interface is
 required to retain the current `FigureSpec → renderer` boundary.
 
+Read-only and deny-delete locked Windows targets are isolated failure controls:
+JSON/PNG/PDF/SVG replacement errors preserve prior bytes and remove owned staging.
+Synthetic ENOSPC checks do not exhaust real storage. Successful Figures remain
+open until the caller closes them; bounded caller-close/GC and handle/RSS traces
+are not universal native-backend or long-session leak-freedom certificates.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside
