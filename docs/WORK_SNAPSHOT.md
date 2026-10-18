@@ -28,6 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest default-log probes preserve state/PNG and do not record synthetic input
+  markers or tracebacks in Python/Rust stdout/stderr. Same-client draft/diagnostic
+  output remains intentional.211related/floor1checks pass; runtime code is unchanged.
+- Current3Python-lock audits and69Cargo-registry OSV queries report no known
+  advisory within their scoped snapshots, not security certification. SEC-08 is
+  PASS. Hold the local test/docs unit whilee728five-job CI remains active.
+
 - Latest CI full/floor separation retains the ordered60-file floor and complete
   full/browser/Rust checks under3finite60minute Python jobs and2Rust20minute jobs.
   Same TeX/system-font prerequisites and both timing reports are preserved.
@@ -150,7 +157,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   staging, route policies, offline sink controls and separate CI budget exhaustion.
 - [CI floor-split evidence](review_evidence/ci_floor_split_verification.json)
   records unchanged scope/prerequisites and local runner/critical-subset checks.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/
+- [Privacy/advisory evidence](review_evidence/privacy_audit_verification.json)
+  records default synthetic log probes, exact lock snapshots and audit limitations.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS71/RUNNING10/OPEN68/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

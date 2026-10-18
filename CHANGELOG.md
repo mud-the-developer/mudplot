@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified default editor error logs with synthetic privacy probes and current
+  Python-lock/registry-crate advisory snapshots; documented same-client draft
+  responses and audit limitations without claiming security certification.
 - Split the complete minimum-dependency contract into its own finite-budget CI
   job after full Pytest plus floor checks exhausted a shared hour. Retained ordered
   floor files, pinned TeX and matching system/font prerequisites; both paths report

@@ -120,6 +120,23 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 26차에서 기본 오류 log와 현재 advisory snapshot을 확인했습니다.** 합성 token/
+연구 행만 사용한 양 editor의 validation/import/render/unknown-route 오류에서 기본
+stdout/stderr marker·traceback이 없고 state/PNG를 보존했습니다. 같은 client의 오류/
+draft/current-state 응답은 편집 기능이며 사용자 간 기밀성·credential 보관소가 아닙니다.
+제품 runtime 변경 없이 회귀1개·관련211통과/최소1통과/2898deselected/경고13과 스타일/
+타입/계약/packaging7명령이 통과했습니다.
+
+세 committed Python lock audit의 알려진 취약점과 official OSV querybatch의 Cargo
+registry69 name/version advisory는0이었습니다. cargo-audit/모든RustSec 범주·영구
+보장·후속 dependency resolution 검사로 확대하지 않습니다. SEC-08은 관찰 범위에서
+PASS이며 [근거](review_evidence/privacy_audit_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS71/RUNNING10/OPEN68/DEFERRED1**입니다.
+기준e728의5job CI를 취소하지 않도록 이 test/doc은 로컬에 보존하며 버전/의존성/lock/
+tag/배포도 유지합니다.
+
+### 이전 리뷰 25차
+
 **리뷰 25차에서 full/floor CI 예산을 분리했습니다.** FIND-027은 full Pytest 성공 뒤
 같은 job의 floor가 남은 시간을 쓰다 취소되던 배치 문제입니다. Ordered60파일 전체
 floor를 Linux/Python3.10 독립 job으로 옮기고 full3.10/3.12는 유지합니다.3Python job은

@@ -68,3 +68,17 @@ fetch requests. Unsafe active link schemes/citation escapes are rejected by
 validation. Clicking a permitted output link is the viewer's explicit action.
 Explicit TeX/PGF workflows run a configured local TeX engine and are not a sandbox
 for untrusted TeX or arbitrary Python callers; keep those inputs/tools trusted.
+
+## Diagnostics and dependency checks
+
+Default editor logging does not intentionally record submitted specs, drafts or
+query values. Same-client error diagnostics/current-state/draft responses remain
+part of editing, not a credential store or cross-user confidentiality boundary.
+Do not put real tokens in figure data or URLs. Debug tooling, custom observers,
+proxies and caller-requested CLI output need their own disclosure review.
+
+The dependency checker audits three committed Python lock exports. A bounded OSV
+snapshot also covers registry crates in Cargo.lock; local/git/private sources and
+non-advisory categories require separate review. A clean snapshot means no known
+advisory was returned for the queried versions at that time, not security approval
+or coverage of later user dependency resolution.

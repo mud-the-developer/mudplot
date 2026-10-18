@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 26 checks default error logging and current advisory snapshots.**
+Synthetic validation/import/render/unknown-route probes on Python/Rust editors
+leave no submitted token/research-row/traceback markers in default stdout/stderr,
+while preserving state/PNG. Same-client error/draft/current-state responses remain
+intentional editing output, not cross-user confidentiality or credential storage.
+One permanent Python regression and211related passes/floor1pass/2898deselected/
+13warnings plus7style/type/contract/package checks pass without runtime changes.
+
+Three committed Python-lock audits return no known vulnerabilities; official OSV
+querybatch returns no advisory for69Cargo registry crate/version pairs. This is
+not cargo-audit/all-RustSec category execution, a timeless guarantee or coverage
+of future dependency resolution. SEC-08 is PASS for the measured scope. [Evidence](review_evidence/privacy_audit_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS71/RUNNING10/OPEN68/DEFERRED1**.
+Thee728five-job CI is still active; save this test/docs unit locally without
+cancelling it. Versions/dependencies/locks/tag/deploy remain unchanged.
+
+### Earlier review phase 25
+
 **Review phase 25 separates full and floor CI execution budgets.**
 FIND-027 addresses the observed combined-job exhaustion after successful full
 Pytest: the complete ordered60-file floor contract now has an independent Linux/

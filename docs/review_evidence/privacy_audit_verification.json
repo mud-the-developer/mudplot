@@ -1,0 +1,526 @@
+{
+  "source_sha256": {
+    "tests/test_review_http_boundaries.py": "3488db1535b1a1b8aa25f9b6537252eaa9f2232293404821ece7cd2f6ca2664e",
+    "scripts/audit_dependencies.py": "ad0be55fb12b461fca347a17cf51318d43e7650789669b47af700d7be15e5e09",
+    "dashboard/editor_server.py": "441b93e4fe9a1f77aec3af44ec283f7fa35e60dd2aff3e67cf7618f272e3ac62",
+    "dashboard/editor_view.py": "69b33e51b389f48d233dd8b9bebfaf2eee4863b8026d9bfcd5095fd6e4f6e96b",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/python.rs": "49baaca99635642d0769609f4d7f0b11df82ff3bff06dc5f1c099484a0994567"
+  },
+  "python_audit": {
+    "argv": [
+      "uv",
+      "run",
+      "--locked",
+      "--script",
+      "scripts/audit_dependencies.py"
+    ],
+    "exit_code": 0,
+    "log": "python-audit.log",
+    "lock_sha256": {
+      "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df",
+      "scripts/check_minimum_versions.py.lock": "720b9d4f80e019d8c324c2a7a6e9c7eb8e152c2115195c19c1d16e038c7ace34",
+      "scripts/audit_dependencies.py.lock": "a656981053bf92115fe25f2aba60d2d7a2e062dea0fc0516f2260685ad41b0da"
+    },
+    "scope": "Three committed Python lock exports via pip-audit/hash mode in the observed environment; no-known-advisory outcome is not a security certificate.",
+    "log_text_sha256": "7f66bab1ee03eb86be9e41dd35696b97391a608c0067675c6de5af7464670ea1"
+  },
+  "rust_audit": {
+    "endpoint": "https://api.osv.dev/v1/querybatch",
+    "lock_sha256": "ad078f75def3c7cbba51112c51f4348116c9a697487134cccbfc371c7f781e94",
+    "queried_registry_packages": 69,
+    "local_packages_excluded": [
+      "mudplot-editor"
+    ],
+    "request_sha256": "6b3cf4b62a254a42e6fe767a66c5632e97c25bd8684c55461e3840e04974f53f",
+    "time_utc": "2026-10-18T11:13:53.111291+00:00",
+    "results": [
+      {
+        "name": "askama",
+        "version": "0.16.1",
+        "advisories": []
+      },
+      {
+        "name": "askama_derive",
+        "version": "0.16.1",
+        "advisories": []
+      },
+      {
+        "name": "askama_macros",
+        "version": "0.16.1",
+        "advisories": []
+      },
+      {
+        "name": "askama_parser",
+        "version": "0.16.1",
+        "advisories": []
+      },
+      {
+        "name": "atomic-waker",
+        "version": "1.1.2",
+        "advisories": []
+      },
+      {
+        "name": "axum",
+        "version": "0.8.9",
+        "advisories": []
+      },
+      {
+        "name": "axum-core",
+        "version": "0.5.6",
+        "advisories": []
+      },
+      {
+        "name": "basic-toml",
+        "version": "0.1.10",
+        "advisories": []
+      },
+      {
+        "name": "bitflags",
+        "version": "2.13.2",
+        "advisories": []
+      },
+      {
+        "name": "bytes",
+        "version": "1.12.1",
+        "advisories": []
+      },
+      {
+        "name": "cfg-if",
+        "version": "1.0.4",
+        "advisories": []
+      },
+      {
+        "name": "errno",
+        "version": "0.3.14",
+        "advisories": []
+      },
+      {
+        "name": "fastrand",
+        "version": "2.5.0",
+        "advisories": []
+      },
+      {
+        "name": "form_urlencoded",
+        "version": "1.2.2",
+        "advisories": []
+      },
+      {
+        "name": "futures-channel",
+        "version": "0.3.34",
+        "advisories": []
+      },
+      {
+        "name": "futures-core",
+        "version": "0.3.34",
+        "advisories": []
+      },
+      {
+        "name": "futures-task",
+        "version": "0.3.34",
+        "advisories": []
+      },
+      {
+        "name": "futures-util",
+        "version": "0.3.34",
+        "advisories": []
+      },
+      {
+        "name": "getrandom",
+        "version": "0.4.3",
+        "advisories": []
+      },
+      {
+        "name": "glob",
+        "version": "0.3.4",
+        "advisories": []
+      },
+      {
+        "name": "http",
+        "version": "1.5.0",
+        "advisories": []
+      },
+      {
+        "name": "http-body",
+        "version": "1.1.0",
+        "advisories": []
+      },
+      {
+        "name": "http-body-util",
+        "version": "0.1.5",
+        "advisories": []
+      },
+      {
+        "name": "httparse",
+        "version": "1.10.1",
+        "advisories": []
+      },
+      {
+        "name": "httpdate",
+        "version": "1.0.3",
+        "advisories": []
+      },
+      {
+        "name": "hyper",
+        "version": "1.11.1",
+        "advisories": []
+      },
+      {
+        "name": "hyper-util",
+        "version": "0.1.20",
+        "advisories": []
+      },
+      {
+        "name": "itoa",
+        "version": "1.0.18",
+        "advisories": []
+      },
+      {
+        "name": "libc",
+        "version": "0.2.189",
+        "advisories": []
+      },
+      {
+        "name": "linux-raw-sys",
+        "version": "0.12.1",
+        "advisories": []
+      },
+      {
+        "name": "log",
+        "version": "0.4.34",
+        "advisories": []
+      },
+      {
+        "name": "matchit",
+        "version": "0.8.4",
+        "advisories": []
+      },
+      {
+        "name": "memchr",
+        "version": "2.8.3",
+        "advisories": []
+      },
+      {
+        "name": "mime",
+        "version": "0.3.17",
+        "advisories": []
+      },
+      {
+        "name": "mio",
+        "version": "1.2.3",
+        "advisories": []
+      },
+      {
+        "name": "once_cell",
+        "version": "1.21.4",
+        "advisories": []
+      },
+      {
+        "name": "percent-encoding",
+        "version": "2.3.2",
+        "advisories": []
+      },
+      {
+        "name": "pin-project-lite",
+        "version": "0.2.17",
+        "advisories": []
+      },
+      {
+        "name": "proc-macro2",
+        "version": "1.0.107",
+        "advisories": []
+      },
+      {
+        "name": "quote",
+        "version": "1.0.47",
+        "advisories": []
+      },
+      {
+        "name": "r-efi",
+        "version": "6.0.0",
+        "advisories": []
+      },
+      {
+        "name": "rustc-hash",
+        "version": "2.1.3",
+        "advisories": []
+      },
+      {
+        "name": "rustix",
+        "version": "1.1.4",
+        "advisories": []
+      },
+      {
+        "name": "ryu",
+        "version": "1.0.23",
+        "advisories": []
+      },
+      {
+        "name": "serde",
+        "version": "1.0.229",
+        "advisories": []
+      },
+      {
+        "name": "serde_core",
+        "version": "1.0.229",
+        "advisories": []
+      },
+      {
+        "name": "serde_derive",
+        "version": "1.0.229",
+        "advisories": []
+      },
+      {
+        "name": "serde_json",
+        "version": "1.0.151",
+        "advisories": []
+      },
+      {
+        "name": "serde_path_to_error",
+        "version": "0.1.20",
+        "advisories": []
+      },
+      {
+        "name": "serde_urlencoded",
+        "version": "0.7.1",
+        "advisories": []
+      },
+      {
+        "name": "slab",
+        "version": "0.4.12",
+        "advisories": []
+      },
+      {
+        "name": "smallvec",
+        "version": "1.16.1",
+        "advisories": []
+      },
+      {
+        "name": "socket2",
+        "version": "0.6.5",
+        "advisories": []
+      },
+      {
+        "name": "syn",
+        "version": "3.0.5",
+        "advisories": []
+      },
+      {
+        "name": "sync_wrapper",
+        "version": "1.0.2",
+        "advisories": []
+      },
+      {
+        "name": "tempfile",
+        "version": "3.27.0",
+        "advisories": []
+      },
+      {
+        "name": "tokio",
+        "version": "1.53.1",
+        "advisories": []
+      },
+      {
+        "name": "tokio-macros",
+        "version": "2.7.2",
+        "advisories": []
+      },
+      {
+        "name": "tower",
+        "version": "0.5.3",
+        "advisories": []
+      },
+      {
+        "name": "tower-layer",
+        "version": "0.3.3",
+        "advisories": []
+      },
+      {
+        "name": "tower-service",
+        "version": "0.3.3",
+        "advisories": []
+      },
+      {
+        "name": "tracing",
+        "version": "0.1.44",
+        "advisories": []
+      },
+      {
+        "name": "tracing-core",
+        "version": "0.1.36",
+        "advisories": []
+      },
+      {
+        "name": "unicode-ident",
+        "version": "1.0.24",
+        "advisories": []
+      },
+      {
+        "name": "wasi",
+        "version": "0.11.1+wasi-snapshot-preview1",
+        "advisories": []
+      },
+      {
+        "name": "windows-link",
+        "version": "0.2.1",
+        "advisories": []
+      },
+      {
+        "name": "windows-sys",
+        "version": "0.61.2",
+        "advisories": []
+      },
+      {
+        "name": "winnow",
+        "version": "1.0.4",
+        "advisories": []
+      },
+      {
+        "name": "zmij",
+        "version": "1.0.23",
+        "advisories": []
+      }
+    ],
+    "status": "completed",
+    "finding_count": 0
+  },
+  "rust_scope": "Official OSV batch query of69Cargo registry crate/version pairs; local crate excluded and no git/private package sources. cargo-audit binary was not installed; this is not every RustSec/unmaintained/license category.",
+  "privacy_probe": {
+    "rows": [
+      {
+        "tool": "python",
+        "invalid_action_import_render_and_unknown_route": true,
+        "state_png_preserved": true,
+        "current_state_and_draft_may_return_to_same_local_client": true
+      },
+      {
+        "tool": "rust",
+        "invalid_action_import_render_and_unknown_route": true,
+        "state_png_preserved": true,
+        "current_state_and_draft_may_return_to_same_local_client": true
+      }
+    ],
+    "sentinels_synthetic": true,
+    "default_stdout_stderr_no_input_sentinels": true,
+    "no_default_tracebacks": true,
+    "same_client_error_or_draft_echo_is_intentional": true,
+    "log_sha256": {
+      "python.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "python.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rust.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rust.stdout": "b5d98fb7618777361f81a05ba93197a00d2d9fc3610a12f5a9f526fc243e13e8"
+    }
+  },
+  "privacy_scope": "Default Python/Rust stdout/stderr for synthetic validation/import/render/unknown-route probes. Same local client error/draft/current-spec output is intentional. No debug/custom observer/proxy log or every exception promise. Never put real credentials in specs/queries.",
+  "limits": "No product runtime change; added one permanent Python log regression. No whole Python/minimum/browser/nativeunit/OS/audit lifetime guarantee. Newly resolved user/fresh-range environments require their own re-audit.",
+  "checks": [
+    {
+      "name": "privacy-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_http_boundaries.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_state_contracts.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "211 passed in 127.82s (0:02:07)"
+      ],
+      "log_text_sha256": "a5ca5c8e72c3c02c1cf8dab551a4665ae4c37cf6080d718dc0bfd90f19847623"
+    },
+    {
+      "name": "floor-privacy",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "1 passed, 2898 deselected, 13 warnings in 4.25s"
+      ],
+      "log_text_sha256": "15a49c820ecfd7ca9c2d7be3b3d408a420c9cc3cc410a94eb2dc1e7382043d34"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "222 files already formatted"
+      ],
+      "log_text_sha256": "65bfe43104bb2e6b62e2cf2e427ada9b13e1c43c71d8a87decbb75061f04e5f6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "f61828f27bbb82c489481fe6a3a797ca49a7235b3c8892c3288d231e83f6224a"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "46c467a3d14c4145d2d12a7aae09aa960ca82a9fe3cefa2dd3f1f2ecfe0f9f77"
+    }
+  ]
+}

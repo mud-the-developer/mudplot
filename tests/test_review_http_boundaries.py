@@ -168,6 +168,58 @@ def test_routes_do_not_turn_dot_encoded_or_static_paths_into_file_reads(
     assert _snapshot(local_editor) == before
 
 
+def test_default_error_logging_does_not_record_submitted_research_or_token_markers(
+    local_editor, capfd
+):
+    token = "SYNTHETIC_TOKEN_DO_NOT_LOG_61"
+    research = "SYNTHETIC_RESEARCH_ROWS_DO_NOT_LOG_62"
+    original = _snapshot(local_editor)
+
+    def post(path, fields):
+        request = urllib.request.Request(
+            local_editor + path,
+            urlencode(fields).encode(),
+            headers={
+                "Content-Type": "application/x-www-form-urlencoded",
+                "HX-Request": "true",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=20) as response:
+            assert response.status == 200
+            return response.read()
+
+    plot = (
+        mp.plot({"x": [1, 2], "y": [2, 3], "notes": [research + "a", research + "b"]})
+        .line("x", "y")
+        .size(4, 3)
+    )
+    capfd.readouterr()
+    try:
+        post("/open", {"json": plot.to_json()})
+        before = _snapshot(local_editor)
+        actions = [
+            {"type": "NoSuchAction", "token": token, "rows": [research] * 8},
+            {
+                "type": "AddLayer",
+                "layer": {"type": "line", "x": "x", "y": "y", "color": token},
+            },
+        ]
+        for action in actions:
+            assert b"error" in post("/action/raw", {"json": json.dumps(action)}).lower()
+            assert _snapshot(local_editor) == before
+        assert (
+            b"error" in post("/open", {"json": '{"suptitle":"' + token + '",'}).lower()
+        )
+        assert _snapshot(local_editor) == before
+        output = capfd.readouterr()
+        assert all(
+            marker not in output.out + output.err
+            for marker in (token, research, "Traceback")
+        )
+    finally:
+        post("/open", {"json": json.dumps(original[0])})
+
+
 def test_http_export_query_cannot_choose_a_server_output_path(local_editor, tmp_path):
     protected = tmp_path / "private.txt"
     protected.write_bytes(b"private export probe")

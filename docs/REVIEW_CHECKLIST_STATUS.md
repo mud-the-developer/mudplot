@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 26차 — 기본 오류 로그·현재 lock advisory 검토
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-private-errors-wb54fsyh`,
+  [민감값 probe/lock 조회 요약](review_evidence/privacy_audit_verification.json)도 보존합니다.
+- 합성 token/연구 행만 사용해 실제 Python/Rust 서버의 invalid action/import/render/
+  unknown-route 오류를 주입했습니다. 기본 stdout/stderr에 marker나 traceback이 없고
+  spec/PNG는 보존됐습니다. 같은 client UI가 오류/draft/current state를 반환하는 편집
+  경로와 server log를 구분하며 무조건 입력을 지워 편집을 깨뜨리지 않았습니다.
+- Python HTTP의 기본 log 비노출 회귀1개를 추가했습니다. 관련211통과·실제 최소1통과/
+  2898deselected/경고13·Ruff222/format·Pyright·계약·packaging7명령이 exit0이며 변경
+  test LSP clean입니다. 제품 runtime/log 정책 코드를 바꾸지 않았습니다.
+- `audit_dependencies.py`의 root/all-extras·minimum·audit 세 Python lock export에
+  알려진 취약점이 없었습니다. 추가로 official OSV querybatch에 Cargo registry69개
+  name/version만 보내 advisory0을 확인했습니다. Local crate 제외·git/private source
+  없음도 확인했습니다. cargo-audit binary를 실행한 것은 아니고 unmaintained/license/
+  모든 platform·후속 설치환경 범주까지 검사했다고 표현하지 않습니다.
+- 현재 조회 결과와 기본 logging scope를 적용성/한계와 함께 기록해 SEC-08은 이
+  관찰 범위에서 PASS입니다. Actual credential/research data를 사용·기록하지 않았고
+  clean 결과를 보안 인증으로 표현하지 않습니다. Debug/custom observer/proxy/명시CLI
+  출력·외부 dependency resolution은 별도 검토이며 security 문서에도 명시했습니다.
+- 새5job CI는 실행 중이므로 이 test/doc 단위는 로컬 commit하고 원격을 취소하지
+  않습니다. 원문/버전/의존성/lock/tag/배포·loop1은 그대로 유지합니다.
+
 ## 25차 — full/floor CI 실행 예산 분리
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-ci-floor-lxto_ug4`,
@@ -831,7 +854,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-05 | P1 | PASS | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-06 | P1 | RUNNING | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
-| SEC-08 | P1 | OPEN | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-08 | P1 | PASS | 오류 로그·비밀값·의존성 위험 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | PERF-01 | P1 | OPEN | 상태 변경과 렌더링 비용 분리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-02 | P1 | OPEN | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-03 | P1 | OPEN | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
@@ -867,7 +890,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 70, RUNNING 10, OPEN 69, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 71, RUNNING 10, OPEN 68, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

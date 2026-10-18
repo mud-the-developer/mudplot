@@ -22,6 +22,12 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 양 editor 기본 stdout/stderr에 합성 입력 marker/traceback이 없고 state/PNG를
+  보존했습니다. 같은 client draft/진단 응답은 의도된 편집 기능입니다. Runtime 변경 없이
+  관련211·최소1통과이며3Python-lock/69Cargo-registry OSV snapshot의 알려진 advisory는
+  없습니다. SEC-08은 범위 내 PASS이지 보안 인증은 아닙니다. 새5job CI를 보호해 로컬
+  test/doc 게시는 보류합니다.
+
 - 최신 full/floor 분리는 ordered60파일 floor와 full/browser/Rust 범위를 유지하며
  3Python job 각60분·Rust2job 각20분의 유한 예산을 둡니다. 같은 TeX/system-font
   전제·timing을 보존하고 CI/릴리스7통과·핵심floor39통과/4skip을 확인했습니다.5job
@@ -127,7 +133,9 @@
   offline sink와 별도 CI 실행 예산 소진을 기록했습니다.
 - [CI floor 분리 근거](review_evidence/ci_floor_split_verification.json)에 같은 범위/
   전제와 로컬 runner/핵심 subset 결과를 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS70/RUNNING10/OPEN69/DEFERRED1**.
+- [Privacy/advisory 근거](review_evidence/privacy_audit_verification.json)에 기본
+  합성 log probe·정확한 lock snapshot과 audit 한계를 기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS71/RUNNING10/OPEN68/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

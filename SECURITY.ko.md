@@ -64,3 +64,15 @@ JSON은 pickle/object 복원이 아닌 plain data입니다. DOI/arXiv/reference�
 동작은 viewer 사용자의 명시적 행동입니다. 명시적 TeX/PGF는 설정한 local TeX engine을
 실행하므로 신뢰하는 입력/도구만 사용하세요. 임의 Python 호출이나 untrusted TeX의
 sandbox를 제공하지 않습니다.
+
+## 진단과 의존성 검사
+
+기본 editor log는 제출 spec/draft/query 값을 의도적으로 기록하지 않습니다. 같은
+로컬 client의 오류 진단·현재 state·draft 응답은 편집 기능이지 credential 보관소나
+사용자 간 기밀성 경계가 아닙니다. 실제 token을 그림 데이터/URL에 넣지 마세요. Debug
+도구·custom observer·proxy·호출자가 요청한 CLI 출력은 별도 노출 검토가 필요합니다.
+
+의존성 checker는 세 committed Python lock export를 audit합니다. 제한된 OSV snapshot은
+Cargo.lock의 registry crate도 대조하지만 local/git/private source와 advisory 외 범주는
+별도 검토해야 합니다. Clean snapshot은 조회 당시 버전에 알려진 advisory가 반환되지
+않았다는 뜻이며 보안 승인이나 후속 사용자 dependency resolution의 보장이 아닙니다.
