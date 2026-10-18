@@ -279,6 +279,47 @@ def _failure_cases(connection: http.client.HTTPConnection, fault_file: Path):
         rows.append(
             {"mode": f"empty-{format_}", "export_rejected_state_preserved": True}
         )
+    damaged = [
+        ("truncated-input", b'{"type":"SetTitle","text":'),
+        ("utf8-input", b'{"type":"SetTitle","text":"' + bytes([255]) + b'"}'),
+        (
+            "deep-input",
+            (
+                '{"type":"SetTitle","text":"bad","extra":'
+                + "[" * 3000
+                + "0"
+                + "]" * 3000
+                + "}"
+            ).encode(),
+        ),
+    ]
+    for mode, data in damaged:
+        connection.request(
+            "POST", "/action", data, {"Content-Type": "application/json"}
+        )
+        response = connection.getresponse()
+        status = response.status
+        assert status in (400, 422) and response.read()
+        assert snapshot() == before, mode
+        rows.append(
+            {
+                "mode": mode,
+                "bytes": len(data),
+                "depth": 3000 if mode == "deep-input" else None,
+                "status": status,
+                "state_png_preserved": True,
+            }
+        )
+    columns = {"x": list(range(20000)), "y": [0] * 20000}
+    data = json.dumps({"type": "SetData", "columns": columns}).encode()
+    connection.request("POST", "/action", data, {"Content-Type": "application/json"})
+    response = connection.getresponse()
+    assert response.status == 200
+    response.read()
+    assert snapshot()[0]["data"]["columns"] == columns
+    rows.append(
+        {"mode": "large-input", "bytes": len(data), "rows": 20000, "lossless": True}
+    )
     assert action("recovered")[0] == 200
     assert snapshot()[0]["panels"][0]["title"] == "recovered"
     return rows

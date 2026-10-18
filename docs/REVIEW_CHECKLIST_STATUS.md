@@ -18,6 +18,36 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 20차 — optional 의미·손상 JSON 복구·CI 시간 진단
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-json-semantics-harf1qd7`,
+  [139필드 표/입력 행/실행 요약](review_evidence/json_semantics_verification.json)도 보존합니다.
+- **FIND-022:** 허용된 marker size0이7개 경로에서 기본6/4로 바뀌고3D line이 지정
+  크기도 무시함을9실패/18통과로 재현했습니다. 7truthy fallback을 None 검사로 바꾸고
+  3D line에도 markersize를 전달했습니다. 생략/null 기본은 유지하며9종×3값27artist
+  사례가 JSON 왕복 뒤 실제 크기를 확인합니다. 지원 외 새 style 옵션은 추가하지 않았습니다.
+- Nullable139필드의 schema/Python 생략·null·명시 default·적용 가능 scalar0/false를
+  확인했습니다. StatSpec.errorbar 기본ci와 LayerSpec.inner 기본legacy는 null과 다릅니다.
+  전 필드 CLI/Rust/UI 의미 대조까지 끝난 것은 아니므로 JSON-09는 RUNNING을 유지합니다.
+- API/CLI의 잘린 JSON·잘못된UTF-8·깊이3000·2만배열을 제한 child에서 확인했습니다.
+  CLI 실패는 기존 출력 bytes를 보존하고 다음 migrate가 성공했습니다. NativeHTTP는
+  26/30/6042byte 손상 입력을422로 거부해 spec/PNG를 보존했고188936byte 정상2만행을
+  무손실 처리한 뒤 정상 편집도 성공하여 JSON-12는 이 관찰 범위에서 PASS입니다.
+- Nullable/marker/CLI249통과·연결 render169통과, 최소174통과/2659deselected/경고13,
+  nativechecker18출력/입력경계, CIguard2통과입니다. 최종 Ruff220/format·Pyright·계약·
+  packaging도 통과했습니다. 원래9명령 중 native 도중 총240초 시도는 완료 결과로
+  세지 않았고 선행3receipt를 보존한 뒤 별도 제한 배치에서 재검증했습니다. CI추가4검사도
+  별도 source hash로 보존했습니다. LSP4경로는3clean/1inconclusive이며 기존 QA FP1건은
+  분류를 유지합니다. 새 전체/browser/nativeunit/양 OS 실행 성공을 주장하지 않습니다.
+- **FIND-023 (CI 구성):** 기준063의39108112974가 완료됐고3.12/양Rust는 성공,
+  3.10은45분 한도 초과로 cancelled였습니다. Check117618247815 annotation의
+  `The job has exceeded the maximum execution time of 45m0s`로 원인을 확인했습니다.
+  다른 과거 취소 원인까지 소급하지 않습니다. Python job만 유한60분과 `--durations=25`로
+  조정해 테스트 삭제 없이 다음 실행을 측정합니다. Static guard는 수정 전 실패/후2통과지만
+  수정 후 remote 성공은 아직 아닙니다. CI-01은 RUNNING·CI-07은 DEFERRED입니다.
+- 기준 실행이 끝났으므로 로컬cf95b78과 이번 수정의 게시를 재개합니다. 원문/버전/의존성/
+  lock/tag/배포는 유지하고 남은 P1/P2·전체 v1 완료로 확대하지 않습니다.
+
 ## 19차 — 코어 결정성·참조 index·효과 경계
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-core-3cmovymj`,
@@ -587,7 +617,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | JSON-09 | P1 | RUNNING | 생략·null·자동값·기본값 구분 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-10 | P1 | PASS | canonical serialization과 해시 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-11 | P1 | RUNNING | 스키마·capabilities·문서 동기화 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-12 | P1 | RUNNING | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-12 | P1 | PASS | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | DATA-01 | P0 | PASS | 입력 형식 간 동일 데이터의 동등성 | data.py::to_columns/_to_list/_mapping_to_columns | test_review_missing_data.py(14formats); test_review_table_formats.py(13); 실제 optional114-pass 실행 |
 | DATA-02 | P0 | PASS | 열 길이·필수 열·중복 열 | data.py::_records_to_columns/_row_values; validate.py::_check_data_integrity/_check_column | test_review_data_contracts.py(49); test_data.py; test_validate_hardening.py; 6차 증거 |
 | DATA-03 | P0 | PASS | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
@@ -705,8 +735,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 63, RUNNING 11, OPEN 75, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 64, RUNNING 10, OPEN 75, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

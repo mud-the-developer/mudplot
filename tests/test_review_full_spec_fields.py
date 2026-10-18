@@ -159,6 +159,38 @@ def test_structural_fixture_covers_all_dataclasses_and_nondefault_fields():
     assert seen == set(MODELS)
 
 
+@pytest.mark.parametrize(
+    "cls,field_name",
+    [
+        pytest.param(cls, field.name, id=f"{name}.{field.name}")
+        for name, cls in sorted(MODELS.items())
+        for field in fields(cls)
+        if type(None) in get_args(typing.get_type_hints(cls)[field.name])
+    ],
+)
+def test_every_nullable_field_distinguishes_omitted_null_and_explicit_default(
+    cls, field_name
+):
+    baseline = cls().to_dict()
+    validator = jsonschema.Draft202012Validator(mp.json_schema(cls))
+    omitted = cls().to_dict()
+    del omitted[field_name]
+    validator.validate(omitted)
+    _assert_json_types(baseline, cls.from_dict(omitted).to_dict())
+    for value in (None, baseline[field_name]):
+        payload = cls().to_dict()
+        payload[field_name] = value
+        validator.validate(payload)
+        _assert_json_types(payload, cls.from_dict(payload).to_dict())
+    types_ = get_args(typing.get_type_hints(cls)[field_name])
+    if int in types_ or float in types_ or bool in types_:
+        value = False if bool in types_ else 0
+        payload = cls().to_dict()
+        payload[field_name] = value
+        validator.validate(payload)
+        assert cls.from_dict(payload).to_dict()[field_name] == value
+
+
 def test_checked_in_fixture_matches_current_fields_and_generator():
     try:
         actual = json.loads(FIXTURE.read_text(encoding="utf-8"))

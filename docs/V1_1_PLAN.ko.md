@@ -120,6 +120,26 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 20차에서 marker0 의미와 손상 JSON 복구를 확인했습니다.** FIND-022의9실패는
+명시0을 기본 크기로 바꾸는7경로와3D line의 크기 무시였습니다. None 검사/전달만 바꿔
+생략/null 기본은 유지합니다.27artist와 nullable139 schema/Python field가 통과했지만
+전 필드 CLI/Rust 의미 대조인 JSON-09는 여전히 RUNNING입니다.
+
+API/CLI의 잘린/UTF-8오류/깊이3000에서 기존 출력/복구를 확인하고 nativeHTTP도
+26/30/6042byte 손상을422로 거부해 state/PNG를 보존했습니다.188936byte 정상2만행은
+무손실 처리해 JSON-12는 이 제한 corpus에서 PASS입니다.249+169대상·최소174통과/
+2659deselected/경고13, native18경계·CIguard2, Ruff220/타입/계약/packaging을 기록했습니다.
+총240초 중단 시도는 제외하고 완료3receipt 뒤 별도 배치의 통과를 보존했습니다.
+
+**FIND-023은 CI 실행 예산 문제**입니다. 기준063 run39108112974의3.10이45분초과로
+취소됐고 check117618247815 annotation으로 확인했습니다. 양 Rust/3.12는 성공했습니다.
+전체 검사는 그대로 두고 유한60분과--durations=25로 다음 실행을 측정하며 아직 원격
+재성공은 아닙니다. 기준 실행이 끝나 로컬cf95b78과 이번 수정의 게시를 재개합니다.
+[증거](review_evidence/json_semantics_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS64/RUNNING10/OPEN75/DEFERRED1**이며 버전/의존성/lock/tag/배포는 유지하고 v1은 미완료입니다.
+
+### 이전 리뷰 19차
+
 **리뷰 19차에서 layer index 타입과 순수 core 경계를 확인했습니다.** FIND-021은
 RemoveLayer/SetColorbar/SetLayerAt의 bool이 실제0/1 layer를 선택하거나 다른 noninteger가
 TypeError로 새는 문제입니다. 공통 reducer 검사3줄로 거부하고 패널 자동 확장/commit 정책은 유지합니다.

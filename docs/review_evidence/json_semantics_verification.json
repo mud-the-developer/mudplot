@@ -1,0 +1,1393 @@
+{
+  "head": "cf95b783923d66679b031d5ab6b4d7ca3d2df4c6",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot/_render.py": "39cf401a2b859d0ec554d7f96a4f5b46896e4241bef5db9a36f5e3ec23715646",
+    "tests/test_review_json_policies.py": "dda333cb2f6a5de8fe5085566a8035b56ce41536dfbba0a672ff99696b960915",
+    "tests/test_review_full_spec_fields.py": "3b075484d37835110b52ac98fdc09bbb2726ee82a2254a9f6d1ec06fbe7d2444",
+    "scripts/check_python_bridge_paths.py": "93231650d53c41e4e258214a41f3498bb70f88626f7f31de607a30e9e4114adf"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "ci_source_sha256": {
+    ".github/workflows/ci.yml": "f6916e71a96474148807be9e1f439fa59bfc1d4466f710d9fd0fc0d30509c810",
+    "tests/test_review_ci_effects.py": "6ad4383116653f33ffcff598257dbd895363f1f4f74e06f9bd88d4d83933ad58"
+  },
+  "marker_reproduction": {
+    "failed": 9,
+    "passed": 18,
+    "cause": "truthy fallback discarded explicitzero in seven paths; line3d failed to forward marker size including positive values"
+  },
+  "nullable_fields": [
+    {
+      "model": "AxisSpec",
+      "field": "limits",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "AxisSpec",
+      "field": "share_id",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "z_score",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "standard_scale",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "row_linkage",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "col_linkage",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "row_colors",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ClusterSpec",
+      "field": "col_colors",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "edge_color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "face_color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "line_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "line_style",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "marker",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "marker_size",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "marker_edge_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "alpha",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "ComponentStyleSpec",
+      "field": "hatch",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "body",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "whisker",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "cap",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "median",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "mean",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "DistributionComponentsSpec",
+      "field": "flier",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ECDFSpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "FigureSpec",
+      "field": "width_ratios",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "FigureSpec",
+      "field": "height_ratios",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "FigureSpec",
+      "field": "layout",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "FigureSpec",
+      "field": "journal",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "FigureSpec",
+      "field": "reference_measure_text",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "vmin",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "vmax",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "center",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "mask",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "xlabels",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "HeatmapSpec",
+      "field": "ylabels",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "HistogramSpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "KDE2DSpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "KDE2DSpec",
+      "field": "clip",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "KDESpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "KDESpec",
+      "field": "clip",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "group",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "semantics",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "label",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "citation",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "href",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "references",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "line_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "line_style",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "marker",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "marker_size",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "jitter",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "bar_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "baseline",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "edge_color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "stat",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "error_style",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "error_alpha",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "ecdf",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "dodge",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "order",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "hue_order",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "gap",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "yerr",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "xerr",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "y_lower",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "y_upper",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "error_color",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "error_line_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "capsize",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "capthick",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "y2",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "value",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "text",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "at",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "to",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "histogram",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "kde",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "kde2d",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "mincnt",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "confidence",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "regression",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "whis",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "components",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "notch",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "showmeans",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "showfliers",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "showmedians",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "showextrema",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "bw_method",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "points",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "inner",
+      "omitted": "legacy",
+      "explicit_null": null,
+      "explicit_default": "legacy",
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "bw_adjust",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "cut",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "clip",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "warn_thresh",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "k_depth",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "width_method",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "outlier_prop",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "trust_alpha",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "c",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "clabel",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "matrix",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "heatmap",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "cluster",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "levels",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "u",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "v",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LayerSpec",
+      "field": "quiver_scale",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "quiver_width",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "LayerSpec",
+      "field": "z",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LegendSpec",
+      "field": "bbox_to_anchor",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "LegendSpec",
+      "field": "title",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PaletteSpec",
+      "field": "preset",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "y2",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "z",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "title_position",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "title_citation",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "title_href",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "PanelSpec",
+      "field": "label",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ReferenceSpec",
+      "field": "citation",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "ReferenceSpec",
+      "field": "href",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "scale_id",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "hue",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "hue_order",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "hue_norm",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "size",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "size_order",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "size_norm",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "style",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "style_order",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "SemanticSpec",
+      "field": "dashes",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "StatSpec",
+      "field": "errorbar",
+      "omitted": "ci",
+      "explicit_null": null,
+      "explicit_default": "ci",
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "StatSpec",
+      "field": "level",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": true
+    },
+    {
+      "model": "StatSpec",
+      "field": "weights",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    },
+    {
+      "model": "StatSpec",
+      "field": "units",
+      "omitted": null,
+      "explicit_null": null,
+      "explicit_default": null,
+      "scalar_zero_or_false_schema_case": false
+    }
+  ],
+  "nullable_scope": "139 actual nullable schema/Python fields; StatSpec.errorbar defaultci and LayerSpec.inner defaultlegacy differ from explicitnull. All-field CLI/Rust meaning parity remains pending in JSON09; do not infer it from structural acceptance.",
+  "json_input_rows": [
+    {
+      "mode": "truncated-input",
+      "bytes": 26,
+      "depth": null,
+      "status": 422,
+      "state_png_preserved": true
+    },
+    {
+      "mode": "utf8-input",
+      "bytes": 30,
+      "depth": null,
+      "status": 422,
+      "state_png_preserved": true
+    },
+    {
+      "mode": "deep-input",
+      "bytes": 6042,
+      "depth": 3000,
+      "status": 422,
+      "state_png_preserved": true
+    },
+    {
+      "mode": "large-input",
+      "bytes": 188936,
+      "rows": 20000,
+      "lossless": true
+    }
+  ],
+  "cli_input_scope": {
+    "truncated": "exit1; sentinel output unchanged; healthy migrate follows",
+    "invalid_utf8": "exit1; sentinel output unchanged; healthy migrate follows",
+    "depth": 3000,
+    "large_unused_array_rows": 20000,
+    "child_timeout_seconds": 20
+  },
+  "limits": "Fixed None/zero marker forwarding without changing omitted/null defaults. JSON12 completes the observed bounded API/CLI/nativeHTTP corpus, not unrestricted resource or every-depth promises. No new full/browser/minimumwhole/nativeunit/OS approval. Initial aggregate240s attempt is not a native pass; retained3completed receipts, then resumed standalone.",
+  "ci_budget": {
+    "run": 39108112974,
+    "head": "063ba0a0580112b72322b26048cf647aa154e677",
+    "conclusion": "cancelled",
+    "job_python310": "cancelled",
+    "other_three_jobs": "success",
+    "check_run": 117618247815,
+    "annotation": "The job has exceeded the maximum execution time of 45m0s",
+    "new_minutes": 60,
+    "full_suite_retained": true,
+    "profiling_flag": "--durations=25",
+    "not_yet_remote_validated": true
+  },
+  "checks": [
+    {
+      "name": "json-field-marker",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_json_policies.py",
+        "tests/test_review_full_spec_fields.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "249 passed in 33.41s"
+      ],
+      "log_text_sha256": "4e47cd8d330c8d8d127702e156af322ab1a156c1253b5aebfc9ee38acc81a58e"
+    },
+    {
+      "name": "render-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_render_coverage.py",
+        "tests/test_new_layers.py",
+        "tests/test_regression_models.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_stabilization.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "169 passed in 79.52s (0:01:19)"
+      ],
+      "log_text_sha256": "ef915be13d1e20740fa86e6aa3717344855b098e802a280065c85d24e6d07ab9"
+    },
+    {
+      "name": "minimum-json-semantics",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "174 passed, 2659 deselected, 13 warnings in 32.59s"
+      ],
+      "log_text_sha256": "fc64992e50b27a5cd784ad3880459465c159fbc6ca5875d8e509a466ed662894"
+    },
+    {
+      "name": "native-http-inputs",
+      "argv": [
+        "python",
+        "-u",
+        "scripts/check_python_bridge_paths.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "ed63f0d4a699a9496acb5329da4e26000716cb4f694a6f46ffb350e9c52c46a3"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "220 files already formatted"
+      ],
+      "log_text_sha256": "2c4b768286e17cda517ae9db713c30a0a2a586356b1d5e3c9a172febf0e63ba6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "176501aeef4ee4bbd5deeaf2fe8206b16fd1380fef46c53612db33ffafa13553"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "873cdfdfa773660513721be84b5e47453963cc4a05b26f5db74db46498df4efa"
+    },
+    {
+      "name": "ci-budget",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_ci_effects.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "2 passed in 0.32s"
+      ],
+      "log_text_sha256": "87b1ffae008cb01b1cb73d443fc6366001240a196a4124ad7aea5b0a001096d6"
+    },
+    {
+      "name": "final-ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "final-format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "220 files already formatted"
+      ],
+      "log_text_sha256": "2c4b768286e17cda517ae9db713c30a0a2a586356b1d5e3c9a172febf0e63ba6"
+    },
+    {
+      "name": "final-pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    }
+  ],
+  "incomplete_attempt": {
+    "stage": "native-http-inputs",
+    "cause": "aggregate foreground240s timeout after3successful recorded checks; no native result receipt; not credited",
+    "prior3checks_retained": true
+  }
+}

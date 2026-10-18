@@ -111,6 +111,11 @@ independent. A package release does not require a spec-version bump.
   elsewhere. New `StatSpec` objects reject unknown options (such as arbitrary
   callable operations) so the requested calculation cannot silently change.
   Weighted/unit resampling options are supported only in their documented scope.
+- Optional values are not uniformly synonyms. Omission chooses the model default;
+  explicit null is retained where nullable. `StatSpec.errorbar` defaults to `"ci"`
+  and `LayerSpec.inner` to `"legacy"`, unlike explicit null. Explicit marker size0
+  stays0 rather than becoming the automatic point size; omitted/null defaults stay
+  unchanged. The structural field table is not all-field UI/CLI/Rust parity approval.
 - An omitted spec version uses the current embedded default in both Python and
   Rust; explicit null or malformed versions are not omissions.
 - Unknown spec versions fail explicitly. A future incompatible serialized

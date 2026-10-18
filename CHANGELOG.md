@@ -6,6 +6,12 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Preserved explicit marker size0 instead of replacing it with default6/4 in raw
+  scatter/regression/strip/errorbar/3D paths, and forwarded marker size for3Dlines.
+  Omitted/null defaults remain unchanged. Added139nullable-field structural checks
+  plus CLI/native damage recovery and normal20k-row input probes.
+- Kept full CI coverage but raised the finite Python matrix budget45→60minutes
+  after an observed timeout; report25slowest tests instead of silently dropping tests.
 - Rejected bool/noninteger layer indices consistently in RemoveLayer, SetColorbar
   and SetLayerAt instead of silently editing another layer or leaking TypeError.
   Retained valid panel auto-extension and explicit validation semantics; added

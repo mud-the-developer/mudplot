@@ -586,7 +586,7 @@ def _draw_series_layer(
                 y,
                 label=label,
                 color=color,
-                s=(layer.marker_size or 6) ** 2,
+                s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                 marker=marker or "o",
                 alpha=layer.alpha,
             )
@@ -609,7 +609,7 @@ def _draw_series_layer(
                     cmap=_continuous_cmap(layer.cmap_kind),
                     norm=norm,
                     label=label,
-                    s=(layer.marker_size or 6) ** 2,
+                    s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                     marker=marker or "o",
                     alpha=layer.alpha,
                 )
@@ -620,7 +620,7 @@ def _draw_series_layer(
                     y,
                     label=label,
                     color=color,
-                    s=(layer.marker_size or 6) ** 2,
+                    s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                     marker=marker or "o",
                     alpha=layer.alpha,
                 )
@@ -632,7 +632,7 @@ def _draw_series_layer(
                 y,
                 label=label,
                 color=color,
-                s=(layer.marker_size or 6) ** 2,
+                s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                 marker=marker or "o",
                 alpha=layer.alpha,
             )
@@ -680,7 +680,7 @@ def _draw_series_layer(
                 color=color,
                 ecolor=layer.error_color,
                 fmt=marker or "o",
-                markersize=layer.marker_size or 4,
+                markersize=4 if layer.marker_size is None else layer.marker_size,
                 linewidth=layer.line_width,
                 elinewidth=layer.error_line_width,
                 capsize=2.0 if layer.capsize is None else layer.capsize,
@@ -2089,7 +2089,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                         cmap=_continuous_cmap(layer.cmap_kind),
                         norm=norm,
                         label=label,
-                        s=(layer.marker_size or 6) ** 2,
+                        s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                         marker=layer.marker or "o",
                         alpha=layer.alpha,
                     )
@@ -2101,7 +2101,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                         z,
                         label=label,
                         color=color,
-                        s=(layer.marker_size or 6) ** 2,
+                        s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
                         marker=layer.marker or "o",
                         alpha=layer.alpha,
                     )
@@ -2116,6 +2116,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                     linewidth=layer.line_width,
                     linestyle=layer.line_style or "-",
                     marker=layer.marker,
+                    markersize=layer.marker_size,
                     alpha=layer.alpha,
                 )
         if sc is not None and layer.colorbar:

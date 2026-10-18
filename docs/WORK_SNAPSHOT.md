@@ -28,10 +28,18 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest249field/marker+169connected passes, floor174passes/13warnings and native
+  JSON recovery18boundary cases retain explicit marker0 without changing automatic
+  defaults.139nullable schema/Python field states pass; JSON-09 broader parity is
+  pending. JSON-12 bounded corrupt/large API/CLI/HTTP recovery is PASS.
+- Baseline063CI completed cancelled:3.10 exceeded45minutes per annotation; both
+  Rust and3.12 passed. Full tests remain; finite60minutes and25slowest timings are
+  configured for the next run. Two local units can now publish, not release/tag.
+
 - Latest core subset195passed; new35cases pass on current/floor stacks. Bool/
   noninteger layer indices no longer choose targets or leak TypeError. Core hashes
   agree across process environments and guarded core effects remain dependency-free.
-  Publishing the local unit waits for baseline063CI to finish rather than cancelling it.
+  The publication hold protected baseline063CI until it completed.
 
 - Latest native19tests passed/3helpers ignored and14controlled output boundaries
   passed. Empty render artifacts no longer commit; spec/PNG/redo/recovery checks
@@ -41,7 +49,7 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - Latest data/JSON subset **291 passed**, floor subset **61 passed/201warnings**;
   native **16 passed/1helper ignored** includes additive-capability coverage.
   Raw group masks no longer string-coerce mixed IDs. Earlier broad results below
-  predate this renderer change; JSON-09/12 remain partial rather than complete.
+  predate later renderer changes; the current JSON-09/12 status is recorded above.
 
 - Latest optional full run: **3423 passed,2 OS skips,1 warning**, before a QA-only
   contour API adjustment and minimum-environment banner. Corrected72P0 cases
@@ -96,7 +104,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   both Rust/3.12 passed), not proof of the later artifact guard.
 - [Core boundary evidence](review_evidence/core_boundary_verification.json)
   records reference/type failures, cross-process hashes and current/floor checks.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS63/RUNNING11/OPEN75/
+- [JSON semantics evidence](review_evidence/json_semantics_verification.json)
+  records139field meanings, marker forwarding, bounded input recovery and CI timeout.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS64/RUNNING10/OPEN75/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

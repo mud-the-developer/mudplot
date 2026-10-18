@@ -22,9 +22,16 @@
 
 ## 검증과 리뷰 상태
 
+- 최신249field/marker+169연결 검사·최소174통과/경고13과 native18경계가 통과했습니다.
+  명시 marker0을 유지하고139nullable schema/Python 의미도 확인했습니다. JSON-09의
+  넓은 언어 간 의미 대조는 남기고 JSON-12는 제한 API/CLI/HTTP 복구 corpus에서 PASS입니다.
+- 기준063CI는3.10의45분초과 annotation을 확인했고 양 Rust/3.12는 성공했습니다.
+  전체 검사는 유지해 다음 유한60분/느린25개 측정을 구성했습니다. 완료된 기준 실행을
+  더 기다리지 않고 로컬 두 단위를 게시하되 릴리스/tag는 아닙니다.
+
 - 최신 core 대상195통과이며 신규35case는 현재/최소 환경에서 통과했습니다. Bool/
   noninteger layer index의 다른 대상 선택/TypeError를 막고 새 프로세스 hash와 효과 경계도
-  확인했습니다. 기준063CI를 취소하지 않도록 이번 로컬 작업의 게시를 완료 뒤로 미룹니다.
+  확인했습니다. 기준063CI가 끝나기 전까지 게시를 보류했습니다.
 
 - 최신 native19통과/helper3ignored·출력14경계가 통과했습니다. 빈 render commit을
   차단하고 optional 부재/실패 시 spec/PNG/redo/복구를 확인해 RUST-03은 PASS입니다.
@@ -32,7 +39,7 @@
 
 - 최신 데이터/JSON 대상 **291통과**, 최소 **61통과/경고201**, additive-capability를
   포함한 native **16통과/helper1ignored**입니다. 혼합 raw ID의 문자열 추론을 제거했습니다.
-  아래의 넓은 과거 결과는 이 renderer 변경 이전이며 JSON-09/12는 부분 검증입니다.
+  아래의 넓은 과거 결과는 후속 renderer 변경 이전이며 현재 JSON-09/12는 위 상태를 따릅니다.
 
 - 로컬 optional 전체 **3423통과/OS조건2skip/경고1** 뒤 QA-only contour API/최소
   환경 banner를 고쳤습니다. 수정된 신규72개는 현재/최소 stack에서 다시 통과했으며
@@ -80,7 +87,9 @@
   기준fe4449d CI cancelled(양 Rust/3.12 성공,3.10 취소)를 기록했습니다. 후속 guard의 증거는 아닙니다.
 - [Core 경계 근거](review_evidence/core_boundary_verification.json)에 참조/타입 오류·
   새 프로세스 hash·현재/최소 검사를 기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS63/RUNNING11/OPEN75/DEFERRED1**.
+- [JSON 의미 근거](review_evidence/json_semantics_verification.json)에139field 표·
+  marker 전달·제한 손상 입력 복구·CI timeout을 기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS64/RUNNING10/OPEN75/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

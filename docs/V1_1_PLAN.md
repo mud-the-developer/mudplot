@@ -124,6 +124,29 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 20 preserves marker zero and verifies bounded JSON recovery.**
+FIND-022 reproduced9artist failures: truthy fallbacks discarded explicit marker0,
+while3Dlines ignored positive/zero sizes. Seven None checks plus forwarding3Dline
+marker size retain omitted/null defaults.27artist cases and139nullable schema/
+Python field cases pass; all-field CLI/Rust meanings remain pending in JSON-09.
+
+API/CLI corrupt UTF-8/truncation/depth3000 preserve output/recover; nativeHTTP
+rejects26/30/6042byte damaged inputs with unchanged spec/PNG and accepts188936byte
+20k-row data losslessly. JSON-12 is PASS for this bounded corpus. Checks:249field/
+marker+169connected passes, floor174passes/2659deselected/13warnings,18native
+boundary cases and2CI guards. Ruff220/types/contracts/packaging pass. An aggregate
+240s interrupted attempt was preserved, not credited; standalone continuation passed.
+
+FIND-023 is confirmed CI budget starvation, not a Python test failure: baseline063
+run39108112974 completed cancelled; annotation117618247815 says it exceeded45m.
+Both Rust and3.12 passed. Keep full tests, use finite60minutes and--durations=25;
+remote success under the new budget is not yet observed. Publishing the queued
+local core unit can now resume. Versions/dependencies/locks/tag/deploy remain.
+[Evidence](review_evidence/json_semantics_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS64/RUNNING10/OPEN75/DEFERRED1**. This is not v1 or release completion.
+
+### Earlier review phase 19
+
 **Review phase 19 fixes plain-integer layer indices and verifies pure core boundaries.**
 FIND-021 reproduced bool selecting real layer0/1 and other noninteger index failures
 across RemoveLayer/SetColorbar/SetLayerAt. Three shared reducer guards now reject
