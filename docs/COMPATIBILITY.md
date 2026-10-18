@@ -67,6 +67,11 @@ inputs and performs no I/O; it is not a persistent immutable data structure.
 are defensive snapshots of supported spec/action data. Change state through
 actions, not by mutating a returned snapshot.
 
+Panel/layer indices are nonnegative plain integers, not bool/float aliases.
+Panel-creating actions retain automatic extension; edits require an existing layer.
+Reduction may build missing column/matrix references without effects; explicit
+validation and render validation reject them before drawing.
+
 Each action copies the full spec; undo/redo replay history. Large inline data
 and long histories therefore have a documented performance ceiling.
 `mp.apply()` returns a new result without exposing partial results on failure.

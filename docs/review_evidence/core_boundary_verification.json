@@ -1,0 +1,151 @@
+{
+  "head": "063ba0a0580112b72322b26048cf647aa154e677",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot/reducer.py": "0e34e8e5bc41add420941b739903602b184aa45d7024613424d3ef93390ad72a",
+    "tests/test_review_core_boundaries.py": "f6a03dffb96fb227d761187032372306eb0b5711ac7061a798693c9c2b8d8be1",
+    "scripts/check_minimum_versions.py": "efa7cbe1a82f7c04532f32e6598079074016f2f2162db79722d3f498e35e3988"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "pre_fix": {
+    "index_cases_failed": 18,
+    "qa_case_failed": 1,
+    "passed": 10,
+    "root": "bool selected real layer0/1 and other noninteger layer indices leakedTypeError across RemoveLayer/SetColorbar/SetLayerAt",
+    "qa_limit": "Initial audit blocked legitimate Python source imports; allow only readonly .py/.pyc reads, never data reads or writes."
+  },
+  "policy": "Nonnegative plain integer indices only; valid panel auto-extension remains. Reduce may construct structurally invalid matrix/column references; explicit validate and render validate consistently.",
+  "scope": "35 new tests plus connected regressions; fresh processes vary CWD/clock/hash+RNG seeds and interleaved themes. Block core data-file/write/network/subprocess effects and optional imports; Python code reads and normal interpreter/package loading are not sandboxed.",
+  "limits": "No new full Python/browser/native/OS run or adversarial Python-object sandbox claim. Current baseline063 CI is allowed to finish before another push to avoid configured cancel-in-progress.",
+  "core_hash_rows": [
+    {
+      "seed": 0,
+      "sha256": "5856fa6cc86a0093a6f0f79069a0e8512673dadd618c6ce0d4df1029a5cc0171",
+      "rng_unchanged": true,
+      "effects_blocked": true
+    },
+    {
+      "seed": 97,
+      "sha256": "5856fa6cc86a0093a6f0f79069a0e8512673dadd618c6ce0d4df1029a5cc0171",
+      "rng_unchanged": true,
+      "effects_blocked": true
+    }
+  ],
+  "checks": [
+    {
+      "name": "core-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_core_boundaries.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_stabilization.py",
+        "tests/test_no_deps.py",
+        "tests/test_known_behaviors.py",
+        "tests/test_cli_apply.py",
+        "tests/test_review_json_policies.py",
+        "tests/test_review_scalar_boundaries.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "195 passed in 75.06s (0:01:15)"
+      ],
+      "log_text_sha256": "9e64756c80db1c6547a8b68a983eab523c57e9a84ef2d755876c1c4f8364f40d"
+    },
+    {
+      "name": "minimum-core",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "35 passed, 2628 deselected, 13 warnings in 3.47s"
+      ],
+      "log_text_sha256": "eac0b207d095b367b0c7064ca87db74d7500fa12fe5f967575fc6d1b553ad2d3"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "220 files already formatted"
+      ],
+      "log_text_sha256": "2c4b768286e17cda517ae9db713c30a0a2a586356b1d5e3c9a172febf0e63ba6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "dad3e61ba71e56abbc61a3d4a4667330a600dc6e16e432c34dc1df8953afcd7f"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "c06d33a5c09c917ec723f338db540fcfa83844339fc464e58505b1516351c7ea"
+    }
+  ]
+}

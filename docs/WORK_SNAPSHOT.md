@@ -28,6 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest core subset195passed; new35cases pass on current/floor stacks. Bool/
+  noninteger layer indices no longer choose targets or leak TypeError. Core hashes
+  agree across process environments and guarded core effects remain dependency-free.
+  Publishing the local unit waits for baseline063CI to finish rather than cancelling it.
+
 - Latest native19tests passed/3helpers ignored and14controlled output boundaries
   passed. Empty render artifacts no longer commit; spec/PNG/redo/recovery checks
   cover missing optional effects and fault paths. RUST-03 is PASS, but timeout
@@ -89,7 +94,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - [Bridge fault evidence](review_evidence/bridge_fault_verification.json) records
   isolated failure injection and baselinefe4449d CI cancelled(3.10 cancelled;
   both Rust/3.12 passed), not proof of the later artifact guard.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS60/RUNNING11/OPEN78/
+- [Core boundary evidence](review_evidence/core_boundary_verification.json)
+  records reference/type failures, cross-process hashes and current/floor checks.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS63/RUNNING11/OPEN75/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

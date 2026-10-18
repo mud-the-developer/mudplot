@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 19차 — 코어 결정성·참조 index·효과 경계
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-core-3cmovymj`,
+  [경로 제거 코어 요약](review_evidence/core_boundary_verification.json)도 보존합니다.
+- **FIND-021:** RemoveLayer/SetColorbar/SetLayerAt의 bool index가 실제0/1 layer를
+  선택하거나 다른 noninteger가 내부 TypeError로 새는 것을18case 불일치로 재현했습니다.
+  기존 범위 검사에 plain int 조건3줄을 더해 공통 reducer에서 거부하며 실패 뒤 state/
+  action/history와 정상 복구를 확인했습니다. 기존 positive panel 자동 확장은 바꾸지 않습니다.
+- 새 프로세스의 CWD·clock·hash/RNG seed0/97과4theme 교차 호출에서 정규화 상태
+  SHA가 `5856fa6c…cc0171`로 같고 RNG가 변하지 않았습니다. 실제 이전 그림의 render/style도
+  reducer 결과를 바꾸지 않아 STATE-07은 PASS입니다.
+- Negative/out-of-range/bool/float/string/null layer index와 잘못된 panel·wire type,
+  없는 column/matrix 참조를 확인했습니다. 임시 invalid spec을 순수하게 조립하는 정책은
+  유지하고 validate/render 오류는 같아 STATE-08은 PASS입니다.
+- Audit/import guard로 core의 data-file/write/network/subprocess·선택 의존성을 차단해
+  schema/capabilities/validate/reduce를 실행해 STATE-09는 PASS입니다. Python code의
+  readonly.py/.pyc import만 허용하며 초기 잘못된 code-open 차단은 QA를 고쳤습니다.
+  Interpreter/package code loading과 임의 사용자 Python method sandbox를 보장하는 것은 아닙니다.
+- 신규35case와 연결된 대상 **195통과**, 실제 최소 stack **35통과/2628deselected/
+  경고13**입니다. Ruff220/format·Pyright·계약·clean packaging까지7명령 exit0,
+  changed Python2경로 LSP clean이며 min runner에 신규 파일도 포함했습니다.
+  새 전체/browser/native/양 OS 실행 결과로 확대하지 않습니다.
+- CI는 `cancel-in-progress: true`이므로 기준063의 실행을 반복 push로 끊지 않도록
+  이번 게시를 해당 실행 완료까지 보류합니다. CI-01은 아직 RUNNING이며 원문/버전/의존성/
+  lock/tag/배포는 그대로입니다. 남은 P1/P2를 완료로 간주하지 않습니다.
+
 ## 18차 — 실제 bridge 실패 주입·빈 산출물 commit 방지
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-bridge-faults-final-ifnu5yl2`,
@@ -539,9 +565,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | STATE-04 | P0 | PASS | mp.apply의 실패 격리 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-05 | P0 | PASS | 비트랜잭션 배치 API의 계약 보존 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | STATE-06 | P0 | PASS | listener 예외의 commit 시점 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| STATE-07 | P1 | OPEN | 결정성과 암묵적 전역 상태 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| STATE-08 | P1 | OPEN | 잘못된 참조와 경계 인덱스 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
-| STATE-09 | P1 | OPEN | 검증과 부수효과 경계 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-07 | P1 | PASS | 결정성과 암묵적 전역 상태 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-08 | P1 | PASS | 잘못된 참조와 경계 인덱스 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
+| STATE-09 | P1 | PASS | 검증과 부수효과 경계 | mudplot/spec.py; reducer.py; store.py; api.py | test_reducer.py; test_stabilization.py; test_review_state_contracts.py |
 | HIST-01 | P0 | PASS | 기본 undo/redo와 경계 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-02 | P0 | PASS | undo 이후 분기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-03 | P0 | PASS | 편집기 action/import/render 실패 원자성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
@@ -679,8 +705,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 60, RUNNING 11, OPEN 78, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 63, RUNNING 11, OPEN 75, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

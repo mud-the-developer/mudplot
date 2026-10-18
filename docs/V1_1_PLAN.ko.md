@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 19차에서 layer index 타입과 순수 core 경계를 확인했습니다.** FIND-021은
+RemoveLayer/SetColorbar/SetLayerAt의 bool이 실제0/1 layer를 선택하거나 다른 noninteger가
+TypeError로 새는 문제입니다. 공통 reducer 검사3줄로 거부하고 패널 자동 확장/commit 정책은 유지합니다.
+
+신규35case로 참조/복구·validation-render 오류를 비교하고 CWD/clock/hash+RNG seed/
+스타일 순서를 바꾼 새 프로세스 상태 hash가 같았습니다. Core의 데이터 파일/쓰기/네트워크/
+subprocess·선택 import를 막되 Python code의 readonly import는 허용하며 sandbox는 아닙니다.
+STATE-07/08/09는 PASS, 관련195통과·최소35통과/2628deselected/경고13,
+Ruff220/format·Pyright·계약·packaging의7명령 통과를 [근거](review_evidence/core_boundary_verification.json)에 보존합니다.
+
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS63/RUNNING11/OPEN75/DEFERRED1**입니다.
+현재 작업은 로컬 커밋하고 baseline063 CI를 끊는 cancel-in-progress를 피하려고 완료 전
+게시를 보류합니다. 후속 전체/browser/native/양 OS 완료는 아니며 버전/lock/tag/배포도 유지합니다.
+
+### 이전 리뷰 18차
+
 **리뷰 18차에서 빈 산출물 commit을 막고 실제 bridge 실패를 주입했습니다.** FIND-020은
 exit0 child의 빈 PNG도 정상으로 commit하던 문제이며 공통 render transport에서
 빈 bytes를 거부합니다. PDF/SVG도 같고 전체 binary decode·CPU/disk 보장은 아닙니다.

@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Rejected bool/noninteger layer indices consistently in RemoveLayer, SetColorbar
+  and SetLayerAt instead of silently editing another layer or leaking TypeError.
+  Retained valid panel auto-extension and explicit validation semantics; added
+  cross-process core hashes, effect/import guards and reference-boundary regressions.
 - Rejected empty native bridge render artifacts even after a successful child exit,
   preventing empty previews from committing. Added controlled empty/malformed JSON,
   exit/stderr, missing optional dependency and empty PNG/PDF/SVG probes that retain

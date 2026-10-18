@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 core 대상195통과이며 신규35case는 현재/최소 환경에서 통과했습니다. Bool/
+  noninteger layer index의 다른 대상 선택/TypeError를 막고 새 프로세스 hash와 효과 경계도
+  확인했습니다. 기준063CI를 취소하지 않도록 이번 로컬 작업의 게시를 완료 뒤로 미룹니다.
+
 - 최신 native19통과/helper3ignored·출력14경계가 통과했습니다. 빈 render commit을
   차단하고 optional 부재/실패 시 spec/PNG/redo/복구를 확인해 RUST-03은 PASS입니다.
   Timeout 자손 소유권 RUST-04는 미완료이며 이전 preview6case는 기존 범위를 유지합니다.
@@ -74,7 +78,9 @@
   실제 native preview/session 계약을 기록했습니다.
 - [Bridge 실패 근거](review_evidence/bridge_fault_verification.json)에 격리 주입과
   기준fe4449d CI cancelled(양 Rust/3.12 성공,3.10 취소)를 기록했습니다. 후속 guard의 증거는 아닙니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS60/RUNNING11/OPEN78/DEFERRED1**.
+- [Core 경계 근거](review_evidence/core_boundary_verification.json)에 참조/타입 오류·
+  새 프로세스 hash·현재/최소 검사를 기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS63/RUNNING11/OPEN75/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

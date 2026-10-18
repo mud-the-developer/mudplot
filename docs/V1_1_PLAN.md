@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 19 fixes plain-integer layer indices and verifies pure core boundaries.**
+FIND-021 reproduced bool selecting real layer0/1 and other noninteger index failures
+across RemoveLayer/SetColorbar/SetLayerAt. Three shared reducer guards now reject
+unsupported indices while keeping valid panel auto-extension and commit semantics.
+
+Thirty-five new cases cover references, recovery and validation/render agreement.
+Fresh processes vary CWD/clock/hash+RNG seeds and interleaved styles with the same
+normalized state hash. Core calls block data-file/write/network/subprocess effects
+and optional imports; readonly Python source imports remain allowed, not sandboxed.
+STATE-07/08/09 are PASS. Related **195 passed**, floor **35 passed/2628 deselected/
+13warnings**; Ruff220/format/Pyright/contracts/packaging passed in7commands.
+[Evidence](review_evidence/core_boundary_verification.json) retains source/log hashes.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS63/RUNNING11/OPEN75/DEFERRED1**.
+Current work is committed locally; publishing waits for baseline063 CI completion
+because the configured cancel-in-progress would otherwise cancel its active run.
+No later full/browser/native/OS approval is implied. Versions/locks/tag/deploy remain.
+
+### Earlier review phase 18
+
 **Review phase 18 rejects empty artifacts and exercises actual bridge failures.**
 FIND-020 reproduced an exit0 child committing an empty PNG. Shared render transport
 now rejects empty artifacts before state/cache commit and before PDF/SVG export.

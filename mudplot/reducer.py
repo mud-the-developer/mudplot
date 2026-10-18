@@ -153,7 +153,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.RemoveLayer(layer_index=li, panel=pi):
             _ensure_panel(s, pi)
             n_layers = len(s.panels[pi].layers)
-            if not (0 <= li < n_layers):
+            if type(li) is not int or not (0 <= li < n_layers):
                 raise ValueError(
                     f"RemoveLayer: layer_index {li} out of range for panel "
                     f"{pi} ({n_layers} layer(s))"
@@ -224,7 +224,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetColorbar(layer_index=li, show=show, label=label, panel=pi):
             _ensure_panel(s, pi)
             n_layers = len(s.panels[pi].layers)
-            if not (0 <= li < n_layers):
+            if type(li) is not int or not (0 <= li < n_layers):
                 raise ValueError(
                     f"SetColorbar: layer_index {li} out of range for panel "
                     f"{pi} ({n_layers} layer(s))"
@@ -238,7 +238,7 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
         case A.SetLayerAt(layer_index=li, at=at, panel=pi):
             _ensure_panel(s, pi)
             n_layers = len(s.panels[pi].layers)
-            if not (0 <= li < n_layers):
+            if type(li) is not int or not (0 <= li < n_layers):
                 raise ValueError(
                     f"SetLayerAt: layer_index {li} out of range for panel "
                     f"{pi} ({n_layers} layer(s))"
