@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Restored an explicit platform guard inside the cached Windows memory binding
+  factory after Linux Pyright exposed unavailable ctypes.WinDLL attributes.
+  Added a non-Windows rejection regression and checked both platform targets,
+  retaining fresh samples/closed handles without ignores or dependency changes.
 - Verified decode-once HTML/SVG special-character boundaries and actual raw-editor
   responses; documented explicit trusted PGF TeX escaping rather than claiming a
   universal plain-text sanitizer. Literal escaped PGF text/math compiles and unsafe

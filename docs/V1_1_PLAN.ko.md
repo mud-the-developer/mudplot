@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 36차에서 Windows observer factory의 platform type경계를 복구했습니다.**
+기준805CI39136943043은3.10Pyright의ctypes.WinDLL2오류로실패하고matrix형제는취소됐습니다.
+Cachefactory추출때ownWindowsguard가빠져localWindows검사로는놓친문제입니다. WinDLL
+전에non-Windows OSError를명시해cast/ignore없이경계를복구하고PID fresh조회/CloseHandle/
+Linux reader는유지합니다.
+
+GlobalLinux/WindowsPyright target모두통과·sampler/history4통과/로컬OS1skip·품질/
+packaging7명령도통과했지만새non-Windows runtime회귀는다음LinuxCI가필요합니다.
+[근거](review_evidence/platform_guard_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS82/RUNNING9/OPEN58/DEFERRED1**이며실패를소급해green으로바꾸지않습니다.
+Layout작업보다이실패를먼저처리했고남은baseline job이끝날때까지hotfix는로컬보존하며
+제품runtime/버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰 35차
+
 **리뷰 35차에서 literalHTML/SVG와명시trustedPGFTeX를구분했습니다.** 특수문자/
 Unicode/무해script문자열이decode-once value로남고script/eventnode가추가되지않았습니다.
 실제양raweditor4case도attribute/state가같고PGF의rawampersand는명확히실패하며

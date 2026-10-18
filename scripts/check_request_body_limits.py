@@ -36,6 +36,8 @@ SPEC = {
 
 @cache
 def _windows_memory_bindings():
+    if os.name != "nt":
+        raise OSError("Windows memory bindings are only available on Windows")
     from ctypes import wintypes
 
     class Counters(ctypes.Structure):

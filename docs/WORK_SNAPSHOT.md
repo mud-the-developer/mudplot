@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest805CI exposed2Linux Pyright errors in the extracted Windows factory, not
+  a renderer/test failure. Explicit platform guarding restores that boundary;
+  both Linux/Windows global checks pass locally, with4runtime tests/1OSskip.
+  A fresh Linux guard execution/CI is still needed. Layout work was postponed;
+  hold this tooling fix while the remaining prior jobs settle.
+
 - Latest HTML/SVG literal/draft decode-once and actual raw-editor4payload checks
   preserve data without added active nodes. Explicit trusted PGF escaping/math
   compiles; OUT-09 is PASS, not an untrusted-TeX sandbox or all-font guarantee.
@@ -241,6 +247,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains hashes, compiler/JUnit/sidecar cases and actual PDF font/URI inspection.
 - [String-context evidence](review_evidence/string_boundary_verification.json)
   records exact HTML/SVG values, compiled trusted TeX and current warning categories.
+- [Platform-guard evidence](review_evidence/platform_guard_verification.json)
+  records the exact failed CI step and separate current platform checks.
 - [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 

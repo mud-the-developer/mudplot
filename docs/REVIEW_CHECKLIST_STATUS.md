@@ -18,6 +18,25 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 36차 — Linux Pyright의 Windows API factory 경계 복구
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-ci805-failure-y9h_wgda`와
+  [실패step/양platform 검사 요약](review_evidence/platform_guard_verification.json)을 보존합니다.
+- **FIND-032 (검증 도구/type):** 기준805CI39136943043의3.10job117703259929가 Pyright
+  단계에서 ctypes.WinDLL2오류로실패했고 matrix3.12는취소됐습니다. 제품renderer/test실패나
+  오래된budget문제로덮지않고 실패log와localLinux platform probe에서같은오류를확인했습니다.
+- Windows branch에서cachefactory를추출할때ownplatformguard가빠져LocalWindows검사가
+  이를드러내지못했습니다. Factory가non-Windows에서WinDLL접근전에명시OSError를내도록
+ 2줄guard를추가했습니다. 캐시binding/type·freshPID조회/CloseHandle·원래Linux reader는
+  그대로며 cast/ignore/suppression/dependency변경은없습니다.
+- GlobalPyright를Linux/Windows target각각0오류로검사했고 sampler/history4통과/1skip·
+  Ruff230/format·계약·packaging7명령이exit0, 변경2경로LSP clean입니다. Skip은로컬Windows의
+  새non-Windows runtimeguard이며 실제Linux실행은다음CI가필요합니다. 기존Win반복20sample
+  타입재사용은계속통과합니다. 현재실패를새성공결과로바꾸거나CI-01을닫지않습니다.
+- Layout 검증은이실패보다우선하지않고이번단위에서는수정하지않았습니다. 남은baseline
+  job을임의취소하지않고 도구hotfix를로컬보존한뒤완료상태에따라게시합니다. 원문/버전/
+  의존성/lock/tag/배포·상태개수·loop1은유지합니다.
+
 ## 35차 — HTML/SVG data·명시 PGF TeX 문자열 문맥
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-string-boundary-_1kovvmy`와

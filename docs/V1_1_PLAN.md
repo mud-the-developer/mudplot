@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 36 fixes the cached Windows observer's platform type boundary.**
+Baseline805CI39136943043 failed Python3.10Pyright with2unavailable ctypes.WinDLL
+attributes; the full matrix sibling cancelled. The extracted factory lacked its
+own Windows guard, hidden by local Windows checking. An explicit non-Windows
+OSError before WinDLL restores the boundary without casts/ignores or changing
+fresh PID sampling/CloseHandle/Linux reading.
+
+Both global Linux/Windows Pyright targets now pass; sampler/history4passes/1local
+OSskip and7quality/package records pass. The new non-Windows runtime regression
+still needs Linux execution in the next CI; this is not a retroactive green result.
+[Evidence](review_evidence/platform_guard_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md)
+retain **PASS82/RUNNING9/OPEN58/DEFERRED1**. Layout work was postponed for this
+actual failure. Keep the tooling hotfix local until the remaining prior jobs settle;
+product runtime/versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 35
+
 **Review phase 35 separates literal HTML/SVG from explicit trusted PGF TeX.**
 Special characters/Unicode/inert script text recover once-decoded values without
 script/event nodes; actual Python/Rust raw pages preserve attributes/state in4cases.

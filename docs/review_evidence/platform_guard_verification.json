@@ -1,0 +1,158 @@
+{
+  "run": 39136943043,
+  "head": "805f29f5d8186442d9d2055987f5dc068dc41978",
+  "failed_job": 117703259929,
+  "failed_step": "Pyright",
+  "reported_errors": 2,
+  "cause": "The cached Windows factory had no own platform guard after extraction from an os.name branch; local Windows Pyright could not expose absent Linux ctypes.WinDLL.",
+  "fix": "Reject non-Windows explicitly before Windows binding creation; retain lazy cache/fresh PID values/CloseHandle and original Linux reader. No Any/cast/ignore or new dependency.",
+  "source_sha256": {
+    "scripts/check_request_body_limits.py": "7343ee23384f95ffe67c010fe6a6fa9807ae199d51b3fb963110e4a6647a87cb",
+    "tests/test_memory_probe.py": "e4421936a36060e516ca34f7fc8ef36c77d955ab7330d53ee5f274b09eba853e"
+  },
+  "failed_job_log_sha256": "e079588afa078c2985f79403565c3efbe1ab5fe6bbf523dc10652ebbda77613e",
+  "local_runtime_scope": "Windows sampler/history4tests pass; the new explicit non-Windows runtime guard test is skipped on local Windows and requires later Linux execution. Both full-workspace Pyright platform targets pass locally.",
+  "current_previous_run_snapshot": {
+    "status": "in_progress",
+    "conclusion": "",
+    "jobs": [
+      {
+        "name": "minimum-render",
+        "conclusion": "",
+        "status": "in_progress"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "conclusion": "failure",
+        "status": "completed"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "conclusion": "",
+        "status": "in_progress"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "conclusion": "cancelled",
+        "status": "completed"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "conclusion": "",
+        "status": "in_progress"
+      }
+    ]
+  },
+  "limits": "This is a tooling/platform type-check regression, not a product render failure, known-advisory or test-suite pass. Earlier all-green06d predates the extracted-factory type scope. New workflow result still needed.",
+  "checks": [
+    {
+      "name": "pyright-linux",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "pyright-windows",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "sampler-tests",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_memory_probe.py",
+        "tests/test_history_profile.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_memory_probe.py:26: non-Windows API guard",
+        "4 passed, 1 skipped in 0.37s"
+      ],
+      "log_text_sha256": "3b4bc6bc758dbbf71dee7113bbb7b9f0c20bb768da638b64537223e60248b864"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "230 files already formatted"
+      ],
+      "log_text_sha256": "586fb37ab03e326fd7d42974a2af011ba905524a2698a03c5a1b28499f83dd69"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "94476a003e360956d917b43f9eec5bfc494ed2527a995f67c6b612d13a77b27b"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "d54378da56565fe428576c34b4a501cfac2bea4d58638e4f0b98a5e27a29c29e"
+    }
+  ]
+}

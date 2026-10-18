@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신805CI실패는추출Windowsfactory의LinuxPyright2오류이며renderer/test실패가
+  아닙니다. 명시platformguard로복구하고양targetglobal검사0·runtime4통과/OS1skip을
+  확인했지만새Linux실행/CI는필요합니다. Layout보다실패를우선했고남은baselinejob중
+  hotfix는로컬에보존합니다.
+
 - 최신HTML/SVG literal/draft decode-once·양raweditor4payload가데이터를유지하고active
   node를추가하지않았습니다. 명시trustedPGFescaping/math도컴파일돼OUT-09는범위내PASS이며
   untrustedTeXsandbox/모든font보장은아닙니다. 관련72/최소6통과·현재185upstream경고분류를기록했습니다.
@@ -204,6 +209,8 @@
   compiler·JUnit·sidecar검사와 실제 PDFfont/URI 관찰을 보존했습니다.
 - [문자열문맥 근거](review_evidence/string_boundary_verification.json)에 정확한
   HTML/SVG값·실제trustedTeX컴파일·현재warning분류를보존했습니다.
+- [Platformguard 근거](review_evidence/platform_guard_verification.json)에 정확한
+  실패CIstep과별도currentplatform검사를기록했습니다.
 - [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
