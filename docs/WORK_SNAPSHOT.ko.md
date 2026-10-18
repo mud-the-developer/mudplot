@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 데이터/JSON 대상 **291통과**, 최소 **61통과/경고201**, additive-capability를
+  포함한 native **16통과/helper1ignored**입니다. 혼합 raw ID의 문자열 추론을 제거했습니다.
+  아래의 넓은 과거 결과는 이 renderer 변경 이전이며 JSON-09/12는 부분 검증입니다.
+
 - 로컬 optional 전체 **3423통과/OS조건2skip/경고1** 뒤 QA-only contour API/최소
   환경 banner를 고쳤습니다. 수정된 신규72개는 현재/최소 stack에서 다시 통과했으며
   이전 전체 실행을 후속 QA까지 검증한 새 실행으로 바꾸지 않습니다.
@@ -60,7 +64,9 @@
   cancelled이며 이를 후속 UI 수정의 원격 통과로 소급하지 않습니다.
 - [P0 통합 증거](review_evidence/completion_p0_verification.json)에 독립 수학/좌표/출력·
   최소 배치·실제 설치 artifact·기준92238f3 CI 성공을 연결하고 중단 시도는 제외했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS52/RUNNING8/OPEN89/DEFERRED1**.
+- [데이터/JSON 정책 근거](review_evidence/data_json_policy_verification.json)에 그룹 식별·
+  empty/singleton/행 순서·구조 JSON 검사를 연결했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS57/RUNNING10/OPEN82/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 16 fixes mixed raw-group identity and verifies data/JSON policies.**
+FIND-018 had string/numeric IDs merged by NumPy dtype inference, with null changing
+membership. Object-valued masks now match original Python equality; numeric
+1/1.0/True still merge by the legacy default, while ordered typed semantics remain.
+Duplicate display captions still require caller normalization, not hidden data coercion.
+
+Empty/singleton/row-order, known-version unknown fields, additive capabilities and
+canonical-key/Unicode policies pass. Optional marker states and bounded Python
+corrupt/deep/large JSON recovery are partial evidence, so JSON-09/12 stay RUNNING.
+Recorded checks: **291 related passes**, minimum **61 passed/2567 deselected/
+201warnings**, native **16 passed/1 helper ignored**; Ruff219/format/Pyright/
+contracts/packaging pass in8commands. LSP confirmed4of6paths;2were inconclusive.
+[Evidence](review_evidence/data_json_policy_verification.json) records exact scope.
+
+[Tracker](REVIEW_CHECKLIST_STATUS.md): **PASS57/RUNNING10/OPEN82/DEFERRED1**.
+Earlier full-suite/P0 evidence does not validate this later renderer change.
+Versions/dependencies/locks/tag/deploy stay unchanged; v1 completion is not claimed.
+
+### Earlier review phase 15
+
 **Review phase 15 consolidates the supported-scope P0 evidence.** New independent
 references cover all34Sharma pairs, adopted D65/IEC values, OLS mean-fit confidence
 intervals, categorical/y2 ownership and asymmetric matrix coordinates. Fresh-process,

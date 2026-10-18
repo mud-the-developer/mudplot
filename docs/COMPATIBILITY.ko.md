@@ -82,6 +82,15 @@ exception은 전파되지만 commit을 되돌리지 않습니다. editor는 반�
 내보냅니다. 값이 같은 action도 event/snapshot을 기록하고 redo를 지웁니다. No-op 최적화로
 listener/undo 의미를 조용히 제거하면 안 됩니다.
 
+Legacy raw group mask는 NumPy 문자열 dtype 추론 없이 원래 Python 값을 사용합니다.
+문자열/숫자는 분리하고 기본 numeric equality의 `1`·`1.0`·`True` 통합은 유지합니다.
+명시적 ordered raw 모드는 typed bool/numeric key를 유지합니다. Raw null은 legacy group이며
+통계 layer의 결측 행 제외와 다릅니다. 빈 label은 범례가 없을 수 있고 caption은 `str(key)`라
+서로 다른 타입이 같은 표시명을 가질 수 있으므로 모호한 ID는 plotting 전에 정규화하세요.
+Raw line은 행 순서/중복 x를 유지하고 lineplot은 x별 집계와 명시 sort 정책을 적용합니다.
+빈 raw line/scatter는 유효할 수 있으나 통계 layer는 usable 관측 부재를 거부하고 singleton의
+정의되지 않는 interval은 만들지 않습니다.
+
 ## JSON과 버전
 
 package/editor **1.0.0**과 serialized spec **0.1**은 독립된 버전입니다.

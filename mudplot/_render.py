@@ -295,7 +295,7 @@ def _series_masks(data_cols, layer: LayerSpec):
             np.ones(n, dtype=bool),
         )
         return
-    g = np.asarray(data_cols[layer.group])
+    g = np.asarray(data_cols[layer.group], dtype=object)
     refs = layer.references or {}
     keys = _unique_stable(g) if layer.hue_order is None else layer.hue_order
     for key in keys:

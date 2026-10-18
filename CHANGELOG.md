@@ -6,6 +6,12 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed raw mixed string/numeric group IDs being merged by NumPy string inference,
+  with group identity changing merely when null was added. Masks now use original
+  object values while preserving legacy numeric equality and ordered typed semantics.
+- Added empty/singleton/row-order and structural JSON policy checks, including an
+  additive-capability consumer regression; canonical serialization does not collapse
+  data list order or numeric types. Broader null/default/depth-path completion remains scoped.
 - Added independently sourced full34-pair CIEDE2000 references, adopted D65/IEC
   calibration checks, OLS mean-CI math, categorical/y2 artist ownership and
   asymmetric matrix-coordinate tests without changing numeric defaults.

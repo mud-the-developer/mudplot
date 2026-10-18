@@ -1,0 +1,160 @@
+{
+  "head": "b16f1de4a8ab030d9e5b201aa8ea3e5da3f180c3",
+  "scope": "current grouped-data and structural JSON policies; not all arbitrary object/group/date or full runtime/release coverage",
+  "os": "Windows-11-10.0.26300-SP0",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "files_sha256": {
+    "mudplot/_render.py": "05159887c19281481e08fffb3ce762f6f3a48a0fb107fa1a0ab2bd38c5a8120c",
+    "mudplot-editor/src/model.rs": "eb559221971e161e36770a3fdf7cef3fc7f39947524b1e05191835e842aac33f",
+    "tests/test_review_group_identity.py": "f9c94d64d83e9c56f9dcc062741d807a886556988ef9e0b939dd7fcd2a33bd25",
+    "tests/test_review_data_edges.py": "29a804819256f6d9a58ecdfe5ddb6621bff56025d0bc7ad55fb771164490f3be",
+    "tests/test_review_json_policies.py": "2b5517449be0dbec27e9c2ed9cfa4eeaa1d4fb8e7701c9889afb7243dcaf3817",
+    "scripts/check_minimum_versions.py": "ab499670e650b7ab5ac83c10e9c606bf8d34223bfdca5a922fc43e5f65192f75"
+  },
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "pre_fix": {
+    "grouping_failed": 4,
+    "grouping_passed": 2,
+    "cause": "NumPy inferred string dtype merged string1 and numeric1; adding null changed grouping"
+  },
+  "policy": {
+    "default_raw": "original values use Python equality; numeric1/1.0/boolTrue merge; string1 stays separate, null remains a legacy group, empty label may be unlabeled",
+    "explicit_order": "existing typed bool/numeric semantics and ambiguous-display-name validation retained",
+    "labels": "str(key) can produce duplicate captions for distinct types; callers should normalize ambiguous group display names",
+    "json": "known-version unknown dataclass keys ignored, unknown versions rejected; canonical keys/whitespace/Unicode equivalence does not coerce data types or list order"
+  },
+  "limits": "No full regression/OS/release completion claim; optional marker/null and Python child JSON depth are partialJSON09/12 evidence, not all-path closure",
+  "checks": [
+    {
+      "name": "data-json",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_group_identity.py",
+        "tests/test_review_data_edges.py",
+        "tests/test_review_json_policies.py",
+        "tests/test_raw_group_order.py",
+        "tests/test_stabilization.py",
+        "tests/test_statistical_plots.py",
+        "tests/test_lineplot.py",
+        "tests/test_new_layers.py",
+        "tests/test_regression_models.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "291 passed in 121.01s (0:02:01)"
+      ],
+      "log_text_sha256": "cc1b6104a432d58d8caa7f645a6f9430f6edba0bd409ef5ac69ad9b88f8a8073"
+    },
+    {
+      "name": "minimum-data-json",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "61 passed, 2567 deselected, 201 warnings in 28.27s"
+      ],
+      "log_text_sha256": "d429d6c0325a28a05c7b1e49edfe412690937acb6cbce022b1863abe151552b0"
+    },
+    {
+      "name": "native-capabilities",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 15 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.17s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "ce9493e39dc11c71a2a270ea8cbf42d15caa094efa42f86d7cbe2260f4ba92d7"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "219 files already formatted"
+      ],
+      "log_text_sha256": "c90f684ccee760f54bc3d79f420f5faafb24e12a103e375749fa94089852e5e6"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "26ca2d59c18ea9c20257233deda5291aed8cc57e7d8191b04367523c412397cc"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "0f64fb67f25b4bf3b9fad577f3d2b428300f0bcb6bf4579698d1322140e1663e"
+    }
+  ]
+}

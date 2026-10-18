@@ -85,6 +85,16 @@ separate persistent dirty-bit/save-target feature; downloads export current stat
 An equal-value action still records an event/snapshot and clears redo. Listener
 and undo semantics must not be silently removed by a no-op optimization.
 
+Legacy raw group masks use original Python values, without NumPy string dtype
+inference. Strings and numbers remain separate; default numeric equality still
+merges `1`, `1.0` and `True`. Explicit ordered raw semantics retain typed bool/
+numeric keys. Raw null is a legacy group, unlike statistical missing-row removal;
+an empty group label may be unlabeled. Display captions remain `str(key)`, so
+distinct types may have identical captions; normalize ambiguous IDs before plotting.
+Raw line paths retain row order and duplicate x; lineplot aggregates per x and
+applies its explicit sort policy. Empty raw line/scatter can be valid, whereas
+statistical layers reject no usable observations and singletons omit undefined intervals.
+
 ## JSON and versions
 
 Package/editor version **1.0.0** and serialized spec version **0.1** are

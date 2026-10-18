@@ -120,6 +120,23 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 16차에서 raw 혼합 그룹 식별과 데이터/JSON 정책을 확인했습니다.** FIND-018은
+NumPy dtype 추론이 문자열/숫자 ID를 합치고 null 존재로 membership이 달라지던 문제입니다.
+원래 object 값으로 mask를 계산하며 기본 numeric equality의1/1.0/True 통합과 ordered
+모드의 typed 의미를 유지합니다. 표시 caption 중복은 caller 정규화 정책으로 명시합니다.
+
+Empty/singleton/행 순서·known-version unknown field·additive capability·canonical
+key/Unicode를 검증했습니다. Optional marker와 제한 Python child의 손상/깊이/큰 JSON
+복구는 부분 근거이므로 JSON-09/12는 RUNNING입니다. 관련 **291통과**, 최소
+**61통과/2567deselected/경고201**, native **16통과/helper1ignored**이며 Ruff219파일/
+format·Pyright·계약·packaging까지8명령이 통과했습니다. LSP는6중4clean/2inconclusive로
+구분합니다. [근거](review_evidence/data_json_policy_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS57/RUNNING10/OPEN82/DEFERRED1**입니다.
+과거 전체/P0 검사를 이번 renderer 수정의 검증으로 확대하지 않습니다. 버전/의존성/lock/
+tag/배포는 유지하며 v1 완성 선언은 아닙니다.
+
+### 이전 리뷰 15차
+
 **리뷰 15차에서 현재 지원 범위 P0 근거를 통합했습니다.** Sharma 원본34쌍·D65/IEC
 기준값·독립 OLS mean-CI·범주/그룹/y2 소속·비대칭 행렬 좌표를 보강했고 고정 환경의
 fresh-process PNG/PDF/SVG 바이트와 물리 크기를 확인했습니다. 제품 수치/색 교정/default는

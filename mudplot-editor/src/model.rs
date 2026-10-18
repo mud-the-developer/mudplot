@@ -171,6 +171,20 @@ mod tests {
     }
 
     #[test]
+    fn capabilities_accept_additive_top_level_and_layer_metadata() {
+        let text = include_str!("../../schemas/capabilities.json");
+        let expected: Capabilities = from_json_strict(text).unwrap();
+        let mut expanded: Value = from_json_strict(text).unwrap();
+        expanded["future_metadata"] = serde_json::json!({"version": 123});
+        let layers = expanded["layers"].as_object_mut().unwrap();
+        for layer in layers.values_mut() {
+            layer["future_layer_field"] = serde_json::json!(["extra", null]);
+        }
+        let actual: Capabilities = from_json_strict(&expanded.to_string()).unwrap();
+        assert_eq!(actual, expected);
+    }
+
+    #[test]
     fn figure_spec_round_trip_preserves_schema_fields() {
         let spec: FigureSpec = serde_json::from_str(DEFAULT_SPEC).unwrap();
         let round_trip = serde_json::to_value(spec).unwrap();

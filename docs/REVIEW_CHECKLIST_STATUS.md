@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 16차 — 혼합 그룹·데이터 경계·JSON 정책
+
+- 기반b16f1de 위에서 수행했습니다. 로컬 증거는
+  `C:\Users\mud\AppData\Local\Temp\mudplot-review-data-json-6kiccy6h`,
+  [경로 제거 정책 요약](review_evidence/data_json_policy_verification.json)도 보존합니다.
+- **FIND-018 (raw group):** `["1",1]`이 NumPy 문자열 추론으로 합쳐지고 None을
+  넣으면 분리되는 것을 수정 전4fail/2pass로 확보했습니다. 공통 `_series_masks`의
+  dtype을 object로 유지해 원래 값으로 비교합니다. Default Python numeric equality는
+  `1`/`1.0`/`True`를 통합하고 explicit ordered의 typed key는 그대로입니다. Raw null과
+  empty label의 legacy 정책/`str(key)` caption 중복 가능성을 문서화했습니다. DATA-04는 PASS입니다.
+- 빈 raw와 통계 관측 부재/싱글턴 interval, raw 중복 x/행 순서와 lineplot 집계·sort를
+  실제 artist/source/JSON으로 비교해 DATA-08/09를 PASS 처리했습니다. 과거 KDE/분포
+  singular·constant 검사는 별도 테스트/최소 배치 근거를 유지하며 모든 미래 조합은 아닙니다.
+- Known-version dataclass unknown key는 무시하고 data metadata는 보존하며 unknown
+  version은 거부했습니다. Rust capability 소비자의 top/per-layer 추가 키 허용도 통과해
+  JSON-08을 PASS 처리합니다. Whitespace/key 순서/Unicode 표기는 canonical hash가 같고
+  data list 순서/1대1.0 타입 대조는 달라 JSON-10도 PASS입니다.
+- Optional marker omission/null/0/default와 제한 child의 잘린/잘못된 UTF-8/깊이3000/
+  유효 large-array2만개 복구는 확인했지만 전 필드/CLI/Rust 경로 전체는 아니므로 JSON-09/12는
+  RUNNING으로만 올립니다. 제품 loader 정책을 schema 검증과 혼동하지 않습니다.
+- 최종 관련 **291통과**, 최소 **61통과/2567deselected/경고201**, native **lib15+main1
+  통과/helper1ignored**입니다. Ruff219파일/format·Pyright·계약·clean sdist→wheel까지
+  8기록 명령이 exit0입니다. LSP는6경로 중4clean/2inconclusive로 전부 clean 주장하지 않습니다.
+  새 전체/browser/양 OS 성공으로 확대하지 않으며 버전/의존성/lock/tag/배포는 유지합니다.
+
 ## 15차 — 지원 범위 P0 통합 검증
 
 - 기준92238f3의 CI run39057547031은 Python3.10/3.12·Rust Linux/Windows 네 job 모두
@@ -484,20 +509,20 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | JSON-05 | P0 | PASS | float 범위 밖 좌표의 실패 처리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-06 | P0 | PASS | 예약 키·문자열 키·Unicode 유효성 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-07 | P0 | PASS | 알 수 없는 spec 버전 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-08 | P1 | OPEN | 알 수 없는 필드의 명시된 처리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-09 | P1 | OPEN | 생략·null·자동값·기본값 구분 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-10 | P1 | OPEN | canonical serialization과 해시 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-08 | P1 | PASS | 알 수 없는 필드의 명시된 처리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-09 | P1 | RUNNING | 생략·null·자동값·기본값 구분 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-10 | P1 | PASS | canonical serialization과 해시 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-11 | P1 | RUNNING | 스키마·capabilities·문서 동기화 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
-| JSON-12 | P1 | OPEN | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
+| JSON-12 | P1 | RUNNING | JSON 크기·깊이·손상 입력 복구 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | DATA-01 | P0 | PASS | 입력 형식 간 동일 데이터의 동등성 | data.py::to_columns/_to_list/_mapping_to_columns | test_review_missing_data.py(14formats); test_review_table_formats.py(13); 실제 optional114-pass 실행 |
 | DATA-02 | P0 | PASS | 열 길이·필수 열·중복 열 | data.py::_records_to_columns/_row_values; validate.py::_check_data_integrity/_check_column | test_review_data_contracts.py(49); test_data.py; test_validate_hardening.py; 6차 증거 |
 | DATA-03 | P0 | PASS | 결측값의 정규화와 렌더링 분리 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-04 | P1 | OPEN | 혼합 그룹 식별자 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-04 | P1 | PASS | 혼합 그룹 식별자 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | DATA-05 | P1 | PASS | 날짜·시간·timezone | data.py::_plain_value/_to_list/2D datetime path | test_review_temporal_precision.py(58); 실제 optional/일반/minimum 12차 기록 |
 | DATA-06 | P1 | PASS | NumPy scalar와 지원하지 않는 객체 | data.py::_plain_value missing/item guards | test_review_scalar_boundaries.py(71); optional/project/minimum 13차 기록 |
 | DATA-07 | P1 | PASS | SQL 파라미터와 연결 소유권 | data.py::to_columns query finally | test_review_sql_ownership.py(10); named/tuple params·transaction·borrowed cursor·cleanup failures |
-| DATA-08 | P1 | OPEN | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
-| DATA-09 | P1 | OPEN | 행 순서·정렬·중복 x의 정책 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-08 | P1 | PASS | 빈 데이터·상수·단일 관측값 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
+| DATA-09 | P1 | PASS | 행 순서·정렬·중복 x의 정책 | mudplot/data.py; validate.py | test_data.py; test_stabilization.py |
 | PLOT-01 | P0 | PASS | 전체 등록 레이어의 실행·계약 커버리지 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-02 | P0 | PASS | 범주형 x의 레이어 간 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-03 | P0 | PASS | 그룹·패널 간 스타일 일관성 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
@@ -606,8 +631,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 52, RUNNING 8, OPEN 89, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 57, RUNNING 10, OPEN 82, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018을 재현 후 수정했습니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

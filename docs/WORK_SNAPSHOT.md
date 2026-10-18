@@ -28,6 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest data/JSON subset **291 passed**, floor subset **61 passed/201warnings**;
+  native **16 passed/1helper ignored** includes additive-capability coverage.
+  Raw group masks no longer string-coerce mixed IDs. Earlier broad results below
+  predate this renderer change; JSON-09/12 remain partial rather than complete.
+
 - Latest optional full run: **3423 passed,2 OS skips,1 warning**, before a QA-only
   contour API adjustment and minimum-environment banner. Corrected72P0 cases
   separately passed on both stacks; do not treat the prior run as a later rerun.
@@ -72,7 +77,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - [P0 completion evidence](review_evidence/completion_p0_verification.json)
   connects independent numeric/geometry/export references, floor batches, installed
   artifacts and baseline92238f3 CI success. Incomplete attempts are not counted.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS52/RUNNING8/OPEN89/
+- [Data/JSON policy evidence](review_evidence/data_json_policy_verification.json)
+  connects group identity, empty/singleton/order and structural JSON checks.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS57/RUNNING10/OPEN82/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
