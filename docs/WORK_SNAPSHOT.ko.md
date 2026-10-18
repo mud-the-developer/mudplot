@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-039는Pythoneditory2datahandle이primaryy범위/scale을쓰던문제를고쳤습니다.
+  15frame/newpure5/browser1·관련209/OS1skip·실제browser6/floor17이통과해primary/title/
+  legend뜻과undo/redo를유지하며PLOT-11은지원범위PASS입니다. PLOT전체검토가nativeparity는
+  아니며기준b8CI5job모두성공뒤alpha+좌표runtime을게시해새전체CI를받습니다.
+
 - 최신FIND-038은공통branch에서annotationtext/arrowopacity누락을고치고defaultRGBA/
   nativeclip/zorder를유지합니다. 수작업overlay와alpha0pixel이맞아관련245/floor12/
   activeLSP3clean으로PLOT-09/12는범위내PASS입니다. PLOT-11drag좌표는별도로남기고
@@ -330,7 +335,9 @@
   log결과와실제backend경고한계를보존했습니다.
 - [Overlay/alpha 근거](review_evidence/overlay_alpha_verification.json)와
   [제한비교](review_evidence/annotation_alpha.png)에실제pixel/style경계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS113/RUNNING5/OPEN31/DEFERRED1**.
+- [Coordinateframe 근거](review_evidence/coordinate_frame_verification.json)에
+  축별metadata/실제browserdrag/이전상태경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS114/RUNNING5/OPEN30/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

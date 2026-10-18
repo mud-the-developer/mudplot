@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed Python editor text/annotation handles using primary y coordinates for
+  secondary-axis layers. Preserve actual y2 limits/scale through preview metadata
+  and data dragging, retaining primary/title/legend frames and undo/redo.
 - Fixed ignored annotation alpha for both text and arrows, including secondary
   axes and fully transparent output. Preserved default RGBA colour opacity and
   native z-order/clip behavior; added pixel/SVG regressions and overlay comparisons.

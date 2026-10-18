@@ -92,6 +92,14 @@ RGBAcolouropacity를유지합니다. Nativezorder/clip정책(line2/point·band1/
 그대로이지새layer순서우선override가아닙니다. 화면밖/완전투명artist가있어도pixel을추가하지
 않을수있습니다. 새publiczorder/clip옵션이나axes/figureannotation좌표mode를추가하지않습니다.
 
+## Editor좌표frame
+
+Text/annotationanchor는선택한primary/y2축의data좌표입니다. Pythoneditorhandle은모든layer에
+primaryy범위를쓰지않고실제렌더축limits/scale(log/역방향포함)을사용합니다. 명시title위치는
+axesfraction,명시legendanchor는figurefraction입니다. Size/DPI/panel변경이좌표공간의뜻을
+바꾸지않으며drag/nudge는기존action/undo/redo/JSON을유지합니다. Non-Cartesianlayer제약과
+previewgeometry한계는별개이며axes/figureannotationmode나nativeUI동등기능을추가한것은아닙니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰55차에서보조datahandle의잘못된yframe을복구했습니다.** FIND-039는y2log100을
+primary범위로clamp하고실제drag에서199.526대신2.605를저장했습니다. 실제secondaryy
+metadata를해당layer에만전달해primarydata/titleaxes/legendfigure뜻을유지했습니다.
+15size/DPI/panel대조·실제artist/JSON·browser선택panel/invertedlogdrag와undo/redo가맞습니다.
+
+Pure5/browser1을분리해관련209통과/non-Windowsguard1skip·실제browser6통과/27deselected·
+floor17통과/3087deselected/Pyparsing289경고·품질10명령·activeLSP6clean입니다.
+PLOT-11은지원범위PASS로PLOT01..12검토를마쳤지만보편API/nativeUI/previewparity인증은아닙니다.
+[근거](review_evidence/coordinate_frame_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS114/RUNNING5/OPEN30/DEFERRED1**입니다. 기준b8CI39171315500은5job모두성공해
+대기alpha+좌표효과를함께게시하고새전체CI를받으며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰54차
+
 **리뷰54차에서annotationalpha누락과overlay를확인했습니다.** FIND-038은유효alpha가
 Text/arrow둘다에빠져초기11회귀가실패했습니다. 공통branch수정으로nondefaultopacity를
 primary/y2양쪽에적용하되defaultRGBAopacity/nativeclip/zorder는유지했습니다. 최종12회귀의

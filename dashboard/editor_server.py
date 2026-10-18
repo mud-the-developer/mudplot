@@ -246,11 +246,17 @@ class EditorSession:
         if panel.projection == "3d":
             return {"is_3d": True, "panel": index}
         bbox = ax.get_position()
-        text_layers = [
-            {"index": i, "type": layer.type, "at": list(layer.at)}
-            for i, layer in enumerate(panel.layers)
-            if layer.type in ("text", "annotate") and layer.at
-        ]
+        secondary = getattr(ax, "_mudplot_secondary_axis", None)
+        text_layers = []
+        for i, layer in enumerate(panel.layers):
+            if layer.type not in ("text", "annotate") or not layer.at:
+                continue
+            entry = {"index": i, "type": layer.type, "at": list(layer.at)}
+            if layer.axis == "y2" and secondary is not None:
+                entry.update(
+                    ylim=list(secondary.get_ylim()), yscale=secondary.get_yscale()
+                )
+            text_layers.append(entry)
         return {
             "is_3d": False,
             "panel": index,

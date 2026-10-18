@@ -148,7 +148,7 @@ nav.tabs .navtab.active { color: white; border-bottom: 2px solid var(--accent); 
 # legend, a title, or a text/annotate layer's anchor point. Coordinates are
 # resolved through one of two spaces (see data-space):
 #   "figure" -- 0..1 directly over the whole preview image (legend).
-#   "axes"   -- 0..1 within the panel-0 axes' own box, further mapped to
+#   "axes"   -- 0..1 within the selected panel's axes box, further mapped to
 #               data values (with log-scale support) if data-data="1"
 #               (title uses axes-fraction directly; text/annotate layers
 #               use the data-coordinate mapping).
@@ -998,21 +998,25 @@ def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
     if has_bbox and xlim and ylim:
         for entry in layout.get("text_layers", []):
             ax_v, ay_v = entry["at"]
+            layer_ylim = entry.get("ylim", ylim)
+            layer_yscale = entry.get("yscale", yscale)
             handles.append(
                 _drag_handle_html(
                     kind="layer-at",
                     label=f"{entry['type']} layer {entry['index'] + 1}",
                     symbol="\u2022",
                     img_x=_data_to_img_frac(ax_v, xlim[0], xlim[1], xscale, bx0, bx1),
-                    img_y=_data_to_img_frac(ay_v, ylim[0], ylim[1], yscale, by0, by1),
+                    img_y=_data_to_img_frac(
+                        ay_v, layer_ylim[0], layer_ylim[1], layer_yscale, by0, by1
+                    ),
                     extra_data={
                         "space": "axes",
                         "data": "1",
                         "bbox": json.dumps(layout["panel_bbox"]),
                         "xlim": json.dumps(xlim),
-                        "ylim": json.dumps(ylim),
+                        "ylim": json.dumps(layer_ylim),
                         "xscale": xscale,
-                        "yscale": yscale,
+                        "yscale": layer_yscale,
                         "post-url": "/action",
                     },
                     fields={

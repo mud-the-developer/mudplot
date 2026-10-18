@@ -102,6 +102,17 @@ priority is not a new layer-order override. An off-axis or fully transparent
 artist can exist without adding visible pixels. No new public zorder/clip option
 or axes/figure-coordinate annotation mode is introduced here.
 
+## Editor coordinate frames
+
+Text/annotation anchors are data coordinates on their selected primary or y2
+axes. Python editor handles use the actual rendered axis limits/scale, including
+log and inverted axes, not the primary y range for every layer. Explicit title
+positions use axes fractions; explicit legend anchors use figure fractions.
+Changing size/DPI or selected panel does not turn one coordinate space into
+another. Drag/nudge dispatch existing actions and retains ordinary undo/redo/JSON.
+Non-Cartesian layer restrictions and preview geometry limits remain separate;
+this does not add axes/figure annotation modes or native-editor control parity.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside

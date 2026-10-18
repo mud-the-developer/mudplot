@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-039 fixes Python editor y2 data handles incorrectly reusing primary
+  y limits/scale.15frame comparisons/newpure5/browser1,209related/1OSskip,6actual
+  browsercases/floor17passes preserve primary/title/legend meanings and undo/redo.
+  PLOT-11 is PASS in supported scope; allPLOT reviews scoped, not native parity.
+  Baselineb8CI is ALL5SUCCESS; publish alpha+coordinate runtime effects for freshCI.
+
 - Latest FIND-038 fixes ignored annotation text+arrow opacity in one shared
   branch, preserving default RGBA/native clipping/z-order. Manual overlay values
   and zero-alpha pixels agree:245related/floor12passes, activeLSP3clean. PLOT-09/12
@@ -398,7 +404,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains per-panel settings, log outcomes and the actual backend warning limit.
 - [Overlay/alpha evidence](review_evidence/overlay_alpha_verification.json) and
   [limited comparison](review_evidence/annotation_alpha.png) retain actual pixel/style boundaries.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS113/RUNNING5/OPEN31/
+- [Coordinate-frame evidence](review_evidence/coordinate_frame_verification.json)
+  retains axis-specific metadata, actual browser drag and previous-state boundaries.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS114/RUNNING5/OPEN30/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

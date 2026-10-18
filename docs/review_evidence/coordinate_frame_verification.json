@@ -1,0 +1,675 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "769f715eed647bedf246934d2038695562ae39597fa489031e1bcc1ca8209dcb",
+    "dashboard/editor_server.py": "4aea50fe45b4ed1c3e260f398f5ace73dab622a277d8c582e623baed72e7a060",
+    "dashboard/editor_view.py": "441807e2fcd03bc36d772f91e6c2543f95ace74d49038035cf9e94f96c90a3ce",
+    "tests/test_review_coordinate_frames.py": "e6adf5dbeb6130d4e5fdb9d03fa731a5a76c35a9625b63074a4abdddf9fc8cd5",
+    "tests/test_review_coordinate_browser.py": "9a270ab3f92a70238a225545760b8053416db05cb8d542d207ef5e1ae8748a7a",
+    "scripts/check_minimum_versions.py": "c7d8e5c8432c401fc59034896dc2e5aa377f133bfb8e29e96fbc5677a98bf5e6",
+    "tests/test_editor_browser.py": "2b865e8edbce7588e2d5b4eeb0932631c84c55adb681dffbbd6481c6afc18691"
+  },
+  "coordinate_table": {
+    "baseline": "b8accf28105c85591c87ebb9a44f65f0888044f8",
+    "rows": [
+      {
+        "size_inches": [
+          4,
+          3
+        ],
+        "dpi": 96,
+        "panels": 1,
+        "active_panel": 0,
+        "handle": "legend::0",
+        "space": "figure",
+        "before_img_xy": [
+          0.8,
+          0.7
+        ],
+        "after_img_xy": [
+          0.8,
+          0.7
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          4,
+          3
+        ],
+        "dpi": 96,
+        "panels": 1,
+        "active_panel": 0,
+        "handle": "title::0",
+        "space": "axes",
+        "before_img_xy": [
+          0.27591,
+          0.879475
+        ],
+        "after_img_xy": [
+          0.27591,
+          0.879475
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          4,
+          3
+        ],
+        "dpi": 96,
+        "panels": 1,
+        "active_panel": 0,
+        "handle": "layer-at:2:0",
+        "space": "axes",
+        "before_img_xy": [
+          0.471958,
+          0.310476
+        ],
+        "after_img_xy": [
+          0.471958,
+          0.310476
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_yscale": "linear"
+      },
+      {
+        "size_inches": [
+          4,
+          3
+        ],
+        "dpi": 96,
+        "panels": 1,
+        "active_panel": 0,
+        "handle": "layer-at:3:0",
+        "space": "axes",
+        "before_img_xy": [
+          0.471958,
+          0.967013
+        ],
+        "after_img_xy": [
+          0.471958,
+          0.529322
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      },
+      {
+        "size_inches": [
+          4,
+          3
+        ],
+        "dpi": 96,
+        "panels": 1,
+        "active_panel": 0,
+        "handle": "layer-at:4:0",
+        "space": "axes",
+        "before_img_xy": [
+          0.353925,
+          0.967013
+        ],
+        "after_img_xy": [
+          0.353925,
+          0.66108
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      },
+      {
+        "size_inches": [
+          6,
+          3
+        ],
+        "dpi": 300,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "legend::1",
+        "space": "figure",
+        "before_img_xy": [
+          0.8,
+          0.7
+        ],
+        "after_img_xy": [
+          0.8,
+          0.7
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          6,
+          3
+        ],
+        "dpi": 300,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "title::1",
+        "space": "axes",
+        "before_img_xy": [
+          0.61675,
+          0.87962
+        ],
+        "after_img_xy": [
+          0.61675,
+          0.87962
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          6,
+          3
+        ],
+        "dpi": 300,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:2:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.714637,
+          0.310216
+        ],
+        "after_img_xy": [
+          0.714637,
+          0.310216
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_yscale": "linear"
+      },
+      {
+        "size_inches": [
+          6,
+          3
+        ],
+        "dpi": 300,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:3:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.714637,
+          0.967221
+        ],
+        "after_img_xy": [
+          0.714637,
+          0.529218
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      },
+      {
+        "size_inches": [
+          6,
+          3
+        ],
+        "dpi": 300,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:4:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.655703,
+          0.967221
+        ],
+        "after_img_xy": [
+          0.655703,
+          0.66107
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      },
+      {
+        "size_inches": [
+          5,
+          4
+        ],
+        "dpi": 150,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "legend::1",
+        "space": "figure",
+        "before_img_xy": [
+          0.8,
+          0.7
+        ],
+        "after_img_xy": [
+          0.8,
+          0.7
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          5,
+          4
+        ],
+        "dpi": 150,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "title::1",
+        "space": "axes",
+        "before_img_xy": [
+          0.615309,
+          0.884715
+        ],
+        "after_img_xy": [
+          0.615309,
+          0.884715
+        ],
+        "before_ylim": null,
+        "after_ylim": null,
+        "after_yscale": null
+      },
+      {
+        "size_inches": [
+          5,
+          4
+        ],
+        "dpi": 150,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:2:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.707481,
+          0.295162
+        ],
+        "after_img_xy": [
+          0.707481,
+          0.295162
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_yscale": "linear"
+      },
+      {
+        "size_inches": [
+          5,
+          4
+        ],
+        "dpi": 150,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:3:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.707481,
+          0.975416
+        ],
+        "after_img_xy": [
+          0.707481,
+          0.521913
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      },
+      {
+        "size_inches": [
+          5,
+          4
+        ],
+        "dpi": 150,
+        "panels": 2,
+        "active_panel": 1,
+        "handle": "layer-at:4:1",
+        "space": "axes",
+        "before_img_xy": [
+          0.651988,
+          0.975416
+        ],
+        "after_img_xy": [
+          0.651988,
+          0.658431
+        ],
+        "before_ylim": [
+          0.0,
+          4.0
+        ],
+        "after_ylim": [
+          10.0,
+          1000.0
+        ],
+        "after_yscale": "log"
+      }
+    ],
+    "browser_before": {
+      "actual_xy": [
+        15.910505,
+        2.605139
+      ],
+      "expected_xy": [
+        15.848931924611133,
+        199.52623149688787
+      ],
+      "observation": "Recorded failing Chromium regression before fix; physical pointer precision tolerated2percent after fix."
+    }
+  },
+  "new_unit_cases": [
+    "test_layout_handle_frames_match_selected_primary_secondary_axes_and_figure[size0-96-1]",
+    "test_layout_handle_frames_match_selected_primary_secondary_axes_and_figure[size1-300-2]",
+    "test_layout_handle_frames_match_selected_primary_secondary_axes_and_figure[size2-150-2]",
+    "test_renderer_artist_positions_match_data_axes_and_figure_transforms",
+    "test_unsupported_noncartesian_text_is_rejected_before_handle_layout"
+  ],
+  "real_browser_cases": [
+    "test_secondary_data_drag_matches_log_inverted_transform_and_history",
+    "test_dragging_the_legend_moves_it_and_persists",
+    "test_arrow_keys_nudge_the_title",
+    "test_a_burst_of_nudges_is_not_dropped",
+    "test_editing_targets_the_selected_panel",
+    "test_cluster_file_keeps_orders_metadata_and_matrix_after_title_edit"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 289,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 28
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 87
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 59
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "root_cause": "Pythoneditorserializedeverytext/annotationagainstselectedPRIMARYylim/yscale. Y2log100wasclampedatprimaryaxesupperhandleandphysicaldragtargety199.526stored2.605instead. Correctrendererprimary\u2192secondaryruntimeAxesreferencelets_extract_layoutincludeonlysecondaryentryycontext;viewusesper-entryylim/scaleandprimaryfallback. Existingprimarylayoutdictionaryshape/specdata/actionsunchanged.",
+  "coordinate_contract": "Text/annotateat/toDATAontheirownaxis;explicitpaneltitleAXESfraction;explicitlegendbboxFIGUREfraction. 3size/DPI/panelconfigstotal15handlebefore/afterrows;primary/title/legendpositionsunchanged. Rendereractualdata/axes/figuretransformsandJSONroundtripchecked. Browserselectedpanel1,invertedlogx/logy2,realmouseevents+HTMX/state/undo/redo,expectedx10^1.2,y10^2.3within2percentpointerprecision.",
+  "scope_limits": "CurrentCartesianPythoneditordrag/rendererframesonly\u2014notnewannotationaxes/figuremodesorRustcontrolparity. Polartextalreadyunsupportedbyvalidation;failedimportsretainpriorstate/PNG/layout. No speculativepolarprojectiontransformorhidingnewcontrolsimplemented. DPI75densefont/layoutresidualLAY09remainsseparate.",
+  "qa_note": "Initial5combinedtestsfailedbeforefix;rendererprivateAxescontextnewtestalsofailedbeforeitsmetadataexisted. Testhandlesinitiallyoverlapped;separatedanchorsbeforefinalbaselinewhichshowedACTUALwrongprimaryy2.605notmissingHTTP. No JSONexportformatinvented;usedexistingto_json/from_json. Keptpure5testsinminimumrosterandbrowser1inoptionalpluginmoduletoavoidmakingPlaywrightrequired. TypedHTMLattrsNoneanddataatNonewereexplicitlyguarded,noAny/cast/ignore. Partialrenameeditappliedonceandremainingblockrebuiltafterread.",
+  "environment_overrides": {
+    "manual": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-coordinate": {
+      "PYTEST_ADDOPTS": "-k \"test_review_coordinate_frames or test_review_annotation_alpha\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "manual",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "15 before/after data/axes/figure coordinate rows: secondary transform corrected, primary/title/legend unchanged"
+      ],
+      "log_text_sha256": "e67c960a8e62e10cb7cdc60de61d7b0697ff503692bf6e84864a2f7e0036a5e5"
+    },
+    {
+      "name": "coordinate-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_coordinate_frames.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_annotation_alpha.py",
+        "tests/test_layout.py",
+        "tests/test_review_mixed_guides.py",
+        "tests/test_memory_probe.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_memory_probe.py:26: non-Windows API guard",
+        "209 passed, 1 skipped in 148.90s (0:02:28)"
+      ],
+      "log_text_sha256": "d1d030cbb64ec4ead9ac4bd4027604e940be3df97c0d236e9838f5adcb71958e"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_coordinate_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "drag or title or nudge or editing_targets_the_selected_panel",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 27 deselected in 32.90s"
+      ],
+      "log_text_sha256": "e0610321e0e040fba0bb9b7b15531c010650247f1512b0f75b071baee941ec4f"
+    },
+    {
+      "name": "floor-coordinate",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "17 passed, 3087 deselected, 289 warnings in 17.22s"
+      ],
+      "log_text_sha256": "ad44478bd14393cc35260c935b954924fd62be60ea838968380d1d777ce02289"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "244 files already formatted"
+      ],
+      "log_text_sha256": "19dbcc6b41d5ff37d5fbccc79424256390bd6a5e680fa27e70cad9e57b1c6e58"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "9e63d95f87e5d8961ac62e599d5d467a6524f4f6923a8d5d02d134930a302400"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "4bd4da6f34ece8bcb770e797ba72a9ae30036d0e66f856fa0076b6658f9491cf"
+    }
+  ],
+  "raw_probe_sha256": {
+    "coordinate_table.json": "1ffeafb716c74be1a775a0e93abc11c14191f011c338878a355da5bb58fc3c29",
+    "probe.py": "a3a20a5ab9fcb7f1e5ef0c451e400b5efa83dd1870e005866741ca2f3de9caa1",
+    "qa.py": "a8e4aadebba97b13425ffe78ad9acfa34530ecb44c5c48bbf76e05cb6d09982b",
+    "environment_overrides.json": "99c5965f090a9dc255cd63c2c15a3cadef4b3f43409d418a16ecca3e0b4593c8",
+    "floor_warning_counts.json": "7d21862a4f546bdeb6b1459d595680e4e2229affc7fd06c6e62681f87cfe98b2",
+    "results.xml": "874f288a52e88d2837b1e3dd1a1054f0a3459932cbc11f3857a2556f076b32d0",
+    "browser.xml": "9983e5ee6573216255d6d339db0129b68e4d126b3fe4c6c5a99cbc0b9cf2bb7a",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

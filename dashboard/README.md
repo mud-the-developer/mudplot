@@ -100,6 +100,10 @@ needing a separate `dashboard build` process.
   `SetLayerAt(...)` respectively — the same actions
   `.legend(bbox_to_anchor=...)`/`.title_position(...)`/`.set_layer_at(...)`
   use from the fluent API. "Reset" restores the named `location`/default.
+  Legend anchors are figure fractions and manual titles are axes fractions;
+  text/annotation anchors remain data values on their selected primary/y2 axis,
+  including its actual log/inverted limits. Size/DPI changes do not change those
+  meanings. This does not add unsupported non-Cartesian annotation modes.
 - This is intentionally a *thin* UI: `editor_view.py` has no I/O (pure HTML
   string building, unit-testable on its own), and `editor_server.py` is
   just wiring around the engine's `Store` (plus caching the last render's

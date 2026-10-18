@@ -78,6 +78,7 @@ TESTS = (
     "tests/test_visual_quality.py",
     "tests/test_bar_uncertainty.py",
     "tests/test_review_annotation_alpha.py",
+    "tests/test_review_coordinate_frames.py",
     "tests/test_statistics.py",
     "tests/test_statistical_plots.py",
     "tests/test_lineplot.py",

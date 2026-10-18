@@ -2366,6 +2366,7 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
     ax.set_xscale(panel.x.scale)
     ax.set_yscale(panel.y.scale)
     ax2 = ax.twinx() if panel.y2 is not None else None
+    ax._mudplot_secondary_axis = ax2
 
     for layer in panel.layers:
         previous = {id(handle) for handle in _raw_legend_handles(ax, ax2)[0]}

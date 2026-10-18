@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 55차 — y2datahandle의실제좌표frame복구
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-coordinate-frames-blyo8vp1`와
+  [15frame대조·실제browser·roundtrip](review_evidence/coordinate_frame_verification.json)을 보존합니다.
+- **FIND-039:** Pythoneditor의모든text/annotate가primaryylim/scale을받아유효y2log100이
+  primary축상단에clamp됐고실제drag의기대y199.526대신2.605139를저장했습니다. 초기5회귀가
+  수정전실패했고renderedprimaryAxes→secondaryAxes참조로실제y2context를추출해해당entry만
+  전달했습니다. View는per-entryy범위/scale을사용하고기존primarymetadata/fallback은보존합니다.
+- Dataanchor는자기축,명시title은axesfraction,legend는figurefraction으로구분합니다.
+  96/150/300DPI·4×3/5×4/6×3inch·1/2panel의15before/afterhandle표에서y2만맞게이동하고
+  primary/title/legend는그대로입니다. Renderer의실제transData/transAxes/transFigure와
+  JSONroundtrip도맞습니다. 동일anchorhandle겹침이라는초기QA를분리한뒤실제잘못된값을재현했습니다.
+- 실제Chromium/Chrome mouse+HTMX에서selectedpanel1·invertedlogx/logy2target.4/.65는
+  x10^1.2/y10^2.3와2%pointer허용오차로맞고primary/다른panel불변·undo/redo가통과했습니다.
+  비지원polartext는원래validation거절로기존state/PNG/layout을유지하므로새극좌표transform/
+  control숨김/annotation좌표옵션을만들지않았습니다.
+- 새pure5와browser1은분리해최소환경에Playwright를추가하지않았습니다. 관련209통과/
+  non-WindowsAPIguard1skip·실제browser선택6통과/27deselected(새test포함/no skip)·floor17통과/
+  3087deselected/경고289·양platformtype/Ruff244/계약/packaging10명령exit0·변경6경로activeLSP
+  clean입니다. 289는모두10종Pyparsing입니다. 가정한JSONexport를추가하지않고기존to_json/
+  from_json을사용했으며typedguard를두어Any/cast/ignore는없습니다.
+- PLOT-11은현재PythonCartesian지원corpus에서PASS로PLOT01..12의명시검토를마쳤지만모든
+  API/nativeparity/previewgeometry보장은아닙니다. 기준b8CI39171315500은5job모두성공해
+  대기alpha+좌표runtime을함께게시하고새전체CI를받습니다. 버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 54차 — annotationalpha누락복구와overlay정렬
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-overlay-alpha-dm2wvg0w`와
@@ -1424,7 +1449,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PLOT-08 | P1 | PASS | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-09 | P1 | PASS | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-10 | P1 | PASS | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-11 | P1 | OPEN | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-11 | P1 | PASS | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-12 | P1 | PASS | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1522,8 +1547,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 113, RUNNING 5, OPEN 31, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 114, RUNNING 5, OPEN 30, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

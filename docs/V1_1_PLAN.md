@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 55 fixes secondary data handles using the wrong y frame.**
+FIND-039 clamped y2log100 against primary limits; a real drag saved2.605instead
+of199.526. Per-rendered-secondary y metadata now reaches only its layer handle;
+primary/title/legend frames remain data/axes/figure respectively. Fifteen size/
+DPI/panel comparisons and actual artist transforms/JSON agree. Real browser
+selected-panel inverted-log drag, unchanged other anchors and undo/redo pass.
+
+New pure5/browser1 stay separate:209connectedpasses/1non-Windowsguard skip,
+6realbrowserpasses/27deselected, floor17passes/3087deselected/289Pyparsing warnings,
+10quality records and activeLSP6clean. PLOT-11 is PASS in current supported scope;
+PLOT01..12 are reviewed, not universal API/native UI/preview-parity certification.
+[Evidence](review_evidence/coordinate_frame_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS114/RUNNING5/OPEN30/DEFERRED1**. Baselineb8CI39171315500 is ALL5SUCCESS;
+publish queued alpha+coordinate effects and obtain new exact whole CI.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 54
+
 **Review phase 54 fixes ignored annotation alpha and checks overlay geometry.**
 FIND-038 passed valid alpha through neither Text nor arrow;11initial regressions
 failed before the shared branch fix. Non-default opacity now reaches both parts,
