@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 48 fixes degenerate polynomial confidence computation.** FIND-037
+reproduces legacy raw-response covariance underflow(collapse) at1e-250 and
+nonfinite/empty bands at1e250; a rank3/11 clustered design warned then returned
+~4.67e10 predictions for ymax121. Before tests fail4/19. Shared predictor/response
+normalization and scoped rank/arithmetic/nonfinite errors now preserve mean-fit
+normal approximation, original units and output-file cleanup, without new fields.
+
+Independent closed-form OLS and all200band/path points agree for three response
+scales/legacy+typed; large predictor helper values and explicit invalid-input
+boundaries pass. This is not universal huge-axis Matplotlib layout support.
+Related201/floor19passes/3068deselected/13warnings and8quality/package records pass.
+STAT-03 is PASS in this corpus. [Evidence](review_evidence/regression_degenerate_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS104/RUNNING5/OPEN40/DEFERRED1**.
+Keep this effect unit local duringefCI(2Rustsuccess/3Pythonrunning);
+versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 47
+
 **Review phase 47 checks projection coordinates and scalar guide meanings.**
 Quiver polygon tips match independent data transforms under unequal axis units;
 nonmonotonic3D xyz and polar radian cardinal positions retain data. Existing mesh/

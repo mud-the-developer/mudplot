@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed polynomial covariance underflow/overflow that could silently collapse or
+  omit legacy confidence bands. Normalize predictor/response units in the shared
+  helper and reject rank/arithmetic/nonfinite failures with causes, retaining the
+  existing normal-approximation mean-fit definition and public configuration.
 - Verified quiver data-space tips, asymmetric 3D/polar coordinates and continuous
   scalar guide/mask/domain behavior, preserving typed heatmap null rejection and
   numeric hue legend mapping rather than inventing new supported controls.

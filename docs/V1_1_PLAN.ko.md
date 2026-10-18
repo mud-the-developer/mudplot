@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰48차에서퇴화다항회귀의confidence수치를고쳤습니다.** FIND-037은legacyresponse
+1e-250covarianceunderflow/0폭·1e250nonfinite/소실band와rank3/11design의경고후
+4.67e10예측을재현했습니다(관측최대121·수정전4/19실패). 공통predictor/response정규화와
+scopedrank/산술/nonfinite오류로원단위mean-fitnormalapproximation/출력보존을유지합니다.
+
+독립OLS공식과3scale×legacy/typed의200grid/bandpolygon·큰predictorhelper·잘못된입력을
+검사했으며모든거대Matplotlib축layout보장은아닙니다. 관련201/floor19통과/3068deselected/
+경고13·품질8명령으로STAT-03은corpusPASS입니다. [근거](review_evidence/regression_degenerate_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS104/RUNNING5/OPEN40/DEFERRED1**입니다.
+efCI양Rust성공/3Python진행을보호해효과unit은로컬보존하고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰47차
+
 **리뷰47차에서projection좌표와scalar의미를확인했습니다.** 비대칭축quiverpolygon끝과
 독립data변환·비단조3Dxyz·polar방위가일치하며mesh/전치대조도재실행했습니다. Heatmap명시
 범위/mask/RGBA/colorbar와legacyc상수/결측이맞고typednull은기존계약대로거절됩니다.

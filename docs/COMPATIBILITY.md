@@ -303,6 +303,18 @@ use fewer bands/categories, boundary strokes/direct labels or separate panels.
 The committed comparison is an agent visual review of synthetic renderings,
 not printer/observer testing or accessibility certification.
 
+## Polynomial numerical limits
+
+Legacy and typed polynomial fits normalize predictor and response units before
+covariance calculation, then restore original units. This prevents a small/large
+response from silently collapsing or losing its confidence band. The interval is
+still the documented normal-approximation **mean-fit** band, not a prediction
+interval. Rank warnings, arithmetic faults and nonfinite predictions are fit
+errors with causes, not a pseudoinverse fallback or a fabricated valid band.
+Finite computation at extreme units does not guarantee Matplotlib can lay out
+ticks or display those axis ranges. Missing/constant/insufficient inputs keep
+existing explicit validation; no new model assumptions or schema fields.
+
 ## Dependencies and distribution
 
 The declarative/state/JSON core has no required third-party dependencies.

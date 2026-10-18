@@ -345,32 +345,62 @@ def _target_axes(ax, ax2, layer: LayerSpec):
 
 def _regression_fit(x, y, degree: int, confidence: float | None, *, at=None):
     """Return a numerically scaled polynomial fit and optional mean-fit CI."""
-    try:
-        x = np.asarray(x, dtype=float)
-        y = np.asarray(y, dtype=float)
-        center = float(x.mean())
-        scale = float(np.ptp(x)) / 2
-        x_scaled = (x - center) / scale
-        grid = (
-            np.linspace(float(x.min()), float(x.max()), 200)
-            if at is None
-            else np.asarray(at, dtype=float)
-        )
-        grid_scaled = (grid - center) / scale
-
-        if confidence is None:
-            coefficients = np.polyfit(x_scaled, y, degree)
-            return grid, np.polyval(coefficients, grid_scaled), None
-
-        coefficients, covariance = np.polyfit(x_scaled, y, degree, cov=True)
-        fitted = np.polyval(coefficients, grid_scaled)
-        design = np.vander(grid_scaled, degree + 1)
-        variance = np.einsum("ij,jk,ik->i", design, covariance, design)
-        critical = NormalDist().inv_cdf(0.5 + confidence / 200)
-        delta = critical * np.sqrt(np.maximum(variance, 0))
-        return grid, fitted, (fitted - delta, fitted + delta)
-    except (TypeError, ValueError, FloatingPointError, np.linalg.LinAlgError) as e:
-        raise ValueError(f"regplot fit failed: {e}") from e
+    with (
+        warnings.catch_warnings(),
+        np.errstate(over="raise", invalid="raise", divide="raise"),
+    ):
+        warnings.simplefilter("error", RuntimeWarning)
+        warnings.simplefilter("error", UserWarning)
+        try:
+            x = np.asarray(x, dtype=float)
+            y = np.asarray(y, dtype=float)
+            magnitude = float(np.max(np.abs(x))) or 1.0
+            unit = x / magnitude
+            center = float(unit.min()) / 2 + float(unit.max()) / 2
+            scale = float(np.ptp(unit)) / 2
+            if not np.isfinite(scale) or scale <= 0:
+                raise ValueError("regression x range is numerically singular")
+            x_scaled = (unit - center) / scale
+            grid = (
+                np.linspace(float(unit.min()), float(unit.max()), 200) * magnitude
+                if at is None
+                else np.asarray(at, dtype=float)
+            )
+            grid_scaled = (grid / magnitude - center) / scale
+            # Covariance squares the response; normalize before it can under/overflow.
+            response_scale = float(np.max(np.abs(y))) or 1.0
+            response = y / response_scale
+            interval = None
+            if confidence is None:
+                coefficients = np.polyfit(x_scaled, response, degree)
+            else:
+                coefficients, covariance = np.polyfit(
+                    x_scaled, response, degree, cov=True
+                )
+                design = np.vander(grid_scaled, degree + 1)
+                variance = np.einsum("ij,jk,ik->i", design, covariance, design)
+                critical = NormalDist().inv_cdf(0.5 + confidence / 200)
+                delta = critical * np.sqrt(np.maximum(variance, 0))
+                fitted = np.polyval(coefficients, grid_scaled)
+                interval = (
+                    (fitted - delta) * response_scale,
+                    (fitted + delta) * response_scale,
+                )
+            fitted = np.polyval(coefficients, grid_scaled) * response_scale
+            if any(
+                not np.isfinite(values).all()
+                for values in [grid, fitted, *(interval or ())]
+            ):
+                raise ValueError("regression produced nonfinite predictions")
+            return grid, fitted, interval
+        except (
+            TypeError,
+            ValueError,
+            FloatingPointError,
+            np.linalg.LinAlgError,
+            Warning,
+        ) as e:
+            raise ValueError(f"regplot fit failed: {e}") from e
 
 
 def _y_errors(data_cols, layer: LayerSpec, mask):

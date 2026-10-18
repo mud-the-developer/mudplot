@@ -64,6 +64,7 @@ TESTS = (
     "tests/test_grid_kde.py",
     "tests/test_heatmap_options.py",
     "tests/test_regression_models.py",
+    "tests/test_review_regression_degenerate.py",
     "tests/test_clustermap.py",
     "tests/test_raw_group_order.py",
     "tests/test_new_layers.py",

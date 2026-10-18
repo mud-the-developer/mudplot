@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 48차 — 퇴화회귀와covariance단위손실복구
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-regression-degenerate-hpq0st5v`와
+  [before/after·조건수·독립OLS공식](review_evidence/regression_degenerate_verification.json)을 보존합니다.
+- **FIND-037:** legacyhelper의rawresponsecovariance는1e-250에서underflow해정규화band최대폭
+  3.13594가0이되고1e250에서는nonfiniteband가소실된채성공했습니다. Clustereddegree10은
+  정규화design조건수1.784e18/rank3(11parameter)인데경고후예측최대4.67e10을반환했습니다
+  (관측최대121). 수정전새19회귀가4실패/15통과임을확인했습니다.
+- 공통_regression_fit에서predictormagnitude/unitrange와response를covariance전에정규화하고
+  원단위로복원합니다. Scoped산술/warning을원인있는ValueError로전환하고nonfiniteband를
+  거절해raw경고와가짜band를반환하지않습니다. Legacy/typed공통호출자만고쳤고새fallback/
+  조건수임계값/API/schemafield는없습니다. 기존mean-fitnormalapproximation정의는유지합니다.
+- x0..4/y[1,2,1,4,3]의독립기울기.6/절편1/RSS3.2/MSE3.2÷3와z(.975)공식을써서response
+  1/1e-250/1e250·legacy/typed의200grid곡선과bandpolygon끝을원단위로대조했습니다.
+  predictor1e-250/1e250/1e308helper계산·부족/상수/높은degree/결측·rank실패의기존파일/
+  Figure/tmp/spec복구도확인했습니다. 유한helper계산은모든거대Matplotlib축layout보장이아닙니다.
+- 새19/관련201통과·실제floor19통과/3068deselected/경고13·양platformtype/Ruff241/
+  계약/packaging8명령exit0·변경효과2경로LSP clean입니다. Optionalrobust/logistic/LOWESS기존
+  독립reference·완전분리·RNG/출력회귀도포함합니다. STAT-03은이경계corpus에서PASS입니다.
+- 기준efCI39162647649는양Rust성공/3Python진행중이라새효과unit은로컬보존합니다.
+  버전/의존성/lock/tag/배포·loop1은유지하며기준성공을후속수치수정에소급하지않습니다.
+
 ## 47차 — projection좌표와연속색상guide의실제의미
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-projection-colours-ciamlju_`와
@@ -1268,7 +1290,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PLOT-12 | P1 | OPEN | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-03 | P1 | OPEN | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-03 | P1 | PASS | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-04 | P1 | OPEN | histogram bin·density·weights | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-05 | P1 | OPEN | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-06 | P1 | OPEN | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1362,8 +1384,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 103, RUNNING 5, OPEN 41, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 104, RUNNING 5, OPEN 40, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

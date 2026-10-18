@@ -263,6 +263,15 @@ Artist와legend의cue를여러panel에서함께검사합니다.
 많이섞입니다. 실제크기를확인하고적은범주/band·경계선/직접label·분리panel을고려하세요.
 커밋comparison은synthetic렌더의agent시각검토이지printer/observer연구나접근성인증은아닙니다.
 
+## 다항회귀수치경계
+
+Legacy/typed다항회귀는covariance이전에predictor/response단위를정규화하고원단위로
+복원해아주작거나큰response의band가조용히0폭/소실되는것을막습니다. 여전히문서의
+normal-approximation **mean-fit** band이지predictioninterval이아닙니다. Rankwarning/
+산술오류/nonfinite예측은원인있는fit오류이지pseudoinversefallback/가짜유효band가아닙니다.
+극단단위에서유한계산이돼도Matplotlib축tick/layout까지그범위를지원하는것은아닙니다.
+결측/상수/표본부족의기존명시validation은유지하고새모델가정/schemafield는추가하지않습니다.
+
 ## 의존성과 배포
 
 선언적/state/JSON core의 필수 third-party 의존성은 없습니다. 색상 계산에는

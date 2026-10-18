@@ -28,6 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-037 fixes legacy polynomial covariance under/overflow and explicit
+  rank/arithmetic errors in the shared helper, with independent mean-fit OLS
+  bands/original units/file cleanup intact.201related/floor19passes make STAT-03
+  PASS in scope, not all huge-axis rendering. Effect stays local duringefCI.
+
 - Latest quiver/3D/polar data-space checks and scalar domains/masks/colourbar or
   numeric-legend checks pass229related/floor12cases. PLOT-07/08 are PASS for
   supported combinations without new API/schema/runtime behavior. Baselineb777
@@ -342,7 +347,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retain fixture consumers, evidence boundaries and contract conflict decisions.
 - [Projection/colour evidence](review_evidence/projection_colour_verification.json)
   retains independent coordinates, explicit domains and unsupported-case boundaries.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS103/RUNNING5/OPEN41/
+- [Regression-boundary evidence](review_evidence/regression_degenerate_verification.json)
+  retains before/after values, normalized design condition/rank and closed-form OLS.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS104/RUNNING5/OPEN40/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

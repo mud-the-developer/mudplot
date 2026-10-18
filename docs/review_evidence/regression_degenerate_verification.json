@@ -1,0 +1,331 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29",
+    "tests/test_review_regression_degenerate.py": "5c7984d8dd2971999821c448c21f0311cb219eef479d4511b1bea0e295748020",
+    "scripts/check_minimum_versions.py": "5adbfe12b4a8e4fecbb701a8367199504e37780248d18b3e2590a71e5a1f4444"
+  },
+  "cases_passed": [
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1.0]",
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e-250]",
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e+250]",
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1.0]",
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e-250]",
+    "test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e+250]",
+    "test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[None-False]",
+    "test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[None-True]",
+    "test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[95-False]",
+    "test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[95-True]",
+    "test_polynomial_computation_scales_large_and_small_predictor_units[1e-250]",
+    "test_polynomial_computation_scales_large_and_small_predictor_units[1e+250]",
+    "test_polynomial_computation_scales_large_and_small_predictor_units[1e+308]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw0-1-None-observations]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw1-1-95-observations]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw2-1-None-distinct]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw3-10-None-observations]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw4-1-95-finite]",
+    "test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw5-1-95-finite]"
+  ],
+  "before_after": {
+    "baseline": "ef201d11939b6245d29076e6cc03723ff63fdd1f",
+    "original_helper_sha256": "d557ee65a0e722df8abc48a3eb7eace606826e4d7e280ae5a387b5748af5a306",
+    "rows": [
+      {
+        "case": "ordinary",
+        "x": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "y": [
+          1.0,
+          2.0,
+          1.0,
+          4.0,
+          3.0
+        ],
+        "degree": 1,
+        "confidence": 95,
+        "normalized_design_condition": 1.0,
+        "normalized_design_rank": 2,
+        "before": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 3.4,
+          "max_band_width_normalized": 3.1359423752640856,
+          "warnings": []
+        },
+        "after": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 3.4,
+          "max_band_width_normalized": 3.1359423752640856,
+          "warnings": []
+        }
+      },
+      {
+        "case": "tiny-response",
+        "x": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "y": [
+          1e-250,
+          2e-250,
+          1e-250,
+          4e-250,
+          3e-250
+        ],
+        "degree": 1,
+        "confidence": 95,
+        "normalized_design_condition": 1.0,
+        "normalized_design_rank": 2,
+        "before": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 3.4000000000000004,
+          "max_band_width_normalized": 0.0,
+          "warnings": []
+        },
+        "after": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 3.4,
+          "max_band_width_normalized": 3.1359423752640856,
+          "warnings": []
+        }
+      },
+      {
+        "case": "huge-response",
+        "x": [
+          0.0,
+          1.0,
+          2.0,
+          3.0,
+          4.0
+        ],
+        "y": [
+          1e+250,
+          2e+250,
+          1e+250,
+          4e+250,
+          3e+250
+        ],
+        "degree": 1,
+        "confidence": 95,
+        "normalized_design_condition": 1.0,
+        "normalized_design_rank": 2,
+        "before": {
+          "outcome": "returned",
+          "all_finite": false,
+          "pred_max_normalized": null,
+          "max_band_width_normalized": null,
+          "warnings": []
+        },
+        "after": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 3.4,
+          "max_band_width_normalized": 3.1359423752640856,
+          "warnings": []
+        }
+      },
+      {
+        "case": "rank-deficient",
+        "x": [
+          0.0,
+          1e-10,
+          2e-10,
+          3e-10,
+          4e-10,
+          5e-10,
+          6e-10,
+          7.000000000000001e-10,
+          8e-10,
+          9e-10,
+          1e-09,
+          1.0
+        ],
+        "y": [
+          0.0,
+          1.0,
+          4.0,
+          9.0,
+          16.0,
+          25.0,
+          36.0,
+          49.0,
+          64.0,
+          81.0,
+          100.0,
+          121.0
+        ],
+        "degree": 10,
+        "confidence": null,
+        "normalized_design_condition": 1.78446922514839e+18,
+        "normalized_design_rank": 3,
+        "before": {
+          "outcome": "returned",
+          "all_finite": true,
+          "pred_max_normalized": 46712666063.39923,
+          "max_band_width_normalized": null,
+          "warnings": [
+            "Polyfit may be poorly conditioned"
+          ]
+        },
+        "after": {
+          "outcome": "ValueError",
+          "message": "regplot fit failed: Polyfit may be poorly conditioned",
+          "warnings": []
+        }
+      }
+    ]
+  },
+  "root_cause": "Legacy_regression_fitnormalizedxonlyviaoverflow-pronemean/rangeandcomputedcovarianceinrawresponseunits. Squaring1e-250underflows0CI;1e250overflowsnonfinitebandwhichcouldrenderempty. Numericalrankwarningcouldreturn~4.67e10predictionforobservedymax121.",
+  "fix": "Sharedpolynomialhelpernormalizespredictormagnitude/unitrangeandresponseBEFOREfit/covariance,thenrestorescoordinateunits. ScopedNumPyover/invalid/divideandRuntime/UserwarningsbecomeValueErrorwithcause;nonfinitepredictions/bandsrejected. Samehelperlegacy/typedcallbacks;publicconfig/schemaunchanged.",
+  "independent_reference": "5pointx0..4/y[1,2,1,4,3]:slope.6/intercept1;Sxx10/RSS3.2/MSE3.2/3;normalcriticalPhi^-1(.975). Meanbanddelta=zsqrt(MSE(1/n+(grid-xbar)^2/Sxx));NOTpredictioninterval. Compareall200gridpositions/pathboundsinoriginalunitsatresponse1,1e-250,1e250typed+legacy.",
+  "limits": "Currentpolynomialmean-fitstable-response/rank/insufficient/constantx/highdegree/missingcorpusplusoptionalmodelsrerun\u2014notuniversalillconditioningthresholdorallhugeaxisrenderability. Predictorhelper1e308finitecomputationdoesnotpromisefullMatplotlibticklayoutacceptanceatthatrange. NumPyrankwarningsrejectunstablefitsinsteadnewpseudoinversefallback.",
+  "qa_note": "Baseline19tests4FAIL15PASSbeforefixdocumentedunderflow/emptyoverflow/rankreturn/leakedrankwarning. Typedarrayteststubaccessconvertedwithnp.asarray;manualnoisyreferenceinterceptcorrectedto1beforebaseline. No productionissueclaimedfortestformat/typeerrors.",
+  "checks": [
+    {
+      "name": "regression-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_regression_degenerate.py",
+        "tests/test_regression_models.py",
+        "tests/test_stabilization.py",
+        "tests/test_statistical_scales.py",
+        "tests/test_review_numeric_geometry.py",
+        "tests/test_layers.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "201 passed in 90.07s (0:01:30)"
+      ],
+      "log_text_sha256": "7453c146beecffe3aca55d32b9bb07f6d009abc2dc0a1916b2f0f590edd92c9c"
+    },
+    {
+      "name": "floor-regression",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "19 passed, 3068 deselected, 13 warnings in 6.66s"
+      ],
+      "log_text_sha256": "edaa258ca3cfb74adc056e4d6c73cebeb8b5c409d2e5b206d23ca8d862211a3c"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "200fea3f28a15c77f633042a823914361438e032e6c8802247ce91bc9ff333ad"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "1eb4d0f2146b1fc00cfcce02f642cc1e756738c1ba4a386427e8257c596ea0d0"
+    }
+  ],
+  "raw_probe_sha256": {
+    "before_after.json": "53f35772699b48aa716c09709ca8aaedc5fc356cc863bf8e0ef7f963a309846f",
+    "results.xml": "ca17f368c867c0036f0ba66875885282b42d626cbf7ad2930370753d3ebda5df"
+  }
+}
