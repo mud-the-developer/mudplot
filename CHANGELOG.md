@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified reference-bearing PNG/PDF/SVG deterministic metadata/IDs, four installed
+  TeX/bibliography combinations with embedded fonts and actual DOI annotations,
+  and PGF sidecar relocation/missing/postprocess failure limits without promising
+  multi-file atomicity or cross-environment hashes.
 - Reused Windows memory-observer Counter/DLL bindings so repeated samples do not
   accumulate ctypes pointer types. PID values are still queried afresh and handles
   closed; bounded editor resource traces remain separate from long-session proof.

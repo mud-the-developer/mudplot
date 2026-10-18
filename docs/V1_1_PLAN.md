@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 34 verifies real reference exports and document results.**
+Reference-bearing PNG/PDF/SVG repeat across time/fresh processes with equal hashes,
+without dropping DOI links/labels; volatile dates are absent and SVG IDs are stable.
+PGF+relative sidecars relocate/compile together; missing sidecars fail. Forced PGF
+postprocessing failure closes the Figure but can overwrite the old PGF/leave images,
+so the existing multi-file non-transactional limit is explicit, not silently fixed.
+OUT-02/06/07 are PASS for these policies.
+
+All70connected cases pass without skips, including actual tectonic, pdflatex+
+bibtex, lualatex+bibtex and lualatex+biblatex. Reference numbers/text pass; installed
+Poppler reports5embedded fonts and the DOI annotation in each compiled PDF. OUT-08
+is PASS for this installed matrix, not every font/OS. Floor6passes/2939deselected/
+13warnings and6quality/package records pass. [Evidence](review_evidence/output_reference_verification.json)
+and [tracker](REVIEW_CHECKLIST_STATUS.md): **PASS81/RUNNING9/OPEN59/DEFERRED1**.
+Runtime is unchanged; keep this test/docs unit local during06dCI. Versions/locks/
+releases and separate string/permission/resource gaps remain unchanged.
+
+### Earlier review phase 33
+
 **Review phase 33 separates bounded session retention from observer artifacts.**
 A137second/500row Python editor run exercised60edit/undo/redo/open cycles and10
 failed effects, with15resource checkpoints. GC reclaimed owned Figures, handles

@@ -28,6 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest reference-bearing deterministic exports retain labels/links without volatile
+  dates/IDs. PGF relocation/missing/failure semantics and4real TeX/bibliography
+  combinations pass; compiled PDFs retain resolved numbers,5embedded fonts each
+  and actual DOI annotations. OUT-02/06/07/08 are PASS in this installed scope.
+  Related70passes/no skips and floor6passes retain PGF non-transactional/OS/font
+  limits; runtime is unchanged and the test/docs unit stays local during06dCI.
+
 - Latest137second session trace reclaims owned Figures and keeps handles/temp
   counts flat while history/cache changes are explicit. RSS/native lifetime still
   needs longer observation; PERF-04 is RUNNING, not leak-free certification.
@@ -223,7 +230,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records exact serial/concurrent bytes, current/floor checks and ownership limits.
 - [Session-resource evidence](review_evidence/session_resource_verification.json)
   separates current RSS/handle/Figure/cache observations from observer self-growth.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING9/OPEN63/
+- [Output/reference evidence](review_evidence/output_reference_verification.json)
+  retains hashes, compiler/JUnit/sidecar cases and actual PDF font/URI inspection.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS81/RUNNING9/OPEN59/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

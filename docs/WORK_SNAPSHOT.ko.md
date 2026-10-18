@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 reference출력은 라벨/링크를 지우지 않고 날짜/ID가결정적이며 PGF이동/누락/
+  실패와4실제TeX/bibliography 조합도 통과했습니다. PDF참조번호·각5embeddedfont·
+  DOIannotation을 확인해 OUT-02/06/07/08은 범위내PASS입니다. 관련70통과/no skip·
+  최소6통과이며 PGF비트랜잭션/OS/font 한계는유지합니다. Runtime변경없이 test/doc은06dCI중 로컬보존합니다.
+
 - 최신137초 세션은 GC후Figure0/고정handle·temp를 확인하고 의도한 history/cache를
   구분했습니다. RSS/native lifetime은 긴 관찰이 남아 PERF-04는 RUNNING입니다.
 - Sampler 자체의 ctypes 타입 재생성이 no-render20회에서 객체662증가를 만들었습니다.
@@ -189,7 +194,9 @@
   serial/concurrent bytes·현재/최소검사와 소유권 한계를 보존했습니다.
 - [세션 자원 근거](review_evidence/session_resource_verification.json)에 실제RSS/
   handle/Figure/cache와 observer 자체 증가를 구분했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS77/RUNNING9/OPEN63/DEFERRED1**.
+- [출력/참조 근거](review_evidence/output_reference_verification.json)에 hash/
+  compiler·JUnit·sidecar검사와 실제 PDFfont/URI 관찰을 보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS81/RUNNING9/OPEN59/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

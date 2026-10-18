@@ -18,6 +18,30 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 34차 — 실제 출력 metadata·PGF bundle·문서 참조
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-output-reference-45nnpl7g`와
+  [출력/참조/폰트/URI 요약](review_evidence/output_reference_verification.json)을 보존합니다.
+- Reference를 가진 동일 spec의 PNG/PDF/SVG를 시간 간격·새 process로 반복해3hash가
+  각 형식에서 같았습니다. PDF CreationDate/ModDate·SVG dc:date는 없고 SVG ID는 unique/
+  결정적이며 DOI href/라벨은 남습니다. PNG/nativePDF는 plain label, SVG는link/citation
+  key비노출, PGF는문서가 figcite/href를 해결하는 정책을 지켜 OUT-02/07은 PASS입니다.
+- 새 PGF2회귀는 원래 basename의 상대 sidecar를 함께 옮기면 실제 pdflatex 컴파일이
+  성공하고 PGF만 옮기면 nonzero가 되는 것을 확인합니다. 후처리 OSError에서Figure는
+  닫히지만 원래PGF가 보존되지 않고 sidecar가 남는 현재 비트랜잭션 한계를 명시해
+  OUT-06은 PASS입니다. 새 bundle transaction이나 기존 사용자 파일 실험은 추가하지 않았습니다.
+- 전체 관련70case는 skip 없이 통과했습니다. Tectonic·pdflatex+bibtex·lualatex+bibtex·
+  lualatex+biblatex의4실제 문서에서 citation번호/라벨을 확인했고 설치Poppler25.02.0의
+  pdffonts/pdfinfo-url로각PDF의보고된5font embedded와DOI annotation도 확인해 OUT-08은
+  이 installed matrix에서 PASS입니다. CJK/모든font/모든OS/TeX환경까지 보장하지 않습니다.
+- 기존 network/shell/pickle 차단된 normalPNG/PDF/SVG reference3case도 통과했습니다.
+  명시 trustedTeX tool/package 실행은 별도 경계입니다. Floor6통과/2939deselected/경고13·
+  Ruff229/format·Pyright·계약·packaging6후속 명령도 exit0이며 새2경로LSP clean입니다.
+  Compiler.log/.blg·JUnit70case·형식SHA·폰트/URI 출력 hash를 보존했습니다.
+- Product runtime은 그대로이며 새 test/floor roster/doc만 로컬 commit해 진행 중06dCI를
+  취소하지 않습니다. OUT-09전체문자경계·자원/권한·PGF atomicbundle의 미지원 범위는
+  별도이며 버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 33차 — bounded 세션 자원·observer 자체 누수 분리
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-session-resources-5uznsuts`,
@@ -994,13 +1018,13 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | LAY-08 | P1 | OPEN | 반복 렌더링의 스타일 격리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-09 | P1 | OPEN | DPI·벡터 출력과 UI 위치의 일치 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | OUT-01 | P0 | PASS | 동일 환경의 반복 출력 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-02 | P1 | OPEN | volatile metadata·ID | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-02 | P1 | PASS | volatile metadata·ID | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-03 | P0 | PASS | 단일 파일 저장의 원자성 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-04 | P1 | RUNNING | 출력 실패·잠금·권한 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-05 | P1 | RUNNING | Figure 소유권과 누수 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-06 | P1 | OPEN | PGF bundle 한계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-07 | P1 | OPEN | 참조의 형식별 의미 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-08 | P1 | OPEN | TeX 컴파일로 참조 확인 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-06 | P1 | PASS | PGF bundle 한계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-07 | P1 | PASS | 참조의 형식별 의미 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-08 | P1 | PASS | TeX 컴파일로 참조 확인 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-09 | P1 | OPEN | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-10 | P2 | OPEN | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | EDIT-01 | P0 | PASS | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1062,7 +1086,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 77, RUNNING 9, OPEN 63, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 81, RUNNING 9, OPEN 59, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

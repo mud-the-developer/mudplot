@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 34차에서 실제 reference 출력/문서 결과를 확인했습니다.** 같은 reference spec의
+PNG/PDF/SVG가 시간간격/새process에서도동일hash이고 DOI/라벨은 남으며 volatile
+metadata는 없고 SVG ID는 결정적입니다. PGF+상대sidecar를 함께 옮기면 컴파일되고 누락하면
+실패합니다. 후처리실패가 옛PGF를 덮고이미지를남길수있는비트랜잭션한계를 유지해
+OUT-02/06/07은 관찰정책에서PASS입니다.
+
+관련70case가 skip없이 통과했으며 실제tectonic·pdflatex+bibtex·lualatex+bibtex·
+lualatex+biblatex의citation번호/본문과 각PDF의5embeddedfont/DOIannotation을
+설치Poppler로 확인해 OUT-08은 이matrix에서PASS입니다. 모든font/OS 보장은 아닙니다.
+최소6통과/2939deselected/경고13·품질/packaging6명령도 [근거](review_evidence/output_reference_verification.json)에
+기록했고 [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS81/RUNNING9/OPEN59/DEFERRED1**입니다.
+Runtime은 그대로며06dCI중 test/doc은로컬보존하고 버전/의존성/lock/tag/배포와별도
+문자경계/권한/자원미완료범위도 유지합니다.
+
+### 이전 리뷰 33차
+
 **리뷰 33차에서 세션 보관량과 observer 자체 증가를 분리했습니다.** 137초/500행의
 60edit/undo/redo/open cycle·실패effect10회·15자원점에서 GC후 Figure0/handle198/
 temp0이었습니다. History30/교체1은 의도된 보관량이며 RSS87.9→96.4MB/peak246.6MB를

@@ -1,0 +1,326 @@
+{
+  "head": "e3b60691d241552849df7858a86f48163934d69d",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "mudplot/_render.py": "e20a43e3bf7c6ee62fc5b0ee142ccd496a57767fbb5092ca912a407fb2838464",
+    "mudplot/tex.py": "bf0bf5abb0ba3eea3ff81aa36c6e08833b05dac2c807497c666af3639027e1c8",
+    "mudplot/bib.py": "dda22b7689de7ddf4bc8aebb521ee9d8f46043cf55f6190c922da1d45afa28fe",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "tests/test_references.py": "a97bb94d51d4b4f6d654d2b0d32fb96dd053f6a07c35497a31ed83ad7e38d947",
+    "tests/test_review_export_determinism.py": "82baf18167eedd0b7f50303339a83f570389dd1a2bc94c1f4525cbae47ffb2ef",
+    "tests/test_review_offline_execution.py": "ce9db61d80927a199a9a3dc6be8bfa53a6010fadc55ba61181a909b2bbfa68b0",
+    "tests/test_review_pgf_bundle.py": "10c59301569bc6f397fe63b21020f3cf6b2eaafeefa412f69ef58d66a73c3a65",
+    "scripts/check_minimum_versions.py": "129855c1add90caa9e65c41db49ca11fa7d658ae5e030c3cfaa7f9fafec4def2"
+  },
+  "tool_versions": {
+    "pdflatex": "pdfTeX 3.141592653-2.6-1.40.29 (TeX Live 2026)",
+    "lualatex": "This is LuaHBTeX, Version 1.24.0 (TeX Live 2026)",
+    "tectonic": "tectonic 0.15.0Tectonic 0.15.0",
+    "bibtex": "BibTeX 0.99e (TeX Live 2026)",
+    "biber": "biber version: 2.22",
+    "pdffonts": "pdffonts version 25.02.0",
+    "pdfinfo": "pdfinfo version 25.02.0"
+  },
+  "reference_suite": {
+    "passed": 70,
+    "skipped": 0,
+    "engine_cases_passed": [
+      "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+      "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+      "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+      "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]"
+    ],
+    "junit_sha256": "3f40f2da20b7fb9cac3f5a78d2df1a42d3d012b81e94b3272c8093bfc8bb5c14"
+  },
+  "compiled_pdf_inspection": [
+    {
+      "engine": "tectonic",
+      "pdf_sha256": "4dbefa3a9ff40e1171530a2e0688dd3a9f609653652da59528a3e129d38cd876",
+      "font_rows": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "IHAIZV+LMSans9-Regular-Identity-H    CID Type 0C       Identity-H       yes yes yes      6  0",
+        "BZIVMZ+LMSans12-Regular-Identity-H   CID Type 0C       Identity-H       yes yes yes      8  0",
+        "IXFAWU+LMRoman10-Regular-Identity-H  CID Type 0C       Identity-H       yes yes yes     14  0",
+        "TQTHRL+LMRoman12-Bold-Identity-H     CID Type 0C       Identity-H       yes yes yes     16  0",
+        "YEUUOC+LMRoman10-Italic-Identity-H   CID Type 0C       Identity-H       yes yes yes     18  0"
+      ],
+      "all_reported_fonts_embedded": true,
+      "uri_rows": [
+        "Page  Type          URL",
+        "   1  Annotation    https://doi.org/10.1145/358669.358692"
+      ],
+      "doi_annotation_present": true,
+      "tool_scope": "Installed Poppler25.02.0 actual PDF objects/fonts; not all Unicode/font-fallback or PDF validation."
+    },
+    {
+      "engine": "pdflatex+bibtex",
+      "pdf_sha256": "d9eecc87c9db8d74fd00670a1d9f52c30512b86c0b81c98ef335ae08fd887dd7",
+      "font_rows": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "QPAJLZ+CMSS8                         Type 1            Builtin          yes yes yes     13  0",
+        "VQUZFU+CMSS10                        Type 1            Builtin          yes yes yes     14  0",
+        "BJYDQU+CMR10                         Type 1            Builtin          yes yes yes     15  0",
+        "OTQOSA+CMBX12                        Type 1            Builtin          yes yes yes     19  0",
+        "MCAEST+CMTI10                        Type 1            Builtin          yes yes yes     21  0"
+      ],
+      "all_reported_fonts_embedded": true,
+      "uri_rows": [
+        "Page  Type          URL",
+        "   1  Annotation    https://doi.org/10.1145/358669.358692"
+      ],
+      "doi_annotation_present": true,
+      "tool_scope": "Installed Poppler25.02.0 actual PDF objects/fonts; not all Unicode/font-fallback or PDF validation."
+    },
+    {
+      "engine": "lualatex+bibtex",
+      "pdf_sha256": "5908108fbc51ee3f1182c11fc22645bba6839dad6568a40e66f4c3020bb084c8",
+      "font_rows": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "TBMVST+LMSans9-Regular               CID Type 0C       Identity-H       yes yes yes     13  0",
+        "MZDWBG+LMSans12-Regular              CID Type 0C       Identity-H       yes yes yes     14  0",
+        "TCGKZD+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     15  0",
+        "RLOOET+LMRoman12-Bold                CID Type 0C       Identity-H       yes yes yes     19  0",
+        "CXFTEY+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     21  0"
+      ],
+      "all_reported_fonts_embedded": true,
+      "uri_rows": [
+        "Page  Type          URL",
+        "   1  Annotation    https://doi.org/10.1145/358669.358692"
+      ],
+      "doi_annotation_present": true,
+      "tool_scope": "Installed Poppler25.02.0 actual PDF objects/fonts; not all Unicode/font-fallback or PDF validation."
+    },
+    {
+      "engine": "lualatex+biblatex",
+      "pdf_sha256": "1061fdf37f11e424c97003cb7e967b9a2407a2bee433a3616d7e060fccae0a74",
+      "font_rows": [
+        "name                                 type              encoding         emb sub uni object ID",
+        "------------------------------------ ----------------- ---------------- --- --- --- ---------",
+        "TBMVST+LMSans9-Regular               CID Type 0C       Identity-H       yes yes yes     13  0",
+        "MZDWBG+LMSans12-Regular              CID Type 0C       Identity-H       yes yes yes     14  0",
+        "LZPCDB+LMRoman10-Regular             CID Type 0C       Identity-H       yes yes yes     15  0",
+        "RLOOET+LMRoman12-Bold                CID Type 0C       Identity-H       yes yes yes     19  0",
+        "CXFTEY+LMRoman10-Italic              CID Type 0C       Identity-H       yes yes yes     21  0"
+      ],
+      "all_reported_fonts_embedded": true,
+      "uri_rows": [
+        "Page  Type          URL",
+        "   1  Annotation    https://doi.org/10.1145/358669.358692"
+      ],
+      "doi_annotation_present": true,
+      "tool_scope": "Installed Poppler25.02.0 actual PDF objects/fonts; not all Unicode/font-fallback or PDF validation."
+    }
+  ],
+  "deterministic_reference_exports": [
+    {
+      "format": "png",
+      "repeated_and_fresh_process_sha256": [
+        "5b9dd454415d1722fa568f73cb6eeb66095ef264bb59e1c2c2ea0600130951dc",
+        "5b9dd454415d1722fa568f73cb6eeb66095ef264bb59e1c2c2ea0600130951dc",
+        "5b9dd454415d1722fa568f73cb6eeb66095ef264bb59e1c2c2ea0600130951dc"
+      ],
+      "bytes": 13245,
+      "visible_label_retained": "RANSAC",
+      "raster_reference_policy": "plain visible labels; no active link/citation object"
+    },
+    {
+      "format": "pdf",
+      "repeated_and_fresh_process_sha256": [
+        "f85019c62f945467853aee35c8514c1a9b655386d9070bbc3bc49e58010e98ab",
+        "f85019c62f945467853aee35c8514c1a9b655386d9070bbc3bc49e58010e98ab",
+        "f85019c62f945467853aee35c8514c1a9b655386d9070bbc3bc49e58010e98ab"
+      ],
+      "bytes": 13145,
+      "visible_label_retained": "RANSAC",
+      "dates_absent": true,
+      "native_pdf_reference_policy": "plain labels; no bibliography resolution/native link guarantee"
+    },
+    {
+      "format": "svg",
+      "repeated_and_fresh_process_sha256": [
+        "9ea58ce12b19e82bc4e93d2f40aae37ba8c835eaa375bbd1b8ed4fe348454b9e",
+        "9ea58ce12b19e82bc4e93d2f40aae37ba8c835eaa375bbd1b8ed4fe348454b9e",
+        "9ea58ce12b19e82bc4e93d2f40aae37ba8c835eaa375bbd1b8ed4fe348454b9e"
+      ],
+      "bytes": 25970,
+      "visible_label_retained": "RANSAC",
+      "dates_absent": true,
+      "ids_unique": true,
+      "ids_sha256": "42ba8c3b5e3fb4f41f27ef6cb0d056f36f661a0eee2259daf57b4894c0507714",
+      "doi_href_retained": true,
+      "citation_key_not_visible": true
+    }
+  ],
+  "pgf_bundle": {
+    "source_files": [
+      "figure-img0.png",
+      "figure-img1.png",
+      "figure.pgf"
+    ],
+    "moved_files": [
+      "figure-img0.png",
+      "figure-img1.png",
+      "figure.pgf",
+      "paper.aux",
+      "paper.log",
+      "paper.pdf",
+      "paper.tex"
+    ],
+    "missing_files": [
+      "figure.pgf",
+      "paper.aux",
+      "paper.log",
+      "paper.tex"
+    ],
+    "postprocess_failure_files": [
+      "figure-img0.png",
+      "figure-img1.png",
+      "figure.pgf"
+    ],
+    "moved_compile_passed": true,
+    "missing_sidecar_compile_failed": true,
+    "postprocess_failure_can_replace_original_and_leave_sidecars": true,
+    "scope": "Known non-transactional bundle, not a new atomicity promise."
+  },
+  "reference_policy": "Raster/nativePDF labels remain plain, no bibliography/nativePDF-link guarantee. SVG href retained without visible citation key. PGF figcite/href become resolved numbers and actual DOI annotation in compiled documents. Offline normalization/normal PNG/PDF/SVG network/shell/pickle blockers passed; explicit trusted TeX package/tool execution is separate.",
+  "limits": "Same fixed local environment only for byte identity. Four installed engine combinations passed, not every OS/CJK font/TeX environment. OUT09fullstringmatrix and broader permission/resource work remain separate. No version/dependency or backend-capability changes.",
+  "qa_control_note": "First private PDF inspection guessed untruncated pytest temp directory names; fixed by inspecting owned names. Not a compiler/product failure.",
+  "checks": [
+    {
+      "name": "reference-output-suite",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-vv",
+        "--tb=short",
+        "tests/test_references.py",
+        "tests/test_review_export_determinism.py",
+        "tests/test_review_offline_execution.py",
+        "tests/test_review_pgf_bundle.py",
+        "--basetemp",
+        "<evidence>\\artifacts",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "======================== 70 passed in 66.44s (0:01:06) ========================"
+      ],
+      "log_text_sha256": "8df4558bbf325136001282317ae5358744f2d48674d87eb56143c1c6a3ab2843"
+    },
+    {
+      "name": "minimum-output",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 2939 deselected, 13 warnings in 18.19s"
+      ],
+      "log_text_sha256": "e59f979d65c47be00a9be2b8eb6b449709ef834f9093611070d542e53c6f7b47"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "229 files already formatted"
+      ],
+      "log_text_sha256": "c1b38a9478b031b6d4bd55b5f933dd2ac57ed867adb55152d400e81451810b51"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "35f81a0d0a5e6ce9bcf263ef33ce0975848ca63ca2a0e2e75aa001e325aa3f65"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "e90a864815df2a95eaf0f8b9d322282725d4c62fa83277a6c25f11b805325fb2"
+    }
+  ],
+  "retained_compile_log_sha256": {
+    "test_exported_pgf_compiles_int1\\paper.blg": "c0761a0f1c0739bd5935c495f7e44adea6c2bf05efd0be99fb3b9512c93be1cb",
+    "test_exported_pgf_compiles_int1\\paper.log": "2ad70635fec41fa1463f3c7dc032a287cd03563f96a08182267b31aeded3e604",
+    "test_exported_pgf_compiles_int2\\paper.blg": "c0761a0f1c0739bd5935c495f7e44adea6c2bf05efd0be99fb3b9512c93be1cb",
+    "test_exported_pgf_compiles_int2\\paper.log": "693d1ecb353101a6942de12313c24ff1061d0ce692ff2b927e39e47d21bf8ab1",
+    "test_exported_pgf_compiles_int3\\paper.blg": "ca82cbac179877089bbc4a49683fac0cf1aceddab36fea29fc1a1e0d095d558c",
+    "test_exported_pgf_compiles_int3\\paper.log": "ab7a7d0b2c6bbbf9a17e5f9a179ec33f4cf870aa198a7342b73cd8ff024d47de",
+    "test_pgf_relative_sidecars_mov0\\missing\\paper.log": "f461f51007d494ef2fbe20940ec57f0b948ff4f8b481eedecee05c13913ee003",
+    "test_pgf_relative_sidecars_mov0\\moved\\paper.log": "6c9eaf0bc641335458d139e4dfe68633c71836d74559fdd5251fbc7b5fb8f983"
+  },
+  "inspection_files_sha256": {
+    "lualatex+biblatex-fonts.txt": "c72fa6451c2f52e078268be1486c833b44db13015c20ad6217986bcfdf281ab1",
+    "lualatex+biblatex-urls.txt": "d0bb46a68c2070fa4c9bcbd11d7649a5d9123c339431ef84fba27c4d0838c9dc",
+    "lualatex+bibtex-fonts.txt": "91116dda7151e039db36b130f23470d5fac21731b22b3a92ac58731faf80c3d6",
+    "lualatex+bibtex-urls.txt": "d0bb46a68c2070fa4c9bcbd11d7649a5d9123c339431ef84fba27c4d0838c9dc",
+    "pdflatex+bibtex-fonts.txt": "46a26cbea239b5a3b173b94e12dae9387dde436b0cbbfe16fd4ccdeb33113786",
+    "pdflatex+bibtex-urls.txt": "d0bb46a68c2070fa4c9bcbd11d7649a5d9123c339431ef84fba27c4d0838c9dc",
+    "tectonic-fonts.txt": "c0882adcce87e79bd656fb0926f66a9044f961400a892fc7b03c79be704e33ea",
+    "tectonic-urls.txt": "d0bb46a68c2070fa4c9bcbd11d7649a5d9123c339431ef84fba27c4d0838c9dc"
+  }
+}
