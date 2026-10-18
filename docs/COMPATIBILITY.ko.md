@@ -96,6 +96,19 @@ Raw line은 행 순서/중복 x를 유지하고 lineplot은 x별 집계와 명�
 빈 raw line/scatter는 유효할 수 있으나 통계 layer는 usable 관측 부재를 거부하고 singleton의
 정의되지 않는 interval은 만들지 않습니다.
 
+## Journal과TeX 크기 우선순위
+
+5개 `TEX_PRESETS`는보통TeXgeometry에관한repo가정이며모든publisherguide의최신인증은
+아닙니다. `columns=1`은column폭,2는text폭에TeX72.27pt/in을적용해inch로변환합니다.
+기본save는이canvas를유지하고SVG/PDF는72graphicspt/in,PNG는요청DPI에서1pixel내
+양자화오차입니다. Sizing은preview전용이아니며render/file도같은spec크기를씁니다.
+
+물리크기는 `.journal()` 관례크기/`.tex_size()`/`.size()` 중마지막action을따릅니다.
+Activejournal의등록rcfont/linewidthkey는action순서와무관하게theme위에적용됩니다.
+`.journal(None)`은크기를바꾸지않고styleoverride를지워명시fontfield를적용합니다.
+TeXsize는body/label/title/tick을각각설정하므로body `size`만바꾸면명시 `label_size`는
+남습니다. 새override메타데이터나render우선순위는추가하지 않았습니다.
+
 ## 소유 render의 동시성 경계
 
 mudplot 소유 Matplotlib effect는 같은 process에서 하나의 재진입 lock으로 직렬화합니다.

@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest5TeX presets×2columns×2fractions match both previews and actual PNG/PDF/
+  SVG boxes in20rows. Existing size/style priority is explicit; runtime behavior
+  and calibration are unchanged. LAY-03 is PASS for current registry values.
+  Related58/floor24passes and8quality checks pass. Hold this unit with the platform
+  hotfix while the remaining prior floor job runs.
+
 - Latest805CI exposed2Linux Pyright errors in the extracted Windows factory, not
   a renderer/test failure. Explicit platform guarding restores that boundary;
   both Linux/Windows global checks pass locally, with4runtime tests/1OSskip.
@@ -249,7 +255,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   records exact HTML/SVG values, compiled trusted TeX and current warning categories.
 - [Platform-guard evidence](review_evidence/platform_guard_verification.json)
   records the exact failed CI step and separate current platform checks.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/
+- [Preset geometry evidence](review_evidence/preset_geometry_verification.json)
+  retains exact file boxes, TeX-unit definitions and current size/font priorities.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS83/RUNNING9/OPEN57/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

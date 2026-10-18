@@ -100,6 +100,23 @@ Raw line paths retain row order and duplicate x; lineplot aggregates per x and
 applies its explicit sort policy. Empty raw line/scatter can be valid, whereas
 statistical layers reject no usable observations and singletons omit undefined intervals.
 
+## Journal and TeX sizing priority
+
+The five `TEX_PRESETS` contain repository assumptions for typical TeX geometry,
+not a fresh certification of every publisher guideline. `columns=1` uses column
+width; `columns=2` uses text width, with TeX72.27pt/in converted to physical inches.
+Default save preserves that canvas; SVG/PDF use72graphics points/in and raster
+pixels quantize within one pixel at the requested DPI. Preview is not the only
+consumer of sizing; the render and files use the same spec dimensions.
+
+Physical size follows the last `.journal()` conventional-size / `.tex_size()` /
+`.size()` action. Active journal registered rc font/linewidth keys take priority
+over theme rc fields regardless of action order. `.journal(None)` clears that
+style override without changing size; explicit font fields then apply. TeX sizing
+sets body, label, title and tick sizes separately, so setting only body `size`
+does not replace an already explicit `label_size`. No new override metadata or
+render-order policy was added.
+
 ## Owned rendering concurrency
 
 mudplot serializes its Matplotlib effects within a process with one reentrant

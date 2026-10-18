@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신5TeXpreset×2columns×2fraction의20행에서양preview와실제PNG/PDF/SVGbox가
+  맞았습니다. 기존size/style우선을명시하고runtime교정은유지해LAY-03은registry범위PASS입니다.
+  관련58/floor24통과·품질8명령을기록하고남은baselinefloor동안test/doc과hotfix는로컬보존합니다.
+
 - 최신805CI실패는추출Windowsfactory의LinuxPyright2오류이며renderer/test실패가
   아닙니다. 명시platformguard로복구하고양targetglobal검사0·runtime4통과/OS1skip을
   확인했지만새Linux실행/CI는필요합니다. Layout보다실패를우선했고남은baselinejob중
@@ -211,7 +215,9 @@
   HTML/SVG값·실제trustedTeX컴파일·현재warning분류를보존했습니다.
 - [Platformguard 근거](review_evidence/platform_guard_verification.json)에 정확한
   실패CIstep과별도currentplatform검사를기록했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS82/RUNNING9/OPEN58/DEFERRED1**.
+- [Presetgeometry 근거](review_evidence/preset_geometry_verification.json)에 실제
+  filebox·TeX단위정의·현재size/font우선순위를기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS83/RUNNING9/OPEN57/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

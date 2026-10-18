@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 37 checks every current TeX preset through real output boxes.**
+Five presets×one/two columns×.75/1fractions match vector/mock preview, spec/render
+and PNG/PDF/SVG dimensions in20recorded rows. TeX72.27pt/in and vector72pt/in are
+not conflated; raster rounding stays within one pixel at100DPI. Original plot state
+is not changed by preview. Registry values are documented assumptions, not fresh
+publisher-guide certification.
+
+Four journal priority controls retain last-size-action behavior and existing rc
+style priority. Clearing journal style reveals explicit font fields without size
+change. The old generic API doc overstated font-last-setter behavior; docs now
+match the established implementation instead of adding flags/changing calibration.
+Related58passes/floor24passes/2951deselected/13warnings and8quality/package records
+pass, including both global platform type targets. LAY-03 is PASS in scope.
+[Evidence](review_evidence/preset_geometry_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS83/RUNNING9/OPEN57/DEFERRED1**. Keep this test/docs unit and the platform hotfix
+local while prior floor runs; runtime behavior/versions/dependencies/locks/releases stay.
+
+### Earlier review phase 36
+
 **Review phase 36 fixes the cached Windows observer's platform type boundary.**
 Baseline805CI39136943043 failed Python3.10Pyright with2unavailable ctypes.WinDLL
 attributes; the full matrix sibling cancelled. The extracted factory lacked its

@@ -1734,9 +1734,11 @@ class Plot:
         ``name`` can be a string (e.g. ``"nature"``, ``"ieee"``, ``"acm"``,
         ``"revtex"``) or a :class:`~mudplot.JournalProfile`.
 
-        Like ``.theme(...)``, this sets values outright rather than merging;
-        call it before other size/font customisation if you want your own
-        values to stick.
+        Sets the conventional size; later ``.size()``/``.tex_size()`` wins for
+        geometry. While active, the journal's registered rc font/linewidth keys
+        override theme fields regardless of action order. Use ``.journal(None)``
+        to clear that style override without changing the current size; explicit
+        per-field font values then apply.
         """
         jname = getattr(name, "name", name)
         return self.dispatch(A.SetJournal(jname))
@@ -1800,7 +1802,8 @@ class Plot:
         double-column-spanning ``figure*`` in a two-column document, or a
         wide figure in a single-column one). This is the same sizing
         ``preview(tex=...)`` uses, but applied to the actual figure you
-        render/save -- not just a mock-column preview.
+        render/save -- not just a mock-column preview. An active journal still
+        has its registered rc style priority; clear it for custom TeX font fields.
         """
         from .tex import _resolve_ctx, _tex_actions
 

@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified all five TeX presets at one/two columns and two fractions against real
+  PNG/PDF/SVG boxes and both previews. Clarified existing journal rc-style versus
+  last size-action priority, including clearing journal style for explicit font
+  fields, without changing calibration or introducing override metadata.
 - Restored an explicit platform guard inside the cached Windows memory binding
   factory after Linux Pyright exposed unavailable ctypes.WinDLL attributes.
   Added a non-Windows rejection regression and checked both platform targets,

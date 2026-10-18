@@ -18,6 +18,26 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 37차 — 전체 TeX preset·columns의 실제 출력 크기
+
+- 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-preset-geometry-mteetbd9`와
+  [20조합 file/preview 표](review_evidence/preset_geometry_verification.json)를 보존합니다.
+- 실제TEX_PRESETS5개×columns1/2×fraction0.75/1.0의20조합에서vectorpreview·mockimage
+  폭·spec·render·PNG/PDF/SVG실제box가일치했습니다. TeX폭은72.27pt/in,vector는72pt/in,
+  PNG는100DPI에서1pixel허용오차이며preview는원래PlotSpec을바꾸지않았습니다.
+- Journal4개도관례size→tex_size→명시size의마지막sizeaction을확인했습니다. Activejournal
+  rcfont/linewidth는theme위에적용되는기존우선순위를유지합니다. `.journal(None)`은size를
+  유지하고명시themefontfield를드러냅니다. `.tex_size`가label_size도설정하므로body size만
+  바꾸면명시label_size가남는것은별개입니다. 초기QA의잘못된15ptlabel가정은고쳤습니다.
+- 기존API설명은font도후속setter로무조건이긴다고과장해실제registry우선순위와맞게
+  문서만고쳤습니다. 새fontoverrideflag/렌더순서변경으로기존publication교정을바꾸지 않았습니다.
+  Preset수치출처는repoTeXregistry/comments이며최신공식publisher가이드전체인증이 아닙니다.
+- 관련58통과·실제floor24통과/2951deselected/경고13·Ruff231/format·양platformglobalPyright/
+  계약·packaging8명령exit0·변경3경로LSP clean입니다. JUnitproperty20행에서실제box를읽고
+  보존했습니다. Runtime AST는docstring을제외하면그대로이며LAY-03은이registry범위에서PASS입니다.
+- CI805의platform실패hotfix는로컬에이미보존됐고남은floor job을임의취소하지않았습니다.
+  이번test/doc단위도로컬보존후baseline완료시함께게시합니다. 버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 36차 — Linux Pyright의 Windows API factory 경계 복구
 
 - 로컬 증거 `C:\Users\mud\AppData\Local\Temp\mudplot-ci805-failure-y9h_wgda`와
@@ -1052,7 +1072,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | COLOR-10 | P2 | OPEN | 품질 report와 대외 문구 정합성 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | LAY-01 | P0 | PASS | 최종 파일의 물리 크기 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-02 | P0 | PASS | tight 옵션의 명시적 차이 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
-| LAY-03 | P1 | OPEN | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
+| LAY-03 | P1 | PASS | TeX preset·columns 적용 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-04 | P1 | OPEN | 긴 제목·suptitle·범례 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-05 | P1 | OPEN | 외부 범례·colorbar·멀티패널 조합 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
 | LAY-06 | P1 | OPEN | 배치 불가능 상태의 처리 | mudplot/_render.py; tex.py; theme.py | test_layout.py; test_journal_profiles.py; test_stabilization.py |
@@ -1128,7 +1148,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 82, RUNNING 9, OPEN 58, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 83, RUNNING 9, OPEN 57, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

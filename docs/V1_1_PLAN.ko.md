@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 37차에서 실제TeXpreset전부의filebox를확인했습니다.** 5preset×columns1/2×
+fraction.75/1의20행에서vector/mockpreview·spec/render·PNG/PDF/SVG크기가맞습니다.
+TeX72.27pt/in과vector72pt/in을구분하고100DPI양자화1pixel허용·preview원본보존을확인했습니다.
+Registry가정이지최신publisherguide전체인증은아닙니다.
+
+Journal4priority case는lastsizeaction·기존rcstyle우선을유지하고journalstyleclear후
+명시fontfield가보이는것을확인했습니다. Font후속setter가무조건이긴다는낡은설명만
+고쳐새flag/교정변경은없습니다. 관련58/floor24통과/2951deselected/경고13·양platform
+검사를포함한품질/packaging8명령이통과해LAY-03은범위내PASS입니다.
+[근거](review_evidence/preset_geometry_verification.json)와 [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS83/RUNNING9/OPEN57/DEFERRED1**입니다. 진행중floor를취소하지않고test/doc과
+platformhotfix는로컬보존하며runtime동작/버전/의존성/lock/tag/배포도유지합니다.
+
+### 이전 리뷰 36차
+
 **리뷰 36차에서 Windows observer factory의 platform type경계를 복구했습니다.**
 기준805CI39136943043은3.10Pyright의ctypes.WinDLL2오류로실패하고matrix형제는취소됐습니다.
 Cachefactory추출때ownWindowsguard가빠져localWindows검사로는놓친문제입니다. WinDLL

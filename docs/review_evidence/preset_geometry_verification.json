@@ -1,0 +1,777 @@
+{
+  "head": "5918f2418d57a216a0996782a815e2fd7e5e737a",
+  "python": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "source_sha256": {
+    "tests/test_review_preset_sizes.py": "de778704de9b8cc25f45df94e9d6de43c13c01c9f7c4f7216c65b2ffc806c1b4",
+    "mudplot/api.py": "0ffdd08d9288b8fb76a1afb02845971152cc896aef7de7d038182ce311eed5dd",
+    "mudplot/tex.py": "bf0bf5abb0ba3eea3ff81aa36c6e08833b05dac2c807497c666af3639027e1c8",
+    "mudplot/theme.py": "b5e06c51bc1d90d08f5af283c07f4fc859b7974a696647a5a0c3dcc7a8bea51a",
+    "mudplot/reducer.py": "0e34e8e5bc41add420941b739903602b184aa45d7024613424d3ef93390ad72a",
+    "mudplot/_render.py": "ab3ed0828edb7f1a3ad92e3ecb530664eb1f4b3c9297e66aa089246ed5ef45d4",
+    "scripts/check_minimum_versions.py": "4153a4a867776053e892586eb56727d0b1e9c0a56f85dc3ecd46dd237e1fc464"
+  },
+  "pt_per_inch": 72.27,
+  "presets": {
+    "article": {
+      "name": "article",
+      "columnwidth_pt": 345.0,
+      "textwidth_pt": 345.0,
+      "fontsize_pt": 10.0,
+      "columns": 1,
+      "family": "serif"
+    },
+    "ieee": {
+      "name": "ieee",
+      "columnwidth_pt": 252.0,
+      "textwidth_pt": 516.0,
+      "fontsize_pt": 10.0,
+      "columns": 2,
+      "family": "serif"
+    },
+    "revtex": {
+      "name": "revtex",
+      "columnwidth_pt": 246.0,
+      "textwidth_pt": 510.0,
+      "fontsize_pt": 10.0,
+      "columns": 2,
+      "family": "serif"
+    },
+    "nature": {
+      "name": "nature",
+      "columnwidth_pt": 250.38425196850392,
+      "textwidth_pt": 512.1496062992127,
+      "fontsize_pt": 7.0,
+      "columns": 2,
+      "family": "sans-serif"
+    },
+    "acm": {
+      "name": "acm",
+      "columnwidth_pt": 241.0,
+      "textwidth_pt": 506.0,
+      "fontsize_pt": 9.0,
+      "columns": 2,
+      "family": "serif"
+    }
+  },
+  "journal_sizes": {
+    "nature": [
+      3.5,
+      2.625
+    ],
+    "ieee": [
+      3.3,
+      2.5
+    ],
+    "acm": [
+      3.33,
+      2.5
+    ],
+    "revtex": [
+      3.4,
+      2.5
+    ]
+  },
+  "journal_rc": {
+    "nature": {
+      "font.family": "sans-serif",
+      "font.sans-serif": [
+        "Arial",
+        "Helvetica",
+        "DejaVu Sans"
+      ],
+      "font.size": 7.0,
+      "axes.labelsize": 7.0,
+      "axes.titlesize": 8.0,
+      "xtick.labelsize": 6.0,
+      "ytick.labelsize": 6.0,
+      "legend.fontsize": 6.0,
+      "axes.linewidth": 0.5
+    },
+    "ieee": {
+      "font.family": "serif",
+      "font.serif": [
+        "Times New Roman",
+        "Times",
+        "DejaVu Serif"
+      ],
+      "font.size": 8.0,
+      "axes.labelsize": 8.0,
+      "axes.titlesize": 9.0,
+      "xtick.labelsize": 7.0,
+      "ytick.labelsize": 7.0,
+      "legend.fontsize": 7.0,
+      "axes.linewidth": 0.5
+    },
+    "acm": {
+      "font.family": "serif",
+      "font.serif": [
+        "Linux Libertine",
+        "Times New Roman",
+        "DejaVu Serif"
+      ],
+      "font.size": 9.0,
+      "axes.labelsize": 9.0,
+      "axes.titlesize": 10.0,
+      "xtick.labelsize": 8.0,
+      "ytick.labelsize": 8.0,
+      "legend.fontsize": 8.0,
+      "axes.linewidth": 0.5
+    },
+    "revtex": {
+      "font.family": "serif",
+      "font.serif": [
+        "Times New Roman",
+        "Times",
+        "DejaVu Serif"
+      ],
+      "font.size": 8.0,
+      "axes.labelsize": 8.0,
+      "axes.titlesize": 9.0,
+      "xtick.labelsize": 7.0,
+      "ytick.labelsize": 7.0,
+      "legend.fontsize": 7.0,
+      "axes.linewidth": 0.5
+    }
+  },
+  "registry_scope": "Repo definitions/comments of typical TeX defaults and journal geometry; not fresh official-journal guideline certification.",
+  "geometry_rows": [
+    {
+      "preset": "acm",
+      "columns": 1,
+      "fraction": 0.75,
+      "requested_inches": [
+        2.501037775010378,
+        1.250518887505189
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          250,
+          125
+        ],
+        "pdf_points": [
+          180.0747198007,
+          90.0373599004
+        ],
+        "svg_points": [
+          180.07472,
+          90.03736
+        ]
+      },
+      "mock_image_width_inches": 2.501037775010378
+    },
+    {
+      "preset": "article",
+      "columns": 1,
+      "fraction": 0.75,
+      "requested_inches": [
+        3.580323785803238,
+        1.790161892901619
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          358,
+          179
+        ],
+        "pdf_points": [
+          257.7833125778,
+          128.8916562889
+        ],
+        "svg_points": [
+          257.783313,
+          128.891656
+        ]
+      },
+      "mock_image_width_inches": 3.580323785803238
+    },
+    {
+      "preset": "ieee",
+      "columns": 1,
+      "fraction": 0.75,
+      "requested_inches": [
+        2.6151930261519305,
+        1.3075965130759652
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          261,
+          130
+        ],
+        "pdf_points": [
+          188.2938978829,
+          94.1469489415
+        ],
+        "svg_points": [
+          188.293898,
+          94.146949
+        ]
+      },
+      "mock_image_width_inches": 2.6151930261519305
+    },
+    {
+      "preset": "nature",
+      "columns": 1,
+      "fraction": 0.75,
+      "requested_inches": [
+        2.5984251968503935,
+        1.2992125984251968
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          259,
+          129
+        ],
+        "pdf_points": [
+          187.0866141732,
+          93.5433070866
+        ],
+        "svg_points": [
+          187.086614,
+          93.543307
+        ]
+      },
+      "mock_image_width_inches": 2.5984251968503935
+    },
+    {
+      "preset": "revtex",
+      "columns": 1,
+      "fraction": 0.75,
+      "requested_inches": [
+        2.5529265255292652,
+        1.2764632627646326
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          255,
+          127
+        ],
+        "pdf_points": [
+          183.8107098381,
+          91.9053549191
+        ],
+        "svg_points": [
+          183.81071,
+          91.905355
+        ]
+      },
+      "mock_image_width_inches": 2.5529265255292657
+    },
+    {
+      "preset": "acm",
+      "columns": 2,
+      "fraction": 0.75,
+      "requested_inches": [
+        5.251141552511416,
+        2.625570776255708
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          525,
+          262
+        ],
+        "pdf_points": [
+          378.0821917808,
+          189.0410958904
+        ],
+        "svg_points": [
+          378.082192,
+          189.041096
+        ]
+      },
+      "mock_image_width_inches": 5.251141552511416
+    },
+    {
+      "preset": "article",
+      "columns": 2,
+      "fraction": 0.75,
+      "requested_inches": [
+        3.580323785803238,
+        1.790161892901619
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          358,
+          179
+        ],
+        "pdf_points": [
+          257.7833125778,
+          128.8916562889
+        ],
+        "svg_points": [
+          257.783313,
+          128.891656
+        ]
+      },
+      "mock_image_width_inches": 3.580323785803238
+    },
+    {
+      "preset": "ieee",
+      "columns": 2,
+      "fraction": 0.75,
+      "requested_inches": [
+        5.354919053549191,
+        2.6774595267745953
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          535,
+          267
+        ],
+        "pdf_points": [
+          385.5541718555,
+          192.7770859278
+        ],
+        "svg_points": [
+          385.554172,
+          192.777086
+        ]
+      },
+      "mock_image_width_inches": 5.354919053549191
+    },
+    {
+      "preset": "nature",
+      "columns": 2,
+      "fraction": 0.75,
+      "requested_inches": [
+        5.31496062992126,
+        2.65748031496063
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          531,
+          265
+        ],
+        "pdf_points": [
+          382.6771653543,
+          191.3385826772
+        ],
+        "svg_points": [
+          382.677165,
+          191.338583
+        ]
+      },
+      "mock_image_width_inches": 5.31496062992126
+    },
+    {
+      "preset": "revtex",
+      "columns": 2,
+      "fraction": 0.75,
+      "requested_inches": [
+        5.292652552926526,
+        2.646326276463263
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          529,
+          264
+        ],
+        "pdf_points": [
+          381.0709838107,
+          190.5354919054
+        ],
+        "svg_points": [
+          381.070984,
+          190.535492
+        ]
+      },
+      "mock_image_width_inches": 5.292652552926526
+    },
+    {
+      "preset": "acm",
+      "columns": 1,
+      "fraction": 1.0,
+      "requested_inches": [
+        3.3347170333471707,
+        1.6673585166735854
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          333,
+          166
+        ],
+        "pdf_points": [
+          240.099626401,
+          120.0498132005
+        ],
+        "svg_points": [
+          240.099626,
+          120.049813
+        ]
+      },
+      "mock_image_width_inches": 3.3347170333471707
+    },
+    {
+      "preset": "article",
+      "columns": 1,
+      "fraction": 1.0,
+      "requested_inches": [
+        4.77376504773765,
+        2.386882523868825
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          477,
+          238
+        ],
+        "pdf_points": [
+          343.7110834371,
+          171.8555417186
+        ],
+        "svg_points": [
+          343.711083,
+          171.855542
+        ]
+      },
+      "mock_image_width_inches": 4.77376504773765
+    },
+    {
+      "preset": "ieee",
+      "columns": 1,
+      "fraction": 1.0,
+      "requested_inches": [
+        3.4869240348692405,
+        1.7434620174346203
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          348,
+          174
+        ],
+        "pdf_points": [
+          251.0585305106,
+          125.5292652553
+        ],
+        "svg_points": [
+          251.058531,
+          125.529265
+        ]
+      },
+      "mock_image_width_inches": 3.486924034869241
+    },
+    {
+      "preset": "nature",
+      "columns": 1,
+      "fraction": 1.0,
+      "requested_inches": [
+        3.4645669291338583,
+        1.7322834645669292
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          346,
+          173
+        ],
+        "pdf_points": [
+          249.4488188976,
+          124.7244094488
+        ],
+        "svg_points": [
+          249.448819,
+          124.724409
+        ]
+      },
+      "mock_image_width_inches": 3.464566929133858
+    },
+    {
+      "preset": "revtex",
+      "columns": 1,
+      "fraction": 1.0,
+      "requested_inches": [
+        3.4039020340390205,
+        1.7019510170195102
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          340,
+          170
+        ],
+        "pdf_points": [
+          245.0809464508,
+          122.5404732254
+        ],
+        "svg_points": [
+          245.080946,
+          122.540473
+        ]
+      },
+      "mock_image_width_inches": 3.403902034039021
+    },
+    {
+      "preset": "acm",
+      "columns": 2,
+      "fraction": 1.0,
+      "requested_inches": [
+        7.001522070015221,
+        3.5007610350076104
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          700,
+          350
+        ],
+        "pdf_points": [
+          504.1095890411,
+          252.0547945205
+        ],
+        "svg_points": [
+          504.109589,
+          252.054795
+        ]
+      },
+      "mock_image_width_inches": 7.001522070015222
+    },
+    {
+      "preset": "article",
+      "columns": 2,
+      "fraction": 1.0,
+      "requested_inches": [
+        4.77376504773765,
+        2.386882523868825
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          477,
+          238
+        ],
+        "pdf_points": [
+          343.7110834371,
+          171.8555417186
+        ],
+        "svg_points": [
+          343.711083,
+          171.855542
+        ]
+      },
+      "mock_image_width_inches": 4.77376504773765
+    },
+    {
+      "preset": "ieee",
+      "columns": 2,
+      "fraction": 1.0,
+      "requested_inches": [
+        7.139892071398921,
+        3.5699460356994606
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          713,
+          356
+        ],
+        "pdf_points": [
+          514.0722291407,
+          257.0361145704
+        ],
+        "svg_points": [
+          514.072229,
+          257.036115
+        ]
+      },
+      "mock_image_width_inches": 7.139892071398922
+    },
+    {
+      "preset": "nature",
+      "columns": 2,
+      "fraction": 1.0,
+      "requested_inches": [
+        7.086614173228348,
+        3.543307086614174
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          708,
+          354
+        ],
+        "pdf_points": [
+          510.2362204724,
+          255.1181102362
+        ],
+        "svg_points": [
+          510.23622,
+          255.11811
+        ]
+      },
+      "mock_image_width_inches": 7.086614173228347
+    },
+    {
+      "preset": "revtex",
+      "columns": 2,
+      "fraction": 1.0,
+      "requested_inches": [
+        7.056870070568701,
+        3.5284350352843505
+      ],
+      "dpi": 100,
+      "file_boxes": {
+        "png_pixels": [
+          705,
+          352
+        ],
+        "pdf_points": [
+          508.0946450809,
+          254.0473225405
+        ],
+        "svg_points": [
+          508.094645,
+          254.047323
+        ]
+      },
+      "mock_image_width_inches": 7.056870070568701
+    }
+  ],
+  "junit_sha256": "248cdd5de0ed96f970d52b77a3db85f45b53ef553c82905959f9a98ba92b0e20",
+  "priority_policy": "SetJournal sets registry name/conventional size. Later SetSize/tex_size wins for geometry. Active journal rc-font/linewidth keys override theme rc-fields regardless of action order; clearing journal(None) keeps current size and exposes explicit theme font fields. tex_size assigns separate body/label/title/tick sizes, so changing only body size is not changing explicit label_size.",
+  "doc_change": "The older generic API doc said later fonts stick; it conflicted with existing registry override implementation. Clarified actual legacy priority and clear-journal behavior instead of adding new override flags/state or changing scientific preset calibration. No renderer/reducer behavior change.",
+  "limits": "5actual repository TeX presets\u00d7columns1/2\u00d7fraction.75/1;4journal priority controls. Registry numbers are typical defaults, not a fresh official publication-guideline certification. PNGallows1pixelquantization; vectors checked72points/inch, TeXconversionuses72.27. No allDPI/UI/long-title/fallback guarantee.",
+  "qa_control_note": "Initial test assumed bodyfont size15 overrides an explicit tex_size label_size; it did not. Set label_size15 explicitly to test intended per-field/journal priority. Not a renderer bug or an implementation priority change.",
+  "checks": [
+    {
+      "name": "preset-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_preset_sizes.py",
+        "tests/test_journal_profiles.py",
+        "tests/test_layout.py",
+        "tests/test_tex.py",
+        "--basetemp",
+        "<evidence>\\artifacts",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "58 passed in 64.84s (0:01:04)"
+      ],
+      "log_text_sha256": "daf9ea24a0b871349449cac48fa7f38f7fa3b6853dce8fa4d706d2e85be6fc1b"
+    },
+    {
+      "name": "floor-presets",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "24 passed, 2951 deselected, 13 warnings in 61.50s (0:01:01)"
+      ],
+      "log_text_sha256": "b81ddb0538e94e7250eb003a6f7a1ef69420a67cfd2fed3491990a4f1f3b9d2d"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "231 files already formatted"
+      ],
+      "log_text_sha256": "ffe4addd568dc877bc3178838726532ea7aa4e8eeb3ba31fe9282127d79e09a3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "7a6a31acd3d189b3c701bdb16e8e29672ce9c36a436dc911762a4f7c042b8f9f"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "315fc285b8ffcacd3bed2ee1b0f5f89277f3b9aa479ecbd7a698b79e2ff3f7d0"
+    }
+  ]
+}
