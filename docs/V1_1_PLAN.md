@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 52 traces role-aware statistical observations.** Twelve explicit
+row-index expectations match required x/y/hue/weight/unit/style/size roles;
+unused-column missing values are not dropped. Exact paired weighted means/n/
+units and bin masses agree. Invalid required types/weights reject rather than
+vanish; strict regplot rejects missing pairs, while selected valid B renders
+original rows4/5/6/8. No validator/estimator/data-drop policy changes.
+
+Boundary-selected388passes/444deselected and floor388passes/2699deselected/
+489classified Pyparsing deprecations plus9quality records pass—not a new whole
+suite count. STAT-08 is PASS in supported scope; STAT01..08 are now reviewed in
+those documented corpora, not all statistics/adapters/UI. [Evidence](review_evidence/observation_pairs_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS109/RUNNING5/OPEN35/DEFERRED1**.
+Keep distribution+pairing docs local during3bCI(2Rustsuccess/3Pythonrunning);
+new numeric effect whole CI, versions/dependencies/locks/tag/deploy remain separate.
+
+### Earlier review phase 51
+
 **Review phase 51 checks manual distribution summaries and jitter determinism.**
 Eight oriented box cells match hand quartiles/observed whiskers/fliers for odd/
 even/single/constant samples.24violin profiles for unequal cells match independent

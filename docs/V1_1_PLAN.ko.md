@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰52차에서role별원래관측을추적했습니다.** 12개명시index가x/y/hue/weight/unit/style/
+size필수role과맞고미사용열의결측은함께drop하지않았습니다. Pairedweightedmean/n/unit/
+질량이정확하며잘못된필수값은거절하고regplot은결측쌍을조용히빼지않습니다. B선택의실제
+scatter는원래row4/5/6/8입니다. Validator/집계/drop정책변경은없습니다.
+
+관련경계선택388통과/444deselected·floor388통과/2699deselected/분류한Pyparsing489경고·
+품질9명령이며새전체suite수로소급하지않습니다. STAT-08은지원범위PASS로STAT01..08의
+명시corpus검토를마쳤지만모든통계/adapter/UI인증은아닙니다. [근거](review_evidence/observation_pairs_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS109/RUNNING5/OPEN35/DEFERRED1**입니다.
+3bCI양Rust성공/3Python진행을보호해분포+pairing문서는로컬보존하고새수치전체CI/버전/
+의존성/lock/tag/배포는별도유지합니다.
+
+### 이전 리뷰51차
+
 **리뷰51차에서분포수작업값과jitter재현성을확인했습니다.** Odd/even/single/constant의
 양방향8box는분위수/관측whisker/outlier가맞고표본수다른24violinprofile의독립분산/
 Gaussian/정규화/분위수오차는5.55e-16입니다. 유한clip면적1을강제하거나결측표본을섞지않습니다.

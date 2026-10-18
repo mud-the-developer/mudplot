@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest12role-aware original-row traces preserve values/weights/units and strict
+  invalid-input boundaries.388boundary-selected/floor388passes plus489classified
+  Pyparsing deprecations make STAT-08 PASS in scope. STAT01..08 are reviewed in
+  documented corpora, not universal statistical/API certification. No runtime/new
+  tests; distribution+pairing docs stay local during3bCI(2Rustsuccess/3Pythonrunning).
+
 - Latest8manual box/24violin checks and seed0jitter reordering/fresh-process
   export/RNG observations agree.408related/floor407passes with1649classified
   Pyparsing deprecations make STAT-06/07 PASS in supported scope. No new runtime/
@@ -373,7 +379,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains exact moments, finite-support mass and explicit singular/clip boundaries.
 - [Distribution/jitter evidence](review_evidence/distribution_jitter_verification.json)
   retains hand summaries, paired rows, profile equations and process/RNG/hash scope.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS108/RUNNING5/OPEN36/
+- [Observation-pair evidence](review_evidence/observation_pairs_verification.json)
+  retains original indices, required-role columns, exact means and rejection policies.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS109/RUNNING5/OPEN35/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Revalidated role-aware listwise statistical rows across weighted summaries,
+  distributions and semantic line mappings, with exact original row/weight/unit
+  traces and explicit invalid-input rejection rather than silent column drops.
 - Revalidated box/violin quartiles, whiskers, profiles and degenerate cells against
   manual expectations, plus fixed-seed jitter positions, matched-environment
   cross-process exports and unchanged global RNG state. No new random API.

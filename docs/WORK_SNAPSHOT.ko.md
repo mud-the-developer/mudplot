@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신12role별원행추적은value/weight/unit대응과필수값거절을유지합니다. 경계선택388/
+  floor388·분류한Pyparsing489경고로STAT-08은범위내PASS이며STAT01..08의명시corpus검토를
+  마쳤지만보편통계/API인증은아닙니다. Runtime/newtest없이3bCI양Rust성공/3Python진행을
+  보호해분포+pairing문서는로컬보존합니다.
+
 - 최신수작업8box/24violin과seed0jitter순서·새process·hash/RNG가일치합니다. 관련408/
   floor407·분류한Pyparsing1649경고로STAT-06/07은지원범위PASS이며새runtime/randomAPI/
   testframework는없습니다. 3bCI양Rust성공/3Python진행을보호해문서는로컬보존하고이전수치효과의
@@ -309,7 +314,9 @@
   유한support질량/singular·clip경계를보존했습니다.
 - [Distribution/jitter 근거](review_evidence/distribution_jitter_verification.json)에
   수작업/pairedrow/정규화식과process/RNG/hash범위를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS108/RUNNING5/OPEN36/DEFERRED1**.
+- [Observationpair 근거](review_evidence/observation_pairs_verification.json)에원래
+  index/필수role/정확mean/거절정책을보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS109/RUNNING5/OPEN35/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

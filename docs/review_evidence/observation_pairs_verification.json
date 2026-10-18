@@ -1,0 +1,1171 @@
+{
+  "source_sha256": {
+    "mudplot/_stat.py": "0786605360f0ddcbacc2fb6f351295d95f7fe6b8d4b8a26b1ae1c87fd7cbef27",
+    "mudplot/_estimate.py": "681fcdb596569fda751839d99f9202fa6c1053ed53dc1cd3e48b4a662a5ab3ac",
+    "mudplot/_ecdf.py": "093b86087a5c85da34a6b98b9c79c305c3edccc008bcfdaa7d98ff900c03b899",
+    "mudplot/_histogram.py": "4b66085ba4c4678b040b04320159372be35df571ded9da94ebd54cea52a2f13d",
+    "mudplot/_kde.py": "bc3e4c38c40c4c21b20bc4b51f24653b2cd02c0256aafb9299d5216f41b8d77a",
+    "mudplot/_kde2d.py": "140e9446f4cfd6d3ef04f1b6dc916e9dd44f20af94eb90554daca5cb516a0ef9",
+    "mudplot/_categorical.py": "594f8d472ba4455141b312ef4e67bb528f57ef46938708a31287c53e6196998f",
+    "mudplot/_semantics.py": "79b3c88d44a538ebfb276ae112cbbf9f74dcaedf3af0e14d7ad891883a1f4d02",
+    "mudplot/_render.py": "7cec0b4bd8969b2ff30450de09e3483e21df8c9a454012d85ad0526864ad0d29"
+  },
+  "row_trace": {
+    "data": {
+      "cat": [
+        "K1",
+        "K1",
+        "K1",
+        null,
+        "K2",
+        "K2",
+        "K2",
+        "K1",
+        "K2",
+        "K1"
+      ],
+      "x": [
+        0,
+        1,
+        null,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "y": [
+        10,
+        null,
+        12,
+        13,
+        14,
+        15,
+        16,
+        18,
+        17,
+        21
+      ],
+      "g": [
+        "A",
+        "A",
+        "A",
+        null,
+        "B",
+        "B",
+        "B",
+        "A",
+        "B",
+        "A"
+      ],
+      "w": [
+        1,
+        2,
+        3,
+        4,
+        null,
+        0,
+        1,
+        2,
+        1,
+        1
+      ],
+      "unit": [
+        "u0",
+        "u1",
+        "u2",
+        "u3",
+        "u4",
+        "u5",
+        "u6",
+        null,
+        "u8",
+        "u9"
+      ],
+      "style": [
+        "a",
+        "a",
+        "a",
+        "b",
+        "b",
+        "b",
+        null,
+        "a",
+        "b",
+        "a"
+      ],
+      "size": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        null,
+        10
+      ]
+    },
+    "traces": [
+      {
+        "kind": "ecdf",
+        "used_indices": [
+          0,
+          1,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 1,
+            "x": 1,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 6,
+            "x": 6,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "x": 8,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "g": "A",
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "histogram",
+        "used_indices": [
+          0,
+          1,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 1,
+            "x": 1,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 6,
+            "x": 6,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "x": 8,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "g": "A",
+            "w": 1
+          }
+        ],
+        "group_bin_mass": [
+          [
+            3.0,
+            3.0
+          ],
+          [
+            0.0,
+            2.0
+          ]
+        ]
+      },
+      {
+        "kind": "kde1d",
+        "used_indices": [
+          0,
+          1,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 1,
+            "x": 1,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 6,
+            "x": 6,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "x": 8,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "g": "A",
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "kde2d",
+        "used_indices": [
+          0,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "y",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "y": 10,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 6,
+            "x": 6,
+            "y": 16,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "y": 18,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "x": 8,
+            "y": 17,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "y": 21,
+            "g": "A",
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "barplot",
+        "used_indices": [
+          0,
+          2,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "y",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "y": 10,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "y": 12,
+            "g": "A",
+            "w": 3
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "y": 16,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "cat": "K1",
+            "y": 18,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "y": 17,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "y": 21,
+            "g": "A",
+            "w": 1
+          }
+        ],
+        "estimates": [
+          {
+            "category": "K1",
+            "group": "A",
+            "indices": [
+              0,
+              2,
+              7,
+              9
+            ],
+            "weighted_mean_exact": "103/7",
+            "actual_value": 14.714285714285712,
+            "n": 4,
+            "n_units": null
+          },
+          {
+            "category": "K2",
+            "group": "B",
+            "indices": [
+              6,
+              8
+            ],
+            "weighted_mean_exact": "33/2",
+            "actual_value": 16.5,
+            "n": 2,
+            "n_units": null
+          }
+        ]
+      },
+      {
+        "kind": "pointplot",
+        "used_indices": [
+          0,
+          2,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "y",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "y": 10,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "y": 12,
+            "g": "A",
+            "w": 3
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "y": 16,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "cat": "K1",
+            "y": 18,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "y": 17,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "y": 21,
+            "g": "A",
+            "w": 1
+          }
+        ],
+        "estimates": [
+          {
+            "category": "K1",
+            "group": "A",
+            "indices": [
+              0,
+              2,
+              7,
+              9
+            ],
+            "weighted_mean_exact": "103/7",
+            "actual_value": 14.714285714285712,
+            "n": 4,
+            "n_units": null
+          },
+          {
+            "category": "K2",
+            "group": "B",
+            "indices": [
+              6,
+              8
+            ],
+            "weighted_mean_exact": "33/2",
+            "actual_value": 16.5,
+            "n": 2,
+            "n_units": null
+          }
+        ]
+      },
+      {
+        "kind": "lineplot",
+        "used_indices": [
+          0,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "y",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "y": 10,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 6,
+            "x": 6,
+            "y": 16,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "y": 18,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "x": 8,
+            "y": 17,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "y": 21,
+            "g": "A",
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "countplot",
+        "used_indices": [
+          0,
+          1,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "g"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "g": "A"
+          },
+          {
+            "row": 1,
+            "cat": "K1",
+            "g": "A"
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "g": "A"
+          },
+          {
+            "row": 4,
+            "cat": "K2",
+            "g": "B"
+          },
+          {
+            "row": 5,
+            "cat": "K2",
+            "g": "B"
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "g": "B"
+          },
+          {
+            "row": 7,
+            "cat": "K1",
+            "g": "A"
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "g": "B"
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "g": "A"
+          }
+        ]
+      },
+      {
+        "kind": "box",
+        "used_indices": [
+          0,
+          2,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "y",
+          "g"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "y": 10,
+            "g": "A"
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "y": 12,
+            "g": "A"
+          },
+          {
+            "row": 4,
+            "cat": "K2",
+            "y": 14,
+            "g": "B"
+          },
+          {
+            "row": 5,
+            "cat": "K2",
+            "y": 15,
+            "g": "B"
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "y": 16,
+            "g": "B"
+          },
+          {
+            "row": 7,
+            "cat": "K1",
+            "y": 18,
+            "g": "A"
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "y": 17,
+            "g": "B"
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "y": 21,
+            "g": "A"
+          }
+        ]
+      },
+      {
+        "kind": "violin",
+        "used_indices": [
+          0,
+          2,
+          6,
+          7,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "y",
+          "g",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "y": 10,
+            "g": "A",
+            "w": 1
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "y": 12,
+            "g": "A",
+            "w": 3
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "y": 16,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 7,
+            "cat": "K1",
+            "y": 18,
+            "g": "A",
+            "w": 2
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "y": 17,
+            "g": "B",
+            "w": 1
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "y": 21,
+            "g": "A",
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "semantic_lineplot",
+        "used_indices": [
+          0,
+          7,
+          9
+        ],
+        "required_columns": [
+          "x",
+          "y",
+          "g",
+          "style",
+          "size",
+          "w"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "x": 0,
+            "y": 10,
+            "g": "A",
+            "style": "a",
+            "size": 1,
+            "w": 1
+          },
+          {
+            "row": 7,
+            "x": 7,
+            "y": 18,
+            "g": "A",
+            "style": "a",
+            "size": 8,
+            "w": 2
+          },
+          {
+            "row": 9,
+            "x": 9,
+            "y": 21,
+            "g": "A",
+            "style": "a",
+            "size": 10,
+            "w": 1
+          }
+        ]
+      },
+      {
+        "kind": "clustered_barplot",
+        "used_indices": [
+          0,
+          2,
+          6,
+          8,
+          9
+        ],
+        "required_columns": [
+          "cat",
+          "y",
+          "g",
+          "w",
+          "unit"
+        ],
+        "observations": [
+          {
+            "row": 0,
+            "cat": "K1",
+            "y": 10,
+            "g": "A",
+            "w": 1,
+            "unit": "u0"
+          },
+          {
+            "row": 2,
+            "cat": "K1",
+            "y": 12,
+            "g": "A",
+            "w": 3,
+            "unit": "u2"
+          },
+          {
+            "row": 6,
+            "cat": "K2",
+            "y": 16,
+            "g": "B",
+            "w": 1,
+            "unit": "u6"
+          },
+          {
+            "row": 8,
+            "cat": "K2",
+            "y": 17,
+            "g": "B",
+            "w": 1,
+            "unit": "u8"
+          },
+          {
+            "row": 9,
+            "cat": "K1",
+            "y": 21,
+            "g": "A",
+            "w": 1,
+            "unit": "u9"
+          }
+        ],
+        "estimates": [
+          {
+            "category": "K1",
+            "group": "A",
+            "indices": [
+              0,
+              2,
+              9
+            ],
+            "weighted_mean_exact": "67/5",
+            "actual_value": 13.400000000000002,
+            "n": 3,
+            "n_units": 3
+          },
+          {
+            "category": "K2",
+            "group": "B",
+            "indices": [
+              6,
+              8
+            ],
+            "weighted_mean_exact": "33/2",
+            "actual_value": 16.5,
+            "n": 2,
+            "n_units": 2
+          }
+        ]
+      }
+    ],
+    "strict_regression_error": "invalid FigureSpec:\n  - panel 0 layer 0 (regplot) group 'A': regression values must be finite numbers\n  - panel 0 layer 0 (regplot) group None: degree 1 regression requires at least 2 observations\n  - panel 0 layer 0 (regplot) group None: degree 1 regression requires at least 2 distinct x values",
+    "regression_selected_B_indices": [
+      4,
+      5,
+      6,
+      8
+    ],
+    "invalid_values": [
+      {
+        "column": "x",
+        "row": 6,
+        "synthetic_value": "not-a-number",
+        "issues": [
+          "panel 0 layer 0 (hist): histogram observations must be finite numeric, not bool"
+        ],
+        "unselected_hue_rejected": false
+      },
+      {
+        "column": "w",
+        "row": 6,
+        "synthetic_value": -1,
+        "issues": [
+          "panel 0 layer 0 (hist): histogram weights must be finite nonnegative, not bool"
+        ],
+        "unselected_hue_rejected": false
+      },
+      {
+        "column": "w",
+        "row": 6,
+        "synthetic_value": true,
+        "issues": [
+          "panel 0 layer 0 (hist): histogram weights must be finite nonnegative, not bool"
+        ],
+        "unselected_hue_rejected": false
+      },
+      {
+        "column": "w",
+        "row": 6,
+        "synthetic_value": "invalid",
+        "issues": [
+          "panel 0 layer 0 (hist): histogram weights must be finite nonnegative, not bool"
+        ],
+        "unselected_hue_rejected": false
+      }
+    ]
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 489,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 78
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 187
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 109
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "reference_policy": "Original10rowsheldfixed;x/y/group/weight/unit/style/sizehaveDIFFERENTmissingpositions. Manualexpectedindicesareliteralrole-awarelists\u2014notindependentcolumncompression. Requiredcolumnsonly;zero-weightdropswhereconfigured,unweightedbox/countdonotfilterunusedweight/y/xcolumns. FractionweightedcentersA103/7orwithunits67/5,B33/2matchactualn/units. HistogramAcounts3/3,B0/2fromoriginalpairedweights.",
+  "strict_policy": "Requirednonnumericx/negative-bool-stringweightspreservedfordiagnosticsandpublicvalidationrejectsrenderwithoutinputmutation. Explicitlyunselectedhueexcludedbeforethatvalidation. Legacyregressionwithselectedmissingx/yREJECTS,notsilentdrop;explicitBselectionrendersEXACToriginalrows4/5/6/8andignoresunusedweightcolumn.",
+  "limits": "STAT08supportedrow-selection/summary/semanticintersectioncorpusonly\u2014notallinputadapters,statisticalmodelsorallUIfields. Independentrolesdifferentvalidsamplesarenotrequiredtomatchidenticalindices. No changedvalidator/drop-policy/newstatistics/reweighting.",
+  "qa_note": "Readactualhelperbodiesbecausecachedgraphcommitisstale;moduleoutlinewasnavigationnotcurrentbehaviorproof. Privateassertprobeandselectedexistingtestsused,no guessednewmodule/testorproductbug.",
+  "environment_overrides": {
+    "manual": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-pairing": {
+      "PYTEST_ADDOPTS": "-k \"(test_weighted_statistics or test_lineplot or test_line_semantics or test_ecdf or test_histogram_statistics or test_kde_options or test_kde2d or test_weighted_violin or test_statistical_scales) and (missing or row or unit or weight or select or invalid or paired)\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "manual",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "12 explicit role-aware row traces, exact weighted means, strict regression and invalid-value rejection pass"
+      ],
+      "log_text_sha256": "17c9f62e2d6b6f53512343efdb4b712d13b68881b5a351fd3110b9a17d8f6480"
+    },
+    {
+      "name": "pairing-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_weighted_statistics.py",
+        "tests/test_lineplot.py",
+        "tests/test_line_semantics.py",
+        "tests/test_ecdf.py",
+        "tests/test_histogram_statistics.py",
+        "tests/test_kde_options.py",
+        "tests/test_kde2d.py",
+        "tests/test_weighted_violin.py",
+        "tests/test_statistical_scales.py",
+        "-k",
+        "missing or row or unit or weight or select or invalid or paired",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "388 passed, 444 deselected in 86.37s (0:01:26)"
+      ],
+      "log_text_sha256": "e17fd73c1382986da09bde3ceb77475b6f76ef73f51a37e95e521a43338ba13c"
+    },
+    {
+      "name": "floor-pairing",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "388 passed, 2699 deselected, 489 warnings in 93.08s (0:01:33)"
+      ],
+      "log_text_sha256": "e3a1db7f68a884d5f6fc97ff1054e6812a3793a1cbe9b40c7450a222b76d90e6"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "241 files already formatted"
+      ],
+      "log_text_sha256": "b276ed5bed929e13fc05216f665a71466cc8077d632fa822f975b316275406c3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "c85f2f1b9364897a2d53857b20e82925763ed827e5e8637ed7697198ddaff276"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "760b09336c8f2f81dac6653833d5f9e5d3c61fff217da3a944771ba6bf540a5c"
+    }
+  ],
+  "raw_probe_sha256": {
+    "row_trace.json": "5850e9e364e2a6efe5e499f5bedee2aa74aa394e5547493c13b306d5bd28a4b7",
+    "probe.py": "cd0315337814e4a59cad6b223d26fdec88adfcb966bc89347269c21548d620a4",
+    "qa.py": "4135167d4db334feba45d36d4d0e01f77d99e7da48e36c117e7110de1651624e",
+    "environment_overrides.json": "a980530ec1e9b995ccb5ce96a6084feea29b759b1cc3ec1c5296e9c3e21089a7",
+    "floor_warning_counts.json": "7cd4871afaa3bda64cb8349466a772205699c9c3826fb77c707553403df4e48b",
+    "results.xml": "f082167af65f6729341d71454c04cfc4159b4c1294efe220a80524a637ce269b",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

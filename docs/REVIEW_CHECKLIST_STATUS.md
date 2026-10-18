@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 52차 — 통계전처리의관측index/원래쌍보존
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-observation-pairs-4tmw6l_y`와
+  [12경로/원래row·정확mean·거절](review_evidence/observation_pairs_verification.json)을 보존합니다.
+- 고정10행의x/y/group/weight/unit/style/size결측위치를다르게뒀습니다. ECDF/hist/KDE1D는
+  row0/1/6/7/8/9,xyKDE2D/lineplot은0/6/7/8/9,weightedcat집계/violin은0/2/6/7/8/9,
+  unweightedbox는0/2/4/5/6/7/8/9,unweightedcount는3만제외했습니다. 필수role이다르므로
+  같은index로억지통일하지않고사용하지않는y/x/weight결측은그대로두었습니다.
+- Semanticlineplot의추가style/size와stat행교집합은0/7/9,unit필수clusterbar는0/2/6/8/9로
+  맞습니다. 원래values/weights/units를함께추적해FractionweightedmeanA103/7또는unit67/5,
+  B33/2와n/n_units가맞고histA질량3/3·B0/2도원행weight에서나옵니다.
+- Regplot선택결측은조용히drop하지않고명시거절하며B만선택하면row4/5/6/8의실제scatter쌍을
+  그대로그립니다(미사용weights결측/0은관계없음). 필수nonnumericx/음수·bool·문자weight4경계는
+  validation/render가거절하고caller상태를보존합니다. 명시제외hue의해당값은검증대상에섞지않습니다.
+- 기존관련경계선택388통과/444deselected·실제floor388통과/2699deselected/경고489·
+  양platformtype/Ruff241/생성계약/packaging9명령exit0입니다. 489는같은floor실행에서모두
+  10종PyparsingDeprecationWarning으로분류했습니다. 전체suite통과수로바꾸어쓰지않습니다.
+- STAT-08은현재지원전처리/선택corpus에서PASS이며STAT01..08은각명시범위의검토를마쳤지만
+  보편통계·adapter·UI인증은아닙니다. 계산/validator/새test/framework는없고3bCI39166807390
+  양Rust성공/3Python진행을보호해전차분포와함께로컬보존합니다. 새회귀수치전체CI·버전/
+  의존성/lock/tag/배포·loop1의별도경계는유지합니다.
+
 ## 51차 — box/violin수작업기준과jitter재현성
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-distribution-jitter-320_pdy8`와
@@ -1362,7 +1384,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | STAT-05 | P1 | PASS | KDE bandwidth·적분·퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-06 | P1 | PASS | box·violin의 집계 정의 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-07 | P1 | PASS | jitter와 난수 재현성 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
-| STAT-08 | P1 | OPEN | 통계 전처리의 관측 대응 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
+| STAT-08 | P1 | PASS | 통계 전처리의 관측 대응 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | COLOR-01 | P0 | PASS | 색 공간 변환의 기준값 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-02 | P0 | PASS | CIEDE2000의 독립 reference | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
 | COLOR-03 | P1 | PASS | gamut 처리 이후 품질 | mudplot/color/; theme.py | test_convert.py; test_distance_cvd.py; test_palette_presets.py |
@@ -1451,7 +1473,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 108, RUNNING 5, OPEN 36, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 109, RUNNING 5, OPEN 35, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
