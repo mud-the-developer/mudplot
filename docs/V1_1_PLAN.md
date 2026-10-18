@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 23 isolates the Windows venv/TMP startup boundary.**
+Twelve six-second controls separate print/capabilities, pipe/file capture, base/
+venv, site and TMP/TEMP. The observed venv fails before its print program with
+321-character TMP, even with-S; base Python and longTEMP/shortTMP controls work.
+These are measured interpreter/host outcomes, not a universal uv/CPython threshold
+or a proven Rust capture defect. Five timed fixtures were stopped, not counted as
+application successes. No runtime code, OS setting or automatic fallback changed.
+
+The same selected interpreter then passes native startup/open/action/PNG, Unicode
+metadata and336-character source preservation with shortTMP/longTEMP. Together
+with earlier PowerShell path/lock tests, PKG-06 is PASS for the observed supported
+configuration and explicit limits; RUST-04 general descendant cleanup stays open.
+Related47checks and style/types/contracts/packaging pass in6recorded commands.
+[Evidence](review_evidence/windows_tmp_boundary_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS69/RUNNING9/OPEN71/DEFERRED1**. Hold docs publication while621CI runs;
+versions/dependencies/locks/tag/deploy and broader completion limits stay unchanged.
+
+### Earlier review phase 22
+
 **Review phase 22 separates locked dev, fresh ranges and isolated builds.**
 A disposable locked-dev install has43packages matching the lock and repeating
 sync retains its version snapshot. Prior fresh range installs show16version

@@ -1,0 +1,266 @@
+{
+  "head": "1c679037c555cb327e4925db7c57ecc15e89057f",
+  "runtime_files_sha256": {
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/_render.py": "7a31d6e31ed3dfb9f8e06cba8b76be839a03e14976f27c973b3a01d6bafc0766",
+    "mudplot/io.py": "16f8de523430b2215d51ca988d6208bf68528488b77e47e0073a894c34eb97c1",
+    "mudplot-editor/src/python.rs": "49baaca99635642d0769609f4d7f0b11df82ff3bff06dc5f1c099484a0994567",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f"
+  },
+  "platform": "Windows-11-10.0.26300-SP0",
+  "python_version": "3.12.15 (main, Oct  3 2026, 01:05:37) [MSC v.1944 64 bit (AMD64)]",
+  "uv_version": "uv 0.12.23 (46b84fd0b 2026-10-03 x86_64-pc-windows-msvc)",
+  "base_interpreter_sha256": "4a3bbd9702bb52d720920a85443e43d90bc405e795cc2d6c1b16620cc0ca396b",
+  "venv_launcher_sha256": "28a4df5b122472dd12f0396f74b186d384f4df081d452b034cf68b2039aafaf3",
+  "checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "capture_matrix": [
+    {
+      "name": "print-pipe-short",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 0.514999999984866,
+      "stdout_bytes": 84,
+      "stderr_bytes": 0,
+      "temp_path_length": 63
+    },
+    {
+      "name": "print-pipe-long",
+      "timeout": true,
+      "exit_code": 1,
+      "seconds": 7.26600000000326,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "temp_path_length": 321
+    },
+    {
+      "name": "capabilities-pipe-short",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 1.4839999999967404,
+      "stdout_bytes": 65460,
+      "stderr_bytes": 0,
+      "temp_path_length": 63
+    },
+    {
+      "name": "capabilities-pipe-long",
+      "timeout": true,
+      "exit_code": 1,
+      "seconds": 7.26600000000326,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "temp_path_length": 321
+    },
+    {
+      "name": "capabilities-file-short",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 1.5,
+      "stdout_bytes": 65460,
+      "stderr_bytes": 0,
+      "temp_path_length": 63
+    },
+    {
+      "name": "capabilities-file-long",
+      "timeout": true,
+      "exit_code": 1,
+      "seconds": 7.26600000000326,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0,
+      "temp_path_length": 321
+    }
+  ],
+  "interpreter_matrix": [
+    {
+      "name": "base-S-short",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 0.20399999999790452,
+      "stdout_bytes": 73,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "base-S-long",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 1.062000000005355,
+      "stdout_bytes": 73,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "base-long",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 0.21899999998277053,
+      "stdout_bytes": 73,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "venv-S-long",
+      "timeout": true,
+      "exit_code": 1,
+      "seconds": 7.187000000005355,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "venv-longTEMP-only",
+      "timeout": false,
+      "exit_code": 0,
+      "seconds": 1.3280000000086147,
+      "stdout_bytes": 84,
+      "stderr_bytes": 0
+    },
+    {
+      "name": "venv-longTMP-only",
+      "timeout": true,
+      "exit_code": 1,
+      "seconds": 7.25,
+      "stdout_bytes": 0,
+      "stderr_bytes": 0
+    }
+  ],
+  "bridge_control": {
+    "temporary_directory_priority": "short TMP, long TEMP",
+    "TMP_length": 63,
+    "TEMP_length": 321,
+    "source_file_length": 336,
+    "startup_and_open_action_and_png": true,
+    "unicode_metadata_preserved": true,
+    "source_bytes_unchanged": true,
+    "long_directory_unchanged": true,
+    "png_sha256": "86394123ce78814534dd38184eaa0a362f48e842d545a2c81881e9a77a0caca3",
+    "no_interpreter_fallback": true
+  },
+  "inference": "Observed venv startup path depends on321character TMP before the print program, independent ofmudplot/capture/site; basePython controls pass. Not a universal uv/CPython/Windows threshold or a Rust capture root-cause claim.",
+  "scope": "Use short cwd/TMP with long absolute data paths on the observed Windows/Pwsh7.6.7/LongPathsEnabled1 host; no automatic interpreter fallback, environment sanitization or OS setting changes.",
+  "cleanup": "Each six-second timed probe was stopped by its own live PopenPID taskkill/T/F and communicated; success endpoints completed before their owned server tree stopped. Not production descendant-cleanup guarantees.",
+  "result_logs_sha256": {
+    "base-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "base-long.stdout": "94d7a22c518bde7abf641ebe6c9b2c2cabf29418ec9c011fe9a7fbdada04a2e5",
+    "base-S-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "base-S-long.stdout": "94d7a22c518bde7abf641ebe6c9b2c2cabf29418ec9c011fe9a7fbdada04a2e5",
+    "base-S-short.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "base-S-short.stdout": "94d7a22c518bde7abf641ebe6c9b2c2cabf29418ec9c011fe9a7fbdada04a2e5",
+    "bridge-shortTMP-longTEMP.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bridge-shortTMP-longTEMP.stdout": "9505e20cc17f49497e367716c39e9cde5534ce08a5330ff817c9a344f381abbe",
+    "capabilities-file-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-file-long.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-file-short.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-file-short.stdout": "3cdb2f0b4a2de25ebc5ead198dfb9a895196df5a9b090d33d1a777bde62ac1df",
+    "capabilities-pipe-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-pipe-long.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-pipe-short.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "capabilities-pipe-short.stdout": "3cdb2f0b4a2de25ebc5ead198dfb9a895196df5a9b090d33d1a777bde62ac1df",
+    "print-pipe-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "print-pipe-long.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "print-pipe-short.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "print-pipe-short.stdout": "69b671a3b23f6bc34211636a696f8028e95157748ffd2b9cfeda04929c760818",
+    "venv-longTEMP-only.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "venv-longTEMP-only.stdout": "69b671a3b23f6bc34211636a696f8028e95157748ffd2b9cfeda04929c760818",
+    "venv-longTMP-only.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "venv-longTMP-only.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "venv-S-long.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "venv-S-long.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "limits": "No product runtime change, no repeated120s wait, no universal longTMP/longcwd support, no new full Python/browser/native/OS suite claims.",
+  "doc_files_sha256": {
+    "docs/COMPATIBILITY.md": "ce94f2663bb8a86df7395e4c12a68aa1b12de31c3b41c4caddce572b2baae798",
+    "docs/COMPATIBILITY.ko.md": "ee6d1458d747f88c0c89959d1ea6e6e2996138171c5b96b60f372486da6767cc",
+    "mudplot-editor/README.md": "a0e11009d1bf7444f16d769bfd33c7dcc5e2e873ac20db76d27d9256e2966436",
+    "mudplot-editor/README.ko.md": "2b6e6e8f64c7b8ccd5af511778bcd261567257474adebbe6eaa0b9dafcc29684"
+  },
+  "final_checks": [
+    {
+      "name": "path-related",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_editor_paths.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_cli_apply.py",
+        "tests/test_cli_migrate.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "47 passed in 55.64s"
+      ],
+      "log_text_sha256": "b8eb6318fb6202ecffb5e837594245a05250232eee65218066880db9878525c6"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "221 files already formatted"
+      ],
+      "log_text_sha256": "8e94ed78209e71558d9bcb04ee84a4a93b82507489ea08908162411df0aef622"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "f8dd31c259a5d664b2583ff774fa82349f3ba906c2a26735824aa9abba2883cb"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "96369379aedbc2b4004817672de1a0b185923deaf1626d725bff590076518fb5"
+    }
+  ]
+}

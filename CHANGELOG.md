@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Documented the measured Windows venv/TMP startup boundary independently of
+  mudplot and capture mode, with a same-interpreter short-TMP bridge control.
+  Long absolute data paths remain distinct from unsupported launcher cwd/TMP
+  configurations; no OS settings or interpreter fallback were changed.
 - Verified locked-dev, allowed fresh-install and PEP517-isolated build scopes
   separately, and clarified that engine wheels exclude source-tree editors.
   Matching-checkout editor startup/assets and an isolated core consumer passed;

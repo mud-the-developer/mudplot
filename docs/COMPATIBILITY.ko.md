@@ -163,8 +163,13 @@ Playwright 패키지만 설치하므로 `playwright install chromium`은 별도 
 
 관찰한 PowerShell7.6.7/LongPathsEnabled1 Windows에서 짧은 CWD+336문자 절대 파일
 경로의 API/console/module/lock/render는 통과했지만260문자 초과 CWD의 console 시작은
-실패했습니다. 짧은 CWD와 절대 경로를 사용하세요. Native bridge의 긴TEMP 시작 probe는
-미완료이며 모든 긴 경로를 보장하거나 OS 설정을 바꾸지 않습니다. Unreleased robust/logistic/
+실패했습니다. 짧은 CWD와 절대 경로를 사용하세요. 별도 대조에서 관찰한 uv venv는
+321문자 `TMP`일 때 print program도 시작하지 못했고 `-S`/pipe/file capture도 같았습니다.
+Base Python은 동작했고 긴 `TEMP`+짧은 `TMP`에서는 같은 venv도 동작했습니다. 이 구성의
+bridge 시작/open/action/PNG도 통과했으며 interpreter를 자동 대체하지 않습니다. CWD/
+`TMP`를 짧게 두고 의도한 환경에서 선택한 interpreter를 먼저 검사하세요. 관찰한 host/
+interpreter 한계이지 모든 경로 임계값·process-tree 정리 보장이나 OS 설정 변경은 아닙니다.
+Unreleased robust/logistic/
 LOWESS effect는 optional `regression` extra(statsmodels>=0.14.1; all/dev 포함)를
 fit 때만 불러옵니다. 일반 polynomial/residual/log-x는 statsmodels가 필요 없습니다.
 이 extra는 Python3.10/NumPy1.23/Matplotlib3.8/statsmodels0.14.1에서 확인했으며

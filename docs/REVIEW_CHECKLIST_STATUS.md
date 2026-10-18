@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 23차 — Windows 긴 TMP의 interpreter/capture 분리
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-longtmp-epe7glbh`,
+  [해시/12대조/bridge control](review_evidence/windows_tmp_boundary_verification.json)도 보존합니다.
+- 긴TMP 실패를 제품/OS/capture 중 하나로 먼저 단정하지 않고 print/capabilities·pipe/file·
+  base/venv·site on/off·TMP/TEMP 분리의12case를 각각6초로 제한했습니다. Short63문자
+  control은 성공했고321문자TMP의 관찰 venv는 print도 시작하지 못해5case를 종료했습니다.
+  이 종료 exit1은 성공이나 application 오류가 아니라 fixture timeout/정리 결과입니다.
+- Base Python은 긴TMP에서 성공했고 venv의 -S는 차이가 없었습니다. 긴TEMP만 두고
+  TMP를 짧게 하면 같은 venv도 동작했습니다. 따라서 mudplot/capture/site와 독립적인
+  관찰 interpreter 시작 경계를 분리했으며 특정 uv/CPython 내부 원인·보편 임계값을
+  새 제품 결함으로 주장하지 않습니다. Runtime 코드/OS 설정/자동 interpreter fallback은 없습니다.
+- 같은 선택 venv와 shortTMP/longTEMP에서 실제 bridge 시작/open/action/PNG·한글
+  metadata·336문자 입력 source 보존·long-directory 불변이 통과했습니다. 앞선PowerShell7.6.7/
+  LongPathsEnabled1의93/336문자 API/CLI/lock 결과와 함께 지원 host 경로와 설정 한계를
+  분리해 PKG-06은 이 관찰 범위에서 PASS입니다. 긴CWD/모든TMP 보장이나 RUST-04
+  일반 자손 정리 완료로 확대하지 않습니다.
+- 각 timed probe는 보유 PopenPID의 자기 tree만 taskkill/T/F 후 communicate했고 현재
+  fixture 프로세스가 없음을 확인했습니다. 정상 endpoint 완료 뒤 소유 서버도 정리했습니다.
+  제품 shutdown/timeout가 같은 보장을 한다는 뜻은 아닙니다.
+- 최종 관련47통과·Ruff221/format·Pyright·계약·packaging6명령이 exit0입니다. Source/
+  interpreter launcher/log/새 doc hash를 보존하며 새 전체/minimum/browser/nativeunit/OS
+  suite는 아닙니다. 기준621CI가 실행 중이라 문서 단위는 로컬 commit으로 보존하며
+  loop1·버전/의존성/lock/tag/배포 상태는 유지합니다.
+
 ## 22차 — lock/격리 build·matching source 편집기 실행
 
 - 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-review-isolation-8zpvxkk4`,
@@ -772,7 +797,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PKG-03 | P0 | PASS | sdist와 wheel 내용·메타데이터 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-04 | P1 | PASS | 저장소 밖 CLI 실행 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-05 | P0 | PASS | 최소 지원 버전 검사 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
-| PKG-06 | P1 | RUNNING | Windows 한글·공백·긴 경로 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
+| PKG-06 | P1 | PASS | Windows 한글·공백·긴 경로 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-07 | P1 | OPEN | GUI 없는 Linux와 OS 차이 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-08 | P1 | PASS | source-tree 편집기의 실행 안내 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-09 | P1 | PASS | lock·빌드 격리·설치 재현 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
@@ -794,7 +819,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 68, RUNNING 10, OPEN 71, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 69, RUNNING 9, OPEN 71, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

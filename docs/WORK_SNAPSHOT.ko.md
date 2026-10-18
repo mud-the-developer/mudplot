@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 WindowsTMP12대조가 관찰 venv 시작 한계를 core/capture와 구분했습니다. 같은
+  interpreter의 짧은TMP/긴TEMP bridge·한글/긴source 보존과 관련47개가 통과했습니다.
+  PKG-06은 이 지원 host 구성/명시 한계에서 PASS이며 모든 긴 경로나 일반 자손 정리
+  보장은 아닙니다. Runtime 변경은 없고621CI 중에는 문서 게시를 보류합니다.
+
 - 최신 locked43package/반복 sync·별도 PEP517 backend·관찰한 동일55member wheel과
   새 무의존 consumer가 통과했습니다. Matching source 두 editor도 공유 자산과 함께
   시작해 PKG-08/09는 PASS입니다. Runtime 변경·릴리스 승인·모든 bytes 재현 보장은 아닙니다.
@@ -32,7 +37,7 @@
   구분해 PKG-02/04는 PASS입니다. 무관한 import 진단은 유지합니다.
 - 기준e14CI39111782233의4job은 모두 성공했지만 후속 guard의 새 통합 검증은 필요합니다.
   짧은 CWD의93/336문자 파일·lock은 통과했으나 long-CWD console·longTEMP bridge
-  제한/미완료가 있어 PKG-06은 RUNNING입니다.
+  한계는 위의 후속 TMP control로 구분했습니다.
 
 - 최신249field/marker+169연결 검사·최소174통과/경고13과 native18경계가 통과했습니다.
   명시 marker0을 유지하고139nullable schema/Python 의미도 확인했습니다. JSON-09의
@@ -105,7 +110,9 @@
   wheel/source hash·외부 CLI·제한된 Windows 경로 결과를 연결했습니다.
 - [격리/source 편집기 근거](review_evidence/isolation_source_editor_verification.json)에
   lock·허용 범위 drift·격리 backend·실제 matching-source 시작을 구분했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS68/RUNNING10/OPEN71/DEFERRED1**.
+- [WindowsTMP 경계 근거](review_evidence/windows_tmp_boundary_verification.json)에
+  interpreter/capture/환경 대조와 같은 interpreter bridge 결과를 기록했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS69/RUNNING9/OPEN71/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

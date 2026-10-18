@@ -59,6 +59,10 @@ without an Origin remain supported; this is not remote-user authentication.
   expand display bytes; this is not a disk/CPU or descendant-process hard bound.
   Missing or empty render artifacts are rejected before preview/cache commit or
   export, even if the child exited successfully; this is not a full binary decoder.
+  On the measured Windows/uv-venv setup, keep cwd/TMP short and use absolute long
+  data paths. A long TMP blocked even interpreter startup, independently of capture;
+  long TEMP with short TMP passed. Verify the selected interpreter first; the bridge
+  does not silently switch interpreters or promise general process-tree cleanup.
 - Failed actions, imports, or renders do not mutate the current spec or
   history. Successful open/reset are undoable snapshots in this Rust editor;
   Python open/reset instead start fresh history. Successful new edits clear redo.

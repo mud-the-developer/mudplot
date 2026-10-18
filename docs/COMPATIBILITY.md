@@ -181,8 +181,14 @@ not its browser binary; `playwright install chromium` remains a separate step.
 On the observed Windows host(PowerShell7.6.7,LongPathsEnabled1), short cwd plus
 336-character absolute file paths passed API/console/module/lock/render checks.
 Console startup from a>260-character cwd failed; use a short cwd with absolute
-paths. A native bridge long-TEMP startup probe remains incomplete, not a universal
-long-path guarantee. No system long-path setting is changed by mudplot.
+paths. Separate controls found that the observed uv-created venv could not start
+its print program with a321-character `TMP`, even with `-S`, while base Python
+worked and long `TEMP` with short `TMP` worked. Pipe/file capture made no difference.
+The same selected venv then passed bridge startup/open/action/PNG with short `TMP`
+and long `TEMP`; no interpreter fallback is performed. Keep cwd/`TMP` short and
+test the selected interpreter under the intended environment before starting the
+editor. These are measured host/interpreter limits, not universal thresholds or
+process-tree cleanup guarantees. No system long-path setting is changed by mudplot.
 Unreleased advanced robust/logistic/LOWESS effects use the optional `regression`
 extra with statsmodels>=0.14.1 (also included by all/dev), loaded only at fit time.
 Ordinary polynomial/residual/log-x rendering needs no statsmodels. This extra

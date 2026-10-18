@@ -53,6 +53,9 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   있으며 디스크/CPU 제한이나 모든 자손 프로세스 격리를 보장하는 것은 아니다.
   성공 종료했어도 render 파일이 없거나 비면 preview/cache commit·export 전에
   거부한다. 이는 모든 binary format을 완전히 decode하는 검증은 아니다.
+  관찰한 Windows/uv venv에서는 CWD/TMP를 짧게 두고 긴 data 절대 경로를 사용한다.
+  긴TMP는 capture와 무관하게 interpreter 시작도 막았고 긴TEMP+짧은TMP는 통과했다.
+  선택한 interpreter를 먼저 확인해야 하며 자동 대체나 일반 process-tree 정리 보장은 없다.
 - 실패한 action/import/render는 현재 spec과 history를 변경하지 않는다. Rust의
   정상 open/reset은 undo 가능한 snapshot이며 Python open/reset은 새 이력을 시작한다.
   두 editor 모두 정상적인 새 편집 후 redo를 지운다.

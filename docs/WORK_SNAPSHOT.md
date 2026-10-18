@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest Windows TMP controls12cases distinguish observed venv startup limits from
+  core/capture. ShortTMP/longTEMP on the same interpreter passes native open/action/
+  PNG and long source preservation; related47checks pass. PKG-06 is PASS only for
+  this supported host configuration and documented limits, not general descendant
+  cleanup or all long paths. Product runtime is unchanged; docs stay local during621CI.
+
 - Latest locked43-package snapshot/repeat sync, separate isolated PEP517 backend,
   equal55-member observed wheel builds and an independent core consumer pass.
   Both matching-checkout source editors start with expected shared assets; PKG-08/
@@ -40,7 +46,7 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   absence is distinct from package installation; PKG-02/04 are PASS.
 - Baselinee14CI39111782233 succeeded in all4Python/Rust OS jobs; these later guards
   still need their own integrated run. Windows93/336character file/lock paths pass
-  from short cwd; long-cwd console and long-TEMP bridge limits keep PKG-06 RUNNING.
+  from short cwd; the later TMP control above now explains that observed startup limit.
 
 - Latest249field/marker+169connected passes, floor174passes/13warnings and native
   JSON recovery18boundary cases retain explicit marker0 without changing automatic
@@ -124,7 +130,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   connects actual extras, wheel/source hashes, outside CLI and bounded Windows paths.
 - [Isolation/source editor evidence](review_evidence/isolation_source_editor_verification.json)
   separates lock, fresh-range drift, isolated backend and actual matching-source startup.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS68/RUNNING10/OPEN71/
+- [Windows TMP boundary evidence](review_evidence/windows_tmp_boundary_verification.json)
+  records interpreter/capture/environment controls and the same-interpreter bridge result.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS69/RUNNING9/OPEN71/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

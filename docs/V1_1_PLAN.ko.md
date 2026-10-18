@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 23차에서 Windows venv/TMP 시작 경계를 분리했습니다.** Print/capabilities·
+pipe/file·base/venv·site·TMP/TEMP의12대조를 각각6초로 제한했습니다. 관찰한 venv는
+321문자TMP에서 print 전부터 멈추고-S도 같았으나 base Python과 긴TEMP/짧은TMP는
+동작했습니다. Host/interpreter 관찰값이지 uv/CPython 보편 임계값이나 Rust capture
+결함 확정은 아닙니다.5timed fixture는 성공이 아닌 종료/정리로 기록했습니다.
+
+같은 interpreter의 짧은TMP/긴TEMP bridge 시작/open/action/PNG·한글 metadata·
+336문자 source 보존도 통과했습니다. 기존 PowerShell 파일/lock 검사와 함께 지원한
+구성·한계를 구분해 PKG-06은 PASS, RUST-04의 일반 자손 정리는 미완료입니다.
+Runtime/OS 설정/자동 fallback 변경은 없고 관련47·스타일/타입/계약/packaging6명령이
+통과했습니다. [근거](review_evidence/windows_tmp_boundary_verification.json)와
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS69/RUNNING9/OPEN71/DEFERRED1**입니다.
+621CI 실행 중에는 이 문서 단위를 게시하지 않고 버전/의존성/lock/tag/배포도 유지합니다.
+
+### 이전 리뷰 22차
+
 **리뷰 22차에서 locked dev·허용 범위·격리 build를 구분했습니다.** 별도 locked dev의
 43package가 lock과 같고 반복 sync 버전도 같았습니다. 이전 fresh 범위 설치의16차이를
 기록하되 모든 사용자가 dev lock과 같아야 한다고 설명하지 않습니다. 별도 fresh PEP517
