@@ -1,0 +1,996 @@
+{
+  "scope": "Renderable representative token semantics; not all139nullable fields or all visual controls.",
+  "cases": [
+    {
+      "id": "line.marker.omitted",
+      "kind": "line",
+      "field": "marker",
+      "variant": "omitted",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.marker.null",
+      "kind": "line",
+      "field": "marker",
+      "variant": "null",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "marker": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.marker.empty",
+      "kind": "line",
+      "field": "marker",
+      "variant": "empty",
+      "value": "",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "marker": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.marker.explicit",
+      "kind": "line",
+      "field": "marker",
+      "variant": "explicit",
+      "value": "o",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "marker": "o"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.line_style.omitted",
+      "kind": "line",
+      "field": "line_style",
+      "variant": "omitted",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.line_style.null",
+      "kind": "line",
+      "field": "line_style",
+      "variant": "null",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "line_style": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.line_style.empty",
+      "kind": "line",
+      "field": "line_style",
+      "variant": "empty",
+      "value": "",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "line_style": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "line.line_style.explicit",
+      "kind": "line",
+      "field": "line_style",
+      "variant": "explicit",
+      "value": "--",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line",
+                "x": "x",
+                "y": "y",
+                "line_style": "--"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter.marker.omitted",
+      "kind": "scatter",
+      "field": "marker",
+      "variant": "omitted",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter",
+                "x": "x",
+                "y": "y"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter.marker.null",
+      "kind": "scatter",
+      "field": "marker",
+      "variant": "null",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter",
+                "x": "x",
+                "y": "y",
+                "marker": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter.marker.empty",
+      "kind": "scatter",
+      "field": "marker",
+      "variant": "empty",
+      "value": "",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter",
+                "x": "x",
+                "y": "y",
+                "marker": ""
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter.marker.explicit",
+      "kind": "scatter",
+      "field": "marker",
+      "variant": "explicit",
+      "value": "s",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter",
+                "x": "x",
+                "y": "y",
+                "marker": "s"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter3d.marker.omitted",
+      "kind": "scatter3d",
+      "field": "marker",
+      "variant": "omitted",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter3d",
+                "x": "x",
+                "y": "y",
+                "z": "z"
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter3d.marker.null",
+      "kind": "scatter3d",
+      "field": "marker",
+      "variant": "null",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "marker": null
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter3d.marker.empty",
+      "kind": "scatter3d",
+      "field": "marker",
+      "variant": "empty",
+      "value": "",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "marker": ""
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "scatter3d.marker.explicit",
+      "kind": "scatter3d",
+      "field": "marker",
+      "variant": "explicit",
+      "value": "^",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "scatter3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "marker": "^"
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "line3d.line_style.omitted",
+      "kind": "line3d",
+      "field": "line_style",
+      "variant": "omitted",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line3d",
+                "x": "x",
+                "y": "y",
+                "z": "z"
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "line3d.line_style.null",
+      "kind": "line3d",
+      "field": "line_style",
+      "variant": "null",
+      "value": null,
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "line_style": null
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "line3d.line_style.empty",
+      "kind": "line3d",
+      "field": "line_style",
+      "variant": "empty",
+      "value": "",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "line_style": ""
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    },
+    {
+      "id": "line3d.line_style.explicit",
+      "kind": "line3d",
+      "field": "line_style",
+      "variant": "explicit",
+      "value": ":",
+      "spec": {
+        "version": "0.1",
+        "size": [
+          4,
+          3
+        ],
+        "data": {
+          "columns": {
+            "x": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "y": [
+              0.2,
+              1.1,
+              2.3,
+              2.9
+            ],
+            "z": [
+              1,
+              2,
+              1,
+              2
+            ]
+          },
+          "matrices": {}
+        },
+        "panels": [
+          {
+            "layers": [
+              {
+                "type": "line3d",
+                "x": "x",
+                "y": "y",
+                "z": "z",
+                "line_style": ":"
+              }
+            ],
+            "projection": "3d"
+          }
+        ]
+      }
+    }
+  ]
+}

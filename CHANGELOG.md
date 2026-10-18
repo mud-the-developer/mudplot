@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Preserved explicit empty marker/line-style tokens rather than treating them as
+  automatic defaults. Added representative schema/CLI/Rust/raw-editor agreement
+  cases while retaining omission/null/numeric-zero and layer-specific restrictions.
 - Added a bounded, reproducible warm state/JSON/render cost profile with synthetic
   1k/10k/100k rows, median/p95 and separate Python allocation/cProfile evidence.
   Kept snapshot safety and avoided unmeasured zero-copy or streaming promises.

@@ -8,11 +8,57 @@ import json
 import os
 import subprocess
 import sys
+from pathlib import Path
 
 import jsonschema
 import mudplot as mp
 import pytest
 from mudplot.spec import LayerSpec
+
+TOKEN_CASES = json.loads(
+    (Path(__file__).parent / "fixtures/review_render_tokens.json").read_text(
+        encoding="utf-8"
+    )
+)["cases"]
+
+
+@pytest.mark.parametrize("case", TOKEN_CASES, ids=lambda case: case["id"])
+def test_render_token_fixture_schema_python_and_cli_migrate_agree(case, tmp_path):
+    from mudplot.__main__ import main
+
+    payload = case["spec"]
+    jsonschema.Draft202012Validator(mp.json_schema()).validate(payload)
+    expected = mp.from_json(json.dumps(payload))
+    assert mp.validate(expected) == []
+    assert getattr(expected.panels[0].layers[0], case["field"]) == case["value"]
+    source, output = tmp_path / "input.json", tmp_path / "output.json"
+    source.write_text(json.dumps(payload), encoding="utf-8")
+    assert main(["migrate", str(source), "-o", str(output)]) == 0
+    assert mp.load_spec(output) == expected
+
+
+@pytest.mark.parametrize(
+    "case",
+    [c for c in TOKEN_CASES if c["variant"] == "empty"],
+    ids=lambda case: case["id"],
+)
+def test_fresh_cli_empty_render_token_matches_python_png(case, tmp_path):
+    import matplotlib.pyplot as plt
+
+    source, expected, actual = (
+        tmp_path / name for name in ("input.json", "expected.png", "actual.png")
+    )
+    source.write_text(json.dumps(case["spec"]), encoding="utf-8")
+    plt.close(mp.save(mp.load_spec(source), str(expected)))
+    result = subprocess.run(
+        [sys.executable, "-m", "mudplot", "render", str(source), str(actual)],
+        capture_output=True,
+        text=True,
+        timeout=30,
+        env={**os.environ, "MPLBACKEND": "Agg"},
+    )
+    assert result.returncode == 0, result.stderr
+    assert actual.read_bytes() == expected.read_bytes()
 
 
 def test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata():
@@ -99,6 +145,69 @@ def test_optional_marker_zero_is_not_an_automatic_size_in_artists(kind, colored,
         points = axes.collections[0]
         assert isinstance(points, PathCollection)
         assert np.allclose(points.get_sizes(), expected**2)
+
+
+@pytest.mark.parametrize(
+    "kind",
+    [
+        "line",
+        "line3d",
+        "scatter",
+        "scatter3d",
+        "regplot",
+        "errorbar",
+        "stripplot",
+        "pointplot",
+    ],
+)
+def test_explicit_empty_marker_is_not_automatic(kind):
+    plot = mp.plot(
+        {
+            "x": [0, 1, 2, 3],
+            "y": [0.2, 1.1, 2.3, 2.9],
+            "z": [1, 2, 1, 2],
+            "err": [0.1] * 4,
+        }
+    )
+    if kind.endswith("3d"):
+        plot.projection3d()
+    options: dict[str, str | None] = {"marker": ""}
+    if kind == "regplot":
+        options["confidence"] = None
+    if kind == "errorbar":
+        options["yerr"] = "err"
+    getattr(plot, kind)("x", "y", *(["z"] if kind.endswith("3d") else []), **options)
+    jsonschema.Draft202012Validator(mp.json_schema()).validate(plot.spec.to_dict())
+    assert mp.validate(plot.spec) == []
+    restored = mp.Plot.from_json(plot.to_json())
+    assert restored.spec.panels[0].layers[0].marker == ""
+    axes = restored.render().axes[0]
+    if kind in ("line", "line3d", "errorbar", "pointplot"):
+        assert axes.lines[0].get_marker() in ("", "None", "none", " ")
+    else:
+        assert len(axes.collections[0].get_paths()[0]) == 0
+
+
+@pytest.mark.parametrize("kind", ["line", "line3d", "pointplot", "hline", "vline"])
+def test_explicit_empty_line_style_is_not_automatic(kind):
+    plot = mp.plot({"x": [1, 2], "y": [2, 3], "z": [0, 1]})
+    if kind.endswith("3d"):
+        plot.projection3d()
+    if kind in ("hline", "vline"):
+        getattr(plot, kind)(1, line_style="")
+    else:
+        getattr(plot, kind)(
+            "x", "y", *(["z"] if kind.endswith("3d") else []), line_style=""
+        )
+    assert mp.validate(plot.spec) == []
+    restored = mp.Plot.from_json(plot.to_json())
+    assert restored.spec.panels[0].layers[0].line_style == ""
+    assert restored.render().axes[0].lines[0].get_linestyle() in (
+        "None",
+        "none",
+        "",
+        " ",
+    )
 
 
 def test_canonical_keys_whitespace_and_unicode_do_not_reorder_or_coerce_data():

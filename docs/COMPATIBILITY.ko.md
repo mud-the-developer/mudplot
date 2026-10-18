@@ -109,7 +109,10 @@ package release마다 spec version을 올릴 필요는 없습니다.
 - Optional 값은 모두 같은 뜻이 아닙니다. 생략은 model default를 선택하고 nullable의
   명시 null은 유지합니다. `StatSpec.errorbar` 기본 `"ci"`, `LayerSpec.inner` 기본 `"legacy"`는
   명시 null과 다릅니다. Marker size0도 자동 점 크기로 바꾸지 않고0으로 전달하며 생략/null
-  기본은 유지합니다. 구조 필드 표만으로 전 필드 UI/CLI/Rust parity를 승인하지 않습니다.
+  기본은 유지합니다. Marker/line-style 옵션을 지원하는 layer의 명시 `""`는 자동 encoding이
+  아닌 no-marker/no-line 의미를 유지하며 null과 다릅니다. KDE/ECDF 같은 개별 style 제한은
+  그대로 검사합니다. 구조 필드 표만으로 전 필드 UI/CLI/Rust parity를 승인하지 않으며
+ 20-case render-token fixture도 명시한 범위만 검증합니다.
 - spec version을 생략하면 Python/Rust 모두 내장된 현재 기본값을 사용합니다.
   명시한 null이나 잘못된 값은 생략이 아닙니다.
 - 알 수 없는 spec version은 명확히 거부합니다. 향후 비호환 serialized shape는

@@ -1,0 +1,503 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "197696b65e03f52041449beb9e16888a2d6e92cf21bbbb8c62c670dee89a9498",
+    "tests/test_review_json_policies.py": "78732f796868716f88f5b033aa7a81b19a7a1378069744b74c045f07cce005ed",
+    "tests/fixtures/review_render_tokens.json": "ecc615f7676b708e494b6bee12e8d450ad50b9132cdc88663ec757a8af4484f7",
+    "mudplot-editor/src/model.rs": "1e90a18758b04e535ded2725372f957643b57c9f872031410bbbec87304ddcd6"
+  },
+  "pre_fix_artist_failures": 6,
+  "pre_fix_artist_controls_passed": 2,
+  "fix": "Only None selects automatic marker/line-style fallback; explicit empty no-marker/no-line strings survive shared regular/statistical/distribution/3D paths. Default non-line automatic marker still falls back to circle; existing numeric zero/None handling stays.",
+  "fixture": "tests/fixtures/review_render_tokens.json",
+  "fixture_cases": 20,
+  "fixture_scope": "5representative layer/field combinations times omitted/null/empty/explicit values. Not all139nullable fields or every visual dropdown.",
+  "normalization": "Omitted modeled field normalizes to Python defaultNone; Rust typed envelope preserves raw omission/null/empty until Python normalization. Whitespace/key order ignored; supported field values/types retained.",
+  "compact_fixture": "Former duplicated full specs were reduced134287\u219219307bytes; normalized equality was asserted for all20 and the compact raw UI corpus was rerun. No large duplicate fixture or new public API.",
+  "rust_codec_cases": 20,
+  "rust_codec_output_sha256": "3a0c1562bd95d33f88862d6217bd7be3cf5de07f3cbf37cd6438c05a561f5365",
+  "ui_results": [
+    {
+      "tool": "python",
+      "id": "line.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "dff61c2a63bf50fe98222e9890dc521803ca876d02f0c29e883a634d100b956c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.line_style.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.line_style.null",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.line_style.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "a7085727be071840b5a879c5a7b8d5fb495a4224197537d4660bf92cce9c832f",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line.line_style.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "b554a9f19021bf7e46ff9106dc5d2f4f37cf9a82e1d41779f72103705f3c50db",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "f1bea9c80b3a1bf1db164e7486f1df0a7942de6052296b53a1ddd6524ddff548",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "f1bea9c80b3a1bf1db164e7486f1df0a7942de6052296b53a1ddd6524ddff548",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "a7085727be071840b5a879c5a7b8d5fb495a4224197537d4660bf92cce9c832f",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "66755ede56d5db2008b06f1cdbdef78c47ba03004cf8965395ca1945939bfca1",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter3d.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "476382c1dd9cbde0a6865779c15d5fc92053227d83a3fbacd3f262c17c132e2e",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter3d.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "476382c1dd9cbde0a6865779c15d5fc92053227d83a3fbacd3f262c17c132e2e",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter3d.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "30d007f84373d1f7f73d094cf16dc382d3a00bf07456b13af2690eae9c40ffe0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "scatter3d.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "8d2ff36ad4a397b35edbe86209dad499d049b4591d49c8bbeeff1b3c195201a1",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line3d.line_style.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "15c959b86d242ee67dd9a9342fedc80a59297d7056da33630cad7611a640531c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line3d.line_style.null",
+      "normalized_state_equal": true,
+      "png_sha256": "15c959b86d242ee67dd9a9342fedc80a59297d7056da33630cad7611a640531c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line3d.line_style.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "e4b92bea3346cec4db07c8974bc0297a98052b487a6be78808efcbbc1bb5f956",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "python",
+      "id": "line3d.line_style.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "bee063364a430204351b06804cabfaa52324435438f523365111fe633d5bb058",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "dff61c2a63bf50fe98222e9890dc521803ca876d02f0c29e883a634d100b956c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.line_style.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.line_style.null",
+      "normalized_state_equal": true,
+      "png_sha256": "da2f9b321d7728d5bd08a59ada9ef5504140303632b00a194dd06ebf801bacc0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.line_style.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "a7085727be071840b5a879c5a7b8d5fb495a4224197537d4660bf92cce9c832f",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line.line_style.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "b554a9f19021bf7e46ff9106dc5d2f4f37cf9a82e1d41779f72103705f3c50db",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "f1bea9c80b3a1bf1db164e7486f1df0a7942de6052296b53a1ddd6524ddff548",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "f1bea9c80b3a1bf1db164e7486f1df0a7942de6052296b53a1ddd6524ddff548",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "a7085727be071840b5a879c5a7b8d5fb495a4224197537d4660bf92cce9c832f",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "66755ede56d5db2008b06f1cdbdef78c47ba03004cf8965395ca1945939bfca1",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter3d.marker.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "476382c1dd9cbde0a6865779c15d5fc92053227d83a3fbacd3f262c17c132e2e",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter3d.marker.null",
+      "normalized_state_equal": true,
+      "png_sha256": "476382c1dd9cbde0a6865779c15d5fc92053227d83a3fbacd3f262c17c132e2e",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter3d.marker.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "30d007f84373d1f7f73d094cf16dc382d3a00bf07456b13af2690eae9c40ffe0",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "scatter3d.marker.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "8d2ff36ad4a397b35edbe86209dad499d049b4591d49c8bbeeff1b3c195201a1",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line3d.line_style.omitted",
+      "normalized_state_equal": true,
+      "png_sha256": "15c959b86d242ee67dd9a9342fedc80a59297d7056da33630cad7611a640531c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line3d.line_style.null",
+      "normalized_state_equal": true,
+      "png_sha256": "15c959b86d242ee67dd9a9342fedc80a59297d7056da33630cad7611a640531c",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line3d.line_style.empty",
+      "normalized_state_equal": true,
+      "png_sha256": "e4b92bea3346cec4db07c8974bc0297a98052b487a6be78808efcbbc1bb5f956",
+      "htmx_raw_json_path": true
+    },
+    {
+      "tool": "rust",
+      "id": "line3d.line_style.explicit",
+      "normalized_state_equal": true,
+      "png_sha256": "bee063364a430204351b06804cabfaa52324435438f523365111fe633d5bb058",
+      "htmx_raw_json_path": true
+    }
+  ],
+  "ui_scope": "ActualPython/RustrawJSONHTMX/open/spec.json/PNG40requests, not a real-browser click run or complete generated-control coverage. Five fresh module CLI render tests compare PNGs,20in-process CLI migrate calls exercise actual parser/I/O.",
+  "ui_result_sha256": "e5c361055c7a8c45000f18d70f742d32b79a48f2f90da6c4714701303e8af8fa",
+  "warnings": "Two current warnings are expected singleton pointplot intervals omitted; minimum15 includes13existingfloorwarnings. No warning filters changed.",
+  "qa_control_failures": "Initial type-stub assertions were corrected in tests; an HTML id=app assumption was wrong for Python inner app-body fragments, not a product failure. Correct endpoint/frame expectation and state/PNG equality then passed; owned server trees were stopped after each attempt. AST rule backend lacked ast-grep CLI; no package installed and exact-identifier search used.",
+  "limits": "JSON09 remainsRUNNINGforuncoverednullablefields/automaticvalues/UImeanings. Noall139field/release/allOS/currentwholeCI claim. ExistingKDE/ECDFrestrictedline-style validation unchanged.",
+  "checks": [
+    {
+      "name": "token-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_json_policies.py",
+        "tests/test_layers.py",
+        "tests/test_line_semantics.py",
+        "tests/test_scatter_semantics.py",
+        "tests/test_statistical_plots.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "266 passed, 2 warnings in 114.16s (0:01:54)"
+      ],
+      "log_text_sha256": "c4fa66ec7f7b951d5c675697cc9f9f4e81ae9d8e4dcbf2c23869cacd1b9772e1"
+    },
+    {
+      "name": "minimum-tokens",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "79 passed, 2858 deselected, 15 warnings in 50.34s"
+      ],
+      "log_text_sha256": "037a5da20df6b665568f8603cc8452538dd874ce51e6d58ce748c01fad485f2d"
+    },
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--check",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "clippy",
+      "argv": [
+        "cargo",
+        "clippy",
+        "--locked",
+        "--all-targets",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--",
+        "-D",
+        "warnings"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "1f6224240e6a02bdfc43ce2796336c1827c43adcce62c3577ca7a447aba00e56"
+    },
+    {
+      "name": "rust-tests",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 5.84s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_text_sha256": "b452737b450a8129821f5bbc39529e0b8d3c6d1a81b9d4b97db1ddc05c1afabc"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "223 files already formatted"
+      ],
+      "log_text_sha256": "1c0028d26b0eb2bbffd35e8f3ea2957a6a46019184711c82fa05404d700618f4"
+    },
+    {
+      "name": "pyright",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "9c8a8c619d0ad53cae89fcf0f2be701d26d7681da802678906f401f719fe51c8"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "8c6cfcf1c77951839b76382940690c6752485af1cca02ad9aa3a92af277e8263"
+    }
+  ],
+  "ui_logs_sha256": {
+    "python-compact.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "python-compact.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rust-compact.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "rust-compact.stdout": "114cc5fea15a7d4d283b33581eac12355925e8105d922ac534512b588af8dea6"
+  },
+  "baseline_ea1_ci": {
+    "run": 39125371498,
+    "head": "ea1e5d1b119b2e6190f17dad4b0a1b54657edb31",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.12)",
+        "id": 117669271366,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "id": 117669271500,
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "id": 117669271570,
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "id": 117669271588,
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "id": 117669271625,
+        "conclusion": "success"
+      }
+    ],
+    "scope": "Complete before current renderer-token fix; not retroactive current-source verification."
+  }
+}

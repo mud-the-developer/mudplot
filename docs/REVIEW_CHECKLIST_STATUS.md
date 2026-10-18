@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 30차 — 명시 빈 marker/style의 의미 보존
+
+- 로컬 증거: `C:\Users\mud\AppData\Local\Temp\mudplot-render-token-probe-r9gzppx_`,
+  [token 의미 대조](review_evidence/render_token_verification.json)를 보존합니다.
+- **FIND-029:** schema/JSON이 보존한 marker/line_style 빈문자열을 renderer가 자동값으로
+  바꾸던6artist case를 재현했습니다(동일 초기사례2개는 통과). 공통 renderer는 None만
+  fallback하고 명시 empty no-marker/no-line을 유지합니다. Non-line None의 자동 circle·
+  기존 marker size0/null/기존 layer별 지원 제한은 유지하며 새로운 public API는 없습니다.
+- 추가13artist case와 기존27size/null/zero 의미를 대조했습니다. Compact shared fixture는
+ 5layer/field×omitted/null/empty/explicit20case이며 schema/Python·실제 CLI migrate parser/
+  I/O·5fresh moduleCLI PNG render·Rust strict typed codec·Python 재로드를 확인했습니다.
+  양 editor rawJSON/HTMX open/spec/PNG40회가 직접 Python 결과와 같습니다. Omitted→
+  PythondefaultNone 정규화는 허용하지만 값/타입을 덮어쓰지 않습니다.
+- Fixture의 중복 full spec은134287→19307bytes로 줄이고 canonical equality20개를
+  확인한 뒤 compact input UI40회도 다시 통과했습니다. 모든139nullable field/자동값/
+  visual dropdown을 검증한 것은 아니므로 JSON-09는 RUNNING입니다.
+- 관련266통과/단일 관측 pointplot interval 경고2·최소79통과/2858deselected/경고15,
+  native lib21+main1통과/helper6ignored·Ruff223/format·Pyright·계약·packaging10명령이
+  exit0입니다. 새LSP3경로는1clean/2inconclusive이며 globalPyright0을 별도로 기록합니다.
+- 초기 잘못된 HTML id=app 가정은 Python inner app-body 계약을 읽고 수정한 QA 제어
+  실패이지 제품 결함이 아닙니다. AST rule backend 부재에 package를 설치하지 않았고
+  알려진 identifier 검색으로 caller를 확인했습니다. 소유 서버는 각 시도 뒤 정리했습니다.
+- 기준ea1CI39125371498은 이제5job 전부 성공했지만 새 renderer 수정 이전 결과입니다.
+  완료된 baseline을 더 기다리지 않고 로컬 성능 단위와 이번 수정을 함께 게시해 다음 CI를
+  받습니다. CI-01/JSON-09 상태와 버전/의존성/lock/tag/배포·loop1은 유지합니다.
+
 ## 29차 — 편집/직렬화/렌더 비용 측정·자손 정리 원격 확인
 
 - 실행: `uv run --no-sync python scripts/profile_state_costs.py`.
@@ -965,7 +991,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 ## 판정 범위와 다음 순서
 
 - 현재 상태: PASS 75, RUNNING 8, OPEN 66, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029를 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

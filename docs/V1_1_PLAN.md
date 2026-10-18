@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 30 keeps explicit empty render tokens distinct from auto/null.**
+FIND-029 reproduced6artist mismatches while schema/codecs kept the empty string.
+Shared renderer fallback now uses None, retaining supported no-marker/no-line
+values, numeric0 and existing automatic/default and layer-specific restrictions.
+The20representative renderable cases agree across schema/Python, CLI migration,
+5fresh CLI renders, typed Rust→Python and40rawJSON editor/HTMX state+PNG checks.
+This is not all139nullable fields/automatic values or every visual control; JSON-09
+stays RUNNING. Compact fixtures preserve meaning without duplicating full specs.
+
+Related266passes/2known singleton interval warnings, floor79passes/2858deselected/
+15warnings, native22passes/6helpers ignored and10quality/codec/package records pass.
+[Evidence](review_evidence/render_token_verification.json) and [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS75/RUNNING8/OPEN66/DEFERRED1**. Baselineea1CI39125371498 is ALL5SUCCESS before
+this renderer change, not its verification. Publish this with queued performance
+evidence and inspect a fresh run. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 29
+
 **Review phase 29 separates measured state/JSON/render costs.**
 Run `uv run --no-sync python scripts/profile_state_costs.py` for the bounded warm
 synthetic1k/10k/100k-row workload. Title dispatch medians are0.803/6.993/67.867ms;

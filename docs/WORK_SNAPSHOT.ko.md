@@ -22,11 +22,17 @@
 
 ## 검증과 리뷰 상태
 
+- 최신 renderer는 지원 빈 marker/style을 자동값으로 바꾸지 않습니다. 대표20case의
+  schema/Python/CLI/typedRust·양rawJSON editor40회가 일치했지만 다른 nullable 의미는
+  남아 JSON-09는 부분 검증입니다. 관련266·최소79·native22통과이며 기존0/default는 유지합니다.
+- 기준ea1CI39125371498은5job 모두 성공했습니다. 새 token 수정 이전 결과라 현재
+  원격 검증으로 소급하지 않고 대기 성능/fixture 단위와 함께 게시합니다.
+
 - 최신 bounded warm1천/1만/10만 행 측정은 core편집/JSON/render를 분리합니다. Title
   dispatch median0.803/6.993/67.867ms·별도 profile의 copy지배를 확인해 PERF-01/03은
   PASS입니다. 모든 hardware/latency 보장이 아니며 새script만 추가하고 core/alias 안전성은 유지합니다.
 - 정확한ea1의 Linux/Windows foreground 자손·MSRV가20/21통과(helper5/6ignored)해
-  RUST-04는 non-detached policy에서 PASS입니다. Full CI는 진행 중이라 새script/doc은 로컬 보존합니다.
+  RUST-04는 non-detached policy에서 PASS입니다. 앞선 게시 보류는 그 full CI 완료까지 유지했습니다.
 
 - 최신 foreground 자손 timeout은 보유 Windows tree/새Unix group·정리 도구2초 예산과
   정리 실패 진단을 유지합니다. Windows21통과/helper6ignored·정상 native bridge는
@@ -158,6 +164,8 @@
 - [성능 근거](review_evidence/performance_verification.json)에 단계별 median/p95/
   반복수·별도 Python 할당/profile 한계를 보존했습니다. [현재 원격 정리](review_evidence/remote_cleanup_verification.json)는
   양OS 정확한 소스/MSRV/control을 확인하되 전체job 완료로 확대하지 않습니다.
+- [Render-token 근거](review_evidence/render_token_verification.json)에 명시 정규화/
+  CLI/codec/rawUI 범위와 남은 전 필드 의미 격차를 보존했습니다.
 - [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS75/RUNNING8/OPEN66/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.

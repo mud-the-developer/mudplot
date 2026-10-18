@@ -216,6 +216,27 @@ mod tests {
     }
 
     #[test]
+    fn render_token_fixture_preserves_omission_null_empty_and_explicit_values() {
+        let fixture: Value = from_json_strict(include_str!(
+            "../../tests/fixtures/review_render_tokens.json"
+        ))
+        .unwrap();
+        let cases = fixture["cases"].as_array().unwrap();
+        assert_eq!(cases.len(), 20);
+        let mut restored = Vec::new();
+        for case in cases {
+            let original = &case["spec"];
+            let spec: FigureSpec = from_json_strict(&original.to_string()).unwrap();
+            let actual: Value = from_json_strict(&serde_json::to_string(&spec).unwrap()).unwrap();
+            assert_eq!(&actual, original, "token fixture {}", case["id"]);
+            restored.push(serde_json::json!({"id":case["id"],"spec":actual}));
+        }
+        if let Ok(path) = std::env::var("MUDPLOT_RENDER_TOKEN_CODEC_OUT") {
+            std::fs::write(path, serde_json::to_vec(&restored).unwrap()).unwrap();
+        }
+    }
+
+    #[test]
     fn figure_spec_round_trip_preserves_arbitrary_precision_json_integers() {
         let integer = "1234567890123456789012345678901234567890";
         let json = format!(r#"{{"version":"0.1","future_id":{integer}}}"#);

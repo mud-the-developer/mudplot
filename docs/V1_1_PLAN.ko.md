@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰 30차에서 명시 빈 render token을 auto/null과 구분했습니다.** FIND-029의
+6artist 불일치는 schema/codec이 유지한 빈문자열을 renderer가 fallback하던 문제입니다.
+이제 None만 자동값을 선택하고 지원 no-marker/no-line·기존0/default와 layer별 제한은
+유지합니다. 대표 renderable20case의 schema/Python·CLI migrate·5fresh CLI render·
+Rust typed→Python·rawJSON editor/HTMX state/PNG40회가 일치했습니다. 전체139nullable/
+자동값/visual control 검증은 아니므로 JSON-09는 RUNNING입니다.
+
+관련266통과/기지singleton interval 경고2·최소79통과/2858deselected/경고15·native22통과/
+helper6ignored·품질/codec/packaging10명령은 [근거](review_evidence/render_token_verification.json)에
+기록했습니다. [대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS75/RUNNING8/OPEN66/DEFERRED1**입니다.
+기준ea1CI39125371498은5job 모두 성공했지만 renderer 변경 이전이라 소급하지 않습니다.
+대기 성능 단위와 함께 게시해 새 CI를 받고 버전/의존성/lock/tag/배포는 유지합니다.
+
+### 이전 리뷰 29차
+
 **리뷰 29차에서 편집/JSON/렌더 비용을 실제로 분리했습니다.**
 `uv run --no-sync python scripts/profile_state_costs.py`는 synthetic1천/1만/10만 행의
 bounded warm workload입니다. Title dispatch median0.803/6.993/67.867ms,10만 행의

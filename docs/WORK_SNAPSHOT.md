@@ -28,13 +28,20 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest renderer keeps supported empty marker/style values rather than automatic
+  fallback.20representative cases agree across schema/Python/CLI/typedRust and
+  both rawJSON editors40times; JSON-09 remains partial for other nullable meanings.
+  Related266passes/floor79passes/native22passes are scoped; numeric0/defaults stay.
+- Baselineea1CI39125371498 is ALL5SUCCESS before this token fix. Publish the queued
+  performance/fixture changes, but don't call that baseline current-source proof.
+
 - Latest bounded warm1k/10k/100k-row cost profile separates core editing, JSON and
   render/save. Title dispatch medians0.803/6.993/67.867ms; measured copying dominates
   a separate instrumented profile, not a guarantee on all hardware. PERF-01/03 PASS.
   No core optimization/alias-safety reduction; only the reproducible script is new.
 - Exactea1Linux/Windows foreground descendant and currentMSRV checks passed20/21
   tests (5/6helpers ignored), so RUST-04 is PASS in its documented non-detached scope.
-  Full current CI remains active; hold this script/docs unit locally.
+  The earlier publication hold protected its full CI until that run completed.
 
 - Latest foreground descendant timeout now uses a held Windows tree/fresh Unix
   process group, bounded cleanup command and explicit cleanup-error diagnostics.
@@ -188,6 +195,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stage median/p95, repeat counts and separate Python allocation/profile caveats.
 - [Current remote cleanup](review_evidence/remote_cleanup_verification.json) checks
   exact source/MSRV/controlled cases on both OSes without all-job completion claims.
+- [Render-token evidence](review_evidence/render_token_verification.json) retains
+  explicit normalization, CLI/codec/rawUI scopes and the remaining all-field gap.
 - [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS75/RUNNING8/OPEN66/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 

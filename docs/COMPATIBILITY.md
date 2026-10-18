@@ -115,7 +115,11 @@ independent. A package release does not require a spec-version bump.
   explicit null is retained where nullable. `StatSpec.errorbar` defaults to `"ci"`
   and `LayerSpec.inner` to `"legacy"`, unlike explicit null. Explicit marker size0
   stays0 rather than becoming the automatic point size; omitted/null defaults stay
-  unchanged. The structural field table is not all-field UI/CLI/Rust parity approval.
+  unchanged. Where a layer accepts marker/line-style options, explicit `""` keeps
+  its no-marker/no-line meaning instead of selecting the automatic encoding; it is
+  not null. Layer-specific restricted styles (for example KDE/ECDF) still validate
+  their own supported choices. The structural field table is not all-field UI/CLI/
+  Rust parity approval; the20-case render-token fixture covers only its stated scope.
 - An omitted spec version uses the current embedded default in both Python and
   Rust; explicit null or malformed versions are not omissions.
 - Unknown spec versions fail explicitly. A future incompatible serialized

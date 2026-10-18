@@ -500,7 +500,7 @@ def _draw_series_layer(
             labels=labels,
             colors=colors,
             linewidth=layer.line_width or 0,
-            linestyle=layer.line_style or "solid",
+            linestyle="solid" if layer.line_style is None else layer.line_style,
             alpha=layer.alpha,
         )
         if use_redundant:
@@ -531,8 +531,15 @@ def _draw_series_layer(
     for series_i, (label, mask) in enumerate(masks):
         x = x_all[mask]
         y = y_all[mask]
-        marker = layer.marker or next(marker_cycle)
-        linestyle = layer.line_style or next(style_cycle)
+        marker = next(marker_cycle) if layer.marker is None else layer.marker
+        if layer.marker is None and layer.type in {
+            "scatter",
+            "regplot",
+            "stripplot",
+            "errorbar",
+        }:
+            marker = marker or "o"
+        linestyle = next(style_cycle) if layer.line_style is None else layer.line_style
         if layer.hue_order is not None and not np.any(np.isfinite(x) & np.isfinite(y)):
             if not layer.color:
                 next(color_iter)
@@ -592,7 +599,7 @@ def _draw_series_layer(
                 label=label,
                 color=color,
                 s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                marker=marker or "o",
+                marker=marker,
                 alpha=layer.alpha,
             )
             if config is None or not config.residual:
@@ -615,7 +622,7 @@ def _draw_series_layer(
                     norm=norm,
                     label=label,
                     s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                    marker=marker or "o",
+                    marker=marker,
                     alpha=layer.alpha,
                 )
             else:
@@ -626,7 +633,7 @@ def _draw_series_layer(
                     label=label,
                     color=color,
                     s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                    marker=marker or "o",
+                    marker=marker,
                     alpha=layer.alpha,
                 )
         elif layer.type == "stripplot":
@@ -638,7 +645,7 @@ def _draw_series_layer(
                 label=label,
                 color=color,
                 s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                marker=marker or "o",
+                marker=marker,
                 alpha=layer.alpha,
             )
         elif layer.type == "bar":
@@ -684,7 +691,7 @@ def _draw_series_layer(
                 label=label,
                 color=color,
                 ecolor=layer.error_color,
-                fmt=marker or "o",
+                fmt=marker,
                 markersize=4 if layer.marker_size is None else layer.marker_size,
                 linewidth=layer.line_width,
                 elinewidth=layer.error_line_width,
@@ -916,11 +923,17 @@ def _draw_stat_layer(
                 )
                 line_y.append(point.value)
                 previous = index
-            marker = layer.marker or (
-                theme.markers[i % len(theme.markers)] if redundant else "o"
+            marker = (
+                layer.marker
+                if layer.marker is not None
+                else (theme.markers[i % len(theme.markers)] if redundant else "o")
             )
-            style = layer.line_style or (
-                theme.line_styles[i % len(theme.line_styles)] if redundant else "-"
+            style = (
+                layer.line_style
+                if layer.line_style is not None
+                else (
+                    theme.line_styles[i % len(theme.line_styles)] if redundant else "-"
+                )
             )
             coordinates = (line_y, line_x) if horizontal else (line_x, line_y)
             target.plot(
@@ -1063,7 +1076,7 @@ def _letter_value_artists(ax, values, positions, width, layer):
             vertices,
             edgecolors=edge,
             linewidths=stroke,
-            linestyles=layer.line_style or "-",
+            linestyles="-" if layer.line_style is None else layer.line_style,
         )
         ax.add_collection(body)
         bodies.append(body)
@@ -1076,7 +1089,7 @@ def _letter_value_artists(ax, values, positions, width, layer):
                 y,
                 color=edge,
                 linewidth=stroke,
-                linestyle=layer.line_style or "-",
+                linestyle="-" if layer.line_style is None else layer.line_style,
                 alpha=layer.alpha,
                 solid_capstyle="butt",
             )
@@ -1091,7 +1104,7 @@ def _letter_value_artists(ax, values, positions, width, layer):
                 y,
                 linestyle="none",
                 color=edge,
-                marker=layer.marker or "d",
+                marker="d" if layer.marker is None else layer.marker,
                 markersize=3 if layer.marker_size is None else layer.marker_size,
                 markerfacecolor="none",
                 markeredgewidth=stroke,
@@ -1626,7 +1639,7 @@ def _draw_ecdf_layer(ax, columns, layer: LayerSpec, color_iter, theme):
             drawstyle="steps-post" if layer.orient == "v" else "steps-pre",
             label=label,
             color=color,
-            linestyle=layer.line_style or style,
+            linestyle=style if layer.line_style is None else layer.line_style,
             linewidth=layer.line_width,
             alpha=layer.alpha,
         )
@@ -1775,7 +1788,9 @@ def _draw_kde_layer(ax, columns, layer: LayerSpec, color_iter, theme):
                 alpha=layer.alpha,
                 edgecolor=layer.edge_color or color,
                 linewidth=layer.line_width,
-                linestyle="-" if layer.line_width == 0 else layer.line_style or style,
+                linestyle="-"
+                if layer.line_width == 0
+                else (style if layer.line_style is None else layer.line_style),
                 hatch=hatch,
                 label=label,
             )
@@ -1792,7 +1807,7 @@ def _draw_kde_layer(ax, columns, layer: LayerSpec, color_iter, theme):
                 alpha=layer.alpha,
                 label=label,
                 linewidth=layer.line_width,
-                linestyle=layer.line_style or style,
+                linestyle=style if layer.line_style is None else layer.line_style,
             )
             if layer.line_width == 0:
                 line.set_visible(False)  # all-zero dashes are invalid in Matplotlib3.8
@@ -1843,7 +1858,11 @@ def _draw_kde2d_layer(ax, columns, layer: LayerSpec, color_iter, theme):
             )
         )
         density = np.asarray(field.density)
-        linestyle = "-" if layer.line_width == 0 else layer.line_style or style
+        linestyle = (
+            "-"
+            if layer.line_width == 0
+            else (style if layer.line_style is None else layer.line_style)
+        )
         if config.fill:
             rgb = to_rgb(color)
             amounts = np.linspace(0.65, 0.1, len(field.thresholds))
@@ -1950,14 +1969,18 @@ def _draw_dist_layer(ax, data_cols, layer: LayerSpec, color_iter, theme):
                 label=label,
                 color=layer.color or next(color_iter),
                 linewidth=layer.line_width,
-                linestyle=layer.line_style or next(style_cycle),
+                linestyle=next(style_cycle)
+                if layer.line_style is None
+                else layer.line_style,
                 alpha=layer.alpha,
             )
     elif layer.type == "rug":
         for label, mask in masks:
             values = _col(data_cols, layer.x)[mask]
             color = layer.color or next(color_iter)
-            linestyle = layer.line_style or next(style_cycle)
+            linestyle = (
+                next(style_cycle) if layer.line_style is None else layer.line_style
+            )
             if layer.hue_order is not None and not np.isfinite(values).any():
                 continue
             ax.vlines(
@@ -2036,7 +2059,7 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
             layer.value,
             label=layer.label,
             color=color,
-            linestyle=layer.line_style or "--",
+            linestyle="--" if layer.line_style is None else layer.line_style,
             linewidth=layer.line_width,
             alpha=layer.alpha,
         )
@@ -2045,7 +2068,7 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
             layer.value,
             label=layer.label,
             color=color,
-            linestyle=layer.line_style or "--",
+            linestyle="--" if layer.line_style is None else layer.line_style,
             linewidth=layer.line_width,
             alpha=layer.alpha,
         )
@@ -2095,7 +2118,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                         norm=norm,
                         label=label,
                         s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                        marker=layer.marker or "o",
+                        marker="o" if layer.marker is None else layer.marker,
                         alpha=layer.alpha,
                     )
                 else:
@@ -2107,7 +2130,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                         label=label,
                         color=color,
                         s=(6 if layer.marker_size is None else layer.marker_size) ** 2,
-                        marker=layer.marker or "o",
+                        marker="o" if layer.marker is None else layer.marker,
                         alpha=layer.alpha,
                     )
             else:  # line3d
@@ -2119,7 +2142,7 @@ def _draw_3d_layer(ax, spec: FigureSpec, layer: LayerSpec, color_iter):
                     label=label,
                     color=color,
                     linewidth=layer.line_width,
-                    linestyle=layer.line_style or "-",
+                    linestyle="-" if layer.line_style is None else layer.line_style,
                     marker=layer.marker,
                     markersize=layer.marker_size,
                     alpha=layer.alpha,
