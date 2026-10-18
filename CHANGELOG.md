@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified quiver data-space tips, asymmetric 3D/polar coordinates and continuous
+  scalar guide/mask/domain behavior, preserving typed heatmap null rejection and
+  numeric hue legend mapping rather than inventing new supported controls.
 - Documented synthetic fixture/evidence separation and current contract-conflict
   decisions with hashed input inventory and scoped masking review, without
   presenting targeted scans as a complete secret/privacy certificate.

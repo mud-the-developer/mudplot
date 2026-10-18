@@ -1,0 +1,167 @@
+{
+  "source_sha256": {
+    "tests/test_review_projection_colours.py": "8268439d6b7d3776f2fb04d8b677007138a332396122bc57d354d463c1828384",
+    "scripts/check_minimum_versions.py": "6e3029b2436f64ac7532f8c11ad1bdf39c5a9b92989e60dd9bcf321753cfb1f3",
+    "mudplot/_render.py": "7153a2c8512e634ccf42a11db023a56f9240e0ec8d3cf08cff86cdc99b770bdb",
+    "mudplot/_semantics.py": "79b3c88d44a538ebfb276ae112cbbf9f74dcaedf3af0e14d7ad891883a1f4d02",
+    "mudplot/validate.py": "167a91cd4a9ca9bbc25be9173298868118cac912a9e76017dfda37ec0ddf389d",
+    "mudplot/api.py": "0ffdd08d9288b8fb76a1afb02845971152cc896aef7de7d038182ce311eed5dd"
+  },
+  "cases_passed": [
+    "test_quiver_tip_is_data_vector_under_unequal_axis_units[2.0-0.0]",
+    "test_quiver_tip_is_data_vector_under_unequal_axis_units[0.0-1.0]",
+    "test_quiver_tip_is_data_vector_under_unequal_axis_units[2.0-1.0]",
+    "test_3d_line_and_scatter_preserve_asymmetric_xyz",
+    "test_polar_radians_have_expected_cardinal_positions_without_data_rewrite",
+    "test_incompatible_projection_is_rejected_without_silent_cartesian_fallback",
+    "test_heatmap_domains_map_outside_missing_without_panel_leak",
+    "test_numeric_semantic_hue_bounds_are_mapping_not_row_selection",
+    "test_typed_heatmap_null_is_explicitly_rejected_not_silently_imputed",
+    "test_native_scatter_color_domain_missing_and_constants_are_finite[values0]",
+    "test_native_scatter_color_domain_missing_and_constants_are_finite[values1]",
+    "test_native_scatter_color_domain_missing_and_constants_are_finite[values2]"
+  ],
+  "independent_expectations": {
+    "quiver": "Explicitscale1,width.005,6x3in,xlim0..4/ylim0..2. Threeaxis/diagonal vectors atdata(1,.5),actualpolygon tipvsindependenttransData(x+u,y+v)1e-5displaypx;anglesxy/scaleunitsxy.SpecJSONunchanged.",
+    "xyz": "Nonmonotonicasymmetricx[1,7,3]/y[11,5,2]/z[19,23,13],line/scatteractualxyzretained.Matrixx/y/transposeexistingnumericgeometry/newlayerschecksreexecuted.",
+    "polar": "Radian0/pi2/piunitrhaveeast/north/westpositions,rawangles/specunchanged;unsupportedpolarhistogramValueErrornotfallback.",
+    "colour": "Twoindependentexplicitvmin/vmaxheatmaps0..10/-10..20withfinitesentinel999EXPLICITLYmasked;guideclimmappable/axisdomain/normalizedRGBAendpoints. Typednullrejected,notimputed. Legacyscattercconstant/allmissing/mixedmissingmask/finiteguide. Numericsemanticshue_norm0..10retainall5rowsincloutliers-5/20,saturateendpoints,legendguidemapping0/5/10\u2014notcolorbarorsubset."
+  },
+  "limits": "Currentpublicsupportedquiver/3D/polar/legacy-c/typedheatmap/semantichuecombinationcorpusonly\u2014notallperspectivehardwareviewers,unsupportedpolarstatlayersorallcontinuousscaleoptions. Legacycusesautonorm;explicitboundsbelongtotypedheatmap/semantics. No new schema/API fields/changeddefaultprojection/forcecolours.",
+  "qa_note": "InitialtypedheatmapNonefixturewasinvalidbycontract;changedvalidmaskfixturetofinitesentinel999+explicitmaskandaddedexplicitNullrejection. Initialsemantichueguideassumedcolorbar;actualpubliccontractisnumericlegendmapping. BothQAassumptionscorrectednotproductbugs. Typedarrays/accessorusagecorrectedwithoutAny/cast/ignore.",
+  "checks": [
+    {
+      "name": "projection-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_projection_colours.py",
+        "tests/test_new_layers.py",
+        "tests/test_review_numeric_geometry.py",
+        "tests/test_heatmap_options.py",
+        "tests/test_scatter_semantics.py",
+        "tests/test_shared_semantics.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "229 passed in 85.53s (0:01:25)"
+      ],
+      "log_text_sha256": "b844a55ff998477fdff6efaa6db3e0440d9d9cb3fec30c52319e286d1be5d423"
+    },
+    {
+      "name": "floor-projection",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "12 passed, 3056 deselected, 13 warnings in 7.66s"
+      ],
+      "log_text_sha256": "7ac78945db13ff72a68fea2501ac7b03c976496171e768f0b80161fe2e80e9fb"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "240 files already formatted"
+      ],
+      "log_text_sha256": "2686ad2c23730d07ee8f661a496791cb76e15c4728d6cb31127106dc2a84852d"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "fd5daaee6519c0e42c7766fd775d5e3773d0845bda6b3f27444b849ae3996b97"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "77470de3da7270223db61ef40aff5ece82862eaa36b8c6fa0cb9266b02d770e2"
+    }
+  ],
+  "junit_sha256": "7f4eb7966c1842aa86a66433e1af2e43f5a31155953c30c6278f74549d673f91"
+}

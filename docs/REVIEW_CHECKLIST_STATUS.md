@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 47차 — projection좌표와연속색상guide의실제의미
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-projection-colours-ciamlju_`와
+  [독립좌표/색상기대값·회귀](review_evidence/projection_colour_verification.json)을 보존합니다.
+- Quiver명시scale1/width.005와비대칭6×3inch·x0..4/y0..2에서세axis/diagonal벡터의
+  실제polygon끝을independenttransData(x+u,y+v)와1e-5displaypixel이내로대조했습니다.
+  3Dline/scatter의비단조x[1,7,3]/y[11,5,2]/z[19,23,13]와polar0/π2/π의동/북/서가
+  원자료를유지합니다. 비정방matrix/mesh는기존numericgeometry/newlayers도현재재실행했습니다.
+  미지원polarhist는fallback없이ValueError입니다.
+- 독립2panelheatmap의explicitvmin/vmax0..10/-10..20·mask·RGBA포화끝·각colorbarmappable/
+  label/domain을검사했습니다. TypedmatrixNone은기존finite계약상거절되고mask용유효999는
+  그리지않습니다. Legacyc의constant/allmissing/mixedmissing은mask와유한guide를유지합니다.
+- Numerichue_norm은-5/20범위밖행도보존하고끝색을포화시키며guide0/5/10을만듭니다.
+  이guide는colorbar가아닌명시numericlegend입니다. 초기typednull/semanticcolorbar라는QA
+  가정은유효mask·명시null거절·실제legend계약으로고쳤으며제품오류로세지않습니다.
+- 새12/관련229통과·실제floor12통과/3056deselected/경고13·양platformtype/Ruff240/
+  계약/packaging8명령exit0·변경2경로LSP clean입니다. PLOT-07/08은현재지원조합corpus에서
+  PASS이지모든projectionviewer나미지원scaleoption인증은아닙니다. Legacyc자동norm과
+  typedheatmap/semantics의명시범위를구분하며새API/schemafield는추가하지않았습니다.
+- 기준b777CI39159051900의4job은성공·3.10은sitebuild진행중이라대기준비감사와함께
+  로컬보존합니다. Productruntime/버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 46차 — fixture/evidence분리와계약결정기록
 
 - [준비감사표](REVIEW_PREPARATION.md)와 [inventory/검사](review_evidence/preparation_audit_verification.json),
@@ -1238,8 +1260,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PLOT-04 | P0 | PASS | 보조 y축 소속과 스케일 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-05 | P1 | OPEN | shared axes와 독립 설정 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-06 | P0 | PASS | heatmap·surface 행렬 방향 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-07 | P1 | OPEN | quiver·3D·polar의 좌표 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-08 | P1 | OPEN | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-07 | P1 | PASS | quiver·3D·polar의 좌표 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-08 | P1 | PASS | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-09 | P1 | OPEN | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-10 | P1 | OPEN | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-11 | P1 | OPEN | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
@@ -1340,7 +1362,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 101, RUNNING 5, OPEN 43, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 103, RUNNING 5, OPEN 41, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

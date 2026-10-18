@@ -49,6 +49,7 @@ TESTS = (
     "tests/test_review_palette_reports.py",
     "tests/test_review_redundant_encoding.py",
     "tests/test_review_numeric_geometry.py",
+    "tests/test_review_projection_colours.py",
     "tests/test_review_export_determinism.py",
     "tests/test_layers.py",
     "tests/test_layout.py",

@@ -22,6 +22,10 @@
 
 ## 검증과 리뷰 상태
 
+- 최신quiver/3D/polardata좌표와scalardomain/mask/colorbar·numericlegend검사는관련229/
+  floor12가통과해PLOT-07/08이현재지원조합PASS입니다. 새API/schema/runtime없이기준b777
+  4성공/마지막sitebuild진행을보호해준비감사+projection단위를로컬보존합니다.
+
 - 최신준비inventory는5synthetic입력/42공유JSON결과snapshot/private로그를분리하고제한된
   scan한계를명시합니다. 계약충돌표는기존선택/이유이지새승인이아닙니다. 기존313/품질7이
   통과해BASE-06/07은범위내PASS이며보편privacy인증은아닙니다. BASE-05는남기고b777CI중문서는로컬보존합니다.
@@ -277,7 +281,9 @@
   checker실패/복구·registrycoverage를보존했습니다.
 - [Review준비](REVIEW_PREPARATION.md)와 [inventory](review_evidence/preparation_audit_verification.json)에
   fixtureconsumer/evidence범위/계약결정을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS101/RUNNING5/OPEN43/DEFERRED1**.
+- [Projection/colour 근거](review_evidence/projection_colour_verification.json)에
+  독립좌표/명시범위/미지원경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS103/RUNNING5/OPEN41/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

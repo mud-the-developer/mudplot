@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 47 checks projection coordinates and scalar guide meanings.**
+Quiver polygon tips match independent data transforms under unequal axis units;
+nonmonotonic3D xyz and polar radian cardinal positions retain data. Existing mesh/
+transpose controls rerun. Explicit heatmap domains/masks/RGBA/colourbar relations
+and legacy-c constants/missing data pass; typed null is rejected, not imputed.
+Numeric semantic hue bounds keep out-of-range rows and use a mapping legend,
+not a fabricated colourbar or row selection.
+
+Related229/floor12passes/3056deselected/13warnings and8quality/package records pass.
+PLOT-07/08 are PASS for currently supported combinations, not every projection/
+scale option. [Evidence](review_evidence/projection_colour_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS103/RUNNING5/OPEN41/DEFERRED1**.
+Runtime/API/schema are unchanged. Baselineb777CI has4success/last3.10sitebuild
+running; keep this unit and preparation docs local until it completes.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 46
+
 **Review phase 46 inventories synthetic inputs and records contract decisions.**
 Five review fixtures and42shared JSON snapshots have provenance/hash/size and
 input-vs-result scope. Targeted profile-path/private-key/token checks have no hits,

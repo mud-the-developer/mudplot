@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰47차에서projection좌표와scalar의미를확인했습니다.** 비대칭축quiverpolygon끝과
+독립data변환·비단조3Dxyz·polar방위가일치하며mesh/전치대조도재실행했습니다. Heatmap명시
+범위/mask/RGBA/colorbar와legacyc상수/결측이맞고typednull은기존계약대로거절됩니다.
+Numerichuebounds는범위밖행도보존하며색상mappinglegend이지임의colorbar/행선택이아닙니다.
+
+관련229/floor12통과/3056deselected/경고13·품질8명령으로PLOT-07/08은현재지원조합PASS이며
+모든projection/scaleoption인증은아닙니다. [근거](review_evidence/projection_colour_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS103/RUNNING5/OPEN41/DEFERRED1**입니다.
+Runtime/API/schema변경없이기준b777CI4성공/3.10sitebuild진행을보호해두unit은로컬보존하고
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰46차
+
 **리뷰46차에서synthetic입력과계약결정을정리했습니다.** Reviewfixture5개와공유JSON42개
 snapshot의hash/size/provenance/입력·결과구분을보존했고제한된profilepath/privatekey/token
 검사는0hit이지만보편privacy인증은아닙니다. RawTemp로그/환경은비공유하고seed/consumer를연결했습니다.

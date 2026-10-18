@@ -28,6 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest quiver/3D/polar data-space checks and scalar domains/masks/colourbar or
+  numeric-legend checks pass229related/floor12cases. PLOT-07/08 are PASS for
+  supported combinations without new API/schema/runtime behavior. Baselineb777
+  has4success/lastsitebuildrunning; preparation+projection units stay local.
+
 - Latest preparation inventory separates5synthetic inputs from42shared JSON result
   snapshots and private raw logs, with explicit targeted-scan limitations. A conflict
   table records preserved contracts/rationale without new approval.313existing
@@ -335,7 +340,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains real checker failure/recovery and registry coverage.
 - [Review preparation](REVIEW_PREPARATION.md) and [inventory](review_evidence/preparation_audit_verification.json)
   retain fixture consumers, evidence boundaries and contract conflict decisions.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS101/RUNNING5/OPEN43/
+- [Projection/colour evidence](review_evidence/projection_colour_verification.json)
+  retains independent coordinates, explicit domains and unsupported-case boundaries.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS103/RUNNING5/OPEN41/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
