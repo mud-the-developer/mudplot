@@ -1,0 +1,490 @@
+{
+  "source_sha256": {
+    "mudplot/_render.py": "837472d8cc909bbff624ba36e05850a45a00f1541617e0221ebbbe821733461c",
+    "tests/test_review_annotation_alpha.py": "f755165eb37cf8d7eb288a8e25a6f3f06947020c14aac6c34c91fbd1d131a42f",
+    "scripts/check_minimum_versions.py": "924153bb9e9dd4fde25454c9cfac733ce4f03f43543266073d1c342d536059e7"
+  },
+  "cases_passed": [
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[False-False-0.0]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[False-False-0.35]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[False-True-0.0]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[False-True-0.35]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[True-False-0.0]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[True-False-0.35]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[True-True-0.0]",
+    "test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis[True-True-0.35]",
+    "test_alpha_zero_adds_no_pixels_to_matching_base_figure[False]",
+    "test_alpha_zero_adds_no_pixels_to_matching_base_figure[True]",
+    "test_default_annotation_stays_opaque_and_svg_has_both_explicit_opacities",
+    "test_default_annotation_preserves_legacy_rgba_colour_opacity"
+  ],
+  "manual_reference": {
+    "bars": [
+      {
+        "indices": [
+          0,
+          1,
+          2
+        ],
+        "centers": [
+          -0.19999999999999998,
+          0.8,
+          -0.19999999999999998
+        ],
+        "widths": [
+          0.36800000000000005,
+          0.36800000000000005,
+          0.36800000000000005
+        ],
+        "heights": [
+          -2.0,
+          0.0,
+          3.0
+        ],
+        "error_segments": [
+          [
+            [
+              -0.19999999999999998,
+              -2.6
+            ],
+            [
+              -0.19999999999999998,
+              -1.7
+            ]
+          ],
+          [
+            [
+              0.8,
+              -0.2
+            ],
+            [
+              0.8,
+              0.5
+            ]
+          ],
+          [
+            [
+              -0.19999999999999998,
+              2.1
+            ],
+            [
+              -0.19999999999999998,
+              4.2
+            ]
+          ]
+        ]
+      },
+      {
+        "indices": [
+          3,
+          4
+        ],
+        "centers": [
+          0.2,
+          2.2
+        ],
+        "widths": [
+          0.36800000000000005,
+          0.36800000000000005
+        ],
+        "heights": [
+          4.0,
+          -1.0
+        ],
+        "error_segments": [
+          [
+            [
+              0.2,
+              3.5
+            ],
+            [
+              0.2,
+              4.9
+            ]
+          ],
+          [
+            [
+              2.2,
+              -1.4
+            ],
+            [
+              2.2,
+              -0.09999999999999998
+            ]
+          ]
+        ]
+      }
+    ],
+    "errorbar_horizontal": [
+      [
+        [
+          1.9,
+          4.0
+        ],
+        [
+          2.1,
+          4.0
+        ]
+      ],
+      [
+        [
+          -0.2,
+          -1.0
+        ],
+        [
+          0.2,
+          -1.0
+        ]
+      ],
+      [
+        [
+          1.7,
+          5.0
+        ],
+        [
+          2.3,
+          5.0
+        ]
+      ]
+    ],
+    "errorbar_vertical": [
+      [
+        [
+          2.0,
+          3.0
+        ],
+        [
+          2.0,
+          4.5
+        ]
+      ],
+      [
+        [
+          0.0,
+          -1.2
+        ],
+        [
+          0.0,
+          -0.5
+        ]
+      ],
+      [
+        [
+          2.0,
+          4.8
+        ],
+        [
+          2.0,
+          6.0
+        ]
+      ]
+    ],
+    "stack": [
+      {
+        "group": 0,
+        "manual_lower": [
+          0,
+          0,
+          0
+        ],
+        "manual_upper": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "group": 1,
+        "manual_lower": [
+          1,
+          2,
+          3
+        ],
+        "manual_upper": [
+          5,
+          1,
+          5
+        ]
+      },
+      {
+        "group": 2,
+        "manual_lower": [
+          5,
+          1,
+          5
+        ],
+        "manual_upper": [
+          3,
+          4,
+          6
+        ]
+      }
+    ],
+    "band_input": {
+      "x": [
+        2,
+        0,
+        1,
+        1
+      ],
+      "lo": [
+        1,
+        -1,
+        0,
+        0.5
+      ],
+      "hi": [
+        3,
+        1,
+        2,
+        1.5
+      ]
+    },
+    "artist_properties": [
+      {
+        "kind": "line",
+        "alpha": 0.6,
+        "zorder": 2,
+        "clip_on": true,
+        "visible": true
+      },
+      {
+        "kind": "scatter",
+        "alpha": 0.5,
+        "zorder": 1,
+        "clip_on": true,
+        "visible": true
+      },
+      {
+        "kind": "band",
+        "alpha": 0.35,
+        "zorder": 1,
+        "clip_on": true,
+        "visible": true
+      },
+      {
+        "kind": "text",
+        "alpha": 0.4,
+        "zorder": 3,
+        "clip_on": false,
+        "visible": true
+      },
+      {
+        "kind": "annotate",
+        "alpha": 0.35,
+        "zorder": 3,
+        "clip_on": true,
+        "visible": true
+      }
+    ],
+    "annotation_zero_pixels": {
+      "before_changed_channels": 9967,
+      "after_changed_channels": 0
+    },
+    "image_sha256": {
+      "reference": "6a58bed5a1a17043ce0db83aa5ee7c17b53e423ce0965303cc5734b4d9ad6859",
+      "before": "c97156136242aa1b275572e560a3369cf12868c5b5cd6e00ba5f0d66cb5fe238",
+      "after": "6a58bed5a1a17043ce0db83aa5ee7c17b53e423ce0965303cc5734b4d9ad6859",
+      "comparison": "8cc69ebda9291f95a14f94159f7ff1eccb759f6bcf8e452f6f26724793a7afbf"
+    }
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "_draw_marker_layerannotatevalidated/storedalpha,butpassedneithertoTextnorarrowprops,soalpha0remainedvisible. Onlythatcommonbranchfixed;primary/y2andarrow/noarrowsharepath. Nondefaultalphaoverrideappliesboth;default1keepslegacyRGBAcolouropacity(Noneartistalpha),notnewdefaultstyle.",
+  "bar_band_stack_policy": "Manualsigned/zero/dodgedunbalanced/duplicatedcategoriesandabsoluteCIsegmentsremainpaired. Nativezero-baselinestackplotsignedarithmeticboundaries0\u2192[1,2,3]\u2192[5,1,5]\u2192[3,4,6],notinventeddivergingstackbarpolicy. Unsorted/duplicatebandpreservesrawpairedboundaryedges,notautosorted. Errorbarbothx/yasymdirectionsretained. Existinginvalidlength/negativeerror/overflowvalidatorsrerun.",
+  "overlap_policy": "Nativeartistzorderretained(line2,scatter/band1,text/annotation3);equal-orderinsertion/nativecross-typeprioritynotredefinedbynewzorderoption. Clipsline/scatter/band/annotateTrue,textFalseinmanualtable;outsideartiststillpresent,notdropped. No newclip/zorderfields/unknownJSONpolicy. Legacybanddefaultalpha.25whenfield1retained.",
+  "golden": {
+    "path": "annotation_alpha.png",
+    "sha256": "8cc69ebda9291f95a14f94159f7ff1eccb759f6bcf8e452f6f26724793a7afbf",
+    "scope": "Resizedsynthetic3panecomparison:referencewithoutannotation/parentb8alpha0ignored/fixedalpha0pixelidenticalreference. ParentONLYmarkerfunctionextractedASTcompiledinprivateprocessandtemporarilyspied;notrepo rollback. Notacrossenvironmentfont/printergolden."
+  },
+  "limits": "PLOT09/12currentbar/stack/band/error/alpha/nativeoverlapclipcorpusonly. AnnotationcoordinatebrowserdragPLOT11remainseparate;notnewaxes/figureannotationAPIorallrendercontrolparity. NewruntimefixneedsfreshwholeCIaftercompletedbaseline.",
+  "qa_note": "Beforefixall11initialnewcasesfailed;12thlegacyRGBAcompatibilitycaseaddedafterwardandall12passfinal. TypedAggcanvasassertsaddedinsteadofAny/casts. InitialprivateprobeassumedannotationclipFalse;actualnativeTruecapturedwithoutchangingenginepolicy. Guessedtest_stackplot/AnnotationSpecsymbolnavigationerrorsnotproductbugs.",
+  "environment_overrides": {
+    "manual": {
+      "PYTHONPATH": "<workspace-root>",
+      "MPLBACKEND": "Agg"
+    },
+    "floor-annotation": {
+      "PYTEST_ADDOPTS": "-k \"test_review_annotation_alpha\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "manual",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Bar/stack/unsorted-band/errors, native zorder/alpha/clip and alpha0 before-after pixel proof pass"
+      ],
+      "log_text_sha256": "b3f60bb96e1a864db62492e7e380e52219b3822d4741f3534e40a0f3613e8707"
+    },
+    {
+      "name": "overlay-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_annotation_alpha.py",
+        "tests/test_bar_uncertainty.py",
+        "tests/test_new_layers.py",
+        "tests/test_layers.py",
+        "tests/test_review_numeric_geometry.py",
+        "tests/test_references.py",
+        "tests/test_review_string_boundaries.py",
+        "tests/test_visual_quality.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "245 passed in 113.13s (0:01:53)"
+      ],
+      "log_text_sha256": "7be4c95af23749948f5437210af9f6c46e3165f6db1a9fa1016b77b8f99f3350"
+    },
+    {
+      "name": "floor-annotation",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "12 passed, 3087 deselected, 13 warnings in 9.76s"
+      ],
+      "log_text_sha256": "71ec607a1b97cfd639cfaaaf71ae796accba89575145463347871177e555fd10"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "242 files already formatted"
+      ],
+      "log_text_sha256": "999a839c35dc03f3f34663ba68a8a3ed1913c9e7c466b22b04a16eb263bb9eec"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "fb477ab4bd6303713d4b5f2a29ed72cf6f0a45359061c0730b6cd1a2a77e55aa"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "bf57cc6efb2a0531f54b0b1e6774f2b5c17bb8a148d143350cf029ad8e2b4e5c"
+    }
+  ],
+  "raw_probe_sha256": {
+    "manual_reference.json": "5f99a30b7e387e2ad16f598fb4245cfbe7726a4179215770665ca9f23e38a4d4",
+    "probe.py": "54d1c7da9504ba8a88c88a1f974b1ae2828d593f0ab159ab58c0bf7295ce4799",
+    "qa.py": "c2ef76ca469c554b2cb68c88c41ba548783f21f743734ed870c8c590c1cb3d00",
+    "environment_overrides.json": "3f216febab3caa041b518cfa92f75380d09d82cefb43b74ac748bec9e634d0c0",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "9d7161dbd41fa518a96d8acd9104c3ea53540034d1a054e4d8ac2ec191be4022",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

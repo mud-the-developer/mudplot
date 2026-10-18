@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-038 fixes ignored annotation text+arrow opacity in one shared
+  branch, preserving default RGBA/native clipping/z-order. Manual overlay values
+  and zero-alpha pixels agree:245related/floor12passes, activeLSP3clean. PLOT-09/12
+  are PASS in scope; PLOT-11drag/coordinates remain separate. Runtime effect stays
+  local duringb8CI(Rust/minsuccess,twoPytestrunning); priorCI is not alpha-fix proof.
+
 - Latest shared/log checks verify9axis tables/3conflicts and supported domain
   policies:214selected/floor214passes.1841Pyparsing and2MPL3.8image warnings are
   distinguished; pixel/strict-warning probes preserve RGB/data/previous output.
@@ -390,7 +396,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains original indices, required-role columns, exact means and rejection policies.
 - [Axis-domain evidence](review_evidence/axis_domain_verification.json)
   retains per-panel settings, log outcomes and the actual backend warning limit.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS111/RUNNING5/OPEN33/
+- [Overlay/alpha evidence](review_evidence/overlay_alpha_verification.json) and
+  [limited comparison](review_evidence/annotation_alpha.png) retain actual pixel/style boundaries.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS113/RUNNING5/OPEN31/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

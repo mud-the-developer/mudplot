@@ -2115,12 +2115,17 @@ def _draw_marker_layer(ax, ax2, layer: LayerSpec, color_iter):
         artist.set_in_layout(False)
     elif layer.type == "annotate":
         assert layer.at is not None
+        # Preserve default RGBA colour opacity; non-default alpha overrides both parts.
+        alpha = None if layer.alpha == 1 else layer.alpha
         artist = target.annotate(
             layer.text or "",
             xy=tuple(layer.to or layer.at),
             xytext=tuple(layer.at),
             color=color,
-            arrowprops={"arrowstyle": "->", "color": color} if layer.to else None,
+            alpha=alpha,
+            arrowprops={"arrowstyle": "->", "color": color, "alpha": alpha}
+            if layer.to
+            else None,
         )
         artist.set_in_layout(False)
     else:

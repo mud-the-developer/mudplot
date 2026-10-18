@@ -88,6 +88,20 @@ raw values remain unchanged. Warnings-as-errors aborts export, retaining previou
 bytes and cleaning owned resources. This is a documented backend warning, not a
 blanket suppression, colour-data rewrite or all-extreme-range rendering promise.
 
+## Overlays and annotation opacity
+
+Raw bands keep boundary row order, including duplicate or unsorted x; no automatic
+sorting/aggregation is implied. Grouped bars retain each observed signed value and
+uncertainty at its dodged center; stackplot uses its native zero-baseline signed
+cumulative definition. Existing length/error-domain validation stays explicit.
+
+Annotation non-default alpha applies to both text and arrow on the selected axis.
+Default alpha1 retains legacy opacity embedded in RGBA colours. Native artist
+z-orders/clip policies remain: line2, point/band1, text/annotation3; cross-type
+priority is not a new layer-order override. An off-axis or fully transparent
+artist can exist without adding visible pixels. No new public zorder/clip option
+or axes/figure-coordinate annotation mode is introduced here.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside

@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 54 fixes ignored annotation alpha and checks overlay geometry.**
+FIND-038 passed valid alpha through neither Text nor arrow;11initial regressions
+failed before the shared branch fix. Non-default opacity now reaches both parts,
+including y2; default RGBA colour opacity/native clip/z-order remain unchanged.
+Twelve final regressions cover SVG/pixels/styles; alpha0changed9967channels before
+and0after versus a matching no-annotation reference.
+
+Signed/dodged/duplicate bars and asymmetric errors, native signed stack boundaries
+and raw unsorted band edges match manual expectations.245related/floor12passes/
+3087deselected/13Pyparsingwarnings and9quality records pass, activeLSP3clean.
+PLOT-09/12 are PASS in supported scope, not a new zorder/clip/coordinate API.
+[Evidence](review_evidence/overlay_alpha_verification.json), [comparison](review_evidence/annotation_alpha.png),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS113/RUNNING5/OPEN31/DEFERRED1**.
+Keep this runtime effect local duringb8CI(Rust/minsuccess,twoPytestrunning);
+PLOT-11drag/browser coordinates and fresh alpha-source CI remain separate.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 53
+
 **Review phase 53 checks shared scopes and log-domain outcomes.** Nine axis tables
 retain column/named grouping, empty-panel/tick consistency and independent y/y2/
 labels; three declaration conflicts reject. Legacy log clipping keeps raw values;

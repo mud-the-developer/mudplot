@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Fixed ignored annotation alpha for both text and arrows, including secondary
+  axes and fully transparent output. Preserved default RGBA colour opacity and
+  native z-order/clip behavior; added pixel/SVG regressions and overlay comparisons.
 - Revalidated shared axis scopes and log domains, including named conflicts,
   independent secondary axes, native legacy clipping and typed LogNorm masks.
   Documented the observed Matplotlib3.8 large-constant warning separately from

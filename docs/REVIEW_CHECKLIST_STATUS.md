@@ -18,6 +18,31 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 54차 — annotationalpha누락복구와overlay정렬
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-overlay-alpha-dm2wvg0w`와
+  [artist/수작업·before/after](review_evidence/overlay_alpha_verification.json)/
+  [제한비교그림](review_evidence/annotation_alpha.png)을 보존합니다.
+- **FIND-038:** annotate의유효alpha가Text/arrowprops에전달되지않아alpha0도불투명했습니다.
+  새초기11회귀가수정전전부실패했고공통_draw_marker_layer의해당branch에서nondefaultalpha를
+  text/arrow모두에전달했습니다. 기본1은기존RGBAcolouropacity를유지해호환성을보존합니다.
+  기존RGBAopacity12번째회귀도추가했으며별도API/schemafield/기본zorder변경은없습니다.
+- Primary/y2·arrow유무·alpha0/.35·기본opaque/RGBA·SVG양쪽opacity와alpha0전체canvas
+  대조가통과했습니다. 이전helper를privateAST로대조한golden의변경channel9967→0이며
+  after는무annotationreference와pixel동일합니다. 비교PNG는resize된합성입력그림이지
+  모든font/backend/인쇄환경golden이아닙니다.
+- 음수/0bar·불균형/중복범주의dodge중심/실제값/절대CI가원행과맞습니다. Signedstackplot
+  수작업경계0→[1,2,3]→[5,1,5]→[3,4,6],중복/unsortedband경계edge순서와x/yerror방향도
+  확인했습니다. Nativeartistzorder/clip표는그대로이며layer호출순서가모든종류의zorder를
+  강제한다거나새clip옵션을지원한다고하지않습니다. 초기annotationclipFalse라는QA가정은
+  실제True로바로잡았지기존clip동작을바꾸지않았습니다.
+- 새12/관련245통과·실제floor12통과/3087deselected/경고13·양platformtype/Ruff242/
+  계약/packaging9명령exit0·변경3경로activeLSP clean입니다. 13경고는모두3종Pyparsing이며
+  최초canvasBase타입stub은Agginstance검사로고쳐Any/cast/ignore를넣지않았습니다.
+- PLOT-09/12는현재지원overlaycorpus에서PASS입니다. PLOT-11browser좌표/drag는별도로남깁니다.
+  기준b8CI39171315500은양Rust/최소환경성공·3.10/3.12Pytest진행중이라새효과unit은로컬
+  보존합니다. 이전CI를새alpha수정에소급하지않고버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 53차 — sharedaxes/독립축과log유효영역
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-axis-contracts-jrvsnxzu`와
@@ -1397,10 +1422,10 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PLOT-06 | P0 | PASS | heatmap·surface 행렬 방향 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-07 | P1 | PASS | quiver·3D·polar의 좌표 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-08 | P1 | PASS | 연속 색상과 colorbar 의미 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-09 | P1 | OPEN | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-09 | P1 | PASS | bar·stack·band·errorbar 정렬 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-10 | P1 | PASS | log scale과 유효 영역 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | PLOT-11 | P1 | OPEN | annotation·legend의 좌표계 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
-| PLOT-12 | P1 | OPEN | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
+| PLOT-12 | P1 | PASS | 겹침·z-order·alpha와 클리핑 | mudplot/_render.py; capabilities.py; validate.py | test_new_layers.py; test_layout.py; test_capabilities_consistency.py |
 | STAT-01 | P0 | PASS | regplot의 적합값 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-02 | P0 | PASS | confidence band의 의미 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
 | STAT-03 | P1 | PASS | 회귀의 퇴화 입력 | mudplot/_estimate.py; _stat.py; _histogram.py; _kde.py | test_statistics.py; test_weighted_statistics.py; test_histogram_statistics.py; test_kde_options.py |
@@ -1497,8 +1522,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 111, RUNNING 5, OPEN 33, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 113, RUNNING 5, OPEN 31, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰54차에서annotationalpha누락과overlay를확인했습니다.** FIND-038은유효alpha가
+Text/arrow둘다에빠져초기11회귀가실패했습니다. 공통branch수정으로nondefaultopacity를
+primary/y2양쪽에적용하되defaultRGBAopacity/nativeclip/zorder는유지했습니다. 최종12회귀의
+SVG/pixel/style이맞고alpha0변경channel은무annotationreference대비9967→0입니다.
+
+부호/dodge/중복bar·비대칭오차·native부호stack·unsortedbandedge가수작업값과맞습니다.
+관련245/floor12통과/3087deselected/Pyparsing13경고·품질9명령·activeLSP3clean으로
+PLOT-09/12는지원범위PASS이지새zorder/clip/좌표API가아닙니다. [근거](review_evidence/overlay_alpha_verification.json)/
+[비교](review_evidence/annotation_alpha.png)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS113/RUNNING5/OPEN31/DEFERRED1**입니다. b8CI의Rust/min성공·양Pytest진행을보호해
+효과unit은로컬보존하고PLOT-11drag좌표와새alpha전체CI를별도로남깁니다. 버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰53차
+
 **리뷰53차에서공유범위와log영역을대조했습니다.** 9축표는col/named/empty/ticks와독립
  y/y2/labels가맞고3선언충돌은거절됩니다. Legacylogclip은원값을보존하고typedinterval은
  영역오류를거절합니다. 큰양수축/독립linear색상/지원heatmapLogNorm·mask가맞으며미지원symlog는없습니다.

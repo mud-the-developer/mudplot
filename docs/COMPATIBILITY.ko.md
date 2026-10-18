@@ -81,6 +81,17 @@ bounds를지원합니다. 명시mask는비양수셀을제외하되원값을바�
 이전bytes와소유자원정리를유지합니다. Backend경계기록이지경고일괄무시/색자료변조/
 모든극단범위렌더보장은아닙니다.
 
+## 겹침과annotation투명도
+
+Rawband는중복/뒤섞인x도원래경계행순서를유지하며자동정렬/집계를하지않습니다.
+Groupedbar는원래부호있는값과오차를각dodge중심에두고stackplot은native0baseline의
+부호있는누적정의를씁니다. 길이/오차영역의기존validation은유지합니다.
+
+Annotation의nondefaultalpha는선택축의text/arrow모두에적용합니다. 기본alpha1은기존
+RGBAcolouropacity를유지합니다. Nativezorder/clip정책(line2/point·band1/text·annotation3)은
+그대로이지새layer순서우선override가아닙니다. 화면밖/완전투명artist가있어도pixel을추가하지
+않을수있습니다. 새publiczorder/clip옵션이나axes/figureannotation좌표mode를추가하지않습니다.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

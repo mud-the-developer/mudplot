@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-038은공통branch에서annotationtext/arrowopacity누락을고치고defaultRGBA/
+  nativeclip/zorder를유지합니다. 수작업overlay와alpha0pixel이맞아관련245/floor12/
+  activeLSP3clean으로PLOT-09/12는범위내PASS입니다. PLOT-11drag좌표는별도로남기고
+  b8CI의Rust/min성공·양Pytest진행을보호해효과unit은로컬보존합니다. 이전CI는새alpha증거가아닙니다.
+
 - 최신shared/log9축표/3충돌·지원영역은선택214/floor214가통과했습니다. 1841Pyparsing과
   2MPL3.8image경고를구분해pixel/Werror대조로RGB/원자료/이전출력을확인했고PLOT-05/10은
   범위내PASS이지모든극단범위보장은아닙니다. 기준3bCI39166807390의5job모두성공해수치
@@ -323,7 +328,9 @@
   index/필수role/정확mean/거절정책을보존했습니다.
 - [Axisdomain 근거](review_evidence/axis_domain_verification.json)에panel별설정/
   log결과와실제backend경고한계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS111/RUNNING5/OPEN33/DEFERRED1**.
+- [Overlay/alpha 근거](review_evidence/overlay_alpha_verification.json)와
+  [제한비교](review_evidence/annotation_alpha.png)에실제pixel/style경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS113/RUNNING5/OPEN31/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
