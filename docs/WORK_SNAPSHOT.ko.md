@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-044는raw/action/nativefigure확장을256panels/cells로막고99/255자동생성과
+  snapshot은유지합니다. 새11/관련489/OS2skip/floor11/HTTP6/제한측정13이맞으며SEC-04는
+  export/다른복잡도정책으로RUNNING입니다. ApphardRAM/CPU보장은아니고2a96CI39191652835
+  진행중구조효과는로컬보존해새소스전체CI를별도로받습니다.
+
 - 최신FIND-043은bivariategrid512를quadraticallocation전검사해새11/관련263/floor11/HTTP4가
   맞습니다. PrivateJob의18자원측정은구조/정확한export위험을남겨SEC-04는RUNNING이지
   전역자원안전보장은아닙니다. cb2CI의pinchRedo hittest실패는같은UI버튼Enter/로컬4통과로
@@ -391,6 +396,8 @@
   Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
 - [Editorasset 근거](review_evidence/editor_asset_verification.json)에
   served/compiledhash·controlledmismatch·미확인smoke를보존했습니다.
+- [구조확장 근거](review_evidence/structure_expansion_verification.json)에
+  decode/생성전상한·정상경계·제한자원관찰을보존했습니다.
 - [자원근거](review_evidence/resource_amplification_verification.json)와
   [pinch UI근거](review_evidence/browser_pinch_activation_verification.json)에제한측정/
   privatepayload지문/현재CI한계를보존했습니다.

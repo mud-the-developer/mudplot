@@ -252,7 +252,11 @@ are defensive snapshots of supported spec/action data. Change state through
 actions, not by mutating a returned snapshot.
 
 Panel/layer indices are nonnegative plain integers, not bool/float aliases.
-Panel-creating actions retain automatic extension; edits require an existing layer.
+Panel-creating actions retain automatic extension for indices0..255, within a
+maximum256panels/layout cells. Larger indices, AddPanel/layout expansion and raw
+panel arrays explicitly fail before bulk construction/native geometry; direct
+Python specs are checked by validation. Partition oversized figures rather than
+expecting silent truncation. Layer edits still require an existing layer.
 Reduction may build missing column/matrix references without effects; explicit
 validation and render validation reject them before drawing.
 

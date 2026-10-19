@@ -64,8 +64,10 @@ processes rather than exposing these editors as a processing service.
 Bivariate hist2d now supports at most512bins per axis (513edges), and hexbin
 supports gridsize up to512; oversized requests fail validation rather than being
 clamped or reaching native quadratic allocation. This specific guard is not a
-hard total memory/time limit. Further structure/export resource policy remains
-under review; the Windows Job limits in review probes are test containment,
+hard total memory/time limit. Figures/layouts are also limited to256panels/cells;
+creating indices0..255 still autoextend, while larger expansion and raw panel
+arrays fail before bulk PanelSpec construction. Other complexity/exact-export
+resource policy remains under review; Windows Job limits in review probes are test containment,
 not an installed application sandbox. Unpatched stress payloads are kept private.
 
 ## File and execution boundaries

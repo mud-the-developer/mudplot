@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰64차에서panel/layout/decode확장을할당전에제한했습니다.** FIND-044는공통256panel/
+cell상한을decode/action/validation에사용하고AddPanel/SetLayout도_ensure_panel을거칩니다.
+Rawarray는개별paneldecode전거절하며99→100/255→256자동생성/경계/입력은보존됩니다.
+초기11중8실패/3정상이최종11통과이며새serializedfield/clamp/입력변형은없습니다.
+
+관련489/OS2skip·floor11/3131deselected/Pyparsing13경고·실제HTTP6·제한측정before11/
+after13·품질10명령이맞습니다. 실제256panelfixture약212MBpeakRSS/5.1sworker가모든
+최대datafigure보장은아니며SEC-04는정확한export/다른복잡도정책때문에RUNNING입니다.
+[근거](review_evidence/structure_expansion_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS123/RUNNING6/OPEN20/DEFERRED1**입니다. 2a96CI39191652835의Rust/min성공·양Python진행을
+보호해구조효과를로컬보존하고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰63차
+
 **리뷰63차에서자원증폭을제한child로측정하고bivariategrid를막았습니다.** WindowsJob의
 memory/CPU를suspendedchildresume전에할당해peakRSS/commit/time/exit와budget중단을
 성공/validation과구분했습니다. HugeDPI/sizepreview는2000px/축이며FIND-043의hist2d축당512bins/

@@ -214,7 +214,10 @@ spec/action 데이터의 defensive snapshot입니다. 반환 snapshot을 직접 
 말고 action으로 상태를 변경하세요.
 
 Panel/layer index는 음수가 아닌 plain 정수이며 bool/float 별칭은 받지 않습니다.
-패널 생성 action의 자동 확장은 유지하고 layer 편집은 기존 layer만 대상으로 합니다.
+Panel생성action은최대256panels/layoutcells내index0..255의자동확장을유지합니다.
+초과index/AddPanel/layout확장/rawpanelarray는대량생성/nativegeometry전에명시거절하고
+직접만든Pythonspec도validation이검사합니다. 조용한truncation대신figure를나누세요.
+Layer편집은기존layer만대상입니다.
 Reduce는 없는 column/matrix 참조를 일시적으로 만들 수 있지만 부수효과 없이 유지하며
 명시 validation·render validation이 그리기 전에 거부합니다.
 

@@ -28,6 +28,8 @@ _UNION_ORIGINS = (Union, types.UnionType)
 # LayerSpec.references) does not need a bump, since old and new loaders
 # both handle its absence the same way.
 SPEC_VERSION = "0.1"
+# Bound declarative expansion before panel construction and native layouts.
+MAX_FIGURE_PANELS = 256
 
 # A migration is a plain dict -> dict function (bumping the "version" key
 # itself), keyed by the version it upgrades *from* -- kept dict->dict
@@ -109,6 +111,14 @@ def _from_dict(cls, data: Any):
     if isinstance(cls, type) and is_dataclass(cls):
         if not isinstance(data, dict):
             raise TypeError(f"{cls.__name__} must be a JSON object")
+        if (
+            cls is FigureSpec
+            and isinstance(data.get("panels"), (list, tuple))
+            and len(data["panels"]) > MAX_FIGURE_PANELS
+        ):
+            raise ValueError(
+                f"FigureSpec.panels supports at most {MAX_FIGURE_PANELS} panels"
+            )
         if getattr(cls, "_reject_unknown_fields", False):
             unknown = set(data) - {f.name for f in fields(cls)}
             if unknown:

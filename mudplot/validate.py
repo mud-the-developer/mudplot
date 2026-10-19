@@ -66,6 +66,7 @@ from ._violin_options import MAX_INNER_OBSERVATIONS
 from ._violin_options import option_issues as violin_option_issues
 from .capabilities import LAYER_TYPES, PALETTE_PRESETS, PROJECTIONS
 from .spec import (
+    MAX_FIGURE_PANELS,
     ECDFSpec,
     FigureSpec,
     HistogramSpec,
@@ -1592,6 +1593,9 @@ def validate(spec: FigureSpec) -> list[str]:
     _check_data_integrity(spec, issues)
 
     n_panels = len(spec.panels)
+    if n_panels > MAX_FIGURE_PANELS:
+        issues.append(f"figure supports at most {MAX_FIGURE_PANELS} panels")
+        return issues
     rows, colsn = 1, n_panels
     if spec.layout is not None:
         if (
@@ -1602,6 +1606,9 @@ def validate(spec: FigureSpec) -> list[str]:
             issues.append("layout must contain two positive integers")
         else:
             rows, colsn = spec.layout
+            if rows * colsn > MAX_FIGURE_PANELS:
+                issues.append(f"layout supports at most {MAX_FIGURE_PANELS} cells")
+                return issues
             if rows * colsn < n_panels:
                 issues.append(
                     f"layout {rows}x{colsn} has {rows * colsn} slots but there are "

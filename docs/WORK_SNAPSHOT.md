@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-044 bounds raw/action/native figure expansion at256panels/cells,
+  retaining positive-index auto-growth99/255 and accepted snapshots.11new/
+  489related/2OSskips/floor11passes,6HTTP/13guarded outcomes agree. SEC-04 remains
+  RUNNING for export/other complexity, not hard app memory/CPU safety. Local
+  structure effect awaits full-source CI after ongoing2a96CI39191652835.
+
 - Latest FIND-043 bounds bivariate grids at512 before quadratic allocation;11new/
   263related/floor11passes and4HTTP preservation checks agree. Private resource
   Job measurements distinguish18outcomes; structure/exact-export risks remain,
@@ -472,6 +478,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
 - [Editor-asset evidence](review_evidence/editor_asset_verification.json)
   retains served/compiled hashes, controlled mismatch outcomes and incomplete smoke.
+- [Structure-expansion evidence](review_evidence/structure_expansion_verification.json)
+  retains pre-decode/pre-construction limits, accepted boundaries and guarded costs.
 - [Resource evidence](review_evidence/resource_amplification_verification.json) and
   [pinch UI evidence](review_evidence/browser_pinch_activation_verification.json)
   retain bounded outcomes, private payload fingerprints and current CI limits.

@@ -57,7 +57,9 @@ untrusted/매우큰작업은호출자가관리하는resource-limitedprocess에�
 
 Hist2d는축당최대512bins(513edges),hexbin은gridsize최대512를지원하고초과는clamp나
 nativequadraticallocation이아닌validation에서거부합니다. 이것이전체memory/timehardlimit는
-아닙니다. 구조/export자원정책은검토중이며리뷰probe의WindowsJob제한은시험격리이지
+아닙니다. Figure/layout은최대256panels/cells이며생성index0..255의자동확장은유지하되
+초과확장/rawpanelarray는대량PanelSpec생성전에거절합니다. 다른복잡도/정확한export자원정책은
+검토중이며리뷰probe의WindowsJob제한은시험격리이지
 제품에설치된sandbox가아닙니다. 미패치stresspayload는private로보관합니다.
 
 ## 파일과 실행 경계

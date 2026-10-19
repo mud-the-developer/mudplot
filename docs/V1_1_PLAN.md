@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 64 bounds panel/layout/decode expansion before allocation.**
+FIND-044 uses one256panel/cell limit in shared decoding, action expansion and
+validation. AddPanel/SetLayout share _ensure_panel; raw arrays reject before
+individual panel decode. Auto-create99→100/255→256 and valid boundaries remain,
+with no clamp/input mutation/new serialized field. Initial11tests8fail/3valid
+become11pass; direct constructed specs and oversized indices fail explicitly.
+
+489relatedpasses/2OSskips,floor11passes/3131deselected/13Pyparsing warnings,
+6actualHTTP preservation cases and11before/13after guarded outcomes complete
+10checks. Actual256panel fixture is~212MBpeakRSS/~5.1sworker—not all max-data
+figure capacity. SEC-04 remains RUNNING for exact export/other complexity policy.
+[Evidence](review_evidence/structure_expansion_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS123/RUNNING6/OPEN20/DEFERRED1**. Preserve local structure effect during
+2a96CI39191652835(Rust/minsuccess,Pythonrunning). Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 63
+
 **Review phase 63 measures resource amplification and bounds bivariate grids.**
 Suspended Windows children are assigned private Job memory/CPU limits before
 running; peakRSS/commit/time/exit outcomes distinguish completed work, validation

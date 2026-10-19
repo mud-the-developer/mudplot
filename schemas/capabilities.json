@@ -1503,6 +1503,10 @@
     "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
     "max_semantic_curves": 256
   },
+  "figure_structure": {
+    "max_panels": 256,
+    "max_layout_cells": 256
+  },
   "bivariate_density": {
     "max_bins_per_axis": 512,
     "max_hexbin_gridsize": 512

@@ -1,0 +1,855 @@
+{
+  "source_sha256": {
+    "mudplot/spec.py": "3793ae17786badc2da7b1a342995e36eab38dc25a3eb826b7055c786672cdc3e",
+    "mudplot/reducer.py": "674b82ed0c411890cd7825976103306920227c39914498d9eaf142e9c8837d4e",
+    "mudplot/validate.py": "e78e033fa6446f56c96bee8d054b64457b6e2fff17f5019eb81835288487ca01",
+    "mudplot/capabilities.py": "42751eb389c076d572d852519c1d5492c832f1c2f3b7991d248741f70a91f75d",
+    "tests/test_review_structure_limits.py": "dc6570799be47a7951e49c2399a998597f701970fdd1110847539bb5fa40ae2e",
+    "scripts/check_minimum_versions.py": "3a495af3750118c03b3020c238f48f2e4e3bd43c4fe972a873c6fcf197b8a72c",
+    "schemas/capabilities.json": "adc550e167612632e281784bb413a04c9e7fcaaf9170e94dfe1a02d2b0e878e0",
+    "docs/REFERENCE.md": "eb73238645fa82654f26b8e00b0faff65e9e610d969124c8ca84948814c94f5c"
+  },
+  "before_geometry_outcomes": [
+    {
+      "case": "geometry-panel-99",
+      "input_bytes": 228,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5758577000233345,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65130496,
+      "peak_committed_bytes": 52449280,
+      "cpu_user_seconds": 0.15625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 100,
+        "layout": null,
+        "seconds": 0.36198710004100576
+      }
+    },
+    {
+      "case": "geometry-panel-255",
+      "input_bytes": 229,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 0.8633448999607936,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65310720,
+      "peak_committed_bytes": 52367360,
+      "cpu_user_seconds": 0.234375,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 256,
+        "layout": null,
+        "seconds": 0.35633479995885864
+      }
+    },
+    {
+      "case": "geometry-panel-256",
+      "input_bytes": 229,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5882441999856383,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65060864,
+      "peak_committed_bytes": 52056064,
+      "cpu_user_seconds": 0.15625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 257,
+        "layout": null,
+        "seconds": 0.3679851000197232
+      }
+    },
+    {
+      "case": "geometry-layout-8x8",
+      "input_bytes": 156,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.3531174999661744,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211460096,
+      "peak_committed_bytes": 232542208,
+      "cpu_user_seconds": 0.5,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8422142000054009
+      }
+    },
+    {
+      "case": "geometry-layout-8x16",
+      "input_bytes": 157,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.074992400011979,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211083264,
+      "peak_committed_bytes": 231895040,
+      "cpu_user_seconds": 0.65625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8610323000466451
+      }
+    },
+    {
+      "case": "geometry-layout-16x16",
+      "input_bytes": 158,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.3824961999780498,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211247104,
+      "peak_committed_bytes": 232071168,
+      "cpu_user_seconds": 0.453125,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8698956999578513
+      }
+    },
+    {
+      "case": "geometry-layout-17x16",
+      "input_bytes": 158,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.066180500027258,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211173376,
+      "peak_committed_bytes": 232001536,
+      "cpu_user_seconds": 0.453125,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8526269999565557
+      }
+    },
+    {
+      "case": "geometry-all-panels-64",
+      "input_bytes": 300,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.4074806999997236,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211271680,
+      "peak_committed_bytes": 231874560,
+      "cpu_user_seconds": 1.34375,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 1.8713261999655515
+      }
+    },
+    {
+      "case": "geometry-all-panels-128",
+      "input_bytes": 493,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 4.349817699985579,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211558400,
+      "peak_committed_bytes": 232005632,
+      "cpu_user_seconds": 1.9375,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 3.0833075999980792
+      }
+    },
+    {
+      "case": "geometry-all-panels-256",
+      "input_bytes": 877,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 5.722375700017437,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211636224,
+      "peak_committed_bytes": 232046592,
+      "cpu_user_seconds": 3.46875,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 5.086350099998526
+      }
+    },
+    {
+      "case": "geometry-decode-257",
+      "input_bytes": 892,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5836797000374645,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65552384,
+      "peak_committed_bytes": 52297728,
+      "cpu_user_seconds": 0.203125,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 257,
+        "layout": null,
+        "seconds": 0.37919659999897704
+      }
+    }
+  ],
+  "after_geometry_outcomes": [
+    {
+      "case": "geometry-panel-99",
+      "input_bytes": 228,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6567567000165582,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65212416,
+      "peak_committed_bytes": 52273152,
+      "cpu_user_seconds": 0.171875,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 100,
+        "layout": null,
+        "seconds": 0.3638269000221044
+      }
+    },
+    {
+      "case": "geometry-panel-255",
+      "input_bytes": 229,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.0371507999952883,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65396736,
+      "peak_committed_bytes": 52285440,
+      "cpu_user_seconds": 0.125,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "valid",
+        "n_panels": 256,
+        "layout": null,
+        "seconds": 0.35767840000335127
+      }
+    },
+    {
+      "case": "geometry-panel-256",
+      "input_bytes": 229,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6609398000291549,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65146880,
+      "peak_committed_bytes": 52465664,
+      "cpu_user_seconds": 0.21875,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "action",
+        "error_type": "ValueError",
+        "message": "figure supports at most 256 panels",
+        "seconds": 0.3690960999811068
+      }
+    },
+    {
+      "case": "geometry-layout-8x8",
+      "input_bytes": 156,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5224032999831252,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 210939904,
+      "peak_committed_bytes": 231677952,
+      "cpu_user_seconds": 0.515625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8394096000120044
+      }
+    },
+    {
+      "case": "geometry-layout-8x16",
+      "input_bytes": 157,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.1541819000267424,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211128320,
+      "peak_committed_bytes": 231882752,
+      "cpu_user_seconds": 0.484375,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8586763999774121
+      }
+    },
+    {
+      "case": "geometry-layout-16x16",
+      "input_bytes": 158,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.529910099983681,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211079168,
+      "peak_committed_bytes": 231862272,
+      "cpu_user_seconds": 0.5625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 0.8472705000312999
+      }
+    },
+    {
+      "case": "geometry-layout-17x16",
+      "input_bytes": 158,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.643603999982588,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64917504,
+      "peak_committed_bytes": 52039680,
+      "cpu_user_seconds": 0.15625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "validation-rejected",
+        "stage": "validate",
+        "issues": [
+          "layout supports at most 256 cells"
+        ],
+        "seconds": 0.34863429999677464
+      }
+    },
+    {
+      "case": "geometry-all-panels-64",
+      "input_bytes": 300,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.5687319000135176,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211378176,
+      "peak_committed_bytes": 232185856,
+      "cpu_user_seconds": 1.40625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 1.8595236000255682
+      }
+    },
+    {
+      "case": "geometry-all-panels-128",
+      "input_bytes": 493,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 4.405365500017069,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211660800,
+      "peak_committed_bytes": 232218624,
+      "cpu_user_seconds": 2.578125,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 3.067230999993626
+      }
+    },
+    {
+      "case": "geometry-all-panels-256",
+      "input_bytes": 877,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 5.8923739999881946,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211734528,
+      "peak_committed_bytes": 232148992,
+      "cpu_user_seconds": 4.265625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          600,
+          400
+        ],
+        "actual_pixels": [
+          600,
+          400
+        ],
+        "seconds": 5.086908199999016
+      }
+    },
+    {
+      "case": "geometry-decode-257",
+      "input_bytes": 892,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.642271000018809,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64815104,
+      "peak_committed_bytes": 52178944,
+      "cpu_user_seconds": 0.1875,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "decode",
+        "error_type": "ValueError",
+        "message": "invalid FigureSpec JSON: FigureSpec.panels supports at most 256 panels",
+        "seconds": 0.35648869996657595
+      }
+    },
+    {
+      "case": "geometry-large-action-rejection",
+      "input_bytes": 233,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.0362890000105835,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64913408,
+      "peak_committed_bytes": 52084736,
+      "cpu_user_seconds": 0.265625,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "action",
+        "error_type": "ValueError",
+        "message": "figure supports at most 256 panels",
+        "seconds": 0.354975700029172
+      }
+    },
+    {
+      "case": "geometry-large-layout-rejection",
+      "input_bytes": 166,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6443261000094935,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64913408,
+      "peak_committed_bytes": 52027392,
+      "cpu_user_seconds": 0.171875,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "validation-rejected",
+        "stage": "validate",
+        "issues": [
+          "layout supports at most 256 cells"
+        ],
+        "seconds": 0.35771279997425154
+      }
+    }
+  ],
+  "http_structure_outcomes": [
+    {
+      "editor": "python",
+      "case": "panel",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "python",
+      "case": "layout",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "python",
+      "case": "raw-panel-array",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "case": "panel",
+      "status": 400,
+      "content_type": "application/json",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "case": "layout",
+      "status": 400,
+      "content_type": "application/json",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "case": "raw-panel-array",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "maximum": 256,
+      "spec_cache_preserved": true
+    }
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "Unboundedpanelindices/layoutproducts/rawpanelarrayscouldexpandobjectsandnativegridworkfromsmallrequests.FIND044nowMAX_FIGURE_PANELS256sharedcoreconstant;_ensure_panelchecksBEFOREconstructor;AddPanel/SetLayoutrouteexpansionthroughit;FigureSpecrawarraycountcheckBEFOREindividualpaneldecode;directSpecvalidationearlyrejectspanel/layoutcelloverflow.",
+  "compatibility": "Nonnegativeplainintegercontractretained;panel99stillcreates100and255creates256. LastAddPaneland16x16layoutacceptedwithoutclamp/shrink. Above256panels/layoutcellsnowfailswithactionableValueError,inputs/snapshotsnotmutated.Nojsonfield/version/config/dependencyadded;semanticcapabilitymetadataexposesbounds.",
+  "resource_scope": "WindowsJobprivatecontainedmeasurement\u2014notproductmemory/timecaps.Actualempty64/128/256panelsandvalidlayoutscomplete,peakRSSaround212MBforfixture;notallmax-data/artist/CPUcasesguaranteed. Exactexports/rasterization/layer/textprocessingandrawJSONcoststillneedpolicy;SEC04RUNNINGnotPASS. OldprivateworkerfrompreviousphasewasrestoredtoitsrecordedSHAaftercopyingnewphasehelpersintoself-containedownedfolder.",
+  "qa_note": "Initial11tests8FAIL3validPASSbeforefix.Final11Pconstructor/decoder-spiesproverejecBEFOREbulkallocwithoutunboundedhosttests.NestedifRuffcombined,nosuppressions/casts/Any.Scopeisstructureexpansiononly;positive99nevermisclassifiedasunconditionallyinvalid.",
+  "environment_overrides": {
+    "geometry-measurement": {
+      "child_executable": "explicit same-base CPython; current venv site-packages; private pre-resume WindowsJob committed-memory/CPU/wait limits, not product sandbox",
+      "details": "guard_api.py/worker.py copied to this new owned directory; previous phase worker restored to exact archived SHA"
+    },
+    "floor-structure": {
+      "PYTEST_ADDOPTS": "-k \"test_review_structure_limits\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "geometry-measurement",
+      "argv": [
+        "python",
+        "<evidence>\\geometry_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "70a5a7134a5f0cbd696f3f2bcd3851639245998e37cefe0eb45d49b74359cf17"
+    },
+    {
+      "name": "http-boundaries",
+      "argv": [
+        "python",
+        "<evidence>\\http_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 actual Python/Rust structure rejections preserve committed spec/PNG"
+      ],
+      "log_text_sha256": "78770d2e64fa1f09bd1e0bc95121872aa527fcd8e5a62f246ed17012026d2004"
+    },
+    {
+      "name": "structure-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_structure_limits.py",
+        "tests/test_reducer.py",
+        "tests/test_layout.py",
+        "tests/test_review_core_boundaries.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_review_editor_assets.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "489 passed, 2 skipped in 129.15s (0:02:09)"
+      ],
+      "log_text_sha256": "734d825985a02cabb75977ff84d0648a2e49983a0ddb37b983134d2dabffe322"
+    },
+    {
+      "name": "floor-structure",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "11 passed, 3131 deselected, 13 warnings in 1.50s"
+      ],
+      "log_text_sha256": "313803f6b93b7bf0ec194b8f68f619188e9ee9325f05d2867a76319c06b7215c"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "255 files already formatted"
+      ],
+      "log_text_sha256": "33292072994d6270c4a52cf37cebe6ce619458fc5cee8092d576ec4dd862c808"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "c9df2e4c621c62790c621dca5acf454df834da5fb6c17f77f1502106c3ed199c"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "2f5502eb97208cb87602fa370e28b4f1dce9aef8d024947b4b17ebf0fb565fd2"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "geometry-before-results.json": "0391dcdd0ab880894881dafa6795f18e0e3de58651ac5e3f6323e8fe73b7fde9",
+    "geometry-resource-results.json": "9b53183a9a2687a1fefe7fc9cc422b55c3586a5c794ea3d2252bd75cec4537c2",
+    "geometry_probe.py": "e35ae50e4549f2658f84f23c225ad848628cb4f0928d139df6382fec9d8eee91",
+    "guard_api.py": "4507054b7da8374e5d86d188d86548ab0dee40a67fa81e270b6c9ddf8e236dbc",
+    "worker.py": "9ea82c960b87b82509c95d506ab08f8425cad5d0e028ffd889e9a885886c61db",
+    "qa.py": "014a6846b0fc383f356eca3c6a9cb9e4f108be4a14c19fdb8ce4f52558f43b29",
+    "http_probe.py": "fe6462f57b870fe20282d2b2fa20a37d69e95c6d5c374fd408c4f5bc471482ae",
+    "http_structure_results.json": "5ec6eefb83e5233915ca5c8f8a18122c0139976bdf2a65af70ab5961f9eef722",
+    "environment_overrides.json": "b83250bba6f6542fb68a327291fa782e1d52517441f1ef230349bf5eca48e848",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "98f6bbd461602c14f2fc16c83315514eda47314067685036c2f64ee5c4188c3f",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

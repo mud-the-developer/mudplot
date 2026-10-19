@@ -12,7 +12,7 @@ from dataclasses import fields as dc_fields
 from dataclasses import replace
 
 from . import actions as A
-from .spec import AxisSpec, FigureSpec, PanelSpec
+from .spec import MAX_FIGURE_PANELS, AxisSpec, FigureSpec, PanelSpec
 from .theme import JOURNAL_SIZES, theme_preset
 
 __all__ = ["reduce", "reduce_all"]
@@ -25,6 +25,8 @@ _ENCODING_FIELDS = {"redundant_encoding", "markers", "line_styles", "hatches"}
 def _ensure_panel(spec: FigureSpec, index: int) -> None:
     if type(index) is not int or index < 0:
         raise ValueError("panel index must be a non-negative integer")
+    if index >= MAX_FIGURE_PANELS:
+        raise ValueError(f"figure supports at most {MAX_FIGURE_PANELS} panels")
     while len(spec.panels) <= index:
         spec.panels.append(PanelSpec())
 
@@ -103,15 +105,14 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             if shy is not None:
                 s.share_y = shy
         case A.AddPanel():
-            s.panels.append(PanelSpec())
+            _ensure_panel(s, len(s.panels))
         case A.SetLayout(rows=r, cols=c, width_ratios=wr, height_ratios=hr):
             if any(type(v) is not int or v <= 0 for v in (r, c)):
                 raise ValueError("layout rows and cols must be positive integers")
+            _ensure_panel(s, r * c - 1)
             s.layout = [r, c]
             s.width_ratios = list(wr) if wr else None
             s.height_ratios = list(hr) if hr else None
-            while len(s.panels) < r * c:
-                s.panels.append(PanelSpec())
         case A.SetFacets():
             from ._facet import materialize_facets
 

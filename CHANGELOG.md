@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Bound figure expansion to256panels/layout cells before bulk construction or
+  native geometry, retaining positive-index automatic growth inside the limit
+  and explicit errors without truncating input figures.
 - Bound legacy bivariate histogram bins per axis and hexbin gridsize to512 before
   native quadratic allocation, with explicit validation/capability metadata and no
   clamping of accepted values. Broader structural/export resource review remains open.

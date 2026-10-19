@@ -33,7 +33,15 @@ from ._stat import (
     MAX_BOOTSTRAPS,
 )
 from ._violin_options import MAX_INNER_OBSERVATIONS
-from .spec import ECDFSpec, HistogramSpec, KDE2DSpec, KDESpec, SemanticSpec, StatSpec
+from .spec import (
+    MAX_FIGURE_PANELS,
+    ECDFSpec,
+    HistogramSpec,
+    KDE2DSpec,
+    KDESpec,
+    SemanticSpec,
+    StatSpec,
+)
 from .theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
 __all__ = [
@@ -899,6 +907,10 @@ def capabilities() -> dict:
             "numeric_curves": "clipping changes appearance, never merges raw curves",
             "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
             "max_semantic_curves": MAX_CURVES,
+        },
+        "figure_structure": {
+            "max_panels": MAX_FIGURE_PANELS,
+            "max_layout_cells": MAX_FIGURE_PANELS,
         },
         "bivariate_density": {
             "max_bins_per_axis": MAX_BIVARIATE_BINS,
