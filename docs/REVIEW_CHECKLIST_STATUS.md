@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 66차 — 총layer의decode/add/facet/joint확장상한
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-layer-budget-hv8c7vza`와
+  [before/after5·copy/decode·HTTP6](review_evidence/layer_budget_verification.json)을 보존합니다.
+- **FIND-046:** 명시color는자동palette계산을건너뛰므로후보720한도가layer방어가아닙니다.
+  작은비교입력의256/512/1024coloredscatter는실제render되고큰raw배열은기존시험wallbudget에
+  걸렸습니다. 공통MAX_FIGURE_LAYERS1024를Figure전체합계로제한해개별rawLayerdecode/
+  새AddLayercopy/facettemplate·jointsource복제전에검사합니다. DirectSpec도validation이조기거절합니다.
+- SinglePanel/다중Panel합계raw와standalonePaneldecode를모두검사하고1024경계/AddLayer/
+  facet·joint의정상복제와입력은유지합니다. Pairgrid는기존최대64개one-layercells이므로쓸데없는
+  guard를더하지않았습니다. 초기12회귀8실패/4정상이최종12통과했으며oldexactcapabilitytest도
+  새max_layersmetadata를명시해같은boundsassert를유지했습니다.
+- 명시color1024fixture약217MBpeakRSS/3.2sworker,초과decode는ValueError로바뀌었습니다.
+  실제Python/RustHTTP6사례의AddLayer/facet/open거절은committedspec/cache를보존합니다.
+  RawJSONparsecost가count검사보다먼저일어나는점과모든artist/data/CPU한도보장은구분합니다.
+- 새12·관련591통과·floor12통과/3160deselected/경고13·before/after5/HTTP6·양platformtype/
+  Ruff257/생성계약/packaging10명령exit0·변경9경로activeLSPclean입니다. 13은모두3종Pyparsing이며
+  새dependency/specversion/option/sandbox/입력clamp는없습니다.
+- SEC-04는여전히RUNNING입니다. Text/다른algorithm/CPU/전체memory정책은남고privateJob의
+  budgetstop을제품성공으로세지않습니다. 기준06fCI39196761559의양Rust성공/3Python진행을
+  보호해layer효과는로컬보존하며새전체CI/버전/의존성/lock/tag/배포·loop1경계는유지합니다.
+
 ## 65차 — source보존과effectpixelbudget의분리
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-effect-budget-keyuqfhr`와
@@ -1786,7 +1808,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 ## 판정 범위와 다음 순서
 
 - 현재 상태: PASS 123, RUNNING 6, OPEN 20, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

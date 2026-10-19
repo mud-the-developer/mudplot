@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰66차에서총layer의model/copy증폭을막았습니다.** FIND-046은명시color가palette후보
+계산을건너뛰므로별도합계1024상한이필요했습니다. RawLayerdecode/AddLayercopy/facet·joint
+복제/directspecvalidation에공통상한을두고정상single/multi/add/facet/joint경계와입력은보존했습니다.
+기존pair의최대64one-layercells에는새규칙을더하지않고초기12중8실패/4정상이최종12통과했습니다.
+
+관련591/floor12/3160deselected/Pyparsing13경고·실제HTTP6·제한측정before/after5·품질10명령·
+activeLSP9clean입니다. 1024fixture약217MB/3.2sworker가모든data/artist보장은아니며text/
+다른algorithm/CPU/총memory/rawJSON비용이남아SEC-04는RUNNING입니다.
+[근거](review_evidence/layer_budget_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS123/RUNNING6/OPEN20/DEFERRED1**입니다. 06fCI39196761559중layer효과는로컬보존하고
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰65차
+
 **리뷰65차에서sourceDPI와nativeeffect작업상한을분리했습니다.** FIND-045는specvalidator가
 아닌Figure생성전/backend-saveDPI/paddedtightbbox에서40millionpixel을검사합니다. 큰sourceDPI/
 2000pxpreview는유지하고정확한효과초과는clamp없이거절합니다. 정상6000²/6320²PNG와큰

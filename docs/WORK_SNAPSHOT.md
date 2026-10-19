@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-046 guards1024total layers before raw decode/add/facet/joint copy,
+  not palette candidates.12new/591related/floor12/6HTTP and boundary snapshots
+  agree; SEC-04 stillRUNNING for text/other algorithm/CPU/totalmemory scope.
+ 1024fixture costs are bounded observations, not universal safety. Keep this
+  layer effect local during06fCI39196761559; fresh effect-source CI remains needed.
+
 - Latest FIND-045 adds40millionpixel owned-effect checks before native canvas/
   save/tightwork, preserving sourceDPI/capped previews and old output/cache on
   failure.18new/315related/4OSskips/floor18/8HTTP pass; SEC-04 stillRUNNING for
@@ -484,6 +490,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
 - [Editor-asset evidence](review_evidence/editor_asset_verification.json)
   retains served/compiled hashes, controlled mismatch outcomes and incomplete smoke.
+- [Layer-budget evidence](review_evidence/layer_budget_verification.json)
+  retains total-across-panels limits, pre-copy/decode assertions and real HTTP cache.
 - [Effect-budget evidence](review_evidence/effect_budget_verification.json)
   retains DPI/source separation, native preflight, tight/atomic output and recovery.
 - [Structure-expansion evidence](review_evidence/structure_expansion_verification.json)

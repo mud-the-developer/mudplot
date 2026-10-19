@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-046은palette가아닌합계1024layers를rawdecode/add/facet/jointcopy전에검사합니다.
+  새12/관련591/floor12/HTTP6과정상snapshot이맞지만text/다른algorithm/CPU/총memory범위로
+  SEC-04는RUNNING입니다. 1024fixture측정은보편안전보장이아니며06fCI39196761559중layer
+  효과는로컬보존해정확한새소스전체CI를별도로받습니다.
+
 - 최신FIND-045는nativecanvas/save/tight작업전40millionpixel effect상한을두고sourceDPI/
   cappedpreview/이전output·cache를보존합니다. 새18/관련315/OS4skip/floor18/HTTP8이맞지만
   다른복잡도/CPU/총memory범위때문에SEC-04는RUNNING입니다. 정확한2a96CI5job성공으로
@@ -401,6 +406,8 @@
   Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
 - [Editorasset 근거](review_evidence/editor_asset_verification.json)에
   served/compiledhash·controlledmismatch·미확인smoke를보존했습니다.
+- [Layerbudget 근거](review_evidence/layer_budget_verification.json)에전체합계상한/
+  decode·copy전검사/실제HTTP cache보존을기록했습니다.
 - [Effectbudget 근거](review_evidence/effect_budget_verification.json)에DPI/source분리·
   native사전검사·tight/atomic출력/회복을보존했습니다.
 - [구조확장 근거](review_evidence/structure_expansion_verification.json)에

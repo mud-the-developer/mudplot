@@ -66,6 +66,7 @@ from ._violin_options import MAX_INNER_OBSERVATIONS
 from ._violin_options import option_issues as violin_option_issues
 from .capabilities import LAYER_TYPES, PALETTE_PRESETS, PROJECTIONS
 from .spec import (
+    MAX_FIGURE_LAYERS,
     MAX_FIGURE_PANELS,
     ECDFSpec,
     FigureSpec,
@@ -1595,6 +1596,9 @@ def validate(spec: FigureSpec) -> list[str]:
     n_panels = len(spec.panels)
     if n_panels > MAX_FIGURE_PANELS:
         issues.append(f"figure supports at most {MAX_FIGURE_PANELS} panels")
+        return issues
+    if sum(len(panel.layers) for panel in spec.panels) > MAX_FIGURE_LAYERS:
+        issues.append(f"figure supports at most {MAX_FIGURE_LAYERS} total layers")
         return issues
     rows, colsn = 1, n_panels
     if spec.layout is not None:

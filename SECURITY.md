@@ -70,7 +70,10 @@ arrays fail before bulk PanelSpec construction. Owned render/save effects now
 reject canvases above40millionpixels before native work, including backend/output
 DPI and padded tight bounds. This is not a source-DPI cap: the original spec and
 capped editor preview remain intact, and no output is silently downscaled.
-Other layer/text/CPU/total-memory policy remains under review; Windows Job limits in review probes are test containment,
+Figures also support at most1024total layers across panels. Raw layer arrays,
+AddLayer and facet/joint expansion reject above that count before individual
+layer decode/new copy/bulk replication. Other text/algorithm/CPU/total-memory
+policy remains under review; Windows Job limits in review probes are test containment,
 not an installed application sandbox. Unpatched stress payloads are kept private.
 
 ## File and execution boundaries

@@ -34,6 +34,7 @@ from ._stat import (
 )
 from ._violin_options import MAX_INNER_OBSERVATIONS
 from .spec import (
+    MAX_FIGURE_LAYERS,
     MAX_FIGURE_PANELS,
     MAX_RENDER_PIXELS,
     ECDFSpec,
@@ -913,6 +914,7 @@ def capabilities() -> dict:
         "figure_structure": {
             "max_panels": MAX_FIGURE_PANELS,
             "max_layout_cells": MAX_FIGURE_PANELS,
+            "max_layers": MAX_FIGURE_LAYERS,
         },
         "bivariate_density": {
             "max_bins_per_axis": MAX_BIVARIATE_BINS,

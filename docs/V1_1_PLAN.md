@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 66 bounds total layers before model/copy amplification.**
+FIND-046 confirms explicit colours bypass palette candidate counts, so that is
+not a layer cap. Shared1024TOTAL across panels now gates raw LayerSpec decoding,
+AddLayer copying, facet/joint replication and direct-spec validation. Accepted
+single/multi-panel/add/facet/joint boundaries and input snapshots are preserved;
+pair's existing at-most64one-layer cells need no extra rule. Initial12tests8fail/
+4valid become12pass, without truncation/new JSON fields/options.
+
+591related/floor12passes/3160deselected/13Pyparsing warnings,6actualHTTP cases,
+5before/5after guarded outcomes and10checks pass, activeLSP9clean.1024fixture
+~217MBpeakRSS/~3.2sworker is not all data/artist capacity; text/algorithm/CPU/total
+memory and rawJSON cost remain. [Evidence](review_evidence/layer_budget_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/DEFERRED1**.
+Keep layer effect local during06fCI39196761559; versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 65
+
 **Review phase 65 separates source DPI from native effect work bounds.**
 FIND-045 now checks40million-pixel work before Figure creation and backend/save
 DPI/tight padded bbox, not in spec validation. Large source DPI stays valid and

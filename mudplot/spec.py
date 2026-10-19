@@ -28,8 +28,9 @@ _UNION_ORIGINS = (Union, types.UnionType)
 # LayerSpec.references) does not need a bump, since old and new loaders
 # both handle its absence the same way.
 SPEC_VERSION = "0.1"
-# Bound declarative expansion before panel construction and native layouts.
+# Bound declarative expansion before panel/layer construction and native layouts.
 MAX_FIGURE_PANELS = 256
+MAX_FIGURE_LAYERS = 1024
 # Bound owned effect work, not the stored source DPI or capped previews.
 MAX_RENDER_PIXELS = 40_000_000
 
@@ -113,13 +114,29 @@ def _from_dict(cls, data: Any):
     if isinstance(cls, type) and is_dataclass(cls):
         if not isinstance(data, dict):
             raise TypeError(f"{cls.__name__} must be a JSON object")
+        if cls is FigureSpec and isinstance(data.get("panels"), (list, tuple)):
+            panels = data["panels"]
+            if len(panels) > MAX_FIGURE_PANELS:
+                raise ValueError(
+                    f"FigureSpec.panels supports at most {MAX_FIGURE_PANELS} panels"
+                )
+            layer_count = sum(
+                len(panel["layers"])
+                for panel in panels
+                if isinstance(panel, dict)
+                and isinstance(panel.get("layers"), (list, tuple))
+            )
+            if layer_count > MAX_FIGURE_LAYERS:
+                raise ValueError(
+                    f"FigureSpec supports at most {MAX_FIGURE_LAYERS} total layers"
+                )
         if (
-            cls is FigureSpec
-            and isinstance(data.get("panels"), (list, tuple))
-            and len(data["panels"]) > MAX_FIGURE_PANELS
+            cls is PanelSpec
+            and isinstance(data.get("layers"), (list, tuple))
+            and len(data["layers"]) > MAX_FIGURE_LAYERS
         ):
             raise ValueError(
-                f"FigureSpec.panels supports at most {MAX_FIGURE_PANELS} panels"
+                f"PanelSpec.layers supports at most {MAX_FIGURE_LAYERS} layers"
             )
         if getattr(cls, "_reject_unknown_fields", False):
             unknown = set(data) - {f.name for f in fields(cls)}

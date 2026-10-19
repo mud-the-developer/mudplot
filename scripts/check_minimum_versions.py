@@ -37,6 +37,7 @@ TESTS = (
     "tests/test_review_state_contracts.py",
     "tests/test_review_core_boundaries.py",
     "tests/test_review_structure_limits.py",
+    "tests/test_review_layer_limits.py",
     "tests/test_review_optional_errors.py",
     "tests/test_review_history_policies.py",
     "tests/test_review_editor_paths.py",

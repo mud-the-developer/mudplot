@@ -60,8 +60,9 @@ nativequadraticallocation이아닌validation에서거부합니다. 이것이전�
 아닙니다. Figure/layout은최대256panels/cells이며생성index0..255의자동확장은유지하되
 초과확장/rawpanelarray는대량PanelSpec생성전에거절합니다. Ownedrender/save는backend/outputDPI와
 padding포함tightbbox의canvas40millionpixels초과를native작업전에거절합니다. SourceDPI한도가
-아니라원spec/cappedpreview는유지하고출력을조용히downscale하지않습니다. 다른layer/text/
-CPU/전체memory정책은검토중이며리뷰probe의WindowsJob제한은시험격리이지
+아니라원spec/cappedpreview는유지하고출력을조용히downscale하지않습니다. Figure전체는
+최대1024layers이며초과raw배열/AddLayer/facet·joint확장을개별decode/newcopy/bulk복제전
+거절합니다. 다른text/algorithm/CPU/전체memory정책은검토중이며리뷰probe의WindowsJob제한은시험격리이지
 제품에설치된sandbox가아닙니다. 미패치stresspayload는private로보관합니다.
 
 ## 파일과 실행 경계

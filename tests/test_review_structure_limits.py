@@ -76,4 +76,5 @@ def test_capabilities_explain_structure_bounds():
     assert mp.capabilities()["figure_structure"] == {
         "max_panels": 256,
         "max_layout_cells": 256,
+        "max_layers": 1024,
     }

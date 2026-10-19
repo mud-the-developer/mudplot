@@ -12,7 +12,7 @@ from dataclasses import fields as dc_fields
 from dataclasses import replace
 
 from . import actions as A
-from .spec import MAX_FIGURE_PANELS, AxisSpec, FigureSpec, PanelSpec
+from .spec import MAX_FIGURE_LAYERS, MAX_FIGURE_PANELS, AxisSpec, FigureSpec, PanelSpec
 from .theme import JOURNAL_SIZES, theme_preset
 
 __all__ = ["reduce", "reduce_all"]
@@ -150,6 +150,8 @@ def reduce(state: FigureSpec, action: A.Action) -> FigureSpec:
             getattr(s.panels[pi], axis).share_id = name
         case A.AddLayer(layer=layer, panel=pi):
             _ensure_panel(s, pi)
+            if sum(len(panel.layers) for panel in s.panels) >= MAX_FIGURE_LAYERS:
+                raise ValueError(f"figure supports at most {MAX_FIGURE_LAYERS} layers")
             s.panels[pi].layers.append(copy.deepcopy(layer))
         case A.RemoveLayer(layer_index=li, panel=pi):
             _ensure_panel(s, pi)

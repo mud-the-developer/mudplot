@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Bound total figure layers to1024 across panels, before raw layer decode, new
+  AddLayer copy or facet/joint replication, preserving accepted boundaries and
+  input snapshots without trimming layers or relying on palette candidate limits.
 - Bound owned render/save canvas work to40millionpixels before native allocation,
   including backend/output DPI and padded tight bounds, without rewriting source
   DPI or capped previews. Oversized effects fail explicitly and preserve old output.

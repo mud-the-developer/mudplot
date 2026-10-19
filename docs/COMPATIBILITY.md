@@ -271,7 +271,11 @@ Panel-creating actions retain automatic extension for indices0..255, within a
 maximum256panels/layout cells. Larger indices, AddPanel/layout expansion and raw
 panel arrays explicitly fail before bulk construction/native geometry; direct
 Python specs are checked by validation. Partition oversized figures rather than
-expecting silent truncation. Layer edits still require an existing layer.
+expecting silent truncation. A figure supports at most1024layers TOTAL across
+panels, not1024per panel. Raw arrays/AddLayer/facet or joint expansion reject
+above that count before individual decode/new layer copy/bulk replication.
+Accepted boundaries retain every layer and input snapshot; layer edits still
+require an existing layer. Palette candidate counts are not this resource limit.
 Reduction may build missing column/matrix references without effects; explicit
 validation and render validation reject them before drawing.
 

@@ -228,7 +228,9 @@ Panel/layer index는 음수가 아닌 plain 정수이며 bool/float 별칭은 �
 Panel생성action은최대256panels/layoutcells내index0..255의자동확장을유지합니다.
 초과index/AddPanel/layout확장/rawpanelarray는대량생성/nativegeometry전에명시거절하고
 직접만든Pythonspec도validation이검사합니다. 조용한truncation대신figure를나누세요.
-Layer편집은기존layer만대상입니다.
+Figure는panel전체합계1024layers까지지원하며panel당1024라는뜻은아닙니다.
+초과rawarray/AddLayer/facet·joint확장은개별decode/newcopy/bulk복제전거절하고정상경계의
+모든layer/입력snapshot은유지합니다. Layer편집은기존layer만대상이며palette후보수는이자원상한이아닙니다.
 Reduce는 없는 column/matrix 참조를 일시적으로 만들 수 있지만 부수효과 없이 유지하며
 명시 validation·render validation이 그리기 전에 거부합니다.
 

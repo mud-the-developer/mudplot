@@ -9,6 +9,7 @@ from ._facet import _ordered, ordered_group_columns, panel_columns
 from ._histogram import MAX_HISTOGRAM_BINS
 from ._kde import option_issues as kde_option_issues
 from .spec import (
+    MAX_FIGURE_LAYERS,
     AxisSpec,
     HistogramSpec,
     KDESpec,
@@ -59,6 +60,8 @@ def materialize_joint(
 
     if len(spec.panels) != 1 or spec.panels[0].filters or spec.panels[0].dropna:
         raise ValueError("joint requires one unfiltered source panel")
+    if len(spec.panels[0].layers) + 2 > MAX_FIGURE_LAYERS:
+        raise ValueError(f"joint expansion exceeds {MAX_FIGURE_LAYERS} total layers")
     source = copy.deepcopy(spec.panels[0])
     if source.x.share_id is not None or source.y.share_id is not None:
         raise ValueError("joint requires axes without named sharing")

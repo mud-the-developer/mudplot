@@ -8,7 +8,7 @@ from itertools import product
 from ._categorical import DISTRIBUTION_TYPES, distribution_columns
 from ._semantics import category_key
 from ._stat import STAT_LAYER_TYPES, is_missing
-from .spec import SemanticSpec
+from .spec import MAX_FIGURE_LAYERS, SemanticSpec
 
 MAX_FACET_PANELS = 64
 RAW_HUE_TYPES = frozenset(
@@ -234,6 +234,8 @@ def materialize_facets(
     if not 1 <= count <= MAX_FACET_PANELS:
         raise ValueError("facet grid needs 1..64 cells; provide orders for empty data")
 
+    if count * len(spec.panels[0].layers) > MAX_FIGURE_LAYERS:
+        raise ValueError(f"facet expansion exceeds {MAX_FIGURE_LAYERS} total layers")
     template = copy.deepcopy(spec.panels[0])
     cells = []
     selected = set()
