@@ -451,6 +451,7 @@ _REQUIRED_LAYER_VALUE = {
     "text": "note",
     "at": [0.0, 0.0],
     "matrix": "matrix",
+    "bins": [0.0, 1.0, 2.0],
 }
 
 

@@ -1,0 +1,249 @@
+{
+  "integration": "Local native contract/stairs commits and operator-merged Dependabot history preserved in non-destructive merge433df14. Synced uv locked dev/browser withHatchling1.32.4/Hypothesis6.168.3/Playwright1.63/Ruff.16.9;Tokio1.53.2 verified. No project/specversion/tag/publish/newloop.",
+  "source_sha256": {
+    "pyproject.toml": "eb9841fe370249ab71fcadbf02d44b5770b9394e7ea482b20d81ab435074681e",
+    "uv.lock": "90d286e6c7469b6677b23128b01a548b8147820cc27cd07c126122ba55334dcf",
+    "mudplot-editor/Cargo.toml": "571b3d9fccd78205befacd1b34b6718cbd2cc494180bd30245b8970cc35b2e50",
+    "mudplot-editor/Cargo.lock": "65db0cb65790c44815b4cc714cfae7e390668c6abb0158c267b1ae90ba04b6df",
+    "mudplot/api.py": "5cee8476865128eaa57c092689e786eed499de7a5ed66f0976685e963bebb3a8",
+    "mudplot/_render.py": "423951fdfb68f254950617199e0b55daa69b29cec48cec8653b052ef062b1d7f",
+    "mudplot/validate.py": "73fdf0d347184800e9117318f804cc70705ac8634cdf23e8da81e0659cbca863",
+    "mudplot/capabilities.py": "649a2f5029022a93039e56447efe2523d3dc9d4eb1fb1b054fd274f3d2ce28f4",
+    "mudplot/spec.py": "a8943c2d9b3dd5bccb72d12e811d22a9369d0c1f389be35d3a4aa21c9bfea2cb",
+    "mudplot-editor/src/model.rs": "e7e3792a02fbe1b9bdbdf867fbbd53ff24e4d8a3d0995b5e8ed244b3620830fe",
+    "scripts/rust_editor_smoke_test.py": "125da3f1815a2810c51c7580a31f6f42752d0f8109dba0b92b31cd807f393322",
+    "scripts/check_minimum_versions.py": "2225a3681c06c39bd691b0f69328f3ad08c643f33d049db1164c5d6032fc38d8",
+    "scripts/check_schema_sync.py": "18ea9ee278f1999e74b145366b9cbb671c7ead5a58aa5cb1ffd7ed498d2a43d0",
+    "tests/test_stairs.py": "c30f00c80702fc865000d29c91c8862b6c5cb087178cab72161a984825314503",
+    "schemas/capabilities.json": "5e571874b819a818e1535224796ba5492cf60e76d2cb8fb42d50451f1b8f4635",
+    "docs/PLOT_GALLERY.md": "32659765338515ade4b61e1e57e23ab49723b15aeaad89049f35f4307fe35051",
+    "docs/REFERENCE.md": "18c07bf8086979bb163594c5b64970477f8f90c0b816d3f3298228cb6bfc6869",
+    "tests/test_dashboard_editor.py": "38706b7b3f21f0c5d140d5e00fcf3f6a3b97a93bc79b70a6f9bee6e459d3bd85"
+  },
+  "versions": {
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "statsmodels": "0.15.0",
+    "scipy": "1.18.1",
+    "hatchling": "1.32.4",
+    "hypothesis": "6.168.3",
+    "pytest": "9.1.1",
+    "playwright": "1.63.0",
+    "ruff": "0.16.9",
+    "pyright": "1.1.414"
+  },
+  "full_suite": {
+    "exit": 0,
+    "seconds": 1822.0046274662018,
+    "passed": 4165,
+    "skipped": 32,
+    "warnings": 17,
+    "required_browser_pgf_tectonic": "all3passed;strictci-profilegate0",
+    "skips": "OptionalPyArrow/Polarsnotinstalled plus documentedWindowsPOSIX/symlink/hostAPIcases;notpassed.",
+    "first_attempt": "2failed4163passed32skip:stairsfixturemissingrequired-binsvaluefixedwithrealexplicitlist;browserfile-recoverytimeoutpreserved,unchangedtestpassedaloneandfullrecheck.Notclaimedracefixed.",
+    "rust_first_attempt": "ConcurrentdefaultCargo+fullpytestelapsed-boundtestfailed;preserved. DefaultCargoaloneandserialvalidation22P6ignoredwithoutsuppressionorchangedthreshold.",
+    "monitor": "Backenderror0lines/noexecution/noinitialreceipt;notpassedtest."
+  },
+  "checks": [
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "seconds": 0.3530616760253906,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "seconds": 0.3569514751434326,
+      "results": [
+        "274 files already formatted"
+      ],
+      "log_sha256": "e3ef58579eb566e7de49eea46e9563c2e14da7a5f45a42fd33f95010938b335b"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "seconds": 7.090468883514404,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "seconds": 8.311384916305542,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "rust-format",
+      "exit_code": 0,
+      "seconds": 2.0857670307159424,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rust-test",
+      "exit_code": 0,
+      "seconds": 7.244022607803345,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 6.54s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "5acc856253fda78b2f9b9093d3b4cf9040c76c86e28c914f42efaf2f025dbd94"
+    },
+    {
+      "name": "rust-build",
+      "exit_code": 0,
+      "seconds": 1.7500808238983154,
+      "results": [],
+      "log_sha256": "3b093a967f51b15261cd33dd344e8d44600d0ae5bf4442dc8cb83161390810d3"
+    },
+    {
+      "name": "tokio",
+      "exit_code": 0,
+      "seconds": 0.3499186038970947,
+      "results": [],
+      "log_sha256": "d88cdd41e4185b56ca30e60d8094f3bd8dea1563add5f9d1fdec26259c0463d7"
+    },
+    {
+      "name": "native-http",
+      "exit_code": 0,
+      "seconds": 52.85063910484314,
+      "results": [
+        "Stem/WLS/stairs native boundary OK: exact JSON and cached PNG undo/redo"
+      ],
+      "log_sha256": "b1d4c0a9d4bc5c075f2cb8472ea9e9138361eb5fbff49eb5a4c525dcaf9b713d"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "seconds": 7.741132974624634,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "435ad1d039dda6b7812146b0c4365f61d98bdac7659f72eae97710692a093aa2"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "seconds": 16.769795417785645,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "4b33ce8239a02a8120666a41ecd2767ee9d044f1654f308b4fd72fe65e153297"
+    },
+    {
+      "name": "python-audit",
+      "exit_code": 0,
+      "seconds": 20.962228059768677,
+      "results": [
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "Python dependency audits OK"
+      ],
+      "log_sha256": "2952fe4e4956f6f3e477c21335f71646533edbcf4af56b954ae031dceeba7a47"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "seconds": 18.737399578094482,
+      "results": [
+        "100 passed, 3279 deselected, 205 warnings in 16.02s"
+      ],
+      "log_sha256": "8def82ab043c4867d3a93c6487e4e351663cead1d600f83495084dccb2758e5f"
+    }
+  ],
+  "cargo_audit": "Notinstalled;notexecutedandnoRustsecurityauditclaim. Pythonthreecommittedlocks audit passed.",
+  "native_boundary": {
+    "native_stem_weighted_regression_stairs_http": true,
+    "scope": "Three cases: stem/WLS/stairs on actual owned Windows native binary/current venv Python, exact source JSON/PNG/titleapply/undo/redo/cache restore. Not GUI/browser or MSRV1.88 proof.",
+    "owned_process": true
+  },
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 205,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 7
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 38
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "notes": "Initialfailures/skips/warningsarenotretroactivelysuccess. CurrentWindowsRust1.99isnotLinuxMSRV1.88/fullnativebrowserproof;freshCIrequired.",
+  "raw_sha256": {
+    "postmerge_checks.py": "cd8cb37e81cbb9a8fdd1e21159ce3aed6fb7121e17b2a6862f8c54db438b4df2",
+    "full_tests.py": "7b9c419944191ac0ef4c248b954fa1e55444027030d8b443d524117bd8fc08d3",
+    "full-result.json": "806e272622286912734de5dc020f6eb2226818d623de387434784e5ab28aa105",
+    "full.log": "d1f6f4d0e6963392f7e24c5c8d29b844d547a3f7f8124ea873789b03972b72d6",
+    "full.xml": "614217f2cb001a085318ac78523bb8876fedb8a0075784567348ebbfab8ede3b",
+    "browser-repro.xml": "66482f0060087006efb8e31998e34a7e4215f7290b816fbf03341fb17a2b6bad",
+    "monitor-launch.json": "f96247cfca338fd7b758d388971be8c447963b1d64af55a5ce84d54c60f889d8",
+    "native_focus.py": "498d26191bb360e0e0c5e57eef6a1b21666c1a3af34ea1e2e3b17b44d67a9620",
+    "native-result.json": "747116a1e3db397544f8199ab36e49d0606e6f40b57bcae2d1ef3886e20ae4b6",
+    "native-server.log": "6733d7e622fa4cc19f72d8c6f44c0da840098179014a66164796b9de3c32f723",
+    "floor_warning_counts.json": "ce65f8dfe90254c977fe2fe1154b0d235cf5ffa35ee6178fdaa81206e4847b69",
+    "first-attempt/full-result.json": "da88da8602080674b1c47319120feae144ee504df77b4c386d69974d5677c838",
+    "first-attempt/full.log": "b45005cb3dfbc56098053a2f1dfd05f58e92984f28313edf980103f3bb9da560",
+    "first-attempt/full.xml": "8537aae0bc23c50e49d2986baa56b43a6039eba18cdef41ed3fd0287c2ceaaed",
+    "first-attempt/receipts.json": "591b85f9adf039a8a3cbc88cc2cfd2da21dc9d09aa310300ec34c04f97d4b456",
+    "first-attempt/rust-test.log": "fa942073a964f4fe0373456eec204d9d8d6b96205aa649464fe63483c79dd5ab"
+  }
+}

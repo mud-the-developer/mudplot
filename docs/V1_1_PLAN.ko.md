@@ -134,6 +134,16 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
 
+**병합후통합검증.** 사용자가한번에merge/push를요청해원격e752175의의존성업데이트와로컬두commit을
+모두보존하고lockedvenv를동기화했습니다. 전체4165P/32skip/17경고·필수browser/PGF/Tectonic3P/
+최소100P/Rust22P6ignored/nativeHTTP3/품질13명령/Python3lock감사가맞고stairsfixture의bins누락을
+고쳤습니다. 최초browser/Rust시간실패는보존하며변경없는직렬/전체재검사는통과했지만flakiness수정은
+아닙니다. Cargo-audit미설치/로컬WindowsRust1.99는LinuxMSRV1.88증명이아니며
+[근거](review_evidence/merged_dependencies_verification.json)를남깁니다. 통합소스를게시해새전체CI를받되
+전체v1.1완료/tag권한으로보지않습니다.
+
+### 이전 리뷰79차
+
 **B6subset:pre-binnedstairs.** 기존x/bins/baseline필드로주어진N높이/N+1edge/rawscalarbaseline을
 저장하고수직unfilledlinearprimary/y2만지원합니다. Rebinning/정규화/보간은없고원본/edge/JSON/actions/
 SetData를보존합니다. 유한1..10000높이·엄격증가/표현가능edge폭이필요하며fill/open/log/group/facet/

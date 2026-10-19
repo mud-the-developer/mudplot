@@ -33,9 +33,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
-- Publish held: origin/main advanced to e752175 with operator-merged Dependabot
-  pyproject/uv/Cargo lock updates. Local code is preserved; integrate and revalidate
-  the new dependency environment before push. Existing receipts predate that merge.
+- Integrated operator-merged e752175 dependency updates without rewriting either
+  history; synced the locked venv. Post-merge full4165P/32skip/17warnings,required
+  browser/PGF/Tectonic3P,floor100P,Rust22P6ignored,nativeHTTP3/schema/wheel and all
+  three Python lock audits pass. Fixed the stairs fixture's missing bins value.
+  Initial browser/Rust timing failures are retained; unchanged serial/full rechecks
+  pass,not a claimed flakiness fix. Cargo-audit unavailable; LinuxMSRV needs CI.
 - Latest B6 supplied-height stairs:29new/382related/floor31/CLI2/nativeHTTP3case
   pass; source/edges retained, explicit linear vertical outline limits. LocalRust
   22P6ignored/12checks; LinuxMSRV/fullGUI need CI. Baseline24baf now cancelled with

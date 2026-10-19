@@ -139,6 +139,18 @@ stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
 
+**Post-merge integration verification.** Operator requested one normal merge/push.
+Remote e752175 dependency updates and both local feature commits are preserved;
+locked venv resynced. Full4165P/32skip/17warnings,requiredbrowser/PGF/Tectonic3P,
+floor100P/Rust22P6ignored/nativeHTTP3/13qualitychecks and three Python lock audits
+pass. A stairs required-bins fixture omission is fixed. Initial browser and Rust
+elapsed-time failures remain recorded; unchanged serial/full rechecks pass, not a
+claimed fix to timing flakiness. Cargo-audit unavailable; Windows Rust1.99 is not
+LinuxMSRV1.88 proof. [Evidence](review_evidence/merged_dependencies_verification.json).
+Publish the integrated source for fresh wholeCI; not entire v1.1/tag approval.
+
+### Earlier review phase 79
+
 **B6 subset: pre-binned stairs.** Existing x/bins/baseline fields store N supplied
 heights/N+1 explicit edges/raw scalar baseline. Vertical unfilled linear primary/y2
 only, no rebinning/normalization/interpolation. Preserve source, edges, JSON/actions/

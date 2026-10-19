@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 80차 — 원격의존성병합과한번의통합push
+
+- 사용자명시요청으로로컬7789481/2eacc44와원격e752175의Dependabotmerges를433df14로비파괴병합하고
+  lockedvenv를동기화했습니다. Hatchling1.32.4/Hypothesis6.168.3/Playwright1.63/Ruff0.16.9와
+  Tokio1.53.2를보존하며프로젝트/spec버전이나tag/publish권한을확장하지않습니다.
+- 첫전체실행은2F/4163P/32skip였습니다. Stairsfixture필수값표의bins누락은명시edge예제로고쳤고
+  browserfile복구timeout은코드/timeout/조건변경없이단독1P·다음전체에서통과했습니다. 병렬Cargo실행의
+  elapsed상한실패도보존하고defaultCargo단독및직렬검증에서22P6ignored를확인했습니다. Flaky원인해결은
+  주장하지않으며기존guard를완화하지않았습니다. Monitorbackend0line실패도미실행이지통과가아닙니다.
+- 새lock기준전체4165P/32skip/17경고·필수browser/PGF/Tectonic3P·floor100P/3279deselected/
+  205Pyparsing경고·실제WindowsnativeHTTP3·품질13명령/Python3lock감사/schema/packaging이맞습니다.
+  [신구실패와최종검증](review_evidence/merged_dependencies_verification.json)을구분해보존합니다.
+  OptionalPyArrow/Polars미설치와Windows권한/플랫폼skip은통과로세지않고Cargo-audit도미설치/미실행입니다.
+- 통합commit들을정상push하고새전체CI를받습니다. Linux/MSRV1.88·Cargo보안감사/전체v1.1/나머지
+  releasegate는이번로컬증명과동일시하지않으며원대장139PASS/6RUNNING/4OPEN/1DEFERRED/자동loop경계는유지합니다.
+
 ## 79차 — 주어진높이의pre-binnedstairs
 
 - 기존x/bins/baseline필드를주어진높이열/N+1edge/rawbaseline으로재사용하며histogram추정/정규화/
