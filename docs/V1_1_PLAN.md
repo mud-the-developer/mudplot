@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 72 pairs reviewed fixed-environment images with semantic oracles.**
+Exact repeat pixels and independent integer point/group/axis/canvas assertions
+cover different claims. A collapsed-group control has identical pixels but wrong
+artist grouping; a colour-only control keeps numeric meaning but changes0.617%of
+pixels. Averaged image error/noise is not blanket approval or cross-env tolerance.
+Four NEW evidence images were viewed/diff-reviewed as author representative
+baselines; no older baseline was replaced and no automatic rebaseline is added.
+
+3new/76related/floor3passes/3225deselected/13Pyparsing warnings and9checks pass,
+activeLSP2clean. [Evidence](review_evidence/visual_contract_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS137/RUNNING6/OPEN6/DEFERRED1**.
+CI-04 PASS is not independent human AT/aesthetic or dense-low-DPI LAY-09 approval.
+Exactce717CI39212306093ALL5SUCCESS validates the prior command-contract correction
+and required JUnit paths; publish queued state/mutation+visual tests for freshCI.
+Runtime/versions/dependencies/locks/tag/deploy unchanged.
+
+### Earlier review phase 71
+
 **Review phase 71 explores state space and selected test sensitivity.**
 An independent field/history/future oracle checks5704bounded traces/21128generated
 events, serialization and detached listener/public snapshots beyond the existing

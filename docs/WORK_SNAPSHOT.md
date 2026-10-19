@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest author-reviewed fixed-env baseline/control/diffs plus independent
+  group/coordinate/canvas checks make CI-04 PASS in scope.76related/floor3passes;
+  zero-pixel wrong-group control proves image similarity is not semantic validity.
+  No old baseline replaced/automatic rebaseline/human-AT claim. Exactce717CI ALL5P
+  validates prior CI-format fix; queued state+visual tests need fresh wholeCI.
+
 - Latest independent5704trace oracle, reviewed deletion-minimal redo fixtures and
   five isolated mutants make CI-03/05 PASS in scope.52related/floor9passes and
   25controlpasses→23intentional mutant failures are not whole mutation coverage.
@@ -539,7 +545,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   and [workload guide](PERFORMANCE.md) separate startup/JSON/render/HTTP/cache scopes.
 - [State/mutation evidence](review_evidence/state_mutation_verification.json)
   retains exact bounded grammar, independent checks, shrunk traces and failure reasons.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS136/RUNNING6/OPEN7/
+- [Visual-contract evidence](review_evidence/visual_contract_verification.json)
+  records numeric oracles, meaningful/zero diffs, fixed-env hashes and author approval.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS137/RUNNING6/OPEN6/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

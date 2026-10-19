@@ -68,6 +68,23 @@ JSON/output contracts; record HEAD plus local changes, environment, command,
 exit code, skips and evidence before closing an ID. Missing coverage stays open.
 Full release gates and historical focused receipts are not interchangeable.
 
+## Visual baselines and numeric meaning
+
+Use fixed-environment images with independent data/group/axis/canvas assertions,
+not image similarity alone. The [representative evidence](docs/review_evidence/visual_contract_verification.json)
+includes a pixel-identical wrong-group control and a colour-only difference.
+Repeat renders in the same pinned setup use zero pixel delta; exact integer data
+coordinates/canvas in this fixture need no numeric slack. This is not a blanket
+cross-font/OS/backend tolerance. Global averaged image error can hide a small but
+important visible region; a one-channel perturbation is a measured noise control,
+not approval to accept every difference below that score.
+
+Never regenerate a failing baseline blindly. View original/control/diff, verify
+semantic assertions, and record environment/source/font hashes plus reviewer role
+and the reason for approval. Tests write temporary results, not repository
+baselines. The new representative baseline was author-reviewed only; it is not
+independent human AT/aesthetic review, and no older baseline was replaced.
+
 ## Before opening a pull request
 
 ```bash

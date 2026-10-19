@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신작성자fixed-envbaseline/control/diff검토와독립group/좌표/canvas로CI-04는범위PASS입니다.
+  관련76/floor3통과이며pixel0이어도의미가틀린control이있어이미지유사도를의미검사로대체하지않습니다.
+  기존baseline교체/자동재생성/사람AT승인은없습니다. 정확한ce717CI5job성공으로이전CI포맷검사를
+  확인했고대기state+visual검사는새소스전체CI를받습니다.
+
 - 최신독립5704traceoracle/검토한deletion-minimalredo2fixture/격리5mutant로CI-03/05는범위PASS입니다.
   관련52/floor9와control25통과→mutant23의도실패는전체mutationcoverage가아닙니다. 원runtimeSHA/
   isolatedimport가맞으며실제checkoutpatch/reset없습니다. ce717CI39212306093중testunit은로컬
@@ -450,7 +455,9 @@
   [workload안내](PERFORMANCE.ko.md)에시작/JSON/render/HTTP/cache범위를구분했습니다.
 - [상태/mutation 근거](review_evidence/state_mutation_verification.json)에제한grammar/
   독립검사/축소trace/실제실패사유를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS136/RUNNING6/OPEN7/DEFERRED1**.
+- [Visual계약 근거](review_evidence/visual_contract_verification.json)에수치oracle/
+  의미/0diff/고정env지문/작성자승인을보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS137/RUNNING6/OPEN6/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

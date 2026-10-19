@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰72차에서고정환경image검토와의미oracle를함께기록했습니다.** Repeat0pixel과독립integer
+좌표/group/axis/canvas는다른검사입니다. Groupcollapsecontrol은pixel같음/artistgroup틀림,
+색만다른control은numeric같음/pixel0.617%변화였고평균오차/noise를포괄자동승인으로삼지않았습니다.
+새4증거이미지를작성자가열어diff검토했으며기존baseline교체/자동재생성은없습니다.
+
+새3/관련76/floor3/3225deselected/Pyparsing13경고·품질9명령·activeLSP2clean,
+[근거](review_evidence/visual_contract_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS137/RUNNING6/OPEN6/DEFERRED1**입니다. CI-04PASS는독립사람AT/미관/LAY-09저DPI전체승인이
+아닙니다. 정확한ce717CI39212306093의5job모두성공으로이전명령검사수정/JUnit필수경로를확인했고
+대기state·mutation+visual검사를게시해새전체CI를받습니다. Runtime/버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰71차
+
 **리뷰71차에서상태공간과선정테스트민감도를검사했습니다.** 독립field/history/futureoracle가
 고정seed외5704제한trace/21128generatedevent·serialization/listener/publicsnapshot격리를확인합니다.
 Greedy삭제shrinker의검토redo2fixture는deletion-minimal이지전역최소/모든domain보장이아닙니다.

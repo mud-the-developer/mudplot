@@ -90,6 +90,7 @@ TESTS = (
     "tests/test_review_generated_drift.py",
     "tests/test_review_editor_assets.py",
     "tests/test_visual_quality.py",
+    "tests/test_review_visual_contracts.py",
     "tests/test_bar_uncertainty.py",
     "tests/test_review_annotation_alpha.py",
     "tests/test_review_coordinate_frames.py",

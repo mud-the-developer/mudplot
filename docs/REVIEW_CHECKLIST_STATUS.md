@@ -18,6 +18,30 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 72차 — 고정환경visualbaseline·의미oracle·diff검토기록
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-visual-baseline-svb3skvz`와
+  [fixedenv/numeric/diff/approval](review_evidence/visual_contract_verification.json),
+  [새baseline](review_evidence/ci_visual_baseline.png)/[appearancecontrol](review_evidence/ci_visual_appearance_control.png)/
+  [appearance×8diff](review_evidence/ci_visual_appearance_diff_x8.png)/[semantic×8diff](review_evidence/ci_visual_semantic_diff_x8.png)를 보존합니다.
+- 4×3inch/120DPI/480×360/Agg/primaryfont와버전을고정하고repeatpixeldelta0을확인했습니다.
+  독립oracle의정확한좌표(1,1)/(2,2)/축0..3/두PythonID1·문자열1group은수치slack이필요없습니다.
+  Group을1/1로붕괴시킨negativecontrol도pixel은완전히같았지만artist행/group검사는실패했습니다.
+  반대로색만바꾼control은numeric의미가같고약0.617%pixel/MSE.0008444차이였습니다.
+- 1channel/1pixelnoise의MSE2.96657e-11은노이즈관찰이지그값이하의모든변경자동승인이아닙니다.
+  전체평균오차가작다는이유로명확한색/의미오류를통과시키지않고다른OS/font/backend의포괄
+  tolerance를새로만들지않았습니다. 수치/artist/실제파일치수검사는이미지검사와계속분리합니다.
+- 작성자가image tool로baseline/control/appearance·semanticdiff를열어점위치/색/축과검은semanticdiff를
+  확인한뒤이새대표증거만승인했습니다. 기존baseline교체/자동재생성은없고tests는tmp결과만
+  씁니다. 독립사람AT/미관/모든publicationlayout승인이아니며후속baseline변경은diff/의미/env/source/
+  font지문/reviewer역할·사유를다시기록하도록양국어Contributing에명시했습니다.
+- 새3·관련76통과·floor3/3225deselected/경고13·양platformtype/Ruff266/생성계약/packaging9명령
+  exit0·변경2경로activeLSPclean입니다. 13은모두3종Pyparsing이며CI-04는대표고정환경/의미scopePASS,
+  LAY-09저DPI복잡배치/인간가독성전체를새로통과시키지않습니다.
+- 기준ce717CI39212306093의5job모두성공으로이전CI명령검사수정/필수JUnitgate전체를확인했습니다.
+  대기상태/mutant+visual검사를함께게시해새전체CI를받고runtime/의존성/lock/버전/tag/배포/
+  loop1·남은gates경계는유지합니다.
+
 ## 71차 — 독립상태oracle·축소fixture·격리선정mutant검사
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-state-mutations-xvltk6yv`와
@@ -1929,7 +1953,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | CI-01 | P0 | RUNNING | 표준 검사 실제 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-02 | P1 | PASS | 브라우저·TeX skip 가시성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-03 | P1 | PASS | 속성 기반 상태 테스트 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-04 | P1 | OPEN | golden image의 역할과 오차 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-04 | P1 | PASS | golden image의 역할과 오차 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-05 | P1 | PASS | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-06 | P1 | PASS | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-07 | P0 | DEFERRED | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
@@ -1944,7 +1968,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 136, RUNNING 6, OPEN 7, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 137, RUNNING 6, OPEN 6, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

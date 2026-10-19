@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Paired fixed-environment visual evidence with independent group/coordinate
+  assertions and reviewed diff artifacts; no blind baseline regeneration or
+  blanket cross-environment image tolerance was introduced.
 - Added a bounded exhaustive state machine with an independent oracle, reviewed
   deletion-minimal replay fixtures and isolated selected mutation evidence for
   axis/group/duplicate-key/atomicity/redo contracts, without runtime/dependency changes.

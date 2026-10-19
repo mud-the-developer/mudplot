@@ -62,6 +62,18 @@ buildprovenance/악성test방어/전체runtime정확성인증이아닙니다.
 ID를 닫기 전에 HEAD+로컬 변경·환경·명령·종료 코드·skip·증거를 기록합니다.
 부족한 검증은 OPEN으로 두며 과거 대상 통과를 전체 릴리스 gate 통과로 바꾸지 않습니다.
 
+## Visual baseline과수치의미
+
+고정환경이미지와독립data/group/axis/canvasassert를함께쓰고이미지유사도만으로통과시키지않습니다.
+[대표근거](docs/review_evidence/visual_contract_verification.json)는pixel이같아도group의미가틀린
+control/색만다른diff를포함합니다. 같은pinned환경repeat는0pixeldelta,이fixture의정확한integer좌표/
+canvas는수치slack이필요없습니다. 이를다른font/OS/backend의포괄오차로확대하지마세요. 전체평균오차는
+작지만중요한영역을숨길수있고1channelnoisecontrol은그점수이하의모든차이승인이아닙니다.
+
+실패baseline을맹목재생성하지말고원본/control/diff와의미assert를본뒤env/source/font지문·reviewer역할·
+승인사유를기록합니다. Test는tmp결과만쓰며repo baseline을갱신하지않습니다. 새대표baseline은작성자검토이지
+독립사람AT/미관평가가아니고기존baseline을교체하지않았습니다.
+
 ## Pull request 전 확인
 
 ```bash

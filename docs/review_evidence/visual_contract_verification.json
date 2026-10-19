@@ -1,0 +1,401 @@
+{
+  "source_sha256": {
+    "tests/test_review_visual_contracts.py": "aac54f68bc3b061c867b848d5d3573388b02e17e09797730d98c5801fe7dfe33",
+    "scripts/check_minimum_versions.py": "0c72b1d891cc71179c44ed7e9220f9d1c28bb39f72012daaf3ee731fdb9df32a",
+    "CONTRIBUTING.md": "dbe641c31312aa7ece2f346106f62f740c89beb1f2217be2293025dc0cead843",
+    "CONTRIBUTING.ko.md": "d1a49fb1930b4a43b2daa60caa0a6190e40c6f0f2accb4eaaa74148d29688d89",
+    "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+    "mudplot/_categorical.py": "594f8d472ba4455141b312ef4e67bb528f57ef46938708a31287c53e6196998f",
+    "mudplot/_stat.py": "0786605360f0ddcbacc2fb6f351295d95f7fe6b8d4b8a26b1ae1c87fd7cbef27",
+    "tests/test_visual_quality.py": "ee07103b118b67dc1bf8216545e284a21e5b25ae8886567f91006b668cd4f9ba",
+    "tests/test_stabilization.py": "7e84752a552a54bb8c98f9e60c490c713ba869b2a7d2e3889a6a6c3fe9395bf2",
+    "tests/test_review_group_identity.py": "f9c94d64d83e9c56f9dcc062741d807a886556988ef9e0b939dd7fcd2a33bd25"
+  },
+  "fixed_environment_probe": {
+    "environment": {
+      "python": "3.12.15",
+      "system": "Windows",
+      "release": "11",
+      "machine": "AMD64",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "Pillow": "12.3.0"
+      },
+      "backend": "Agg",
+      "primary_font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22"
+    },
+    "canvas_inches": [
+      4,
+      3
+    ],
+    "dpi": 120,
+    "pixels": [
+      480,
+      360
+    ],
+    "rows": [
+      {
+        "name": "baseline",
+        "source_sha256": "2dfee9e12b6394cc365da1d980f55fb9b11624d1f50ac82c15af313fcd30e08b",
+        "group_offsets": [
+          [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              2.0,
+              2.0
+            ]
+          ]
+        ],
+        "semantic_group_oracle": true,
+        "xlim": [
+          0.0,
+          3.0
+        ],
+        "ylim": [
+          0.0,
+          3.0
+        ]
+      },
+      {
+        "name": "repeat",
+        "source_sha256": "2dfee9e12b6394cc365da1d980f55fb9b11624d1f50ac82c15af313fcd30e08b",
+        "group_offsets": [
+          [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              2.0,
+              2.0
+            ]
+          ]
+        ],
+        "semantic_group_oracle": true,
+        "xlim": [
+          0.0,
+          3.0
+        ],
+        "ylim": [
+          0.0,
+          3.0
+        ]
+      },
+      {
+        "name": "semantic-collapsed",
+        "source_sha256": "7e95c973fa0d16d8e9dc27b0a3fceb4e02631c1b4cff124cc5adcd1cda322496",
+        "group_offsets": [
+          [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              2.0,
+              2.0
+            ]
+          ]
+        ],
+        "semantic_group_oracle": false,
+        "xlim": [
+          0.0,
+          3.0
+        ],
+        "ylim": [
+          0.0,
+          3.0
+        ]
+      },
+      {
+        "name": "appearance-red",
+        "source_sha256": "8b560c81aaaed4d83ceff6c734a8f00f730c16090ccde5e752be646d731d171e",
+        "group_offsets": [
+          [
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          [
+            [
+              2.0,
+              2.0
+            ]
+          ]
+        ],
+        "semantic_group_oracle": true,
+        "xlim": [
+          0.0,
+          3.0
+        ],
+        "ylim": [
+          0.0,
+          3.0
+        ]
+      }
+    ],
+    "comparisons": {
+      "baseline": {
+        "changed_pixel_fraction": 0.0,
+        "mean_square_normalized": 0.0,
+        "max_channel_delta": 0.0,
+        "pixel_equal": true
+      },
+      "repeat": {
+        "changed_pixel_fraction": 0.0,
+        "mean_square_normalized": 0.0,
+        "max_channel_delta": 0.0,
+        "pixel_equal": true
+      },
+      "semantic-collapsed": {
+        "changed_pixel_fraction": 0.0,
+        "mean_square_normalized": 0.0,
+        "max_channel_delta": 0.0,
+        "pixel_equal": true
+      },
+      "appearance-red": {
+        "changed_pixel_fraction": 0.006168981481481482,
+        "mean_square_normalized": 0.0008443999458897576,
+        "max_channel_delta": 148.0,
+        "pixel_equal": false
+      },
+      "single-channel-noise": {
+        "changed_pixel_fraction": 5.787037037037037e-06,
+        "mean_square_normalized": 2.966570312462918e-11,
+        "max_channel_delta": 1.0,
+        "pixel_equal": false
+      }
+    },
+    "file_sha256": {
+      "appearance-red.png": "15eae604d01b87f7f5cec250d689a4e21f7e7e65b4b0aaf924a57403dec114d4",
+      "baseline.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+      "diff-appearance-red.png": "cde8ae8abcd872239951b892751096a29a05dd87e8ccf40721e2d0909f96126a",
+      "diff-repeat.png": "8887c1978e7fd3a1cbecee096b28d487fa4d3c0c760ed6a8a3a2fb5e679006b9",
+      "diff-semantic-collapsed.png": "8887c1978e7fd3a1cbecee096b28d487fa4d3c0c760ed6a8a3a2fb5e679006b9",
+      "diff-single-channel-noise.png": "77e836e8fb079dfd4824a9f7b4a678a22bb51112e6dce65e6ac7beea53be4338",
+      "repeat.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+      "semantic-collapsed.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+      "single-channel-noise.png": "901b9954211122e9b8bd0d65bc856768fb853f4f0746d14afe4dd42bd4828f9e"
+    },
+    "scope": "Fixedenvironmentrepresentativebaselinewithindependentgroup/coordinates/canvasassertions.Semanticnegativecontrolchangesgroupidentitybutpixelsremainidentical;appearancecontrolkeepssemanticsbutpixelschange.No blanketcrossenvironmentthresholdorauto-rebaseline."
+  },
+  "reviewed_files": {
+    "docs/review_evidence/ci_visual_baseline.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+    "docs/review_evidence/ci_visual_appearance_control.png": "15eae604d01b87f7f5cec250d689a4e21f7e7e65b4b0aaf924a57403dec114d4",
+    "docs/review_evidence/ci_visual_appearance_diff_x8.png": "cde8ae8abcd872239951b892751096a29a05dd87e8ccf40721e2d0909f96126a",
+    "docs/review_evidence/ci_visual_semantic_diff_x8.png": "8887c1978e7fd3a1cbecee096b28d487fa4d3c0c760ed6a8a3a2fb5e679006b9"
+  },
+  "baseline_approval": {
+    "reviewer_role": "coding assistant, author review",
+    "status": "approved representative fixed-environment evidence baseline only",
+    "reviewed": "Image tool viewed baseline, red appearance control, amplified appearance diff and all-black semantic-collapse diff. Blue/red point centers at(1,1)/(2,2), axes0..3/canvas4x3in120DPI; appearance diff restricted to points, semantic diffblack despite wrong group identity.",
+    "independent_human_review": "not_run",
+    "prior_baselines_replaced": false,
+    "scope": "Four NEW evidence images, no automatic update or blanket publication/aesthetic/AT approval. Current tests write tmp outputs only."
+  },
+  "tolerance_policy": "Sameenvironmentrepeatrequires0pixeldelta;manuallychosenintegercoordinates1/2andcanvas480x360areexact/neednoslack.Inotherenvfont/backendversionnotblanketcross-platformpixelbytepromise.Appearancecontrolchanges0.00616898pixelfractionyetglobalMSE.0008444;semanticgroupcollapseimageEXACT0whileindependentgrouporaclefails.Onechannel1pixelnoiseMSE2.96657e-11isdiagnosticNOTpermissiontoacceptalllower-scorechanges.No thresholdrelaxation/autorebaseline.",
+  "numeric_semantics": "OriginalPythonIDs1/string1shouldproduce2groupswithoffsets[[1,1]],[[2,2]].Collapsedcontrol1/1producesonecollectionbothpoints,identicalpixelswithsameexplicitcolour/marker/no legend. Colour-onlycontrolretainsgroups/coordinatesbutchangespixels. Imagesalonecannotprovesemanticcorrectness. Existingaxis/numeric/rawdatatestsretained.",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "environment_overrides": {
+    "visual-verification": {
+      "scope": "Existing fixed4x3in120DPI/Agg/font-pinned representative report and4newimages, not regenerated repo baselines; image reading/reviewer scope recorded separately."
+    },
+    "floor-visual": {
+      "PYTEST_ADDOPTS": "-k \"test_review_visual_contracts\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "visual-verification",
+      "argv": [
+        "python",
+        "<evidence>\\verify_visual.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Exact repeat;pixel-identical wrong group rejected numerically;appearance-only diff detected;4new author-reviewed artifacts fingerprints verified"
+      ],
+      "log_text_sha256": "41fbe4b4b7dd093d0c6b7e2c4d690c8a1ac2d7ca0dd104dddc229b5fedcc7640"
+    },
+    {
+      "name": "visual-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_visual_contracts.py",
+        "tests/test_visual_quality.py",
+        "tests/test_stabilization.py",
+        "tests/test_review_group_identity.py",
+        "tests/test_review_coordinate_frames.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "76 passed in 49.41s"
+      ],
+      "log_text_sha256": "8a0ed9abdf39e48ad5ebe236f17ca147fa5b51ff05321d079452dd020fc2da3a"
+    },
+    {
+      "name": "floor-visual",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "3 passed, 3225 deselected, 13 warnings in 4.98s"
+      ],
+      "log_text_sha256": "69e75c20784519e2abac8072fa05b798957f2525e28a1d9bc0a73fd7013d73b2"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "266 files already formatted"
+      ],
+      "log_text_sha256": "de72dbac372b74a3c7cc904de89d96362e24e44d74295ec7886f6c77f59817b2"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "9ce8d84acfc4314c9d4dc6eaf05a2608a766b7ccb335c7c868e81b7997507b6a"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "e675bb4858dccab958ad88b568b2fe24c596d46bad36489a3c004399f5cb07e8"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "probe.py": "41efed9869197cedec282f352b2b01be80205ebeeb844f0dab0b7f25226932d0",
+    "verify_visual.py": "dc371f66eed4a3f3c4b86b7432edd02598a7a245ffa594248c4df74212998010",
+    "qa.py": "bb3570090919fbbf6b657168a2cc9178cb208c780615c16010656033c7294f24",
+    "visual_probe.json": "e1d0cd9bbe7ce2e78281b7fb64ed7e54e6e91f36c0af2edc7080118956fd7673",
+    "reviewed_files.json": "ce4c82b20c4f68f01333dca82dd48a3902d9b5df4039f0dbdbd012541f00206d",
+    "baseline.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+    "repeat.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+    "semantic-collapsed.png": "f79f9de8d7a9828b1c85f0a4ff8ec37e1d6cbb4ce613246ab421d41ed52c00f6",
+    "appearance-red.png": "15eae604d01b87f7f5cec250d689a4e21f7e7e65b4b0aaf924a57403dec114d4",
+    "single-channel-noise.png": "901b9954211122e9b8bd0d65bc856768fb853f4f0746d14afe4dd42bd4828f9e",
+    "diff-appearance-red.png": "cde8ae8abcd872239951b892751096a29a05dd87e8ccf40721e2d0909f96126a",
+    "diff-semantic-collapsed.png": "8887c1978e7fd3a1cbecee096b28d487fa4d3c0c760ed6a8a3a2fb5e679006b9",
+    "diff-repeat.png": "8887c1978e7fd3a1cbecee096b28d487fa4d3c0c760ed6a8a3a2fb5e679006b9",
+    "diff-single-channel-noise.png": "77e836e8fb079dfd4824a9f7b4a678a22bb51112e6dce65e6ac7beea53be4338",
+    "environment_overrides.json": "5705f54f5d564e3e0b88725406074efc89b5790182bfd9011ad3aa22c91a4004",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "617147be45cd21dfa4910f8f5fb18392c4f6c3f946558b98ce44939d5eb369de",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}
