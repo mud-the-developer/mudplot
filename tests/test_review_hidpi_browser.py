@@ -89,9 +89,11 @@ def test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame(
         assert moved is not None and moved == pytest.approx(expected_key, rel=3e-5)
         assert moved[0] < dragged[0]  # rightward pixels on an inverted log x axis
         _settle(page)
-        assert (
-            page.evaluate("document.activeElement.dataset.handleId")
-            == f"layer-at:3:{active}"
+        # HTMX restores focus on the next animation frame, not the state commit.
+        page.wait_for_function(
+            "id => document.activeElement.dataset.handleId === id",
+            arg=f"layer-at:3:{active}",
+            timeout=5000,
         )
         page.get_by_role("button", name="Undo", exact=True).click()
         _wait_until(

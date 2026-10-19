@@ -22,6 +22,12 @@
 
 ## 검증과 리뷰 상태
 
+- 최신공유htmx/license/nativebrowserhash·4controlledversion·metadata거절과관련176/
+  floor2로RUST-07은matching-source범위PASS입니다. Runtimepackagehandshake를추가하지
+  않았고전체표준smoke의outertimeout은focused성공과구분해미확인으로남깁니다.
+  489aCI의즉시focusassert실패는성공이아니며boundedfocuswait수정의로컬4통과/새LinuxCI
+  필요를구분해대기HTML/자산/testfix를함께게시합니다.
+
 - 최신FIND-042는action/focus정책을바꾸지않고erroralert/currentpage의미를붙입니다.
   새pure3/실제keyboard-only·관련169/browser6/floor3로EDIT-08은Python범위PASS이며
   EDIT01..09검토가사람의AT/nativecontrol인증은아닙니다. 긴Tab경로는명시하고489aCI
@@ -378,7 +384,9 @@
   route/status/type/error표와numericfieldcontext경계를보존했습니다.
 - [Keyboard/access 근거](review_evidence/keyboard_access_verification.json)에
   Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS122/RUNNING5/OPEN22/DEFERRED1**.
+- [Editorasset 근거](review_evidence/editor_asset_verification.json)에
+  served/compiledhash·controlledmismatch·미확인smoke를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING5/OPEN21/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

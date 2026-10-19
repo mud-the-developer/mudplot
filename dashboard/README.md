@@ -7,7 +7,10 @@ dependency-free declarative core has no UI dependency; the dashboard imports
 the engine in one direction only. The engine wheel deliberately excludes
 `dashboard/` and the Rust editor. Use a matching source checkout and its locked
 render/dev environment; a successful `pip install mudplot` is not a standalone
-editor installation.
+editor installation. Rust embeds this checkout's single htmx asset and reuses
+its 0BSD license rather than vendoring another copy. Package-label equality is
+checked by release preflight, not a runtime handshake; compatible labels can
+still mix, so startup success is not a cross-release compatibility certificate.
 
 ```
 dashboard ──▶ mudplot   (one-way dependency)

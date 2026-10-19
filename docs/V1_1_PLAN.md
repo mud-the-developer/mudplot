@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 62 verifies matching-checkout assets and mismatch boundaries.**
+One tracked htmx/license pair supplies Python/Rust and actual native Chromium
+version/hash. Embedded spec/capabilities and declared metadata align. Controlled
+current/compatible-label runtimes start; incompatible spec or missing required
+capability fails meaningfully. Release preflight explains metadata mismatch;
+there is no automatic package-label handshake or all-historical-release promise.
+
+Newpure2/176related/floor2passes/3118deselected/13Pyparsing warnings and9quality
+records pass. A focused actual native browser asset check passes; the earlier
+full standard smoke exceeded an OUTER480sQA budget without an exit receipt and
+remains inconclusive, not passed. RUST-07 is PASS only in the documented scope.
+[Evidence](review_evidence/editor_asset_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS123/RUNNING5/OPEN21/DEFERRED1**. Baseline489aCI39183500953failed three
+3.10immediate-focus assertions;3.12was cancelled. [Focused synchronization](review_evidence/browser_focus_sync_verification.json)
+keeps exact expectations with bounded UI-focus waits (local4pass, newLinuxCI
+still required), not a data/runtime change. Publish queued HTML/assets/testfix
+for new whole CI. Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 61
+
 **Review phase 61 adds missing error/current-page accessibility semantics.**
 FIND-042 adds alert semantics to still-escaped errors and aria-current to the
 active navigation link; three pure checks fail before/pass after. A real

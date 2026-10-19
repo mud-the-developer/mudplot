@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified shared htmx/license ownership and native browser asset hashes, plus
+  controlled compatible-label/incompatible-spec/capability startup boundaries.
+  Clarified matching-checkout policy without adding a runtime version handshake.
 - Added alert/current-page semantics to Python editor errors/navigation and
   verified a keyboard-only panel/form/error-recovery/handle/navigation journey.
   Existing labels, focus outlines and action/state behavior remain unchanged.

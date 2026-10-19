@@ -120,9 +120,10 @@ def test_keyboard_panel_forms_error_recovery_handle_and_navigation(browser, tmp_
         )
         assert right is not None and right[0] > before[0]
         _settle(page)
-        assert (
-            page.evaluate("document.activeElement.dataset.handleId")
-            == f"title::{active}"
+        page.wait_for_function(
+            "id => document.activeElement.dataset.handleId === id",
+            arg=f"title::{active}",
+            timeout=5000,
         )
         page.keyboard.press("Shift+ArrowLeft")
         left = wait_state(

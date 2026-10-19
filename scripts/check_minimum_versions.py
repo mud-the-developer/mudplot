@@ -77,6 +77,7 @@ TESTS = (
     "tests/test_review_accessibility.py",
     "tests/test_schema_export.py",
     "tests/test_review_generated_drift.py",
+    "tests/test_review_editor_assets.py",
     "tests/test_visual_quality.py",
     "tests/test_bar_uncertainty.py",
     "tests/test_review_annotation_alpha.py",

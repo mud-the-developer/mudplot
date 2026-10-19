@@ -6,6 +6,15 @@ with the Python package so generated contracts cannot drift unnoticed.
 The engine wheel does not contain this editor or its dashboard assets. Build it
 from the matching source checkout with that checkout's Python environment.
 
+There is no automatic Python **package-label** handshake at editor startup.
+Release preflight compares Python/project/Rust/Cargo.lock metadata; an engine
+with incompatible spec/default or required capabilities fails through the real
+bridge startup checks. A compatible runtime with a different package label can
+still start, so use the matching checkout rather than treating acceptance as a
+cross-release compatibility guarantee. Controlled version/capability probes and
+served htmx hashes are recorded in `docs/review_evidence/editor_asset_verification.json`;
+these are not tests of every historical published Python distribution.
+
 ## Run
 
 From the repository root, after `uv sync --locked --extra render`:

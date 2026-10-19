@@ -154,6 +154,18 @@ bbox의물리간격을사용합니다. Manualanchor는caller소유이며constrai
 reference/marker를보이는문자가같다는이유로합치지않습니다. Spec/source/stylefield는
 이guide정책으로재작성하지않습니다.
 
+## Editor checkout과공유static
+
+Editor는matchingPython환경의sourcecheckout을사용하세요. Rust는dashboard/static의단일
+htmx와0BSDlicense를재사용하고embeddeddefaultspec/generatedcapabilities참조를씁니다.
+Enginewheel만으로dashboard/editor가독립설치되는것은아닙니다.
+
+Releasepreflight는Python/project/Rust/Cargo.lockmetadata차이를검출하지만startup은Python
+packagelabelhandshake를강제하지않습니다. Label만다른호환controlledruntime은시작될수있고
+spec/default나필수capability불일치는실제bridge parsing/rendering에서거절됩니다. 모든과거
+배포판조합의보장이아닙니다. Focusednativebrowserasset/hash검사와표준전체browsersmoke의
+시간한도미확인실행은별개이며후자를통과로세지않습니다.
+
 ## 키보드와상태피드백
 
 Pythoneditor의native label/disclosure/button은keyboardform/panel선택/페이지이동을지원하고

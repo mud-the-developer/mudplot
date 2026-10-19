@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰62차에서matchingcheckout자산과mismatch경계를검증했습니다.** 단일htmx/license는
+Python/Rust/실제nativeChromium의버전/hash가같고embeddedspec/capabilities/metadata도맞습니다.
+Controlledcurrent/compatiblelabel은수용,불일치spec/필수capability는설명가능한시작거절입니다.
+Releasepreflightmetadata차이는검출하지만runtimepackage-labelhandshake/모든과거배포판보장은아닙니다.
+
+새pure2/관련176/floor2통과/3118deselected/Pyparsing13경고·품질9명령과focused실제native
+browser는통과했습니다. 앞선표준전체smoke는OUTERQA480s한도로exitreceipt없이끝나미확인이지
+통과가아닙니다. RUST-07은명시범위PASS입니다. [근거](review_evidence/editor_asset_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS123/RUNNING5/OPEN21/DEFERRED1**입니다.
+기준489aCI39183500953은3.10focus즉시assert3실패/3.12cancelled로끝났습니다.
+[동기화근거](review_evidence/browser_focus_sync_verification.json)는정확한UI-focus조건wait의
+로컬4통과/새LinuxCI필요를구분하며data/runtimefix가아닙니다. 대기HTML/자산/testfix를함께
+게시해새전체CI를받고버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰61차
+
 **리뷰61차에서오류/currentpage접근성의미누락을보완했습니다.** FIND-042는escaped오류에
 alert/currentnavlink에aria-current를붙여pure3의before실패/after통과를확인했습니다.
 실제Tab/Enter/typing/화살표만으로panel선택·form·JSON오류회복·보통/Shift handle이동·Docs/

@@ -1,0 +1,34 @@
+{
+  "baseline_ci": {
+    "run": 39183500953,
+    "head": "489a97bb43d0eeb914be8c394a5b15a5c45b0113",
+    "failed_job": 117841034733,
+    "surface": "Python3.10UbuntuPytest",
+    "failures": [
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[1-1.0-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.25-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.0-1.25]"
+    ],
+    "observed": "Immediate document.activeElement.dataset.handleId wasNone after key commit;data/geometry assertions had passed.",
+    "log_text_sha256": "71188b7907898e5c97131afe004a870fcf0c1accb06108a81cee5f224a56a399"
+  },
+  "change": "Tests now wait_for_function for the exact handle focus with5000msbudget. Thispreservesfocusassertion,notdisables/retrieswholecase;HTMXrestorationrunsinrequestAnimationFrame. Samepostconditionawaitusedinrelatedkeyboard-onlytest. No app/runtime/datascalecodechange.",
+  "source_sha256": {
+    "tests/test_review_hidpi_browser.py": "4c88a910baf6c82ee2b8effc1787106df584eccc6f87781997366f4bfd63faa1",
+    "tests/test_review_keyboard_browser.py": "09dec7e6a209e39e7c40ca17e423797287e7211096849f43ec65622ba566b276",
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f"
+  },
+  "local_verification": {
+    "exit_code": 0,
+    "cases": [
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[1-1.0-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.25-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.0-1.25]",
+      "test_keyboard_panel_forms_error_recovery_handle_and_navigation"
+    ],
+    "junit_sha256": "1cb93955553f0fed2bbec94ef1c17cd94fbb604313ef07b17a7da724b8fdb55b",
+    "log_text_sha256": "6256fa6702fc1672c1a56f3b41b323dbdeafcf1b62414ebe22e50015ef2b4120"
+  },
+  "limits": "Real newLinuxCIstillrequired;localWindows4passnotproofthatpriorrunisgreen. No arbitrarysleep/looseneddataexpectation/removedfocuscheck.",
+  "qa_note": "ghrunlogunavailablewhileworkflowrunning;completedjobRESTlogdownloadsavedprivately,UTF8BOM/ANSItextdecodedwithoutcredentialoutput. Initialterminalescape/stdindecodeerrorswerelog-fetchtoolissues,notproducttests."
+}

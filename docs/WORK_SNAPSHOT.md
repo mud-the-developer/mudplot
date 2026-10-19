@@ -28,6 +28,14 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest shared htmx/license/native-browser hash and4controlled version cases,
+  release metadata mismatch test and176related/floor2passes make RUST-07 PASS
+  in matching-source scope. No package-label runtime handshake/new runtime added.
+  Full canonical smoke's outer-budget timeout remains inconclusive, separate from
+  focused browser success. Baseline489aCI failed immediate-focus assertions;
+  bounded observable-focus waits pass4locally but need newLinuxCI. Publish the
+  queued HTML/assets/testfix without claiming the old run succeeded.
+
 - Latest FIND-042 adds error-alert/current-page semantics without changing action
   or focus policy. Newpure3/actualkeyboard-only journey plus169related/6browser/
   floor3passes make EDIT-08 PASS in Python scope. EDIT01..09 reviewed, not human
@@ -455,7 +463,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains actual route/status/type/error tables and numeric field context boundaries.
 - [Keyboard/access evidence](review_evidence/keyboard_access_verification.json)
   retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS122/RUNNING5/OPEN22/
+- [Editor-asset evidence](review_evidence/editor_asset_verification.json)
+  retains served/compiled hashes, controlled mismatch outcomes and incomplete smoke.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING5/OPEN21/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

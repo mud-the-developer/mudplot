@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 62차 — 공유static/license와matchingcheckout경계
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-editor-assets-kff9yi0o`와
+  [자산hash/라이선스·4runtime·미확인smoke](review_evidence/editor_asset_verification.json)을 보존합니다.
+- 추적htmx는dashboard/static의JS/0BSDlicense2경로뿐이며Rustinclude_bytes는같은JS를
+  씁니다. 실제Python/RustHTTP및nativeChromiumwindow.htmx1.9.12의응답SHA가원본과같고
+  embeddeddefaultspec/currentgeneratedcaps/Python·Rust·Cargo.lockmetadata도일치합니다.
+- 현Pythoncontrolledruntime4종에서current/compatiblelabel9.9.9-probe는정상startup/action,
+  spec9.9-probe/missingthemescapability는실제bridge오류로startup거절됐습니다. Runtimepackage
+  labelhandshake는원래없으며이를새guard/field로추가하지않았습니다. 별도releasepreflight의
+  Pythonmetadata불일치fixture는project/Rust/lock차이를설명하며수용이모든과거배포판호환보장은아닙니다.
+- 표준rust_editor_smoke_test.py--browser는전체QA480s예산중진행하다outertimeout으로
+  exitreceipt없이끝났습니다. 빈native.log/후속ownedprocess없음을기록했고통과/제품assertion
+  실패로세지않습니다. 그뒤RUST-07전용실제browserasset로드/hash를별도로수행했지전체smoke를
+  작은검사로통과치환하지않았습니다. WholeCI/gate결과와도구분합니다.
+- 새pure2·관련176통과·실제nativefocusedbrowser1·4controlledruntime·floor2통과/
+  3118deselected/경고13·양platformtype/Ruff253/생성계약/packaging9명령exit0·새test/minrunner
+  activeLSPclean입니다. 13은모두3종Pyparsing이며native전용sitecustomize와floorplugin경로를
+  분리해다른환경/설치파일에개입하지않습니다.
+- RUST-07은현재matching-source/assets/controlledmismatch범위PASS입니다. Runtime/FIND추가는
+  없습니다. 기준489aCI39183500953은3.10의DPR3casefocus즉시assert실패/3.12cancelled로끝나
+  성공이아닙니다. [focus동기화근거](review_evidence/browser_focus_sync_verification.json)에
+  실제joblog와정확한postcondition5초wait를보존했습니다. Assertion/data조건을제거하지않고
+  HTMXrequestAnimationFrame복원을기다리며로컬관련4case통과/새LinuxCI필요를구분합니다.
+  대기HTML의미/자산/test동기화를함께게시하고버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 61차 — keyboard경로와alert/current상태의미
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-keyboard-access-w5uvdwsx`와
@@ -1642,7 +1668,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | RUST-04 | P1 | PASS | 120초 timeout과 자식 정리 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-05 | P1 | PASS | preview 2000px 제한과 원본 보존 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-06 | P1 | PASS | Rust history와 캐시의 commit 순서 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
-| RUST-07 | P1 | OPEN | 공유 static 자산·버전 정합성 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
+| RUST-07 | P1 | PASS | 공유 static 자산·버전 정합성 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | SEC-01 | P0 | PASS | loopback bind와 Host 검증 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-02 | P0 | PASS | Origin과 mutation 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-03 | P0 | PASS | 16 MiB 요청 한도 | _Handler._read_body; protect_local_boundary limited Bytes | test_review_body_framing.py(13); check_request_body_limits.py(39); 실제 PID RSS/peak·상태 보존 11차 기록 |
@@ -1686,7 +1712,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 122, RUNNING 5, OPEN 22, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 123, RUNNING 5, OPEN 21, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

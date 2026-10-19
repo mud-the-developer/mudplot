@@ -180,6 +180,21 @@ their existing identity handling: raw `1` and `"1"`, different data columns, axe
 references and marker sources are not merged just because visible strings match.
 No spec/source/style fields are rewritten by this guide policy.
 
+## Matching editor checkout and static assets
+
+Use the editor source checkout with its matching Python environment. Rust embeds
+`dashboard/static/htmx.min.js`, shares its 0BSD license, and uses the embedded
+spec/default and generated capabilities references; the engine wheel is not a
+standalone dashboard/editor installation.
+
+Release preflight detects Python/project/Rust/Cargo.lock metadata drift, but
+startup does not enforce a Python package-label handshake. A label-only compatible
+controlled runtime can start; incompatible spec/default or missing required
+capabilities fail through actual bridge parsing/rendering. This is a documented
+boundary, not proof of all historical Python/editor combinations. The focused
+native browser asset/hash check is separate from an inconclusive time-bounded
+attempt at the full standard browser smoke; the latter is not counted as a pass.
+
 ## Keyboard and state feedback
 
 The Python editor's native labels/disclosures/buttons support keyboard form,

@@ -1,0 +1,302 @@
+{
+  "source_sha256": {
+    "dashboard/static/htmx.min.js": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+    "dashboard/static/htmx.LICENSE": "126cfb5670a927207a43f0387ce4cb5f853337116c39a18b02cb8198403d471e",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/model.rs": "1e90a18758b04e535ded2725372f957643b57c9f872031410bbbec87304ddcd6",
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+    "mudplot-editor/default_spec.json": "881140137f8359977f922d05f30675e9396a1590163dbde1011c4a587afac448",
+    "scripts/check_release_version.py": "493fbf277a7cebe0aff9fcba74e3ce7cf21a4d748c88bfc9dd4082d8ab080997",
+    "tests/test_review_editor_assets.py": "703ec7a126dd34b77526b10ca90abfa9e6e2f9d0bd3fc0a0c3ed5a47e1f76ea2",
+    "scripts/check_minimum_versions.py": "5b2e79b97dfaa418e491d774f9add26ae4f9ad9a9c4c528a04abc1f9c0e881dd",
+    "schemas/capabilities.json": "3cdb2f0b4a2de25ebc5ead198dfb9a895196df5a9b090d33d1a777bde62ac1df"
+  },
+  "asset_version_matrix": {
+    "tracked_htmx_paths": [
+      "dashboard/static/htmx.LICENSE",
+      "dashboard/static/htmx.min.js"
+    ],
+    "htmx_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+    "htmx_license_sha256": "126cfb5670a927207a43f0387ce4cb5f853337116c39a18b02cb8198403d471e",
+    "native_binary_sha256": "372a6d4cbceea81e61d0a6d2befda39f2760e6e57d40e5f7994b83242553abed",
+    "package_editor_lock_version": "1.0.0",
+    "spec_version": "0.1",
+    "python_static_hash_matches": true,
+    "cases": [
+      {
+        "mode": "current",
+        "startup": "accepted",
+        "metadata": {
+          "package_version": "1.0.0",
+          "spec_version": "0.1",
+          "package_file": "<workspace-package>",
+          "executable": "<selected-python>"
+        },
+        "spec_action_roundtrip": true,
+        "served_htmx_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+        "package_label_handshake": false,
+        "browser_htmx_version": "1.9.12",
+        "browser_asset_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452"
+      },
+      {
+        "mode": "label-only",
+        "startup": "accepted",
+        "metadata": {
+          "package_version": "9.9.9-probe",
+          "spec_version": "0.1",
+          "package_file": "<workspace-package>",
+          "executable": "<selected-python>"
+        },
+        "spec_action_roundtrip": true,
+        "served_htmx_sha256": "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452",
+        "package_label_handshake": false
+      },
+      {
+        "mode": "spec-contract",
+        "startup": "rejected",
+        "metadata": {
+          "package_version": "1.0.0",
+          "spec_version": "9.9-probe",
+          "package_file": "<workspace-package>",
+          "executable": "<selected-python>"
+        },
+        "exit_code": 1,
+        "error_text": "Error: BridgeError(\"Python bridge exited with exit code: 1: error: invalid FigureSpec JSON: don't know how to load spec version '0.1' (this mudplot understands '9.9-probe'); upgrade mudplot, or migrate the file by hand\")\n"
+      },
+      {
+        "mode": "missing-capability",
+        "startup": "rejected",
+        "metadata": {
+          "package_version": "1.0.0",
+          "spec_version": "0.1",
+          "package_file": "<workspace-package>",
+          "executable": "<selected-python>"
+        },
+        "exit_code": 1,
+        "error_text": "Error: BridgeError(\"decode capabilities: missing field `themes` at line 2769 column 1\")\n"
+      }
+    ],
+    "scope": "Controlled metadata/spec/capability runtime variants on selected current Python;NOThistoricalreleased-packagecompatibilitymatrix.Noauto package-label handshake promised;release preflight detects metadata drift."
+  },
+  "incomplete_broad_smoke": {
+    "command": [
+      "python",
+      "scripts/rust_editor_smoke_test.py",
+      "--browser"
+    ],
+    "outcome": "incomplete: outer QA batch480s timeout before child exit receipt",
+    "exit_code": null,
+    "native_log_empty": true,
+    "ownership_check": "After timeout the filtered process inventory contained no python/native editor processes from the task; only querying shells.",
+    "not_counted_as_pass": true,
+    "focused_browser": "Separately real native page loads current htmx, evaluates version and matches response bytes; not full canonical smoke completion."
+  },
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "ownership_policy": "One tracked dashboard/static/htmx.min.js plus0BSDlicense.Rustinclude_bytesusesSAMEfileandPythonservesit;realnativebrowserwindow.htmxversion/hashagree. Embeddeddefaultversion/currentcapabilitiesJSONandPython/Rust/Cargo.lockmetadataagreeinmatchingcheckout. Enginewheeldoesnotincludeeditor/dashboard,matchingcheckoutrequired.",
+  "mismatch_policy": "NOautomaticpackage-labelhandshake. Controlledsame-specPythonlabel9.9.9-probeisacceptedwithrealactionroundtripandmustnotbepresentedasruntimeversionrejection. ExistingreleasepreflightfixtureflagsRust/pyproject/Cargo.lockversusPythonmetadatadrift. Actualincompatiblespec9.9-probeandmissingcapabilitythemesrejectstartupmeaningfully. Thesearecontrolledcurrent-runtimevariants,NOThistoricaldistributioncompatibilitymatrix. No newruntimeguard/metadatafield/contractversionintroduced.",
+  "smoke_scope": "Fullcanonicalrust_editor_smoke_test.py--browserwasinterruptedbyOUTER480sQAtimebudgetbeforeexitreceipt.Native logemptyandposttimeouttask-ownedprocessinventorywasempty.Notcountedaspassorfailureassertion. SeparatetargetedactualChromium-nativeassetload/version/responsehashisboundedandpassed;doesnotclaimfullcanonicalcompletion.",
+  "environment_overrides": {
+    "version-probe": {
+      "native_PYTHONPATH": "<owned-evidence>",
+      "MUDPLOT_PROBE_MODE": "one of current/label-only/spec-contract/missing-capability; local controlled stubs, not historical distributions"
+    },
+    "floor-assets": {
+      "PYTEST_ADDOPTS": "-k \"test_review_editor_assets\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-floor-plugin>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "version-probe",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Shared Python/Rust htmx hash+license/embedded spec/capability alignment and4controlled runtime version cases pass"
+      ],
+      "log_text_sha256": "a4d876e64b908a72ecccf59ff720b51b52d6945ac3cdf5a78ef157c2446a409f"
+    },
+    {
+      "name": "assets-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_editor_assets.py",
+        "tests/test_release_preflight.py",
+        "tests/test_review_generated_drift.py",
+        "tests/test_schema_export.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "176 passed in 168.42s (0:02:48)"
+      ],
+      "log_text_sha256": "471981e52620beb8d69403a621fee642293e361e0c77df556be25fa25224c16e"
+    },
+    {
+      "name": "floor-assets",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "2 passed, 3118 deselected, 13 warnings in 1.40s"
+      ],
+      "log_text_sha256": "908323393ffbd7e10f198005f04e8381b6704d1a0b8a74ffe9890a45b71136f0"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "253 files already formatted"
+      ],
+      "log_text_sha256": "0cbcc26f8c24a0f4958469cc9e107a306ed1d1426ae7f126922fb64b525f6307"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "2fcd9d2efc91b8a60f6be13f419b98cc63601242423df74a656886279af54743"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "3a5dba10066b9fa9ebce21ee018b539fcab36c6617c8f37e6922610aac571f3b"
+    }
+  ],
+  "raw_probe_sha256": {
+    "asset_version_matrix.json": "1ce3131529b8b11a7abc4fc7da8debb2d476cf80adcd20d9d594757af3271889",
+    "probe.py": "e096424dd456a3c9e72c581018b9a13209bbb0d0314e47e9594def1ce54a7c28",
+    "qa.py": "8f82a7b5da6c37f65cdb07844c467bad79ed78f65ec6419ef659233515fd6dfe",
+    "sitecustomize.py": "f975440f0bffcebdc8c3ee7a7e8dc5725fac46b09b7cc918a3c8e02b88346a35",
+    "environment_overrides.json": "5ee724d36de2b15c05a006b038e1e83373acd2096af6bb120bd8ef3a9d7f3a7d",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "b05563a1f0570c8519078dc655dd7813d25a5a3c4b22021f57311b6d5e3bad06",
+    "floor-plugin/_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "incomplete-smoke.json": "dce4abf026700014081ea16a3e0d0f74cffeca39283d78e2099a7de12255725e",
+    "initial-full-smoke-qa.py": "f57ef6d7bc20c5642e7a817571f5c484ebde662b5d31c4b370bf685e7d675ec4",
+    "initial-receipts.json": "5a4c37b5cd1e6c75b1c313fc8fb1ada88122326516606c415dca22447342ecbf",
+    "native-browser.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "current.log": "e037a083a1550abbcd2c7bf0a32f8b55b7d6cf2a0d498af807f1f3c9c83b8cee",
+    "label-only.log": "e68b0e24a3cd58e9eb3f032500ec681c313cd9b96f682ef31d6c29baef87ce87",
+    "spec-contract.log": "80fc1d191e94dc01125a106fa190425b29f77e362ef4efd71f5e0139e807b05f",
+    "missing-capability.log": "e48680bedd647049ffca2c7aa2f8a7de2d694af02439afe22d3f700da6efbc96"
+  },
+  "ci_followup": {
+    "run": 39183500953,
+    "head": "489a97bb43d0eeb914be8c394a5b15a5c45b0113",
+    "conclusion": "failure",
+    "py310": "failed3immediatefocusassertions",
+    "py312": "cancelled",
+    "not_counted_as_success": true,
+    "focused_test_sync_evidence": "browser_focus_sync_verification.json"
+  }
+}
