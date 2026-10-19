@@ -18,6 +18,35 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 67차 — gesture경계·단일checkpoint·선택manifest
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-history-provenance-ibkva6i9`와
+  [전후profile/gesture/memory](review_evidence/history_improvement_verification.json),
+  [manifest예시](OUTPUT_PROVENANCE.md)/[합성결과](review_evidence/provenance_manifest_example.json)를 보존합니다.
+- 실제browser두drag는각100move중요청0/release1commit이었고중간title편집을합치지않아
+  history는SetLayerAt/SetTitle/SetLayerAt3개였습니다. Undo는gesture/독립edit경계를정확히
+  복원합니다. Focus-onlyclick은dispatch가없어0event이지core의명시no-opevent를없앤것이아닙니다.
+  새corecoalescer/Esc-cancelAPI를넣지않고기존keyboardburst검사도재실행했습니다.
+- 기존9caseprofile의1k행/1000actionsundo약405→17ms,10k행/256actions의cached/control은
+  약219/860ms이며추가tracedretainedPythonbytes약51KB/280KB를측정했습니다. Defaultpure
+  reducer만이전64경계의내부state한개를보관하며replay전deepcopy/초기fallback/branch폐기를
+  합니다. Customreducer는fullreplay/호출수유지,모든history/redo/noop/listener실패후commit/
+  SetData/반환snapshot의의미를검사했습니다. 한cache도fullspec크기비용은있고hardRAM이아닙니다.
+- 중단된큰profile은target미도달/undo·redo=null로남기고0ms라고하지않습니다. 초기private
+  prototype는빈applysuffix에cache를직접주면alias가생겨copy를명시했으며새Store_replay도
+  같은방어를합니다. Prototype전체listener/branchAPI가제품구현과같다고가정하지않았습니다.
+- Provenancerecipe는새directory에만canonicalspec/data/env/primaryfont/outputhash를별도JSON으로
+  남기고image의timestamp/history를변경하지않습니다. Image3형식재저장bytes동일/metadata환경
+  whitelist/기존directory거절/원output불변이맞습니다. Hash는익명화가아니며fallback/TeX/전체
+  ambient환경을잠그지않습니다. 새save옵션/mandatorysidecar는없고합성데이터만공유합니다.
+- 새core9/recipe1/browser1·관련201통과·실제browser4통과/29deselected(no skip)·floor10통과/
+  3172deselected/경고13·9profilecase/2memory비교·양platformtype/Ruff260/schema/packaging11명령
+  exit0·변경5경로activeLSPclean입니다. 13은모두3종Pyparsing입니다. 직접Storetypedimport/helper
+  annotation과현재정의로초기staleattribute진단을확인했고Any/getattr/ignore는없습니다.
+- HIST-07/08/OUT-10은이관찰/구현/recipe범위에서PASS입니다. 기준06fCI39196761559는5job모두
+  성공해이전044/045전체검증을확인했습니다. 대기layer+checkpoint효과를함께게시해새전체CI를
+  받으며버전/의존성/lock/tag/배포·loop1/남은gates경계는유지합니다.
+
 ## 66차 — 총layer의decode/add/facet/joint확장상한
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-layer-budget-hv8c7vza`와
@@ -1676,8 +1705,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | HIST-04 | P1 | PASS | reset과 open의 이력 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-05 | P1 | PASS | no-op action의 정책 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | HIST-06 | P1 | PASS | 긴 이력의 재생 정확성 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-07 | P2 | OPEN | 연속 드래그 action 합치기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
-| HIST-08 | P2 | OPEN | 체크포인트와 이력 제한 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-07 | P2 | PASS | 연속 드래그 action 합치기 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
+| HIST-08 | P2 | PASS | 체크포인트와 이력 제한 | mudplot/store.py; dashboard/editor_server.py; mudplot-editor/src/model.rs | test_reducer.py; test_dashboard_editor.py; test_editor_browser.py |
 | JSON-01 | P0 | PASS | 공식 지원 필드의 손실 없는 왕복 | io.py/spec.py; model.rs::full_field_fixture_preserves_types_values_and_array_order | test_review_full_spec_fields.py(69); Python→Rust→Python 9차 artifact |
 | JSON-02 | P0 | PASS | 비유한 숫자의 경계 분리 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
 | JSON-03 | P0 | PASS | 재귀 중복 키 거부 | mudplot/io.py; spec.py; schema.py; mudplot-editor/src/model.rs | test_spec_roundtrip.py; test_json_schema_compat.py; test_schema_export.py |
@@ -1747,7 +1776,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | OUT-07 | P1 | PASS | 참조의 형식별 의미 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-08 | P1 | PASS | TeX 컴파일로 참조 확인 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-09 | P1 | PASS | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
-| OUT-10 | P2 | OPEN | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
+| OUT-10 | P2 | PASS | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | EDIT-01 | P0 | PASS | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-02 | P1 | PASS | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-03 | P1 | PASS | htmx 교체 이후 상태·이벤트 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1807,7 +1836,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 123, RUNNING 6, OPEN 20, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 126, RUNNING 6, OPEN 17, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

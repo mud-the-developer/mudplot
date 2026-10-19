@@ -24,7 +24,9 @@ class Store:
 
     Snapshot safety is deliberate, but copying scales with the full spec,
     including inline data. This is an editor state store, not a streaming data
-    pipeline.
+    pipeline. The default pure reducer retains one preceding 64-action state
+    to shorten near-tail replay, without dropping history. Custom reducers
+    keep full replay and their existing call semantics.
     """
 
     def __init__(self, state: FigureSpec | None = None, *, reducer=reduce):
@@ -39,6 +41,7 @@ class Store:
         self._listeners: list[Listener] = []
         self._history: list[Action] = []
         self._redo_stack: list[Action] = []
+        self._checkpoint: tuple[int, FigureSpec] | None = None
 
     @property
     def state(self) -> FigureSpec:
@@ -53,9 +56,16 @@ class Store:
     def _dispatch(self, action: Action) -> None:
         """Internal dispatch that skips only the public return snapshot."""
         action = copy.deepcopy(action)
+        cursor, previous = len(self._history), self._state
         self._state = self._reducer(self._state, action)
         self._history.append(action)
         self._redo_stack.clear()
+        if self._reducer is reduce:
+            if self._checkpoint is not None and self._checkpoint[0] > cursor:
+                self._checkpoint = None
+            # Keep one prior pure-reducer state, never a cache of every snapshot.
+            if cursor and cursor % 64 == 0:
+                self._checkpoint = (cursor, previous)
         for cb in tuple(self._listeners):
             cb(self.state, copy.deepcopy(action))
 
@@ -64,14 +74,19 @@ class Store:
         return self.state
 
     def _replay(self) -> None:
-        # ponytail: replay is linear in history; add checkpoints only if long
-        # interactive histories become a measured bottleneck.
-        self._state = copy.deepcopy(self._initial)
-        for action in self._history:
+        cursor, initial = 0, self._initial
+        if (
+            self._reducer is reduce
+            and self._checkpoint is not None
+            and self._checkpoint[0] <= len(self._history)
+        ):
+            cursor, initial = self._checkpoint
+        self._state = copy.deepcopy(initial)
+        for action in self._history[cursor:]:
             self._state = self._reducer(self._state, action)
 
     def undo(self) -> FigureSpec:
-        """Revert the last dispatched action by replaying from the start."""
+        """Revert the last action by replaying the retained history prefix."""
         if not self._history:
             return self.state
         self._redo_stack.append(self._history.pop())

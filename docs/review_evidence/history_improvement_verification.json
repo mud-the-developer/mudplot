@@ -1,0 +1,752 @@
+{
+  "source_sha256": {
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f",
+    "tests/test_review_history_checkpoint.py": "43d38dad83ff1161873bff3d666071110089c0b573c91eed2c4d939670c77ef2",
+    "tests/test_review_gesture_browser.py": "31b41f5e17c01e817c88a90920578e199d578adde25b72234728305d35a9974d",
+    "tests/test_review_provenance_recipe.py": "e211457e7f0c0ed724668f126c04de1d1eca8332a5e8031c4f9a47f1dfc69c17",
+    "docs/OUTPUT_PROVENANCE.md": "89d709da9fb2ae077ab417775ee53efbd721967e079cc85f3a03f6da021fbd38",
+    "scripts/profile_history_costs.py": "a98afbeefb68fb9383e30d11fbf133f7516810be87a758414db84fbf1cdddcec",
+    "scripts/check_minimum_versions.py": "43ebf2e79697321adab1a805c5a34513dc629adf48dc4cc2b9f4cac149b93009"
+  },
+  "gesture_trace": {
+    "gestures": [
+      {
+        "move_steps": 100,
+        "requests_while_moving": 0,
+        "requests_on_release": 1,
+        "commit_roundtrip_ms": 679.9616999924183
+      },
+      {
+        "move_steps": 100,
+        "requests_while_moving": 0,
+        "requests_on_release": 1,
+        "commit_roundtrip_ms": 782.7140000299551
+      }
+    ],
+    "requests": [
+      {
+        "x": [
+          "15.91332821501428"
+        ],
+        "y": [
+          "200.63973659624182"
+        ],
+        "type": [
+          "set_layer_at"
+        ],
+        "panel": [
+          "1"
+        ],
+        "layer_index": [
+          "3"
+        ]
+      },
+      {
+        "type": [
+          "set_title"
+        ],
+        "panel": [
+          "1"
+        ],
+        "text": [
+          "independent edit"
+        ]
+      },
+      {
+        "x": [
+          "7.959391059651585"
+        ],
+        "y": [
+          "80.05379112450626"
+        ],
+        "type": [
+          "set_layer_at"
+        ],
+        "panel": [
+          "1"
+        ],
+        "layer_index": [
+          "3"
+        ]
+      }
+    ],
+    "committed_history": [
+      {
+        "type": "SetLayerAt",
+        "layer_index": 3,
+        "at": [
+          15.91332821501428,
+          200.63973659624182
+        ],
+        "panel": 1
+      },
+      {
+        "type": "SetTitle",
+        "text": "independent edit",
+        "panel": 1,
+        "citation": null,
+        "href": null
+      },
+      {
+        "type": "SetLayerAt",
+        "layer_index": 3,
+        "at": [
+          7.959391059651585,
+          80.05379112450626
+        ],
+        "panel": 1
+      }
+    ],
+    "original_at": [
+      10,
+      100
+    ],
+    "first_at": [
+      15.91332821501428,
+      200.63973659624182
+    ],
+    "second_at": [
+      7.959391059651585,
+      80.05379112450626
+    ],
+    "undo_boundary_verified": true,
+    "policy": "Mouse-up submits once; no new core coalescer."
+  },
+  "before_profile": [
+    {
+      "rows": 1000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 4.472100001294166,
+      "redo_ms": 4.863299953285605,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 0.8043999841902405,
+        "p95_nearest_rank_ms": 0.8789999992586672
+      },
+      "memory": {
+        "rss_bytes": 27656192,
+        "lifetime_peak_rss_bytes": 27656192
+      }
+    },
+    {
+      "rows": 1000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "status": "completed",
+      "undo_ms": 41.34759999578819,
+      "redo_ms": 41.43300000578165,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 100,
+        "median_ms": 0.7841500046197325,
+        "p95_nearest_rank_ms": 1.0261000134050846
+      },
+      "memory": {
+        "rss_bytes": 27815936,
+        "lifetime_peak_rss_bytes": 27815936
+      }
+    },
+    {
+      "rows": 1000,
+      "target_history": 1000,
+      "completed_actions": 1000,
+      "status": "completed",
+      "undo_ms": 405.03119997447357,
+      "redo_ms": 411.535500024911,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 1000,
+        "median_ms": 0.7834999996703118,
+        "p95_nearest_rank_ms": 1.0594999766908586
+      },
+      "memory": {
+        "rss_bytes": 28819456,
+        "lifetime_peak_rss_bytes": 28819456
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 36.28120000939816,
+      "redo_ms": 41.017600044142455,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 6.696099968394265,
+        "p95_nearest_rank_ms": 7.264900021255016
+      },
+      "memory": {
+        "rss_bytes": 30191616,
+        "lifetime_peak_rss_bytes": 30191616
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "status": "completed",
+      "undo_ms": 337.9904999746941,
+      "redo_ms": 346.77669999655336,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 100,
+        "median_ms": 6.562950002262369,
+        "p95_nearest_rank_ms": 7.32360000256449
+      },
+      "memory": {
+        "rss_bytes": 30547968,
+        "lifetime_peak_rss_bytes": 30547968
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 1000,
+      "completed_actions": 372,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 372,
+        "median_ms": 6.632150034420192,
+        "p95_nearest_rank_ms": 7.398800051305443
+      },
+      "memory": {
+        "rss_bytes": 30384128,
+        "lifetime_peak_rss_bytes": 30384128
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 361.4060000400059,
+      "redo_ms": 402.34279999276623,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 67.03674999880604,
+        "p95_nearest_rank_ms": 68.18689999636263
+      },
+      "memory": {
+        "rss_bytes": 47075328,
+        "lifetime_peak_rss_bytes": 51728384
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 100,
+      "completed_actions": 38,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 38,
+        "median_ms": 65.63334999373183,
+        "p95_nearest_rank_ms": 68.18960001692176
+      },
+      "memory": {
+        "rss_bytes": 47226880,
+        "lifetime_peak_rss_bytes": 51609600
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 1000,
+      "completed_actions": 38,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 38,
+        "median_ms": 65.92704998911358,
+        "p95_nearest_rank_ms": 68.99080000584945
+      },
+      "memory": {
+        "rss_bytes": 47259648,
+        "lifetime_peak_rss_bytes": 52482048
+      }
+    }
+  ],
+  "after_profile": [
+    {
+      "rows": 1000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 4.755700007081032,
+      "redo_ms": 4.913199984002858,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 0.8302499772980809,
+        "p95_nearest_rank_ms": 0.9489000076428056
+      },
+      "memory": {
+        "rss_bytes": 27652096,
+        "lifetime_peak_rss_bytes": 27652096
+      }
+    },
+    {
+      "rows": 1000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "status": "completed",
+      "undo_ms": 15.281900006812066,
+      "redo_ms": 15.555899997707456,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 100,
+        "median_ms": 0.8021500252652913,
+        "p95_nearest_rank_ms": 0.9593000286258757
+      },
+      "memory": {
+        "rss_bytes": 27877376,
+        "lifetime_peak_rss_bytes": 27877376
+      }
+    },
+    {
+      "rows": 1000,
+      "target_history": 1000,
+      "completed_actions": 1000,
+      "status": "completed",
+      "undo_ms": 17.675300012342632,
+      "redo_ms": 16.895900014787912,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 1000,
+        "median_ms": 0.7999999797903001,
+        "p95_nearest_rank_ms": 0.9063999750651419
+      },
+      "memory": {
+        "rss_bytes": 28844032,
+        "lifetime_peak_rss_bytes": 28844032
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 36.50919999927282,
+      "redo_ms": 41.40009998809546,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 6.619299994781613,
+        "p95_nearest_rank_ms": 7.072700012940913
+      },
+      "memory": {
+        "rss_bytes": 30171136,
+        "lifetime_peak_rss_bytes": 30449664
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 100,
+      "completed_actions": 100,
+      "status": "completed",
+      "undo_ms": 124.09760005539283,
+      "redo_ms": 128.66329995449632,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 100,
+        "median_ms": 6.657550024101511,
+        "p95_nearest_rank_ms": 7.236199977342039
+      },
+      "memory": {
+        "rss_bytes": 30400512,
+        "lifetime_peak_rss_bytes": 30400512
+      }
+    },
+    {
+      "rows": 10000,
+      "target_history": 1000,
+      "completed_actions": 372,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 372,
+        "median_ms": 6.626699992921203,
+        "p95_nearest_rank_ms": 7.29550002142787
+      },
+      "memory": {
+        "rss_bytes": 30720000,
+        "lifetime_peak_rss_bytes": 30818304
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 10,
+      "completed_actions": 10,
+      "status": "completed",
+      "undo_ms": 362.11400001775473,
+      "redo_ms": 397.0013000071049,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 10,
+        "median_ms": 66.14765000995249,
+        "p95_nearest_rank_ms": 68.78319999668747
+      },
+      "memory": {
+        "rss_bytes": 48529408,
+        "lifetime_peak_rss_bytes": 51654656
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 100,
+      "completed_actions": 38,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 38,
+        "median_ms": 67.45760000194423,
+        "p95_nearest_rank_ms": 69.32909996248782
+      },
+      "memory": {
+        "rss_bytes": 47120384,
+        "lifetime_peak_rss_bytes": 50753536
+      }
+    },
+    {
+      "rows": 100000,
+      "target_history": 1000,
+      "completed_actions": 37,
+      "status": "stopped",
+      "undo_ms": null,
+      "redo_ms": null,
+      "exit_code": 0,
+      "timed_out": false,
+      "dispatch_latency": {
+        "samples": 37,
+        "median_ms": 67.91030004387721,
+        "p95_nearest_rank_ms": 69.2405000445433
+      },
+      "memory": {
+        "rss_bytes": 47149056,
+        "lifetime_peak_rss_bytes": 52830208
+      }
+    }
+  ],
+  "checkpoint_memory_comparison": [
+    {
+      "rows": 1000,
+      "actions": 256,
+      "checkpoint_stride": 64,
+      "retained_checkpoint_count": 1,
+      "checkpoint_cursor": 192,
+      "modes": {
+        "cached": {
+          "retained_python_bytes": 182304,
+          "peak_traced_python_bytes": 332488,
+          "undo_ms_without_tracing": 25.62410000246018,
+          "state_sha256": "839ef3261e47b033e88f6e2aa10061f1e4e4ed9713583bbb6803ed76a503fc2d"
+        },
+        "full-replay-custom-pure-control": {
+          "retained_python_bytes": 131200,
+          "peak_traced_python_bytes": 281384,
+          "undo_ms_without_tracing": 105.33760004909709,
+          "state_sha256": "839ef3261e47b033e88f6e2aa10061f1e4e4ed9713583bbb6803ed76a503fc2d"
+        }
+      },
+      "additional_traced_retained_bytes": 51104,
+      "scope": "Standard Store default versus an equivalent custom pure reducer wrapper that retains full replay by contract; tracing measures retained Python allocations, not all RSS/native memory. Timings measured after tracing stopped."
+    },
+    {
+      "rows": 10000,
+      "actions": 256,
+      "checkpoint_stride": 64,
+      "retained_checkpoint_count": 1,
+      "checkpoint_cursor": 192,
+      "modes": {
+        "cached": {
+          "retained_python_bytes": 869104,
+          "peak_traced_python_bytes": 1248248,
+          "undo_ms_without_tracing": 218.58300000894815,
+          "state_sha256": "3b82ceeb9d131ca0305c26c468901234e19272d40754dd7f61148ae4c4d070de"
+        },
+        "full-replay-custom-pure-control": {
+          "retained_python_bytes": 589096,
+          "peak_traced_python_bytes": 968240,
+          "undo_ms_without_tracing": 860.282699984964,
+          "state_sha256": "3b82ceeb9d131ca0305c26c468901234e19272d40754dd7f61148ae4c4d070de"
+        }
+      },
+      "additional_traced_retained_bytes": 280008,
+      "scope": "Standard Store default versus an equivalent custom pure reducer wrapper that retains full replay by contract; tracing measures retained Python allocations, not all RSS/native memory. Timings measured after tracing stopped."
+    }
+  ],
+  "provenance_example": "provenance_manifest_example.json",
+  "provenance_example_sha256": "b92da31c417f3054234658ff566138f00f48be833bda8028f406038d9fe5d1d2",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "real_browser_cases": [
+    "test_mouse_gestures_commit_once_and_keep_independent_edits_and_undo",
+    "test_arrow_keys_nudge_the_title",
+    "test_a_burst_of_nudges_is_not_dropped",
+    "test_editing_targets_the_selected_panel"
+  ],
+  "coalescing_decision": "Observed100mousemoves/gesture\u21920requestsduringmovement/1onrelease,twoindependentgesturesseparatedbytitleeditremain3eventsandundoonegestureatonce.Focus-onlyclick0events.Existingkeyboardburstcoalescingtestedseparately.No newcorecoalescer/Esc-cancel/gestureAPIintroduced.",
+  "checkpoint_decision": "Measurednear-tailreplaycostjustifiesONEprevious64-actionboundaryinternalstate(defaultpure-reduceridentityONLY). Capturepreviousinternalstateoncommitaftercursor64n;deepcopybefore_replay,fallbacKinitialifcursorbeforecache,discardcachewhenbranchbelowprefix. Fullhistory/redo/noop/listenerfailure/snapshotcontractsretained.Customreducersfullreplay/callcountsunchanged.Nohistorytruncation/newpublicconfig.Persistence/otherprocessRusthistorynotchanged.ExtramemoryONEfullsupportedSpec,notanOShardmemorybound.",
+  "provenance_decision": "Optionalseparatefresh-directorymanifestrecipeincludescanonical-spec/data/env/font/outputSHAs,selectedversionfields,noabsolute paths/hostname/username/argv/envdump/timestamp. Imagesrepeatbyte-identicalaftermanifest;refusesoverwriteexistingdirectory.Notgeneralredaction/fullenvlock;hashesoflowentropydataarenotanonymization;primaryfontnotallfallback/TeXfonts.",
+  "qa_note": "Earlyprivateprototypepassedcheckpointdirectlytoemptyapplysuffixandwouldaliascache;fixedbycopyinprototypeandproduct_replaydeepcopy,notclaimednewpublicempty-applysnapshotAPI. NewtestsStoreattributesnowdefined/typed;directStoreimportandhelpertypingclarifystaleinitialdiagnostic.NoAny/cast/getattr/ignore. FontPropertiesfamilymustbelistforgenericfontfamily;documentedrecipetestcaught/fixedsans-serifpatternparsewithoutproductionfontchanges.",
+  "environment_overrides": {
+    "history-profile": {
+      "scope": "fixed9case profile with observed2.5sdispatch/RSS budget and12sperchildwait; incomplete target timings remain null, not successzero"
+    },
+    "floor-history": {
+      "PYTEST_ADDOPTS": "-k \"test_review_history_checkpoint or test_review_provenance_recipe\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "history-profile",
+      "argv": [
+        "python",
+        "scripts/profile_history_costs.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "4e2ba156bd03958c976435b511a0e04a8aabeacea0946b8c4695ff3b3280651e"
+    },
+    {
+      "name": "checkpoint-memory",
+      "argv": [
+        "python",
+        "<evidence>\\checkpoint_memory.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "228abf03c54c89d320f50aada3f87a987e037922b55eb38c0df139dab04f4ea1"
+    },
+    {
+      "name": "history-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\verified-core",
+        "tests/test_review_history_checkpoint.py",
+        "tests/test_review_provenance_recipe.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_reducer.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_history_profile.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "201 passed in 157.52s (0:02:37)"
+      ],
+      "log_text_sha256": "6bf26eb916a71001a0ce22e9e4564d8f1163fd448d112463470c9b6cd812a4b9"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\verified-browser",
+        "tests/test_review_gesture_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "mouse_gestures or burst_of_nudges or arrow_keys or editing_targets",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "4 passed, 29 deselected in 30.71s"
+      ],
+      "log_text_sha256": "71727cdd819904d59e58e94bbc5e0b35ede63d25d8f0bb37bd4bc8a243a859ad"
+    },
+    {
+      "name": "floor-history",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "10 passed, 3172 deselected, 13 warnings in 9.51s"
+      ],
+      "log_text_sha256": "de107a02c7d59bc5816338ffb4ef96fabfef1a432740f94636811e5dc3f80614"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "260 files already formatted"
+      ],
+      "log_text_sha256": "e04fbeb0bf86aad2e601f06f3e1b27816908b2f8b485406eefdf3977ffbb3cf5"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "aa811e169af8e97ad84dec779dbc104ff198e5972b4a8041be5bed1472640628"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "86c9f27a30458a43abb8ce5e37dcadc132aa7e43e9a2a9302e53c4c72137d11d"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "before-history-profile.json": "ae925d1b8791f0f0c76e863bd1e6a1b0c1e8643ab35f59c993a52a11cb95138e",
+    "after-history-profile.json": "5c01fe7ce0ec96a1d0fa78d913a0f4e30ab8e9aa29a2e0201daba67298eb01ba",
+    "before-store.py": "17b941a995d43aa8b53f4fac5d23b442278d675779005f36525fc6e5871f54ee",
+    "before-checkpoint-comparison.json": "1de16bbd3ffb61951eb95f44e965aeac96996cc7a060afb66035c10b4f899594",
+    "checkpoint_comparison.json": "1de16bbd3ffb61951eb95f44e965aeac96996cc7a060afb66035c10b4f899594",
+    "checkpoint_compare.py": "c5f1d64a008698af6dcc1370bad78c7c1cced10d1f4dd7e935518bdc09a1e028",
+    "checkpoint_memory.py": "c3b9bc7bcbde238de8a9a8d295c6fbd79aa8ca39c6dc96c03f80fb26789b74e3",
+    "checkpoint_memory_comparison.json": "50544f81c4642447b390ed37c67e10f90e37deef9fcef13ec549e804cd2a0dfa",
+    "gesture_trace.json": "9e43dd5193aa59964b35c3a87f54f7ccd62f92a4affc802eb96f1bf75778f324",
+    "provenance_manifest_example.json": "b92da31c417f3054234658ff566138f00f48be833bda8028f406038d9fe5d1d2",
+    "qa.py": "4744b03069880d98efda6715b4b3553ee4eeb1c5c8df18a3b8b4f6b60fa6cb2b",
+    "environment_overrides.json": "73c5d07ae671da5bbf18ff31c5aab65981adaa61d018bfdec07fab7a67775fe0",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "3e5ebe2303c2eb1875d33ca09b8242e5c39339473b9a756f920a343c694428fe",
+    "browser.xml": "cb188471529f710679f2e958a5abd871c937eec955daec947d114b65678af527",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Shortened default Store near-tail undo/redo using one preceding64-action state,
+  retaining all history/listeners/snapshot and custom-reducer semantics. Measured
+  memory tradeoff; added gesture-boundary and opt-in provenance manifest examples.
 - Bound total figure layers to1024 across panels, before raw layer decode, new
   AddLayer copy or facet/joint replication, preserving accepted boundaries and
   input snapshots without trimming layers or relying on palette candidate limits.

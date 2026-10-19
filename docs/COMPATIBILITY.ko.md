@@ -234,8 +234,11 @@ Figure는panel전체합계1024layers까지지원하며panel당1024라는뜻은�
 Reduce는 없는 column/matrix 참조를 일시적으로 만들 수 있지만 부수효과 없이 유지하며
 명시 validation·render validation이 그리기 전에 거부합니다.
 
-각 action은 전체 spec을 복사하며 undo/redo는 history를 replay합니다.
-따라서 큰 inline data와 긴 history에는 문서화된 성능 상한이 있습니다.
+각action은전체spec을복사하고undo/redo는보존한history를replay합니다. Defaultpure reducer만
+이전64-action경계의내부state한개를보관해near-tail재생을줄이고이전cursor는initial로fallback합니다.
+새branch가cacheprefix아래면폐기하며customreducer는기존fullreplay/호출의미를유지합니다.
+History절단/no-op·listener·snapshot의미변경은없고추가spec한개의메모리tradeoff이지hardmemory
+한도가아닙니다. 큰inline data/긴history의성능상한은여전히남습니다.
 `mp.apply()`는 실패한 중간 결과를 노출하지 않고 새 결과를 반환합니다.
 `Plot.apply()`와 `Store.dispatch_all()`은 순서대로 개별 dispatch하는 것이며
 **batch transaction이 아닙니다**. listener는 commit 이후 실행되고, listener
@@ -258,6 +261,13 @@ Legacy raw group mask는 NumPy 문자열 dtype 추론 없이 원래 Python 값�
 Raw line은 행 순서/중복 x를 유지하고 lineplot은 x별 집계와 명시 sort 정책을 적용합니다.
 빈 raw line/scatter는 유효할 수 있으나 통계 layer는 usable 관측 부재를 거부하고 singleton의
 정의되지 않는 interval은 만들지 않습니다.
+
+## 선택적출력provenance
+
+[별도manifest예시](OUTPUT_PROVENANCE.md)는canonicalspec/data·선택환경/font/outputhash를
+기록하고imagebytes에timestamp/history를넣지않습니다. Opt-inrecipe이지새saveoption/mandatory
+sidecar/envlock이아니며기존directory는overwrite대신거절합니다. Hash는anonymization이아니고
+primaryfont가모든fallback은아니므로공유전에내용을검토하세요.
 
 ## Journal과TeX 크기 우선순위
 

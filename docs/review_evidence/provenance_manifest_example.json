@@ -1,0 +1,23 @@
+{
+  "canonical_spec_sha256": "062a589070e6c1918d0bd20edc48afd3c1c874431bbc35143c14720cb36fdd6e",
+  "data_sha256": "aaefc2bd8dd8d0711936ad3fa71a1997b7b92f896569d64a4c6641fb875ac0cf",
+  "environment": {
+    "machine": "AMD64",
+    "mudplot": "1.0.0",
+    "primary_font_sha256": "3fdf69cabf06049ea70a00b5919340e2ce1e6d02b0cc3c4b44fb6801bd1e0d22",
+    "python": "3.12.15",
+    "system": "Windows",
+    "versions": {
+      "matplotlib": "3.11.1",
+      "numpy": "2.5.2"
+    }
+  },
+  "environment_sha256": "defe3f8dc25e230070d467f6a274986ae2a93c1d9f86fe12fe0becf7ff87fab2",
+  "outputs": {
+    "figure.mplot.json": "2cf0343b7b7acf69a9d62feb51783c42af0670d72a616347cbd7be2e8ff0b938",
+    "figure.pdf": "fef492b9e59d804793f95be3ccbd599d82fdd62ff7da33ca61c1779933c23884",
+    "figure.png": "e289eb9f183d3c6f4a9f2151a72886ff65bf5e63cae670e25968f85d7627efd4",
+    "figure.svg": "61d2ab0e7dbb4a469947ddc0b6d5ffa0664d42c0526991ddc6ed39726e5f8150"
+  },
+  "spec_version": "0.1"
+}

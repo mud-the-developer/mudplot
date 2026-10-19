@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 67 keeps gesture boundaries, adds one checkpoint and optional provenance.**
+Real100-move gestures submit once on release; independent edits and undo boundaries
+remain separate, without a new core coalescer. Default pure Store replay can start
+from one preceding64-action state; custom reducers/history/noop/listener/snapshot
+semantics stay intact.1k-row/1000-action undo~405→17ms;10k/256~860→219ms with
+~280KBextra traced Python retention (not all-RAM/timing guarantees). History is never cut.
+
+A tested [separate manifest recipe](OUTPUT_PROVENANCE.md) records hashes/selected
+environment without volatile image metadata, path dumps or forced sidecars; output
+bytes repeat and existing directories refuse overwrite. Hashes are not anonymization.
+201related/4actualbrowserpasses/29deselected/floor10/3172deselected/13Pyparsing warnings
+and11checks pass, activeLSP5clean. [Evidence](review_evidence/history_improvement_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS126/RUNNING6/OPEN17/DEFERRED1**.
+Exact06fCI39196761559ALL5SUCCESS validates prior044/045; publish queued layer+
+checkpoint effects for fresh whole CI. Versions/dependencies/locks/tag/deploy unchanged.
+
+### Earlier review phase 66
+
 **Review phase 66 bounds total layers before model/copy amplification.**
 FIND-046 confirms explicit colours bypass palette candidate counts, so that is
 not a layer cap. Shared1024TOTAL across panels now gates raw LayerSpec decoding,

@@ -279,8 +279,13 @@ require an existing layer. Palette candidate counts are not this resource limit.
 Reduction may build missing column/matrix references without effects; explicit
 validation and render validation reject them before drawing.
 
-Each action copies the full spec; undo/redo replay history. Large inline data
-and long histories therefore have a documented performance ceiling.
+Each action copies the full spec; undo/redo replay the retained history. For the
+default pure reducer, Store keeps at most one preceding64-action-boundary internal
+state to shorten near-tail replay. Earlier cursors fall back to the initial state;
+new branches discard a cache beyond their prefix. Custom reducers keep full replay
+and their existing call semantics. No history is cut and no-op/listener/snapshot
+rules change. Retaining one extra supported spec is a memory tradeoff, not a hard
+memory limit; large inline data and long histories still have a performance ceiling.
 `mp.apply()` returns a new result without exposing partial results on failure.
 `Plot.apply()` and `Store.dispatch_all()` are ordered individual dispatches,
 **not batch transactions**. Listeners run after a committed transition; a
@@ -306,6 +311,14 @@ distinct types may have identical captions; normalize ambiguous IDs before plott
 Raw line paths retain row order and duplicate x; lineplot aggregates per x and
 applies its explicit sort policy. Empty raw line/scatter can be valid, whereas
 statistical layers reject no usable observations and singletons omit undefined intervals.
+
+## Optional output provenance
+
+The [separate manifest recipe](OUTPUT_PROVENANCE.md) records canonical spec/data,
+selected environment/font and output hashes without adding timestamps or history
+to image bytes. It is opt-in, not a new save option/mandatory sidecar/environment
+lock. It refuses an existing directory rather than overwrite it. Review before
+sharing: hashes are not anonymization and primary font metadata is not all fallbacks.
 
 ## Journal and TeX sizing priority
 

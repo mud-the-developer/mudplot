@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신gesture/undo·defaultreducer단일checkpoint·선택provenancerecipe로HIST-07/08/OUT-10은
+  범위PASS입니다. 관련201/실제browser4/floor10으로event/listener/snapshot/imagebytes를
+  보존하며속도는추가spec한개의tradeoff이지history절단이아닙니다. 정확한06fCI5job성공으로
+  044/045전체를확인했고layer+checkpoint를게시해새CI를받습니다.
+
 - 최신FIND-046은palette가아닌합계1024layers를rawdecode/add/facet/jointcopy전에검사합니다.
   새12/관련591/floor12/HTTP6과정상snapshot이맞지만text/다른algorithm/CPU/총memory범위로
   SEC-04는RUNNING입니다. 1024fixture측정은보편안전보장이아니며06fCI39196761559중layer
@@ -415,7 +420,9 @@
 - [자원근거](review_evidence/resource_amplification_verification.json)와
   [pinch UI근거](review_evidence/browser_pinch_activation_verification.json)에제한측정/
   privatepayload지문/현재CI한계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/DEFERRED1**.
+- [History/provenance 근거](review_evidence/history_improvement_verification.json)와
+  [manifestrecipe](OUTPUT_PROVENANCE.md)에재생/memory/gesture/privacy범위를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS126/RUNNING6/OPEN17/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

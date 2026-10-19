@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest gesture/undo evidence, bounded one-state default-reducer checkpoint and
+  separate opt-in provenance recipe make HIST-07/08/OUT-10 PASS in scope.201related/
+  4actualbrowser/floor10passes preserve events, listeners, snapshots and image
+  bytes; measured replay speedup trades one extra supported Spec, not history loss.
+  Exact06fCI ALL5SUCCESS validates044/045; publish layer+checkpoint for freshCI.
+
 - Latest FIND-046 guards1024total layers before raw decode/add/facet/joint copy,
   not palette candidates.12new/591related/floor12/6HTTP and boundary snapshots
   agree; SEC-04 stillRUNNING for text/other algorithm/CPU/totalmemory scope.
@@ -499,7 +505,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 - [Resource evidence](review_evidence/resource_amplification_verification.json) and
   [pinch UI evidence](review_evidence/browser_pinch_activation_verification.json)
   retain bounded outcomes, private payload fingerprints and current CI limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/
+- [History/provenance evidence](review_evidence/history_improvement_verification.json)
+  and [manifest recipe](OUTPUT_PROVENANCE.md) retain replay/memory/gesture/privacy limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS126/RUNNING6/OPEN17/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

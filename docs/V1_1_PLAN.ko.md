@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰67차에서gesture경계를유지하고단일checkpoint와선택provenance를검사했습니다.** 실제
+100movegesture는release1요청/독립edit와undo분리였고새corecoalescer는없습니다. Defaultpure
+Store만이전64경계state한개에서재생하며customreducer/history/noop/listener/snapshot은유지합니다.
+1k행1000actionsundo약405→17ms/10k행256약860→219ms·추가tracedretention280KB는관찰값이지
+전체RAM/시간보장은아니며history를자르지않습니다.
+
+검사한[별도manifestrecipe](OUTPUT_PROVENANCE.md)는image휘발metadata/pathdump/강제sidecar없이
+hash/선택env를기록하고재출력bytes/기존directory거절이맞습니다. Hash익명화보장은아닙니다.
+관련201/browser4통과/29deselected/floor10/3172deselected/Pyparsing13경고·품질11명령·activeLSP5clean,
+[근거](review_evidence/history_improvement_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS126/RUNNING6/OPEN17/DEFERRED1**입니다. 정확한06fCI39196761559의5job모두성공으로
+044/045전체를확인했고대기layer+checkpoint효과를게시해새전체CI를받습니다. 버전/의존성/
+lock/tag/배포는유지합니다.
+
+### 이전 리뷰66차
+
 **리뷰66차에서총layer의model/copy증폭을막았습니다.** FIND-046은명시color가palette후보
 계산을건너뛰므로별도합계1024상한이필요했습니다. RawLayerdecode/AddLayercopy/facet·joint
 복제/directspecvalidation에공통상한을두고정상single/multi/add/facet/joint경계와입력은보존했습니다.
