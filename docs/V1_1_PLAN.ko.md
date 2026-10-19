@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰60차에서사라진fieldcontext와실제machineenvelope를대조했습니다.** FIND-041은
+width/height오류의CLI/native설명이동일했으며공통decoder에Class.field만추가해TypeError/
+ValueError·원인·union·입력을보존했습니다. 초기5실패/3정상은최종9통과이며실제26CLI/UI/native가
+JSONfile/stdout·HTML/JSON·binaryexport/500plain실패를구분하고route/auth의미는유지했습니다.
+
+관련386/OS2skip·실제browser3통과/30deselected·floor9/3106deselected/Pyparsing13경고·품질10명령이
+통과했고연결pointplotsingletoninterval2경고는별도분류했습니다. EDIT-07/09는지원범위PASS이지
+보편valueredaction인증은아닙니다. [근거](review_evidence/machine_error_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS121/RUNNING5/OPEN23/DEFERRED1**입니다. B9CI39178688403의5job모두성공으로040전체를
+확인했으며확대+회복+새decoder효과를게시해정확한새전체CI를받습니다. 버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰59차
+
 **리뷰59차에서실제UI의파일/export회복을검사했습니다.** 유효A→badJSON/invalidspec은
 기존spec/PNG/history/layout과draft를보존하고유효B는freshhistory/오류해제로열렸습니다.
 실제SVG저장경로fault는400HTML이며부분vector가아니고Figure/cache가보존됩니다.

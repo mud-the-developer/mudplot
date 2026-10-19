@@ -30,6 +30,7 @@ TESTS = (
     "tests/test_review_data_edges.py",
     "tests/test_review_group_identity.py",
     "tests/test_review_json_policies.py",
+    "tests/test_review_error_context.py",
     "tests/test_review_missing_data.py",
     "tests/test_review_temporal_precision.py",
     "tests/test_review_scalar_boundaries.py",

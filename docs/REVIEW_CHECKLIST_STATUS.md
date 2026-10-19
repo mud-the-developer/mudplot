@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 60차 — field오류위치와실제machine응답계약
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-machine-contracts-5kqxu18l`와
+  [before/after26응답·route/CLI/agent표](review_evidence/machine_error_verification.json)을 보존합니다.
+- **FIND-041:** width/height잘못된string의CLI설명이둘다expectednumbergotstr로동일해
+  field가사라졌고Rustagent도같은설명을받았습니다. 초기8회귀5실패/3정상union통과를확인하고
+  공통_from_dictdataclassfield경계에서Class.field만덧붙였습니다. TypeError/ValueError/원인을
+  유지해union의TypeErrorfallback을바꾸지않으며nestedchain/input불변/엄격ValueError도최종9회귀가맞습니다.
+- 실제CLIapply는결과JSONfile/stdout빈값/exit0·1/stderrprogress-error,capabilities는stdoutJSON입니다.
+  PythonUIrawform은정상nonHX303redirect/HX오류200HTML이지JSONRPC가아닙니다. GETspec은JSON,
+  PNG/PDF/SVG는실제media입니다. Source기반route를써서정상/오류envelope를가정하지않았습니다.
+- 현소스로빌드한실제WindowsRustHTTP는action200JSONspec/400badfield·negativepanel/415media/
+  422syntax·UTF8·duplicateJSONerror만반환하고실패spec/cache는불변입니다. Native전용private
+  sitecustomize로SVGchild만exit7시키면500text/plain이지성공vector가아니며정상action/export로
+  회복했습니다. 위조response가아니고다른command는실제Python으로위임하며server는종료/reap했습니다.
+- 허용진단은공개field/type/JSONline-column이며검사한numericcanary는echo하지않습니다.
+  이것이기존모든union/value/backend오류의보편redactor는아닙니다. 양수panel99는자동확장
+  계약이라초기QA가정을바로잡아음수-1로대조했지새panel한도/JSONRPC를만들지않았습니다.
+- 새pure9/실제26응답·관련386통과/Windows2skip·실제browser3통과/30deselected(no skip)·
+  floor9통과/3106deselected/경고13·양platformtype/Ruff250/생성계약/packaging10명령exit0·변경
+  3경로activeLSPclean입니다. Floor13은전부3종Pyparsing이며연결suite의2UserWarning은
+  pointplot의singleton통계interval생략으로별도분류하고숨기지않습니다.
+- EDIT-07/09는이actualUI/CLI/nativeHTTP지원corpus에서PASS입니다. 기준B9CI39178688403은
+  5job모두성공해FIND040전체검증을확인했으며확대+회복+이번fieldcontext효과를같이게시해새
+  전체CI를받습니다. 버전/의존성/lock/tag/배포·loop1과새소스별전체검증경계는유지합니다.
+
 ## 59차 — 파일open/실패/export후정상편집회복
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-editor-recovery-6n1ph96d`와
@@ -1585,9 +1611,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-04 | P1 | PASS | 지연 응답과 최신 preview | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-05 | P1 | PASS | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-06 | P1 | PASS | open·export·실패 후 회복 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-07 | P1 | OPEN | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-07 | P1 | PASS | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-09 | P1 | OPEN | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-09 | P1 | PASS | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-02 | P0 | PASS | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows/Linux CI jobs success for781f3f5; 14차 remote snapshot |
 | RUST-03 | P1 | PASS | 실패한 subprocess와 출력 경계 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
@@ -1638,8 +1664,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 119, RUNNING 5, OPEN 25, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 121, RUNNING 5, OPEN 23, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

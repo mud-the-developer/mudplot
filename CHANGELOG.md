@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added public class/field context to decode errors while preserving exception
+  kinds, causes, union acceptance and input values. Verified CLI/UI/native Rust
+  response shapes and failure recovery without introducing a new RPC interface.
 - Verified valid/broken/valid file opening, draft/history/preview preservation and
   vector-export failure recovery through real browser controls, with unchanged
   source files and a final state-matching JSON download. No new export format.

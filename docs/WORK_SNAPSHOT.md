@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-041 adds public field context to decoder failures without changing
+  error kinds/union acceptance.9new/386related/2OSskips,26actualCLI/UI/native cases,
+  3browser/floor9passes make EDIT-07/09 PASS in scope. Not a generic redactor or
+  new RPC. ExactB9CI ALL5SUCCESS validates prior040; publish three queued units
+  for fresh decoder-source whole CI. Versions/dependencies/releases unchanged.
+
 - Latest valid/bad/valid file and injected SVG-save failure UI sequence preserves
   cached state/history/draft/resources, then edits/exports/downloads successfully
   without changing source files.229related/6OSskips,4actualbrowser/floor43passes
@@ -439,7 +445,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains actual viewport/DPR settings, pointer/data values and original DPI/state.
 - [Editor-recovery evidence](review_evidence/editor_recovery_verification.json)
   retains spec/PNG/history/error hashes, source-file preservation and export recovery.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS119/RUNNING5/OPEN25/
+- [Machine/error evidence](review_evidence/machine_error_verification.json)
+  retains actual route/status/type/error tables and numeric field context boundaries.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS121/RUNNING5/OPEN23/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

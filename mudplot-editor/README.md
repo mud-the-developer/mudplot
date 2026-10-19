@@ -95,6 +95,15 @@ Routes: `GET /`, `/fig.{png,pdf,svg}`, `/spec.json`,
 controls use `/control/*` and `/layers`; `/open`, `/action/raw`, `/undo`,
 `/redo`, and `/reset` return the `#app` htmx fragment.
 
+The JSON `/action` route returns a FigureSpec on200 or an `{error:string}`
+object on400(action failure),415(media type) or422(JSON/UTF-8/duplicate keys).
+Field decoder diagnostics include public `Class.field` context while preserving
+Python's error kinds and validation rules. `apply` writes its result JSON file
+with empty stdout; progress/errors use stderr, while capabilities use JSON stdout.
+Exports are PNG/PDF/SVG media on success; a bridge vector-export failure is
+500text/plain. Check status and Content-Type before decoding—not every route or
+failure is JSON, and the UI form endpoints intentionally return HTML/redirects.
+
 Still deliberately out of scope: multi-user sessions/authentication, every
 specialized axis/drag control from the mature Python editor, and a native Rust
 renderer. Add them only when local usage warrants the extra state and code.

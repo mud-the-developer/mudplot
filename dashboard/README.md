@@ -119,6 +119,16 @@ needing a separate `dashboard build` process.
   PNG bytes and a bit of layout info the drag handles need — see
   `EditorSession.refresh()`).
 
+## Error and response envelopes
+
+Field decode errors include `Class.field` context without changing accepted
+values or exception kinds. Python `/action/raw` remains a JSON-action **form**:
+HTMX gets HTML (including visible200error fragments), ordinary posts redirect303.
+Use `/spec.json` for JSON state; do not treat UI form responses as JSON RPC.
+Rust `POST /action` is the JSON spec/error API. CLI `apply` writes a JSON file
+with empty stdout and exit0/1; `capabilities` emits JSON stdout. Check each
+surface's status/Content-Type and keep stderr separate from machine data.
+
 ## Engine APIs it reuses
 
 The Python editor does not have its own state logic — it reuses the engine's

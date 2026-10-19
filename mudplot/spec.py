@@ -118,7 +118,10 @@ def _from_dict(cls, data: Any):
         for f in fields(cls):
             if f.name not in data:
                 continue
-            kwargs[f.name] = _from_dict(hints[f.name], data[f.name])
+            try:
+                kwargs[f.name] = _from_dict(hints[f.name], data[f.name])
+            except (TypeError, ValueError) as error:
+                raise type(error)(f"{cls.__name__}.{f.name}: {error}") from error
         return cls(**kwargs)
     if origin in (list, tuple):
         if not isinstance(data, (list, tuple)):

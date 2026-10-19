@@ -180,6 +180,28 @@ their existing identity handling: raw `1` and `"1"`, different data columns, axe
 references and marker sources are not merged just because visible strings match.
 No spec/source/style fields are rewritten by this guide policy.
 
+## Error context and machine interfaces
+
+Dataclass decoding errors identify public `Class.field` context, preserving their
+TypeError/ValueError class, cause and existing coercion/union acceptance. Nested
+class/field chains are not a new full JSON-pointer/index API or universal value
+redactor. Expected types, field names and JSON line/column information are allowed
+diagnostics; tested numeric errors do not echo submitted string values.
+
+Actual machine/UI envelopes differ:
+
+- CLI `apply` writes its JSON output file, leaves stdout empty and uses exit0/1;
+  progress/errors go to stderr. `capabilities` writes a complete JSON stdout.
+- Python editor forms use HTML errors/HTMX200 or ordinary303redirects, not JSON
+  RPC. `/spec.json` is JSON; PNG/PDF/SVG routes retain their actual media types.
+- Rust `POST /action` returns200JSONspec or400/415/422JSON`{error:string}` for
+  action/transport failures. Vector exports are binary on success; a bridge
+  export failure is500text/plain, not successful JSON or a partial vector file.
+
+Clients must check status and Content-Type before decoding. Operator-supplied CLI
+paths may appear in normal local progress messages; this is not a guarantee that
+all pre-existing union/value/backend errors redact arbitrary confidential text.
+
 ## State and action semantics
 
 `FigureSpec` remains a mutable dataclass/list graph. `reduce()` preserves its

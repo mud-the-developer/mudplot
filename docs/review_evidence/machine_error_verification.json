@@ -1,0 +1,680 @@
+{
+  "source_sha256": {
+    "mudplot/spec.py": "92db31cd51e1a0c44189d72cf2cc20eeffcb5ed1ff10244c58214ddddc4ca61b",
+    "mudplot/actions.py": "e3e05dd14a4746c708f3abc61eeeaf93cb1ed9bdf293f4dcce385d661fa3f34d",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+    "tests/test_review_error_context.py": "9df67ccdde370317755caa91382abc9e7f11fb54e2058d480e01754db31c0ee8",
+    "scripts/check_minimum_versions.py": "89d2c7c629a0b21bfbf63709d31705f8d4b418da88b29598c65fc4b0cfabb30c"
+  },
+  "before_matrix": {
+    "rows": [
+      {
+        "surface": "python_cli_apply",
+        "case": "valid",
+        "exit_code": 0,
+        "stdout_empty": true,
+        "stderr": "wrote <owned-evidence>\\valid-out.json\n",
+        "output_preserved_on_failure": false
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "numeric",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: expected number, got str\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "panel",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: panel index must be a non-negative integer\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "syntax",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: invalid action JSON: invalid JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_capabilities",
+        "case": "valid",
+        "exit_code": 0,
+        "stdout_json": true,
+        "stderr_empty": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "numeric",
+        "route": "/action",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: width must be a number",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "panel",
+        "route": "/action",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: panel index must be a non-negative integer",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "syntax",
+        "route": "/action/raw",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: invalid JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/spec.json",
+        "status": 200,
+        "content_type": "application/json",
+        "body_sha256": "94679f35b5cf21135338712bbc8c88c16a01dc1647df54de5108bac2d42d5474"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.png",
+        "status": 200,
+        "content_type": "image/png",
+        "body_sha256": "0a5a490af127482ceca310ad75d530fcb51c4e3f4ed2dcf38936e27431176897"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.svg",
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "body_sha256": "4d6951a2fc92343c7851a708429cb53b3b3e4b6a7b796a36f2845380d1b06c5c"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.pdf",
+        "status": 200,
+        "content_type": "application/pdf",
+        "body_sha256": "19c183ba3a1efbabdb2d8b67ae0f012db685a201272049a884559bc74ef031f3"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "valid",
+        "route": "/action",
+        "status": 200,
+        "content_type": "application/json",
+        "shape": "FigureSpec",
+        "spec_sha256": "8798e4a8aff05af347e44a156324c3346afdefe74346e1a95d16072d106cbe48"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "numeric",
+        "route": "/action",
+        "status": 400,
+        "content_type": "application/json",
+        "error": "Python bridge exited with exit code: 1: error: expected number, got str",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "panel",
+        "route": "/action",
+        "status": 400,
+        "content_type": "application/json",
+        "error": "Python bridge exited with exit code: 1: error: panel index must be a non-negative integer",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "syntax",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: EOF while parsing an object at line 1 column 1",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "wrong_type",
+        "route": "/action",
+        "status": 415,
+        "content_type": "application/json",
+        "error": "Content-Type must be application/json",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "utf8",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: invalid utf-8 sequence of 1 bytes from index 0",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "duplicate",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: duplicate JSON object key \"text\" at line 1 column 38",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.png",
+        "status": 200,
+        "content_type": "image/png",
+        "body_sha256": "0825825ba8257953195948e16b3b32b1e5af6920a65c591dcd760996f6873e4e"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.svg",
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "body_sha256": "7662f6043378c9bb30bec7bd77c0bb33580f4864ed7c9e18759bc82a8ac3a8ef"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.pdf",
+        "status": 200,
+        "content_type": "application/pdf",
+        "body_sha256": "f1169399255d4ec051e729792403b323a910b70a3c1671b25c14c2aed9022b07"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "injected_export_failure",
+        "route": "/fig.svg",
+        "status": 500,
+        "content_type": "text/plain; charset=utf-8",
+        "body": "Python bridge exited with exit code: 7: error: synthetic SVG bridge export unavailable",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "recovered",
+        "status": 200,
+        "content_type": "application/json"
+      }
+    ],
+    "native_binary_sha256": "372a6d4cbceea81e61d0a6d2befda39f2760e6e57d40e5f7994b83242553abed",
+    "scopes": "Real Python CLI, Python UI, current-source-built native Rust HTTP. Native-only sitecustomize fault exits SVG child7; no project/interpreter/site files modified."
+  },
+  "response_matrix": {
+    "rows": [
+      {
+        "surface": "python_cli_apply",
+        "case": "valid",
+        "exit_code": 0,
+        "stdout_empty": true,
+        "stderr": "wrote <owned-evidence>\\valid-out.json\n",
+        "output_preserved_on_failure": false
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "numeric",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: SetSize.width: expected number, got str\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "panel",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: panel index must be a non-negative integer\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_apply",
+        "case": "syntax",
+        "exit_code": 1,
+        "stdout_empty": true,
+        "stderr": "error: invalid action JSON: invalid JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)\n",
+        "output_preserved_on_failure": true
+      },
+      {
+        "surface": "python_cli_capabilities",
+        "case": "valid",
+        "exit_code": 0,
+        "stdout_json": true,
+        "stderr_empty": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "numeric",
+        "route": "/action",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: width must be a number",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "panel",
+        "route": "/action",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: panel index must be a non-negative integer",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "syntax",
+        "route": "/action/raw",
+        "status": 200,
+        "content_type": "text/html; charset=utf-8",
+        "error": "ValueError: invalid JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+        "spec_png_history_preserved": true,
+        "html_error_not_json_rpc": true
+      },
+      {
+        "surface": "python_ui",
+        "case": "raw_valid_non_htmx",
+        "route": "/action/raw",
+        "status": 303,
+        "content_type": "",
+        "shape": "redirect, not JSON payload"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/spec.json",
+        "status": 200,
+        "content_type": "application/json",
+        "body_sha256": "651c01ca24904090f02483735972d4244a053200b13ac4745b11b98efa06a79a"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.png",
+        "status": 200,
+        "content_type": "image/png",
+        "body_sha256": "3c449249d3a2a8e64c3c8ec6a477a44220cdd37f3fbb2083ef898154bae6536e"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.svg",
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "body_sha256": "93f250207732288d75ab2c741cf38dab440d62ac9011a2d6d03c963514d37dda"
+      },
+      {
+        "surface": "python_ui",
+        "case": "get",
+        "route": "/fig.pdf",
+        "status": 200,
+        "content_type": "application/pdf",
+        "body_sha256": "c6c5b796f9941cab1cbc013ac8f4967744987576a9d30d7156a98d60209f4ff8"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "get_spec",
+        "route": "/spec.json",
+        "status": 200,
+        "content_type": "application/json",
+        "shape": "FigureSpec"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "valid",
+        "route": "/action",
+        "status": 200,
+        "content_type": "application/json",
+        "shape": "FigureSpec",
+        "spec_sha256": "8798e4a8aff05af347e44a156324c3346afdefe74346e1a95d16072d106cbe48"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "numeric",
+        "route": "/action",
+        "status": 400,
+        "content_type": "application/json",
+        "error": "Python bridge exited with exit code: 1: error: SetSize.width: expected number, got str",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "panel",
+        "route": "/action",
+        "status": 400,
+        "content_type": "application/json",
+        "error": "Python bridge exited with exit code: 1: error: panel index must be a non-negative integer",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "syntax",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: EOF while parsing an object at line 1 column 1",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "wrong_type",
+        "route": "/action",
+        "status": 415,
+        "content_type": "application/json",
+        "error": "Content-Type must be application/json",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "utf8",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: invalid utf-8 sequence of 1 bytes from index 0",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "duplicate",
+        "route": "/action",
+        "status": 422,
+        "content_type": "application/json",
+        "error": "invalid action JSON: duplicate JSON object key \"text\" at line 1 column 38",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.png",
+        "status": 200,
+        "content_type": "image/png",
+        "body_sha256": "0825825ba8257953195948e16b3b32b1e5af6920a65c591dcd760996f6873e4e"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.svg",
+        "status": 200,
+        "content_type": "image/svg+xml",
+        "body_sha256": "7662f6043378c9bb30bec7bd77c0bb33580f4864ed7c9e18759bc82a8ac3a8ef"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "export",
+        "route": "/fig.pdf",
+        "status": 200,
+        "content_type": "application/pdf",
+        "body_sha256": "f1169399255d4ec051e729792403b323a910b70a3c1671b25c14c2aed9022b07"
+      },
+      {
+        "surface": "rust_agent",
+        "case": "injected_export_failure",
+        "route": "/fig.svg",
+        "status": 500,
+        "content_type": "text/plain; charset=utf-8",
+        "body": "Python bridge exited with exit code: 7: error: synthetic SVG bridge export unavailable",
+        "spec_png_preserved": true
+      },
+      {
+        "surface": "rust_agent",
+        "case": "recovered",
+        "status": 200,
+        "content_type": "application/json"
+      }
+    ],
+    "native_binary_sha256": "372a6d4cbceea81e61d0a6d2befda39f2760e6e57d40e5f7994b83242553abed",
+    "scopes": "Real Python CLI, Python UI, current-source-built native Rust HTTP. Native-only sitecustomize fault exits SVG child7; no project/interpreter/site files modified."
+  },
+  "real_browser_cases": [
+    "test_a_render_error_is_shown_without_losing_the_previous_figure",
+    "test_open_reset_and_download_keep_python_document_history_and_source_files_separate",
+    "test_file_failures_and_vector_export_failures_preserve_state_then_recover"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "DataclassdecoderfieldloopletgenericTypeError/ValueErrorlosefieldpath;invalidSetSizewidthandheightBOTHCLIerror:expectednumbergotstr,indistinguishablethroughRustagenttoo. Catchonlythoseexceptionsatfieldboundary,re-raisetype(error)withpublicClass.fieldprefixandcause. Noacceptance/coercion/uniontype/fallbackchange.",
+  "format_policy": "CLIapplywritesJSONFILE/stdoutempty/status0or1/stderrwrote-or-error;capabilitiesstdoutisJSON. PythonUIrawvalidnonHTMXPOST303redirect/failedHXforms200HTMLerror,notJSONRPC. NativeRustGETspecJSONFigureSpec/POSTaction200JSONFigureSpecand400,415,422JSON{error};exports200binaryor500text/plainfailure,notsuccessJSON/vector. Actual26route/CLIcasesexplicit.",
+  "information_policy": "Publicclass/fieldchain,expectedtypes,negativepanel/JSONline-columnmessagesarealloweddiagnosticcontext;operator-suppliedCLIoutputpathsnormalstderrwrotemessagesmaskedinthepublicreport. Testedbad-inputUI/nativeerrorsdonotcontaintraceback/internalownedtemppath;newnumericcontextdoesnotechoSYNTHETICcanary. Notageneralredactorforallpreexistingunion/value/backendmessages.",
+  "qa_note": "Positivepanel99AUTOCREATESpanelsbyexistingcorecontract\u2014notout-of-rangeerror. Initialprobeassumptioncorrectedtonegative-1beforefinal24matrix. Initial8newtests5FAIL3PASSbeforefix;final9testsincludeValueErrornestedstrictclasspreservation. LayerSpec.from_dictgenericreturnnarrowedwithisinstance,noAny/cast/ignore. Nativebinaryrebuiltfromcurrentsourcecargo--lockedbeforeprobe;noRustsourcechanged. FaultsitecustomizeisONLYownedprobePYTHONPATH/nativechildandonlySVGwhenflagON,allotherCLIreal;processreapedinfinally/nointerpreter/projectinstallationchanged.",
+  "environment_overrides": {
+    "actual-matrix": {
+      "PYTHONPATH": "<workspace-root>",
+      "native_child_PYTHONPATH": "<owned-evidence>",
+      "native_child_fault": "sitecustomize.py gates render-to-svg only; real Python delegates all other commands"
+    },
+    "floor-error": {
+      "PYTEST_ADDOPTS": "-k \"test_review_error_context\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "actual-matrix",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "26 actual CLI/UI/native response cases pass; native process terminated/reaped"
+      ],
+      "log_text_sha256": "49ed47f19d7b33b9336e57b65e5aa153d6162f5ce158d08ace228702d41f614c"
+    },
+    {
+      "name": "error-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_error_context.py",
+        "tests/test_cli_apply.py",
+        "tests/test_agent.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_review_full_spec_fields.py",
+        "tests/test_review_json_policies.py",
+        "tests/test_reducer.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "386 passed, 2 skipped, 2 warnings in 60.60s (0:01:00)"
+      ],
+      "log_text_sha256": "c45f8e3c8ab0e76143f7c5d0c0d4de67bd18c06e10488bee2d25a36e47237ba2"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_editor_browser.py",
+        "tests/test_review_editor_recovery_browser.py",
+        "-k",
+        "render_error or file_failures or open_reset",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "3 passed, 30 deselected in 18.11s"
+      ],
+      "log_text_sha256": "fb99d166881544dfbb0c0b5e97f9edf0bb717f085210839e91491d7b24cc550f"
+    },
+    {
+      "name": "floor-error",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "9 passed, 3106 deselected, 13 warnings in 1.39s"
+      ],
+      "log_text_sha256": "7446069dc6087692fc9fbcd7dd5f63d058a3aa561c88fe8677f9de2992e18954"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "250 files already formatted"
+      ],
+      "log_text_sha256": "8fc84de260370606207d2013c73b2de92868bcb9e7e1020fd067097954486ba6"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "323b8d4ce59786e9fbbd949987a3de7f07cc50d862265378329219d7cfb040e2"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "474b84724b37ce00108e86a74b0415e22b84a761ec69be17e8b50ffd98be6261"
+    }
+  ],
+  "raw_probe_sha256": {
+    "before_matrix.json": "60e95cdbd33d17b0f523a8a7fd916c93f0ec8c11bfd57e9dd67174ee000df212",
+    "response_matrix.json": "5fe9a8d37f26ef1b8a66663dc15eb10a9a2d2980743cedd057ef9280a6c18fbb",
+    "probe.py": "d8af11be9acea43559a2a1301337d3ef986032e61017ff4e18dd221238d3dcd0",
+    "qa.py": "88e946b5a6190b5127ce37ad7a4ccfa5c53b4da6bf06006d5689014712253eab",
+    "sitecustomize.py": "6a62ddcdb9e80d6c4f528515041db3cec9771ea38fe721199e0725416e227427",
+    "environment_overrides.json": "d14ac8e9030797c2e87a921df2696d7cb8dd3617eaba9e77b1d3dd5c56e14b05",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "7ef8dbaf78ad29446aa9c8191075c3608dcf83224f7dcd105d90c8bf7b6c138a",
+    "browser.xml": "65ffb82c80c76b649fdc5fee3384431ad74bd495475de703513a598f59565a39",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  },
+  "connected_warnings": {
+    "count": 2,
+    "category": "UserWarning",
+    "message": "statistical intervals omitted for groups with fewer than 2 observations or independent resampling units",
+    "tests": [
+      "test_explicit_empty_marker_is_not_automatic[pointplot]",
+      "test_explicit_empty_line_style_is_not_automatic[pointplot]"
+    ]
+  }
+}

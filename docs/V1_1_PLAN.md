@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 60 fixes lost field context and checks actual machine envelopes.**
+FIND-041 made invalid width/height indistinguishable through CLI/native-agent
+errors. Shared decoding now prefixes publicClass.field, preserving TypeError/
+ValueError,cause,union alternatives and inputs. Initial5fail/3pass become final9pass.
+Actual26CLI/UI/native cases check JSON FILE versus stdout,HTML versus JSON,and
+binary exports versus500plain failure without changing routes or auth semantics.
+
+386connectedpasses/2OSskips,3actualbrowserpasses/30deselected,floor9passes/
+3106deselected/13Pyparsing warnings and10quality records pass. Two connected
+singleton pointplot interval warnings are classified separately, not suppressed.
+EDIT-07/09 are PASS in support; this is not universal value-redaction certification.
+[Evidence](review_evidence/machine_error_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS121/RUNNING5/OPEN23/DEFERRED1**. B9CI39178688403is ALL5SUCCESS, validating
+040whole. Publish scaled+recovery+newdecoder effect and obtain new exact whole CI.
+Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 59
+
 **Review phase 59 checks file and export recovery through real UI controls.**
 ValidA→brokenJSON/invalidspec retains spec/PNG/history/layout and submitted draft;
 validB opens fresh history and clears errors. A fault in the real SVG save path

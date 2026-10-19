@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-041은decoder오류에공개fieldcontext를추가하고오류종류/union허용은유지합니다.
+  새9/관련386/OS2skip·실제CLI/UI/native26·browser3/floor9로EDIT-07/09는범위PASS이지
+  보편redactor/새RPC는아닙니다. 정확한B9CI5job성공으로이전040전체를확인했고세대기unit을
+  게시해새decoder소스전체CI를받습니다. 버전/의존성/배포는유지합니다.
+
 - 최신valid/bad/valid파일과SVGsavefault의실제UI는state/history/draft/자원을보존하고
   정상편집/export/다운로드로회복하며원파일은불변입니다. 관련229/OS6skip·browser4/floor43로
   EDIT-06은지원범위PASS입니다. Runtime없이newB9CI39178688403중확대+회복검증은로컬
@@ -364,7 +369,9 @@
   viewport/DPR설정·pointer/data·원DPI/state를보존했습니다.
 - [Editor회복 근거](review_evidence/editor_recovery_verification.json)에
   spec/PNG/history/오류hash·소스보존·export회복을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS119/RUNNING5/OPEN25/DEFERRED1**.
+- [Machine/오류 근거](review_evidence/machine_error_verification.json)에실제
+  route/status/type/error표와numericfieldcontext경계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS121/RUNNING5/OPEN23/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

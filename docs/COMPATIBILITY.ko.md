@@ -154,6 +154,23 @@ bbox의물리간격을사용합니다. Manualanchor는caller소유이며constrai
 reference/marker를보이는문자가같다는이유로합치지않습니다. Spec/source/stylefield는
 이guide정책으로재작성하지않습니다.
 
+## 오류context와machineinterface
+
+Dataclassdecode오류는공개Class.fieldcontext를붙이고TypeError/ValueError종류·원인·기존
+coercion/union허용을유지합니다. Nestedchain은새fullJSONpointer/indexAPI나보편value-redactor가
+아닙니다. 예상type/field/JSONline-column은허용진단이며검사한numeric오류는제출string을echo하지않습니다.
+
+실제envelope는구분합니다.
+
+- CLIapply는JSON결과file/stdout빈값/exit0·1이며progress/error는stderr입니다. Capabilities는stdoutJSON입니다.
+- Pythoneditorform은HTML오류/HTMX200또는일반303redirect이지JSONRPC가아닙니다.
+  /spec.json은JSON이고PNG/PDF/SVG는원래media-type입니다.
+- RustPOST/action은200JSONspec또는action/transport실패400/415/422JSONerror입니다.
+  Vector성공은binary,bridgeexport실패는500text/plain이지성공JSON/부분vector가아닙니다.
+
+Status/Content-Type을먼저확인하고decode하세요. CLI사용자가준path는정상로컬progress에
+나올수있으며기존모든union/value/backend오류가임의기밀text를redact한다는보장은아닙니다.
+
 ## 상태와 action 의미
 
 `FigureSpec`은 계속 mutable dataclass/list graph입니다. `reduce()`는 입력을
