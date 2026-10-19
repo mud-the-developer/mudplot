@@ -33,6 +33,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
+- Publish held: origin/main advanced to e752175 with operator-merged Dependabot
+  pyproject/uv/Cargo lock updates. Local code is preserved; integrate and revalidate
+  the new dependency environment before push. Existing receipts predate that merge.
+- Latest B6 supplied-height stairs:29new/382related/floor31/CLI2/nativeHTTP3case
+  pass; source/edges retained, explicit linear vertical outline limits. LocalRust
+  22P6ignored/12checks; LinuxMSRV/fullGUI need CI. Baseline24baf now cancelled with
+  minimumP/RustLinuxF/threecancels; publish queued fix+stairs,notoldpass.
 - Native contract follow-up: old hardcoded kind count caused24bafRustCI failure;
   now exact raw JSON metadata preservation/stem/WLS assertions. LocalRust22P/
   6ignored+Python291P/actualWindowsnativeHTTPJSON-PNGundo-redo pass,notLinuxMSRV/

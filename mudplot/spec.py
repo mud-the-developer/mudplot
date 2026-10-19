@@ -467,7 +467,8 @@ class SemanticSpec(SpecBase):
 
 @dataclass
 class LayerSpec(SpecBase):
-    # line | stem | scatter | bar | errorbar | band | hline | vline | annotate | text
+    # line | stem | stairs | scatter | bar | errorbar | band | hline | vline
+    # | annotate | text
     # | hist | box | heatmap | violin | kde | ecdf | rug | regplot | stripplot
     # | stackplot | hist2d | hexbin | quiver | pie | contour | contourf
     # | scatter3d
@@ -498,7 +499,7 @@ class LayerSpec(SpecBase):
     alpha: float = 1.0
     # bar geometry / outlines (bar_width is the total span of a category)
     bar_width: float | None = None
-    baseline: float | None = None  # nonstack statistical bars/stem: raw baseline (0)
+    baseline: float | None = None  # nonstack bars/stem/stairs: raw baseline (0)
     edge_color: str | None = None
     # Raw-data statistical layers; None selects documented type defaults.
     stat: StatSpec | None = None

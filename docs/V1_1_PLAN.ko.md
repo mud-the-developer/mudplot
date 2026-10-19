@@ -115,6 +115,8 @@
   residual진단/설정.
 - [x] **B6a — 수직numericstem:** 원본순서/반복위치·명시baseline·primary/y2·양수log,
   닫힌미지원mapping검사와실제gallery예제.
+- [x] **B6b — Pre-binnedstairs:** 주어진높이/N+1edge·수직unfilledlinearprimary/y2/rawbaseline,
+  묵시hist추정/mapping은없음.
 - [ ] **B6 — Matplotlib 범위:** 나머지 primitive/신호/vector/mesh/triangle/3D,
   축·정규화·범례·레이아웃 확장.
 
@@ -131,6 +133,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+
+**B6subset:pre-binnedstairs.** 기존x/bins/baseline필드로주어진N높이/N+1edge/rawscalarbaseline을
+저장하고수직unfilledlinearprimary/y2만지원합니다. Rebinning/정규화/보간은없고원본/edge/JSON/actions/
+SetData를보존합니다. 유한1..10000높이·엄격증가/표현가능edge폭이필요하며fill/open/log/group/facet/
+semantic은거절합니다. [범위](STAIRS.ko.md)와실제PNG/spec/source,새29/관련382/floor31/
+3348deselected/Pyparsing13경고·CLI2/nativeHTTP3/Rust22P6ignored·품질12명령/activeLSP11clean,
+[근거](review_evidence/v11_stairs_verification.json)를남깁니다. 기준24bafCI는cancelled종료/minimum성공/
+RustLinux실패/나머지3cancel이며통과로세지않습니다. 대기native계약수정+stairs를게시해새Linux/MSRV/
+전체CI를받고새model/action/specfield·의존성/lock/버전/tag/publish는변경하지않습니다.
+
+### 이전 리뷰78차
 
 **Native통합후속.** 기준24bafCI39254853276RustLinux실패는하드코딩kind수38actual/37expected였고
 Windowscancel/Python진행을그대로기록합니다. Parser오류로보지않고원본JSON의모든kind/required/optional

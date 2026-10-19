@@ -118,6 +118,8 @@ is authorized by this tracker.
   weighted CI/bootstrap/advanced-model CI and residual diagnostics/controls.
 - [x] **B6a — Vertical numeric stem:** source order/duplicates, explicit baseline,
   primary/y2/positive log; closed unsupported mappings, raw-data gallery example.
+- [x] **B6b — Pre-binned stairs:** explicit supplied heights/N+1 edges, vertical
+  unfilled linear primary/y2/raw baseline; no implicit hist estimation/mappings.
 - [ ] **B6 — Native Matplotlib breadth:** remaining primitive/signal/vector/
   mesh/triangle/3-D families, richer axes/normalization/legends/layouts.
 
@@ -136,6 +138,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
+
+**B6 subset: pre-binned stairs.** Existing x/bins/baseline fields store N supplied
+heights/N+1 explicit edges/raw scalar baseline. Vertical unfilled linear primary/y2
+only, no rebinning/normalization/interpolation. Preserve source, edges, JSON/actions/
+SetData; require finite numeric1..10000heights/strict finite increasing edges with
+representable widths. Reject unsupported fill/open/log/group/facet/semantic options.
+[Scope](STAIRS.md), real PNG/spec/source.29new/382related/floor31passes/
+3348deselected/13Pyparsing warnings,CLI2/nativeHTTP3cases/Rust22P6ignored/12checks,
+activeLSP11clean. [Evidence](review_evidence/v11_stairs_verification.json).
+Baseline24bafCI ended cancelled:minimumPASS/RustLinuxFAIL/other3cancelled—notpass.
+Publish queued native count-contract fix plus stairs for fresh Linux/MSRV/fullCI.
+No new model/action/spec fields/dependencies/locks/versions/tag/publish authority.
+
+### Earlier review phase 78
 
 **Native integration follow-up.** Baseline24bafCI39254853276RustLinux failed an
 old hardcoded kind-count assertion (38actual/37expected);Windowscancelled,Python

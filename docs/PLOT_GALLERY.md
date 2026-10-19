@@ -150,6 +150,38 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/stem.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#stem)
 
+### `stairs` — Pre-binned stairs
+
+![Pre-binned stairs](images/plots/stairs.png)
+
+Supplied heights and explicit edges, without rebinning observations.
+
+주어진높이와명시edge를사용하며관측을다시binning하지않습니다.
+
+**Required / 필수:** `x`, `bins`
+
+**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"height": [2.0, 1.0, 3.0, -0.5]}
+plot = (
+    mp.plot(data)
+    .stairs("height", [0, 1, 2, 4, 5], baseline=0, line_width=1.4)
+    .labels(x="Bin edges", y="Supplied height", title="Synthetic pre-binned values")
+    .legend(show=False)
+    .size(4.5, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/stairs.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#stairs)
+
 ### `regplot` — Regression
 
 ![Regression](images/plots/regplot.png)

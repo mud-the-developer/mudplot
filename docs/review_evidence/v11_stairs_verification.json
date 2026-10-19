@@ -1,0 +1,179 @@
+{
+  "source_sha256": {
+    "mudplot/api.py": "5cee8476865128eaa57c092689e786eed499de7a5ed66f0976685e963bebb3a8",
+    "mudplot/_render.py": "423951fdfb68f254950617199e0b55daa69b29cec48cec8653b052ef062b1d7f",
+    "mudplot/validate.py": "73fdf0d347184800e9117318f804cc70705ac8634cdf23e8da81e0659cbca863",
+    "mudplot/spec.py": "a8943c2d9b3dd5bccb72d12e811d22a9369d0c1f389be35d3a4aa21c9bfea2cb",
+    "mudplot/capabilities.py": "649a2f5029022a93039e56447efe2523d3dc9d4eb1fb1b054fd274f3d2ce28f4",
+    "dashboard/plot_gallery.py": "d5683140257bef044fd9416a68b7d05321437f5e6fbb3f61dbd6771f47c7a1db",
+    "examples/plots/stairs.py": "4d9592543f90588b2fb3bba89125ff426fe9a6f86642b8c22206a991ff33ba3a",
+    "tests/test_stairs.py": "c30f00c80702fc865000d29c91c8862b6c5cb087178cab72161a984825314503",
+    "scripts/check_minimum_versions.py": "2225a3681c06c39bd691b0f69328f3ad08c643f33d049db1164c5d6032fc38d8",
+    "schemas/capabilities.json": "5e571874b819a818e1535224796ba5492cf60e76d2cb8fb42d50451f1b8f4635",
+    "docs/REFERENCE.md": "18c07bf8086979bb163594c5b64970477f8f90c0b816d3f3298228cb6bfc6869",
+    "docs/PLOT_GALLERY.md": "32659765338515ade4b61e1e57e23ab49723b15aeaad89049f35f4307fe35051",
+    "docs/STAIRS.md": "98a6c4d877ffa07ea2de4b01c6bf9a741d3039bdbb19bf2a19cf2acd041ce668",
+    "docs/STAIRS.ko.md": "4705068b447980a586d07a098b1fc3c0c60c858a61f21e48c6af4ae943c24cdb",
+    "docs/FEATURE_COVERAGE.md": "bbe9c260cae07cab3f8894e4eea63df6f8885efa5be6d2f1475c4fe6d96a6499",
+    "docs/FEATURE_COVERAGE.ko.md": "a624905c9f0325cab59b90c9a5e61227db76f403c60e1d628ea585247b94b6a8",
+    "docs/images/plots/stairs.mplot.json": "0dc4641b9f8bcbf6ac173ae81b60ce238a71e736b299ec4b08f5f4d170a4737d",
+    "docs/images/plots/stairs.png": "553364e83a643e852332e0c4f8df3b236bed4631e47af0bc90032171fd584645",
+    "scripts/rust_editor_smoke_test.py": "125da3f1815a2810c51c7580a31f6f42752d0f8109dba0b92b31cd807f393322",
+    "mudplot-editor/src/model.rs": "e7e3792a02fbe1b9bdbdf867fbbd53ff24e4d8a3d0995b5e8ed244b3620830fe"
+  },
+  "cli": [
+    {
+      "kind": "primary",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "edges_preserved": true,
+      "png_sha256": "2375e8e533e4169e7c02431fb0b20e72b0e5c2ed7ddbbf1f2283c5d8e7f338f6"
+    },
+    {
+      "kind": "y2",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "edges_preserved": true,
+      "png_sha256": "4f60c80270a4d5209e323fb47b1c36a5d41826dbae72037b1500c4f0caa24dab"
+    }
+  ],
+  "native_boundary": {
+    "native_stem_weighted_regression_stairs_http": true,
+    "scope": "Three cases: stem/WLS/stairs on actual owned Windows native binary/current venv Python, exact source JSON/PNG/titleapply/undo/redo/cache restore. Not GUI/browser or MSRV1.88 proof.",
+    "owned_process": true
+  },
+  "scope": "B6verticalunfilledlinearprimary-y2STAIRS:LayerSpec.xnamesNsuppliedheights/binsstoresN+1explicitfiniteincreasingedges/finitepositiverepresentablewidths,baseline0includingrawNone.Notobservations/rebinning/normalization. Source/edge/action/JSON/SetDatapreserved;Nchangesrequirematchingedges. No newfields/dependencies/version. No horizontal/fill/open/log/group/facet/semantics/weights;unsupportednondefaultstylesreject. SharedcloseddiscreteoptionhelperkeepsSTEMcontracts.",
+  "oracles": "ManualStepPatchvalues/edges/baseline/eightpathvertices;source-order/noestimator,mutableinputedgecopy/zero-single-negative/y2,shape-tie-decreasing-bool-missing-infinite-overflowedgewidthbadcases,missingheights,failedsaveoldbytes,rowbudget10000,invalidmappings,linearity,fACETnohistorymutation,sourceSetData. Existingstem/hist-step/gallery/nativekindpreservation/state-machineincluded.",
+  "gallery": "OnlynewrealPNG+specandstandaloneexample;authorviewedstairsPNGpositive-negativeheights/nonuniformwidth/rawbaseline. NotindependenthumanAT/readabilityapproval,oldimagesnotregenerated.",
+  "baseline_status": "24bafCI39254853276completedcancelled:RustLinuxhardcodedcountfailure/Minimumsuccess/other3jobscancelled.No inferredcancelreason/pass. Local7789481count-preservationfixalreadycommittedandqueued;publishwithnewstairsafterterminalbaseline. NewLinuxMSRV/fullGUIcurrentCIsourceproofstillneeded.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "results": [
+        "382 passed in 178.09s (0:02:58)"
+      ],
+      "log_sha256": "c4d0544ba8757767551d625fe06071dd2c8dd07d6376e2cd182cfc4edf3f4d0f"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "results": [
+        "31 passed, 3348 deselected, 13 warnings in 4.20s"
+      ],
+      "log_sha256": "4ce4322c68ddfcf9b898b058561f6d02bbe43363ff5cd772c190553a507fac9f"
+    },
+    {
+      "name": "rust-format",
+      "exit_code": 0,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rust-test",
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 6.73s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "6d65687ab4f6dc9e2aa8757d9142d3a3b958a4e6bb85b3cd412670630f6b6266"
+    },
+    {
+      "name": "rust-build",
+      "exit_code": 0,
+      "results": [],
+      "log_sha256": "aeeec6601b67140498c48e653bbb5c24ba11e9974e63faf3fa59e9f64912757f"
+    },
+    {
+      "name": "native-boundary",
+      "exit_code": 0,
+      "results": [
+        "Stem/WLS/stairs native boundary OK: exact JSON and cached PNG undo/redo"
+      ],
+      "log_sha256": "b1d4c0a9d4bc5c075f2cb8472ea9e9138361eb5fbff49eb5a4c525dcaf9b713d"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "274 files already formatted"
+      ],
+      "log_sha256": "e3ef58579eb566e7de49eea46e9563c2e14da7a5f45a42fd33f95010938b335b"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "cddd7ce1bae0518724887dcc8c0e513c970fcb5ac7ec648ba59bbf99fccb07d9"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "c4de6ea309420fa15e77920b1161da025223408d87112800c702f16e279abb9d"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "0939ec29b89545cd1898b3d700bbbcf362a018cd9c9edc280cca3dfdee4b94c5",
+    "cli.json": "55b10bb0e6ab68dc1fcc75b60e83f44e482a7b13b4ff73598f2d20c9a547db37",
+    "results.xml": "a55279e6eef992e213fcbb4917235f3583a6c005120fe59150ffd3a3aeb2a801",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "native_focus.py": "498d26191bb360e0e0c5e57eef6a1b21666c1a3af34ea1e2e3b17b44d67a9620",
+    "native-result.json": "747116a1e3db397544f8199ab36e49d0606e6f40b57bcae2d1ef3886e20ae4b6",
+    "native-server.log": "ad30d5fe51c59e17ecfc24389b4977f12ff6624c1fe280227cb28d3926da715a"
+  }
+}

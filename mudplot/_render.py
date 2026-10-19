@@ -55,6 +55,7 @@ __all__ = ["render", "save"]
 _SERIES_TYPES = {
     "line",
     "stem",
+    "stairs",
     "regplot",
     "scatter",
     "stripplot",
@@ -477,6 +478,18 @@ def _draw_series_layer(
         itertools.cycle(theme.hatches) if use_redundant else itertools.repeat(None)
     )
     target = _target_axes(ax, ax2, layer)
+    if layer.type == "stairs":
+        return target.stairs(
+            _col(data_cols, layer.x),
+            layer.bins,
+            baseline=0 if layer.baseline is None else layer.baseline,
+            fill=False,
+            color=layer.color or next(color_iter),
+            linewidth=layer.line_width,
+            linestyle=layer.line_style or "-",
+            alpha=layer.alpha,
+            label=_decorate(layer.label, layer.citation, layer.href),
+        )
 
     x_all = _x_values(target, data_cols, layer.x)
     norm = _color_norm(data_cols, layer) if layer.c is not None else None

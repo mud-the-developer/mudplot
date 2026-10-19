@@ -74,6 +74,13 @@ GALLERY_EXAMPLES = tuple(
             "유한합성관측의수직stem으로원본순서와rawbaseline을보존합니다.",
         ),
         (
+            "stairs",
+            "series",
+            "Pre-binned stairs",
+            "Supplied heights and explicit edges, without rebinning observations.",
+            "주어진높이와명시edge를사용하며관측을다시binning하지않습니다.",
+        ),
+        (
             "regplot",
             "series",
             "Regression",

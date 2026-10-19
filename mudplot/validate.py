@@ -106,6 +106,7 @@ _DRAWSTYLES = {"default", "steps", "steps-pre", "steps-mid", "steps-post"}
 _AXIS_ROUTABLE_TYPES = {
     "line",
     "stem",
+    "stairs",
     "regplot",
     "scatter",
     "stripplot",
@@ -1301,25 +1302,38 @@ def _stable_group_indices(values) -> list[tuple[object, list[int]]]:
         return groups
 
 
-def _check_stem_data(cols, layer, panel, where, issues):
+def _check_discrete_options(layer, where, issues):
     allowed = (
         {"type", "citation", "href"}
-        | set(LAYER_TYPES["stem"]["required"])
-        | set(LAYER_TYPES["stem"]["optional"])
+        | set(LAYER_TYPES[layer.type]["required"])
+        | set(LAYER_TYPES[layer.type]["optional"])
     )
     defaults = LayerSpec()
     for field in fields(layer):
         if field.name not in allowed and getattr(layer, field.name) != getattr(
             defaults, field.name
         ):
-            issues.append(f"{where}: {field.name} is not supported for stem")
+            issues.append(f"{where}: {field.name} is not supported for {layer.type}")
     for name in ("line_width", "marker_size"):
         value = getattr(layer, name)
-        if value is not None and (not _finite(value) or not 0 <= value <= 1000):
-            issues.append(f"{where}: stem {name} must be finite in [0,1000]")
+        if (
+            name in allowed
+            and value is not None
+            and (not _finite(value) or not 0 <= value <= 1000)
+        ):
+            issues.append(f"{where}: {layer.type} {name} must be finite in [0,1000]")
     baseline = 0 if layer.baseline is None else layer.baseline
     if not _finite(baseline):
-        issues.append(f"{where}: stem baseline must be finite numeric, not bool")
+        issues.append(
+            f"{where}: {layer.type} baseline must be finite numeric, not bool"
+        )
+        return None
+    return baseline
+
+
+def _check_stem_data(cols, layer, panel, where, issues):
+    baseline = _check_discrete_options(layer, where, issues)
+    if baseline is None:
         return
     if not all(isinstance(name, str) and name in cols for name in (layer.x, layer.y)):
         return
@@ -1339,6 +1353,37 @@ def _check_stem_data(cols, layer, panel, where, issues):
         and (baseline <= 0 or any(value <= 0 for value in y))
     ):
         issues.append(f"{where}: log stem heads and baseline must be positive")
+
+
+def _check_stairs_data(cols, layer, panel, where, issues):
+    baseline = _check_discrete_options(layer, where, issues)
+    if baseline is None or not isinstance(layer.x, str) or layer.x not in cols:
+        return
+    values = cols[layer.x]
+    if not 1 <= len(values) <= MAX_ROWS:
+        issues.append(f"{where}: stairs requires 1..{MAX_ROWS} supplied heights")
+        return
+    if any(not _finite(value) for value in values):
+        issues.append(f"{where}: stairs heights must be finite numeric, not bool")
+    edges = layer.bins
+    if (
+        not isinstance(edges, (list, tuple))
+        or len(edges) != len(values) + 1
+        or any(not _finite(value) for value in edges)
+        or any(
+            not left < right or not _finite(right - left)
+            for left, right in pairwise(edges)
+        )
+    ):
+        issues.append(
+            f"{where}: stairs needs N+1 finite increasing edges "
+            "with representable widths"
+        )
+    value_axis = panel.y2 if layer.axis == "y2" else panel.y
+    if panel.x.scale != "linear" or (
+        value_axis is not None and value_axis.scale != "linear"
+    ):
+        issues.append(f"{where}: stairs currently requires linear axes")
 
 
 def _check_regression_data(
@@ -1881,6 +1926,8 @@ def validate(spec: FigureSpec) -> list[str]:
 
             if layer.type == "stem":
                 _check_stem_data(cols, layer, panel, where, issues)
+            elif layer.type == "stairs":
+                _check_stairs_data(cols, layer, panel, where, issues)
 
             if (
                 layer.type in _MATRIX_LAYER_TYPES

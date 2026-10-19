@@ -89,6 +89,18 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "stairs": {
+        "required": ["x", "bins"],
+        "optional": [
+            "baseline",
+            "label",
+            "color",
+            "line_width",
+            "line_style",
+            "alpha",
+            "axis",
+        ],
+    },
     "regplot": {
         "required": ["x", "y"],
         "optional": [
@@ -840,6 +852,12 @@ def capabilities() -> dict:
             "baseline": "raw scalar, default zero; positive on log response axes",
             "max_rows": MAX_ROWS,
             "limits": "primary/y2 Cartesian only; no group/semantics/facet/weights",
+        },
+        "stairs": {
+            "values": "x names the supplied height column; bins stores N+1 edges",
+            "geometry": "vertical outline, scalar baseline default zero; no rebinning",
+            "max_rows": MAX_ROWS,
+            "limits": "linear primary/y2 only; no fill/open/group/facet/weights",
         },
         "regression": {
             "fields": _action_fields(RegressionSpec),

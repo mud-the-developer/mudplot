@@ -154,6 +154,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`, `y`, `group`
 - **optional**: `color`, `line_width`, `line_style`, `alpha`, `axis`
 
+### `stairs`
+
+- **required**: `x`, `bins`
+- **optional**: `baseline`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+
 ### `stem`
 
 - **required**: `x`, `y`

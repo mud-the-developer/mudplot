@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 79차 — 주어진높이의pre-binnedstairs
+
+- 기존x/bins/baseline필드를주어진높이열/N+1edge/rawbaseline으로재사용하며histogram추정/정규화/
+  보간/edge보정은없습니다. 수직unfilledlinearprimary/y2·1..10000유한높이/엄격증가유한edge·표현가능폭,
+  baseline0(원시None도0)와원본/JSON/actions/SetData를보존하고개수변화는맞는edge를다시요구합니다.
+- Fill/open/log/group/facet/dropna/semantic/weights/다른nondefault필드는거절합니다. 공통discreteoption
+  검증을분리하면서기존stem34검사도유지했습니다. 새29/관련382/floor31/3348deselected/Pyparsing13,
+  CLI2·실제WindowsnativeHTTPstem/WLS/stairs3종JSON-PNG-undo-redo/Rust22P6ignored/품질12명령·
+  activeLSP11clean,[근거](review_evidence/v11_stairs_verification.json)를남겼습니다.
+- 실제새PNG/spec/source를추가해눈으로확인했고독립사람AT/가독성인증은아닙니다. 기존private증거/
+  이미지baseline은재생성·덮어쓰지않았습니다. 대기nativefix의metadata검사는새stairsx/bins도보존합니다.
+- 기준24bafCI39254853276은cancelled종료/minimum성공/RustLinux실패/나머지3jobcancel을그대로보존합니다.
+  대기7789481nativecount계약수정+새stairs를게시해새LinuxMSRV/전체CI를받으며GUI/전체v1.1완료/
+  tag/publish/자동loop를추정하지않습니다. 원대장139PASS/6RUNNING/4OPEN/1DEFERRED와나머지범위는유지합니다.
+
 ## 78차 — Nativecapabilitycount회귀와HTTP통합검사
 
 - 새stairs를검토하려다기준24bafCI39254853276RustLinuxjob실패를우선확인했습니다. 실제오류는

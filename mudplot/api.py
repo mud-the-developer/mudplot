@@ -117,6 +117,31 @@ class Plot:
             )
         )
 
+    def stairs(
+        self,
+        values: str,
+        edges: list[float],
+        *,
+        baseline: float = 0.0,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Draw supplied bin heights with explicit edges, without re-estimation."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="stairs",
+                    x=values,
+                    bins=edges,
+                    baseline=baseline,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def regplot(
         self,
         x: str,

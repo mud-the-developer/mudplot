@@ -25,6 +25,11 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- 게시보류:origin/main에사용자가merge한Dependabot의pyproject/uv/Cargo lock업데이트e752175가
+  들어왔습니다. 로컬code는보존하고통합·새의존성환경재검증뒤push합니다. 현재receipt는그merge이전입니다.
+- 최신B6주어진높이stairs는새29/관련382/floor31/CLI2/nativeHTTP3가맞고원본/edge·linear수직outline
+  제한을보존합니다. 로컬Rust22P6ignored/품질12명령이며LinuxMSRV/GUI는CI가필요합니다. 기준24baf는
+  cancelled종료/minimumP/RustLinuxF/나머지3cancel로기록해대기수정+stairs를게시하고과거통과로세지않습니다.
 - Native후속:24bafRustCI의기존kind수하드코딩실패를정확한JSONmetadata/stem/WLS보존검사로수정했습니다.
   로컬Rust22P/6ignored·Python291P/실제WindowsnativeHTTPJSON-PNGundo-redo가맞지만LinuxMSRV/GUI는
   아닙니다. PythonCI진행을보호해검증unit은로컬보존하고새stairs는추가하지않았습니다.

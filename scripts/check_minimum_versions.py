@@ -83,6 +83,7 @@ TESTS = (
     "tests/test_raw_group_order.py",
     "tests/test_new_layers.py",
     "tests/test_stem.py",
+    "tests/test_stairs.py",
     "tests/test_review_bivariate_limits.py",
     "tests/test_stabilization.py",
     "tests/test_references.py",

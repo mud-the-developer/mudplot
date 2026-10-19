@@ -37,6 +37,21 @@
         "axis"
       ]
     },
+    "stairs": {
+      "required": [
+        "x",
+        "bins"
+      ],
+      "optional": [
+        "baseline",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "axis"
+      ]
+    },
     "regplot": {
       "required": [
         "x",
@@ -1141,6 +1156,12 @@
     "baseline": "raw scalar, default zero; positive on log response axes",
     "max_rows": 10000,
     "limits": "primary/y2 Cartesian only; no group/semantics/facet/weights"
+  },
+  "stairs": {
+    "values": "x names the supplied height column; bins stores N+1 edges",
+    "geometry": "vertical outline, scalar baseline default zero; no rebinning",
+    "max_rows": 10000,
+    "limits": "linear primary/y2 only; no fill/open/group/facet/weights"
   },
   "regression": {
     "fields": [

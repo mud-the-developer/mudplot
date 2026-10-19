@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added pre-binned vertical stairs from supplied heights and explicit N+1 edges,
+  raw baseline/linear primary-y2 routing and strict unsupported-option rejection,
+  with executable gallery and native JSON/PNG undo/redo coverage.
 - Replaced a brittle native capability kind-count assertion with exact source
   metadata preservation checks and native HTTP stem/weighted-regression JSON,
   PNG and undo/redo integration coverage, without changing runtime behavior.
