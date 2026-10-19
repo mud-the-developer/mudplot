@@ -36,7 +36,12 @@ def test_checker_rejects_drift_then_accepts_restored_copy(
     assert sync.main() == 1
     error = capsys.readouterr().err
     assert target in error and "regenerate with:" in error
-    assert "python -m mudplot" in error
+    command = (
+        "python -m scripts.render_docs_demo"
+        if target == "docs/PLOT_GALLERY.md"
+        else "python -m mudplot"
+    )
+    assert command in error
     (tmp_path / target).write_bytes(original)
     assert sync.main() == 0
 

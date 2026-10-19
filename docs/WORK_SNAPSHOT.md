@@ -33,6 +33,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
+- Latest B6 vertical numeric stem:34new/343related/floor36/CLI3pass, real gallery,
+  closed option/data limits and primary/y2/log geometry. No old images replaced.
+  Baseline2dCI failed generated gallery weights-row drift in full/minimum; new
+  gallery sync/drift guard fixes it. First new-SVG packaging failure is preserved;
+  final file placement/checks pass. New whole CI still required, not old pass.
 - Latest B5 weighted poly/log-x point fits/raw residuals:35new/467related/floor35/
   CLI3pass, explicit no weighted inference/joint; original data and unweighted
   behavior retained. ExactefdcwholeCI ALL5P covers prior ECDF, not new WLS source.

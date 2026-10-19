@@ -116,6 +116,8 @@ is authorized by this tracker.
   retention/positive-row selection, explicit no weighted CI/advanced models.
 - [ ] **B5 — Advanced statistics / matrices:** further heatmap/clustering controls,
   weighted CI/bootstrap/advanced-model CI and residual diagnostics/controls.
+- [x] **B6a — Vertical numeric stem:** source order/duplicates, explicit baseline,
+  primary/y2/positive log; closed unsupported mappings, raw-data gallery example.
 - [ ] **B6 — Native Matplotlib breadth:** remaining primitive/signal/vector/
   mesh/triangle/3-D families, richer axes/normalization/legends/layouts.
 
@@ -134,6 +136,21 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
+
+**B6 subset: vertical numeric stem plots.** Existing baseline fields encode raw
+segments/heads without sorting or aggregation; duplicates/source/SetData/styles,
+primary/y2 and positive log axes are preserved. Reject missing/nonfinite/bool data,
+outside1..10000rows, invalid baseline/styles and unsupported horizontal/group/
+semantic/facet/polar/3D mappings. [Scope](STEM.md), real executable gallery assets.
+34new/343related/floor36passes/3313deselected/205Pyparsing warnings,CLI3/8checks,
+activeLSP11clean. [Evidence](review_evidence/v11_stem_verification.json).
+Baseline2dCI39246899201FAILED one generated gallery weights-list drift (full4082P,
+minimum3275P,3.12cancel,bothRustP). Regenerate actual gallery and add it to the
+cheap schema checker with real drift/restore tests; no weakened guard. An initial
+packaging SVG placement failure is preserved; move only new vectors to image root,
+then all checks pass. Publish fix/subset for fresh wholeCI—not historical success.
+
+### Earlier review phase 76
 
 **B5 subset: relative weighted polynomial/log-x point fits and raw residuals.**
 Reuse LayerSpec.weights and typed RegressionSpec; positive-weight rows drive fit,

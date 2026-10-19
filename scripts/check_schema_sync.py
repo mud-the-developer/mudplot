@@ -1,4 +1,4 @@
-"""CI helper: verify schemas/*.json and docs/REFERENCE.md are up to date.
+"""CI helper: verify schemas and generated reference/gallery Markdown are current.
 
 Regenerates each artifact into a temp dir and diffs it against the checked-in
 copy, so a spec/capabilities change without a matching regeneration fails CI
@@ -26,10 +26,16 @@ _TARGETS = [
     ("schema", "schemas/figure_spec.schema.json", True),
     ("capabilities", "schemas/capabilities.json", False),
     ("docs", "docs/REFERENCE.md", True),
+    ("gallery", "docs/PLOT_GALLERY.md", False),
 ]
 
 
 def _regenerate(subcommand: str, out_path: Path, use_out_flag: bool) -> None:
+    if subcommand == "gallery":
+        from dashboard.plot_gallery import gallery_markdown
+
+        out_path.write_text(gallery_markdown(), encoding="utf-8")
+        return
     base_cmd = [sys.executable, "-m", "mudplot", subcommand]
     if use_out_flag:
         subprocess.run([*base_cmd, "--out", str(out_path)], cwd=REPO_ROOT, check=True)
@@ -47,9 +53,14 @@ def main() -> int:
             checked_in_path = REPO_ROOT / checked_in
             if not filecmp.cmp(out_path, checked_in_path, shallow=False):
                 flag = " --out <path>" if use_out_flag else " > <path>"
+                command = (
+                    "python -m scripts.render_docs_demo"
+                    if subcommand == "gallery"
+                    else f"python -m mudplot {subcommand}{flag}"
+                )
                 print(
                     f"error: {checked_in} is out of date; regenerate with:\n"
-                    f"  python -m mudplot {subcommand}{flag}",
+                    f"  {command}",
                     file=sys.stderr,
                 )
                 ok = False

@@ -378,7 +378,8 @@ Log 값/범주는 양수여야 하고 유한 범위를 넘는 도형을 조용�
 | --- | --- | --- |
 | line/scatter/step/errorbar/band | 부분 | 전체 artist 옵션, 유한 hlines/vlines, 일반 fill/span, 가로 band, 비대칭 x 오차 |
 | bar/pie | 부분 | barh, stacking/bottom/align, 막대별 스타일·값 라벨, pie annotation·wedge/text 옵션 |
-| stem/stairs/eventplot/broken_barh | 미지원 | 이산 신호·미리 binning한 계단·이벤트·구간 timeline |
+| stem | 부분: 수직numericprimary/y2/rawbaseline·원본순서/반복위치·양수log | Horizontal/group/facet/semantic미지원. [범위](STEM.ko.md) |
+| stairs/eventplot/broken_barh | 미지원 | 미리binning한계단·이벤트·구간timeline |
 | hist/box/violin/ECDF | 부분: 전용 가중 ECDF·proportion/percent/count·보완형·v/h, 그룹 histogram stack/dodge·빈 layer/stack step | Histogram step+dodge/채운 step/fill/poly/discrete/자동 bin/2변량, precomputed box 통계와 추가 분포 옵션 |
 | image/contour | 부분 | 좌표 grid/extent, mask, RGB(A) 이미지, pcolor/pcolormesh/spy와 contour 상세 설정 |
 | triangulated field | 미지원 | triplot/tripcolor/tricontour/tricontourf/trisurf |

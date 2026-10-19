@@ -18,6 +18,24 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 77차 — 수직numericstem과generatedgallery누락수정
+
+- B6첫stem범위는1..10000유한numeric행/수직rawbaseline·원본순서/반복위치·SetData/style·primary/y2/
+  양수log입니다. 새model/action/specfield는없고horizontal/group/semantic/weight/facet/dropna/polar/3D/
+  다른layer옵션은닫힌whitelist로거절합니다. CallerFigure소유와실패시원출력보존을유지합니다.
+- 실제새PNG/spec/SVG/PDF와실행gallery를추가하고이미지를열어양·음관측/zero baseline을확인했지만
+  독립사람AT/가독성인증은아닙니다. 기존baseline은재생성하지않았습니다. 새34/관련343/floor36/
+  3313deselected/Pyparsing205경고·CLI3종/품질8명령·activeLSP11clean,
+  [기하/CLI/실패기록](review_evidence/v11_stem_verification.json)을남겼습니다.
+- 기준2dCI39246899201은3.10에서1F/4082P/46skip,minimum1F/3275P/37skip이며같은generatedgallery의
+  regplotweightsoptional목록누락만실패했습니다. 3.12cancel/양Rust성공을그대로두고필수TeX통과여도
+  전체failure를거절한gate를완화하지않습니다. 실제gallery재생성과빠른check_schema_sync에네번째
+  gallerytarget·intentionaldrift/restore검사를추가해rootcaller누락을잡았습니다.
+- 첫packaging은PNG/spec전용plots폴더의새SVG를올바르게거절했습니다. 그기록/지문을보존하고우리의
+  새SVG/PDF만이미지root로옮겨링크수정후8검사를다시전부통과했습니다. Artifactguard는유지합니다.
+- 원대장139PASS/6RUNNING/4OPEN/1DEFERRED/다른v1.1remainder/gate와버전/의존성/lock/tag/publish/
+  자동loop경계는유지하며수정·새subset을게시해새전체CI를받습니다. 과거실패를소급성공으로바꾸지않습니다.
+
 ## 76차 — v1.1상대가중회귀point/residualsubset
 
 - 기존LayerSpec.weights를typedpoly/log-x점적합/rawresidual에적용하고sqrt(relativew)로

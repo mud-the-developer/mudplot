@@ -75,6 +75,20 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "stem": {
+        "required": ["x", "y"],
+        "optional": [
+            "baseline",
+            "label",
+            "color",
+            "line_width",
+            "line_style",
+            "marker",
+            "marker_size",
+            "alpha",
+            "axis",
+        ],
+    },
     "regplot": {
         "required": ["x", "y"],
         "optional": [
@@ -820,6 +834,12 @@ def capabilities() -> dict:
             "layout": "own Cartesian panel; no axis sharing/cropped limits/overlays",
             "data": "source matrix unchanged; fit-time transformation/order only",
             "limits": "one colour strip/axis; no missing data/continuous strip legend",
+        },
+        "stem": {
+            "orientation": "vertical numeric positions and heads; rows unchanged",
+            "baseline": "raw scalar, default zero; positive on log response axes",
+            "max_rows": MAX_ROWS,
+            "limits": "primary/y2 Cartesian only; no group/semantics/facet/weights",
         },
         "regression": {
             "fields": _action_fields(RegressionSpec),

@@ -66,6 +66,14 @@ GALLERY_EXAMPLES = tuple(
             "숫자 x별 평균과 seeded 점별 CI를 표시하며 동시 신뢰대역이 아닙니다.",
         ),
         (
+            "stem",
+            "series",
+            "Stem plot",
+            "Finite synthetic vertical observations retain their supplied order "
+            "and raw baseline.",
+            "유한합성관측의수직stem으로원본순서와rawbaseline을보존합니다.",
+        ),
+        (
             "regplot",
             "series",
             "Regression",

@@ -97,6 +97,26 @@ class Plot:
             )
         )
 
+    def stem(
+        self,
+        x: str,
+        y: str,
+        *,
+        baseline: float = 0.0,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Draw vertical numeric stems without reordering or aggregating rows."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="stem", x=x, y=y, baseline=baseline, label=label, **style
+                ),
+                panel=panel,
+            )
+        )
+
     def regplot(
         self,
         x: str,

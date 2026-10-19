@@ -50,7 +50,7 @@ from ._regression import MAX_REGRESSION_ROWS
 from ._regression import group_issues as regression_group_issues
 from ._regression import option_issues as regression_option_issues
 from ._regression import weighted_option_issues as regression_weight_issues
-from ._semantics import category_key, shared_scale_issues
+from ._semantics import MAX_ROWS, category_key, shared_scale_issues
 from ._semantics import data_issues as semantic_data_issues
 from ._stat import (
     COUNT_STATS,
@@ -105,6 +105,7 @@ _DRAWSTYLES = {"default", "steps", "steps-pre", "steps-mid", "steps-post"}
 # secondary y-axis); hist/box/heatmap always draw on the primary axes only.
 _AXIS_ROUTABLE_TYPES = {
     "line",
+    "stem",
     "regplot",
     "scatter",
     "stripplot",
@@ -1300,6 +1301,46 @@ def _stable_group_indices(values) -> list[tuple[object, list[int]]]:
         return groups
 
 
+def _check_stem_data(cols, layer, panel, where, issues):
+    allowed = (
+        {"type", "citation", "href"}
+        | set(LAYER_TYPES["stem"]["required"])
+        | set(LAYER_TYPES["stem"]["optional"])
+    )
+    defaults = LayerSpec()
+    for field in fields(layer):
+        if field.name not in allowed and getattr(layer, field.name) != getattr(
+            defaults, field.name
+        ):
+            issues.append(f"{where}: {field.name} is not supported for stem")
+    for name in ("line_width", "marker_size"):
+        value = getattr(layer, name)
+        if value is not None and (not _finite(value) or not 0 <= value <= 1000):
+            issues.append(f"{where}: stem {name} must be finite in [0,1000]")
+    baseline = 0 if layer.baseline is None else layer.baseline
+    if not _finite(baseline):
+        issues.append(f"{where}: stem baseline must be finite numeric, not bool")
+        return
+    if not all(isinstance(name, str) and name in cols for name in (layer.x, layer.y)):
+        return
+    x, y = cols[layer.x], cols[layer.y]
+    if not 1 <= len(x) <= MAX_ROWS:
+        issues.append(f"{where}: stem requires 1..{MAX_ROWS} rows")
+        return
+    if any(not _finite(value) for value in [*x, *y]):
+        issues.append(f"{where}: stem x/y must be finite numeric, not bool")
+        return
+    if panel.x.scale == "log" and any(value <= 0 for value in x):
+        issues.append(f"{where}: log stem positions must be positive")
+    value_axis = panel.y2 if layer.axis == "y2" else panel.y
+    if (
+        value_axis is not None
+        and value_axis.scale == "log"
+        and (baseline <= 0 or any(value <= 0 for value in y))
+    ):
+        issues.append(f"{where}: log stem heads and baseline must be positive")
+
+
 def _check_regression_data(
     cols, layer, where: str, issues: list[str], *, allow_empty: bool = False, panel=None
 ) -> None:
@@ -1837,6 +1878,9 @@ def validate(spec: FigureSpec) -> list[str]:
                     )
                 else:
                     _check_column(cols, val, where, issues)
+
+            if layer.type == "stem":
+                _check_stem_data(cols, layer, panel, where, issues)
 
             if (
                 layer.type in _MATRIX_LAYER_TYPES

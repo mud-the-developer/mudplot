@@ -51,9 +51,10 @@ from .validate import assert_valid
 
 __all__ = ["render", "save"]
 
-# layer types that draw one or more x/y series (and support ``group``)
+# Layer types drawing x/y series; grouping is kind-specific.
 _SERIES_TYPES = {
     "line",
+    "stem",
     "regplot",
     "scatter",
     "stripplot",
@@ -615,6 +616,29 @@ def _draw_series_layer(
                 markersize=layer.marker_size,
                 alpha=layer.alpha,
             )
+        elif layer.type == "stem":
+            color = layer.color or next(color_iter)
+            container = target.stem(
+                x,
+                y,
+                bottom=0 if layer.baseline is None else layer.baseline,
+                linefmt="-",
+                markerfmt="o",
+                basefmt="-",
+                label=label,
+            )
+            container.markerline.set_marker(marker or "o")
+            container.markerline.set_markersize(
+                6 if layer.marker_size is None else layer.marker_size
+            )
+            container.markerline.set_color(color)
+            container.markerline.set_alpha(layer.alpha)
+            for artist in (container.stemlines, container.baseline):
+                artist.set_color(color)
+                artist.set_alpha(layer.alpha)
+                artist.set_linestyle(linestyle)
+                if layer.line_width is not None:
+                    artist.set_linewidth(layer.line_width)
         elif layer.type == "regplot":
             color = layer.color or next(color_iter)
             weights = None

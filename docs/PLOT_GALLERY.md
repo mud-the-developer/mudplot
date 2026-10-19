@@ -115,6 +115,41 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/lineplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#lineplot)
 
+### `stem` — Stem plot
+
+![Stem plot](images/plots/stem.png)
+
+Finite synthetic vertical observations retain their supplied order and raw baseline.
+
+유한합성관측의수직stem으로원본순서와rawbaseline을보존합니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {
+    "position": [0, 1, 2, 3, 4, 5],
+    "response": [0.5, 1.2, -0.4, 0.8, -0.2, 0.1],
+}
+plot = (
+    mp.plot(data)
+    .stem("position", "response", baseline=0, marker_size=5, line_width=1.2)
+    .labels(x="Position", y="Response (a.u.)", title="Synthetic discrete observations")
+    .legend(show=False)
+    .size(4.5, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/stem.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#stem)
+
 ### `regplot` — Regression
 
 ![Regression](images/plots/regplot.png)
@@ -125,7 +160,7 @@ A polynomial mean fit with an explicit opt-in confidence band.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `regression`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `regression`, `weights`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 

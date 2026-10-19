@@ -113,6 +113,8 @@
   weightedCI/advancedmodel추론은명시미지원.
 - [ ] **B5 — 고급 통계·행렬:** 추가heatmap/clustering·weightedCI/bootstrap/advanced-modelCI·
   residual진단/설정.
+- [x] **B6a — 수직numericstem:** 원본순서/반복위치·명시baseline·primary/y2·양수log,
+  닫힌미지원mapping검사와실제gallery예제.
 - [ ] **B6 — Matplotlib 범위:** 나머지 primitive/신호/vector/mesh/triangle/3D,
   축·정규화·범례·레이아웃 확장.
 
@@ -129,6 +131,18 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+
+**B6subset:수직numericstem.** 기존baseline필드로segment/head를만들고sorting/집계없이
+반복위치/원본/SetData/style·primary/y2·양수log를보존합니다. 결측/비유한/bool·1..10000외행/
+잘못된baseline/style·horizontal/group/semantic/facet/polar/3D는거절합니다. [범위](STEM.ko.md)와실제
+실행gallery예제가있습니다. 새34/관련343/floor36/3313deselected/Pyparsing205경고·CLI3·품질8명령/
+activeLSP11clean,[근거](review_evidence/v11_stem_verification.json)를남겼습니다.
+기준2dCI39246899201은galleryweights목록누락1개로실패(full4082P/minimum3275P/3.12cancel/양RustP)했고
+실제gallery재생성+빠른schema checker의gallerydrift/restore추가로고쳤지guard를완화하지않았습니다.
+첫packagingSVG위치실패도보존하고새vector만이미지root로옮겨전체로컬검사를통과했습니다. 새전체CI를
+받되과거실패를성공으로바꾸지않습니다.
+
+### 이전 리뷰76차
 
 **B5subset:상대가중poly/log-x점적합/rawresidual.** 기존LayerSpec.weights/typedRegressionSpec을
 재사용하고양수weight행으로fit/scatter/residual·표본/서로다른x를검사합니다. 원본/group/hue/facet/y2/

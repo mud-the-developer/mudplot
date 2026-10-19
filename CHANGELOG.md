@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added bounded vertical numeric stem plots with raw baseline/order/duplicates,
+  primary/y2 and positive log geometry, executable gallery/spec/vector examples
+  and strict unsupported-option rejection. Include gallery Markdown in the cheap
+  generated-artifact drift checker, fixing the omitted regression weights listing.
 - Added opt-in relative weighted poly/log-x point fits and raw residuals through
   the existing weights column; reject weighted confidence/advanced models and
   nonrepresentable weight scaling while preserving legacy unweighted behavior.
