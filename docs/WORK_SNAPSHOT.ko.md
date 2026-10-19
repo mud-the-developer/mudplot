@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- Native후속:24bafRustCI의기존kind수하드코딩실패를정확한JSONmetadata/stem/WLS보존검사로수정했습니다.
+  로컬Rust22P/6ignored·Python291P/실제WindowsnativeHTTPJSON-PNGundo-redo가맞지만LinuxMSRV/GUI는
+  아닙니다. PythonCI진행을보호해검증unit은로컬보존하고새stairs는추가하지않았습니다.
 - 최신B6수직numericstem은새34/관련343/floor36/CLI3·실제gallery와닫힌option/data한계·primary/y2/
   log기하가맞습니다. 기존이미지교체는없고기준2dCI의full/minimumgalleryweights목록누락은새gallery동기화/
   driftguard로수정했습니다. 첫SVGpackaging위치실패는보존하고최종위치·검사는통과했으나새전체CI는필요합니다.

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Replaced a brittle native capability kind-count assertion with exact source
+  metadata preservation checks and native HTTP stem/weighted-regression JSON,
+  PNG and undo/redo integration coverage, without changing runtime behavior.
 - Added bounded vertical numeric stem plots with raw baseline/order/duplicates,
   primary/y2 and positive log geometry, executable gallery/spec/vector examples
   and strict unsupported-option rejection. Include gallery Markdown in the cheap

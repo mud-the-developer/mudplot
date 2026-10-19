@@ -33,6 +33,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
+- Native contract follow-up: old hardcoded kind count caused24bafRustCI failure;
+  now exact raw JSON metadata preservation/stem/WLS assertions. LocalRust22P/
+  6ignored+Python291P/actualWindowsnativeHTTPJSON-PNGundo-redo pass,notLinuxMSRV/
+  GUI approval. Verification unit local while PythonCIjobs run;no stairs added.
 - Latest B6 vertical numeric stem:34new/343related/floor36/CLI3pass, real gallery,
   closed option/data limits and primary/y2/log geometry. No old images replaced.
   Baseline2dCI failed generated gallery weights-row drift in full/minimum; new

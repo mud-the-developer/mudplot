@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 78차 — Nativecapabilitycount회귀와HTTP통합검사
+
+- 새stairs를검토하려다기준24bafCI39254853276RustLinuxjob실패를우선확인했습니다. 실제오류는
+  generated_capabilities_cover_visual_controls의37kind고정assert에stem추가38이들어온것이며
+  Linux19P/1F/5ignored/exit101,Windowscancel/Python진행을구분했습니다. 과거실패를성공으로바꾸지않습니다.
+- 고정숫자증가가아닌원본JSON의모든kind/required/optional배열이native모델에정확히보존되는지검사하고
+  stemx/y·baseline/weightedregplot필드도명시했습니다. 기존visualcontrol조건을유지하며parser/runtime/
+  schema/새필드/버전/의존성/lock을변경하지않았습니다.
+- 기존RustHTTPsmoke에stem/WLSopen·정확JSON/PNG·titleapply/undo-redocache복구를추가하고
+  소유한실제Windowsnative서버/현재venvPython으로실행·종료했습니다. 로컬Rust1.99의22P/6ignored,
+  Python291P/품질11명령·activeLSP2clean,[근거](review_evidence/v11_native_contract_verification.json)를
+  남겼습니다. GUI/전체nativebrowser/LinuxMSRV1.88실행으로확대하지않으며그환경은CI에서받습니다.
+- 새기능은추가하지않고현재Pythonjob을보호해수정unit은로컬보존합니다. 원대장139PASS/6RUNNING/
+  4OPEN/1DEFERRED와남은v1.1/releasegate/자동loop·tag/publish경계는유지합니다.
+
 ## 77차 — 수직numericstem과generatedgallery누락수정
 
 - B6첫stem범위는1..10000유한numeric행/수직rawbaseline·원본순서/반복위치·SetData/style·primary/y2/

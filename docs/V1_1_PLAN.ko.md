@@ -132,6 +132,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
 
+**Native통합후속.** 기준24bafCI39254853276RustLinux실패는하드코딩kind수38actual/37expected였고
+Windowscancel/Python진행을그대로기록합니다. Parser오류로보지않고원본JSON의모든kind/required/optional
+보존과명시stem/weightedregplot계약으로고쳤으며기존visual검사는유지했습니다.
+
+로컬Rust1.99의22P/6ignored·Python291P/실제소유WindowsnativeHTTPstem/WLS의JSON/PNG/titleapply/
+undo-redocache복구·품질11명령/LSP2clean,[근거](review_evidence/v11_native_contract_verification.json)를
+남깁니다. Linux/MSRV1.88/전체nativeGUI는CI가필요하고runtime/schema/의존성/새stairs추가는없습니다.
+현재job종료를보호해unit은로컬보존후새전체CI를받습니다.
+
+### 이전 리뷰77차
+
 **B6subset:수직numericstem.** 기존baseline필드로segment/head를만들고sorting/집계없이
 반복위치/원본/SetData/style·primary/y2·양수log를보존합니다. 결측/비유한/bool·1..10000외행/
 잘못된baseline/style·horizontal/group/semantic/facet/polar/3D는거절합니다. [범위](STEM.ko.md)와실제

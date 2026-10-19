@@ -137,6 +137,20 @@ stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
 
+**Native integration follow-up.** Baseline24bafCI39254853276RustLinux failed an
+old hardcoded kind-count assertion (38actual/37expected);Windowscancelled,Python
+jobs still running at this checkpoint. Preserve the failure, not a parser bug.
+Replace the count with exact raw-JSON kind/required/optional preservation and
+explicit stem/weighted-regplot contracts; all previous visual controls remain.
+
+LocalRust1.99 tests22P/6ignored,Python291P,actualownedWindowsnativeHTTPstem/WLS
+JSON/PNG/titleapply/undo-redo cache restoration and11quality checks pass,LSP2clean.
+[Evidence](review_evidence/v11_native_contract_verification.json). Linux/MSRV1.88/
+fullnativeGUI still need CI; no new runtime/schema/dependencies or stairs feature.
+Keep this verification unit local while current jobs finish, then fresh whole CI.
+
+### Earlier review phase 77
+
 **B6 subset: vertical numeric stem plots.** Existing baseline fields encode raw
 segments/heads without sorting or aggregation; duplicates/source/SetData/styles,
 primary/y2 and positive log axes are preserved. Reject missing/nonfinite/bool data,

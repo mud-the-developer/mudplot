@@ -319,9 +319,32 @@ mod tests {
 
     #[test]
     fn generated_capabilities_cover_visual_controls() {
-        let capabilities: Capabilities =
+        let raw: Value =
             serde_json::from_str(include_str!("../../schemas/capabilities.json")).unwrap();
-        assert_eq!(capabilities.layers.len(), 37);
+        let capabilities: Capabilities = serde_json::from_value(raw.clone()).unwrap();
+        let layers = raw["layers"].as_object().unwrap();
+        assert_eq!(capabilities.layers.len(), layers.len());
+        for (kind, fields) in layers {
+            assert_eq!(
+                capabilities.layers[kind].required,
+                serde_json::from_value::<Vec<String>>(fields["required"].clone()).unwrap()
+            );
+            assert_eq!(
+                capabilities.layers[kind].optional,
+                serde_json::from_value::<Vec<String>>(fields["optional"].clone()).unwrap()
+            );
+        }
+        assert_eq!(capabilities.layers["stem"].required, ["x", "y"]);
+        assert!(
+            capabilities.layers["stem"]
+                .optional
+                .contains(&"baseline".into())
+        );
+        assert!(
+            capabilities.layers["regplot"]
+                .optional
+                .contains(&"weights".into())
+        );
         assert_eq!(capabilities.layers["clustermap"].required, ["matrix"]);
         for field in ["cluster", "heatmap", "colorbar"] {
             assert!(

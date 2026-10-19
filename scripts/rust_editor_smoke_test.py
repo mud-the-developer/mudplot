@@ -53,6 +53,46 @@ def _request(
     return response
 
 
+def _review_recent_layer_contracts(base: str) -> None:
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            spec = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            preview = response.read()
+        assert preview.startswith(b"\x89PNG\r\n\x1a\n")
+        return spec, preview
+
+    original = capture()
+    source = {"x": [2, 1, 2], "y": [3, -1, 4], "w": [1, 1, 2]}
+    examples = [
+        mp.plot(source).stem("x", "y", baseline=0.5).size(4, 3),
+        mp.plot(source).regplot("x", "y", weights="w").size(4, 3),
+    ]
+    for plot in examples:
+        expected = json.loads(plot.to_json())
+        html = _submit(base, "/open", {"json": plot.to_json()})
+        assert b'class="error"' not in html
+        before = capture()
+        assert before[0] == expected
+        action = {"type": "SetTitle", "text": "Native layer round trip", "panel": 0}
+        with _request(
+            f"{base}/action", json.dumps(action).encode(), "application/json"
+        ) as response:
+            changed = json.load(response)
+        plot.dispatch(mp.actions.SetTitle(action["text"]))
+        after = capture()
+        assert after[0] == changed == json.loads(plot.to_json())
+        with _request(f"{base}/undo", b"") as response:
+            assert response.status == 200
+        assert capture() == before
+        with _request(f"{base}/redo", b"") as response:
+            assert response.status == 200
+        assert capture() == after
+    _submit(base, "/open", {"json": json.dumps(original[0])})
+    assert capture() == original
+    print("Stem/WLS native boundary OK: exact JSON and cached PNG undo/redo")
+
+
 def _review_history_contracts(base: str) -> None:
     def capture():
         with _request(f"{base}/spec.json") as response:
@@ -587,6 +627,7 @@ def main(*, browser: bool = False) -> int:
                     ) from error
                 time.sleep(0.1)
 
+        _review_recent_layer_contracts(base)
         _review_history_contracts(base)
         _review_document_policies(base)
         _review_preview_contracts(base)

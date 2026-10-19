@@ -1,0 +1,122 @@
+{
+  "source_sha256": {
+    "mudplot-editor/src/model.rs": "4ad1c37ece1da5a10b5e19e61527067974dbe2dfe5b0a9aedcc227045fcdbe1c",
+    "scripts/rust_editor_smoke_test.py": "2412a7769b19e32b2b4818eada33642aea8a85d7b3b3bac2844bb191ab35e01a",
+    "schemas/capabilities.json": "89da9dcb8ba544c892623f43bad6bc39193d03f45583396f2adc4eba7611dfdd",
+    "mudplot-editor/Cargo.toml": "571b3d9fccd78205befacd1b34b6718cbd2cc494180bd30245b8970cc35b2e50",
+    "mudplot-editor/Cargo.lock": "ad078f75def3c7cbba51112c51f4348116c9a697487134cccbfc371c7f781e94"
+  },
+  "baseline_failure": {
+    "run": 39254853276,
+    "head": "24baf03655d1b66f450e009f5292e88abfcfdd71",
+    "job": 118067450822,
+    "failed_test": "model::tests::generated_capabilities_cover_visual_controls",
+    "failure": "native parsed38kindswhiletesthardcoded37;RustLinuxlib19P1F5ignored.Windowscancelledmatrixfailfast,notpass. PreserveactualPythonjoboutcomesseparately.",
+    "fix": "ExactrawJSONkindcount+everyrequired/optionalarraypreservedbynativemodel;explicitstemx/y-baselineandregplotweightsassertions.No parser/runtime/source-capabilityweakened.Nohardcodedcountbump."
+  },
+  "native_boundary": {
+    "native_stem_weighted_regression_http": true,
+    "scope": "Actual owned compiled Windows native server with configured venv Python;open/JSON/PNG/apply/undo/redo cachedpreview sourceandPNGrestore verified.No GUI/browserclaim.",
+    "owned_process": true
+  },
+  "scope": "Test-onlynativecontract+existingHTTPsmokehook;actualownedWindowsbinary/venvPythonopen/JSON/PNG/titleapply/undo-redocachedPNGrestoreforstem/WLS. Mainruntime/schema/capfields/deps/versionsunchanged. No newstairsimplementation/GUI/browser/MSRV1.88runclaim. LocalRust1.99;LinuxMSRVneedsCI.",
+  "checks": [
+    {
+      "name": "rust-format",
+      "exit_code": 0,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rust-test",
+      "exit_code": 0,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 7.57s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "320f8cbf2f673ad77c3c6635c44879901b1f22e0aad2872997e46b7858986ce6"
+    },
+    {
+      "name": "rust-build",
+      "exit_code": 0,
+      "results": [],
+      "log_sha256": "99f71393b9903dca098310bb446022a4bdee195ea9996f351a787195555210a6"
+    },
+    {
+      "name": "native-boundary",
+      "exit_code": 0,
+      "results": [
+        "Stem/WLS native boundary OK: exact JSON and cached PNG undo/redo"
+      ],
+      "log_sha256": "20f95fdd222c3de78b8c1425a5b373f441bc40eaad079887232971681b961f2f"
+    },
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "results": [
+        "291 passed in 14.74s"
+      ],
+      "log_sha256": "20320478b2bbaa9f47f2b672824ab3f1527f1e8fbc552a9079ee39afb762cb70"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "272 files already formatted"
+      ],
+      "log_sha256": "869436c8f05e15a33d8f0726ba55b59eaa224bc789f77c56ddd23cb7512c3f89"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "bf91379f32dcfa916c420548bb8149d7419098549f30918d17e1968f83536470"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "db103ae6b4ce506542efb60fd8b4e86fe39cc83ca059b3ae3f086111f9344e88"
+    }
+  ],
+  "raw_sha256": {
+    "rust-linux.log": "9cff2b24fb682c0a81028a194e298199013a21b507b980dd8c3b8ba59b57e410",
+    "qa.py": "22ab242f827388b477df58a45065d69cd0287264545d86ed8c30f2eb1cd30950",
+    "native_focus.py": "7856daab2d7eff5f675cc5cd0179bd8776d359a467b11960b41267fb0151a6d3",
+    "native-result.json": "e4aa64b84f888d1d6e04b4972f9f1f935293f21180224db30784e1fd10b64fd0",
+    "native-server.log": "88145077cc3355e7f7282820604a67cf7f0c2111d5a5ae573958f1bad646b300",
+    "results.xml": "1920d14e202eff3049a6a2e101681aae3042687b33797b519fa75dd3108c9678"
+  }
+}
