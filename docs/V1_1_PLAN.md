@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 61 adds missing error/current-page accessibility semantics.**
+FIND-042 adds alert semantics to still-escaped errors and aria-current to the
+active navigation link; three pure checks fail before/pass after. A real
+Tab/Enter/typing/arrows-only journey selects a panel, edits a form, recovers from
+JSON failure, moves a handle with normal/Shift steps and visits Docs/Editor.
+Pointerdown0, labels/pressed state/focus outline/handle-focus restoration agree.
+
+169related/6actualbrowserpasses/27deselected/floorpure3/3115deselected/13Pyparsing
+warnings and9quality records pass, activeLSP4clean. EDIT-08 is PASS in current
+Python scope, so EDIT01..09 are reviewed—not independent human AT/WCAG/native
+control certification. Long77–86forwardTabpaths remain explicit, no new shortcuts.
+[Evidence](review_evidence/keyboard_access_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS122/RUNNING5/OPEN22/DEFERRED1**. Keep new HTML effect local during489aCI
+39183500953(Rustsuccess/3Pythonrunning); versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 60
+
 **Review phase 60 fixes lost field context and checks actual machine envelopes.**
 FIND-041 made invalid width/height indistinguishable through CLI/native-agent
 errors. Shared decoding now prefixes publicClass.field, preserving TypeError/

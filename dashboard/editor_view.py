@@ -354,7 +354,8 @@ _DRAG_JS = """
 def _nav_html(active: str) -> str:
     def tab(href: str, label: str, key: str) -> str:
         cls = " active" if key == active else ""
-        return f'<a class="navtab{cls}" href="{href}">{label}</a>'
+        current = ' aria-current="page"' if key == active else ""
+        return f'<a class="navtab{cls}" href="{href}"{current}>{label}</a>'
 
     return (
         '<nav class="tabs">'
@@ -1058,7 +1059,7 @@ def render_app_body(
     """
     layout = layout or {}
     active = min(active_panel, max(len(spec.panels) - 1, 0))
-    error_html = f'<div class="error">{_esc(error)}</div>' if error else ""
+    error_html = f'<div class="error" role="alert">{_esc(error)}</div>' if error else ""
     open_attr = " open" if draft_json else ""
     left = (
         '<details data-key="samples"><summary>Start from a sample</summary>'

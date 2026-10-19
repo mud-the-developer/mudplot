@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-042는action/focus정책을바꾸지않고erroralert/currentpage의미를붙입니다.
+  새pure3/실제keyboard-only·관련169/browser6/floor3로EDIT-08은Python범위PASS이며
+  EDIT01..09검토가사람의AT/nativecontrol인증은아닙니다. 긴Tab경로는명시하고489aCI
+  39183500953중HTML효과는로컬보존해이전CI를새수정증거로소급하지않습니다.
+
 - 최신FIND-041은decoder오류에공개fieldcontext를추가하고오류종류/union허용은유지합니다.
   새9/관련386/OS2skip·실제CLI/UI/native26·browser3/floor9로EDIT-07/09는범위PASS이지
   보편redactor/새RPC는아닙니다. 정확한B9CI5job성공으로이전040전체를확인했고세대기unit을
@@ -371,7 +376,9 @@
   spec/PNG/history/오류hash·소스보존·export회복을보존했습니다.
 - [Machine/오류 근거](review_evidence/machine_error_verification.json)에실제
   route/status/type/error표와numericfieldcontext경계를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS121/RUNNING5/OPEN23/DEFERRED1**.
+- [Keyboard/access 근거](review_evidence/keyboard_access_verification.json)에
+  Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS122/RUNNING5/OPEN22/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

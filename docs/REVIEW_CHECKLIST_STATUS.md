@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 61차 — keyboard경로와alert/current상태의미
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-keyboard-access-w5uvdwsx`와
+  [Tab순서·pointer0·error/handle/nav검토](review_evidence/keyboard_access_verification.json)을 보존합니다.
+- **FIND-042:** 보이는오류문자에는alert의미가없고활성Editor/Docs는CSSclass뿐이었습니다.
+  초기pure3회귀가전부실패했고오류에role=alert/현재link에만aria-current=page를덧붙였습니다.
+  Escaping/CSS표시/폼action/navigationhandler/spec/state/focus정책은바꾸지않았습니다.
+- 실제Chromium에서Tab/Enter/Control+A/typing/화살표/Shift+ArrowLeft만으로panel2→title→
+  AdvancedJSON오류alert→수정성공→titlehandle보통/큰이동→Docs/Editor왕복을검사했습니다.
+  직접element.focus()/mouseclick없이pointerdown0,현재panelaria-pressed와control의label연결,
+  handle2pxoutline/HTMX후focus유지/오류해제/원panel불변과pageJS오류0이맞습니다.
+- Codingassistant의DOM/CSS/source검토와실제키보드자동화기록이지독립적인사람의AT사용성
+  연구가아닙니다. Forward-onlyTab은77/78/86step인구간도기록했으며새shortcut/rovingfocus를
+  만들거나Rust모든control/OSfilepicker/WCAG보편인증으로확대하지않았습니다.
+- 새pure3/browser1·관련169통과·실제browser6통과/27deselected(no skip)·floor3통과/
+  3115deselected/경고13·양platformtype/Ruff252/계약/packaging9명령exit0·변경4경로activeLSP
+  clean입니다. 13은전부3종Pyparsing이고pure만floorroster에추가해Playwright의존성은늘지않았습니다.
+  추측한to_jsonfallback/Optionalpositionstub/JS문자열길이는검사전고쳤고Any/cast/ignore는없습니다.
+- EDIT-08은현재Python지원keyboard/의미corpus에서PASS로EDIT01..09검토를마쳤지만완전한
+  접근성인증은아닙니다. 기준489aCI39183500953의양Rust성공/3Python진행을보호해새HTML효과는
+  로컬보존하며이전CI를소급하지않습니다. 버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 60차 — field오류위치와실제machine응답계약
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-machine-contracts-5kqxu18l`와
@@ -1612,7 +1634,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-05 | P1 | PASS | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-06 | P1 | PASS | open·export·실패 후 회복 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-07 | P1 | PASS | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-08 | P1 | PASS | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-09 | P1 | PASS | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | RUST-01 | P0 | PASS | Python CLI 위임의 계약 일치 | mudplot-editor/src/; scripts/rust_editor_smoke_test.py | Rust unit tests; rust_editor_smoke_test.py --browser |
 | RUST-02 | P0 | PASS | Python 실행 파일 선택과 quoting | main.rs::parse_args; python.rs::PythonBridge | check_python_bridge_paths.py Windows/Linux CI jobs success for781f3f5; 14차 remote snapshot |
@@ -1664,8 +1686,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 121, RUNNING 5, OPEN 23, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 122, RUNNING 5, OPEN 22, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

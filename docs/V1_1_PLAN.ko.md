@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰61차에서오류/currentpage접근성의미누락을보완했습니다.** FIND-042는escaped오류에
+alert/currentnavlink에aria-current를붙여pure3의before실패/after통과를확인했습니다.
+실제Tab/Enter/typing/화살표만으로panel선택·form·JSON오류회복·보통/Shift handle이동·Docs/
+Editor왕복을수행하고pointerdown0/label·pressed·outline·handlefocus유지가맞습니다.
+
+관련169/browser6통과/27deselected/floorpure3/3115deselected/Pyparsing13경고·품질9명령·
+activeLSP4clean으로EDIT-08은Python지원범위PASS입니다. EDIT01..09검토가사람의AT/WCAG/
+모든nativecontrol인증은아니며긴77~86forwardTab과새shortcut없음을명시합니다.
+[근거](review_evidence/keyboard_access_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS122/RUNNING5/OPEN22/DEFERRED1**입니다. 489aCI39183500953양Rust성공/3Python진행을
+보호해HTML효과는로컬보존하며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰60차
+
 **리뷰60차에서사라진fieldcontext와실제machineenvelope를대조했습니다.** FIND-041은
 width/height오류의CLI/native설명이동일했으며공통decoder에Class.field만추가해TypeError/
 ValueError·원인·union·입력을보존했습니다. 초기5실패/3정상은최종9통과이며실제26CLI/UI/native가

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added alert/current-page semantics to Python editor errors/navigation and
+  verified a keyboard-only panel/form/error-recovery/handle/navigation journey.
+  Existing labels, focus outlines and action/state behavior remain unchanged.
 - Added public class/field context to decode errors while preserving exception
   kinds, causes, union acceptance and input values. Verified CLI/UI/native Rust
   response shapes and failure recovery without introducing a new RPC interface.

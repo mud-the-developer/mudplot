@@ -119,6 +119,15 @@ needing a separate `dashboard build` process.
   PNG bytes and a bit of layout info the drag handles need — see
   `EditorSession.refresh()`).
 
+## Keyboard scope
+
+Use Tab/Enter for native controls/disclosures/navigation and arrows on focused
+preview handles (Shift increases the step). Labels remain associated with their
+controls; panel pressed/current-page state and textual alert errors are exposed
+without relying only on colour. The recorded keyboard-only journey includes error
+recovery and focus restoration on handles. Long forward Tab paths remain; this
+is not a full screen-reader/OS accessibility certification or new shortcut system.
+
 ## Error and response envelopes
 
 Field decode errors include `Class.field` context without changing accepted

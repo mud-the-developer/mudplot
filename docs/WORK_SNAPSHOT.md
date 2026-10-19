@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-042 adds error-alert/current-page semantics without changing action
+  or focus policy. Newpure3/actualkeyboard-only journey plus169related/6browser/
+  floor3passes make EDIT-08 PASS in Python scope. EDIT01..09 reviewed, not human
+  AT/native-control certification; long forwardTabpaths remain documented.
+  New HTML effect stays local during489aCI39183500953; priorCI is not its proof.
+
 - Latest FIND-041 adds public field context to decoder failures without changing
   error kinds/union acceptance.9new/386related/2OSskips,26actualCLI/UI/native cases,
   3browser/floor9passes make EDIT-07/09 PASS in scope. Not a generic redactor or
@@ -447,7 +453,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains spec/PNG/history/error hashes, source-file preservation and export recovery.
 - [Machine/error evidence](review_evidence/machine_error_verification.json)
   retains actual route/status/type/error tables and numeric field context boundaries.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS121/RUNNING5/OPEN23/
+- [Keyboard/access evidence](review_evidence/keyboard_access_verification.json)
+  retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS122/RUNNING5/OPEN22/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

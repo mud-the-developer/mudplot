@@ -154,6 +154,17 @@ bbox의물리간격을사용합니다. Manualanchor는caller소유이며constrai
 reference/marker를보이는문자가같다는이유로합치지않습니다. Spec/source/stylefield는
 이guide정책으로재작성하지않습니다.
 
+## 키보드와상태피드백
+
+Pythoneditor의native label/disclosure/button은keyboardform/panel선택/페이지이동을지원하고
+previewhandle은화살표/Shift큰step과보이는focusoutline을사용합니다. Inline오류는escapedtext와
+role=alert,현재Editor/Docslink는aria-current=page를노출합니다. State/action이나강제focus이동을
+새로정의하지않습니다.
+
+기록한forward-onlyTab경로는77~86step으로길수있습니다. DOM/CSS검토와실제Chromium
+keyboard자동화이지독립적인사람의screen-reader/OSfilepicker시험·완전한접근성인증은아닙니다.
+Shortcut/rovingfocusframework나nativeeditor동등control을추가하지않았습니다.
+
 ## 오류context와machineinterface
 
 Dataclassdecode오류는공개Class.fieldcontext를붙이고TypeError/ValueError종류·원인·기존

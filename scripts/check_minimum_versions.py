@@ -74,6 +74,7 @@ TESTS = (
     "tests/test_review_pgf_bundle.py",
     "tests/test_review_string_boundaries.py",
     "tests/test_dashboard.py",
+    "tests/test_review_accessibility.py",
     "tests/test_schema_export.py",
     "tests/test_review_generated_drift.py",
     "tests/test_visual_quality.py",

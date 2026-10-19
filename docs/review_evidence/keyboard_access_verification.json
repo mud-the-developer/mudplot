@@ -1,0 +1,280 @@
+{
+  "source_sha256": {
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f",
+    "tests/test_review_accessibility.py": "6056a986a81f38982685345e52cdb08b6ba2fb83e7d5c4ca023b9a5353f4a491",
+    "tests/test_review_keyboard_browser.py": "8fff9172d27992b876be6869d4ecd3de3f13cbdbc70850fe74683619821babba",
+    "scripts/check_minimum_versions.py": "6fce68be5bb6f5ccc8397010579d60a55eb5dd7679ab7dbedfa1744b495eb2ec",
+    "tests/test_editor_browser.py": "2b865e8edbce7588e2d5b4eeb0932631c84c55adb681dffbbd6481c6afc18691"
+  },
+  "keyboard_trace": {
+    "tab_steps": [
+      {
+        "target": "panel 2",
+        "tabs": 13
+      },
+      {
+        "target": "panel title",
+        "tabs": 18
+      },
+      {
+        "target": "advanced disclosure",
+        "tabs": 77
+      },
+      {
+        "target": "raw action",
+        "tabs": 1
+      },
+      {
+        "target": "dispatch invalid JSON",
+        "tabs": 1
+      },
+      {
+        "target": "correct raw action",
+        "tabs": 78
+      },
+      {
+        "target": "dispatch corrected JSON",
+        "tabs": 1
+      },
+      {
+        "target": "panel title movement handle",
+        "tabs": 86
+      },
+      {
+        "target": "Docs navigation",
+        "tabs": 7
+      },
+      {
+        "target": "Editor navigation",
+        "tabs": 1
+      }
+    ],
+    "pointerdowns_before_navigation": 0,
+    "selected_panel": 1,
+    "error_text": "ValueError: invalid JSON: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)",
+    "recovered_title": "keyboard recovered",
+    "title_position_before": [
+      0.25,
+      0.9
+    ],
+    "after_right": [
+      0.3012066463031405,
+      0.8999995390556518
+    ],
+    "after_shift_left": [
+      0.14758693575635334,
+      0.8999995390556518
+    ],
+    "page_errors": [],
+    "scope": "Keyboard-only path; not full AT certification."
+  },
+  "real_browser_cases": [
+    "test_keyboard_panel_forms_error_recovery_handle_and_navigation",
+    "test_arrow_keys_nudge_the_title",
+    "test_edits_keep_scroll_position_and_open_sections",
+    "test_a_render_error_is_shown_without_losing_the_previous_figure",
+    "test_a_burst_of_nudges_is_not_dropped",
+    "test_editing_targets_the_selected_panel"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "Inlineerrorfragmenthadvisibletextbutnoalertsemantics,andactiveEditor/DocslinkwasCSSclass-only. Addrole=alerttostill-escapederrorregionandaria-current=pageonlytoactiveLink. No navigation handler/state/action/validation/visualpipelinechange. Initial3purechecksfailedbeforefix;all3passafter.",
+  "review_record": {
+    "reviewer": "coding assistant DOM/CSS/code review plus automated actual Chromium keyboard journey, not independent human AT study",
+    "label_association": "Existing_fieldnestsnativecontrolinside<label>;get_by_labelandnativeTabreachinput/textarea. Existingpanelbuttonsaria-pressedretained;handlehasaria-label/focusoutline2px.",
+    "keyboard_only": "Tab/Enter/Control+A/typing/arrows/Shift+ArrowLeft;NOmouseclicks/element.focus()/forcedDOMfocusinjourney. RealHTMXpanel/field/error/recovery,handlefocusrestorationandDocspage/Editorreturnchecked.",
+    "feedback": "VisibleJSONerrorwithalert,texttitleupdates,aria-pressedpanel/currentpageareperceivablewithoutcolor-onlyencoding. Escapingremains;errorremovesafterrecovery.",
+    "limits": "CurrentPythoneditorcorpus\u2014notRustallcontrols/OSfilepicker/nativehardware/screen-readerannouncement/WCAGcertification. PuresemanticchecksandactualkeyboardautomationdonotreplacehumanATusabilityreview. Forward-onlyTabpath77/78/86stepsrecorded;nofocusshortcut/rovingtabindexframeworkadded."
+  },
+  "qa_note": "Removedguessedto_jsonmethodfallbackandusedexistingmp.to_json;optionalpositionsnarrowedwithasserts\u2014notAny/cast/ignore. Ruffstringlinefixed. No unrelatedadvisoryruleschanged. Pure3addedminimumroster/browser1optionalkeptoutofminimumdeps.",
+  "environment_overrides": {
+    "floor-accessibility": {
+      "PYTEST_ADDOPTS": "-k \"test_review_accessibility\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "accessibility-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_accessibility.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_dashboard.py",
+        "tests/test_review_response_generation.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "169 passed in 157.65s (0:02:37)"
+      ],
+      "log_text_sha256": "348e6459ec6628d09dce88ededa6c5cdb58c96baea9a60b6cc614860879c5e53"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\browser-pytest",
+        "tests/test_review_keyboard_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "keyboard_panel or arrow_keys or nudges or edits_keep_scroll or editing_targets or render_error",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 27 deselected in 30.97s"
+      ],
+      "log_text_sha256": "0f4ad04118f508b279802ceb58560559f4c78df7e2ff3be2cde7e3ba5100207a"
+    },
+    {
+      "name": "floor-accessibility",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "3 passed, 3115 deselected, 13 warnings in 1.40s"
+      ],
+      "log_text_sha256": "57ba1680775be89fffb140ed8d4d033f029f8a237b7258dff5aba42f7e082bd9"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "252 files already formatted"
+      ],
+      "log_text_sha256": "c2c1b47fe3e4c9a2692a6ccd3f12d3744d4697e852a8f9a0d05053eb78174cc3"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "f3b6a8433b790e3f9409965b7c739157885de62f231f53bd7e418c62e6949b06"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "b89fdd3e900a5c8c0b42fe92916a61710f6a41787fab87267cc3dfb0426b29db"
+    }
+  ],
+  "raw_probe_sha256": {
+    "keyboard_trace.json": "b978bd86ea7b694615eb570af8f75e7a9218709e0c155eac7d44fa0161576984",
+    "qa.py": "4820a4472534fb4d1347d72481552e7b92706c1fb8a7919553acfa6b1c7f9718",
+    "environment_overrides.json": "7c082cf97cd5e4e663ffe5ece3f6734918ab2fbaad33d65ceabd3be697f3ed3f",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "3aa5202dfce00d8e3cf1d2144fd5be1159187e0a52913a367e5e0969f54f2fcd",
+    "browser.xml": "cb9b7026517b36bb6477d5f3b62a1dccbeeeae872ded20417534b9b2490f6067",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

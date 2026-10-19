@@ -180,6 +180,19 @@ their existing identity handling: raw `1` and `"1"`, different data columns, axe
 references and marker sources are not merged just because visible strings match.
 No spec/source/style fields are rewritten by this guide policy.
 
+## Keyboard and state feedback
+
+The Python editor's native labels/disclosures/buttons support keyboard form,
+active-panel and navigation paths. Preview handles accept arrows and Shift for a
+larger step with a visible focus outline. Inline errors retain escaped text and
+expose `role="alert"`; the current Editor/Docs link uses `aria-current="page"`.
+These semantics do not change state/action behavior or force new focus movement.
+
+Forward-only Tab paths can be long (77–86 steps in the recorded journey). This is
+bounded DOM/CSS review plus actual Chromium keyboard automation, not independent
+human screen-reader/OS file-picker testing or complete accessibility certification.
+No shortcut/roving-focus framework or native-editor control-parity promise is added.
+
 ## Error context and machine interfaces
 
 Dataclass decoding errors identify public `Class.field` context, preserving their
