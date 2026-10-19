@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 58 checks scaled/high-DPI browser data editing.** Actual Chromium
+contexts assert DPR1/2, CSS125% and CDPvisual-viewport125% separately. Three
+cases retain editable6×3inch/600DPI while preview remains2000×1000. Selected-panel
+inverted-log/y2 drag and image-fraction keyboard steps map to expected data;
+focus/undo/redo/other panels/specJSON stay intact. This is explicit emulation,
+not all native browser zoom/OS/physical hardware or dense75DPI geometry proof.
+
+New optionalbrowser3 plus178related/8actualbrowserpasses/28deselected/floorpure7/
+3099deselected/289Pyparsing warnings and9quality records pass. EDIT-02 is PASS
+in this scope without runtime changes. [Evidence](review_evidence/scaled_preview_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS118/RUNNING5/OPEN26/DEFERRED1**.
+Baseline4bcCI ALL5SUCCESS allowed queued D535response fix+B9tests publication;
+newB9CI39178688403is running and must validate that effect. Keep scaled-test/docs
+local meanwhile. Versions/dependencies/locks/tag/deploy stay unchanged.
+
+### Earlier review phase 57
+
 **Review phase 57 checks two local pages and a raw-action client sharing state.**
 Controlled first render holds the session lock while other bodies arrive;
 state/PNG remain at the previous commit. Release yields AthenB/raw in either

@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest3emulated Chromium DPR/CSS/visual-viewport cases preserve high-DPI preview
+  data frames/keyboard/focus/undo/redo and600DPIeditable state.178related/8actual
+  browser/floorpure7passes make EDIT-02 PASS in scoped emulation, not all hardware.
+  No runtime change. Published queued D535+B9after exact4bcCI ALL5SUCCESS; new
+  B9CI39178688403is running. Current scaled test/docs remain local.
+
 - Latest shared-session test observes two tabs/raw-action arrivals and serial
   commits without lost fields or partial preview, matching pure state and fresh
   PNG.169related/1OSskip,4actualbrowser/floor8passes make EDIT-05 PASS in local
@@ -423,7 +429,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains actual delivery/commit/DOM/pixel timelines and internal generation limits.
 - [Shared-session evidence](review_evidence/shared_session_verification.json)
   retains request/commit order, allowed outcomes and final cache/spec equivalence.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS117/RUNNING5/OPEN27/
+- [Scaled-preview evidence](review_evidence/scaled_preview_verification.json)
+  retains actual viewport/DPR settings, pointer/data values and original DPI/state.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS118/RUNNING5/OPEN26/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

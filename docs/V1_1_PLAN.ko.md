@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰58차에서확대/highDPIbrowserdata편집을검사했습니다.** 실제Chromium의DPR1/2·
+CSS125%·CDPvisual-viewport125%를구분해3case에서spec6×3inch/600DPI와preview2000×1000을
+유지했습니다. 선택panel의invertedlog/y2drag·imagefraction키이동이data기대값과맞고focus/
+undo/redo/다른panel/specJSON은그대로입니다. 명시emulation이지모든nativebrowserzoom/OS/
+물리hardware/75DPIdensegeometry보장은아닙니다.
+
+새optionalbrowser3·관련178/browser8통과/28deselected/floorpure7/3099deselected/Pyparsing289경고·
+품질9명령으로EDIT-02는범위내PASS이며runtime은바꾸지않았습니다. [근거](review_evidence/scaled_preview_verification.json)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS118/RUNNING5/OPEN26/DEFERRED1**입니다.
+기준4bcCI5job모두성공해D535응답수정+B9test를먼저게시했고newB9CI39178688403진행중이므로
+새효과전체결과는남아있습니다. 확대test/doc은로컬보존하며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰57차
+
 **리뷰57차에서로컬두page/rawaction의공유상태를확인했습니다.** 첫render의sessionlock을
 보류하면다른body가도착해도state/PNG는이전commit이며release뒤A→B/raw허용순서로만
 commit해독립field/history/순수apply결과가맞습니다. 최종PNG는새session의같은spec과같고

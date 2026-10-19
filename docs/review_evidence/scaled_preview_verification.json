@@ -1,0 +1,535 @@
+{
+  "source_sha256": {
+    "tests/test_review_hidpi_browser.py": "b43adbee1076b4b238b40be70f649aa806fc41be06f984db29ca8f5c00bc9806",
+    "tests/test_review_coordinate_frames.py": "e6adf5dbeb6130d4e5fdb9d03fa731a5a76c35a9625b63074a4abdddf9fc8cd5",
+    "dashboard/editor_view.py": "d651135d3ae387af651b52b0afe3334020bdf0cddd9d523e8c4b6765ac36a133",
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot/_render.py": "769f715eed647bedf246934d2038695562ae39597fa489031e1bcc1ca8209dcb"
+  },
+  "scale_traces": [
+    {
+      "dpr": 1,
+      "css_zoom": 1.0,
+      "visual_page_scale": 1.0,
+      "spec_dpi": 600,
+      "spec_size": [
+        6,
+        3
+      ],
+      "preview_pixel_shape": [
+        2000,
+        1000
+      ],
+      "desired_client_xy": [
+        1041.1257998518518,
+        342.0633230060764
+      ],
+      "actual_pointer": {
+        "x": 1041,
+        "y": 342
+      },
+      "drag_data": [
+        15.872842552159966,
+        199.66109772734157
+      ],
+      "expected_drag": [
+        15.848931924611133,
+        199.52623149688787
+      ],
+      "keyboard_data": [
+        12.544154159045785,
+        199.66120638459142
+      ],
+      "expected_keyboard": [
+        12.544154159045785,
+        199.66120638459142
+      ],
+      "layout": {
+        "is_3d": false,
+        "panel": 1,
+        "panel_bbox": [
+          0.5197644444444445,
+          0.09043626012731482,
+          0.9111012962962962,
+          0.96761
+        ],
+        "xlim": [
+          100.0,
+          1.0
+        ],
+        "ylim": [
+          0.0,
+          4.0
+        ],
+        "xscale": "log",
+        "yscale": "linear",
+        "text_layers": [
+          {
+            "index": 2,
+            "type": "text",
+            "at": [
+              10,
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "type": "text",
+            "at": [
+              12.544154159045785,
+              199.66120638459142
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          },
+          {
+            "index": 4,
+            "type": "annotate",
+            "at": [
+              20,
+              200
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          }
+        ]
+      }
+    },
+    {
+      "dpr": 2,
+      "css_zoom": 1.25,
+      "visual_page_scale": 1.0,
+      "spec_dpi": 600,
+      "spec_size": [
+        6,
+        3
+      ],
+      "preview_pixel_shape": [
+        2000,
+        1000
+      ],
+      "desired_client_xy": [
+        1064.7906845925927,
+        456.46135594039356
+      ],
+      "actual_pointer": {
+        "x": 1064,
+        "y": 456
+      },
+      "drag_data": [
+        16.01778421237904,
+        200.6276171349874
+      ],
+      "expected_drag": [
+        15.848931924611133,
+        199.52623149688787
+      ],
+      "keyboard_data": [
+        12.658633689321169,
+        200.62790439796538
+      ],
+      "expected_keyboard": [
+        12.658633689321169,
+        200.62790439796538
+      ],
+      "layout": {
+        "is_3d": false,
+        "panel": 1,
+        "panel_bbox": [
+          0.5197644444444445,
+          0.09043626012731482,
+          0.9111012962962962,
+          0.96761
+        ],
+        "xlim": [
+          100.0,
+          1.0
+        ],
+        "ylim": [
+          0.0,
+          4.0
+        ],
+        "xscale": "log",
+        "yscale": "linear",
+        "text_layers": [
+          {
+            "index": 2,
+            "type": "text",
+            "at": [
+              10,
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "type": "text",
+            "at": [
+              12.658633689321169,
+              200.62790439796538
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          },
+          {
+            "index": 4,
+            "type": "annotate",
+            "at": [
+              20,
+              200
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          }
+        ]
+      }
+    },
+    {
+      "dpr": 2,
+      "css_zoom": 1.0,
+      "visual_page_scale": 1.25,
+      "spec_dpi": 600,
+      "spec_size": [
+        6,
+        3
+      ],
+      "preview_pixel_shape": [
+        2000,
+        1000
+      ],
+      "desired_client_xy": [
+        1041.1257998518518,
+        342.0633230060764
+      ],
+      "actual_pointer": {
+        "x": 1041,
+        "y": 342
+      },
+      "drag_data": [
+        15.872842552159966,
+        199.66109772734157
+      ],
+      "expected_drag": [
+        15.848931924611133,
+        199.52623149688787
+      ],
+      "keyboard_data": [
+        12.544154159045785,
+        199.66120638459142
+      ],
+      "expected_keyboard": [
+        12.544154159045785,
+        199.66120638459142
+      ],
+      "layout": {
+        "is_3d": false,
+        "panel": 1,
+        "panel_bbox": [
+          0.5197644444444445,
+          0.09043626012731482,
+          0.9111012962962962,
+          0.96761
+        ],
+        "xlim": [
+          100.0,
+          1.0
+        ],
+        "ylim": [
+          0.0,
+          4.0
+        ],
+        "xscale": "log",
+        "yscale": "linear",
+        "text_layers": [
+          {
+            "index": 2,
+            "type": "text",
+            "at": [
+              10,
+              1
+            ]
+          },
+          {
+            "index": 3,
+            "type": "text",
+            "at": [
+              12.544154159045785,
+              199.66120638459142
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          },
+          {
+            "index": 4,
+            "type": "annotate",
+            "at": [
+              20,
+              200
+            ],
+            "ylim": [
+              10.0,
+              1000.0
+            ],
+            "yscale": "log"
+          }
+        ]
+      }
+    }
+  ],
+  "real_browser_cases": [
+    "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[1-1.0-1.0]",
+    "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.25-1.0]",
+    "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.0-1.25]",
+    "test_secondary_data_drag_matches_log_inverted_transform_and_history",
+    "test_dragging_the_legend_moves_it_and_persists",
+    "test_arrow_keys_nudge_the_title",
+    "test_a_burst_of_nudges_is_not_dropped",
+    "test_editing_targets_the_selected_panel"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 289,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 28
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 87
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 59
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "coordinate_policy": "ActualChromiumcontextsDPR1/2;CSSzoom1.25andCDPEmulation.setPageScaleFactor1.25areEXPLICITemulatedbrowserconditions,notphysicaldisplaycertification. Layer3selectedpanel1,invertedlogx100..1/logy2 10..1000mouseaxesfractions.4/.65target10^1.2/10^2.3within2.5percentCSSpointerpixelprecision. ArrowRightchangesIMAGEfraction.02anddataxdecreasesonreversedlogaxis;compareinverseformulaat3e-5relativeDOMattributequantization.",
+  "state_policy": "Previewnatural2000x1000whileeditableSpecsize6x3/DPI600unchanged. KeyboardfocushandlestayscurrentafterHTMXswap;UIundoexactdragvalues/redoexactkeyvalues;primarytext/otherpanelunchanged;GETspecJSONroundtrip. Existinglegenddrag/title/nudgeburst/selectioncasesincluded.",
+  "limits": "EDIT02scopedemulatedChromiumDPR/CSS/visual-page-zoomandcurrentUIonly\u2014notallOS/nativeChromeUIzoom/physicalhardware/accessibility/75DPIdensegeometryorallprojectioncertification. No new transforms/coordinateAPI/runtime code/seed/config/dependencies.",
+  "qa_note": "RemovedunusedmathimportandwrappedJSstringforRuff;testerrorsnotproductbugs. ActualDPR/visualViewportscaleassertedratherthanguessedfromspecDPI. Browser-onlytestkeptoutofminimumdependencyroster;floorcountsarepurecoordinate/protocolregressions.",
+  "environment_overrides": {
+    "floor-coordinate": {
+      "PYTEST_ADDOPTS": "-k \"test_review_coordinate_frames or test_review_response_generation\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "coordinate-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_coordinate_frames.py",
+        "tests/test_review_annotation_alpha.py",
+        "tests/test_review_style_dpi.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "178 passed in 161.15s (0:02:41)"
+      ],
+      "log_text_sha256": "26a61a936a0d9b68da52e3fe4bc3ad2e4131f838172cdc39240ff9a02b9f8b6b"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\browser-pytest",
+        "tests/test_review_hidpi_browser.py",
+        "tests/test_review_coordinate_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "scaled_preview or secondary_data_drag or dragging or nudge or editing_targets",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "8 passed, 28 deselected in 46.07s"
+      ],
+      "log_text_sha256": "a5bad690604425e7e4c0e564b709af7f621a9c55db97337ff2f9a50c202ade02"
+    },
+    {
+      "name": "floor-coordinate",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "7 passed, 3099 deselected, 289 warnings in 14.93s"
+      ],
+      "log_text_sha256": "60590fe912621aca9453762c687c096653fd29445f34ba18a10047ff5b958b6f"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "248 files already formatted"
+      ],
+      "log_text_sha256": "156d1236ed7bd89ffcb5e279bf08d0fb583587303b2759f4a4ded0aa72e6d277"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "0aead913521c80434654aa95d5fd2c5036b1c0d60a8e9020b7419e2c2ffea9be"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "003a8742f97ef2736196f22d1e9f71242838f29e2bff2e18bdb12ab993d321eb"
+    }
+  ],
+  "raw_probe_sha256": {
+    "scale_traces.json": "3ca1ee707db78caf28d9474150543010967f30e3313dff43366e1d34a246e5d5",
+    "qa.py": "b4262e00725cdb3cc40697f9eb8592f5cebc499e44fbeeb6f1d0f58e253d4b36",
+    "environment_overrides.json": "e94e55bb315b15b96e58bb5c071a2a1f24811a798b88cc2f4c457edcbf90be5c",
+    "floor_warning_counts.json": "7d21862a4f546bdeb6b1459d595680e4e2229affc7fd06c6e62681f87cfe98b2",
+    "results.xml": "ca44690c203ead5fd677f0ad8bf7404d2314e7e870e358c5aba0b117db04cbd8",
+    "browser.xml": "e211544de39df58ae76ca3b8bffb2bbbc0f7dbae9f2d717fa9cfba739e026a3a",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

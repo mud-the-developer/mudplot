@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified high-DPI preview dragging and keyboard/undo/redo in actual Chromium
+  contexts with emulated DPR, CSS enlargement and visual-viewport scaling, while
+  preserving editable DPI, panel state and original coordinate meanings.
 - Verified one local editor session across two pages and a raw-action client:
   arrivals/serial commits, disjoint-field preservation and final preview match.
   Documented shared panel state and refresh behavior, not live collaboration.

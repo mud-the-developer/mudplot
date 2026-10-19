@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신ChromiumDPR/CSS/visual-viewport3case는highDPIpreview의dataframe/키/focus/undo/
+  redo와편집DPI600을유지합니다. 관련178/실제browser8/floorpure7로EDIT-02는emulation범위
+  PASS이지모든hardware보장은아닙니다. Runtime변경없고정확한4bcCI5job성공뒤D535+B9를
+  게시해newB9CI39178688403진행중이며현재확대test/doc은로컬보존합니다.
+
 - 최신공유session은두tab/rawaction도착과직렬commit에서field유실/부분preview가없고
   순수state/새PNG가맞습니다. 관련169/OS1skip·실제browser4/floor8로EDIT-05는로컬범위
   PASS이지live협업/tab별panel은아닙니다. 새runtime없이4bcCI중대기응답효과와test/doc을로컬보존합니다.
@@ -350,7 +355,9 @@
   전달/commit/DOM/pixeltimeline과내부generation범위를보존했습니다.
 - [Sharedsession 근거](review_evidence/shared_session_verification.json)에
   요청/commit순서·허용결과·최종cache/spec동등성을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS117/RUNNING5/OPEN27/DEFERRED1**.
+- [Scaledpreview 근거](review_evidence/scaled_preview_verification.json)에실제
+  viewport/DPR설정·pointer/data·원DPI/state를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS118/RUNNING5/OPEN26/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

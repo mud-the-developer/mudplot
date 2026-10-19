@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 58차 — DPR/확대preview의drag·키보드·undo/redo
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-scaled-preview-1p1d6dg4`와
+  [3scale별실제pointer/data/frame](review_evidence/scaled_preview_verification.json)을 보존합니다.
+- 실제Chromiumcontext의[DPR1/CSS1/page1],[DPR2/CSS1.25/page1],[DPR2/CSS1/page1.25]를
+  검사했습니다. CSSzoom과CDPEmulation.setPageScaleFactor의visualViewport확대를정확히
+  구분하고window.devicePixelRatio/visualViewport.scale도실제값을assert했습니다. 물리모니터/
+  모든OS/browser-nativezoom을검증했다는뜻은아닙니다.
+- Spec6×3inch/600DPI/selectedpanel1의previewnatural크기는모두2000×1000입니다. Inverted
+  logx/y2log의mouseaxes.4/.65는기대10^1.2/10^2.3과2.5%CSSpointer오차로맞고ArrowRight의
+  imagefraction+.02는datax를줄입니다. 실제HTMLfraction에서역변환한keyboard값도3e-5
+  상대오차로맞고HTMX후handlefocus/undo정확한drag값/redo정확한key값이유지됐습니다.
+- DPI600/size/primarytext/빈다른panel은불변이고specJSON도같습니다. 새optionalbrowser3case,
+  관련178통과·실제browser선택8통과/28deselected(no skip)·floorpure7통과/3099deselected/
+  경고289·양platformtype/Ruff248/계약/packaging9명령exit0·변경testactiveLSPclean입니다.
+  289는전부10종Pyparsing이고browserfile을최소의존성roster에넣지않았습니다.
+- EDIT-02는이emulatedChromium/현재data-editcorpus에서PASS이며LAY-09의75DPIdense
+  geometry와물리hardware일반보장은별도로남깁니다. 제품runtime/좌표정책/FIND추가는없습니다.
+- 기준4bcCI39175434805는5job모두성공해대기D535응답효과+B9공유test를이번iteration시작에
+  먼저게시했습니다. Origin/HEAD당시B9일치/newCI39178688403진행을확인했으며새효과전체검증은
+  아직입니다. 현재확대test/doc은로컬보존하고버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 57차 — 두tab/rawaction의공유session직렬화
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-shared-session-jmjawfeq`와
@@ -1536,7 +1558,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | OUT-09 | P1 | PASS | SVG·TeX·HTML 문자열 경계 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | OUT-10 | P2 | OPEN | 출력 provenance 기록 | mudplot/io.py; _render.py; tex.py | test_spec_roundtrip.py; test_stabilization.py; test_references.py; test_review_output_contracts.py |
 | EDIT-01 | P0 | PASS | UI 입력과 공통 action | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-02 | P1 | OPEN | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-02 | P1 | PASS | 드래그·키보드 위치 편집 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-03 | P1 | PASS | htmx 교체 이후 상태·이벤트 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-04 | P1 | PASS | 지연 응답과 최신 preview | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-05 | P1 | PASS | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1594,7 +1616,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 117, RUNNING 5, OPEN 27, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 118, RUNNING 5, OPEN 26, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
