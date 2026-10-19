@@ -1558,7 +1558,7 @@ class Plot:
         marginal_kind: str = "hist",
         kde: KDESpec | dict | None = None,
     ) -> Plot:
-        """Add paired histogram/KDE marginals to a completed raw scatter/regplot.
+        """Add paired marginals to raw scatter/regplot or ungrouped binned 2D data.
 
         Main panel is top-left, y marginal right, x marginal below. Original
         data remains intact; all views use dynamic complete x/y/group cases.

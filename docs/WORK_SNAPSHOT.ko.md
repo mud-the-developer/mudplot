@@ -22,8 +22,9 @@
 
 ## 검증과 리뷰 상태
 
-- **사용자scope는v1안정화까지만입니다.** 새기능/API/추측최적화/v1.1확장/추정releasepublish는
-  중단하고옛loop문구를새사람scope를넓히는권한으로쓰지않습니다.
+- **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
+  권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
+  새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
 - 정확한기존v1.0.0checksum/certificate/repo·workflow·tag·source와현재권한/auditguard로CI-08/09는
   범위PASS입니다. 관련34/floor6/3lockedAudit가맞고받은코드실행/새release는없습니다. 무결성/빌드출처는
   현재mainruntime안전성이아니며fa1CI중unit은로컬보존합니다.

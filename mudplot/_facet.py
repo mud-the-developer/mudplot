@@ -143,7 +143,9 @@ def panel_filter_issues(columns, panel):
     if panel.projection != "2d" or panel.y2 is not None:
         issues.append("filtered panels support primary Cartesian 2D axes only")
     for layer in panel.layers:
-        if layer.type not in FACET_LAYER_TYPES:
+        if layer.type not in FACET_LAYER_TYPES and (
+            layer.type not in {"hist2d", "hexbin"} or filters
+        ):
             issues.append(f"{layer.type} does not support panel filters")
         if layer.c is not None:
             issues.append("facets use SemanticSpec numeric hue, not legacy c/colorbars")

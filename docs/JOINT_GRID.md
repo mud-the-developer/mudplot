@@ -2,8 +2,8 @@
 
 *[한국어 / Korean](JOINT_GRID.ko.md)*
 
-This first joint-grid subset links one raw scatter/regression view to x/y
-histogram marginals. It does not implement every Seaborn joint kind or pair grid.
+This joint-grid subset links one raw scatter/regression or ungrouped hist2d/hexbin
+view to x/y histogram/KDE marginals. It does not implement every Seaborn joint kind.
 
 ![Synthetic paired dose and response observations](images/joint_observations.png)
 
@@ -30,7 +30,7 @@ p = (mp.plot(raw)
 - Panel 2: vertical x histogram below the main graph.
 - There is **no fourth axes** in the unused bottom-right corner.
 
-The template must contain exactly one raw `scatter` or `regplot`, optionally
+The template must contain exactly one raw `scatter`, `regplot`, `hist2d` or `hexbin`, optionally
 with reference/annotation layers, on primary Cartesian 2-D axes. Axes labels
 fall back to column names when empty. The main x label moves to the lower
 marginal; the repeated right-side y label is hidden. Marginal legends are hidden,
@@ -46,6 +46,21 @@ Total figure size is unchanged: set it explicitly. X is shared by column and y
 by row. Consequently measurement values align, while density/count axes remain
 independent of the main measurement axes. Display limits remain display limits,
 not additional data filtering.
+
+## Binned centers
+
+```python
+p = (mp.plot(raw).hist2d("dose", "response", bins=12, colorbar=False)
+       .joint(bins=10, marginal_stat="count").size(7, 6.5))
+# Or: hexbin("dose", "response", gridsize=20, colorbar=False)
+```
+
+Binned centers require ungrouped, unweighted raw numeric x/y and an explicitly
+disabled colorbar. The center's bins/gridsize/density remain its own settings;
+`joint(bins=...)` configures histogram marginals only. The paired selector is
+applied before center and marginal validation/rendering, and SetData refreshes it.
+Hist/KDE marginals both work. No general binned facet filters, hue_order/group or
+implicit colorbar removal is introduced.
 
 ## KDE marginals
 
@@ -105,7 +120,7 @@ spec version is still 0.1.
 ## Explicit limits
 
 - No semantic roles, legacy c/colourbar, secondary axes, weighted marginals,
-  hexbin joint kinds or nested facet/joint composition yet.
+  grouped/weighted binned centers or nested facet/joint composition yet.
   [Numeric pair matrices](PAIR_GRID.md) use a separate constructor.
 - Raw lines/bands are not converted into scatter or mean curves: dropping pairs
   could otherwise change path gaps. Only the stated main kinds are accepted.

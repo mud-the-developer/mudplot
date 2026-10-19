@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Operator target is now v1.1 completion**, superseding the earlier v1-only
+stabilization limit. Implement documented subsets and verify backward behavior;
+this is not full upstream parity or authorization to tag/publish. No autonomous
+loop is currently registered; this request does not recreate expired scheduling.
+
+**B4 extension: binned joint centers.** Ungrouped/unweighted hist2d and hexbin
+with explicit colorbar=False now compose existing paired histogram/KDE marginals.
+Complete x/y rows, original data, SetData refresh and independent density axes are
+preserved. General binned facet filters, hue_order/group/weights/colorbars remain
+explicitly unsupported; center grid/density settings are not marginal settings.
+17new/198related/floor17passes/3234deselected/13Pyparsing warnings,2CLIapply-render
+flows and8quality checks pass; activeLSP6clean. [Evidence](review_evidence/v11_binned_joint_verification.json).
+This completes only this bounded B4 subset, not all remaining batches/gates.
+Exactfa1CI39218632870ALL5SUCCESS validates prior state/visual tests; publish queued
+supply-chain validation and new runtime for fresh whole CI. Versions/locks stay.
+
+### Earlier review phase 73 (previous scope)
+
 **Scope is now v1 stabilization only.** The operator narrowed work: no new
 features/APIs/speculative optimizations/v1.1 expansion. Focus on existing
 regressions, installation/output preservation, current CI and necessary safety

@@ -1,4 +1,4 @@
-"""Pure joint scatter/regression + paired histogram marginal composition."""
+"""Pure joint main-view + paired histogram/KDE marginal composition."""
 
 from __future__ import annotations
 
@@ -18,6 +18,8 @@ from .spec import (
     PanelSpec,
     RegressionSpec,
 )
+
+JOINT_MAIN_TYPES = ("scatter", "regplot", "hist2d", "hexbin")
 
 JOINT_STATS = {
     "count": "Count",
@@ -67,17 +69,22 @@ def materialize_joint(
         raise ValueError("joint requires axes without named sharing")
     if source.projection != "2d" or source.y2 is not None:
         raise ValueError("joint supports primary Cartesian 2D axes only")
-    data_layers = [
-        layer for layer in source.layers if layer.type in ("scatter", "regplot")
-    ]
+    data_layers = [layer for layer in source.layers if layer.type in JOINT_MAIN_TYPES]
     if len(data_layers) != 1 or any(
-        layer.type not in {"scatter", "regplot", "hline", "vline", "text", "annotate"}
+        layer.type not in {*JOINT_MAIN_TYPES, "hline", "vline", "text", "annotate"}
         for layer in source.layers
     ):
         raise ValueError(
-            "joint needs one completed scatter/regplot plus optional annotations"
+            "joint needs one completed scatter/regplot/hist2d/hexbin "
+            "plus optional annotations"
         )
     layer = data_layers[0]
+    if layer.type in ("hist2d", "hexbin") and (
+        layer.group is not None
+        or layer.hue_order is not None
+        or layer.weights is not None
+    ):
+        raise ValueError("binned joint centers require ungrouped, unweighted raw x/y")
     if isinstance(layer.regression, RegressionSpec) and layer.regression.residual:
         raise ValueError("joint marginals use raw y, not residual responses")
     if (

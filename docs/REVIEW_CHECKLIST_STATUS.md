@@ -18,7 +18,24 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
-## 73차 — 기존release무결성/출처와권한·audit실패정책
+## 74차 — 사용자v1.1scope확장과binnedjoint subset
+
+- 최신사용자요청은 **v1.1까지완성** 으로이전v1안정화전용scope를대체합니다. 문서화한subset을
+  순서대로완성하며전체upstream동등성/기능완료=release준비로보지않고새loop/tag/publish권한도추정하지않습니다.
+- B4의hist2d/hexbin중심은명시colorbarFalse/ungrouped/unweighted일때기존pairedhist/KDE주변을
+  지원합니다. 같은완전x/y행/원본/SetData재선택/독립density축을보존하고일반binnedfacetfilters/
+  group/hue_order/weights/colorbar는거절합니다. 중심grid/density와주변bins/stat은독립입니다.
+- Rootjoint허용종류와paneldropna만좁게확장하고공통validation/renderselector를사용합니다.
+  데이터복제/누락좌표대체/기본colorbar제거/새specfield/version/dependency는없습니다.
+- 초기positive7실패/거절8정상에서현재17통과,관련198/floor17/3234deselected/Pyparsing13경고,
+  실제CLIapply→preview2종/양platformtype/Ruff268/schema·packaging8명령과activeLSP6clean입니다.
+  [수치/상태/CLI근거](review_evidence/v11_binned_joint_verification.json)를남겼습니다. 기존scatter/regplot/
+  facets/pair/KDE/구조상한도연결대조했지만새전체nativebrowser시험으로확대하지않습니다.
+- 정확한fa1CI39218632870의5job모두성공으로이전state/visual검사전체를확인했고대기공급망검증+
+  새runtime을게시해새전체CI를받습니다. 원검토대장139PASS/6RUNNING/4OPEN/1DEFERRED와남은B2b/B4b/
+  B5b/B6remainder는그대로이며이subset하나로v1.1전체완료라고하지않습니다.
+
+## 73차 — 기존release무결성/출처와권한·audit실패정책 (당시scope)
 
 - 사용자가목표를 **v1안정화까지만** 으로좁혔습니다. 신규기능/API/추측최적화/v1.1확장은중단하고
   기존기능회귀/설치·출력보존/현재CI와필요한안전성확인에집중합니다. 옛loop의v1완성문구로

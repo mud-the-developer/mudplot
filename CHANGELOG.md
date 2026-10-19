@@ -6,9 +6,12 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added opt-in ungrouped hist2d/hexbin joint centers with paired histogram/KDE
+  marginals, source-row preservation and dynamic complete cases. Colorbars and
+  unsupported group/weight mappings remain explicit rejections.
 - Verified exact existing v1.0.0 release checksums and OIDC certificate identity
   separately from current runtime quality, and added scoped supply-chain/audit
-  failure-policy guards. Ongoing work is limited to v1 stabilization.
+  failure-policy guards. The operator subsequently expanded the target to v1.1.
 - Paired fixed-environment visual evidence with independent group/coordinate
   assertions and reviewed diff artifacts; no blind baseline regeneration or
   blanket cross-environment image tolerance was introduced.

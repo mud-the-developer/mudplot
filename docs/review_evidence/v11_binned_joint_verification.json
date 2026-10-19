@@ -1,0 +1,128 @@
+{
+  "source_sha256": {
+    "mudplot/_joint.py": "1c48f5e31af0ceae200585b91e88e53a1315bfca878755fd3e8160215531c12a",
+    "mudplot/_facet.py": "03447bba046e9d0a1f5e45b1427d352b8e345026adffe28f9b14a675a0a412b5",
+    "mudplot/capabilities.py": "237d00d1eaddd94a2dd25eeb0fdb0eed91d0ac60c783aaf9588d40f1cb859f96",
+    "mudplot/api.py": "9e6c2377a1443ce9c91506651061eda4f3de44def5d89c9d52464815584beb96",
+    "tests/test_joint_binned.py": "33f05b1393adc7a3e05dc9e31f2125178ade2ccd1695764e55288ac91e5464a6",
+    "scripts/check_minimum_versions.py": "ecadeb4709e0b88a93e9b5f2f52d632b844867466d971b188155823be1a271d4",
+    "schemas/capabilities.json": "65297cd26216cb4280a11c40827d6c19821d8d4709c47c77ddc4b071e4efc5a6",
+    "docs/JOINT_GRID.md": "9215ed5fb028e614670dcb1faa172ad3038152446f903dfc785d64add73655ad",
+    "docs/JOINT_GRID.ko.md": "ea53e236de8595740febdfd505d417e1832bada93edcf05cb9d70ce8148f4ebb",
+    "docs/FEATURE_COVERAGE.md": "17a3674c8c6db608bb80235fd8bf66806365f33c92f300ee1d56af7bbe5a768e",
+    "docs/FEATURE_COVERAGE.ko.md": "b93e2ea1a48476af10a78ed85309060f32e6c21bff15eba5357352a32a0addd2"
+  },
+  "cli": [
+    {
+      "kind": "hist2d",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "panels": 3,
+      "png_sha256": "70be91997f377c6cdecf2ac25bfff7c723adcdc88442059270121332b36cb78f"
+    },
+    {
+      "kind": "hexbin",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "panels": 3,
+      "png_sha256": "b014c233f693ade1ecf25e9a6bdef248f4283343ce090730e66d856d0a0b6e97"
+    }
+  ],
+  "scope": "v1.1B4boundedextension:ungroupedunweightedhist2d/hexbinwithEXPLICITcolorbarFalsecancomposeexistinghist/KDEpairedmarginals. Samecompletex/ycohort/SetDatarefresh/originaltable/snapshotsremain;maingrid/densityandmarginalbinsindependent. Binnedselectorsallowdropnaonly,notgeneralpanelfilters/facetbuilder. No defaultchanges/serializedfields/specversion/newdependency.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "results": [
+        "198 passed in 71.26s (0:01:11)"
+      ],
+      "log_sha256": "3cf7cc2cf5b84412830e1edb4ae0df3b2b75a007337ee31efe1f5a460e7e682d"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "results": [
+        "17 passed, 3234 deselected, 13 warnings in 5.77s"
+      ],
+      "log_sha256": "829d57ace2a759a7e1ab046e53eba32d1350b7f0d6e825e37835e64444855137"
+    },
+    {
+      "name": "linux",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "268 files already formatted"
+      ],
+      "log_sha256": "3782c2a7a8f4eb1a3da1167300a44b4d0f3966fa249bb7d05403812301be5ae8"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_sha256": "b75bbbae12ab53e9c28a686fa8ffa618fb8f1d7dd3b180f7cdd17cc4a8e8a991"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "6fa9628a82eff73abe34080a163defe7949cf14038510c025cf58d141eb21f0e"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "4352bb7ade87bc31dfc562bd4cad1e7c631837d57504510b7c4d6ad9d913a32c",
+    "cli.json": "deba5ae53b766bf4e25b48d285921feb9945a280df552d87de0ad7791479db33",
+    "results.xml": "8a70befea38e8f5c5194917e8a1b34da8192b7b24d3facaa5f2d21698e19ea8b",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

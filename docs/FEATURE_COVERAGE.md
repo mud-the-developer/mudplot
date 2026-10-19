@@ -61,7 +61,7 @@ argument in every upstream signature.
 | `relplot`, `displot`, `catplot`, `lmplot` | Partial composition: terminal `facet()` materializes row/col subsets, wrap/shared axes and semantic domains for supported 2-D templates | Full builder families, live template mapping, legacy c/colorbars, consolidated figure legends and broader inference |
 | `FacetGrid` | Partial row/col materialization, shared axes/semantic domains and raw groups | Live mapping and wider grid controls; see [facet limits](FACETS.md) |
 | `PairGrid` / `pairplot` | Partial numeric pair matrix: raw scatter, histogram/KDE diagonals, pairwise complete cases and named value axes | Corner/semantic/weighted/CDF/nested grids; see [pair scope](PAIR_GRID.md) |
-| `JointGrid` / `jointplot` | Partial: terminal `joint()` links raw scatter/regplot and paired histogram/KDE marginals; source data preserved | Semantic/c/weighted/CDF/hexbin joint kinds, nested composition and richer layout; see [joint scope](JOINT_GRID.md) |
+| `JointGrid` / `jointplot` | Partial: terminal `joint()` links raw scatter/regplot or ungrouped hist2d/hexbin (colorbar=False) with paired histogram/KDE marginals; source data preserved | Semantic/c/weighted/CDF/grouped-binned kinds, nested composition and richer layout; see [joint scope](JOINT_GRID.md) |
 | Themes, palettes, legend/despine utilities | Partial: named themes, LCH palettes, legend/despine controls | More contexts, upstream palette/colormap selection, legend columns and shared semantics |
 | `seaborn.objects` | Partial mark-level equivalents only | A composable statistical transform/move/scale pipeline; no drop-in object API |
 

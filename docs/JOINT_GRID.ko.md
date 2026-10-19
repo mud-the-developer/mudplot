@@ -2,8 +2,8 @@
 
 *[English](JOINT_GRID.md)*
 
-이번 첫 joint-grid 범위는 raw scatter/regression과 x/y 주변 히스토그램을
-연결합니다. Seaborn의 모든 joint kind나 pair grid를 구현한 것은 아닙니다.
+Joint-grid는raw scatter/regression 또는ungroupedhist2d/hexbin과x/y주변histogram/KDE를
+연결합니다. Seaborn의모든jointkind를구현한것은아닙니다.
 
 ![합성 dose/response 관측의 joint plot](images/joint_observations.png)
 
@@ -30,7 +30,7 @@ p = (mp.plot(raw)
 - Panel 2: 아래의 세로 x 히스토그램.
 - 오른쪽 아래에는 **네 번째 axes를 만들지 않습니다.**
 
-템플릿은 primary Cartesian 2-D의 raw `scatter` 또는 `regplot` 하나와 선택적인
+템플릿은 primary Cartesian 2-D의 raw `scatter`/`regplot`/`hist2d`/`hexbin` 하나와 선택적인
 참조/주석 layer여야 합니다. 비어 있는 축 이름은 열 이름으로 채웁니다. 본 그래프의
 x 이름은 아래 주변 분포로 옮기고 오른쪽 y 이름은 반복하지 않습니다. 주변 범례는
 숨기며 raw group 색상/자리는 본 그래프와 일치합니다.
@@ -44,6 +44,19 @@ Density는 한 주변 분포의 그룹 전체 면적 합이 1이고 probability/
 전체 그림 크기는 자동으로 늘리지 않으므로 직접 지정하세요. X는 열, y는 행을
 공유하여 측정값 위치를 맞춥니다. Density/count 축은 본 측정값 축과 별개입니다.
 표시 limits가 추가 데이터 필터를 뜻하지도 않습니다.
+
+## Binned중심
+
+```python
+p = (mp.plot(raw).hist2d("dose", "response", bins=12, colorbar=False)
+       .joint(bins=10, marginal_stat="count").size(7, 6.5))
+# 또는hexbin("dose", "response", gridsize=20, colorbar=False)
+```
+
+Binned중심은ungrouped/unweightedrawnumericx/y와명시colorbarFalse를요구합니다. 중심의
+bins/gridsize/density는유지하고jointbins는주변hist에만적용합니다. Pairedselector는중심/주변
+validation·render전에적용되고SetData뒤갱신됩니다. Hist/KDE주변모두지원하지만일반binnedfacet
+filter/hue_order/group/암묵colorbar제거는지원하지않습니다.
 
 ## KDE 주변 분포
 
@@ -99,7 +112,7 @@ scatter/regplot에 raw-action 폼으로 적용할 수 있습니다. 예전 spec�
 
 ## 명시적인 제한
 
-- Semantic role·legacy c/colorbar·보조축·가중 주변 분포·hexbin joint kind·
+- Semantic role·legacy c/colorbar·보조축·가중 주변 분포·group/weightedbinned중심·
   facet/joint 중첩 구성은 아직 미지원입니다. [Numeric pair matrix](PAIR_GRID.ko.md)는
   별도 구성 API입니다.
 - Raw line/band를 scatter/평균 곡선으로 바꾸지 않습니다. 쌍 결측을 제외하면서

@@ -825,13 +825,15 @@
     ],
     "main": [
       "scatter",
-      "regplot"
+      "regplot",
+      "hist2d",
+      "hexbin"
     ],
     "marginals": "hist count/density/probability/percent or KDE density",
     "layout": "main top-left, y right, x below; no fourth axes",
     "selection": "dynamic complete x/y/group cases; source table intact",
     "sharing": "x by column, y by row; density axes remain independent",
-    "limits": "one raw primary Cartesian2D template; no semantics/c/y2/weights"
+    "limits": "one raw primary Cartesian2D template; no semantics/c/y2/weights; binned centers require no group/hue_order/colourbar"
   },
   "pair_grid": {
     "action": "SetPairGrid",

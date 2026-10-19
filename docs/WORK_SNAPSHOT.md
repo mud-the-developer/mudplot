@@ -28,9 +28,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
-- **Operator scope: v1 stabilization only.** No new features/APIs/speculative
-  optimization/v1.1 expansion or inferred release publishing. Existing loop text
-  remains a wake trigger, not authority to broaden the newer human scope.
+- **Latest operator target: v1.1 completion.** This supersedes the earlier v1-only
+  stabilization limit, not release/tag/publish authority or full upstream parity.
+  No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
+  hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
+  but broader remainders/gates and new whole-source CI are still outstanding.
 - Exact existing-v1.0.0 checksum/certificate/repo-workflow-tag-source verification
   and current scoped permission/audit guards make CI-08/09 PASS.34related/floor6
   pass/three locked audits clean; no downloaded code executed/new release created.

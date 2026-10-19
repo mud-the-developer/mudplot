@@ -52,7 +52,7 @@ Python 3.10 / Matplotlib 3.8 / NumPy 1.23 지원을 유지합니다.
 | `relplot`/`displot`/`catplot`/`lmplot` | 부분 구성: 지원하는 2-D 템플릿의 terminal facet()·row/col 분할·wrap/공통 축·semantic domain | 전체 builder군·live template mapping·legacy c/colorbar·figure 통합 범례·추론 확장 |
 | `FacetGrid` | 부분: row/col materialization·공통 축/semantic domain·raw group | Live mapping·넓은 grid 설정. [Facet 제한](FACETS.ko.md) 참고 |
 | `PairGrid`/`pairplot` | 부분: numeric pair matrix·raw scatter·histogram/KDE 대각선·쌍별 결측·이름 기반 값축 | Corner/semantic/가중/CDF/중첩 grid. [Pair 범위](PAIR_GRID.ko.md) 참고 |
-| `JointGrid`/`jointplot` | 부분: terminal joint()로 raw scatter/regplot과 동일 행의 주변 histogram/KDE 연결·원자료 보존 | Semantic/c/가중/CDF/hexbin joint·중첩 구성·추가 layout. [Joint 범위](JOINT_GRID.ko.md) 참고 |
+| `JointGrid`/`jointplot` | 부분: raw scatter/regplot 또는ungroupedhist2d/hexbin(colorbar=False)과pairedhistogram/KDE연결·원자료보존 | Semantic/c/가중/CDF/groupedbinned·중첩구성·추가layout. [Joint 범위](JOINT_GRID.ko.md) 참고 |
 | 테마·팔레트·범례·despine | 부분 | 추가 context, upstream 팔레트/colormap 선택, 범례 열·공통 매핑 |
 | `seaborn.objects` | 일부 mark와 비슷한 기능만 있음 | 통계 transform/move/scale 합성; 동일 object API는 미지원 |
 

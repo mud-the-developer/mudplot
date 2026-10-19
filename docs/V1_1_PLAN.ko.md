@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
+subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
+현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+
+**B4확장:binnedjoint중심.** Ungrouped/unweightedhist2d/hexbin을명시colorbar=False로만들면
+기존pairedhist/KDE주변과구성합니다. 동일x/y완전행·원본·SetData갱신/독립density축을유지하고
+일반binnedfacetfilter/hue_order/group/weights/colorbar는명시거절합니다. 중심grid/density와주변설정을
+혼동하지않습니다. 새17/관련198/floor17/3234deselected/Pyparsing13경고·CLI2·품질8명령/
+activeLSP6clean,[근거](review_evidence/v11_binned_joint_verification.json)를남겼습니다.
+이B4subset만완료한것이지모든remainder/gate완료는아닙니다. 정확한fa1CI39218632870의5job모두성공으로
+이전state/visual검사를확인했고대기공급망검증+새runtime을게시해새전체CI를받습니다. 버전/lock은유지합니다.
+
+### 이전 리뷰73차 (당시scope)
+
 **목표는v1안정화까지만입니다.** 사용자가scope를좁혔으므로새기능/API/추측최적화/v1.1확장을
 중단하고기존회귀/설치·출력보존/현재CI/필요안전성에집중합니다. 옛loop문구가새범위를확장하거나
 publish권한을주는것은아닙니다.

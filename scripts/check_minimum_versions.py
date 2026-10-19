@@ -71,6 +71,7 @@ TESTS = (
     "tests/test_review_style_dpi.py",
     "tests/test_facets.py",
     "tests/test_joint_grid.py",
+    "tests/test_joint_binned.py",
     "tests/test_pair_grid.py",
     "tests/test_grid_kde.py",
     "tests/test_heatmap_options.py",
