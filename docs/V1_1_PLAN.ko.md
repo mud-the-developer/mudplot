@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰69차에서필수optional-tool실행을표시하고실패gate로연결했습니다.** Localfixture의skip은
+유지하지만CI/minimum/TeX/release의고정JUnitcase는한번passed여야하고missing/skip/xfail/
+failure/중복/깨진report는실패합니다. Reader64MiB/UTF-8/NUL·DTD·entity경계를두고alwaysdiagnostic
+upload가실패job을복구하지않게하며matrix/source report/cache를분리했습니다. Release권한/guard는유지합니다.
+
+제한된absence는3skip/pytest0/gate1,실제browser/PGF/4TeX는6pass/4profile0입니다. 동시
+원순서/shuffle41씩통과/sameID/order다름은임의순서/thread보장이아닙니다. 새20/관련37/floor20/
+3190deselected/Pyparsing13경고·품질10명령·activeLSP3clean,
+[근거](review_evidence/ci_path_matrix_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS131/RUNNING6/OPEN12/DEFERRED1**입니다. 정확한d221CI39201840394의5job모두성공으로
+이전layer/checkpoint전체를확인했지만새gate실행으로소급하지않고대기문서+CI를게시해새전체CI를받습니다.
+버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰68차
+
 **리뷰68차에서양국어문서와작성자증거판단을맞췄습니다.** README의finitepattern/resource/
 checkpoint범위와실행예시의callerFigureclose를명시했습니다. Provenancerecipe누수3개는0으로
 고쳤지만API소유권/outputbytes는바꾸지않았습니다. c4f40a대비exports41→52/Plot70→84/

@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest required browser/TeX JUnit paths and matrix/ordering evidence make
+  CI-02/06 PASS in scope.20new/37related/floor20pass; controlled absence is3SKIP/
+  pytest0/gate1, real6paths pass and2x41original/shuffled cases agree. Reader bounds,
+  distinct artifacts/cache and unchanged release guards are not signed provenance.
+  Exactd221CI ALL5SUCCESS validates046/checkpoint; queued docs+new gate need freshCI.
+
 - Latest paired README/recipe execution, API-delta inventory and evidence-level
   author report make DOC-01/02/03 PASS in scope.63related/floor9passes and198file
   links support claims, not independent release approval. Examples now close
@@ -515,7 +521,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   and [manifest recipe](OUTPUT_PROVENANCE.md) retain replay/memory/gesture/privacy limits.
 - [Documentation evidence](review_evidence/documentation_review_verification.json)
   and [interim review](REVIEW_DECISION.md) retain additions/compatibility exceptions/gaps.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS129/RUNNING6/OPEN14/
+- [CI path/matrix evidence](review_evidence/ci_path_matrix_verification.json)
+  separates real passes, tool-absence skips, required-case failures and job scopes.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS131/RUNNING6/OPEN12/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

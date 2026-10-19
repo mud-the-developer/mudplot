@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Made required CI browser/PGF/TeX paths fail on missing/skipped/ambiguous JUnit
+  cases while preserving local optional skips. Retain matrix/source-specific
+  reports and cache namespaces; bound UTF-8 JUnit input without DTD/entities.
 - Aligned paired READMEs with finite pattern/resource/checkpoint scopes and
   executable caller-owned Figure cleanup. Added an interim API/evidence review
   that explicitly withholds release approval and final-review sign-off.

@@ -1,0 +1,849 @@
+{
+  "source_sha256": {
+    ".github/workflows/ci.yml": "d572e18ada96da2e99cb9ace3db2d9df76653f87c21829d23581d0f3df0868b3",
+    ".github/workflows/tex-matrix.yml": "b054b3df8c8967203b1bc3a9ccee2d23f0a93d0d97c44e67f2ab86df264be1d7",
+    ".github/workflows/release.yml": "11b5a6276beead11be50f457c112756656a23475f6e1b20afa5314e4ad6e60a7",
+    "scripts/check_required_test_paths.py": "7b885345f674334fbca0e45812ef3628a4376d23ea925d4461d1897470524cd7",
+    "tests/test_required_test_paths.py": "2e27a4a1a8fb07181cd8936aa6fd13edbbd0f1a634c9b973cf777aa9f94067e5",
+    "scripts/check_minimum_versions.py": "5fa288977d489b9a03a11bd504e2cddc6370566b60557e8e99da68393a0a7a5a",
+    "CONTRIBUTING.md": "fd3d9ca8f949b2ab83d56adcf89124ebf2258a229f65082252ae08b965069f84",
+    "CONTRIBUTING.ko.md": "2414800a22162178a9bc4be4740c434555bd6528e1b6e55f23f959be05abda27",
+    "pyproject.toml": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb",
+    "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df"
+  },
+  "experiments": {
+    "gates": [
+      {
+        "case": "actual-tools-present",
+        "profile": "ci",
+        "exit_code": 0,
+        "summary": {
+          "counts": {
+            "passed": 6
+          },
+          "ok": true,
+          "profile": "ci",
+          "required": [
+            {
+              "module": "test_editor_browser",
+              "name": "test_dragging_the_legend_moves_it_and_persists",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_pgf_export_emits_figcite_and_href_macros",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+              "outcomes": [
+                "passed"
+              ]
+            }
+          ],
+          "total": 6
+        }
+      },
+      {
+        "case": "actual-tools-present",
+        "profile": "minimum",
+        "exit_code": 0,
+        "summary": {
+          "counts": {
+            "passed": 6
+          },
+          "ok": true,
+          "profile": "minimum",
+          "required": [
+            {
+              "module": "test_references",
+              "name": "test_pgf_export_emits_figcite_and_href_macros",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+              "outcomes": [
+                "passed"
+              ]
+            }
+          ],
+          "total": 6
+        }
+      },
+      {
+        "case": "actual-tools-present",
+        "profile": "tex",
+        "exit_code": 0,
+        "summary": {
+          "counts": {
+            "passed": 6
+          },
+          "ok": true,
+          "profile": "tex",
+          "required": [
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+              "outcomes": [
+                "passed"
+              ]
+            }
+          ],
+          "total": 6
+        }
+      },
+      {
+        "case": "actual-tools-present",
+        "profile": "release",
+        "exit_code": 0,
+        "summary": {
+          "counts": {
+            "passed": 6
+          },
+          "ok": true,
+          "profile": "release",
+          "required": [
+            {
+              "module": "test_editor_browser",
+              "name": "test_dragging_the_legend_moves_it_and_persists",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_pgf_export_emits_figcite_and_href_macros",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+              "outcomes": [
+                "passed"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+              "outcomes": [
+                "passed"
+              ]
+            }
+          ],
+          "total": 6
+        }
+      },
+      {
+        "case": "controlled-tools-absent",
+        "profile": "ci",
+        "pytest_exit_code": 0,
+        "checker_exit_code": 1,
+        "summary": {
+          "counts": {
+            "skipped": 3
+          },
+          "ok": false,
+          "profile": "ci",
+          "required": [
+            {
+              "module": "test_editor_browser",
+              "name": "test_dragging_the_legend_moves_it_and_persists",
+              "outcomes": [
+                "skipped"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_pgf_export_emits_figcite_and_href_macros",
+              "outcomes": [
+                "skipped"
+              ]
+            },
+            {
+              "module": "test_references",
+              "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+              "outcomes": [
+                "skipped"
+              ]
+            }
+          ],
+          "total": 3
+        }
+      }
+    ],
+    "parallel": {
+      "lanes": [
+        {
+          "mode": "original",
+          "exit_code": 0,
+          "tests": 41,
+          "skipped": 0,
+          "temp": "<evidence>/pytest-original",
+          "mpl_config": "<evidence>/mpl-original"
+        },
+        {
+          "mode": "shuffled",
+          "exit_code": 0,
+          "tests": 41,
+          "skipped": 0,
+          "temp": "<evidence>/pytest-shuffled",
+          "mpl_config": "<evidence>/mpl-shuffled"
+        }
+      ],
+      "identity_set_same": true,
+      "order_changed": true,
+      "shuffle_seed": 52673,
+      "scope": "Two independent pytest processes share checkout but use distinct temporary directories/font caches/reports. Not shared-Store/Matplotlib thread-safety or universal test-order independence."
+    },
+    "monitor_note": "Monitor3/4 launcher errors produced zero output/no experiment receipts. Actual checked experiments were run later through the working bash path; launch errors are not test results."
+  },
+  "observed_ci": {
+    "run": 39201840394,
+    "head": "d221188b709ef8c3eb99e7b9239db8a7646cfdcf",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "rust-editor (windows-latest)",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "success"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "minimum-render",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv for the isolated dependency floor",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install the same locked tooling as the full matrix",
+            "conclusion": "success"
+          },
+          {
+            "name": "Retain font/system dependencies without browser download",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install the same TeX prerequisites as the full matrix",
+            "conclusion": "success"
+          },
+          {
+            "name": "Minimum render dependency contract",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv for the isolated dependency floor",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run uv sync --locked --extra all",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust 1.88 MSRV",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust format",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust/Python editor bridge smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Interpreter selection and Unicode/spaced paths",
+            "conclusion": "success"
+          },
+          {
+            "name": "Sequential request-body boundaries and server RSS",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv and complete Python effects for smoke fixtures",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "conclusion": "success",
+        "steps": [
+          {
+            "name": "Set up job",
+            "conclusion": "success"
+          },
+          {
+            "name": "Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Audit all committed Python dependency locks",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Install project (with dev extras)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install Chromium for the browser tests",
+            "conclusion": "success"
+          },
+          {
+            "name": "Install pdflatex + tectonic (TeX engines for the .pgf-export reference tests; the fuller pdflatex/lualatex/biber matrix runs nightly in tex-matrix.yml and before publishing in release.yml)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff lint",
+            "conclusion": "success"
+          },
+          {
+            "name": "Ruff format check",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pyright",
+            "conclusion": "success"
+          },
+          {
+            "name": "Pytest",
+            "conclusion": "success"
+          },
+          {
+            "name": "Optional table adapters with real libraries",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Schema/docs export is in sync (drift guard for Rust + humans)",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard site builds",
+            "conclusion": "success"
+          },
+          {
+            "name": "Dashboard editor smoke test",
+            "conclusion": "success"
+          },
+          {
+            "name": "Rust editor real-browser smoke test",
+            "conclusion": "skipped"
+          },
+          {
+            "name": "Sdist/wheel rebuild and contents are complete",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Install uv",
+            "conclusion": "success"
+          },
+          {
+            "name": "Post Run actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+            "conclusion": "success"
+          },
+          {
+            "name": "Complete job",
+            "conclusion": "success"
+          }
+        ]
+      }
+    ],
+    "python312": {
+      "summaries": [
+        "3956 passed, 46 skipped, 17 warnings in 2495.79s (0:41:35)",
+        "243 passed in 47.13s"
+      ],
+      "raw_sha256": "795ea72230bfd19b184ecacc322678e76a942573e6dbc6c8fbb1342a3fa7f8a9"
+    },
+    "minimum": {
+      "summaries": [
+        "3145 passed, 37 skipped, 4058 warnings in 2273.28s (0:37:53)"
+      ],
+      "raw_sha256": "c22a1fc6a51db004f60dfdbf281ca89213f091115dda633f3c27e319551916a3"
+    }
+  },
+  "observed_tex_job": {
+    "run": 39108186237,
+    "head": "063ba0a0580112b72322b26048cf647aa154e677",
+    "conclusion": "success",
+    "log": {
+      "summaries": [
+        "3 passed, 1 skipped, 57 deselected in 17.15s"
+      ],
+      "raw_sha256": "524cdd75ef93354ab55b969601e27f9bde3bf597c68ba6d81e93508e8e7fcab8"
+    },
+    "scope": "Historicaldedicatedjob3classicpassed/tectonicskip\u2014notcurrent-sourcewholeverification,newrequiredtexprofileenforcesclassic3only."
+  },
+  "policy": "Localoptionalfixturesmayskip.RequiredJUnitidentitiesmustoccurONCEaspassed;missing/duplicate/skip/xfail/failure/malformed/missingreportfailsCIprofile. Currentci3/minimum2/tex3/release6realrequiredpaths.Sourcecheckerdoesnotsignreportsorproveallsemantics/malicious-testsafety. HostednewworkflowproofstillpendingCI01.",
+  "matrix_cache_artifacts": "UbuntuPython3.10/3.12full/3.10floor;RustUbuntu+Windows/Python3.12/MSRV1.88;nightlyandreleaseLinux3.12TeX. ExplicitUVcache suffixesPython/minimum/RustOSandlockglobs,nightlyreleasecacheoff. Artifactnamesmatrix/sourceSHA,diagnosticsseparatefromdist.NoOS/minoruniversality/shared-Mplthreadsafetyclaim.",
+  "cache_action_metadata": {
+    "url": "https://raw.githubusercontent.com/astral-sh/setup-uv/bec219d24cd3e171d82865faccec33120bb574f4/action.yml",
+    "sha256": "7405b496f9c661ba66fe80bce45b26382c23d872ea09ac729b78d80ba0ebb137",
+    "scope": "Pinnedpublishedinputmetadata(cache-suffix/cache-dependency-glob/post-ifsuccess),notindependentcompleteactionimplementationaudit."
+  },
+  "workflow_safety": "No event/publishpermission/branchpolicy/concurrency-releasechange. alwayschecks/uploadsdonotrepairpriorjobfailure;failedbuildstillblocksneedsbuildreleasejob.No tag/release/publishruntriggered. Sameexistingpinnedartifactactionreused.",
+  "qa_note": "TwoMonitorslauncherroredwithzerolines/noreceipts\u2014NOTtestfail/pass. Actualexperimentsranthroughworkingbashlater.Controlledmissingtoolpathdoesnotuninstallbinaries/privatepytestpluginonly.Requiredtoolspresent6P/allprofiles0,absent3SKIPpytest0/gate1,paralleloriginal/shuffled2x41P0skip/sameIDs/differentorder.YAMLlinewrap/LFfixed;yamllint7legacywarnings(documentstart/on-key/comment)0errors,notignoredcodefindings. GitHublogAPIfirstrefusedescapes;rawretrievedwithallow-escape-sequencesandfilteredforsummaries,noexecutinglogcontent.",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "environment_overrides": {
+    "actual-path-contrast": {
+      "absent": "Child-onlypytestpluginredirectsrealPlaywrightlaunchtononexistentownedexeandhidesTeXdiscovery;nobinaryremoved. pytest0/3skips/gate1preserved.",
+      "present": "Actual browser/nativePGF/Tectonic/pdflatex+BibTeX/LuaLaTeX+BibTeX/LuaLaTeX+biber6passed,notversion-onlyprobe.",
+      "parallel": "Twoindependentprocesses/original+shuffle52673/same41IDs/distincttemp/font/reports/notthread-safetyproof."
+    },
+    "floor-policy": {
+      "PYTEST_ADDOPTS": "-k \"test_required_test_paths\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "actual-path-contrast",
+      "argv": [
+        "python",
+        "<evidence>\\verify_paths.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Actual6passes/all4profiles0; controlled3skips/pytest0/checker1; concurrent2x41passes0skips/sameIDs/differentorder"
+      ],
+      "log_text_sha256": "92809b89184670450c2e3e64b3de660c7710b7cf1e97fe0a20f0bb1e8285a02c"
+    },
+    {
+      "name": "policy-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_required_test_paths.py",
+        "tests/test_release_preflight.py",
+        "tests/test_history_profile.py",
+        "tests/test_review_generated_drift.py",
+        "tests/test_schema_export.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "37 passed in 53.56s"
+      ],
+      "log_text_sha256": "0c4f5917326893a588e32576c4db77a806523f13c220acc6c6a4bfb557f0c14a"
+    },
+    {
+      "name": "floor-policy",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "20 passed, 3190 deselected, 13 warnings in 1.74s"
+      ],
+      "log_text_sha256": "a97127b6bcb7d1a7423ca6af62ac145fa5ddb29aecb5368549661a7f5f42f34f"
+    },
+    {
+      "name": "yaml",
+      "argv": [
+        "yamllint",
+        ".github/workflows/ci.yml",
+        ".github/workflows/tex-matrix.yml",
+        ".github/workflows/release.yml"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "052975f4f9b3eadb5271486d05cdbfbea918661f2e0fdb156681d70dadfc8dfb"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "263 files already formatted"
+      ],
+      "log_text_sha256": "470a54b66de0446ff41dcdcc53cdc8e6be293f9b5fbba828819ad67bec97fc81"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "7f465f527adf79e41ece580854b36547fb3223d0d22843521d1e6c3e331ae88e"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "ded214ec62b9c76c391f9fd3dfc2eaf775f6df75a4f2e09d4ae3c34a5aaba87e"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "_qa_optional_absent.py": "1a1d56a7e4c33d9f7a41bb0c02316532e99d2ddd5a29c3bca96434fccd50f9ee",
+    "_qa_order.py": "510a62c43fe1a6e1cf34f3477c5a1beafbe5a4836142690230c553bfa5c291c2",
+    "run_present.py": "4903d261d63882da9eaff01cf71f46bbc514932156e2ca3c000a235cf3a90fcb",
+    "run_parallel.py": "d357961bfa35ad33559f09c9feb6318477d834f3165d325d2fe7f7fd88684077",
+    "verify_paths.py": "82079e2567753f6011daa4a27081525af097f9724602cc9247404efbb2d99da7",
+    "qa.py": "6e9dce723f8bcd98d8cd48201869620615cbf94211f72c3ad298d900108e8c22",
+    "absent-results.xml": "ba3a49e64ad076edf39b223cec2ad927e375dc004f28c765335c5e30a87ab7ab",
+    "present-results.xml": "fb45d24120e9463d2df86ed8ca0c88de5d86e33309e3f87c490968847cb5e6e2",
+    "present-receipts.json": "8978a51128094eded1c16ec69d4c82fc1a631860101f3c5b561199398d27713b",
+    "verified_path_experiments.json": "2e6e37e7d01d0120f8a8292a5996d698d06f2aaef32bb813ebcfc52973c71c1f",
+    "parallel_results.json": "87f500db63da69412d0401f76a7f31a0e4463ed869f5a747a7d3cde9398e65ba",
+    "parallel-original.xml": "e7f533b258143fdb598197b9ab25048b4ec92b00734eb01468db30d530dc5a8a",
+    "parallel-shuffled.xml": "6c695f6fec8ebbf5c19f5d981b3eb73879f75b54a6de184a260cee8765819493",
+    "order-original.json": "94295d0c6b65da048ba828797cf1da0fb2c1e624521b1be9eb77aeacb92a9256",
+    "order-shuffled.json": "beffcfb313cdcdb61073c57b8475b6f7398cdbc0f1f0ec002f1b49e8b99358f3",
+    "setup-uv-action.yml": "7405b496f9c661ba66fe80bce45b26382c23d872ea09ac729b78d80ba0ebb137",
+    "current-baseline-ci.json": "0e84904bc5a0e2c1455efbc0fd7400e3435a9368e2aa2c6b3e2ff130ef0a4994",
+    "tex-job-metadata.json": "a470fe944abe274acf21b127e480fdf0d6b6ef073d61a7718a477746502c104b",
+    "ci-py312.log": "795ea72230bfd19b184ecacc322678e76a942573e6dbc6c8fbb1342a3fa7f8a9",
+    "ci-minimum.log": "c22a1fc6a51db004f60dfdbf281ca89213f091115dda633f3c27e319551916a3",
+    "tex-job.log": "524cdd75ef93354ab55b969601e27f9bde3bf597c68ba6d81e93508e8e7fcab8",
+    "environment_overrides.json": "13eaa45ea0bee5423a041bd73ad283dd1a81eb07a979c4d89b47b2a5dbc9bab8",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "ee1882d0f662fa73d3c7c59fa991866fe1c6794be0dde9063689c78cef08c408",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  },
+  "junit_input_boundary": {
+    "max_bytes": 67108864,
+    "encoding": "UTF-8, optional BOM",
+    "forbidden": [
+      "NUL",
+      "DOCTYPE",
+      "ENTITY declarations"
+    ],
+    "scope": "Validate bytes/text before standard XML parsing; external/internal entity, UTF16/NUL and size regressions rejected. Active LSP/Semgrep clean without ignore/Any/new dependency. Not general XML processing or signed report provenance."
+  },
+  "new_policy_tests": 20
+}

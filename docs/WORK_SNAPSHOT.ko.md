@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신requiredJUnit/browser·TeX/matrix·순서증거로CI-02/06은범위PASS입니다. 새20/관련37/
+  floor20과actual6/2×41이맞으며absence3SKIP·pytest0는gate1로거절합니다. Reader경계/분리artifact·
+  cache/기존releaseguard유지는서명provenance가아닙니다. 정확한d221CI5job성공으로046/checkpoint를
+  확인했고대기문서+새gate를게시해새전체CI를받습니다.
+
 - 최신양국어README/recipe실행·API변화·증거수준작성자보고서로DOC-01/02/03은범위PASS입니다.
   관련63/floor9/relativefile198이지독립release승인은아니고예시의save반환Figure만닫도록
   맞춰API소유권/outputbytes는유지했습니다. DOC-04/05/06은OPEN/NOTRELEASEAPPROVED이며
@@ -429,7 +434,9 @@
   [manifestrecipe](OUTPUT_PROVENANCE.md)에재생/memory/gesture/privacy범위를보존했습니다.
 - [문서근거](review_evidence/documentation_review_verification.json)와
   [잠정review](REVIEW_DECISION.md)에API추가/호환예외/남은gate를구분했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS129/RUNNING6/OPEN14/DEFERRED1**.
+- [CI경로/matrix 근거](review_evidence/ci_path_matrix_verification.json)에실제통과/
+  도구부재skip/필수case실패/job범위를구분했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS131/RUNNING6/OPEN12/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

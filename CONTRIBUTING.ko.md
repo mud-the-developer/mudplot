@@ -26,6 +26,34 @@ TeX 엔진이 없으면 TeX 의존 테스트는 건너뜁니다. 일반 CI는
 Tectonic/pdflatex로 PGF 테스트를 실행하며, nightly/release 매트릭스는
 LuaLaTeX, BibTeX, biber까지 검사합니다.
 
+## 필수 CI 경로와 skip 증거
+
+Localoptionaltest는도구가없으면skip할수있지만실행성공은아닙니다. Workflow는skip사유포함
+JUnit을보관하고 `scripts/check_required_test_paths.py`로필수case의missing/skip/xfail/failure/
+중복을거절합니다. 무관한test통과로필수경로를대체하지않습니다. Report는64MiB/UTF-8(BOM허용)/
+NUL·DTD·entity선언금지이며pytestJUnit용이지일반XML/entity처리service가아닙니다.
+
+| Profile | 필수 경로 |
+| --- | --- |
+| `ci` | 실제browserlegenddrag/nativePGF참조/Tectonic논문compile |
+| `minimum` | 격리floor의PGF/Tectonic, browser요구없음 |
+| `tex` | pdflatex+BibTeX/LuaLaTeX+BibTeX/LuaLaTeX+biber논문compile |
+| `release` | Browser/PGF/Tectonic과전체TeXmatrix |
+
+실제전체browser/reference검사예시이며임의의focusedsubset에적용하는명령은아닙니다.
+
+```bash
+uv run pytest -q tests/test_editor_browser.py tests/test_references.py --junitxml=paths.xml
+uv run python scripts/check_required_test_paths.py ci paths.xml
+```
+
+무관한optional skip은그대로보이고허용합니다. 필수case검사/reportupload는실패뒤에도실행하지만
+pytest/job실패를성공으로바꾸지않습니다. Linuxfull은Python3.10/3.12,격리floor는3.10,
+RustMSRV1.88/Python3.12bridge는Windows/Linux이며모든OS/minor증명은아닙니다. UVcache접미사는
+Python/minimum/Rust·OSlane을분리하고lock입력은명시합니다. Nightly/releasecache는비활성이고
+결과artifact는matrix/sourceSHA이름으로release `dist`와분리합니다. JUnitidentity검사는서명된
+buildprovenance/악성test방어/전체runtime정확성인증이아닙니다.
+
 ## 리뷰 체크리스트와 증거
 
 [2026-10-16 상세 체크리스트](mudplot_review_checklist_detailed_2026-10-16.md)와

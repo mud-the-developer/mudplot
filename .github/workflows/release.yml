@@ -93,7 +93,19 @@ jobs:
           uv run ruff format --check .
           uv run pyright
       - name: Python test suite (browser included)
-        run: uv run pytest -q
+        run: uv run pytest -q --junitxml=release-results.xml
+      - name: Required release browser and TeX paths executed
+        if: always()
+        run: >-
+          uv run --no-sync python
+          scripts/check_required_test_paths.py release release-results.xml
+      - name: Retain release test outcomes including skips
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: test-results-release-${{ github.sha }}
+          path: release-results.xml
+          if-no-files-found: error
       - name: Minimum render dependency contract
         run: |
           uv python install 3.10

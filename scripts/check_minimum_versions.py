@@ -35,6 +35,7 @@ TESTS = (
     "tests/test_review_temporal_precision.py",
     "tests/test_review_scalar_boundaries.py",
     "tests/test_review_state_contracts.py",
+    "tests/test_required_test_paths.py",
     "tests/test_review_core_boundaries.py",
     "tests/test_review_structure_limits.py",
     "tests/test_review_layer_limits.py",

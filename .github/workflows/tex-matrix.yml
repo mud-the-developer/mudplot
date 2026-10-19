@@ -53,4 +53,16 @@ jobs:
       - name: Run TeX engine and bibliography matrix
         run: >-
           uv run pytest tests/test_references.py
-          -k compiles_into_a_real_paper -v
+          -k compiles_into_a_real_paper -v --junitxml=tex-results.xml
+      - name: Required full TeX paths executed
+        if: always()
+        run: >-
+          uv run --no-sync python
+          scripts/check_required_test_paths.py tex tex-results.xml
+      - name: Retain TeX outcomes including skips
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: test-results-tex-${{ github.sha }}
+          path: tex-results.xml
+          if-no-files-found: error

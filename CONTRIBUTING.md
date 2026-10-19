@@ -26,6 +26,39 @@ TeX-dependent tests skip when no TeX engine is installed. CI runs the normal
 PGF suite with Tectonic/pdflatex; the scheduled/release matrix also covers
 LuaLaTeX, BibTeX, and biber.
 
+## Required CI paths and skip evidence
+
+Local optional tests may skip when a tool is absent; skip is not tool execution.
+The workflows retain JUnit reports (including skip reasons) and use
+`scripts/check_required_test_paths.py` to reject missing, skipped, xfailed, failed
+or duplicate required cases. A passing unrelated test cannot satisfy the gate.
+Reports are bounded to64MiB UTF-8 (BOM allowed), without NUL/DTD/entity declarations;
+this reader is for pytest JUnit, not a general XML/entity processing service.
+
+| Profile | Required paths |
+| --- | --- |
+| `ci` | Actual browser legend drag, native PGF references, Tectonic paper compile |
+| `minimum` | PGF and Tectonic in the isolated dependency floor; no browser requirement |
+| `tex` | pdflatex+BibTeX, LuaLaTeX+BibTeX, LuaLaTeX+biber paper compiles |
+| `release` | Browser/PGF/Tectonic plus all full TeX matrix paths |
+
+Example for an actual full browser/reference run (not an arbitrary focused subset):
+
+```bash
+uv run pytest -q tests/test_editor_browser.py tests/test_references.py --junitxml=paths.xml
+uv run python scripts/check_required_test_paths.py ci paths.xml
+```
+
+Unrelated optional skips remain visible/allowed. Required-path checks and report
+uploads run after failures too; they do not repair a failed pytest/job verdict.
+The Linux full matrix is Python3.10/3.12; the isolated floor is Python3.10.
+Rust MSRV1.88 and Python3.12 bridge probes run on Windows/Linux. This is the tested
+matrix, not proof of every OS/Python minor. UV cache suffixes separate Python,
+minimum and Rust/OS lanes; dependency-lock inputs remain explicit. Nightly/release
+cache stays disabled. Test artifact names include matrix identity/source SHA and
+stay separate from release `dist` artifacts. JUnit identity checks are not signed
+build provenance, malicious-test protection or runtime correctness certification.
+
 ## Review checklist and evidence
 
 Use the [2026-10-16 detailed checklist](mudplot_review_checklist_detailed_2026-10-16.md)

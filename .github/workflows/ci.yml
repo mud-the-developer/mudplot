@@ -26,6 +26,7 @@ jobs:
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
           python-version: ${{ matrix.python-version }}
+          cache-suffix: python-${{ matrix.python-version }}
           cache-dependency-glob: "uv.lock"
       - name: Audit all committed Python dependency locks
         if: matrix.python-version == '3.12'
@@ -69,7 +70,23 @@ jobs:
       - name: Pyright
         run: uv run pyright
       - name: Pytest
-        run: uv run pytest -q --durations=25
+        run: >-
+          uv run pytest -q --durations=25
+          --junitxml=ci-results-${{ matrix.python-version }}.xml
+      - name: Required browser and TeX paths executed
+        if: always()
+        run: >-
+          uv run --no-sync python
+          scripts/check_required_test_paths.py ci
+          ci-results-${{ matrix.python-version }}.xml
+      - name: Retain Python test outcomes including skips
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: >-
+            test-results-python-${{ matrix.python-version }}-${{ github.sha }}
+          path: ci-results-${{ matrix.python-version }}.xml
+          if-no-files-found: error
       - name: Optional table adapters with real libraries
         if: matrix.python-version == '3.12'
         run: |
@@ -112,6 +129,7 @@ jobs:
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
           python-version: "3.10"
+          cache-suffix: minimum-python-3.10
           cache-dependency-glob: |
             uv.lock
             scripts/check_minimum_versions.py.lock
@@ -138,9 +156,23 @@ jobs:
           rm tectonic.tar.gz
           tectonic --version
       - name: Minimum render dependency contract
+        env:
+          PYTEST_ADDOPTS: "--junitxml=minimum-results.xml"
         run: >-
           uv run --python 3.10 --locked --script
           scripts/check_minimum_versions.py
+      - name: Required minimum TeX paths executed
+        if: always()
+        run: >-
+          uv run --no-sync python
+          scripts/check_required_test_paths.py minimum minimum-results.xml
+      - name: Retain minimum test outcomes including skips
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: test-results-minimum-${{ github.sha }}
+          path: minimum-results.xml
+          if-no-files-found: error
 
   rust-editor:
     runs-on: ${{ matrix.os }}
@@ -159,6 +191,7 @@ jobs:
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
           python-version: "3.12"
+          cache-suffix: rust-${{ matrix.os }}-python-3.12
           cache-dependency-glob: "uv.lock"
       - run: uv sync --locked --extra all
       - name: Rust 1.88 MSRV

@@ -18,6 +18,34 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 69차 — 필수browser/TeX실행gate와matrix/순서증거
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-ci-paths-drubgwvw`와
+  [도구유무/실제JUnit/병렬matrix](review_evidence/ci_path_matrix_verification.json)을 보존합니다.
+- 선택pytest는도구가없으면정상skip/exit0일수있습니다. Privatechild만실제Playwrightlaunch를
+  없는exe로유도/TeX탐색을숨긴경우3skip/pytest0였고새requiredgate는exit1로거절했습니다.
+  바이너리를실제제거하거나가짜도구버전을성공으로보지않았습니다. 도구present는browserlegend/
+  nativePGF/Tectonic/pdflatex+BibTeX/LuaLaTeX+BibTeX/LuaLaTeX+biber6개실행통과입니다.
+- `check_required_test_paths.py`는ci3/minimum2/tex3/release6의고정JUnitidentity가한번passed여야
+  합니다. Missing/skip/xfail/fail/중복/없거나깨진report는실패하고무관한optional skip은허용합니다.
+  Reader는64MiB/UTF-8(BOM허용)/NUL·DTD·entity금지이며XML진단은이경계와회귀로고쳤습니다.
+  새로운dependency/Any/ignore로숨기지않고activeLSP3경로clean을확인했습니다.
+- Workflow는JUnit과실패사유를always검사/보관하되실패job을성공으로복구하지않습니다.
+  MatrixPython/sourceSHA이름으로report/UVcache접미사를분리했고nightly/releasecacheoff와
+  permissions/events/need-build/publishguard는그대로입니다. 기존pinnedartifactaction만재사용했습니다.
+  Pinnedsetup-uvmetadata의cacheinput을검사했지thirdparty전체구현/서명provenance인증은아닙니다.
+- 별도process의원순서/seed52673변경순서는같은41ID/다른order로각41pass/0skip였고temp/font/
+  report가분리됐습니다. 임의순서/동일Storethread/Mpl병렬안전전체를보장하지않습니다. Monitor3/4의
+  0line launchererror는결과가아니며나중정상bash실험receipt만계산했습니다.
+- 새20/관련37통과·floor20/3190deselected/경고13·actual6/4profilegate0·2×41pass·품질10명령exit0,
+  Ruff263/양platformtype/생성계약/packaging가맞습니다. 13은모두3종Pyparsing,YAML은0error와
+  기존7warning(documentstart/GHAon/comment)을구분합니다. 새검사script/TESTS추가외lock변경없습니다.
+- 실제d221CI39201840394ALL5SUCCESS를확인했습니다. 3.12는3956pass/46skip뒤optional243pass,
+  floor는3145pass/37skip이며원인/구버전nightly3pass+Tectonic1skip을구분합니다. 이로이전046/
+  checkpoint전체를확인했지만새JUnitgate가그때실행됐다고소급하지않습니다.
+- CI-02/06은이source/실험범위PASS입니다. 대기문서+CI변화를함께게시해새전체CI를받고CI-01/
+  공급망/릴리스gates·버전/의존성/lock/tag/배포·loop1은유지합니다. JUnit은악성test방어/출처서명이아닙니다.
+
 ## 68차 — 문서정합/API변화/증거수준의작성자검토
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-doc-review-hdbzn_ev`와
@@ -1844,11 +1872,11 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PKG-08 | P1 | PASS | source-tree 편집기의 실행 안내 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-09 | P1 | PASS | lock·빌드 격리·설치 재현 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | CI-01 | P0 | RUNNING | 표준 검사 실제 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-02 | P1 | OPEN | 브라우저·TeX skip 가시성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-02 | P1 | PASS | 브라우저·TeX skip 가시성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-03 | P1 | OPEN | 속성 기반 상태 테스트 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-04 | P1 | OPEN | golden image의 역할과 오차 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-05 | P1 | OPEN | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-06 | P1 | OPEN | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-06 | P1 | PASS | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-07 | P0 | DEFERRED | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-08 | P1 | OPEN | 체크섬·OIDC provenance 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-09 | P1 | OPEN | 공급망 권한·실패 정책 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
@@ -1861,7 +1889,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 129, RUNNING 6, OPEN 14, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 131, RUNNING 6, OPEN 12, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

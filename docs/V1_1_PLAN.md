@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 69 makes required optional-tool execution visible and fail closed.**
+Local optional fixtures still skip, but fixed JUnit required paths must pass once
+for CI/minimum/TeX/release profiles. Missing/skip/xfail/failure/duplicate or malformed
+report cannot green the gate. UTF-8/64MiB/NUL/DTD/entity bounds protect the reader.
+Always diagnostic uploads do not repair failed jobs; profiles/artifacts/cache
+namespaces are distinct and release/event/permission guards are unchanged.
+
+Controlled absence yields3skips/pytest0/gate1; actual browser/PGF/four TeX routes
+6pass/all4profiles0. Concurrent original/shuffled lanes each41pass/same IDs/new
+order; no arbitrary-order or thread-safety guarantee.20new/37related/floor20/
+3190deselected/13Pyparsing warnings and10checks pass, activeLSP3clean.
+[Evidence](review_evidence/ci_path_matrix_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS131/RUNNING6/OPEN12/DEFERRED1**. Exactd221CI39201840394ALL5SUCCESS
+validates prior layer/checkpoint runtime, not this new gate; publish queued docs+
+CI controls for fresh whole CI. No version/dependency/lock/tag/deploy changes.
+
+### Earlier review phase 68
+
 **Review phase 68 reconciles paired docs and current author-review evidence.**
 READMEs now qualify finite patterns/resource bounds/checkpoint scope and explicitly
 close caller-owned save Figures in executable examples. The provenance recipe's
