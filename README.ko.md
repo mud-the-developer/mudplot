@@ -225,6 +225,7 @@ Unreleased robust/logistic/LOWESS는 이 source tree의 `pip install '.[regressi
 전체RAM/CPU/sandbox보장이아니며[호환성](docs/COMPATIBILITY.ko.md)/[보안범위](SECURITY.ko.md)를
 확인하세요. 현재checkout의계약이지공개v1.0.0wheelbytes를소급변경한것은아닙니다.
 [현재작성자검토](docs/REVIEW_DECISION.md)는API추가/남은releasegate를기록하며release승인이아닙니다.
+[실측성능안내](docs/PERFORMANCE.ko.md)는API/editor/child비용·history·명시집계를구분하며streaming/SLA약속이아닙니다.
 
 검사 명령, 브라우저/TeX 설정, 스키마 재생성 방법은
 [`CONTRIBUTING.ko.md`](CONTRIBUTING.ko.md)를 참고하세요.

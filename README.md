@@ -243,6 +243,8 @@ These are not total RAM/CPU/sandbox guarantees; see [compatibility](docs/COMPATI
 and [security scope](SECURITY.md). They describe this checkout, not retroactively
 changed bytes of the published v1.0.0 wheel. [Current author review](docs/REVIEW_DECISION.md)
 records API additions and missing release gates; it is not release approval.
+[Measured performance guidance](docs/PERFORMANCE.md) separates API/editor/child
+costs, history tradeoffs and explicit aggregation from a streaming/SLA promise.
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for checks, browser/TeX setup, and
 schema regeneration.

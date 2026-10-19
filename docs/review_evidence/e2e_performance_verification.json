@@ -1,0 +1,743 @@
+{
+  "source_sha256": {
+    "docs/PERFORMANCE.md": "833e1d870e885f2822fd03e9afa0549aa38f00d09855d53dbc1483e43384d3ce",
+    "docs/PERFORMANCE.ko.md": "e5684947d33ae09832b5c282bc3e7d950f5415a9cb5078c8c40206583dd1846e",
+    "README.md": "4d9d8a7233e0e92475667715216e787bd3ccf00e4547252bf2cc18aa86dc5526",
+    "README.ko.md": "14ba50794d2c06fb9fe9764690f76c9d4b2d871b2a69ff78759eae709c4d3051",
+    "docs/COMPATIBILITY.md": "56cd8d73e003edb7c0553c92f1fa1f006589300e135140f1fa5478a982915502",
+    "docs/COMPATIBILITY.ko.md": "95a73a8515a4aafc0054b75f4b8e623fa9c358332577a741cefbe0819009b1dc",
+    "tests/test_review_performance_guidance.py": "9997edf389984f1f7f87c9fdb2589c0ea6e4d36cec3f0957c94edf3110222014",
+    "tests/test_review_ci_effects.py": "3418365a656303dafd9ff3ed98df166708631ef3b5d6847acd564dd4b9b34da7",
+    "scripts/check_minimum_versions.py": "6b77e768ca905a330e0028deb759e715ba265c07a28c9abdadb456e3fd0ca152",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/validate.py": "376e3d880fbdf45fe7e0592d1b1d352197fd78456f467d8231c4ca30b068d8c0",
+    "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18"
+  },
+  "observed_code": {
+    "git_head": "21d678382d13d45c689587d2c3c9b23433c442ff",
+    "source_sha256": {
+      "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+      "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+      "mudplot/spec.py": "5fccfe3e1abf0ded55543b5e9a4d5bbb9828feca01f24f49132ab6a5bac33609",
+      "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+      "mudplot/validate.py": "376e3d880fbdf45fe7e0592d1b1d352197fd78456f467d8231c4ca30b068d8c0",
+      "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+      "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+      "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f",
+      "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+      "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f"
+    },
+    "environment": {
+      "python": "3.12.15",
+      "system": "Windows",
+      "release": "11",
+      "machine": "AMD64",
+      "versions": {
+        "mudplot": "1.0.0",
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1"
+      }
+    }
+  },
+  "e2e_cases": [
+    {
+      "rows": 1000,
+      "data_columns": 3,
+      "source_json_bytes": 59898,
+      "source_sha256": "624247c82b5a3283ae11194fddde72b574edbc2fdd9baae80e2381c84fbfbe1f",
+      "cold_api": {
+        "module_import_ms": 596.8456999980845,
+        "first_public_save_close_ms": 537.6365999691188,
+        "script_start_to_first_output_ms": 1146.686399995815,
+        "scope": "Freshprocess andownedemptyfontcache,interpreterlaunchbeforePythonstatementnotincluded."
+      },
+      "direct_components": {
+        "spec_to_json": {
+          "samples": 100,
+          "median_ms": 1.6255499795079231,
+          "p95_nearest_rank_ms": 1.9220999674871564,
+          "max_ms": 2.2496000165119767
+        },
+        "json_to_spec": {
+          "samples": 100,
+          "median_ms": 2.975700015667826,
+          "p95_nearest_rank_ms": 3.463699948042631,
+          "max_ms": 3.748199960682541
+        },
+        "pure_reduce_title": {
+          "samples": 100,
+          "median_ms": 0.4078000201843679,
+          "p95_nearest_rank_ms": 0.4768000217154622,
+          "max_ms": 0.798800028860569
+        },
+        "validation_only": {
+          "samples": 100,
+          "median_ms": 0.013049982953816652,
+          "p95_nearest_rank_ms": 0.01750001683831215,
+          "max_ms": 0.027699978090822697
+        },
+        "defensive_store_snapshot": {
+          "samples": 100,
+          "median_ms": 0.40569997509010136,
+          "p95_nearest_rank_ms": 0.41660002898424864,
+          "max_ms": 0.7260999991558492
+        }
+      },
+      "direct_reduce_public_png_save_close_read": {
+        "samples": 5,
+        "median_ms": 530.330200039316,
+        "p95_nearest_rank_ms": 538.747799990233,
+        "max_ms": 538.747799990233
+      },
+      "cli_new_process_trials": [
+        {
+          "trial": 0,
+          "cache": "new-interpreter/disk-font-cold",
+          "capabilities": [
+            908.6663000052795,
+            65727,
+            0
+          ],
+          "apply": [
+            1700.2508000005037,
+            0,
+            85
+          ],
+          "render_preview": [
+            2743.8185999635607,
+            0,
+            79
+          ]
+        },
+        {
+          "trial": 1,
+          "cache": "new-interpreter/disk-font-warm",
+          "capabilities": [
+            1681.1446000356227,
+            65727,
+            0
+          ],
+          "apply": [
+            1683.166800008621,
+            0,
+            85
+          ],
+          "render_preview": [
+            2551.2247000006028,
+            0,
+            79
+          ]
+        },
+        {
+          "trial": 2,
+          "cache": "new-interpreter/disk-font-warm",
+          "capabilities": [
+            1711.5741999587044,
+            65727,
+            0
+          ],
+          "apply": [
+            1677.9137999983504,
+            0,
+            85
+          ],
+          "render_preview": [
+            2552.678100008052,
+            0,
+            79
+          ]
+        }
+      ],
+      "editor_paths": [
+        {
+          "path": "python-editor",
+          "startup_to_ready_ms": 2303.2616000273265,
+          "python_worker_phases": {
+            "import_ms": 100.36340000806376,
+            "default_session_preview_ms": 1010.9492000192404,
+            "bind_ms": 5.047099955845624
+          },
+          "first_source_open_ms": 537.6622999901883,
+          "warm_post_to_html": {
+            "samples": 5,
+            "median_ms": 540.8334999810904,
+            "p95_nearest_rank_ms": 546.532100008335,
+            "max_ms": 546.532100008335
+          },
+          "warm_png_fetch": {
+            "samples": 5,
+            "median_ms": 16.618499998003244,
+            "p95_nearest_rank_ms": 20.430699980352074,
+            "max_ms": 20.430699980352074
+          },
+          "warm_post_plus_fetch": {
+            "samples": 5,
+            "median_ms": 560.9888999606483,
+            "p95_nearest_rank_ms": 564.8061000392772,
+            "max_ms": 564.8061000392772
+          },
+          "responses": [
+            {
+              "form_bytes": 34,
+              "html_bytes": 25289,
+              "png_bytes": 28936,
+              "pixel_sha256": "9d3416ef71587c47873e9a205701131b958f5a4daa521dfdabac326e96a5ebd6"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25452,
+              "png_bytes": 28786,
+              "pixel_sha256": "ecc437b3fc6d17e3429deb6f2885006089f88e9d32074000b09c5bd0a5935651"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25615,
+              "png_bytes": 28924,
+              "pixel_sha256": "d45b7a8fc61c25ef5c000b00ad9cdc402af6e18a88fbae3eb456df35993283d0"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25778,
+              "png_bytes": 28935,
+              "pixel_sha256": "c5e37877b240940f050424fc9bffe466440b81a6d0f58af404c7dc8b0f75c5b4"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25941,
+              "png_bytes": 28863,
+              "pixel_sha256": "8769f4b41577648304091313f94d58f84fd0a2636d262ad5c945704bf1ffcb4e"
+            }
+          ],
+          "failure_recovery": {
+            "rejected_ms": 18.131399992853403,
+            "next_valid_post_ms": 536.4140999736264,
+            "state_and_cache_preserved": true
+          },
+          "scope": "Freshserver/default-preview startup. Warm means server/disk-font-cachewarm;Rust stillstarts2Pythonchildrenpervalidaction. HTTPincludesnewlocalconnection+HTML+PNGbytesnotDOMpaint. Requestpixel/stateequivalenceassertedoutsidebench-timer."
+        },
+        {
+          "path": "rust-editor",
+          "startup_to_ready_ms": 4277.045199996792,
+          "python_worker_phases": null,
+          "first_source_open_ms": 1804.3137000058778,
+          "warm_post_to_html": {
+            "samples": 5,
+            "median_ms": 4199.421499972232,
+            "p95_nearest_rank_ms": 4225.969900027849,
+            "max_ms": 4225.969900027849
+          },
+          "warm_png_fetch": {
+            "samples": 5,
+            "median_ms": 15.265499998349696,
+            "p95_nearest_rank_ms": 23.28630001284182,
+            "max_ms": 23.28630001284182
+          },
+          "warm_post_plus_fetch": {
+            "samples": 5,
+            "median_ms": 4215.182999963872,
+            "p95_nearest_rank_ms": 4241.2354000261985,
+            "max_ms": 4241.2354000261985
+          },
+          "responses": [
+            {
+              "form_bytes": 34,
+              "html_bytes": 203349,
+              "png_bytes": 28936,
+              "pixel_sha256": "9d3416ef71587c47873e9a205701131b958f5a4daa521dfdabac326e96a5ebd6"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 203349,
+              "png_bytes": 28786,
+              "pixel_sha256": "ecc437b3fc6d17e3429deb6f2885006089f88e9d32074000b09c5bd0a5935651"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 203349,
+              "png_bytes": 28924,
+              "pixel_sha256": "d45b7a8fc61c25ef5c000b00ad9cdc402af6e18a88fbae3eb456df35993283d0"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 203349,
+              "png_bytes": 28935,
+              "pixel_sha256": "c5e37877b240940f050424fc9bffe466440b81a6d0f58af404c7dc8b0f75c5b4"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 203349,
+              "png_bytes": 28863,
+              "pixel_sha256": "8769f4b41577648304091313f94d58f84fd0a2636d262ad5c945704bf1ffcb4e"
+            }
+          ],
+          "failure_recovery": {
+            "rejected_ms": 1645.2467999770306,
+            "next_valid_post_ms": 4241.871599981096,
+            "state_and_cache_preserved": true
+          },
+          "scope": "Freshserver/default-preview startup. Warm means server/disk-font-cachewarm;Rust stillstarts2Pythonchildrenpervalidaction. HTTPincludesnewlocalconnection+HTML+PNGbytesnotDOMpaint. Requestpixel/stateequivalenceassertedoutsidebench-timer."
+        }
+      ],
+      "notes": "Direct public save includesatomicfilesystem/read; editorpreviewbuffer+HTML/HTTP differs. Componentsareseparate/overlappingprobes,notsummablebreakdown. Fivehighcostsamplesp95isobservedmaxnotstabletail. No source clipping/historycut/downsample/newtelemetry/runtimechange."
+    },
+    {
+      "rows": 10000,
+      "data_columns": 3,
+      "source_json_bytes": 581380,
+      "source_sha256": "0bfb25c52ea77c0957d5cbde959e3984b9b65af4d245d18804c53632f504d489",
+      "cold_api": {
+        "module_import_ms": 594.2577999667265,
+        "first_public_save_close_ms": 555.3836999461055,
+        "script_start_to_first_output_ms": 1215.441899956204,
+        "scope": "Freshprocess andownedemptyfontcache,interpreterlaunchbeforePythonstatementnotincluded."
+      },
+      "direct_components": {
+        "spec_to_json": {
+          "samples": 100,
+          "median_ms": 15.413699991768226,
+          "p95_nearest_rank_ms": 16.106099996250123,
+          "max_ms": 16.777500044554472
+        },
+        "json_to_spec": {
+          "samples": 100,
+          "median_ms": 18.2465499965474,
+          "p95_nearest_rank_ms": 19.173900014720857,
+          "max_ms": 20.680900022853166
+        },
+        "pure_reduce_title": {
+          "samples": 100,
+          "median_ms": 3.4267500159330666,
+          "p95_nearest_rank_ms": 4.055499972309917,
+          "max_ms": 4.150399996433407
+        },
+        "validation_only": {
+          "samples": 100,
+          "median_ms": 0.013100041542202234,
+          "p95_nearest_rank_ms": 0.017400016076862812,
+          "max_ms": 0.028699985705316067
+        },
+        "defensive_store_snapshot": {
+          "samples": 100,
+          "median_ms": 3.3790000015869737,
+          "p95_nearest_rank_ms": 3.9742999942973256,
+          "max_ms": 4.294800048228353
+        }
+      },
+      "direct_reduce_public_png_save_close_read": {
+        "samples": 5,
+        "median_ms": 553.4895000164397,
+        "p95_nearest_rank_ms": 556.7986000096425,
+        "max_ms": 556.7986000096425
+      },
+      "cli_new_process_trials": [
+        {
+          "trial": 0,
+          "cache": "new-interpreter/disk-font-cold",
+          "capabilities": [
+            984.0800000238232,
+            65727,
+            0
+          ],
+          "apply": [
+            1805.7578000007197,
+            0,
+            86
+          ],
+          "render_preview": [
+            2826.5257999883033,
+            0,
+            80
+          ]
+        },
+        {
+          "trial": 1,
+          "cache": "new-interpreter/disk-font-warm",
+          "capabilities": [
+            1741.2557000061497,
+            65727,
+            0
+          ],
+          "apply": [
+            1784.0178000042215,
+            0,
+            86
+          ],
+          "render_preview": [
+            2636.7443000199273,
+            0,
+            80
+          ]
+        },
+        {
+          "trial": 2,
+          "cache": "new-interpreter/disk-font-warm",
+          "capabilities": [
+            1770.5871999496594,
+            65727,
+            0
+          ],
+          "apply": [
+            1769.3161999923177,
+            0,
+            86
+          ],
+          "render_preview": [
+            2619.4937000400387,
+            0,
+            80
+          ]
+        }
+      ],
+      "editor_paths": [
+        {
+          "path": "python-editor",
+          "startup_to_ready_ms": 2304.4779000338167,
+          "python_worker_phases": {
+            "import_ms": 99.8548999777995,
+            "default_session_preview_ms": 1004.428000014741,
+            "bind_ms": 4.802699957508594
+          },
+          "first_source_open_ms": 597.9575000237674,
+          "warm_post_to_html": {
+            "samples": 5,
+            "median_ms": 576.5201000031084,
+            "p95_nearest_rank_ms": 585.8116999734193,
+            "max_ms": 585.8116999734193
+          },
+          "warm_png_fetch": {
+            "samples": 5,
+            "median_ms": 20.63149999594316,
+            "p95_nearest_rank_ms": 23.17060000495985,
+            "max_ms": 23.17060000495985
+          },
+          "warm_post_plus_fetch": {
+            "samples": 5,
+            "median_ms": 597.1515999990515,
+            "p95_nearest_rank_ms": 608.9156999951228,
+            "max_ms": 608.9156999951228
+          },
+          "responses": [
+            {
+              "form_bytes": 34,
+              "html_bytes": 25289,
+              "png_bytes": 8013,
+              "pixel_sha256": "3725f45e5884f99900501dcb2a028ac3c0862b3e5f508d26a03598a4ba54baf8"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25452,
+              "png_bytes": 7869,
+              "pixel_sha256": "068c911aec40af3310035263918d1d91f9611f514c5f9d4d4d9b47599690b71c"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25615,
+              "png_bytes": 7997,
+              "pixel_sha256": "3878cf006d61c18e352e2dc584c84b65477a6abea0e7ef9b5865fc8fce169a31"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25778,
+              "png_bytes": 8000,
+              "pixel_sha256": "b6a5019815ef04879fee2ef2bcb912abf069b9e6877e11a4a40fdefa5c58e552"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 25941,
+              "png_bytes": 7938,
+              "pixel_sha256": "86903b6108db61ac7e049152053286ae17b60cc99303bdadf88a13e4945c85de"
+            }
+          ],
+          "failure_recovery": {
+            "rejected_ms": 18.51990004070103,
+            "next_valid_post_ms": 559.6017999923788,
+            "state_and_cache_preserved": true
+          },
+          "scope": "Freshserver/default-preview startup. Warm means server/disk-font-cachewarm;Rust stillstarts2Pythonchildrenpervalidaction. HTTPincludesnewlocalconnection+HTML+PNGbytesnotDOMpaint. Requestpixel/stateequivalenceassertedoutsidebench-timer."
+        },
+        {
+          "path": "rust-editor",
+          "startup_to_ready_ms": 4288.4604999562725,
+          "python_worker_phases": null,
+          "first_source_open_ms": 2009.7127999761142,
+          "warm_post_to_html": {
+            "samples": 5,
+            "median_ms": 4417.498700029682,
+            "p95_nearest_rank_ms": 4550.99409999093,
+            "max_ms": 4550.99409999093
+          },
+          "warm_png_fetch": {
+            "samples": 5,
+            "median_ms": 13.890700007323176,
+            "p95_nearest_rank_ms": 16.848400002345443,
+            "max_ms": 16.848400002345443
+          },
+          "warm_post_plus_fetch": {
+            "samples": 5,
+            "median_ms": 4431.3894000370055,
+            "p95_nearest_rank_ms": 4561.570499965455,
+            "max_ms": 4561.570499965455
+          },
+          "responses": [
+            {
+              "form_bytes": 34,
+              "html_bytes": 1822313,
+              "png_bytes": 8013,
+              "pixel_sha256": "3725f45e5884f99900501dcb2a028ac3c0862b3e5f508d26a03598a4ba54baf8"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 1822313,
+              "png_bytes": 7869,
+              "pixel_sha256": "068c911aec40af3310035263918d1d91f9611f514c5f9d4d4d9b47599690b71c"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 1822313,
+              "png_bytes": 7997,
+              "pixel_sha256": "3878cf006d61c18e352e2dc584c84b65477a6abea0e7ef9b5865fc8fce169a31"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 1822313,
+              "png_bytes": 8000,
+              "pixel_sha256": "b6a5019815ef04879fee2ef2bcb912abf069b9e6877e11a4a40fdefa5c58e552"
+            },
+            {
+              "form_bytes": 34,
+              "html_bytes": 1822313,
+              "png_bytes": 7938,
+              "pixel_sha256": "86903b6108db61ac7e049152053286ae17b60cc99303bdadf88a13e4945c85de"
+            }
+          ],
+          "failure_recovery": {
+            "rejected_ms": 1841.0386000177823,
+            "next_valid_post_ms": 4403.463100024965,
+            "state_and_cache_preserved": true
+          },
+          "scope": "Freshserver/default-preview startup. Warm means server/disk-font-cachewarm;Rust stillstarts2Pythonchildrenpervalidaction. HTTPincludesnewlocalconnection+HTML+PNGbytesnotDOMpaint. Requestpixel/stateequivalenceassertedoutsidebench-timer."
+        }
+      ],
+      "notes": "Direct public save includesatomicfilesystem/read; editorpreviewbuffer+HTML/HTTP differs. Componentsareseparate/overlappingprobes,notsummablebreakdown. Fivehighcostsamplesp95isobservedmaxnotstabletail. No source clipping/historycut/downsample/newtelemetry/runtimechange."
+    }
+  ],
+  "checkpoint_source_identity": "StorecurrentSHAmatcheshistory_improvement_verificationactualbefore-after/memory/contractsandD221wholeCIpassed.No newoptimizationoroldmetricrefreshclaim.",
+  "supported_workload_decision": "Paper-orientedinline1000/10000raw-line3columnfixtures/shortfive-titleactionscompleted.Sourceandpreviewpixelsverifiedwithinvalid\u2192validrecovery.Notstreaming/million-rowpromise.Specifictypedusable-row/group/algorithmcapsstillapply.Full-specsnapshot/transportcostisnotremovedbyonecheckpoint.",
+  "cost_scope": "100componentrepeats,3freshCLIprocessgrouptrials,5API/HTTPeffectsamples. Nearest-rankp95offivesamplesisobservedmax/notstabletail. Directsaveincludesatomicfilesystem/close/read;HTTPbuffer+HTML+PNGfetchnotDOMpaint.Componentsareindependentoverlappingprobes,notsummableaccounting.RustvalidUIactionsourcecallsapply+render2freshPythonchildren;server/diskfontwarm!=childimportsWarm.",
+  "cold_scope": "Ownedemptyfontcachedirsperfreshcase/API/Pythonserver/Rust/CLIpaths,notusercachepurge.APIcoldscriptclockexcludesinterpreterlaunchbeforefirststatement.Serverstartupincludesdifferentdefault-previewwork/readinesspoll<=50ms;firstsourceopenseparate.NativeCLIprobesincludeconfiguredvenvprocesslaunch/exit/import/I/O.",
+  "failure_scope": "Initialprivateprobeusedguessed/nonexistentRust/ui_actionandfailedHTTP404;ownedprocessescleanedandownedattemptfolderarchived.Notusedastimingproof.Fixedexactsource/control/titlethenranfreshcase/fontdirs. FinalonlycompletepercaseJSONused.No new runtime telemetry/route/header/productfeatures.",
+  "guidance": "Explicitconsecutiveblockmeanrecipekeepsn/original,notuniversaldownsamplingorrawCIequivalence;data-store/specsplitisfollowupdesignonlyifrealcopy/transportbottleneckjustifieslifecycle/export/cachecontracts.Nosilentdrops/historycut/immutablerewrite.",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "environment_overrides": {
+    "e2e-cases": {
+      "environment": "Fresh1000/10000casePythonprocesses/APIownedfontcache;freshPythonHTTPserverbaseinterpreterwithmatchingvenvsitepackages;nativeRustconfiguredsamevenvPython;sharedfontcacheperpathacrosschildrequests,notsharedimports.",
+      "scope": "4x3in100DPIrawline3columns/5SetTitleactions,100fastcomponentrepeats/3freshCLItrials/5effectsamplep95=observedmax. UIroutesPython/action,Rust/control/title;failedinitial/ui_action404attemptarchived/excluded."
+    },
+    "floor-guidance": {
+      "PYTEST_ADDOPTS": "-k \"test_review_performance_guidance or test_review_history_checkpoint\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "e2e-verification",
+      "argv": [
+        "python",
+        "<evidence>\\verify_cases.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Actual1k/10k API/Python/Rust same states+pixels;100component samples/5warm effect samples/3fresh CLI trials; invalid\u2192valid recovery; process cleanup and unchanged checkpoint source verified"
+      ],
+      "log_text_sha256": "17f10815fb8a998df400353106301ac7c681f91fb19f2d0b176590167e34b54e"
+    },
+    {
+      "name": "performance-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_performance_guidance.py",
+        "tests/test_review_history_checkpoint.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_history_profile.py",
+        "tests/test_review_doc_contracts.py",
+        "tests/test_review_ci_effects.py",
+        "tests/test_required_test_paths.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "79 passed in 37.39s"
+      ],
+      "log_text_sha256": "ee7a7e9c83f432545393ced1d4939184ff432b0a241002078bf03415b5e348f9"
+    },
+    {
+      "name": "floor-guidance",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "15 passed, 3201 deselected, 13 warnings in 5.91s"
+      ],
+      "log_text_sha256": "34738f6636651061ffcd9d8793055c1bde75d70fce9bb2d9a4f7fdb2afd34211"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "264 files already formatted"
+      ],
+      "log_text_sha256": "287cc8e737362a0fa91b6a1fc144b8698be17ffd396d05aaea1b53764d0eb8e1"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "a1fc4c283efbdfeeb60b6118a31d701ed7615ced69b5f21f644e32556b234dc6"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "6460da5bca6f7bc60d2b65f877fa092404cf89fd9e010dd5881ebce5e94e91a4"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "e2e_case.py": "ccd670cc526b31edd164c011d0d6cc37857327dedacc8da5b8a407e927a64944",
+    "python_server.py": "8cc7e49d52563866a31b7a62b72f03c6a2c956ab3106a61def88bb35c361c557",
+    "verify_cases.py": "116b2e98296dafcd91dc4a380c6735572d266762ba9858cb65bd82c23b5a0d85",
+    "qa.py": "8bd66617cce2bcc558f3619b135127e06f5a32f39a8d92fa1adad647932f30a7",
+    "verified_cases.json": "87ae286d467c1eef2e999a6c35323eaed256e13f44bf36acb27760614870de67",
+    "1000/report.json": "f1695563a88523706112aa2428c43a6fcd62e092ca4c535c4dd7098f5e82618d",
+    "10000/report.json": "8c10d077c6c09607a670229fb0b4864342596d4cf084cac150948b0866e4d76b",
+    "1000/spec.json": "dd7d18b050f6b62f2820cbe4e63f0f353dd19a317edbb86ecf2eac3190ccb5ab",
+    "10000/spec.json": "9a9e591e42dde22048d371d4836d3f5f47e9c4e6d8a1ff19d51db0237c2575e6",
+    "1000/api.png": "833581555d6c6b13d0d1d2a57c74c7dbdff740b107b790ab6cfcdd4484fd1679",
+    "10000/api.png": "66b71baa5ed5ac95776a93e16a3ad3c4cd0492cfff9ac5a746f595745b90a602",
+    "environment_overrides.json": "00ff18c86773d500ea252173fece1f4d38f3e6cfe460cc4572dd42518f386979",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "8dec3e2dae5a32c0cc79302321635caf4e8735d9d30b95cd190ecbc1f797dd15",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  },
+  "ci_command_contract_fix": {
+    "run": 39207855660,
+    "head": "21d678382d13d45c689587d2c3c9b23433c442ff",
+    "python310": "1 failed,3983passed/46skipped;single literal-run assertion. Required real browser/PGF/Tectonic outcomes allpassed,gate correctlyrejects report with ANY failure.",
+    "python312": "cancelled by matrix failfast;notindependentfailureorpass.",
+    "before_test_sha256": "033e8465c75eb993cbcb0711f72e4a8da3a479ce583a28b5006ecf2fafb89ef9",
+    "after_test_sha256": "3418365a656303dafd9ff3ed98df166708631ef3b5d6847acd564dd4b9b34da7",
+    "raw_failure_log_sha256": "d31c8ff3ee332d0b4133081fad1ea4175241b70488e88663ee0527cfa5b02dbf",
+    "fix": "Read actual Pytest step,normalize folded YAML command;keep60min/fullsuite/durations25/JUnitandexplicitlyrejecttestselectors.No workflow/runtime/gateweakening;4CIeffecttestsaddedtominimumrosterandlocalcontract20+4+preflight3=27P,finalconnected79/floor15.",
+    "new_whole_ci_required": true
+  }
+}

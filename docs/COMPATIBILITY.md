@@ -286,6 +286,8 @@ new branches discard a cache beyond their prefix. Custom reducers keep full repl
 and their existing call semantics. No history is cut and no-op/listener/snapshot
 rules change. Retaining one extra supported spec is a memory tradeoff, not a hard
 memory limit; large inline data and long histories still have a performance ceiling.
+[Measured workload guidance](PERFORMANCE.md) separates startup/JSON/render/HTTP
+costs and explicit data reduction from streaming or automatic-history-cut claims.
 `mp.apply()` returns a new result without exposing partial results on failure.
 `Plot.apply()` and `Store.dispatch_all()` are ordered individual dispatches,
 **not batch transactions**. Listeners run after a committed transition; a

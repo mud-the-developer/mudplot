@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Documented measured API/Python/Rust editor costs, explicit aggregation and large
+  workload limits without streaming/SLA or silent history-cut claims. Kept the
+  full-suite CI contract test robust to folded YAML/JUnit command formatting.
 - Made required CI browser/PGF/TeX paths fail on missing/skipped/ambiguous JUnit
   cases while preserving local optional skips. Retain matrix/source-specific
   reports and cache namespaces; bound UTF-8 JUnit input without DTD/entities.

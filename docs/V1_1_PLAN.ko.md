@@ -120,6 +120,22 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰70차에서E2E비용과실제workload범위를분리했습니다.** 동일1k/10krawline/title의spec/
+pixel은같았고warmAPIpublicsave·close·read530/553ms/PythonHTTP+PNG561/597ms/Rust4215/4431ms는
+서로다른경로관찰이지언어/SLA보장이아닙니다.100component/3freshCLI/5고비용표본/colddefault·open은
+분리하고Rust의Pythonchild2회와큰HTML을residentPython과구별했습니다.
+
+[성능안내](PERFORMANCE.ko.md)/[English](PERFORMANCE.md)는명시집계의원본/count/미완료history의
+null시간과streaming/자동절단없음을보존합니다. 기존checkpoint/source/계약으로PERF-05/07/08은
+범위PASS이고관련79/floor15/3201deselected/Pyparsing13경고·품질9명령·activeLSP3clean입니다.
+[근거](review_evidence/e2e_performance_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS134/RUNNING6/OPEN9/DEFERRED1**입니다. 21dCI39207855660은literal-run포맷assert1실패/
+3983통과/필수tool통과·3.12cancel/min·Rust성공으로종료했습니다. 기존test는실제folded명령을읽되
+fullsuite/60분/timing/JUnit/selector금지를유지하도록수정했습니다. Gate/runtime/버전/의존성/lock/
+tag/배포변경없이문서/test수정만게시해새전체CI를받습니다.
+
+### 이전 리뷰69차
+
 **리뷰69차에서필수optional-tool실행을표시하고실패gate로연결했습니다.** Localfixture의skip은
 유지하지만CI/minimum/TeX/release의고정JUnitcase는한번passed여야하고missing/skip/xfail/
 failure/중복/깨진report는실패합니다. Reader64MiB/UTF-8/NUL·DTD·entity경계를두고alwaysdiagnostic

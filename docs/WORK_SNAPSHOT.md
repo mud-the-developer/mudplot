@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest bounded same-data API/Python/Rust cold/warm/component probes plus explicit
+  aggregation/history guidance make PERF-05/07/08 PASS in scope.79related/floor15
+  passes preserve semantics/source/pixels; no streaming/SLA or new optimization.
+  21dCI failed one old literal-command-format test; corrected test keeps whole-suite,
+ 60min/timing/JUnit/no-selector contract. Oldfailure/3.12cancel remain recorded.
+
 - Latest required browser/TeX JUnit paths and matrix/ordering evidence make
   CI-02/06 PASS in scope.20new/37related/floor20pass; controlled absence is3SKIP/
   pytest0/gate1, real6paths pass and2x41original/shuffled cases agree. Reader bounds,
@@ -523,7 +529,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   and [interim review](REVIEW_DECISION.md) retain additions/compatibility exceptions/gaps.
 - [CI path/matrix evidence](review_evidence/ci_path_matrix_verification.json)
   separates real passes, tool-absence skips, required-case failures and job scopes.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS131/RUNNING6/OPEN12/
+- [E2E performance evidence](review_evidence/e2e_performance_verification.json)
+  and [workload guide](PERFORMANCE.md) separate startup/JSON/render/HTTP/cache scopes.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS134/RUNNING6/OPEN9/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

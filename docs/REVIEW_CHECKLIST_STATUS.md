@@ -18,6 +18,35 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 70차 — API/Python/Rust비용과대형지원범위·CI명령검사보존
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-e2e-costs-azds8gdv`와
+  [동일state/pixel/cold-warm/component](review_evidence/e2e_performance_verification.json),
+  [성능안내](PERFORMANCE.ko.md)/[English](PERFORMANCE.md)를 보존합니다.
+- 같은4×3inch/100DPIrawline3columns/1k·10k행/제목action5개를directAPI·Pythonform·Rusttitleform에
+  적용했습니다. 최종spec와previewpixels가같고invalidlayout뒤validaction도state/cache를보존합니다.
+  WarmAPI(publicatomicPNGsave·close·read)는median530/553ms,PythonHTTP+PNGfetch561/597ms,
+  Rust4215/4431ms였습니다. 표본5의nearestp95는관찰max이지안정적tail/SLA가아닙니다.
+- 100회JSONencode/decode/reduce/snapshot/validation,3회freshCLIcontext를별도로측정했습니다.
+  Rust는정상action마다apply+renderPythonchild2개이며HTML은1k/10k203KB/1.82MB(Python25KB)
+  였습니다. APIfilesystem/HTTPbuffer/DOMpaint·colddefault준비/첫open·중첩component를섞어
+  합산하지않고privatefontcache/설정인터프리터/관찰poll지연을기록했습니다. 추정/ui_action404첫시도는
+  폐기하고실제/control/title로새cold디렉터리에서완료한결과만사용했습니다.
+- 이미측정·검증한단일checkpoint의replay/memory/state/listener/noop/실패계약sourceSHA는현재와같습니다.
+  싼rawvalidation을삭제할이유가없고streaming/immutable/zero-copy필수주장을하지않았습니다.
+  큰100k×긴history의budget미완료는undo·redo=null로남기며domain명시집계는원본/count와
+  달라진관측의미를보존합니다. 후속data/spec분리는실제병목이증명됐을때의설계경계입니다.
+- 기준21dCI39207855660은3.10의기존literal `run: uv run pytest...` assertion1개로실패했습니다.
+  3983case/필수실제browser·PGF·Tectonic은통과했고strictgate가전체failure를거절한것이맞습니다.
+  YAMLfolded명령/JUnit추가를step단위로읽도록기존test만고쳤고60분/fullsuite/durations25/JUnit/
+  selector금지는유지합니다. 4CI효과tests도minimum에포함했으며gate/runtime/workflow를느슨하게하지않았습니다.
+- 새집계문서2·관련79통과·floor15/3201deselected/경고13·1k/10kE2E/100component/3CLI/5warm·
+  양platformtype/Ruff264/생성계약/packaging9명령exit0·변경3경로activeLSPclean입니다.
+  13은모두3종Pyparsing이고snapshot/성능source/실패CIlogSHA를분리합니다. PERF-05/07/08은
+  이범위PASS이며긴native세션PERF-04/전체CPU·memory보장으로올리지않습니다.
+- 기준21dCI는3.10실패/3.12cancelled/최소환경·양Rust성공으로종료됐지성공으로변경하지않습니다.
+  문서/CItest수정만게시해새전체CI를받고runtime/버전/의존성/lock/tag/배포·loop1경계는유지합니다.
+
 ## 69차 — 필수browser/TeX실행gate와matrix/순서증거
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-ci-paths-drubgwvw`와
@@ -1858,10 +1887,10 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PERF-02 | P1 | PASS | 데이터 크기×이력 길이 matrix | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-03 | P1 | PASS | deep copy의 실제 프로파일 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-04 | P1 | RUNNING | 장시간 세션의 자원 증가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-05 | P1 | OPEN | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-05 | P1 | PASS | Python/Rust end-to-end 비교 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PERF-06 | P1 | PASS | 동시 render의 격리 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-07 | P2 | OPEN | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
-| PERF-08 | P2 | OPEN | 대형 데이터 지원 범위의 명문화 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-07 | P2 | PASS | 작은 최적화부터 평가 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
+| PERF-08 | P2 | PASS | 대형 데이터 지원 범위의 명문화 | mudplot/store.py; reducer.py; _render.py | workload measurements not run |
 | PKG-01 | P0 | PASS | 깨끗한 wheel의 코어 독립성 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-02 | P1 | PASS | optional extras의 기능 경계 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | PKG-03 | P0 | PASS | sdist와 wheel 내용·메타데이터 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
@@ -1889,7 +1918,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 131, RUNNING 6, OPEN 12, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 134, RUNNING 6, OPEN 9, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

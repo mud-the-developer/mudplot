@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신동일데이터API/Python/Rustcold·warm·component/명시집계·history안내로PERF-05/07/08은
+  범위PASS입니다. 관련79/floor15가의미/source/pixel을보존하며streaming/SLA/새최적화는없습니다.
+  21dCI의literal명령포맷test1실패는whole-suite/60분/timing/JUnit/selector금지를유지해수정했고
+  기존실패/3.12cancel은그대로기록해새전체CI를받습니다.
+
 - 최신requiredJUnit/browser·TeX/matrix·순서증거로CI-02/06은범위PASS입니다. 새20/관련37/
   floor20과actual6/2×41이맞으며absence3SKIP·pytest0는gate1로거절합니다. Reader경계/분리artifact·
   cache/기존releaseguard유지는서명provenance가아닙니다. 정확한d221CI5job성공으로046/checkpoint를
@@ -436,7 +441,9 @@
   [잠정review](REVIEW_DECISION.md)에API추가/호환예외/남은gate를구분했습니다.
 - [CI경로/matrix 근거](review_evidence/ci_path_matrix_verification.json)에실제통과/
   도구부재skip/필수case실패/job범위를구분했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS131/RUNNING6/OPEN12/DEFERRED1**.
+- [E2E성능 근거](review_evidence/e2e_performance_verification.json)와
+  [workload안내](PERFORMANCE.ko.md)에시작/JSON/render/HTTP/cache범위를구분했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS134/RUNNING6/OPEN9/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

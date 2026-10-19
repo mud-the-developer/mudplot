@@ -124,6 +124,26 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 70 separates E2E costs and documents practical workload scope.**
+Same1k/10k raw-line/title actions retain API/editor specs and PNG pixels. Warm
+API public-save/close/read medians530/553ms, PythonHTTP+PNG561/597ms and Rust
+4215/4431ms are different paths, not a language/SLA claim.100component repeats,
+3freshCLI trials,5high-cost samples and cold default/open stages remain separate;
+Rust's two Python children/action and larger HTML differ from resident Python.
+
+[Guidance](PERFORMANCE.md)/[한글](PERFORMANCE.ko.md) keeps source/counts for explicit
+aggregation, null timings for stopped large histories and no streaming/automatic
+history cut. Existing checkpoint/source/contracts support PERF-05/07/08 PASS.
+79related/floor15passes/3201deselected/13Pyparsing warnings,9checks/activeLSP3clean.
+[Evidence](review_evidence/e2e_performance_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS134/RUNNING6/OPEN9/DEFERRED1**.21dCI39207855660FAILED one old literal-run
+format assertion (3983passed/required tools passed);3.12cancelled,min/Rustpassed.
+The test now reads actual folded command while retaining full-suite/60min/timing/
+JUnit/no-selector constraints. Publish docs/test-only correction for fresh CI,
+without weakening gates or changing runtime/versions/dependencies/locks/tag/deploy.
+
+### Earlier review phase 69
+
 **Review phase 69 makes required optional-tool execution visible and fail closed.**
 Local optional fixtures still skip, but fixed JUnit required paths must pass once
 for CI/minimum/TeX/release profiles. Missing/skip/xfail/failure/duplicate or malformed

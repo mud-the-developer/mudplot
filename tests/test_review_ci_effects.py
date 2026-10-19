@@ -21,7 +21,16 @@ def test_python_matrix_retains_full_suite_with_timeout_headroom_and_timings():
     )[0]
     # Baseline063 exceeded45minutes; measure the full suite instead of dropping tests.
     assert "timeout-minutes: 60" in job
-    assert "run: uv run pytest -q --durations=25" in job
+    step = job.split("- name: Pytest\n", 1)[1].split("\n      - ", 1)[0]
+    command = step.split("run:", 1)[1].strip()
+    if command.startswith(">"):
+        command = command.split("\n", 1)[1]
+    command = " ".join(command.split())
+    assert command.startswith("uv run pytest -q --durations=25 ")
+    assert "--junitxml=ci-results-${{ matrix.python-version }}.xml" in command
+    assert not any(
+        selector in command for selector in (" -k ", " -m ", "--ignore", " tests/")
+    )
 
 
 def test_minimum_suite_has_its_own_finite_job_with_the_same_tex_prerequisites():

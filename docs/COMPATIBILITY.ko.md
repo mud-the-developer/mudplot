@@ -239,6 +239,8 @@ Reduce는 없는 column/matrix 참조를 일시적으로 만들 수 있지만 �
 새branch가cacheprefix아래면폐기하며customreducer는기존fullreplay/호출의미를유지합니다.
 History절단/no-op·listener·snapshot의미변경은없고추가spec한개의메모리tradeoff이지hardmemory
 한도가아닙니다. 큰inline data/긴history의성능상한은여전히남습니다.
+[실측workload안내](PERFORMANCE.ko.md)는시작/JSON/render/HTTP와명시집계를구분하며streaming/
+자동history절단으로대형지원주장을하지않습니다.
 `mp.apply()`는 실패한 중간 결과를 노출하지 않고 새 결과를 반환합니다.
 `Plot.apply()`와 `Store.dispatch_all()`은 순서대로 개별 dispatch하는 것이며
 **batch transaction이 아닙니다**. listener는 commit 이후 실행되고, listener
