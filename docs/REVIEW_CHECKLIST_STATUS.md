@@ -18,6 +18,28 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 59차 — 파일open/실패/export후정상편집회복
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-editor-recovery-6n1ph96d`와
+  [spec/PNG/history·오류·다운로드timeline](review_evidence/editor_recovery_verification.json)을 보존합니다.
+- 실제filepicker로유효A를열어편집후malformedJSON/validJSON의missingcolumnspec을열면
+  기존spec/PNG/history/layout과화면그림은그대로이며오류/draft는보존됩니다. 유효B는fresh
+  history로열리고오류가사라졌습니다. 소스파일A/bad/B의원bytes는마지막까지불변입니다.
+- 실제renderer._save_figure의SVG저장만합성OSError로실패시켜GET/fig.svg의HTTP400/
+  text/html(부분SVG아님)을확인했습니다. 실제render/finallyclose를거쳐기존state/PNG/history/
+  layout/Figure수가보존됐고PNG편집은계속됐습니다. Fault를해제하면SVG200/image/svg+xml의
+  최신title과다운로드specJSON=현재state가맞습니다. 미지원JSONexport/PGFbundle을가정하지않습니다.
+- 새실제browser1·관련229통과/Windows환경6skip(5symlink권한/1POSIXmode)·실제browser4통과/
+  29deselected(no skip)·floor43통과/4symlinkskip/3059deselected/경고13·양platformtype/
+  Ruff249/계약/packaging9명령exit0·변경testactiveLSPclean입니다. 13은모두3종Pyparsing입니다.
+- 최초연결browser실행의Openfiguretimeout은file-read후접힌Opensection을재확인하는기존
+  househelper방식으로보완했습니다. 초기실패log/receipt와최종9명령재실행을구분했고제품
+  commit/drop규칙이나새기능을바꿨다고하지않습니다. UI오류는제출파일path/traceback을
+  불필요하게넣지않았지만EDIT-07의CLI/agent정보정책전체검토까지완료했다고하지않습니다.
+- EDIT-06은현재지원파일/PDF·SVGexport/PNGpreview/JSONdownloadcorpus에서PASS입니다.
+  Runtime/FIND/의존성/버전/lock/tag/배포변경없이newB9CI39178688403을보호해확대검증과
+  함께로컬보존하며응답순서효과의새전체CI·loop1은별도유지합니다.
+
 ## 58차 — DPR/확대preview의drag·키보드·undo/redo
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-scaled-preview-1p1d6dg4`와
@@ -1562,7 +1584,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | EDIT-03 | P1 | PASS | htmx 교체 이후 상태·이벤트 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-04 | P1 | PASS | 지연 응답과 최신 preview | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-05 | P1 | PASS | 두 탭·동시 agent 요청 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
-| EDIT-06 | P1 | OPEN | open·export·실패 후 회복 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
+| EDIT-06 | P1 | PASS | open·export·실패 후 회복 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-07 | P1 | OPEN | 입력 오류의 위치·설명 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-08 | P1 | OPEN | 키보드 접근과 상태 피드백 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
 | EDIT-09 | P1 | OPEN | agent 응답의 기계 판독성 | dashboard/editor_server.py; editor_view.py | test_dashboard_editor.py; test_editor_browser.py |
@@ -1616,7 +1638,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 118, RUNNING 5, OPEN 26, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 119, RUNNING 5, OPEN 25, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

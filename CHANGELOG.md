@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified valid/broken/valid file opening, draft/history/preview preservation and
+  vector-export failure recovery through real browser controls, with unchanged
+  source files and a final state-matching JSON download. No new export format.
 - Verified high-DPI preview dragging and keyboard/undo/redo in actual Chromium
   contexts with emulated DPR, CSS enlargement and visual-viewport scaling, while
   preserving editable DPI, panel state and original coordinate meanings.

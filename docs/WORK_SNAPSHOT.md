@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest valid/bad/valid file and injected SVG-save failure UI sequence preserves
+  cached state/history/draft/resources, then edits/exports/downloads successfully
+  without changing source files.229related/6OSskips,4actualbrowser/floor43passes
+  make EDIT-06 PASS in scope. No runtime change. Scaled+recovery units stay local
+  duringnewB9CI39178688403; broader error/agent policies remain separate.
+
 - Latest3emulated Chromium DPR/CSS/visual-viewport cases preserve high-DPI preview
   data frames/keyboard/focus/undo/redo and600DPIeditable state.178related/8actual
   browser/floorpure7passes make EDIT-02 PASS in scoped emulation, not all hardware.
@@ -431,7 +437,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains request/commit order, allowed outcomes and final cache/spec equivalence.
 - [Scaled-preview evidence](review_evidence/scaled_preview_verification.json)
   retains actual viewport/DPR settings, pointer/data values and original DPI/state.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS118/RUNNING5/OPEN26/
+- [Editor-recovery evidence](review_evidence/editor_recovery_verification.json)
+  retains spec/PNG/history/error hashes, source-file preservation and export recovery.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS119/RUNNING5/OPEN25/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

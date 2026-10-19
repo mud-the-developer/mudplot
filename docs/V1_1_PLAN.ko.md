@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰59차에서실제UI의파일/export회복을검사했습니다.** 유효A→badJSON/invalidspec은
+기존spec/PNG/history/layout과draft를보존하고유효B는freshhistory/오류해제로열렸습니다.
+실제SVG저장경로fault는400HTML이며부분vector가아니고Figure/cache가보존됩니다.
+PNG편집은계속되고fault해제후SVG200/최신title과현재state동일JSON다운로드가맞으며소스파일은불변입니다.
+
+새실제browser1·관련229/Windows6skip·browser4통과/29deselected·floor43통과/4symlinkskip/
+3059deselected/Pyparsing13경고·품질9명령이며초기helpertimeout은별도보존하고file-read후
+section재확인한최종실행과구분했습니다. EDIT-06은지원범위PASS이지새export형식/CLI·agent
+오류정책전체검토는아닙니다. [근거](review_evidence/editor_recovery_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS119/RUNNING5/OPEN25/DEFERRED1**입니다. Runtime없이newB9CI39178688403중확대+
+회복검증을로컬보존하며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰58차
+
 **리뷰58차에서확대/highDPIbrowserdata편집을검사했습니다.** 실제Chromium의DPR1/2·
 CSS125%·CDPvisual-viewport125%를구분해3case에서spec6×3inch/600DPI와preview2000×1000을
 유지했습니다. 선택panel의invertedlog/y2drag·imagefraction키이동이data기대값과맞고focus/

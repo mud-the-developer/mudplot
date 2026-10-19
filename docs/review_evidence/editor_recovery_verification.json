@@ -1,0 +1,323 @@
+{
+  "source_sha256": {
+    "tests/test_review_editor_recovery_browser.py": "4a45a924e287e4252fb69d1eb06c0bb4bf870b83c0c67a5664600c010bfac511",
+    "tests/test_editor_browser.py": "2b865e8edbce7588e2d5b4eeb0932631c84c55adb681dffbbd6481c6afc18691",
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "dashboard/editor_view.py": "d651135d3ae387af651b52b0afe3334020bdf0cddd9d523e8c4b6765ac36a133",
+    "mudplot/_render.py": "769f715eed647bedf246934d2038695562ae39597fa489031e1bcc1ca8209dcb"
+  },
+  "recovery_timeline": {
+    "timeline": [
+      {
+        "stage": "a_edited",
+        "spec_sha256": "7137a1f4491d485d3fe5d1d4ddd3f88647aad84df6be5e0a5e822cb35011d615",
+        "png_sha256": "8390a5df5f969c0a654586e077bcb02562a5402acf29217a0f946784675a68c7",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "A edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "stage": "bad_json_rejected",
+        "spec_sha256": "7137a1f4491d485d3fe5d1d4ddd3f88647aad84df6be5e0a5e822cb35011d615",
+        "png_sha256": "8390a5df5f969c0a654586e077bcb02562a5402acf29217a0f946784675a68c7",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "A edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": "ValueError: invalid figure spec: invalid FigureSpec JSON: invalid JSON: Expecting value: line 1 column 8 (char 7)"
+      },
+      {
+        "stage": "bad_spec_rejected",
+        "spec_sha256": "7137a1f4491d485d3fe5d1d4ddd3f88647aad84df6be5e0a5e822cb35011d615",
+        "png_sha256": "8390a5df5f969c0a654586e077bcb02562a5402acf29217a0f946784675a68c7",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "A edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": "ValueError: invalid figure spec: invalid FigureSpec:\n  - panel 0 layer 0 (line): column 'missing' not found in data (available: ['u', 'v'])"
+      },
+      {
+        "stage": "b_edited",
+        "spec_sha256": "4b07c0a956b3f3df367a0e2664978d5cfebefcfb05d5ba32216ed015cbda9166",
+        "png_sha256": "5fd404b2bde4562919301a365d7cacaf6d47c208643a1e75ff105887c15335cf",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "B edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "stage": "svg_export_rejected",
+        "spec_sha256": "4b07c0a956b3f3df367a0e2664978d5cfebefcfb05d5ba32216ed015cbda9166",
+        "png_sha256": "5fd404b2bde4562919301a365d7cacaf6d47c208643a1e75ff105887c15335cf",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "B edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": null
+      },
+      {
+        "stage": "edited_and_exported",
+        "spec_sha256": "ba914c9f8a28bdf6d2786dfaaa028663e53b79ceae31d69d98de5ac0e785d286",
+        "png_sha256": "0778abc67794882c8e9fcc5941d1278c4079683c6ce8bee0cb09309cfa66f6ac",
+        "history": [
+          {
+            "type": "SetTitle",
+            "text": "B edited",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          },
+          {
+            "type": "SetTitle",
+            "text": "B after export failure",
+            "panel": 0,
+            "citation": null,
+            "href": null
+          }
+        ],
+        "error": null
+      }
+    ],
+    "failed_export_status": 400,
+    "recovered_export_status": 200,
+    "source_files_unchanged": true,
+    "download_matches_state": true,
+    "page_errors": []
+  },
+  "real_browser_cases": [
+    "test_file_failures_and_vector_export_failures_preserve_state_then_recover",
+    "test_a_render_error_is_shown_without_losing_the_previous_figure",
+    "test_opening_a_spec_file_from_the_picker",
+    "test_open_reset_and_download_keep_python_document_history_and_source_files_separate"
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "recovery_policy": "ValidfileAedited\u2192malformedJSON\u2192validJSONinvalidspec(missingcolumn)keepsoriginalstate/PNG/history/layoutandsubmitteddraft. ValidfileBopensfreshhistoryandclearsUIerror;editBtheninjectOSErrorinREAL_save_figureforSVGonly(actualrender+finallycloseexercise). GETfig.svgreturns400HTMLnotpartialSVG,state/cache/history/layout/openFigurecountpreserved. EditPNGpreviewwhileSVGfails,clearfaultthenSVG200correctmime/latesttitleandJSONdownloadstateequal. Originalsourcefilesbytesunchanged.",
+  "format_scope": "PythoneditorvectorHTTPexportsarePDF/SVG;PNGisthecachedpreviewandSpecJSONhasitsownroute. No inventedJSONexportmethod/PGFbundle/atomicdownloadfileclaims. CLI/agenterrorfeedbackEDIT07andmachineprotocolEDIT09remainseparate.",
+  "qa_note": "FirstcombinedbrowserrunhadOpenfigurebuttontimeoutwhenfile-reader/settlesnapshothadcollapsedOpenpanel;adoptexistinghousehelpersecondvisibilitycheckafterfile-read. No productcommit-policychange. Preserveinitialtimeoutlog/receiptsseparatefromfinalpassedrun;allfinal9commandsrerunwithnewtestsourcehash. Sourceguards/diagnosticsnotignored.",
+  "environment_overrides": {
+    "floor-recovery": {
+      "PYTEST_ADDOPTS": "-k \"test_review_history_policies or test_review_response_generation or test_review_output_contracts\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "recovery-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_dashboard_editor.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_review_response_generation.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_spec_roundtrip.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:81: Windows symlink creation requires Developer Mode or privilege",
+        "SKIPPED [1] tests\\test_spec_roundtrip.py:100: POSIX mode bits do not apply on Windows",
+        "229 passed, 6 skipped in 179.54s (0:02:59)"
+      ],
+      "log_text_sha256": "968a4bea76e195570262f8f6157e7b629113b99487298f673350afd0eb8fca9a"
+    },
+    {
+      "name": "real-browser",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "--basetemp",
+        "<evidence>\\verified-browser-pytest",
+        "tests/test_review_editor_recovery_browser.py",
+        "tests/test_editor_browser.py",
+        "-k",
+        "file_failures or render_error or open_reset or opening_a_spec",
+        "--junitxml",
+        "<evidence>\\browser.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "4 passed, 29 deselected in 21.62s"
+      ],
+      "log_text_sha256": "d5a4e760438dea257408c7a62d7ba3dc614ee0ed3829e072ca88d5745c87ce2f"
+    },
+    {
+      "name": "floor-recovery",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "43 passed, 4 skipped, 3059 deselected, 13 warnings in 68.25s (0:01:08)"
+      ],
+      "log_text_sha256": "e51b8ed5fb9a6c0de025813906f67ea7364adf82586deab35c7deedd24fd50c5"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "249 files already formatted"
+      ],
+      "log_text_sha256": "cd83ead2e950d1cadea9ebbf07897f3d4cc11df68a345db6fd25a2994605a54a"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "ce08173836e4f86edd7f6b47a9547d48d48e1a803c4ef46b060293375e8b02c4"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "a0e97cfeaa121b2e893cc8826c4977217ca4231c704d62427cbb2cba2f0acd10"
+    }
+  ],
+  "raw_probe_sha256": {
+    "recovery_timeline.json": "e81c0eba1e866ed04fc8ebfffa0844e7973aac2343ff2b3422059a6fe40d2b45",
+    "qa.py": "a8205d2de3cb864e7a41259150b8b00a016a0d28ba9899c39fcb42bd9b0b9dc0",
+    "environment_overrides.json": "301c532044de8ac70943b335d5615abdfe05ec304440fd2df7016ccb9564ebcd",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "1c16162dca7fddeaa40e06ff21a634b978b005ff93213545377b52358c916eb0",
+    "browser.xml": "99e6e30d72b9aa68d193748157104afd45a2bda816b152b9529bc6e9524b70da",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "initial-browser-timeout.log": "bf66220af5961edf21cfbb0930851aee348d4e1594f79c45e1bf5c5c25b9cba9",
+    "initial-receipts.json": "1010a6471b22373eb9cec51cf654d514854d05a0df2ac674e95f22c8595fb037"
+  }
+}

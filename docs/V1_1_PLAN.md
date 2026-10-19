@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 59 checks file and export recovery through real UI controls.**
+ValidA→brokenJSON/invalidspec retains spec/PNG/history/layout and submitted draft;
+validB opens fresh history and clears errors. A fault in the real SVG save path
+returns400HTML, not partial vector output, with cached state/Figure cleanup intact.
+PNG editing continues; clearing the fault restores SVG200/latest title and a
+JSON download equal to current state. Source files remain byte-unchanged.
+
+New actual browser1 plus229relatedpasses/6Windows-skips,4realbrowserpasses/
+29deselected,floor43passes/4symlinkskips/3059deselected/13Pyparsing warnings and
+9quality records pass. Initial browser helper timeout is preserved separately;
+final runs use the existing post-file-read section visibility check. EDIT-06 is
+PASS in current support, not a new export format or complete CLI/agent error audit.
+[Evidence](review_evidence/editor_recovery_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS119/RUNNING5/OPEN25/DEFERRED1**. No runtime change; keep scaled+recovery
+units local duringnewB9CI39178688403. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 58
+
 **Review phase 58 checks scaled/high-DPI browser data editing.** Actual Chromium
 contexts assert DPR1/2, CSS125% and CDPvisual-viewport125% separately. Three
 cases retain editable6×3inch/600DPI while preview remains2000×1000. Selected-panel

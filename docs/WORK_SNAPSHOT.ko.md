@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신valid/bad/valid파일과SVGsavefault의실제UI는state/history/draft/자원을보존하고
+  정상편집/export/다운로드로회복하며원파일은불변입니다. 관련229/OS6skip·browser4/floor43로
+  EDIT-06은지원범위PASS입니다. Runtime없이newB9CI39178688403중확대+회복검증은로컬
+  보존하고더넓은오류/agent정책은별도남깁니다.
+
 - 최신ChromiumDPR/CSS/visual-viewport3case는highDPIpreview의dataframe/키/focus/undo/
   redo와편집DPI600을유지합니다. 관련178/실제browser8/floorpure7로EDIT-02는emulation범위
   PASS이지모든hardware보장은아닙니다. Runtime변경없고정확한4bcCI5job성공뒤D535+B9를
@@ -357,7 +362,9 @@
   요청/commit순서·허용결과·최종cache/spec동등성을보존했습니다.
 - [Scaledpreview 근거](review_evidence/scaled_preview_verification.json)에실제
   viewport/DPR설정·pointer/data·원DPI/state를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS118/RUNNING5/OPEN26/DEFERRED1**.
+- [Editor회복 근거](review_evidence/editor_recovery_verification.json)에
+  spec/PNG/history/오류hash·소스보존·export회복을보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS119/RUNNING5/OPEN25/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
