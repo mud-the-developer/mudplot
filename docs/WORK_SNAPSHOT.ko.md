@@ -25,6 +25,8 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- 최신B5상대가중poly/log-x점적합·rawresidual은새35/관련467/floor35/CLI3가맞고가중추론/joint는
+  명시거절하며원본/unweighted기본을보존합니다. 정확한efdc전체CI5job성공은이전ECDF이지새WLS는아닙니다.
 - 최신B4ECDF주변/대각선은새27/관련328/floor27/CLI2가맞고정확한cohort/반복값/log/질량축과
   기본동작을유지합니다. Weighted/complementarygrid는미지원이며floor201Pyparsing/기존극단countticker
   경고1개를기록했습니다. 정확한3f2전체CI5job성공은이전binnedwork이지새ECDF전체증명이아닙니다.

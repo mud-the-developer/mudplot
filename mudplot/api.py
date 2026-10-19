@@ -103,6 +103,7 @@ class Plot:
         y: str,
         *,
         regression: RegressionSpec | dict | None = None,
+        weights: str | None = None,
         degree: int = 1,
         confidence: float | None = None,
         group: str | None = None,
@@ -114,16 +115,23 @@ class Plot:
 
         ``confidence`` is a percentage (for example ``95``) using a normal
         approximation; it is disabled by default rather than implying
-        uncertainty the caller did not request.
+        uncertainty the caller did not request. ``weights`` selects relative
+        poly/logx point fitting only; weighted confidence bands are rejected.
         """
-        from ._regression import prepare_regression
+        from ._regression import prepare_regression, weighted_option_issues
 
         config = prepare_regression(regression)
+        if weights is not None and config is None:
+            config = RegressionSpec()
+        problems = weighted_option_issues(config, confidence, weights)
+        if problems:
+            raise ValueError("; ".join(problems))
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
                     type="regplot",
                     regression=config,
+                    weights=weights,
                     x=x,
                     y=y,
                     degree=degree,

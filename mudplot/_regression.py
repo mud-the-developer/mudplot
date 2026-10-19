@@ -51,6 +51,19 @@ def option_issues(config, degree, confidence):
     return issues
 
 
+def weighted_option_issues(config, confidence, weights):
+    if weights is None:
+        return []
+    issues = []
+    if not isinstance(weights, str) or not weights:
+        issues.append("regression weights must be a nonempty column name")
+    if not isinstance(config, RegressionSpec) or config.model not in ("poly", "logx"):
+        issues.append("weighted regression requires poly/logx RegressionSpec")
+    if confidence is not None:
+        issues.append("weighted regression confidence bands are not supported")
+    return issues
+
+
 def group_issues(config: RegressionSpec, pairs, distinct_x):
     issues = []
     if config.model == "logx" and any(x <= 0 for x, _y in pairs):

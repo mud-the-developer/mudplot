@@ -112,8 +112,10 @@ is authorized by this tracker.
 - [x] **B5c — Clustered heatmaps:** optional SciPy row/column trees/optimal leaves,
   validated supplied linkage, aligned display metadata, colour strips and
   z-score/min-max. Source matrix retained. [Scope](CLUSTERMAP.md).
-- [ ] **B5 — Advanced statistics / matrices:** further heatmap/clustering controls, weighted/
-  bootstrap/advanced-model CI and residual diagnostics/controls.
+- [x] **B5d — Relative weighted point fits:** poly/log-x and raw residuals, source
+  retention/positive-row selection, explicit no weighted CI/advanced models.
+- [ ] **B5 — Advanced statistics / matrices:** further heatmap/clustering controls,
+  weighted CI/bootstrap/advanced-model CI and residual diagnostics/controls.
 - [ ] **B6 — Native Matplotlib breadth:** remaining primitive/signal/vector/
   mesh/triangle/3-D families, richer axes/normalization/legends/layouts.
 
@@ -132,6 +134,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
+
+**B5 subset: relative weighted polynomial/log-x point fits and raw residuals.**
+Reuse LayerSpec.weights and typed RegressionSpec; positive-weight rows drive fit,
+scatter, residual and sample/distinct-x checks. Preserve original data, group/hue/
+facet/y2/SetData/JSON/actions, legacy unweighted paths and row limits. Missing/nonfinite
+inputs, unrepresentable relative weights, weighted bands/bootstrap/advanced models
+and weighted joint marginals are explicit failures, not invented inference.
+35new/467related/floor35passes/3278deselected/13Pyparsing warnings, CLI3/8checks,
+activeLSP10clean. [Evidence](review_evidence/v11_weighted_regression_verification.json).
+ExactefdcCI39238007230ALL5SUCCESS validates previous ECDF grids, not new WLS paths.
+This bounded B5 subset needs fresh whole CI; weighted inference/other batches remain.
+No model/action/spec fields, version/dependency/lock/tag/publish changes.
+
+### Earlier review phase 75
 
 **B4 extension: empirical cumulative grids.** Opt-in ECDF joint marginals and
 pair diagonals now support explicit count/probability/percent, preserve the exact

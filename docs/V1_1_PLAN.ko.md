@@ -109,8 +109,10 @@
 - [x] **B5c — 군집 heatmap:** optional SciPy 행/열 트리/optimal leaf·제공 linkage
   검증·표시 metadata/색 strip 정렬·z-score/min-max. 원자료를 유지합니다.
   [범위](CLUSTERMAP.ko.md) 참고.
-- [ ] **B5 — 고급 통계·행렬:** 추가 heatmap/clustering 설정·가중/bootstrap/advanced-model
-  CI·residual 진단/설정.
+- [x] **B5d — 상대가중점적합:** poly/log-x·rawresidual/원본·양수행보존,
+  weightedCI/advancedmodel추론은명시미지원.
+- [ ] **B5 — 고급 통계·행렬:** 추가heatmap/clustering·weightedCI/bootstrap/advanced-modelCI·
+  residual진단/설정.
 - [ ] **B6 — Matplotlib 범위:** 나머지 primitive/신호/vector/mesh/triangle/3D,
   축·정규화·범례·레이아웃 확장.
 
@@ -127,6 +129,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+
+**B5subset:상대가중poly/log-x점적합/rawresidual.** 기존LayerSpec.weights/typedRegressionSpec을
+재사용하고양수weight행으로fit/scatter/residual·표본/서로다른x를검사합니다. 원본/group/hue/facet/y2/
+SetData/JSON/actions·unweighted기본/rowlimit을보존하고결측·비유한·상대weights표현불가·가중band/
+bootstrap/advancedmodel·가중joint는추론을발명하지않고거절합니다. 새35/관련467/floor35/
+3278deselected/Pyparsing13경고·CLI3·품질8명령/activeLSP10clean,
+[근거](review_evidence/v11_weighted_regression_verification.json)를남겼습니다. 정확한efdcCI39238007230의
+5job성공은이전ECDFgrid이지새WLS증명이아닙니다. 이번B5subset은새전체CI를받고가중추론/다른배치는
+남아있으며model/action/specfield·버전/의존성/lock/tag/publish변경은없습니다.
+
+### 이전 리뷰75차
 
 **B4확장:경험적누적grid.** ECDFjoint주변/pair대각선은명시count/probability/percent와정확한
 paired/단변량행·반복최소값jump·양수log관측·독립stat축을지원합니다. 비기본미사용bins/KDE옵션/

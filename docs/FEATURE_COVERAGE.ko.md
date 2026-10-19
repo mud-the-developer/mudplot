@@ -45,7 +45,7 @@ Python 3.10 / Matplotlib 3.8 / NumPy 1.23 지원을 유지합니다.
 | `pointplot` | 부분: raw/log-fit 추정/구간·가중/단위 CI·native/log 간격·순서/hue/방향/dodge·빈 셀 선 끊기 | axis log sum/count·추가 추정/semantic/style/date·native/log y2 |
 | `barplot` | 부분: raw/log-fit 추정/구간·가중/단위 CI·native/log 간격·양수 log baseline·방향/gap/라벨; precomputed bar 별도 | axis log sum/count·추가 추론/semantic/date·native/log y2 |
 | `countplot` | 부분: 전체 분모 count/비율/percent·native/log 범주 간격·명시적 log baseline·방향/gap/선형 stack/라벨 | 가중 count·log 값축 stack/stat_scale·추가 정규화/semantic/date |
-| `regplot` | 부분: 기존 다항식 + 설정형 poly/log-x/Huber/binomial-logit/LOWESS·선택 raw group; advanced는 optional extra | 가중/bootstrap/advanced-model CI·partial residualization·추가 fit/scatter. [범위](REGRESSION.ko.md) 참고 |
+| `regplot` | 부분: 기존 다항식 + 설정형 poly/log-x/Huber/binomial-logit/LOWESS·선택rawgroup·상대가중poly/logx점적합/rawresidual;advanced는optionalextra | WeightedCI/bootstrap/advanced-modelCI·partial residualization·추가 fit/scatter. [범위](REGRESSION.ko.md) 참고 |
 | `residplot` | 부분: regplot residual mode·원래 y-row prediction·zero guide·group/facet별 fit | 별도 residual trend·out-of-sample/deviance 진단·추론. [범위](REGRESSION.ko.md) 참고 |
 | `heatmap` | 부분: legacy imshow + opt-in mask/원자료 주석·포맷/행열 label·명시/robust/log/중심 색상 범위·정사각 셀/경계 | 사용자 annotation 행렬·추가 norm/rotation/colourbar·clustering. [범위](HEATMAP.ko.md) 참고 |
 | `clustermap` | 부분: 행/열 linkage·제공 트리/optimal leaf·정렬 dendrogram/mask/label/색 strip·sample z-score/min-max, optional SciPy | 여러 색 track/legend·결측·interactive cut·custom metric/layout. [범위](CLUSTERMAP.ko.md) 참고 |

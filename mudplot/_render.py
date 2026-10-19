@@ -344,7 +344,9 @@ def _target_axes(ax, ax2, layer: LayerSpec):
     return ax2 if (layer.axis == "y2" and ax2 is not None) else ax
 
 
-def _regression_fit(x, y, degree: int, confidence: float | None, *, at=None):
+def _regression_fit(
+    x, y, degree: int, confidence: float | None, *, at=None, weights=None
+):
     """Return a numerically scaled polynomial fit and optional mean-fit CI."""
     with (
         warnings.catch_warnings(),
@@ -372,7 +374,28 @@ def _regression_fit(x, y, degree: int, confidence: float | None, *, at=None):
             response_scale = float(np.max(np.abs(y))) or 1.0
             response = y / response_scale
             interval = None
-            if confidence is None:
+            if weights is not None:
+                if confidence is not None:
+                    raise ValueError("weighted confidence bands are not supported")
+                weight = np.asarray(weights, dtype=float)
+                if (
+                    weight.shape != x.shape
+                    or not np.isfinite(weight).all()
+                    or np.any(weight <= 0)
+                ):
+                    raise ValueError(
+                        "selected regression weights must be finite positive"
+                    )
+                with np.errstate(under="ignore"):
+                    relative = weight / float(weight.max())
+                if np.any(relative <= 0):
+                    raise ValueError(
+                        "relative regression weights are not representable"
+                    )
+                coefficients = np.polyfit(
+                    x_scaled, response, degree, w=np.sqrt(relative)
+                )
+            elif confidence is None:
                 coefficients = np.polyfit(x_scaled, response, degree)
             else:
                 coefficients, covariance = np.polyfit(
@@ -594,6 +617,11 @@ def _draw_series_layer(
             )
         elif layer.type == "regplot":
             color = layer.color or next(color_iter)
+            weights = None
+            if layer.weights is not None:
+                weights = _col(data_cols, layer.weights)[mask]
+                positive = weights > 0
+                x, y, weights = x[positive], y[positive], weights[positive]
             config = layer.regression
             if config is None:
                 grid, fitted, interval = _regression_fit(
@@ -603,7 +631,12 @@ def _draw_series_layer(
                 from ._regression_render import fit_regression
 
                 grid, fitted, interval = fit_regression(
-                    x, y, layer, _regression_fit, at=x if config.residual else None
+                    x,
+                    y,
+                    layer,
+                    _regression_fit,
+                    at=x if config.residual else None,
+                    weights=weights,
                 )
                 if target.get_yscale() == "log" and any(
                     np.any(values <= 0) for values in [fitted, *(interval or ())]

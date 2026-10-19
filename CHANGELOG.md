@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added opt-in relative weighted poly/log-x point fits and raw residuals through
+  the existing weights column; reject weighted confidence/advanced models and
+  nonrepresentable weight scaling while preserving legacy unweighted behavior.
 - Added opt-in unweighted ECDF joint marginals and pair diagonals with explicit
   count/probability/percent, exact selected cohorts/tie jumps and independent
   statistic axes. Unused bins/KDE options and density are rejected.

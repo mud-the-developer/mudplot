@@ -566,7 +566,7 @@ class LayerSpec(SpecBase):
     bw_adjust: float | None = None  # positive bandwidth multiplier, default 1
     cut: float | None = None  # support extension in bandwidths, default 0
     clip: list[float | None] | None = None  # KDE support bounds, raw value units
-    weights: str | None = None  # violin only; relative paired row weights
+    weights: str | None = None  # violin/regplot; relative paired row weights
     warn_thresh: float | None = None  # swarm overlap warning fraction, default 0.05
     # Letter-value tail stopping and relative band widths (boxenplot only).
     k_depth: str | int | None = None  # tukey/proportion/trustworthy/full or 1..32

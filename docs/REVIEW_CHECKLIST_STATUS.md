@@ -18,6 +18,23 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 76차 — v1.1상대가중회귀point/residualsubset
+
+- 기존LayerSpec.weights를typedpoly/log-x점적합/rawresidual에적용하고sqrt(relativew)로
+  sum(w*(y-P(x))**2)를최소화합니다. 행복제/samplingprobability/weightedCI를뜻하지않으며
+  weightedband/bootstrap/robust/logistic/LOWESS/joint는명시거절합니다. API는가중요청때만typedpoly
+  기본을선택하고rawJSON은명시RegressionSpec을요구해legacyunweighted경로를유지합니다.
+- Panel/hue선택뒤유한x/y·비음수유한weights가필요하며결측은임의삭제/대체하지않고기존명시dropna로
+  선택할수있습니다. Zero행은원본에남되fit/scatter/residual·개수/서로다른x에서빼고각group에
+  degree+1양수행/서로다른x가필요합니다. 정규화underflow/특이fit/표현불가결과는clamp하지않고실패합니다.
+- 독립rationalWLS/배율1e±200/0outlier/degree2/logx/rawresidual/group-hue/facet-y2/JSON-actions/SetData/
+  rowlimit/실패시파일·Figure보존을검사했습니다. 새35/관련467/floor35/3278deselected/Pyparsing13경고,
+  실제CLIpoly/logx/residual3종/품질8명령·activeLSP10clean,
+  [근거](review_evidence/v11_weighted_regression_verification.json)를남겼습니다. 새필드/의존성/lock/버전은없습니다.
+- 정확한efdcCI39238007230의5job모두성공으로이전ECDFgrid를확인했고새WLS는새전체CI를받습니다.
+  원대장139PASS/6RUNNING/4OPEN/1DEFERRED와가중추론/다른v1.1remainder/gate는유지하고새nativebrowser/
+  v1.1전체완료/tag/publish/자동loop를추정하지않습니다.
+
 ## 75차 — v1.1ECDF주변/대각선subset
 
 - 기존ECDF를재사용해jointmarginal/pairdiagonal에명시count/probability/percent를지원합니다.

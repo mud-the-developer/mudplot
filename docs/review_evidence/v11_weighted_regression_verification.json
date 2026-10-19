@@ -1,0 +1,140 @@
+{
+  "source_sha256": {
+    "mudplot/_regression.py": "842cd2f3c30cf23fda763d7ea7771fad92863069679644f43a5133ed15026c30",
+    "mudplot/_regression_render.py": "0796c95fa31e0a5c9f470a17cd19a04b0146f22da60c750aab6d0a101e393e12",
+    "mudplot/_render.py": "1daacadd3da5f376f6d91ab863793a886e4f374d07e62f53810e47df3f849652",
+    "mudplot/validate.py": "5161bcc06e23af4e6f331c164a604172fabc34baa1ae3d0f22535444c02d5601",
+    "mudplot/api.py": "4e866e70f0d84dc63e3f06829e9dabd3e609eb31afa75806d65a4add6400392a",
+    "mudplot/spec.py": "8af1d7947b2c7b16a0ce51add3cd1b531cb9c1414e8f8f349432e4abbe402bae",
+    "mudplot/capabilities.py": "23e0b8df0814a86295e3809d058c12d1e7c8213876b3e3f211222f1105f76539",
+    "mudplot/_joint.py": "3292d54d933f8e04d92b832b6214ed19f8850408fc28566a7e605e27e78f482e",
+    "tests/test_regression_weights.py": "05f6f6583c0acd38cd8a249ce24f05db86ab4c40eb17ec8307af5149d13bb0fd",
+    "scripts/check_minimum_versions.py": "47e4175a1195f4385eedee48fb56e5e4e31ae5ee3b0e63d2a8dc343acd34931e",
+    "schemas/capabilities.json": "3995e120b0b03738b4b3765cc9b662c290130344b0cc406f3a451a757ecafa20",
+    "docs/REGRESSION.md": "57a6b95a0d57bbb26c982624ca2c55f24357a5225228c335343a10e801532967",
+    "docs/REGRESSION.ko.md": "fb3fe92bf12471f4b92541afb0765fa77c56ef760ff2fd7c26c9952a3d161070",
+    "docs/FEATURE_COVERAGE.md": "92a451c4cefb309ae80025ae42b80c13cfca1d0d9fa56f3b76e7506d67dadfc5",
+    "docs/FEATURE_COVERAGE.ko.md": "f2ad15b8a0410f325b219e788f61a50beffa91d6351022c5d6751fee0e59ad23"
+  },
+  "cli": [
+    {
+      "kind": "poly",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "weights_preserved": true,
+      "png_sha256": "1a847d7416bd8029caaf1e0f855dd4789f69c26b57c3788368753306ee3da234"
+    },
+    {
+      "kind": "logx",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "weights_preserved": true,
+      "png_sha256": "89bf12d111bfb09230a44f0e63f83fe40a80694bddbc834a900de493cfc27e42"
+    },
+    {
+      "kind": "residual",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "weights_preserved": true,
+      "png_sha256": "cb0895c92c55f22870747c0bb855642cf7fbdc6b2ae68e2c0362669c3f2672f1"
+    }
+  ],
+  "scope": "ExistingLayerSpec.weightsopt-inpoly/logxpointfitandrawresidualonly;defaultunweightedpathunchanged.APIselectsRegressionSpec()whenweightsrequested,rawJSONmustprovideexplicitRegressionSpec. ObjectiveSum(w_i*(y_i-P(x_i))**2)usessqrt(relativeweight),notreplicatedobservations/samplingprobabilities/inference. Finitecoordinates/finite-nonnegativeweightvaluesrequiredafterpanel-hueselection;missingrequiresknownexplicitdropna,zeroweightrowssource-retainedbutnotfit/scatter/residualorcount/distincttests. Rowbudgetstillselectedinputrows,notpositive-only. WeightedCI/bootstrap/advancedmodels/jointmarginalsrejected;underflow-to-zero/rank/nonrepresentablefitsraisewithoutclamp.No newmodel/action/specfield/dependency/version.",
+  "independent_oracles": "ManualWLSx0,1,2/y0,1,4/w1,1,2\u2192intercept-4/11,slope23/11;rawresidual4/11,-8/11,2/11. Compareweightsmultipliers1e-200/1e200,zerooutlierretention/fill,degree2exactcurve/log-x,groups/facets/y2,connected legacy RNG/JSON/actions/SetData/oldoutputs.Failinvalidnames/values/confidence/optionalmodels/zero-or-insufficient/rankunderflow/missingcolumnbeforeartists.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "results": [
+        "467 passed in 154.80s (0:02:34)"
+      ],
+      "log_sha256": "7742105e0aa548dfa048f7241221ca66b58bb03d73680bea190cf1835bf8cb0d"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "results": [
+        "35 passed, 3278 deselected, 13 warnings in 10.71s"
+      ],
+      "log_sha256": "e4d336290e1cc9d5315955d3d7ac691f314614d41149d41557617f84bc344934"
+    },
+    {
+      "name": "linux",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "270 files already formatted"
+      ],
+      "log_sha256": "02b01aaaeed47ace86d3000f8bbcd2951e8f78c28de924ce555b4aae3dd22e98"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_sha256": "61a2a1af6dc2520f5af5c4b96e4d454de63bfff3e014fd1e269ff45d44f7accd"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "a9d8915885345de0b8ce2b28c7c225925241626148a7a5085d0032c5816f395d"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "a4717cdb50ab9694bb61a7f6d1077e22e6e38ca1f675a464fcfe3524e2fc30cf",
+    "cli.json": "936e1837e09cb3412a44f230e66f91b29f547cbfa644bd6ba5efab41a74bcd09",
+    "results.xml": "58d1d5a7a8b0ed04c3c6e2631d530ddd4c0a7fa1b98e44a2a6d511f5196e4978",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

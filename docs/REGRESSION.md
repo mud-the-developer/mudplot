@@ -49,12 +49,38 @@ unrepresentable residuals fail without regularization, jitter or an invented fit
 An exact line is already a Huber minimum; it does not need a fictitious MAD scale.
 Log coordinate axes require positive input/predicted values; residual y is linear.
 
+## Relative weighted point fits
+
+```python
+p = mp.plot(raw).regplot("x", "y", weights="mass")
+r = mp.plot(raw).residplot("x", "y", weights="mass", regression={"model": "logx"})
+```
+
+`weights` names the existing LayerSpec column. The fluent builder selects a typed
+poly config if no model was supplied; raw JSON must set `regression` explicitly
+(e.g. `{}`). Only poly/logx point fits and raw residuals are supported. We minimize
+`sum(w_i * (y_i - P(x_i))**2)` with square-root relative weights, not squared weights,
+replicated rows or sampling probabilities. Multiplying every weight by one positive
+factor leaves the fit unchanged. No weighted CI/bootstrap/advanced-model inference
+is implied; any confidence or robust/logistic/LOWESS request with weights fails.
+
+After panel/hue selection, x/y and weights must be finite numeric (not bool), and
+weights nonnegative. No missing values are imputed or silently dropped; an existing
+explicit panel dropna selector may remove incomplete rows. Zero-weight rows remain
+in source data but not fits/scatter/residuals or sample/distinct-x counts. Every fitted
+group needs degree+1 positive rows/distinct x; all-zero groups fail. Positive weights
+whose relative scaling underflows to zero, singular designs and nonrepresentable
+results fail rather than discarding/clamping observations. The typed row budget
+still counts selected input rows, not only positive-weight ones. Group/hue/facet/y2
+routing and original data/JSON remain unchanged. Joint composition rejects weighted
+regression because its unweighted marginals would otherwise describe a different mass.
+
 ## Residuals are not deviance or inference
 
 `residplot` forces `residual=True` on a copied config. It plots **observed y minus
 in-sample fitted response** at each original x, in original row order, plus one
 zero guide per layer. Fits happen independently per selected raw group/facet.
-It does not imply out-of-sample errors, deviance residuals, weights, correlation,
+It does not imply out-of-sample errors, deviance residuals, correlation,
 causal inference or an extra LOWESS trend of residuals. Choosing model='lowess'
 computes residuals from a LOWESS fit to the original response.
 
@@ -65,7 +91,7 @@ paths within their existing data/axis limits.
 `confidence=95` remains opt-in normal-approximation mean-fit CI for poly/logx,
 not bootstrap or simultaneous whole-curve coverage. Residual/robust/logistic/
 LOWESS confidence bands are explicitly unsupported. Wider fit/scatter controls,
-weighted regression and bootstrap inference remain separate work.
+weighted confidence bands and bootstrap inference remain separate work.
 
 ## One question per executable example
 

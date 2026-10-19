@@ -46,12 +46,31 @@ Typed fit은 선형대수 전에 predictor/response를 scaling하고 원래 좌�
 오류로 처리합니다. 정확한 직선은 이미 Huber 최소이므로 가짜 MAD scale이 필요
 없습니다. Log 좌표축은 입력/예측이 양수여야 하며 residual y축은 linear입니다.
 
+## 상대가중pointfit
+
+```python
+p = mp.plot(raw).regplot("x", "y", weights="mass")
+r = mp.plot(raw).residplot("x", "y", weights="mass", regression={"model": "logx"})
+```
+
+Weights는기존LayerSpec열을지정하며fluentbuilder는모델생략시typedpoly를선택합니다.
+RawJSON은regression을명시해야하며빈설정{}도가능합니다. Poly/logx점적합·rawresidual만지원하고
+sqrt(relativeweights)로sum(w_i*(y_i-P(x_i))**2)를최소화합니다. 제곱가중/행복제/samplingprobability가
+아니며양수공통배율은fit을바꾸지않습니다. WeightedCI/bootstrap/robust/logistic/LOWESS는거절합니다.
+
+Panel/hue선택뒤x/y·weights는bool이아닌유한숫자,weights는비음수여야합니다. 결측을묵시삭제/대체하지
+않고필요하면기존명시paneldropna를사용하세요. Zero-weight행은원본에남되fit/scatter/residual과
+표본/서로다른x개수에서제외합니다. 각fitgroup에degree+1양수행·서로다른x가필요하고all-zero는실패합니다.
+상대정규화가0으로underflow하는양수weights/특이design/표현불가결과는clamp/관측삭제없이실패합니다.
+Typedrowbudget은선택원행전체를세고group/hue/facet/y2·원본·JSON은보존합니다. 가중regplot의
+joint구성은unweighted주변질량과혼동하므로거절합니다.
+
 ## Residual은 deviance나 추론이 아님
 
 `residplot`은 복사한 설정의 `residual=True`를 강제합니다. 원래 행 순서/x에서
 **관측 y - in-sample fitted response**와 layer당 zero guide 하나를 표시합니다.
 선택한 raw group/facet마다 독립 fit합니다. Out-of-sample 오차·deviance residual·
-weights·상관계수·인과 추론·residual 위 추가 LOWESS trend를 뜻하지 않습니다.
+상관계수·인과 추론·residual 위 추가 LOWESS trend를 뜻하지 않습니다.
 Model='lowess'이면 원래 response의 LOWESS fit에서 residual을 구합니다.
 
 Joint 주변 분포는 raw y를 뜻하므로 residual 템플릿은 거부합니다. 일반 설정형
@@ -59,7 +78,7 @@ regplot은 기존 데이터/축 제한 안에서 joint/facet 경로를 사용할
 
 `confidence=95`는 poly/logx의 명시적 정규근사 평균 fit CI이며 bootstrap이나
 전체 곡선 동시 coverage가 아닙니다. Residual/robust/logistic/LOWESS band는
-명시적으로 미지원입니다. 추가 fit/scatter control·가중 회귀·bootstrap은 남았습니다.
+명시적으로 미지원입니다. 추가fit/scattercontrol·weightedCI·bootstrap은남았습니다.
 
 ## 실행 가능한 그림별 질문
 

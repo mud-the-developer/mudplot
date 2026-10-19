@@ -49,6 +49,7 @@ from ._letter_value import option_issues as letter_value_option_issues
 from ._regression import MAX_REGRESSION_ROWS
 from ._regression import group_issues as regression_group_issues
 from ._regression import option_issues as regression_option_issues
+from ._regression import weighted_option_issues as regression_weight_issues
 from ._semantics import category_key, shared_scale_issues
 from ._semantics import data_issues as semantic_data_issues
 from ._stat import (
@@ -1310,6 +1311,15 @@ def _check_regression_data(
     if allow_empty and len(x_values) == 0:
         return
     config = layer.regression
+    weight_problems = regression_weight_issues(config, layer.confidence, layer.weights)
+    if weight_problems:
+        issues.extend(f"{where}: {problem}" for problem in weight_problems)
+        return
+    weights = None
+    if layer.weights is not None:
+        if layer.weights not in cols or len(cols[layer.weights]) != len(x_values):
+            return
+        weights = cols[layer.weights]
     if config is not None:
         if regression_option_issues(config, layer.degree, layer.confidence):
             return
@@ -1347,6 +1357,13 @@ def _check_regression_data(
         if any(not _finite(value) for pair in pairs for value in pair):
             issues.append(f"{where}{suffix}: regression values must be finite numbers")
             continue
+        if weights is not None:
+            if any(not _finite(weights[i]) or weights[i] < 0 for i in indices):
+                issues.append(
+                    f"{where}{suffix}: regression weights must be finite nonnegative"
+                )
+                continue
+            pairs = [(x_values[i], y_values[i]) for i in indices if weights[i] > 0]
         try:
             distinct_x = len({x for x, _y in pairs})
         except TypeError:

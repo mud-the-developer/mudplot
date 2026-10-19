@@ -132,7 +132,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `regplot`
 
 - **required**: `x`, `y`
-- **optional**: `regression`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+- **optional**: `regression`, `weights`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
 
 ### `rug`
 

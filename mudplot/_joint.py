@@ -95,6 +95,8 @@ def materialize_joint(
         or layer.weights is not None
     ):
         raise ValueError("binned joint centers require ungrouped, unweighted raw x/y")
+    if layer.type == "regplot" and layer.weights is not None:
+        raise ValueError("joint does not support weighted regression marginals")
     if isinstance(layer.regression, RegressionSpec) and layer.regression.residual:
         raise ValueError("joint marginals use raw y, not residual responses")
     if (

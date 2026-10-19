@@ -53,13 +53,18 @@ def _optional_fit(model, x, y, at, config):
         ) from error
 
 
-def fit_regression(x, y, layer, polynomial_fit, *, at=None):
+def fit_regression(x, y, layer, polynomial_fit, *, at=None, weights=None):
     """Return original-coordinate grid/response/CI; no mutation or global RNG."""
     config = layer.regression
     assert config is not None
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
     model = config.model
+    if weights is not None and (
+        model not in ("poly", "logx") or layer.confidence is not None
+    ):
+        raise ValueError("weighted regression supports poly/logx point fits only")
+    fit_options = {} if weights is None else {"weights": weights}
     with (
         warnings.catch_warnings(),
         np.errstate(over="raise", invalid="raise", divide="raise"),
@@ -89,6 +94,7 @@ def fit_regression(x, y, layer, polynomial_fit, *, at=None):
                     layer.degree,
                     layer.confidence,
                     at=points,
+                    **fit_options,
                 )
             else:
                 grid = (

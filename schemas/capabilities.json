@@ -27,6 +27,7 @@
       ],
       "optional": [
         "regression",
+        "weights",
         "degree",
         "confidence",
         "group",
@@ -1166,7 +1167,8 @@
     "max_lowess_rows": 5000,
     "failures": "nonfinite/singular/separated/unconverged fits raise",
     "legacy": "regression=None retains old polynomial effects",
-    "limits": "no weights/bootstrap/deviance residuals/residual smooth trend"
+    "weights": "LayerSpec.weights; relative poly/logx point fits/raw residuals; zero rows excluded; scaling must remain representable",
+    "limits": "no weighted CI/robust/logistic/LOWESS; no bootstrap/deviance residuals/residual smooth trend"
   },
   "statistics": {
     "estimators": [

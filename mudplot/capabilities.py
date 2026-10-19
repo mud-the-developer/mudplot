@@ -79,6 +79,7 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
         "required": ["x", "y"],
         "optional": [
             "regression",
+            "weights",
             "degree",
             "confidence",
             "group",
@@ -832,7 +833,10 @@ def capabilities() -> dict:
             "max_lowess_rows": MAX_LOWESS_ROWS,
             "failures": "nonfinite/singular/separated/unconverged fits raise",
             "legacy": "regression=None retains old polynomial effects",
-            "limits": "no weights/bootstrap/deviance residuals/residual smooth trend",
+            "weights": "LayerSpec.weights; relative poly/logx point fits/raw "
+            "residuals; zero rows excluded; scaling must remain representable",
+            "limits": "no weighted CI/robust/logistic/LOWESS; "
+            "no bootstrap/deviance residuals/residual smooth trend",
         },
         "statistics": {
             "estimators": list(ESTIMATORS),
