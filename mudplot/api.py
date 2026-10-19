@@ -323,7 +323,7 @@ class Plot:
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Bin two numeric columns into a rectangular count/density map."""
+        """Bin two numeric columns, with at most 512 bins per axis."""
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
@@ -354,7 +354,7 @@ class Plot:
         panel: int = 0,
         **style,
     ) -> Plot:
-        """Bin two numeric columns into a native Matplotlib hexagonal map."""
+        """Bin two numeric columns, with gridsize in 1..512."""
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(

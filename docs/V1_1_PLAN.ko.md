@@ -120,6 +120,21 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰63차에서자원증폭을제한child로측정하고bivariategrid를막았습니다.** WindowsJob의
+memory/CPU를suspendedchildresume전에할당해peakRSS/commit/time/exit와budget중단을
+성공/validation과구분했습니다. HugeDPI/sizepreview는2000px/축이며FIND-043의hist2d축당512bins/
+513edges·hexbin512초과는nativeallocation전거부합니다. 초기11중7실패/4정상이최종11통과입니다.
+
+관련263/floor11통과/3120deselected/Pyparsing13경고·실제HTTP4·측정18/10명령완료이지모든
+제품case성공은아닙니다. Job은시험격리일뿐구조/정확한export는여전히budget에걸려SEC-04는
+RUNNING입니다. [자원근거](review_evidence/resource_amplification_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS123/RUNNING6/OPEN20/DEFERRED1**입니다. cb2CI39187999070은focus/data검사뒤pinch
+Redo클릭가로막힘1실패이며[UI활성화근거](review_evidence/browser_pinch_activation_verification.json)는
+같은버튼Enter/정확한undo-redo값의로컬4통과·새LinuxCI필요를기록합니다. Forceclick/runtime
+geometry변경이아니며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰62차
+
 **리뷰62차에서matchingcheckout자산과mismatch경계를검증했습니다.** 단일htmx/license는
 Python/Rust/실제nativeChromium의버전/hash가같고embeddedspec/capabilities/metadata도맞습니다.
 Controlledcurrent/compatiblelabel은수용,불일치spec/필수capability는설명가능한시작거절입니다.

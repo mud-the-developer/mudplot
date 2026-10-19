@@ -21,6 +21,8 @@ HISTOGRAM_MULTIPLES = ("layer", "stack", "dodge")
 HISTOGRAM_ELEMENTS = ("bars", "step")
 NORMALIZED_STATS = ("probability", "proportion", "percent", "density")
 MAX_HISTOGRAM_BINS = 10_000
+# Native bivariate grids allocate quadratically rather than like 1-D histograms.
+MAX_BIVARIATE_BINS = 512
 
 
 def histogram_rows(columns: dict, layer: LayerSpec) -> list[int]:

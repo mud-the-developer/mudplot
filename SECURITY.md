@@ -53,6 +53,21 @@ RSS/lifetime peaks; native renderer descendants are excluded. These observations
 are not hard memory/CPU limits, concurrent-load guarantees or proof on every OS.
 See [the review ledger](docs/REVIEW_CHECKLIST_STATUS.md) for exact scope/results.
 
+## Compute and render resources
+
+A request-byte limit is not a CPU/RAM/render-work budget. Preview output is
+bounded to 2000 pixels per axis, but structural complexity and exact-size
+exports can require substantially more work. Keep imported specs/data trusted;
+contain untrusted or unusually large work in caller-managed resource-limited
+processes rather than exposing these editors as a processing service.
+
+Bivariate hist2d now supports at most512bins per axis (513edges), and hexbin
+supports gridsize up to512; oversized requests fail validation rather than being
+clamped or reaching native quadratic allocation. This specific guard is not a
+hard total memory/time limit. Further structure/export resource policy remains
+under review; the Windows Job limits in review probes are test containment,
+not an installed application sandbox. Unpatched stress payloads are kept private.
+
 ## File and execution boundaries
 
 HTTP static/export routes select fixed bundled assets or return current figure

@@ -141,6 +141,19 @@ selection, remote multi-user conflict resolution or a new revision/reject API.
 The Python `/action/raw` form's JSON action still uses an HTML/redirect UI
 response, not an invented JSON RPC route.
 
+## Bivariate resolution and resource scope
+
+Hist2d supports integer or integer-pair resolutions in1..512per axis, or3..513
+increasing finite edges. Hexbin gridsize is1..512. Larger values now explicitly
+fail shared validation; defaults/normal counts, edge values and density semantics
+are not silently clamped or rewritten. The1-D histogram limit remains10000bins.
+
+This mitigates native bivariate grid amplification, not all computational costs.
+Request bytes and capped preview pixels do not bound structure expansion or exact
+export rasterization. Some resource probes still reached their private process
+budget; SEC-04 remains in progress, not a complete safety/capacity certification.
+Keep unusually large/untrusted work in caller-managed isolated processes.
+
 ## Automatic layout limits
 
 With adaptive layout enabled, automatic panel titles/suptitle and named outside

@@ -36,6 +36,7 @@ from ._histogram import (
     HISTOGRAM_ELEMENTS,
     HISTOGRAM_MULTIPLES,
     HISTOGRAM_STATS,
+    MAX_BIVARIATE_BINS,
     MAX_HISTOGRAM_BINS,
     NORMALIZED_STATS,
     histogram_rows,
@@ -1998,26 +1999,35 @@ def validate(spec: FigureSpec) -> list[str]:
                     if type(layer.density) is not bool:
                         issues.append(f"{where}: density must be true or false")
                     bins = layer.bins
-                    valid_bins = type(bins) is int and bins > 0
+                    valid_bins = type(bins) is int and 1 <= bins <= MAX_BIVARIATE_BINS
                     if isinstance(bins, list):
                         if len(bins) == 2:
                             valid_bins = all(
-                                type(value) is int and value > 0 for value in bins
+                                type(value) is int and 1 <= value <= MAX_BIVARIATE_BINS
+                                for value in bins
                             )
                         else:
                             valid_bins = (
-                                len(bins) >= 3
+                                3 <= len(bins) <= MAX_BIVARIATE_BINS + 1
                                 and all(_finite(value) for value in bins)
                                 and all(a < b for a, b in pairwise(bins))
                             )
                     if not valid_bins:
                         issues.append(
-                            f"{where}: bins must be a positive integer, a positive "
-                            "[x, y] integer pair, or increasing finite edges"
+                            f"{where}: bins must be an integer in "
+                            f"1..{MAX_BIVARIATE_BINS}, "
+                            "an [x, y] integer pair in that range, or "
+                            f"3..{MAX_BIVARIATE_BINS + 1} increasing finite edges"
                         )
                 else:
-                    if type(layer.gridsize) is not int or layer.gridsize <= 0:
-                        issues.append(f"{where}: gridsize must be a positive integer")
+                    if (
+                        type(layer.gridsize) is not int
+                        or not 1 <= layer.gridsize <= MAX_BIVARIATE_BINS
+                    ):
+                        issues.append(
+                            f"{where}: gridsize must be an integer in "
+                            f"1..{MAX_BIVARIATE_BINS}"
+                        )
                     if layer.mincnt is not None and (
                         type(layer.mincnt) is not int or layer.mincnt < 0
                     ):

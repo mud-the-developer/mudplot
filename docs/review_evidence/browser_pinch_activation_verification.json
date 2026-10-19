@@ -1,0 +1,29 @@
+{
+  "baseline_ci": {
+    "run": 39187999070,
+    "head": "cb2010bf340c5a1d83e9825c95b7f00e2087060d",
+    "failed_job": 117854398170,
+    "conclusion": "failure",
+    "py310": "cancelled",
+    "py312": "DPR2visualviewport1.25caseRedoLocator.clickinterceptedbypanels;focuswait/dataassertionspassed",
+    "log_text_sha256": "8afca3d4e6e0831a9b8ffba2c3f28fc01ddf2fcfe86f29a87c195bb28e6b75d1"
+  },
+  "change": "Undo/RedoactivateSAMEUIbuttonswithEnter,notforceclick/session.undo/API/JSdispatch. Pinchpointerdragandallgeometry/data/focuschecksunchanged. Exactundodrag/redokeyvaluesandcurrentSpecJSONassertionsretained.",
+  "source_sha256": {
+    "tests/test_review_hidpi_browser.py": "e27a59b3f193875ba1e402913227a34e61746c8c637fec0e335c79cfa304a400",
+    "tests/test_review_keyboard_browser.py": "09dec7e6a209e39e7c40ca17e423797287e7211096849f43ec65622ba566b276",
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f"
+  },
+  "local_verification": {
+    "exit_code": 0,
+    "cases": [
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[1-1.0-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.25-1.0]",
+      "test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame[2-1.0-1.25]",
+      "test_keyboard_panel_forms_error_recovery_handle_and_navigation"
+    ],
+    "log_text_sha256": "f99f84396117a9a855371220533cfc3feaa3450270548971c20fc077fde77041",
+    "junit_sha256": "ff792ff7f10bb092f3cbaac15619b97cdb17c8e3f3e97efa395149de6468fa47"
+  },
+  "limits": "LinuxnewCIrequired;notallmouse-toolbarhit-testingunderCDPpinchcertified. Nativekeyboardactivationisexplicitcoverage,notclaimthatappscroll/hit-testwasfixed. BaselinefailureNOTcountedasgreen."
+}

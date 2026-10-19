@@ -69,6 +69,7 @@ TESTS = (
     "tests/test_clustermap.py",
     "tests/test_raw_group_order.py",
     "tests/test_new_layers.py",
+    "tests/test_review_bivariate_limits.py",
     "tests/test_stabilization.py",
     "tests/test_references.py",
     "tests/test_review_pgf_bundle.py",

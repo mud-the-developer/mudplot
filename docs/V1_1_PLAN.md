@@ -124,6 +124,25 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 63 measures resource amplification and bounds bivariate grids.**
+Suspended Windows children are assigned private Job memory/CPU limits before
+running; peakRSS/commit/time/exit outcomes distinguish completed work, validation
+and budget stops. Preview stays2000px/axis for huge declared size/DPI. FIND-043
+now rejects hist2d>512bins/axis(513edges) and hexbin>512 before native allocation,
+retaining accepted data semantics. Initial11tests7fail/4valid become11pass.
+
+263related/floor11passes/3120deselected/13Pyparsing warnings,4actualHTTP rejections
+and18measurement records/10commands complete. Job guards are TESTcontainment,
+not installed product limits; other structure/exact-export work still hits them.
+SEC-04 becomes RUNNING, not PASS. [Resource evidence](review_evidence/resource_amplification_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/DEFERRED1**.
+cb2CI39187999070failed one CDPpinch Redo click interception; earlier focus/data
+checks passed. [UI activation](review_evidence/browser_pinch_activation_verification.json)
+keeps exact undo/redo expectations via native Enter (local4pass/newLinuxCIneeded),
+not force-click/runtime geometry changes. Versions/dependencies/locks/tag/deploy stay.
+
+### Earlier review phase 62
+
 **Review phase 62 verifies matching-checkout assets and mismatch boundaries.**
 One tracked htmx/license pair supplies Python/Rust and actual native Chromium
 version/hash. Embedded spec/capabilities and declared metadata align. Controlled

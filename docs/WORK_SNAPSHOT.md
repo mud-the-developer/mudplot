@@ -28,6 +28,13 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-043 bounds bivariate grids at512 before quadratic allocation;11new/
+  263related/floor11passes and4HTTP preservation checks agree. Private resource
+  Job measurements distinguish18outcomes; structure/exact-export risks remain,
+  so SEC-04 is RUNNING, not a global resource-safety claim. cb2CI's pinch Redo
+  hit-test failure is separately corrected to UI Enter/local4pass; freshLinuxCI
+  still needed. No forced clicks, new dependency/version or broad budget framework.
+
 - Latest shared htmx/license/native-browser hash and4controlled version cases,
   release metadata mismatch test and176related/floor2passes make RUST-07 PASS
   in matching-source scope. No package-label runtime handshake/new runtime added.
@@ -465,7 +472,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
 - [Editor-asset evidence](review_evidence/editor_asset_verification.json)
   retains served/compiled hashes, controlled mismatch outcomes and incomplete smoke.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING5/OPEN21/
+- [Resource evidence](review_evidence/resource_amplification_verification.json) and
+  [pinch UI evidence](review_evidence/browser_pinch_activation_verification.json)
+  retain bounded outcomes, private payload fingerprints and current CI limits.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

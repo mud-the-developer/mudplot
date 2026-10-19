@@ -95,13 +95,14 @@ def test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame(
             arg=f"layer-at:3:{active}",
             timeout=5000,
         )
-        page.get_by_role("button", name="Undo", exact=True).click()
+        # Native key activation avoids CDP pinch-zoom hit-test/scroll races.
+        page.get_by_role("button", name="Undo", exact=True).press("Enter")
         _wait_until(
             lambda: session.store.state.panels[active].layers[3].at,
             lambda at: at == dragged,
         )
         _settle(page)
-        page.get_by_role("button", name="Redo", exact=True).click()
+        page.get_by_role("button", name="Redo", exact=True).press("Enter")
         _wait_until(
             lambda: session.store.state.panels[active].layers[3].at,
             lambda at: at == moved,

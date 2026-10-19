@@ -1,0 +1,844 @@
+{
+  "source_sha256": {
+    "mudplot/_histogram.py": "f9775c1b7d7c36e728e1007c78b6287d9ab6e7e1b4868bb3da669816d5b733e2",
+    "mudplot/validate.py": "cb93d80f8323448590ded447cd3b17f06fc37829997d6f25d053e86365afa655",
+    "mudplot/capabilities.py": "add0f5d681edbd719d8a9bd65807cbfb84daf07b5e37a9f60853357937745494",
+    "mudplot/api.py": "1e9dc2e4796ad9ebe9f5ab21860d9eecf8afbc509577b3dd88dee9b43389f4cd",
+    "tests/test_review_bivariate_limits.py": "5b3cdc35dfa7b368a8bcb2f93328f1bf77786bb3fa34d8cbbb1de4a9b4238b48",
+    "scripts/check_minimum_versions.py": "5ff4ed52a1fe0599deddf8f81c5bc92b193ce21dd0842e4002851f8257c140d5",
+    "schemas/capabilities.json": "85a2178d49553f483da0d13d0d6e3191a92b9014f8506ccf31b9ba11de17847c",
+    "docs/REFERENCE.md": "eb73238645fa82654f26b8e00b0faff65e9e610d969124c8ca84948814c94f5c"
+  },
+  "before_resource_outcomes": [
+    {
+      "input_bytes": 18,
+      "memory_limit_bytes": 67108864,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 0.49095230002421886,
+      "exit_code": 23,
+      "wall_timeout": false,
+      "peak_rss_bytes": 13463552,
+      "peak_committed_bytes": 8216576,
+      "job_assigned_before_resume": true,
+      "case": "guard-selfcheck",
+      "worker_status": "guarded-memory-error"
+    },
+    {
+      "input_bytes": 141,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.081024599960074,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211386368,
+      "peak_committed_bytes": 232071168,
+      "job_assigned_before_resume": true,
+      "case": "normal-preview",
+      "worker_status": "ok",
+      "requested_pixels": [
+        400,
+        300
+      ],
+      "actual_pixels": [
+        400,
+        300
+      ]
+    },
+    {
+      "input_bytes": 148,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.3791207000031136,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211165184,
+      "peak_committed_bytes": 231841792,
+      "job_assigned_before_resume": true,
+      "case": "huge-dpi-preview",
+      "worker_status": "ok",
+      "requested_pixels": [
+        4000000000,
+        3000000000
+      ],
+      "actual_pixels": [
+        2000,
+        1500
+      ]
+    },
+    {
+      "input_bytes": 157,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.0860038000391796,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211263488,
+      "peak_committed_bytes": 232161280,
+      "job_assigned_before_resume": true,
+      "case": "huge-canvas-preview",
+      "worker_status": "ok",
+      "requested_pixels": [
+        1000000000000,
+        1000000000000
+      ],
+      "actual_pixels": [
+        2000,
+        2000
+      ]
+    },
+    {
+      "input_bytes": 159,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.4083501999848522,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211091456,
+      "peak_committed_bytes": 231837696,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-million",
+      "worker_status": "memory-budget-blocked"
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.1107000000192784,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211230720,
+      "peak_committed_bytes": 232112128,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-million",
+      "worker_status": "memory-budget-blocked"
+    },
+    {
+      "input_bytes": 166,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.4873071999754757,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 513241088,
+      "peak_committed_bytes": 536178688,
+      "job_assigned_before_resume": true,
+      "case": "private-structure-A",
+      "worker_status": "memory-budget-blocked"
+    },
+    {
+      "input_bytes": 205,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 3.4499981999979354,
+      "exit_code": 1,
+      "wall_timeout": false,
+      "peak_rss_bytes": 549036032,
+      "peak_committed_bytes": 536870912,
+      "job_assigned_before_resume": true,
+      "case": "private-structure-B",
+      "worker_status": "nonzero-no-final-worker-json"
+    },
+    {
+      "input_bytes": 35106,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.4667373999836855,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 69591040,
+      "peak_committed_bytes": 90312704,
+      "job_assigned_before_resume": true,
+      "case": "many-layers",
+      "worker_status": "error"
+    },
+    {
+      "input_bytes": 262773,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.1910687999916263,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 217677824,
+      "peak_committed_bytes": 238444544,
+      "job_assigned_before_resume": true,
+      "case": "matrix-256",
+      "worker_status": "ok"
+    },
+    {
+      "input_bytes": 73880,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 8.157409299979918,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211021824,
+      "peak_committed_bytes": 231874560,
+      "job_assigned_before_resume": true,
+      "case": "long-title",
+      "worker_status": "ok"
+    },
+    {
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.058034499990754,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 210984960,
+      "peak_committed_bytes": 231698432,
+      "job_assigned_before_resume": true,
+      "case": "private-output-A",
+      "worker_status": "memory-budget-blocked"
+    },
+    {
+      "input_bytes": 164,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.4150634000543505,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211324928,
+      "peak_committed_bytes": 232120320,
+      "job_assigned_before_resume": true,
+      "case": "private-output-B",
+      "worker_status": "memory-budget-blocked"
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 4.020137199957389,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211369984,
+      "peak_committed_bytes": 232034304,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-boundary-512",
+      "worker_status": "ok"
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 3.354335899988655,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211062784,
+      "peak_committed_bytes": 231886848,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-boundary-513",
+      "worker_status": "ok"
+    },
+    {
+      "input_bytes": 151,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.2540713000344113,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211304448,
+      "peak_committed_bytes": 232042496,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-boundary-512",
+      "worker_status": "ok"
+    },
+    {
+      "input_bytes": 151,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.540796000044793,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211128320,
+      "peak_committed_bytes": 231731200,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-boundary-513",
+      "worker_status": "ok"
+    }
+  ],
+  "after_resource_outcomes": [
+    {
+      "input_bytes": 18,
+      "memory_limit_bytes": 67108864,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 0.6528976000263356,
+      "exit_code": 23,
+      "wall_timeout": false,
+      "peak_rss_bytes": 13291520,
+      "peak_committed_bytes": 8007680,
+      "job_assigned_before_resume": true,
+      "case": "guard-selfcheck",
+      "worker_status": "guarded-memory-error",
+      "cpu_user_seconds": 0.0,
+      "cpu_kernel_seconds": 0.03125
+    },
+    {
+      "input_bytes": 22,
+      "memory_limit_bytes": 67108864,
+      "cpu_seconds_limit": 1,
+      "wall_seconds_limit": 12,
+      "seconds": 6.282031900016591,
+      "exit_code": 3221225540,
+      "wall_timeout": false,
+      "peak_rss_bytes": 13430784,
+      "peak_committed_bytes": 8187904,
+      "job_assigned_before_resume": true,
+      "case": "guard-cpu-selfcheck",
+      "worker_status": "cpu-selfcheck-started",
+      "cpu_user_seconds": 3.546875,
+      "cpu_kernel_seconds": 1.34375
+    },
+    {
+      "input_bytes": 141,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5424727000063285,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211128320,
+      "peak_committed_bytes": 232017920,
+      "job_assigned_before_resume": true,
+      "case": "normal-preview",
+      "worker_status": "ok",
+      "cpu_user_seconds": 0.453125,
+      "cpu_kernel_seconds": 0.40625,
+      "requested_pixels": [
+        400,
+        300
+      ],
+      "actual_pixels": [
+        400,
+        300
+      ]
+    },
+    {
+      "input_bytes": 148,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.1625016999896616,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211353600,
+      "peak_committed_bytes": 232161280,
+      "job_assigned_before_resume": true,
+      "case": "huge-dpi-preview",
+      "worker_status": "ok",
+      "cpu_user_seconds": 0.546875,
+      "cpu_kernel_seconds": 0.28125,
+      "requested_pixels": [
+        4000000000,
+        3000000000
+      ],
+      "actual_pixels": [
+        2000,
+        1500
+      ]
+    },
+    {
+      "input_bytes": 157,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5506311999633908,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211091456,
+      "peak_committed_bytes": 231804928,
+      "job_assigned_before_resume": true,
+      "case": "huge-canvas-preview",
+      "worker_status": "ok",
+      "cpu_user_seconds": 0.53125,
+      "cpu_kernel_seconds": 0.3125,
+      "requested_pixels": [
+        1000000000000,
+        1000000000000
+      ],
+      "actual_pixels": [
+        2000,
+        2000
+      ]
+    },
+    {
+      "input_bytes": 159,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6463796999887563,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65286144,
+      "peak_committed_bytes": 52420608,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-million",
+      "worker_status": "validation-rejected",
+      "cpu_user_seconds": 0.15625,
+      "cpu_kernel_seconds": 0.1875
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.0341433999710716,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65093632,
+      "peak_committed_bytes": 52310016,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-million",
+      "worker_status": "validation-rejected",
+      "cpu_user_seconds": 0.171875,
+      "cpu_kernel_seconds": 0.15625
+    },
+    {
+      "input_bytes": 166,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.251944499963429,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 514072576,
+      "peak_committed_bytes": 536625152,
+      "job_assigned_before_resume": true,
+      "case": "private-structure-A",
+      "worker_status": "memory-budget-blocked",
+      "cpu_user_seconds": 0.546875,
+      "cpu_kernel_seconds": 0.390625
+    },
+    {
+      "input_bytes": 205,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.9197864000452682,
+      "exit_code": 1,
+      "wall_timeout": false,
+      "peak_rss_bytes": 548982784,
+      "peak_committed_bytes": 536870912,
+      "job_assigned_before_resume": true,
+      "case": "private-structure-B",
+      "worker_status": "nonzero-no-final-worker-json",
+      "cpu_user_seconds": 1.296875,
+      "cpu_kernel_seconds": 0.921875
+    },
+    {
+      "input_bytes": 35106,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.2533545999904163,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 69197824,
+      "peak_committed_bytes": 89915392,
+      "job_assigned_before_resume": true,
+      "case": "many-layers",
+      "worker_status": "error",
+      "cpu_user_seconds": 0.5625,
+      "cpu_kernel_seconds": 0.359375
+    },
+    {
+      "input_bytes": 262773,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6484943000250496,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 218255360,
+      "peak_committed_bytes": 238948352,
+      "job_assigned_before_resume": true,
+      "case": "matrix-256",
+      "worker_status": "ok",
+      "cpu_user_seconds": 0.5625,
+      "cpu_kernel_seconds": 0.40625
+    },
+    {
+      "input_bytes": 73880,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 8.83313410001574,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211415040,
+      "peak_committed_bytes": 232185856,
+      "job_assigned_before_resume": true,
+      "case": "long-title",
+      "worker_status": "ok",
+      "cpu_user_seconds": 4.4375,
+      "cpu_kernel_seconds": 2.921875
+    },
+    {
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.5059964999672957,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 212213760,
+      "peak_committed_bytes": 232906752,
+      "job_assigned_before_resume": true,
+      "case": "private-output-A",
+      "worker_status": "memory-budget-blocked",
+      "cpu_user_seconds": 0.40625,
+      "cpu_kernel_seconds": 0.34375
+    },
+    {
+      "input_bytes": 164,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.1850036999676377,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 210894848,
+      "peak_committed_bytes": 231571456,
+      "job_assigned_before_resume": true,
+      "case": "private-output-B",
+      "worker_status": "memory-budget-blocked",
+      "cpu_user_seconds": 0.484375,
+      "cpu_kernel_seconds": 0.390625
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 3.452141000016127,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211140608,
+      "peak_committed_bytes": 231890944,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-boundary-512",
+      "worker_status": "ok",
+      "cpu_user_seconds": 1.796875,
+      "cpu_kernel_seconds": 0.9375
+    },
+    {
+      "input_bytes": 155,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6574242999777198,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65331200,
+      "peak_committed_bytes": 52531200,
+      "job_assigned_before_resume": true,
+      "case": "hexbin-boundary-513",
+      "worker_status": "validation-rejected",
+      "cpu_user_seconds": 0.234375,
+      "cpu_kernel_seconds": 0.125
+    },
+    {
+      "input_bytes": 151,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.695619500009343,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211292160,
+      "peak_committed_bytes": 231878656,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-boundary-512",
+      "worker_status": "ok",
+      "cpu_user_seconds": 0.484375,
+      "cpu_kernel_seconds": 0.421875
+    },
+    {
+      "input_bytes": 151,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.644333900010679,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64995328,
+      "peak_committed_bytes": 52121600,
+      "job_assigned_before_resume": true,
+      "case": "hist2d-boundary-513",
+      "worker_status": "validation-rejected",
+      "cpu_user_seconds": 0.28125,
+      "cpu_kernel_seconds": 0.109375
+    }
+  ],
+  "http_boundary_outcomes": [
+    {
+      "editor": "python",
+      "geometry": "hexbin",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "resolution_boundary": 512,
+      "rejected_value": 513,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "python",
+      "geometry": "hist2d",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "resolution_boundary": 512,
+      "rejected_value": 513,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "geometry": "hexbin",
+      "status": 400,
+      "content_type": "application/json",
+      "resolution_boundary": 512,
+      "rejected_value": 513,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "geometry": "hist2d",
+      "status": 400,
+      "content_type": "application/json",
+      "resolution_boundary": 512,
+      "rejected_value": 513,
+      "spec_cache_preserved": true
+    }
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "Legacyhist2d/hexbinacceptedunboundedpositivegridcounts.NativequadraticallocationsfromsmallrequestsreachedprivateJobmemorylimit.FIND043sharedvalidatornowrejectsresolutionabove512perhist2daxis(513edges)/hexbingridsizewithoutclampingdata. Before11tests7failed4validboundarypassed;after11pass.",
+  "budget_scope": "PRIVATETESTWindowsJobcreatedlimitsBEFORECREATE_SUSPENDEDworkerisassigned/resumed.Committedmemory512MiB/process(default),singleprocess,configureduserCPU8s,parentblockingwait12splussetup/terminationoverhead;selfchecks64MiB/CPU1s.PSAPIpeakRSSandjobpeakCOMMITareDIFFERENT\u2014RSSincludesfile/sharedmappedpagesandmayexceedcommitlimit.CPUlimitsarecoarse;observedCPUselfchecktimeisrecorded,notinstant1sclaim.GuardsareNOTinstalledproductlimits.",
+  "interpreter_scope": "uvvenvlaunchercreatesachildandstrictone-processselfcheckrejecteditBEFOREanylargecase.ActualbaseCPythonfromsys._base_executableandsamevenvsite-packagesareEXPLICITforguardedworker,notunreportedfallback.Nohostvenv/packagefilesmodified.Privateinterpreter.jsonretainsfullprovenance.",
+  "remaining_risks": "SEC04RUNNING,NOTPASS.Structureexpansionandlargeexactraster/vector-imageworkstillhittheTESTmemorybudget;unpatchedinputpayloads/scriptsremainprivate,onlypath-freeoutcomes/hashesreported.Many-layersfixturehitsa paletteguard,NOTgeneral layer count cap.Longtextandmatrixsamplepasswithinmeasuredscope,NOThardresourceguarantees.Noautomaticglobalmemory/time/processisolationinproduct;bytescap/preview2000boundareNOTcomputecaps.",
+  "decision": "Firstsmallsharedmitigationusespublication-orientedbivariate512resolution(max262144rectangularcells)withmeasuredboundaryruntime.No genericbudgetframework/newconfig/specversion/panelautogrowthchange.Previewcapunchanged;furtherstructure/exportbudgetpolicyneededbeforereleaseSEC04completion.",
+  "qa_note": "Selfchecklauncher1816andfirstCPUwallstoparemeasurement-calibrationrecords,notproducttests/passes.CorrectedactualCLIreferencecommandtodocsnotinventedreference;generatedcaps/referencechecked. No forcedlargeallocationoutsideJobguard.",
+  "environment_overrides": {
+    "bounded-resource-measurement": {
+      "child_executable": "explicit sys._base_executable (same CPython3.12.15), not the uv venv trampoline",
+      "child_PYTHONPATH": "<workspace-root> + <current-venv-site-packages>",
+      "child_limits": "Win32Job process committed-memory512MiB/defaultCPU8s plus parent wait12s; selfchecks64MiB/CPU1s. RSS includes mapped pages and is NOT equal to commit limit.",
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "MPLCONFIGDIR": "<owned-evidence>/mpl-cache"
+    },
+    "floor-bivariate": {
+      "PYTEST_ADDOPTS": "-k \"test_review_bivariate_limits\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "bounded-resource-measurement",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "70b83d19d9919d8444f03fd10fa39295d104d88045f16549eb546484ba44be62"
+    },
+    {
+      "name": "http-boundaries",
+      "argv": [
+        "python",
+        "<evidence>\\http_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "4 actual Python/Rust HTTP bivariate limit rejections preserve committed spec/PNG"
+      ],
+      "log_text_sha256": "cfc40dbf35a12cfdb5f17627b8b9d8baf63dc23b215bb22d31f75abe70dd0e11"
+    },
+    {
+      "name": "bivariate-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_bivariate_limits.py",
+        "tests/test_new_layers.py",
+        "tests/test_histogram_statistics.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_json_schema_compat.py",
+        "tests/test_review_editor_assets.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "263 passed in 89.97s (0:01:29)"
+      ],
+      "log_text_sha256": "e165e5b5539b6e7fdbe7883da895dd88f5cc21603a1a261f031255cb4fdf5616"
+    },
+    {
+      "name": "floor-bivariate",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "11 passed, 3120 deselected, 13 warnings in 1.46s"
+      ],
+      "log_text_sha256": "689100d8486cc030cfc53b7e1d2c84620f3f942d7f7d60b65e37bf5ba95a404f"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "254 files already formatted"
+      ],
+      "log_text_sha256": "22728b34ab6ca369e20e152bfcadbfb2cab8ee18e689e24b26a7823fc7c5b1ee"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "8ec30e134e552ecc75060ccc8ea62e1387cab2bf83735cb5f4acb1f0e914436e"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "fd0f1a63f352f2a9ab45b0968c54977c151e15762e917f4bdcd8f1e707d9c1dd"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "before-resource-results.json": "5fd4b4981355e7507484c4bbe1936c5b4331547395fa1d873f5ecc33ab913bb9",
+    "resource_results.json": "a02ef6a79cd5d9d3d9bff0489bad3c6b42e792c4c04aa37bc220f64b3635f924",
+    "probe.py": "32d974bfd1db9bbbcaddc76f93c1dcc370a42c6a5e3683da912ddc7b4bf7cdc4",
+    "worker.py": "fb0d0d96151f5ca4c9bbdd3c08ca8a3dc3d2cd1241ee6c7ceedc749f45850fa2",
+    "qa.py": "27391ce6289f3dd4bbb1c7dd76a19552211369d38fde96044e39024809b88966",
+    "http_probe.py": "28d05fee61686a9b669d07461bbc4a5658683184bb52c103aae58322a88748a0",
+    "http_boundary_results.json": "52befa47909b228ef11c029a79797353517976a70b88e434bcb338307062d949",
+    "environment_overrides.json": "2fd74a96ec3f48bb00153074142573261feb93eba0a82eb2957a4a5e400fe86d",
+    "interpreter.json": "a715fc50ad19c5756ef939b9eec649a8e7b9ea0f1f1e979b3c8ea93c2f7d935a",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "b3d4dd59129326a9ab0da40bd089551d400268aee919e373bbb90c3a33530c0f",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "guard-launcher-selfcheck.json": "ee2c19961fb8835d87403a8c7be9156c4daa7a1006be4e739bf9059de09fb9ae",
+    "guard-cpu-first-wall-stop.json": "a2964c626bef5d55a0b7c5ca51d5d6492363e4bf0cbfd560b9d95ef96b9272cc"
+  }
+}

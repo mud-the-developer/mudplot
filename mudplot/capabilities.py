@@ -18,6 +18,7 @@ from ._histogram import (
     HISTOGRAM_ELEMENTS,
     HISTOGRAM_MULTIPLES,
     HISTOGRAM_STATS,
+    MAX_BIVARIATE_BINS,
     MAX_HISTOGRAM_BINS,
 )
 from ._kde import MAX_KDE_POINTS
@@ -898,6 +899,10 @@ def capabilities() -> dict:
             "numeric_curves": "clipping changes appearance, never merges raw curves",
             "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
             "max_semantic_curves": MAX_CURVES,
+        },
+        "bivariate_density": {
+            "max_bins_per_axis": MAX_BIVARIATE_BINS,
+            "max_hexbin_gridsize": MAX_BIVARIATE_BINS,
         },
         "histogram": {
             "fields": _action_fields(HistogramSpec),

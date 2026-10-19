@@ -49,6 +49,17 @@ chunked 요청을 지원합니다.
 렌더 자식은 제외했습니다. 이는 메모리/CPU hard limit·동시 부하·모든 OS 보장이 아닙니다.
 정확한 범위/결과는 [리뷰 대장](docs/REVIEW_CHECKLIST_STATUS.md)을 확인하세요.
 
+## 계산과렌더자원
+
+요청bytes한도는CPU/RAM/렌더계산량budget이아닙니다. Preview는한축2000pixel로제한되지만
+구조복잡도/정확한크기export는훨씬큰작업을요구할수있습니다. 가져오는spec/data를신뢰하고
+untrusted/매우큰작업은호출자가관리하는resource-limitedprocess에격리하며처리service로노출하지마세요.
+
+Hist2d는축당최대512bins(513edges),hexbin은gridsize최대512를지원하고초과는clamp나
+nativequadraticallocation이아닌validation에서거부합니다. 이것이전체memory/timehardlimit는
+아닙니다. 구조/export자원정책은검토중이며리뷰probe의WindowsJob제한은시험격리이지
+제품에설치된sandbox가아닙니다. 미패치stresspayload는private로보관합니다.
+
 ## 파일과 실행 경계
 
 HTTP static/export route는 고정 bundled 자산이나 현재 figure bytes만 선택합니다.

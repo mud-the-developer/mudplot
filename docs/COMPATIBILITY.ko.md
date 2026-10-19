@@ -122,6 +122,17 @@ Sessionlock은후보render/commit을직렬화하며동시도착의FIFO공정성�
 Tab별독립panel선택·원격다중사용자충돌해결·새revision거절API가아닙니다. Python
 /action/rawform의JSONaction도기존HTML/redirectUI응답이지새JSONRPCroute가아닙니다.
 
+## Bivariate해상도와자원범위
+
+Hist2d의정수/정수pair해상도는축당1..512또는3..513개의증가하는finiteedge를지원하고
+hexbin gridsize는1..512입니다. 초과는공통validation에서명시실패하며default/정상count/
+edge값/density의미를조용히clamp/재작성하지않습니다. 1Dhistogram은기존10000bins상한입니다.
+
+이는nativebivariategrid증폭의완화이지모든계산량제한은아닙니다. Bytes/previewpixel한도가
+구조확장/정확한export rasterization을제한하지는않으며일부probe는privateprocessbudget에
+걸려SEC-04는진행중입니다. 완전한안전/용량인증으로보지말고큰/untrusted작업은호출자가
+관리하는격리process를사용하세요.
+
 ## 자동 layout 한계
 
 Adaptive layout에서자동paneltitle/suptitle·namedoutsidelegend는draw뒤bbox를검사합니다.

@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Bound legacy bivariate histogram bins per axis and hexbin gridsize to512 before
+  native quadratic allocation, with explicit validation/capability metadata and no
+  clamping of accepted values. Broader structural/export resource review remains open.
 - Verified shared htmx/license ownership and native browser asset hashes, plus
   controlled compatible-label/incompatible-spec/capability startup boundaries.
   Clarified matching-checkout policy without adding a runtime version handshake.

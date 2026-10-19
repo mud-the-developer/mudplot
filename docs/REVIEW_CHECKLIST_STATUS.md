@@ -18,6 +18,34 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 63차 — 제한process의자원증폭측정과bivariate상한
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-resource-guard-bsx7rf8a`와
+  [sanitized RSS/commit/time·before/after·HTTP](review_evidence/resource_amplification_verification.json)을 보존합니다.
+  미패치구조/export의구체payload와probe소스는private이며공개요약에는종료/크기/hash만남깁니다.
+- WindowsJob을먼저설정하고CREATE_SUSPENDED child를assign한뒤에만resume했습니다.
+  UVlauncher가한child제한에막힌첫자체검사는큰입력전중단됐고명시적으로같은baseCPython3.12.15+
+  현venvsite-packages를선택했습니다. 64MiB memory자체검사와CPU/WALL종료검사를기록하며
+  기본512MiB는processcommit한도이지RSS한도가아닙니다. CPU검사/종료는coarse이며setup/
+  termination오버헤드를뺀순간hard-time보장으로해석하지않습니다. 이는제품에설치한guard가아닙니다.
+- **FIND-043:** 작은JSON의legacyhist2d/hexbin무제한positivegrid가nativequadraticallocation까지
+  갔습니다. 공통validator에축당512bins/513edges·hexgridsize512를두어초기11회귀7실패/4정상에서
+  최종11통과했습니다. 정상512는원값대로끝나고초과는clamp가아닌validation거절입니다.
+  Native/PythonHTTP4거절은현재spec/cache를보존하고caps를재생성했습니다. 1D10000bin은유지합니다.
+- Before17/after18제한child측정에서큰요청DPI/canvaspreview는실제2000pixel이내였고
+  bivariate초과는memorybudget중단에서validation거절(~65MBpeakRSS)로바뀌었습니다.
+  다른구조확장/정확한raster·vector-image export는여전히시험budget에걸렸으므로SEC-04를
+  OPEN→RUNNING으로만변경합니다. Layer예제의palette거절도보편layercountcap이라고하지않습니다.
+- 관련263통과·floor11통과/3120deselected/경고13·HTTP4·측정18기록·양platformtype/Ruff254/
+  schema/packaging10명령exit0입니다. 측정완료exit0이모든제품case의성공이라는뜻은아닙니다.
+  13은전부3종Pyparsing이며새dependency/specversion/전역budgetframework는없습니다.
+- 기준cb2CI39187999070은3.12의확대RedoLocatorclick pointer-interception1실패/3.10cancelled입니다.
+  이전focuswait/data검사는통과했고[pinch UI활성화근거](review_evidence/browser_pinch_activation_verification.json)는
+  같은Undo/Redo버튼을Enter로활성화해정확한state검사를유지합니다. Pointerdrag는그대로이며
+  forceclick/직접Store호출이아닙니다. 관련로컬4통과이지모든mouse-toolbar/nativezoom보장은아닙니다.
+- SEC-04와CI-01은진행중이며구조/export추가정책및새Linux전체CI가필요합니다. 버전/의존성/
+  lock/tag/배포·loop1은유지하고큰작업을무제한으로실행하거나실패한CI를성공으로세지않습니다.
+
 ## 62차 — 공유static/license와matchingcheckout경계
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-editor-assets-kff9yi0o`와
@@ -1672,7 +1700,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | SEC-01 | P0 | PASS | loopback bind와 Host 검증 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-02 | P0 | PASS | Origin과 mutation 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-03 | P0 | PASS | 16 MiB 요청 한도 | _Handler._read_body; protect_local_boundary limited Bytes | test_review_body_framing.py(13); check_request_body_limits.py(39); 실제 PID RSS/peak·상태 보존 11차 기록 |
-| SEC-04 | P1 | OPEN | 작은 요청의 과도한 계산 방어 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
+| SEC-04 | P1 | RUNNING | 작은 요청의 과도한 계산 방어 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-05 | P1 | PASS | CSP·no-store·브라우저 header | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-06 | P1 | PASS | 파일 경로·임시 파일 경계 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
 | SEC-07 | P1 | PASS | 외부 참조·입력의 실행 금지 | dashboard/editor_server.py; mudplot-editor/src/; SECURITY.md | test_dashboard_editor.py; test_editor_browser.py; Rust guards |
@@ -1712,8 +1740,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 123, RUNNING 5, OPEN 21, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 현재 상태: PASS 123, RUNNING 6, OPEN 20, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.

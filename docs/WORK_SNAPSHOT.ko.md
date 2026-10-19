@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-043은bivariategrid512를quadraticallocation전검사해새11/관련263/floor11/HTTP4가
+  맞습니다. PrivateJob의18자원측정은구조/정확한export위험을남겨SEC-04는RUNNING이지
+  전역자원안전보장은아닙니다. cb2CI의pinchRedo hittest실패는같은UI버튼Enter/로컬4통과로
+  별도보완하며새LinuxCI가필요합니다. Forceclick/새의존성·버전/큰budgetframework는없습니다.
+
 - 최신공유htmx/license/nativebrowserhash·4controlledversion·metadata거절과관련176/
   floor2로RUST-07은matching-source범위PASS입니다. Runtimepackagehandshake를추가하지
   않았고전체표준smoke의outertimeout은focused성공과구분해미확인으로남깁니다.
@@ -386,7 +391,10 @@
   Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
 - [Editorasset 근거](review_evidence/editor_asset_verification.json)에
   served/compiledhash·controlledmismatch·미확인smoke를보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING5/OPEN21/DEFERRED1**.
+- [자원근거](review_evidence/resource_amplification_verification.json)와
+  [pinch UI근거](review_evidence/browser_pinch_activation_verification.json)에제한측정/
+  privatepayload지문/현재CI한계를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS123/RUNNING6/OPEN20/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 
