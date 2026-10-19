@@ -22,6 +22,12 @@
 
 ## 검증과 리뷰 상태
 
+- **사용자scope는v1안정화까지만입니다.** 새기능/API/추측최적화/v1.1확장/추정releasepublish는
+  중단하고옛loop문구를새사람scope를넓히는권한으로쓰지않습니다.
+- 정확한기존v1.0.0checksum/certificate/repo·workflow·tag·source와현재권한/auditguard로CI-08/09는
+  범위PASS입니다. 관련34/floor6/3lockedAudit가맞고받은코드실행/새release는없습니다. 무결성/빌드출처는
+  현재mainruntime안전성이아니며fa1CI중unit은로컬보존합니다.
+
 - 최신작성자fixed-envbaseline/control/diff검토와독립group/좌표/canvas로CI-04는범위PASS입니다.
   관련76/floor3통과이며pixel0이어도의미가틀린control이있어이미지유사도를의미검사로대체하지않습니다.
   기존baseline교체/자동재생성/사람AT승인은없습니다. 정확한ce717CI5job성공으로이전CI포맷검사를
@@ -457,7 +463,9 @@
   독립검사/축소trace/실제실패사유를보존했습니다.
 - [Visual계약 근거](review_evidence/visual_contract_verification.json)에수치oracle/
   의미/0diff/고정env지문/작성자승인을보존했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS137/RUNNING6/OPEN6/DEFERRED1**.
+- [공급망 근거](review_evidence/supply_chain_verification.json)에정확한구버전release의
+  무결성/identity/권한/현재runtime범위를분리했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS139/RUNNING6/OPEN4/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

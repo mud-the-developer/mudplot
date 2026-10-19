@@ -120,6 +120,24 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**목표는v1안정화까지만입니다.** 사용자가scope를좁혔으므로새기능/API/추측최적화/v1.1확장을
+중단하고기존회귀/설치·출력보존/현재CI/필요안전성에집중합니다. 옛loop문구가새범위를확장하거나
+publish권한을주는것은아닙니다.
+
+**리뷰73차에서기존release와공급망정책을확인했습니다.** 기존v1.0.0wheel/sdist/checksum의
+정확digest와OIDCcertificate의repo/releaseworkflow/tag/source986a168/hostedrunner를맞췄고서명tag3db667도
+986a168을가리킵니다. 현재main과구분하며wrongref거절/tamperhash불일치만검사하고받은코드실행/
+새release생성은없습니다. Read-onlyCI/TeX와buildOIDC/publisher권한분리·fail-closedsourceguards/
+3lockedPythonaudit의예외없음을확인했습니다.
+
+새6/관련34/floor6/3228deselected/Pyparsing13경고·품질10명령·activeLSP2clean,
+[근거](review_evidence/supply_chain_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS139/RUNNING6/OPEN4/DEFERRED1**입니다. CI-08/09PASS는무결성/출처/정책범위이지현재runtime
+안전승인이아닙니다. fa1CI39218632870중unit은로컬보존하고runtime/버전/의존성/lock/tag/배포는유지하며
+좁힌v1안정화내기존회귀/검증만마무리합니다.
+
+### 이전 리뷰72차
+
 **리뷰72차에서고정환경image검토와의미oracle를함께기록했습니다.** Repeat0pixel과독립integer
 좌표/group/axis/canvas는다른검사입니다. Groupcollapsecontrol은pixel같음/artistgroup틀림,
 색만다른control은numeric같음/pixel0.617%변화였고평균오차/noise를포괄자동승인으로삼지않았습니다.

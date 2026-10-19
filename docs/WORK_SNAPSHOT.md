@@ -28,6 +28,14 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- **Operator scope: v1 stabilization only.** No new features/APIs/speculative
+  optimization/v1.1 expansion or inferred release publishing. Existing loop text
+  remains a wake trigger, not authority to broaden the newer human scope.
+- Exact existing-v1.0.0 checksum/certificate/repo-workflow-tag-source verification
+  and current scoped permission/audit guards make CI-08/09 PASS.34related/floor6
+  pass/three locked audits clean; no downloaded code executed/new release created.
+  Integrity/build provenance is not current-main runtime safety. Unit local duringfa1CI.
+
 - Latest author-reviewed fixed-env baseline/control/diffs plus independent
   group/coordinate/canvas checks make CI-04 PASS in scope.76related/floor3passes;
   zero-pixel wrong-group control proves image similarity is not semantic validity.
@@ -547,7 +555,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains exact bounded grammar, independent checks, shrunk traces and failure reasons.
 - [Visual-contract evidence](review_evidence/visual_contract_verification.json)
   records numeric oracles, meaningful/zero diffs, fixed-env hashes and author approval.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS137/RUNNING6/OPEN6/
+- [Supply-chain evidence](review_evidence/supply_chain_verification.json)
+  separates exact old-release integrity/identity, permissions and current runtime scope.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS139/RUNNING6/OPEN4/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

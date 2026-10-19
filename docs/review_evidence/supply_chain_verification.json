@@ -1,0 +1,366 @@
+{
+  "source_sha256": {
+    "tests/test_supply_chain_policy.py": "279f893d25489d06270ab59aca162d7c0c54fcb0e636028e6c46df2ebf1e908e",
+    "scripts/check_minimum_versions.py": "8c3cbd793222051df3ac8456748020c16554bb7db54d5f5a2c2dbc7329562407",
+    "scripts/audit_dependencies.py": "ad0be55fb12b461fca347a17cf51318d43e7650789669b47af700d7be15e5e09",
+    ".github/workflows/ci.yml": "d572e18ada96da2e99cb9ace3db2d9df76653f87c21829d23581d0f3df0868b3",
+    ".github/workflows/tex-matrix.yml": "b054b3df8c8967203b1bc3a9ccee2d23f0a93d0d97c44e67f2ab86df264be1d7",
+    ".github/workflows/release.yml": "11b5a6276beead11be50f457c112756656a23475f6e1b20afa5314e4ad6e60a7",
+    "pyproject.toml": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb",
+    "uv.lock": "659babbe662828debebe4c714029b00fe78fe17a79742699d2097874547609df",
+    "scripts/check_minimum_versions.py.lock": "720b9d4f80e019d8c324c2a7a6e9c7eb8e152c2115195c19c1d16e038c7ace34",
+    "scripts/audit_dependencies.py.lock": "a656981053bf92115fe25f2aba60d2d7a2e062dea0fc0516f2260685ad41b0da",
+    "mudplot-editor/Cargo.lock": "ad078f75def3c7cbba51112c51f4348116c9a697487134cccbfc371c7f781e94",
+    "SECURITY.md": "b5c070cae59f0d9fcbde532ef09ba190e29ae3cfff5747c1dd46713ced5c433b",
+    "SECURITY.ko.md": "3c9843565ea8372e0a6867ed650da5be7f5bf5f98994d2d2c6c9c83d554c262e"
+  },
+  "verified_existing_release": {
+    "tag": {
+      "reason": "valid",
+      "tag": "v1.0.0",
+      "target_commit": "986a168403fe17134e6330e38bd1defba1230134",
+      "target_type": "commit",
+      "verified": true
+    },
+    "assets": [
+      {
+        "asset": "mudplot-1.0.0-py3-none-any.whl",
+        "sha256": "eeeef55f31cbdd3ea890fa687d341ff43bb6b37e184a444ca4ac2ce479ab08b2",
+        "verified_certificate_policy": [
+          {
+            "subjectAlternativeName": "https://github.com/mud-the-developer/mudplot/.github/workflows/release.yml@refs/tags/v1.0.0",
+            "issuer": "https://token.actions.githubusercontent.com",
+            "sourceRepositoryURI": "https://github.com/mud-the-developer/mudplot",
+            "sourceRepositoryDigest": "986a168403fe17134e6330e38bd1defba1230134",
+            "sourceRepositoryRef": "refs/tags/v1.0.0",
+            "sourceRepositoryIdentifier": "1357270971",
+            "sourceRepositoryOwnerIdentifier": "109789371",
+            "runnerEnvironment": "github-hosted",
+            "runInvocationURI": "https://github.com/mud-the-developer/mudplot/actions/runs/37453203356/attempts/1"
+          }
+        ],
+        "gh_verify_exit_code": 0
+      },
+      {
+        "asset": "mudplot-1.0.0.tar.gz",
+        "sha256": "25b781391a28d1d9f4498652f84196a5dade367035349899907d6517c0e9ef76",
+        "verified_certificate_policy": [
+          {
+            "subjectAlternativeName": "https://github.com/mud-the-developer/mudplot/.github/workflows/release.yml@refs/tags/v1.0.0",
+            "issuer": "https://token.actions.githubusercontent.com",
+            "sourceRepositoryURI": "https://github.com/mud-the-developer/mudplot",
+            "sourceRepositoryDigest": "986a168403fe17134e6330e38bd1defba1230134",
+            "sourceRepositoryRef": "refs/tags/v1.0.0",
+            "sourceRepositoryIdentifier": "1357270971",
+            "sourceRepositoryOwnerIdentifier": "109789371",
+            "runnerEnvironment": "github-hosted",
+            "runInvocationURI": "https://github.com/mud-the-developer/mudplot/actions/runs/37453203356/attempts/1"
+          }
+        ],
+        "gh_verify_exit_code": 0
+      },
+      {
+        "asset": "SHA256SUMS",
+        "sha256": "384d6af562b99b69fdf1e790820b58614264792ddc2b56fb91ad76f0411c0b9f",
+        "verified_certificate_policy": [
+          {
+            "subjectAlternativeName": "https://github.com/mud-the-developer/mudplot/.github/workflows/release.yml@refs/tags/v1.0.0",
+            "issuer": "https://token.actions.githubusercontent.com",
+            "sourceRepositoryURI": "https://github.com/mud-the-developer/mudplot",
+            "sourceRepositoryDigest": "986a168403fe17134e6330e38bd1defba1230134",
+            "sourceRepositoryRef": "refs/tags/v1.0.0",
+            "sourceRepositoryIdentifier": "1357270971",
+            "sourceRepositoryOwnerIdentifier": "109789371",
+            "runnerEnvironment": "github-hosted",
+            "runInvocationURI": "https://github.com/mud-the-developer/mudplot/actions/runs/37453203356/attempts/1"
+          }
+        ],
+        "gh_verify_exit_code": 0
+      }
+    ],
+    "wrong_identity": {
+      "exit_code": 1,
+      "requested_wrong_identity": "https://github.com/mud-the-developer/mudplot/.github/workflows/release.yml@refs/heads/main",
+      "verified_positive_identity": "https://github.com/mud-the-developer/mudplot/.github/workflows/release.yml@refs/tags/v1.0.0",
+      "identity_equal": false,
+      "stderr": "\nError: verifying with issuer \"sigstore.dev\"\n",
+      "scope": "Negative policy contrast; CLI error wording is generic issuer verification, not asserted as a precise certificate-mismatch diagnostic."
+    },
+    "tamper_control": {
+      "expected_sha256": "eeeef55f31cbdd3ea890fa687d341ff43bb6b37e184a444ca4ac2ce479ab08b2",
+      "modified_sha256": "375fc49e9466f2eba4bbeabe86063b3e9b1a75ca21a5cdce7baf98c34a74ee3a",
+      "matches": false,
+      "scope": "Owned copy only,never executed/installed/uploaded."
+    },
+    "python_audit": {
+      "locks": [
+        "root all extras",
+        "minimum PEP723 lock",
+        "audit PEP723 lock"
+      ],
+      "clean_reports": 3,
+      "ignored_advisories": [],
+      "scope": "Known-advisory lookup for current committed versions at this time,notallvulnerabilities/runtimeapproval."
+    },
+    "scope": "Read-only existingv1.0.0 assets; currentmainisNOTtheattestedrelease. Certificate identity/verified timestamps and subject digest inspected\u2014notmerelyuntrustedpredicateclaims. No newtag/publish/deploy."
+  },
+  "selected_release": "v1.0.0",
+  "tag_object": "3db667d6b7d4d665334effd9fdba7fb6a5fb13bd",
+  "attested_source_commit": "986a168403fe17134e6330e38bd1defba1230134",
+  "current_main_not_attested_by_this_release": true,
+  "permission_table": [
+    {
+      "workflow": "CI/main and PR",
+      "contents": "read",
+      "oidc": "none",
+      "publish": "none",
+      "untrusted_pr_policy": "pull_request only, no pull_request_target/workflow_run token-bearing bridge; checkout persist-credentials:false"
+    },
+    {
+      "workflow": "TeX matrix",
+      "contents": "read",
+      "oidc": "none",
+      "publish": "none"
+    },
+    {
+      "workflow": "Release/build/tag-only",
+      "contents": "read",
+      "oidc": "write and attestations:write",
+      "publish": "none",
+      "guards": "signedannotatedGitHubverifiedtagdirectcheckoutcommit;matchingversions;lockedallthreePythonhashaudits;tests/requiredpaths/fullTeX/duplicatebuildchecksums/attest"
+    },
+    {
+      "workflow": "Release/github-release",
+      "contents": "write",
+      "oidc": "none",
+      "publish": "existing GitHub assetcreateonlyafterneedsbuild",
+      "guards": "downloads exact dist, strictchecksums, refusesexistingrelease, no clobber/upload;noalways/continue-on-error bypass"
+    }
+  ],
+  "audit_exceptions": {
+    "python_ignore_allowlist": [],
+    "scope": "rootall-extras/minimumPEP723/auditPEP723 exports, --locked/require-hashes/disable-pip;no ignoredadvisories. Cargo registry snapshot is separate SEC05 evidence,notclaimedcoveredbyPythonpip-audit. Non-advisory/localgit/private dependencies require separate review.",
+    "live_results": "59/30/29resolvedpackageexports:3No-known-vulnerabilities,exit0.Notlaterresolutionorunknownflawsecurityapproval."
+  },
+  "guard_evidence": "6newpolicytests plus existing3preflight/requiredpath20/CIeffect4/nodeps=34P;wrongtag preflight and export/vulnerability subprocess exceptions fail closed. Workflow permission/trigger/needsbuild/immutability source inspected. No realbadtag release orpublishcommand executed; guard-source/unitchecksnotmaliciousActionproof.",
+  "verification_scope": "ghattestationverifypositive3assetswithrepo+exactcertificateSANworkflowtag+OIDCissuer+sourcecommit/ref+denyselfhosted+SLSA1andverifiedtimestamp. Parsed VERIFIEDcertificateidentity/digests/subject inspected,notjustworkflow-controlledpredicate. Wrongrefnegativeexit1genericissuer-errorpreserved;positiveSANindependentlydifferent. Initialassertover-specificerrorwordingfixedinrecordnotlooseningidentitypolicy. Downloadedfilesneverinstalled/executed;tamperonlyownedcopyhashmismatch.",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "environment_overrides": {
+    "release-record-verification": {
+      "scope": "Existingv1.0.0 assets/read-only GitHub download+ghattestationcertificatepolicy;tag3db667\u2192source986a168NOTcurrentmain. Noartifactcodeexecuted/installed/no newrelease."
+    },
+    "floor-policy": {
+      "PYTEST_ADDOPTS": "-k \"test_supply_chain_policy\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "release-record-verification",
+      "argv": [
+        "python",
+        "<evidence>\\verify_records.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Exact3asset digests/checksums + verifiedcertificate repo/workflow/ref/source/hosted policy; signedannotatedtag target; wrongidentity1/tamperhashfail;3cleanlockedPythonaudits"
+      ],
+      "log_text_sha256": "a0f884e270befb95d20babe9e0f2fa4c2568684e770c6706b39e380759a72422"
+    },
+    {
+      "name": "policy-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_supply_chain_policy.py",
+        "tests/test_release_preflight.py",
+        "tests/test_required_test_paths.py",
+        "tests/test_review_ci_effects.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "34 passed in 1.98s"
+      ],
+      "log_text_sha256": "46030ed0bb329f10a3ab52c21ca505abb4fd946dd07871068c370f264a1ecce8"
+    },
+    {
+      "name": "floor-policy",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "6 passed, 3228 deselected, 13 warnings in 1.62s"
+      ],
+      "log_text_sha256": "0f99fdb12c09cf84abde4d9e679a3630ed20b6acbd2b3fdaa523e6bd1f32b631"
+    },
+    {
+      "name": "locked-audits",
+      "argv": [
+        "uv",
+        "run",
+        "--locked",
+        "--script",
+        "scripts/audit_dependencies.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "No known vulnerabilities found",
+        "Python dependency audits OK"
+      ],
+      "log_text_sha256": "91bd5e5b2425102f7e43b19ddaa10cabcc88d2777c42a3aea8f5e65458724fa0"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "267 files already formatted"
+      ],
+      "log_text_sha256": "7ccd744a63228a52732244e5547732f9e5ad5cdce331c992b9b8f83879e7b68d"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "0645711bed95f53ddc13dae4b8031fa532ed062cc61c797bffec2258ee3f6803"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "a40f1640158f40976fa173c4427ebf511cebebf105f6b79dbad28d5a0965a92f"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "release-metadata.json": "5143c98ba54a3de026914c8cbfb2a98326d94a3768f2060ccbfdd5879f0b1caf",
+    "checksum-results.json": "357a4ed5d2e1cf4e25a549eaaee301677b681eda34b4b3d9e9f99de92ac50ee1",
+    "attestation-receipts.json": "85f281b87c32491a847c7d6aba63bc50cd66d25e232f5c914135bcabfeea699d",
+    "tag-verification.json": "f1627bf76a55802404f05f56158124b8548a2c951a51ff7320f31565bef41901",
+    "verified_records.json": "94eea9526ca52679ca5c67fecbc7c2e177a0e49dc5edf04dae703530cbbb1a2d",
+    "verify_records.py": "b4cf868688e92b2c02f3068131dc665909478fd6880186c93f42898a929bb94a",
+    "verify_attestations.py": "9164f8ea46537b3b0e92fe1aa220be65767a7dca8ca227e4d5e09b0779075286",
+    "wrong-identity.log": "486941643d59bcaec905305a9ad2843539956d60f735745f77a05db562cfda19",
+    "wrong-identity-result.json": "f1e6ec7b87fdeb36f0d727efba7185941c6f168ee394a6949a0811fff5666d83",
+    "dependency-audit.log": "9ada6109f3878dd61cda8ea0dd2a8e6257ac0782a1736148efedf9d6658d110f",
+    "qa.py": "8908c5299ef4bf829783dec1c3b327a5ba1218d02953a5a60931cdb41a4efdc2",
+    "environment_overrides.json": "538a691fa743fbcddf5985fe8a44b70eeea4142ac2c6ba40138f253e043b2e47",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "2d054d25765f076393d2685361ac157798fbe6d76c7216e0b97b1b2178509ff5",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "assets/mudplot-1.0.0-py3-none-any.whl": "eeeef55f31cbdd3ea890fa687d341ff43bb6b37e184a444ca4ac2ce479ab08b2",
+    "mudplot-1.0.0-py3-none-any.whl.attestation.json": "1fb073a907e10968a571bbabaeffefeb4dbd620537bc9c3af7d393cc6a3dd153",
+    "mudplot-1.0.0-py3-none-any.whl.attestation.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/mudplot-1.0.0.tar.gz": "25b781391a28d1d9f4498652f84196a5dade367035349899907d6517c0e9ef76",
+    "mudplot-1.0.0.tar.gz.attestation.json": "1fb073a907e10968a571bbabaeffefeb4dbd620537bc9c3af7d393cc6a3dd153",
+    "mudplot-1.0.0.tar.gz.attestation.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "assets/SHA256SUMS": "384d6af562b99b69fdf1e790820b58614264792ddc2b56fb91ad76f0411c0b9f",
+    "SHA256SUMS.attestation.json": "1fb073a907e10968a571bbabaeffefeb4dbd620537bc9c3af7d393cc6a3dd153",
+    "SHA256SUMS.attestation.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

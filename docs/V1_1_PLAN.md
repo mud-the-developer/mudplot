@@ -124,6 +124,28 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Scope is now v1 stabilization only.** The operator narrowed work: no new
+features/APIs/speculative optimizations/v1.1 expansion. Focus on existing
+regressions, installation/output preservation, current CI and necessary safety
+checks. Older recurring-loop wording does not broaden this scope or grant publish.
+
+**Review phase 73 verifies an existing release and supply-chain policy.**
+Exact v1.0.0 wheel/sdist/checksum assets match digests; verified OIDC certificate
+policy pins repo/release workflow/tag/source986a168/hosted runner. Signed tag3db667
+also targets986a168, not current main. Wrong-ref verification rejects and an owned
+tampered copy mismatches hash; no downloaded code executed or release created.
+CI/TeX read-only permissions, scoped build OIDC/publisher writes and fail-closed
+source guards are tested; three locked Python audits have no ignored advisories.
+
+6new/34related/floor6passes/3228deselected/13Pyparsing warnings and10checks pass,
+activeLSP2clean. [Evidence](review_evidence/supply_chain_verification.json),
+[tracker](REVIEW_CHECKLIST_STATUS.md): **PASS139/RUNNING6/OPEN4/DEFERRED1**.
+CI-08/09 PASS is integrity/provenance/policy scope, not current runtime security
+approval. Keep unit local duringfa1CI39218632870; runtime/versions/dependencies/
+locks/tag/deploy unchanged. Finish only stabilization within the narrowed scope.
+
+### Earlier review phase 72
+
 **Review phase 72 pairs reviewed fixed-environment images with semantic oracles.**
 Exact repeat pixels and independent integer point/group/axis/canvas assertions
 cover different claims. A collapsed-group control has identical pixels but wrong

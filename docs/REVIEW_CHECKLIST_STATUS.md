@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 73차 — 기존release무결성/출처와권한·audit실패정책
+
+- 사용자가목표를 **v1안정화까지만** 으로좁혔습니다. 신규기능/API/추측최적화/v1.1확장은중단하고
+  기존기능회귀/설치·출력보존/현재CI와필요한안전성확인에집중합니다. 옛loop의v1완성문구로
+  이새scope를확장하지않으며남은전체150항목통과나tag/publish를자동조건으로추정하지않습니다.
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-supply-review-egfcnb4c`와
+  [기존asset/certificate/권한/audit](review_evidence/supply_chain_verification.json)을 보존합니다.
+- 기존v1.0.0wheel/sdist/SHA256SUMS3개를읽기전용다운로드해GitHubassetdigest와checksum을맞췄습니다.
+  검증한attestation의certificate는정확한repo/release.yml@refs/tags/v1.0.0/OIDCissuer/986a168source/
+  GitHub-hostedrunner와verifiedtimestamps를확인했습니다. 서명annotatedtag3db667의직접target도986a168입니다.
+  Release의친숙한targetCommitish=main을현재commit증거로쓰지않고현재main과구버전artifact를분리합니다.
+- 같은repo라도wrongrefidentity는exit1,ownedtampercopy는hash불일치였습니다. NegativeCLI의genericissuer
+  오류문구를특정certificate문구로단정한초기assert는기록을분리했고identity정책은완화하지않았습니다.
+  파일무결성/빌드출처/runtime안전성을분리하며받은코드를설치·실행하지않고새release/tag를만들지않았습니다.
+- 권한은CI/TeXcontentsread,tag-onlybuild의OIDC·attestwrite/publishercontentswrite를분리했습니다.
+  persistcredentialsfalse/privilegedPR없음/needsbuild/verifieddirecttag/strictchecksum/existingrelease거절/
+  no-clobber를source와guardtests로확인했습니다. 실제badtag배포를시도하거나악성Action전체방어를주장하지않습니다.
+- Root/minimum/audit3committedlock의실제locked/hashaudit는59/30/29packageexport모두knownvulnerability
+  없음/exit0이고ignore/allowlist는없습니다. Export/vulnerability프로세스실패는예외전파로중단합니다.
+  Cargoregistry의별도boundedOSV/unknownfutureadvisory·localgit/private/nonadvisory범위는별도입니다.
+- 새6/관련34통과·floor6/3228deselected/경고13·3asset정확검증/negativecontrols·양platformtype/Ruff267/
+  생성계약/packaging/실제audit10명령exit0·변경2경로activeLSPclean입니다. 13은모두3종Pyparsing입니다.
+  CI-08/09는선택한기존release/sourcepolicy범위PASS이지현재main의출처/완전안전/새릴리스승인이아닙니다.
+- fa1CI39218632870의양Rust성공/3Python진행을보호해unit은로컬보존하고제품runtime/버전/의존성/lock/
+  publish/deploy/loop1은유지합니다. 좁힌v1안정화scope안에서남은회귀/검증만마무리합니다.
+
 ## 72차 — 고정환경visualbaseline·의미oracle·diff검토기록
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-visual-baseline-svb3skvz`와
@@ -1957,8 +1983,8 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | CI-05 | P1 | PASS | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-06 | P1 | PASS | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-07 | P0 | DEFERRED | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-08 | P1 | OPEN | 체크섬·OIDC provenance 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-09 | P1 | OPEN | 공급망 권한·실패 정책 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-08 | P1 | PASS | 체크섬·OIDC provenance 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-09 | P1 | PASS | 공급망 권한·실패 정책 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | DOC-01 | P1 | PASS | 한글·영문·생성 문서 정합성 | README.md; docs/COMPATIBILITY.md; docs/V1_1_PLAN.md | test_schema_export.py; scripts/check_schema_sync.py; manual claim review |
 | DOC-02 | P1 | PASS | public API와 오류 계약 | README.md; docs/COMPATIBILITY.md; docs/V1_1_PLAN.md | test_schema_export.py; scripts/check_schema_sync.py; manual claim review |
 | DOC-03 | P1 | PASS | 발견 사항의 증거 수준 | README.md; docs/COMPATIBILITY.md; docs/V1_1_PLAN.md | test_schema_export.py; scripts/check_schema_sync.py; manual claim review |
@@ -1968,7 +1994,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 137, RUNNING 6, OPEN 6, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 139, RUNNING 6, OPEN 4, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

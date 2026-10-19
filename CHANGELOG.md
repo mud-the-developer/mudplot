@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Verified exact existing v1.0.0 release checksums and OIDC certificate identity
+  separately from current runtime quality, and added scoped supply-chain/audit
+  failure-policy guards. Ongoing work is limited to v1 stabilization.
 - Paired fixed-environment visual evidence with independent group/coordinate
   assertions and reviewed diff artifacts; no blind baseline regeneration or
   blanket cross-environment image tolerance was introduced.
