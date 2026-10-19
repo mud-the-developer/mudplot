@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Aligned paired READMEs with finite pattern/resource/checkpoint scopes and
+  executable caller-owned Figure cleanup. Added an interim API/evidence review
+  that explicitly withholds release approval and final-review sign-off.
 - Shortened default Store near-tail undo/redo using one preceding64-action state,
   retaining all history/listeners/snapshot and custom-reducer semantics. Measured
   memory tradeoff; added gesture-boundary and opt-in provenance manifest examples.

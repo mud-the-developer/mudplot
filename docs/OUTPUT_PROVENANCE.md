@@ -13,6 +13,7 @@ import platform
 import sys
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import mudplot as mp
 from matplotlib import font_manager
 
@@ -22,7 +23,8 @@ spec = mp.plot({"x": [1, 2, 3], "y": [2, 4, 3]}).line("x", "y").size(4, 3).spec
 spec.dpi = 100
 mp.save_spec(spec, out / "figure.mplot.json")
 for fmt in ("png", "pdf", "svg"):
-    mp.save(spec, out / f"figure.{fmt}")
+    figure = mp.save(spec, out / f"figure.{fmt}")
+    plt.close(figure)
 
 
 def digest(data):

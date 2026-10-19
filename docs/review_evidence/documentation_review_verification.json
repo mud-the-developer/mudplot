@@ -1,0 +1,1076 @@
+{
+  "source_sha256": {
+    "README.md": "cd2f45839294af1819d56aa4501c95a7460aa78f1640afe8f46b88a40dd40652",
+    "README.ko.md": "44e571a4008e68349879aa41fc477aa6ad697a675b42407c4ce883ed73e3a6ee",
+    "docs/REVIEW_DECISION.md": "b9babe227170bfdfb16ce5f05e574af6e99a96c53450a3be426bcf9799f98e90",
+    "docs/OUTPUT_PROVENANCE.md": "afb450b44566b4413b4aa61c538eaae08dd08abfef483bbd911fd640f3ca9163",
+    "docs/COMPATIBILITY.md": "d05f5931de34ad4845956ace4653162ee72fcda5d9affdb7714375c0c3c0a515",
+    "docs/COMPATIBILITY.ko.md": "d3111f94627458f6b8b87f941f7e4867a54c51d702b6ad416b7a552ccc03fabe",
+    "mudplot/__init__.py": "349d91132da9206cb22377e4a41c088e449fa708014c7fe3c69ee3aad09fe893",
+    "mudplot/api.py": "1e9dc2e4796ad9ebe9f5ab21860d9eecf8afbc509577b3dd88dee9b43389f4cd",
+    "mudplot/spec.py": "5fccfe3e1abf0ded55543b5e9a4d5bbb9828feca01f24f49132ab6a5bac33609",
+    "mudplot/actions.py": "e3e05dd14a4746c708f3abc61eeeaf93cb1ed9bdf293f4dcce385d661fa3f34d",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "tests/test_review_doc_contracts.py": "e5631743c901f163390ec928e98914a29f492ece8a53436e21ac576867e2d196",
+    "tests/test_review_provenance_recipe.py": "e4f98cdb796bc7155907a514a872a45a24b431ecde43a97c72b367b69ddab399",
+    "scripts/check_minimum_versions.py": "1734c1dd7e8448a2659ed5c1a0fcb4fbc19b004f76e7a45e55b3814d7aee6f5e",
+    "docs/REFERENCE.md": "eb73238645fa82654f26b8e00b0faff65e9e610d969124c8ca84948814c94f5c"
+  },
+  "public_surface_comparison": {
+    "baseline": "c4f40ab22660129ad4e35c63d1f66feb62e2dd99",
+    "scope": "AST source public names/signatures/annotated fields/declared flags\u2014not full behavior compatibility. Additive optional fields and changed defaults/types require semantic review; resource hardening is explicit.",
+    "checks": [
+      {
+        "path": "mudplot/__init__.py",
+        "kind": "root_exports",
+        "baseline_count": 41,
+        "current_count": 52,
+        "added_names": [
+          "ClusterSpec",
+          "ComponentStyleSpec",
+          "DistributionComponentsSpec",
+          "ECDFSpec",
+          "HeatmapSpec",
+          "HistogramSpec",
+          "KDE2DSpec",
+          "KDESpec",
+          "RegressionSpec",
+          "SemanticSpec",
+          "StatSpec"
+        ],
+        "removed_names": [],
+        "changed": [],
+        "same": false
+      },
+      {
+        "path": "mudplot/api.py",
+        "kind": "Plot_public_signatures",
+        "baseline_count": 70,
+        "current_count": 84,
+        "added_names": [
+          "barplot",
+          "boxenplot",
+          "clustermap",
+          "countplot",
+          "ecdf",
+          "facet",
+          "joint",
+          "kde2d",
+          "lineplot",
+          "pair",
+          "pointplot",
+          "residplot",
+          "share_axis",
+          "swarmplot"
+        ],
+        "removed_names": [],
+        "changed": [
+          {
+            "name": "bar",
+            "added": {
+              "yerr": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "y_upper": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "bar_width": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "group": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "y_lower": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "box",
+            "added": {
+              "hue_order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[Any] | None"
+              },
+              "whis": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | list[float] | tuple[float, float] | None"
+              },
+              "native_scale": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "dodge": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "y": {
+                "kind": "positional",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "width": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "components": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "DistributionComponentsSpec | dict | None"
+              },
+              "notch": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "stat_scale": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'data'",
+                "annotation": "str"
+              },
+              "showfliers": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "orient": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'v'",
+                "annotation": "str"
+              },
+              "gap": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "showmeans": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[Any] | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "errorbar",
+            "added": {
+              "y_upper": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "y_lower": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "heatmap",
+            "added": {
+              "heatmap": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "HeatmapSpec | dict | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "hist",
+            "added": {
+              "element": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "hue_order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list | None"
+              },
+              "stat": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "multiple": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "cumulative": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "orient": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'v'",
+                "annotation": "str"
+              },
+              "weights": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "common_norm": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "kde",
+            "added": {
+              "hue_order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[Any] | None"
+              },
+              "cut": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "fill": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "cumulative": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "orient": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'v'",
+                "annotation": "str"
+              },
+              "weights": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "common_grid": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "common_norm": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "gridsize": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "int | None"
+              },
+              "warn_singular": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "clip": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[float | None] | tuple[float | None, ...] | None"
+              },
+              "bw_method": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | float | None"
+              },
+              "bw_adjust": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "regplot",
+            "added": {
+              "regression": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "RegressionSpec | dict | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "scatter",
+            "added": {
+              "hue": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "semantics": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "SemanticSpec | dict | None"
+              },
+              "size": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "appearance": {
+                "kind": "kwargs",
+                "required": false,
+                "default": null,
+                "annotation": null
+              }
+            },
+            "removed": {},
+            "changed": {
+              "style": {
+                "before": {
+                  "kind": "kwargs",
+                  "required": false,
+                  "default": null,
+                  "annotation": null
+                },
+                "after": {
+                  "kind": "keyword-only",
+                  "required": false,
+                  "default": "None",
+                  "annotation": "str | None"
+                }
+              }
+            }
+          },
+          {
+            "name": "violin",
+            "added": {
+              "hue_order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[Any] | None"
+              },
+              "native_scale": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "density_norm": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'width'",
+                "annotation": "str"
+              },
+              "cut": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "showextrema": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "dodge": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "y": {
+                "kind": "positional",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "width": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "points": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "int | None"
+              },
+              "split": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "showmedians": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "stat_scale": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'data'",
+                "annotation": "str"
+              },
+              "orient": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'v'",
+                "annotation": "str"
+              },
+              "weights": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | None"
+              },
+              "common_norm": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "False",
+                "annotation": "bool"
+              },
+              "gap": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "inner": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "'legacy'",
+                "annotation": "str | None"
+              },
+              "clip": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[float | None] | tuple[float | None, float | None] | None"
+              },
+              "bw_method": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "str | float | None"
+              },
+              "bw_adjust": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "float | None"
+              },
+              "showmeans": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "bool | None"
+              },
+              "order": {
+                "kind": "keyword-only",
+                "required": false,
+                "default": "None",
+                "annotation": "list[Any] | None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          }
+        ],
+        "same": false
+      },
+      {
+        "path": "mudplot/spec.py",
+        "kind": "model_annotated_fields",
+        "baseline_count": 14,
+        "current_count": 25,
+        "added_names": [
+          "ClusterSpec",
+          "ComponentStyleSpec",
+          "DistributionComponentsSpec",
+          "ECDFSpec",
+          "HeatmapSpec",
+          "HistogramSpec",
+          "KDE2DSpec",
+          "KDESpec",
+          "RegressionSpec",
+          "SemanticSpec",
+          "StatSpec"
+        ],
+        "removed_names": [],
+        "changed": [
+          {
+            "name": "AxisSpec",
+            "added": {
+              "share_id": {
+                "annotation": "str | None",
+                "default": "None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "LayerSpec",
+            "added": {
+              "trust_alpha": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "bar_width": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "density_norm": {
+                "annotation": "str",
+                "default": "'width'"
+              },
+              "stat": {
+                "annotation": "StatSpec | None",
+                "default": "None"
+              },
+              "histogram": {
+                "annotation": "HistogramSpec | None",
+                "default": "None"
+              },
+              "error_line_width": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "stat_scale": {
+                "annotation": "str",
+                "default": "'data'"
+              },
+              "regression": {
+                "annotation": "RegressionSpec | None",
+                "default": "None"
+              },
+              "inner": {
+                "annotation": "str | None",
+                "default": "'legacy'"
+              },
+              "warn_thresh": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "showmeans": {
+                "annotation": "bool | None",
+                "default": "None"
+              },
+              "native_scale": {
+                "annotation": "bool",
+                "default": "False"
+              },
+              "value_labels": {
+                "annotation": "bool",
+                "default": "False"
+              },
+              "width_method": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "stack": {
+                "annotation": "bool",
+                "default": "False"
+              },
+              "y_lower": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "width": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "notch": {
+                "annotation": "bool | None",
+                "default": "None"
+              },
+              "showfliers": {
+                "annotation": "bool | None",
+                "default": "None"
+              },
+              "error_style": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "label_format": {
+                "annotation": "str",
+                "default": "'g'"
+              },
+              "weights": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "cluster": {
+                "annotation": "ClusterSpec | None",
+                "default": "None"
+              },
+              "semantics": {
+                "annotation": "SemanticSpec | None",
+                "default": "None"
+              },
+              "dodge": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "capthick": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "components": {
+                "annotation": "DistributionComponentsSpec | None",
+                "default": "None"
+              },
+              "showmedians": {
+                "annotation": "bool | None",
+                "default": "None"
+              },
+              "split": {
+                "annotation": "bool",
+                "default": "False"
+              },
+              "y_upper": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "baseline": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "edge_color": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "clip": {
+                "annotation": "list[float | None] | None",
+                "default": "None"
+              },
+              "order": {
+                "annotation": "list[Any] | None",
+                "default": "None"
+              },
+              "error_color": {
+                "annotation": "str | None",
+                "default": "None"
+              },
+              "hue_order": {
+                "annotation": "list[Any] | None",
+                "default": "None"
+              },
+              "kde": {
+                "annotation": "KDESpec | None",
+                "default": "None"
+              },
+              "whis": {
+                "annotation": "float | list[float] | None",
+                "default": "None"
+              },
+              "heatmap": {
+                "annotation": "HeatmapSpec | None",
+                "default": "None"
+              },
+              "showextrema": {
+                "annotation": "bool | None",
+                "default": "None"
+              },
+              "cut": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "sort": {
+                "annotation": "bool",
+                "default": "True"
+              },
+              "kde2d": {
+                "annotation": "KDE2DSpec | None",
+                "default": "None"
+              },
+              "ecdf": {
+                "annotation": "ECDFSpec | None",
+                "default": "None"
+              },
+              "points": {
+                "annotation": "int | None",
+                "default": "None"
+              },
+              "orient": {
+                "annotation": "str",
+                "default": "'v'"
+              },
+              "k_depth": {
+                "annotation": "str | int | None",
+                "default": "None"
+              },
+              "error_alpha": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "common_norm": {
+                "annotation": "bool",
+                "default": "False"
+              },
+              "gap": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "outlier_prop": {
+                "annotation": "float | None",
+                "default": "None"
+              },
+              "bw_method": {
+                "annotation": "str | float | None",
+                "default": "None"
+              },
+              "bw_adjust": {
+                "annotation": "float | None",
+                "default": "None"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          },
+          {
+            "name": "PanelSpec",
+            "added": {
+              "dropna": {
+                "annotation": "list[str]",
+                "default": "field(default_factory=list)"
+              },
+              "filters": {
+                "annotation": "dict[str, Any]",
+                "default": "field(default_factory=dict)"
+              }
+            },
+            "removed": {},
+            "changed": {}
+          }
+        ],
+        "same": false
+      },
+      {
+        "path": "mudplot/actions.py",
+        "kind": "action_annotated_fields",
+        "baseline_count": 32,
+        "current_count": 36,
+        "added_names": [
+          "SetAxisShare",
+          "SetFacets",
+          "SetJointGrid",
+          "SetPairGrid"
+        ],
+        "removed_names": [],
+        "changed": [],
+        "same": false
+      },
+      {
+        "path": "mudplot/__main__.py",
+        "kind": "CLI_commands",
+        "baseline_count": 7,
+        "current_count": 7,
+        "added_names": [],
+        "removed_names": [],
+        "changed": [],
+        "same": true
+      },
+      {
+        "path": "mudplot/__main__.py",
+        "kind": "CLI_flags",
+        "baseline_count": 6,
+        "current_count": 6,
+        "added_names": [],
+        "removed_names": [],
+        "changed": [],
+        "same": true
+      }
+    ]
+  },
+  "author_review": "../REVIEW_DECISION.md",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "scope": "DOC01/02/03pairedREADME/generateddocs/actualexamples/publicAPIinventory/evidenceclassificationONLY. DOC04/05/06finalreleaseevaluation/reassessment/handoffremainOPEN;independentreviewer/humanATnotclaimed.",
+  "confirmed_doc_corrections": [
+    "Finite-pattern wording replaces unconditional print-safe guarantee.",
+    "README builder assigns/explicitly closes save Figure; APIownershipremainsOPENsuccessFigure/callerclose. CLI/editorownedexportcleanupisaseparatecontract.",
+    "Provenance recipe and repeat-output test close returned save Figures. Regression observed3openFiguresbefore/0after; outputbytesunchanged.",
+    "PairedREADME currentUnreleasedresourcebounds/checkpoint scope matchcapabilities/compatibility, notpublishedoldwheelretroactivity."
+  ],
+  "compatibility_notes": "Root41\u219252/Plot70\u219284/actions32\u219236classes(no removals);existingmodelannotations/defaultskept;addedoptionalparametersmaybepositional(box/violinY)orkeywords. Scatteroldvarkwstylecaptureremainsviaappearance;newstylekeywordissemanticrole(oldLayerSpecdidnothavestylefield).Validlegacyappearancekwargs/single-columnformsasserted. Resourceboundsareexplicitavailability-hardeningnarrowing,notclaimedfullyadditiveacceptance;error text context changed,notserializedshape.",
+  "qa_note": "Initialall-signatures-identicalassumptionfailedandwasreplacedbyactualdelta/classification\u2014notAPIremovalbug. Box/violinlegacyemptyYisemptystring,notNone;test expectation correctedfromexistingdataclass/defaultcontract. TrustedMarkdownexecutiononlyinrepoexamples/tests,notuntrusteddatafeature. No runtimeAPI/renderer/Storechangeinthisunit.",
+  "environment_overrides": {
+    "surface-inventory": {
+      "baseline": "c4f40ab22660129ad4e35c63d1f66feb62e2dd99",
+      "scope": "AST source only, no executing historical code; behavior exceptions separately classified"
+    },
+    "floor-documentation": {
+      "PYTEST_ADDOPTS": "-k \"test_review_doc_contracts or test_review_provenance_recipe\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "surface-inventory",
+      "argv": [
+        "python",
+        "<evidence>\\surface_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "719a818ec663141b0ab704419b6828b2dd510f7fb1648d588ad1393bb30ecae8"
+    },
+    {
+      "name": "documentation-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_doc_contracts.py",
+        "tests/test_review_provenance_recipe.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_visual_quality.py",
+        "tests/test_cli_apply.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "63 passed in 77.18s (0:01:17)"
+      ],
+      "log_text_sha256": "54d690f09394e04dbeb07ee223d10ecd6745b6898d2c3b13cd33b04cf69b2bc1"
+    },
+    {
+      "name": "floor-documentation",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "9 passed, 3181 deselected, 13 warnings in 6.41s"
+      ],
+      "log_text_sha256": "a4f5863584a1ab74a6e9d249fdb456f8ab201b770056251eca66594d0f8e02ed"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "261 files already formatted"
+      ],
+      "log_text_sha256": "a72cc25a200f7c7d18ce510728921d25e6b7457b729b20a7d3eb2b7b0f8f03b2"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "aa5da50475d1a66a959e35f70661aaa87337aa363b16f00aeca8991925c581a4"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "87254b9c3d040069abd9103bddaa3fda412885ddd44d2395b7e0ee3c7f13dd5b"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "surface_probe.py": "ee95e7a3ec692a33ff89ae5e29ac54d364706740c4eab754d57091923751618f",
+    "public_surface_comparison.json": "759ab1de4ca831336f6da7a41be7fbb1cb0c205e478f7a78f4cead9752d67e4e",
+    "qa.py": "c6d782583b3b7229c86ab08ec7b74afbb2b55d127bcdeabb82eac38da5e205ac",
+    "environment_overrides.json": "628bad74a43fb28ba51e340e1d510c27127ff942ff3faf106f569c982bd1cd47",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "958fc79b9af4d7fef57ac32080e1957d4a09fb94a2b561a98ebe457234ee621d",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  },
+  "relative_file_links": {
+    "count": 198,
+    "all_targets_exist": true,
+    "scope": "RelativefiletargetsONLY;anchors/dynamicURLs/externalsnotanetworkcrawlerclaim."
+  },
+  "source_review_base": "d221188b709ef8c3eb99e7b9239db8a7646cfdcf"
+}

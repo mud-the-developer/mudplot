@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰68차에서양국어문서와작성자증거판단을맞췄습니다.** README의finitepattern/resource/
+checkpoint범위와실행예시의callerFigureclose를명시했습니다. Provenancerecipe누수3개는0으로
+고쳤지만API소유권/outputbytes는바꾸지않았습니다. c4f40a대비exports41→52/Plot70→84/
+actions32→36추가/삭제없음을기록하고optionalparameter/scattercapture/resource수용축소를
+구분했지전행동동일을가정하지않았습니다. CLI명령/flag는그대로입니다.
+
+새doc8/관련63/floor9/3181deselected/Pyparsing13경고·relativefile198·품질9명령·activeLSP3clean,
+[receipt](review_evidence/documentation_review_verification.json)/ [잠정review](REVIEW_DECISION.md)/
+[대장](REVIEW_CHECKLIST_STATUS.md)은 **PASS129/RUNNING6/OPEN14/DEFERRED1**입니다.
+DOC-01/02/03은이범위PASS이며DOC-04/05/06은OPEN/gate판정NOTRELEASEAPPROVED로독립승인이
+아닙니다. d221CI39201840394중문서unit은로컬보존하고runtime/버전/의존성/lock/tag/배포는변경하지않습니다.
+
+### 이전 리뷰67차
+
 **리뷰67차에서gesture경계를유지하고단일checkpoint와선택provenance를검사했습니다.** 실제
 100movegesture는release1요청/독립edit와undo분리였고새corecoalescer는없습니다. Defaultpure
 Store만이전64경계state한개에서재생하며customreducer/history/noop/listener/snapshot은유지합니다.

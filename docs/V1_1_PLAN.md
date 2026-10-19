@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 68 reconciles paired docs and current author-review evidence.**
+READMEs now qualify finite patterns/resource bounds/checkpoint scope and explicitly
+close caller-owned save Figures in executable examples. The provenance recipe's
+three-open-Figure example issue is fixed to0 without changing API ownership or
+output bytes. Source inventory fromc4f40a finds additions (exports41→52/Plot70→84/
+actions32→36), no removals; optional parameters/scatter capture/resource narrowing
+are classified rather than claimed identical behavior. CLIcommands/flags unchanged.
+
+8newdoccases/63relatedpasses,floor9/3181deselected/13Pyparsing warnings,
+198relativefiletargets and9quality records pass, activeLSP3clean. [Receipt](review_evidence/documentation_review_verification.json),
+[interim review](REVIEW_DECISION.md), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS129/RUNNING6/OPEN14/DEFERRED1**. DOC-01/02/03 are PASS in this scope;
+DOC-04/05/06 remain OPEN and the gate decision is NOT RELEASE APPROVED, not an
+independent sign-off. Keep doc unit local duringd221CI39201840394; no runtime/
+version/dependency/lock/tag/deploy changes or authority inferred.
+
+### Earlier review phase 67
+
 **Review phase 67 keeps gesture boundaries, adds one checkpoint and optional provenance.**
 Real100-move gestures submit once on release; independent edits and undo boundaries
 remain separate, without a new core coalescer. Default pure Store replay can start

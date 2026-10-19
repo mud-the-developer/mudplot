@@ -15,8 +15,8 @@
   최적화(`Palette.report()`로 직접 측정한 값이며, 인증된 접근성 기준은 아님);
   아래 [검증된 명칭 팔레트](docs/DEMO.md#4-colour-palette-presets-measured-not-assumed)
   참고
-- **흑백 인쇄 안전** → 그룹화된 bar/box/violin 도 기본적으로 해칭 패턴을 함께
-  사용해, 색상이 비슷해져도 막대가 구별됩니다 —
+- **유한한 보조 그룹 패턴** → bar/box/violin의 기본 hatch가 비슷한 색상을
+  보조하지만 주기는 반복됩니다. 무제한 식별성 대신 실제 크기/출력을 확인하세요 —
   [흑백 인쇄 데모](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
   참고
 
@@ -57,7 +57,8 @@ effect 경계에 둔다.
 갱신을 쓴다는 뜻은 아닙니다. `FigureSpec`은 mutable dataclass/list 그래프이며,
 reducer와 `Store`는 snapshot 격리를 위해 방어적 deep copy를 사용합니다.
 따라서 action 비용은 inline data를 포함한 전체 spec 크기에 비례하고,
-undo/redo는 history를 재생합니다. 이는 일반적인 논문 데이터에서 단순하고
+undo/redo는 보존한 history를 재생합니다. Default pure reducer는 한 boundedcheckpoint에서
+시작할 수 있고 custom reducer는 full replay를 유지합니다. 이는 일반적인 논문 데이터에서 단순하고
 감사 가능한 의미론을 우선한 설계이지, 수백만 행을 고빈도로 갱신하는
 streaming pipeline 설계가 아닙니다. 그런 workload는 먼저 집계/downsample하고
 benchmark하세요.
@@ -211,6 +212,20 @@ Unreleased robust/logistic/LOWESS는 이 source tree의 `pip install '.[regressi
 경로에 있으며 이미 공개한 v1.0.0 wheel의 기능이 아닙니다. `all`/`dev` extra는 이를
 포함하고 `render`만 설치하면 기존 NumPy/Matplotlib만 사용합니다.
 
+### 현재 checkout의 자원 범위 (Unreleased)
+
+| 경계 | 지원 상한 |
+| --- | --- |
+| Figure 구조 | `max_panels = 256`, `max_layout_cells = 256` |
+| Layer 모델 | `max_layers = 1024`, panel 전체 합계 |
+| Bivariate grid | hist2d `max_bins_per_axis = 512`; hexbin gridsize ≤512 |
+| 소유 canvas 작업 | `max_canvas_pixels = 40_000_000`, output DPI/tight 범위 포함 |
+
+초과는조용한clamp가아닌명시실패이며sourceDPI/cappedpreview의원상태는유지합니다.
+전체RAM/CPU/sandbox보장이아니며[호환성](docs/COMPATIBILITY.ko.md)/[보안범위](SECURITY.ko.md)를
+확인하세요. 현재checkout의계약이지공개v1.0.0wheelbytes를소급변경한것은아닙니다.
+[현재작성자검토](docs/REVIEW_DECISION.md)는API추가/남은releasegate를기록하며release승인이아닙니다.
+
 검사 명령, 브라우저/TeX 설정, 스키마 재생성 방법은
 [`CONTRIBUTING.ko.md`](CONTRIBUTING.ko.md)를 참고하세요.
 
@@ -243,15 +258,17 @@ extra가 필요합니다(`dev`에 포함).
 ### 직관적 fluent 빌더
 
 ```python
+import matplotlib.pyplot as plt
 import mudplot as mp
 
-(mp.plot(data)                        # 아래 어느 형식이든 가능
+fig = (mp.plot(data)                  # 아래 어느 형식이든 가능
     .line(x="voltage", y="current", group="order")
     .labels(x="Voltage (mV)", y="Current (μA)")
     .legend(title="Order")
     .theme("paper").journal("nature")
     .palette("qualitative", hue_start=30)
     .save("fig.pdf"))
+plt.close(fig)
 ```
 
 `save()`는 지정한 figure 크기를 유지합니다. 내용에 맞게 잘라내려면

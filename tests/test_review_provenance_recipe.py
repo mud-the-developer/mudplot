@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import mudplot as mp
 import pytest
 
@@ -21,7 +22,9 @@ def test_documented_manifest_is_separate_deterministic_and_refuses_overwrite(
     )
     monkeypatch.chdir(tmp_path)
     namespace = {}
+    figures = plt.get_fignums()
     exec(compile(recipe, "documented-provenance-recipe", "exec"), namespace)
+    assert plt.get_fignums() == figures
     directory = tmp_path / "synthetic-provenance"
     original = {path.name: path.read_bytes() for path in directory.iterdir()}
     manifest = json.loads(original["manifest.json"])
@@ -61,8 +64,12 @@ def test_documented_manifest_is_separate_deterministic_and_refuses_overwrite(
     repeat.mkdir()
     for fmt in ("png", "pdf", "svg"):
         target = repeat / f"figure.{fmt}"
-        mp.save(spec, target)
-        assert target.read_bytes() == original[target.name]
+        figure = mp.save(spec, target)
+        try:
+            assert target.read_bytes() == original[target.name]
+        finally:
+            plt.close(figure)
     with pytest.raises(FileExistsError):
         exec(compile(recipe, "documented-provenance-recipe", "exec"), {})
     assert {path.name: path.read_bytes() for path in directory.iterdir()} == original
+    assert plt.get_fignums() == figures

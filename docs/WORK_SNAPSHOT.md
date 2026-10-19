@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest paired README/recipe execution, API-delta inventory and evidence-level
+  author report make DOC-01/02/03 PASS in scope.63related/floor9passes and198file
+  links support claims, not independent release approval. Examples now close
+  returned save Figures; API ownership/output bytes stay unchanged. DOC-04/05/06
+  remain OPEN/decisionNOTRELEASEAPPROVED. Doc unit stays local duringd221CI.
+
 - Latest gesture/undo evidence, bounded one-state default-reducer checkpoint and
   separate opt-in provenance recipe make HIST-07/08/OUT-10 PASS in scope.201related/
   4actualbrowser/floor10passes preserve events, listeners, snapshots and image
@@ -507,7 +513,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retain bounded outcomes, private payload fingerprints and current CI limits.
 - [History/provenance evidence](review_evidence/history_improvement_verification.json)
   and [manifest recipe](OUTPUT_PROVENANCE.md) retain replay/memory/gesture/privacy limits.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS126/RUNNING6/OPEN17/
+- [Documentation evidence](review_evidence/documentation_review_verification.json)
+  and [interim review](REVIEW_DECISION.md) retain additions/compatibility exceptions/gaps.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS129/RUNNING6/OPEN14/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later
