@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 75차 — v1.1ECDF주변/대각선subset
+
+- 기존ECDF를재사용해jointmarginal/pairdiagonal에명시count/probability/percent를지원합니다.
+  Joint완전x/ycohort와pair단변량대각선의차이·원본·반복값최소jump/SetData·log관측과독립질량축을
+  보존하며hist/KDE기본은유지합니다. Density/비기본미사용bins/KDE옵션·weighted/complementarygrid는
+  거절하고새model/actionfield/specversion/dependency를추가하지않습니다.
+- 새27·관련328·floor27/3251deselected·CLIapply→preview2종/품질8명령·activeLSP6clean,
+  [행/누적질량/거절/JSON근거](review_evidence/v11_ecdf_grid_verification.json)를남겼습니다.
+  Floor201은10종Pyparsingdeprecation,연결1overflow는변경하지않은plainECDF의기존극단countticker
+  경고이며억제/무경고주장을하지않습니다. Rawlog의도구원문은문법교정하지않고지문을보존합니다.
+- 정확한3f2CI39227715054의5job모두성공으로이전binnedjoint를확인했고새ECDF는새소스전체CI를
+  받습니다. 원대장139PASS/6RUNNING/4OPEN/1DEFERRED와다른v1.1remainder/gate는유지하고
+  전체v1.1완료/새nativebrowser검증/tag/publish/자동loop를추정하지않습니다.
+
 ## 74차 — 사용자v1.1scope확장과binnedjoint subset
 
 - 최신사용자요청은 **v1.1까지완성** 으로이전v1안정화전용scope를대체합니다. 문서화한subset을

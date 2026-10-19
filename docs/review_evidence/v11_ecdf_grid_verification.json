@@ -1,0 +1,176 @@
+{
+  "source_sha256": {
+    "mudplot/_joint.py": "7bc56edad72748935e05f50d87217ca85dd7ac1a950aa984f42844546147e3b2",
+    "mudplot/_pair.py": "47a400ff337e24626a8fbd07a416b2744a491854e4422779f30bed0075c37d84",
+    "mudplot/capabilities.py": "557564bdb441892de51469ae4f45e401202be9217700a3ff8402729b8590e2ae",
+    "mudplot/api.py": "1163cbe9b4128070d64018a95ffa8a5acf5930af72da8c06e3d83eda0c939271",
+    "tests/test_grid_ecdf.py": "dbd49fc329691c5b9f77a4748069ecdd995396fec20011217cfec9edab2870db",
+    "scripts/check_minimum_versions.py": "0a788ad28686c43876e8025c99e6240c16723af9d3d560b9e13bec577742cfb9",
+    "schemas/capabilities.json": "302fa0f67a07c36197cb8db27a27d46c8414138d84616505e9efa337f6e2925d",
+    "docs/JOINT_GRID.md": "1b3c1702374d7486cff85d6e887d1dd402e23ad3e853559982ec196b6f268b8c",
+    "docs/JOINT_GRID.ko.md": "114a276a55c398b6279de7494f13c63006787a70dc1bec1a16b9e68105008e89",
+    "docs/PAIR_GRID.md": "d501468b22a9a80cdca16100e6ba012113a8967754d3f592b27f7555261e561b",
+    "docs/PAIR_GRID.ko.md": "a23a309b179337ba706d6da59ef5d0b6fd9516ac32d8d8cf1501fb4c1986cd88",
+    "docs/FEATURE_COVERAGE.md": "c8166394c41a6ebc6c95c1b328eb9cc8d980b09d443efc274a6c8d2a5872b402",
+    "docs/FEATURE_COVERAGE.ko.md": "218a3be69db287bd3545727aea32bfde81cd5f4c212f2e77da6d88ae9e4c1bf1"
+  },
+  "cli": [
+    {
+      "kind": "joint",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "ecdf_layers": 2,
+      "png_sha256": "c6f32e05308d78861c3b070826e28a199a19471045415961c409416fcf488057"
+    },
+    {
+      "kind": "pair",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "ecdf_layers": 2,
+      "png_sha256": "18dfe560b0144d6c4a44af434cc74624db05c0bef695bcdd24f78feb90ef9242"
+    }
+  ],
+  "scope": "Opt-inunweightedECDFjointmarginals/pairdiagonals:count/probability/percentonly;unuseddefaultbins20/KDEoptionsrejected.No model/action/newserializedfields/version/dependency. Pairedjointvsvariable-onlypaircohorts,fulltie-jumps/minzero,orientation/valuevsstat-axis/log/source/SetDatacontractsretained.Hist/KDEdefaultsandKDEcumulative/weightrejectionunchanged.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "results": [
+        "328 passed, 1 warning in 101.27s (0:01:41)"
+      ],
+      "log_sha256": "0e714a4d7ad469d858ddea9959ecdd15fd276a9c7b4e9f24b9f0a9379504ef3f"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "results": [
+        "27 passed, 3251 deselected, 201 warnings in 8.86s"
+      ],
+      "log_sha256": "14c7953a88e2a19e861d28c3cf459b9fbba90ada766d4ee32f34accaa5576ffc"
+    },
+    {
+      "name": "linux",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows",
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "results": [
+        "269 files already formatted"
+      ],
+      "log_sha256": "5f2d9f6092a7014769a87a1a918cd7049766bc452b0a37ca1308e198b42e8515"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_sha256": "743db9bdc45b6277b34991ed420462e5f9a1ee83cbf4dc0dd7f3a2b636bdb0b2"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "1da93322303400583fc30a75cef038485b60d29681505e7c1798b9046da8abd8"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 201,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 43
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 37
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      }
+    ]
+  },
+  "connected_warning": {
+    "count": 1,
+    "case": "tests/test_ecdf.py::test_finite_count_mass_is_per_curve_not_pooled_across_groups",
+    "message": "RuntimeWarning: overflow encountered in multiply (matplotlib/ticker.py)",
+    "unchanged_direct_ecdf_sources": {
+      "mudplot/_ecdf.py": "093b86087a5c85da34a6b98b9c79c305c3edccc008bcfdaa7d98ff900c03b899",
+      "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+      "tests/test_ecdf.py": "5ae35ee2ef4f6565bf6f1e9acebb945c1a2fed51aa117e5640eeac36841b1ca9"
+    },
+    "scope": "ExistingextremecountplainECDFpath;notnewgridtest.No blanketwarningfilter/claimwarningfree."
+  },
+  "raw_sha256": {
+    "qa.py": "53933abb4892703f9857816ab970cc76387e5bcd83814bb256c2f8f213d21228",
+    "cli.json": "600c989ec7d6be3bbfa05a53244bc358ad246c59cc10c494fa4cc8991fb006a2",
+    "results.xml": "26593e0b3f6ad99cabc5dfa5cde5959565e64932d646da154454ff5f86bc031e",
+    "floor_warning_counts.json": "d5a0ec5238b724b18a0a26b5c50efd58f86b13aa7ff7c3b4d68a975a78469ab8",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}

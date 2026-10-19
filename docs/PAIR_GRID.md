@@ -2,7 +2,7 @@
 
 *[한국어 / Korean](PAIR_GRID.ko.md)*
 
-This first pair-grid subset creates a square scatter matrix with histogram
+This pair-grid subset creates a square scatter matrix with histogram/KDE/ECDF
 diagonals. It is not full Seaborn PairGrid/pairplot parity.
 
 ![Synthetic numeric pair matrix](images/pair_observations.png)
@@ -54,6 +54,20 @@ Finite support and skipped mass mean displayed area need not equal one. One clip
 configuration applies to every variable, so choose bounds appropriate to their
 units. Histogram remains the unchanged default.
 
+## Empirical cumulative diagonals
+
+```python
+p = (mp.plot(raw).pair(["Dose", "Response"], group="condition",
+       diag_kind="ecdf", diag_stat="percent").size(7, 7))
+```
+
+Choose count/probability(proportion)/percent explicitly; density is rejected. Keep
+unused bins=20 and omit KDE config. Each diagonal uses only its own variable/group
+rows, not complete cases across all variables, and normalizes per curve. Ties keep
+their full jump and the ECDF includes a duplicated minimum/zero-mass start, without
+infinite tail coordinates. Cumulative-mass y axes never share measurement-value y.
+Weighted/complementary ECDF grid options are not exposed; hist stays the default.
+
 ## Pairwise data is not global listwise deletion
 
 The original `FigureSpec.data` remains intact. Each scatter panel uses dynamic
@@ -99,7 +113,7 @@ are absent.
 Construction, validation and action replay require no optional numeric/render
 dependencies. Specs open in the existing editors, with normal cell selection,
 label controls and SVG/PDF exports. Unsupported corner/triangular grids,
-continuous/semantic hue, weights, CDF, callables and nested grids remain
+continuous/semantic hue, weights, complementary CDF, callables and nested grids remain
 explicitly outside this first subset. This is an additional workflow, not a new
 layer type or spec-version bump.
 

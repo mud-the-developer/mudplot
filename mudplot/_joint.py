@@ -11,6 +11,7 @@ from ._kde import option_issues as kde_option_issues
 from .spec import (
     MAX_FIGURE_LAYERS,
     AxisSpec,
+    ECDFSpec,
     HistogramSpec,
     KDESpec,
     LayerSpec,
@@ -21,6 +22,8 @@ from .spec import (
 
 JOINT_MAIN_TYPES = ("scatter", "regplot", "hist2d", "hexbin")
 
+GRID_ECDF_STATS = {"count": "count", "probability": "proportion", "percent": "percent"}
+
 JOINT_STATS = {
     "count": "Count",
     "density": "Density",
@@ -30,12 +33,19 @@ JOINT_STATS = {
 
 
 def grid_kde_config(kind, bins, stat, kde) -> KDESpec | None:
-    """Reuse strict KDE settings without treating CDF/weights as raw density."""
-    if kind not in ("hist", "kde"):
-        raise ValueError("grid distribution kind must be hist or kde")
-    if kind == "hist":
+    """Validate distribution choices and return KDE settings only when selected."""
+    if kind not in ("hist", "kde", "ecdf"):
+        raise ValueError("grid distribution kind must be hist, kde or ecdf")
+    if kind != "kde":
         if kde is not None:
             raise ValueError("KDE configuration requires kind='kde'")
+        if kind == "ecdf" and (
+            bins != 20 or not isinstance(stat, str) or stat not in GRID_ECDF_STATS
+        ):
+            raise ValueError(
+                "ECDF grids require count/probability/percent "
+                "and unused default bins=20"
+            )
         return None
     if bins != 20 or stat != "density":
         raise ValueError("KDE grids require density and do not use histogram bins")
@@ -136,8 +146,13 @@ def materialize_joint(
             hue_order=copy.deepcopy(layer.hue_order),
             bins=bins,
             orient=orient,
-            histogram=HistogramSpec(stat=marginal_stat) if density is None else None,
+            histogram=HistogramSpec(stat=marginal_stat)
+            if marginal_kind == "hist"
+            else None,
             kde=copy.deepcopy(density),
+            ecdf=ECDFSpec(stat=GRID_ECDF_STATS[marginal_stat])
+            if marginal_kind == "ecdf"
+            else None,
             color=layer.color,
             alpha=min(layer.alpha, 0.6),
         )

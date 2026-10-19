@@ -3,7 +3,7 @@
 *[한국어 / Korean](JOINT_GRID.ko.md)*
 
 This joint-grid subset links one raw scatter/regression or ungrouped hist2d/hexbin
-view to x/y histogram/KDE marginals. It does not implement every Seaborn joint kind.
+view to x/y histogram/KDE/ECDF marginals. It does not implement every Seaborn joint kind.
 
 ![Synthetic paired dose and response observations](images/joint_observations.png)
 
@@ -84,6 +84,21 @@ KDE supports density only: leave bins at its unused default 20 and do not reques
 count/probability/percent, weights or cumulative CDF. The same config is copied
 across variables: shared clip bounds must make sense for both units. Histogram
 remains the default and is unchanged.
+
+## Empirical cumulative marginals
+
+```python
+p = (mp.plot(raw).scatter("dose", "response", group="condition")
+       .joint(marginal_kind="ecdf", marginal_stat="probability").size(7, 6.5))
+```
+
+ECDF supports `count`, `probability` (proportion), or `percent`, not density. Leave
+unused `bins=20` and omit KDE options; other bins/configs are rejected, not ignored.
+Each curve uses its own paired group's mass, aggregates ties and draws its full
+jump at the minimum, without fabricated infinite tails or KDE fitting. Vertical x
+marginals use steps-post; horizontal y marginals swap coordinates/use steps-pre.
+The statistic axis stays linear/independent even with positive log observations.
+Weighted or complementary ECDF configuration is not exposed by grid construction.
 
 ## One cohort, original data intact
 

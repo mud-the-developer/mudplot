@@ -95,6 +95,10 @@ is authorized by this tracker.
 - [x] **B4e — Configured KDE grids:** joint KDE marginals and pair KDE diagonals,
   strict copied KDESpec, density/cohort/axis preservation and singular skip rules.
   Histogram defaults unchanged; weights/CDF are explicitly rejected in grids.
+- [x] **B4f — Binned joint centers:** ungrouped hist2d/hexbin, explicit colorbar=False,
+  paired histogram/KDE/ECDF marginals; no general binned facet filters.
+- [x] **B4g — ECDF grids:** unweighted count/probability/percent marginals and
+  diagonals, exact cohorts/ties/log value axes; histogram/KDE defaults unchanged.
 - [ ] **B3 — Relational/distribution remainder:** wider facet combinations/line inference,
   broader histogram/KDE variants and semantic controls.
 - [ ] **B4 — Composition remainder:** live facet mapping/consolidated guides,
@@ -128,6 +132,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
+
+**B4 extension: empirical cumulative grids.** Opt-in ECDF joint marginals and
+pair diagonals now support explicit count/probability/percent, preserve the exact
+paired versus univariate cohorts, ties/minimum jumps, positive log observations
+and independent statistic axes. Unused nondefault bins, KDE options, density and
+weighted/complementary configuration are rejected, not silently converted.
+27new/328related/floor27passes/3251deselected/CLI2/8checks andactiveLSP6clean.
+Floor201warnings are10Pyparsing deprecations;1connected overflow warning belongs
+to the unchanged plain-ECDF extreme-count ticker path, not a warning-free claim.
+[Evidence](review_evidence/v11_ecdf_grid_verification.json). Exact3f2CI39227715054
+ALL5SUCCESS validates binned joint support; publish this subset for fresh wholeCI.
+Other v1.1 remainders/release gates stay open; no versions/dependencies/locks changed.
+
+### Earlier review phase 74
 
 **B4 extension: binned joint centers.** Ungrouped/unweighted hist2d and hexbin
 with explicit colorbar=False now compose existing paired histogram/KDE marginals.

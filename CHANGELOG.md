@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added opt-in unweighted ECDF joint marginals and pair diagonals with explicit
+  count/probability/percent, exact selected cohorts/tie jumps and independent
+  statistic axes. Unused bins/KDE options and density are rejected.
 - Added opt-in ungrouped hist2d/hexbin joint centers with paired histogram/KDE
   marginals, source-row preservation and dynamic complete cases. Colorbars and
   unsupported group/weight mappings remain explicit rejections.

@@ -2,7 +2,7 @@
 
 *[English](JOINT_GRID.md)*
 
-Joint-grid는raw scatter/regression 또는ungroupedhist2d/hexbin과x/y주변histogram/KDE를
+Joint-grid는raw scatter/regression 또는ungroupedhist2d/hexbin과x/y주변histogram/KDE/ECDF를
 연결합니다. Seaborn의모든jointkind를구현한것은아닙니다.
 
 ![합성 dose/response 관측의 joint plot](images/joint_observations.png)
@@ -79,6 +79,18 @@ KDE는 density만 지원합니다. 사용하지 않는 bins는 기본 20으로 �
 probability/percent·weights·cumulative CDF는 요청할 수 없습니다. 같은 설정을
 변수별로 복사하므로 clip 경계는 두 변수의 단위 모두에 맞아야 합니다. Histogram
 기본 동작은 그대로입니다.
+
+## 경험적누적주변분포
+
+```python
+p = (mp.plot(raw).scatter("dose", "response", group="condition")
+       .joint(marginal_kind="ecdf", marginal_stat="probability").size(7, 6.5))
+```
+
+ECDF는count/probability(proportion)/percent를지원하며density는아닙니다. 미사용bins=20을유지하고
+KDE옵션은생략하세요. 다른bins/config를조용히무시하지않습니다. 곡선별pairedgroup질량/반복값/
+최소값의전체jump를사용하며가짜무한tail/KDEfit은없습니다. X주변steps-post/y주변좌표교환·steps-pre,
+양수log관측에서도stat축은linear/독립입니다. Grid구성에weighted/complementaryECDF설정은없습니다.
 
 ## 같은 관측 집합과 보존된 원자료
 

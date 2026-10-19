@@ -2,7 +2,7 @@
 
 *[English](PAIR_GRID.md)*
 
-이번 첫 pair-grid 범위는 산점도 행렬과 대각선 histogram입니다. Seaborn의 모든
+Pair-grid는산점도행렬과대각선histogram/KDE/ECDF를지원합니다. Seaborn의 모든
 PairGrid/pairplot 동작과 동등한 구현은 아닙니다.
 
 ![합성 numeric pair matrix](images/pair_observations.png)
@@ -53,6 +53,18 @@ common_grid/fill을 검증하고 독립 복사합니다. KDE는 diag_stat='densi
 보이는 면적이 1이 아닐 수 있습니다. 같은 clip 설정이 모든 변수에 적용되므로 각
 단위에 맞아야 합니다. Histogram 기본 동작은 바꾸지 않았습니다.
 
+## 경험적누적대각선
+
+```python
+p = (mp.plot(raw).pair(["Dose", "Response"], group="condition",
+       diag_kind="ecdf", diag_stat="percent").size(7, 7))
+```
+
+Count/probability(proportion)/percent를명시하고density는거절합니다. 미사용bins=20/KDEconfig생략을
+유지하세요. 대각선은자기변수/group행만사용하며전체변수완전행으로줄이지않고곡선별정규화합니다.
+반복값전체jump/최소값중복·질량0시작을보존하며가짜무한tail은없습니다. 누적질량y는측정값y와
+공유하지않고weighted/complementarygrid옵션은미지원입니다. Hist기본은유지합니다.
+
 ## 전체 열 listwise 삭제가 아닌 쌍별 관측
 
 원래 `FigureSpec.data`는 그대로입니다. 산점도 셀은 동적 `dropna=[x,y,group]`,
@@ -93,7 +105,7 @@ p.share_axis("y", "response", panel=2)
 
 구성·검증·action 재생에는 optional numeric/render dependency가 필요 없습니다.
 기존 에디터로 spec을 열고 셀 선택/label control과 SVG/PDF 내보내기를 사용할 수
-있습니다. Corner/삼각 grid·continuous/semantic hue·weights·CDF·callable·
+있습니다. Corner/삼각 grid·continuous/semantic hue·weights·complementaryCDF·callable·
 중첩 grid는 이번 범위 밖입니다. 새 workflow이지 layer 종류나 spec version을
 추가한 것은 아닙니다.
 

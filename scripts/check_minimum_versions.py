@@ -74,6 +74,7 @@ TESTS = (
     "tests/test_joint_binned.py",
     "tests/test_pair_grid.py",
     "tests/test_grid_kde.py",
+    "tests/test_grid_ecdf.py",
     "tests/test_heatmap_options.py",
     "tests/test_regression_models.py",
     "tests/test_review_regression_degenerate.py",

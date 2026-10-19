@@ -768,7 +768,8 @@ def capabilities() -> dict:
             "action": "SetJointGrid",
             "fields": _action_fields(_actions.SetJointGrid),
             "main": ["scatter", "regplot", "hist2d", "hexbin"],
-            "marginals": "hist count/density/probability/percent or KDE density",
+            "marginals": "hist count/density/probability/percent, KDE density, "
+            "or ECDF count/probability/percent",
             "layout": "main top-left, y right, x below; no fourth axes",
             "selection": "dynamic complete x/y/group cases; source table intact",
             "sharing": "x by column, y by row; density axes remain independent",
@@ -780,10 +781,11 @@ def capabilities() -> dict:
             "action": "SetPairGrid",
             "fields": _action_fields(_actions.SetPairGrid),
             "max_variables": MAX_PAIR_VARIABLES,
-            "cells": "raw scatter off diagonal; typed hist/KDE diagonal",
+            "cells": "raw scatter off diagonal; typed hist/KDE/ECDF diagonal",
             "selection": "pairwise complete rows; diagonal variable-only rows",
             "sharing": "named x columns/y off-diagonal rows; density y independent",
-            "limits": "2..8 numeric vars; categorical group; no corner/weights/CDF",
+            "limits": "2..8 numeric vars; categorical group; no corner/weights; "
+            "ECDF needs non-density stat and unused default bins",
         },
         "named_axis_sharing": {
             "field": "AxisSpec.share_id",

@@ -33,6 +33,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
+- Latest B4 ECDF marginals/diagonals:27new/328related/floor27/CLI2pass. Exact cohort/
+  ties/log/mass axes and default compatibility are preserved; no weighted/complementary
+  grid options. Floor201Pyparsing/1old extreme-count ticker warning are recorded.
+  Exact3f2wholeCI ALL5P validates prior binned work, not these new ECDF paths.
 - Exact existing-v1.0.0 checksum/certificate/repo-workflow-tag-source verification
   and current scoped permission/audit guards make CI-08/09 PASS.34related/floor6
   pass/three locked audits clean; no downloaded code executed/new release created.

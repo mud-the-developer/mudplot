@@ -8,9 +8,17 @@ from dataclasses import replace
 from ._ecdf import finite_number
 from ._facet import _ordered, ordered_group_columns
 from ._histogram import MAX_HISTOGRAM_BINS
-from ._joint import JOINT_STATS, grid_kde_config
+from ._joint import GRID_ECDF_STATS, JOINT_STATS, grid_kde_config
 from ._stat import is_missing
-from .spec import AxisSpec, HistogramSpec, KDESpec, LayerSpec, LegendSpec, PanelSpec
+from .spec import (
+    AxisSpec,
+    ECDFSpec,
+    HistogramSpec,
+    KDESpec,
+    LayerSpec,
+    LegendSpec,
+    PanelSpec,
+)
 
 MAX_PAIR_VARIABLES = 8
 
@@ -82,9 +90,12 @@ def materialize_pair(
                 hue_order=copy.deepcopy(hue_order),
                 bins=bins if diagonal else 20,
                 histogram=HistogramSpec(stat=diag_stat)
-                if diagonal and density is None
+                if diagonal and diag_kind == "hist"
                 else None,
                 kde=copy.deepcopy(density) if diagonal else None,
+                ecdf=ECDFSpec(stat=GRID_ECDF_STATS[diag_stat])
+                if diagonal and diag_kind == "ecdf"
+                else None,
             )
             required = list(
                 dict.fromkeys(

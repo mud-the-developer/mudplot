@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- 최신B4ECDF주변/대각선은새27/관련328/floor27/CLI2가맞고정확한cohort/반복값/log/질량축과
+  기본동작을유지합니다. Weighted/complementarygrid는미지원이며floor201Pyparsing/기존극단countticker
+  경고1개를기록했습니다. 정확한3f2전체CI5job성공은이전binnedwork이지새ECDF전체증명이아닙니다.
 - 정확한기존v1.0.0checksum/certificate/repo·workflow·tag·source와현재권한/auditguard로CI-08/09는
   범위PASS입니다. 관련34/floor6/3lockedAudit가맞고받은코드실행/새release는없습니다. 무결성/빌드출처는
   현재mainruntime안전성이아니며fa1CI중unit은로컬보존합니다.

@@ -93,6 +93,10 @@
 - [x] **B4e — 설정형 KDE grid:** Joint KDE 주변 분포·pair KDE 대각선,
   strict 복사 KDESpec·density/관측/축 보존·특이값 skip. Histogram 기본값은 유지하고
   grid의 weights/CDF는 명시적으로 거부합니다.
+- [x] **B4f — Binnedjoint중심:** ungroupedhist2d/hexbin·명시colorbar=False와
+  pairedhist/KDE/ECDF주변,일반binnedfacetfilters는미지원.
+- [x] **B4g — ECDFgrid:** unweightedcount/probability/percent주변·대각선,
+  정확한cohort/반복값/log관측축,기존hist/KDE기본보존.
 - [ ] **B3 — 관계·분포 나머지:** facet 조합 확장/넓은 line 추론,
   추가 histogram/KDE 표현과 semantic 설정.
 - [ ] **B4 — 자동 구성 나머지:** live facet mapping/통합 guide·추가 pair/joint kind.
@@ -123,6 +127,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+
+**B4확장:경험적누적grid.** ECDFjoint주변/pair대각선은명시count/probability/percent와정확한
+paired/단변량행·반복최소값jump·양수log관측·독립stat축을지원합니다. 비기본미사용bins/KDE옵션/
+density/weighted·complementary설정을거절하며묵시변환하지않습니다. 새27/관련328/floor27/
+3251deselected/CLI2·품질8명령/activeLSP6clean입니다. Floor201은10종Pyparsing이고연결1overflow는
+변경하지않은plainECDF극단count의ticker경로이지무경고보장은아닙니다.
+[근거](review_evidence/v11_ecdf_grid_verification.json),정확한3f2CI39227715054의5job모두성공으로
+binnedjoint를확인했고이번subset은새전체CI를받습니다. 남은v1.1remainder/releasegate는유지하며
+버전/의존성/lock은변경하지않았습니다.
+
+### 이전 리뷰74차
 
 **B4확장:binnedjoint중심.** Ungrouped/unweightedhist2d/hexbin을명시colorbar=False로만들면
 기존pairedhist/KDE주변과구성합니다. 동일x/y완전행·원본·SetData갱신/독립density축을유지하고

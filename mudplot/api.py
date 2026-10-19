@@ -1558,7 +1558,7 @@ class Plot:
         marginal_kind: str = "hist",
         kde: KDESpec | dict | None = None,
     ) -> Plot:
-        """Add paired marginals to raw scatter/regplot or ungrouped binned 2D data.
+        """Add hist/KDE/ECDF marginals to scatter/regplot or ungrouped binned data.
 
         Main panel is top-left, y marginal right, x marginal below. Original
         data remains intact; all views use dynamic complete x/y/group cases.
@@ -1587,7 +1587,7 @@ class Plot:
         diag_kind: str = "hist",
         kde: KDESpec | dict | None = None,
     ) -> Plot:
-        """Materialize a numeric scatter matrix with histogram/KDE diagonals.
+        """Materialize a numeric scatter matrix with hist/KDE/ECDF diagonals.
 
         Each cell uses pairwise complete cases; original data stays intact.
         Named value axes share across rows/columns, never with diagonal density.
