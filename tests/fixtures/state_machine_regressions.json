@@ -1,0 +1,19 @@
+{
+  "scope": "Deletion-minimal trace for a controlled stale-redo mutant; not an automatically regenerated baseline.",
+  "cases": [
+    {
+      "name": "new_branch_discards_old_redo",
+      "events": ["title-a", "undo", "title-b", "redo"],
+      "expected_title": "B",
+      "expected_history": 1,
+      "origin": "Controlled redo-clear omission, deletion-shrunk from a longer event sequence."
+    },
+    {
+      "name": "equal_value_new_branch_is_still_an_event",
+      "events": ["title-a", "undo", "title-a", "redo"],
+      "expected_title": "A",
+      "expected_history": 1,
+      "origin": "Actual isolated production-source redo-clear mutant: exhaustive test reported this deletion-minimal trace."
+    }
+  ]
+}

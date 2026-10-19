@@ -1,0 +1,503 @@
+{
+  "source_sha256": {
+    "tests/test_review_state_machine.py": "066894d96b15758686284b4da065a3d46d358e7f1b5a0eaf75bb02335f9673dd",
+    "tests/fixtures/state_machine_regressions.json": "5000c510a9951e9fe2a80c46767a3d78bf46b3977a9f186ab3a06213cac32750",
+    "scripts/check_minimum_versions.py": "3fc536e091a5c786cdf91e42cc4f20cc5ce52426fb883f3b908aa13f300758b2",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+    "tests/test_review_coordinate_frames.py": "e6adf5dbeb6130d4e5fdb9d03fa731a5a76c35a9625b63074a4abdddf9fc8cd5",
+    "tests/test_review_group_identity.py": "f9c94d64d83e9c56f9dcc062741d807a886556988ef9e0b939dd7fcd2a33bd25",
+    "tests/test_review_json_contracts.py": "31877ce6e610722f54e5542f5ae3bfd50a6550278c77b72fee7315fd58834af9",
+    "tests/test_review_output_contracts.py": "c7eb07b01fbb024c8a8fb234701e25910fea91962b88622be07a90cbec56c58d",
+    "pyproject.toml": "b3a7e27a95c07e9fa39df12a262d04f711d69ee32ed4e7080558bde1017b07eb"
+  },
+  "verification": {
+    "mutants": [
+      {
+        "name": "axis-secondary-to-primary",
+        "source_file": "mudplot/_render.py",
+        "before_text_sha256": "81872405b5dc1c359b3b001452a73323938ba7bbc2481bb403c980df9d8ec693",
+        "mutant_text_sha256": "41d06807e04251e51b215b21da76de7bf608eef4e936be151236770391519654",
+        "baseline": {
+          "exit_code": 0,
+          "cases": 1,
+          "failed": [],
+          "junit_sha256": "9c9a20ad4d375aed800b04a29d0aa7eb6f35f17d88f905f0913ce9beaaf94572",
+          "log_sha256": "8d8dd318cfc1288d347f6c3a3ada790c896f73ed2d2b3e60fb17b6dfc79c18d3",
+          "isolated_import": true
+        },
+        "mutant": {
+          "exit_code": 1,
+          "cases": 1,
+          "failed": [
+            {
+              "name": "test_renderer_artist_positions_match_data_axes_and_figure_transforms",
+              "classname": "tests.test_review_coordinate_frames",
+              "message": "StopIteration"
+            }
+          ],
+          "junit_sha256": "b6142b573ae544ab3456cc77d49a140a340f2b9213f190122749b89cbbf2b207",
+          "log_sha256": "46906b62fd9adc7db25ac73d21a43409decd0e7f772bb9729a1302aceb1c9f8f",
+          "isolated_import": true
+        }
+      },
+      {
+        "name": "group-object-to-inferred-string",
+        "source_file": "mudplot/_render.py",
+        "before_text_sha256": "81872405b5dc1c359b3b001452a73323938ba7bbc2481bb403c980df9d8ec693",
+        "mutant_text_sha256": "a48f38ea1af1384a412bb909a9569d1a7e27762748dce3029007ba305d450137",
+        "baseline": {
+          "exit_code": 0,
+          "cases": 4,
+          "failed": [],
+          "junit_sha256": "49ea8c73a3ee3230540f428111b2d5bd2ae2db75171c506c2ef8f68a19ae5b56",
+          "log_sha256": "2610cb2426bd6fed63f579dee3967052ec1c16275ff5c6f3d06878bcd4de80f9",
+          "isolated_import": true
+        },
+        "mutant": {
+          "exit_code": 1,
+          "cases": 4,
+          "failed": [
+            {
+              "name": "test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups0-expected0]",
+              "classname": "tests.test_review_group_identity",
+              "message": "assert [[0, 1]] == [[0], [1]]\n  \n  At index 0 diff: [0, 1] != [0]\n  Right contains one more item: [1]\n  Use -v to get more diff"
+            },
+            {
+              "name": "test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups2-expected2]",
+              "classname": "tests.test_review_group_identity",
+              "message": "assert [[0], [1], [2], [3]] == [[0], [1, 2, 3]]\n  \n  At index 1 diff: [1] != [1, 2, 3]\n  Left contains 2 more items, first extra item: [2]\n  Use -v to get more diff"
+            }
+          ],
+          "junit_sha256": "00c9f24d659365c5ed62297ee8c4d9f825684b174a90b9d744c6e1afa9b0cf62",
+          "log_sha256": "98cb68db5723d16f911f5f6ede474a5906f7a07e820b4db4fd0b1263735c3737",
+          "isolated_import": true
+        }
+      },
+      {
+        "name": "duplicate-key-last-value-wins",
+        "source_file": "mudplot/io.py",
+        "before_text_sha256": "e917d0fd97e76cd6c37451c076fe17cd3e71a86ba900824a45159b5a1002a67e",
+        "mutant_text_sha256": "1a504d9d4583e841da267de22324f808719d8905c9ce59c97a23e5c27070be97",
+        "baseline": {
+          "exit_code": 0,
+          "cases": 18,
+          "failed": [],
+          "junit_sha256": "afa8f7beea6c3a76ba954cce7e22c4e93c25a32d01c88905a56d604597a614a3",
+          "log_sha256": "dad08dba9fbd549d3a6102547af9d38dc1774663ad3c13b77f3ce098df802fa8",
+          "isolated_import": true
+        },
+        "mutant": {
+          "exit_code": 1,
+          "cases": 18,
+          "failed": [
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"dpi\":100,\"dpi\":100}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"dpi\":100,\"dpi\":200}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"dpi\":100,\"dpi\":100}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"dpi\":100,\"dpi\":200}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"dpi\":100,\"dpi\":100}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"dpi\":100,\"dpi\":200}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            },
+            {
+              "name": "test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+              "classname": "tests.test_review_json_contracts",
+              "message": "Failed: DID NOT RAISE ValueError"
+            }
+          ],
+          "junit_sha256": "ac41c2dc5e49f54ae65603103070b7aec58e238f3cc19abafd85438e1a308e99",
+          "log_sha256": "a02e1559a6161f00aeb5f57ce283ce9fe7b5eed63a46f6f1dd50d351744eee38",
+          "isolated_import": true
+        }
+      },
+      {
+        "name": "atomic-failure-deletes-previous-target",
+        "source_file": "mudplot/io.py",
+        "before_text_sha256": "e917d0fd97e76cd6c37451c076fe17cd3e71a86ba900824a45159b5a1002a67e",
+        "mutant_text_sha256": "8bb2b89088158e72b2eae075b6201f44e54daa4ac9478b97dac4f1940bec3859",
+        "baseline": {
+          "exit_code": 0,
+          "cases": 1,
+          "failed": [],
+          "junit_sha256": "ab7091e6c18412092744f03ead677af6aaffa43750782328ce04cf419d703f44",
+          "log_sha256": "f50b0c879c79e061d7320638bd08ac6462155fd163bd56f4e9ab76940d8d1988",
+          "isolated_import": true
+        },
+        "mutant": {
+          "exit_code": 1,
+          "cases": 1,
+          "failed": [
+            {
+              "name": "test_out_03_atomic_failure_retains_previous_bytes_and_cleans_staging[write-json]",
+              "classname": "tests.test_review_output_contracts",
+              "message": "FileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\mud\\\\AppData\\\\Local\\\\Temp\\\\mudplot-state-mutations-xvltk6yv\\\\atomic-failure-deletes-previous-target-mutant-tmp\\\\test_out_03_atomic_failure_ret0\\\\\ud55c\uae00 \uacbd\ub85c (review)\\\\previous.json'"
+            }
+          ],
+          "junit_sha256": "1328a5a3bac5148ef46dd6df0b546e58c9a4bf9a1258c1c8f4f0bf2ece1a4def",
+          "log_sha256": "d14871eb638d6bfb46c3125bc05f63888241f5e2e662acac6e4869f5794e3a68",
+          "isolated_import": true
+        }
+      },
+      {
+        "name": "redo-branch-is-not-cleared",
+        "source_file": "mudplot/store.py",
+        "before_text_sha256": "f9bdea12f317f2075e5a1d6fc8e1cc0366a38791d46db6aee61567d65fc7a5df",
+        "mutant_text_sha256": "e1f1eb7dc132064fd51c832774cc0d5f8d464e0881d0c8cebc8000c42274b5ed",
+        "baseline": {
+          "exit_code": 0,
+          "cases": 1,
+          "failed": [],
+          "junit_sha256": "655c5f91e4884767c238d16a71f8edd5decabb161e1274291ed25e495aa8ade6",
+          "log_sha256": "ad087812137c313bc9d20ef5b3b647e3ea0765888275b87cdc5f56bf56ba0d41",
+          "isolated_import": true
+        },
+        "mutant": {
+          "exit_code": 1,
+          "cases": 1,
+          "failed": [
+            {
+              "name": "test_exhaustive_short_state_space[4]",
+              "classname": "tests.test_review_state_machine",
+              "message": "Failed: prefix=0, deletion-minimal events=['title-a', 'undo', 'title-a', 'redo']"
+            }
+          ],
+          "junit_sha256": "92ccbbf1c67a5162ff5a3dff2ab0d15fe5ae95de463e926c57426dc19debbc89",
+          "log_sha256": "766e4afabf9f23aaff4395bcf946ac880a329e06bb583cf2612a1d7d1eb545b9",
+          "isolated_import": true
+        }
+      }
+    ],
+    "production_checkout_unchanged": true,
+    "production_source_sha256": {
+      "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+      "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+      "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972"
+    },
+    "post_experiment_fixture_changes": {
+      "scope": "After experiment, intentional root TEST additions persisted the actual shrunk redo trace alongside the controlled trace. Runtime originals were never patched; original experiment proof preserves its earlier test/fixture fingerprints.",
+      "current_test_sha256": "066894d96b15758686284b4da065a3d46d358e7f1b5a0eaf75bb02335f9673dd",
+      "current_fixture_sha256": "5000c510a9951e9fe2a80c46767a3d78bf46b3977a9f186ab3a06213cac32750"
+    },
+    "systematic_state_space": {
+      "alphabet_size": 8,
+      "depths": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "short_traces": 4680,
+      "checkpoint_prefixes": [
+        64,
+        128
+      ],
+      "checkpoint_suffix_depth": 3,
+      "checkpoint_traces": 1024,
+      "generated_event_checks": 21128,
+      "oracle": "Independent title/size/panel/history/future frame transitions; full spec equality, JSON roundtrip, negative-action no transition, listener/public snapshot mutation isolation each step. No same-reducer oracle.",
+      "shrinking": "Greedy deletion until no single event removal still fails; deletion-minimal only, not globally minimal/Hypothesis full shrinking. Exact controlled and isolated-source traces persisted for current-good replay."
+    }
+  },
+  "property_scope": "Bounded exhaustive8-eventalphabet/depth1..4plus3-eventsuffixesfromcheckpoint64/128. Independenttitle-size-panel/history-futureoracle;JSONroundtrip/snapshot/listener-isolation/negative-actionno-transitionchecks.No same-reducerexpected-state oracle;existing2seed768-actiontestsretained. Greedydeletion1-minimalnotglobalminimum/shrinkingallnumericdomains. Reviewedfixturepersistsbothcontrolledandactualisolatedredo-mutanttraces.",
+  "mutation_scope": "Five selected availability/meaning/atomicitycontracts,25baselinepasses/23intentionaltestfailures across5mutants(groupmutant2of4parametercasesfail). No universalmutationcoverage/line-percentageclaim.No originalsourcepatched/reset/stash/checkout;ownedcopiedruntime/importpathsasserted,syntheticownedtmpfilesonly.AtomicdeletionfaultdoesNOTtargetuserfiles.",
+  "qa_note": "InitialoracleNone-titleassumptionwaswrong(actualPanelSpec.titleisstrdefaultempty),fixedtypedindependentstateframeswithoutAny/cast/ignore. Newpersistedactualtraceaddedafterisolatedexperiment;originalproofhasoldtest/fixturehashesatthattime,currenttest/fixtureupdatesareintentionalandcurrentruntime3hashesunchanged. Parse/import/collectionerrorswouldnotcountasmutantkill.",
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "environment_overrides": {
+    "mutants": {
+      "scope": "Owned package/dashboard/tests copies only,base CPython with matching venv sitepackages;import path asserted isolated beforetests;realcheckout runtime neverpatched.No checkout/reset/stash/restoration or userfilesmodified.",
+      "controls": "Eachselectedtarget passes in unmodified copy first;mutant must pytestexit1/assertionfailure,notimport/collectionexit2. Owned temporary targets only for atomic fault."
+    },
+    "floor-properties": {
+      "PYTEST_ADDOPTS": "-k \"test_review_state_machine\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "mutant-verification",
+      "argv": [
+        "python",
+        "<evidence>\\verify_mutants.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Five isolated mutants detected/25 baseline passes/23 intentional test failures; runtime root never patched;5704 traces/21128 generated event checks plus saved shrink fixtures"
+      ],
+      "log_text_sha256": "954909c67ba5fbac7218d784f80c0bcbd0ca07a48e5e014ddb47daa9dbe4df33"
+    },
+    {
+      "name": "state-machine-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_state_machine.py",
+        "tests/test_review_state_contracts.py",
+        "tests/test_reducer.py",
+        "tests/test_review_history_checkpoint.py",
+        "tests/test_review_history_policies.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "52 passed in 64.40s (0:01:04)"
+      ],
+      "log_text_sha256": "5be077c57b45bfaecf36b8a941e8c60567814638430e2d9addca83109812ec22"
+    },
+    {
+      "name": "floor-properties",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "9 passed, 3216 deselected, 13 warnings in 27.20s"
+      ],
+      "log_text_sha256": "32d65ae690d9a0f37c5df9a52dae31e20aec003b533826693eb27aeff608916a"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "265 files already formatted"
+      ],
+      "log_text_sha256": "38bff2432efe5cd39d9efb5da45d430ae778322e3e387091d9313f217ee1323a"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "b0d4c172d8a177bf8e6ee4c0b60378e23219b7ce0e9a9199326dd7251696ade6"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "847d0f4c2c766bfbf1093b30b59d55d42eeff192c1928228e5b96a300be0f097"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "run_mutants.py": "746f3206cb862d398024c6e3faa2b5785aa2cbb08527c9ac215a75d8a806c4da",
+    "verify_mutants.py": "77bb6458ca225976c7b857578f63fb085a2019ec9c51939d9892b9ee47a74d35",
+    "_qa_isolation.py": "62b060c9def46f989b7819a6df38b7190ce892f7f4c15a3c889d506f27a2a576",
+    "mutant_results.json": "41373be94fa730cbb368beca3d00fe379e1439679277bab7ac90110af8c08a5f",
+    "verified_mutants.json": "7947912463db8121bc61ab0b8904ad406a3c8f005058345d96717325d0366716",
+    "checkout_unchanged.json": "07de86b059d0d460c069a2ce3d0342fc5b2113e7c2ff75b103dbc91a4ea5f8f5",
+    "qa.py": "adab30cc7e3c385e9f02b6708383f8359b2df629e82879479e5e86711cc1931a",
+    "environment_overrides.json": "b0c1cc13c20bc64b6cd9426265c7e99ced1f1286c5e9ff5116be13f8f57bf336",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "8d94a9e5b41a424d6abd43c09f4579a9a520b79f72adcc1b5850fdc2d6b1d4f9",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "axis-secondary-to-primary-baseline.xml": "9c9a20ad4d375aed800b04a29d0aa7eb6f35f17d88f905f0913ce9beaaf94572",
+    "axis-secondary-to-primary-baseline.log": "8d8dd318cfc1288d347f6c3a3ada790c896f73ed2d2b3e60fb17b6dfc79c18d3",
+    "axis-secondary-to-primary-baseline-import.json": "470a3d1132533c7083d2c124b98a8aed80aa597af32526050073d5cfe6d06ee3",
+    "axis-secondary-to-primary-mutant.xml": "b6142b573ae544ab3456cc77d49a140a340f2b9213f190122749b89cbbf2b207",
+    "axis-secondary-to-primary-mutant.log": "46906b62fd9adc7db25ac73d21a43409decd0e7f772bb9729a1302aceb1c9f8f",
+    "axis-secondary-to-primary-mutant-import.json": "37e86e2ba77e0e7e648148c8da6494a57dd05522625b39bccf6b694e2cf80022",
+    "group-object-to-inferred-string-baseline.xml": "49ea8c73a3ee3230540f428111b2d5bd2ae2db75171c506c2ef8f68a19ae5b56",
+    "group-object-to-inferred-string-baseline.log": "2610cb2426bd6fed63f579dee3967052ec1c16275ff5c6f3d06878bcd4de80f9",
+    "group-object-to-inferred-string-baseline-import.json": "470a3d1132533c7083d2c124b98a8aed80aa597af32526050073d5cfe6d06ee3",
+    "group-object-to-inferred-string-mutant.xml": "00c9f24d659365c5ed62297ee8c4d9f825684b174a90b9d744c6e1afa9b0cf62",
+    "group-object-to-inferred-string-mutant.log": "98cb68db5723d16f911f5f6ede474a5906f7a07e820b4db4fd0b1263735c3737",
+    "group-object-to-inferred-string-mutant-import.json": "75387fb5180aef5645799170b79db643a7ee74da2bbda59972458e2f99075141",
+    "duplicate-key-last-value-wins-baseline.xml": "afa8f7beea6c3a76ba954cce7e22c4e93c25a32d01c88905a56d604597a614a3",
+    "duplicate-key-last-value-wins-baseline.log": "dad08dba9fbd549d3a6102547af9d38dc1774663ad3c13b77f3ce098df802fa8",
+    "duplicate-key-last-value-wins-baseline-import.json": "470a3d1132533c7083d2c124b98a8aed80aa597af32526050073d5cfe6d06ee3",
+    "duplicate-key-last-value-wins-mutant.xml": "ac41c2dc5e49f54ae65603103070b7aec58e238f3cc19abafd85438e1a308e99",
+    "duplicate-key-last-value-wins-mutant.log": "a02e1559a6161f00aeb5f57ce283ce9fe7b5eed63a46f6f1dd50d351744eee38",
+    "duplicate-key-last-value-wins-mutant-import.json": "c2499c814f5e5b65ef3dbd23d6ba3d0997583dfbc187e6442c023daa679ed7db",
+    "atomic-failure-deletes-previous-target-baseline.xml": "ab7091e6c18412092744f03ead677af6aaffa43750782328ce04cf419d703f44",
+    "atomic-failure-deletes-previous-target-baseline.log": "f50b0c879c79e061d7320638bd08ac6462155fd163bd56f4e9ab76940d8d1988",
+    "atomic-failure-deletes-previous-target-baseline-import.json": "470a3d1132533c7083d2c124b98a8aed80aa597af32526050073d5cfe6d06ee3",
+    "atomic-failure-deletes-previous-target-mutant.xml": "1328a5a3bac5148ef46dd6df0b546e58c9a4bf9a1258c1c8f4f0bf2ece1a4def",
+    "atomic-failure-deletes-previous-target-mutant.log": "d14871eb638d6bfb46c3125bc05f63888241f5e2e662acac6e4869f5794e3a68",
+    "atomic-failure-deletes-previous-target-mutant-import.json": "5442f7da67573630b344ab39d5c5181e9e957f5e3c98003f778a7534a3d53cff",
+    "redo-branch-is-not-cleared-baseline.xml": "655c5f91e4884767c238d16a71f8edd5decabb161e1274291ed25e495aa8ade6",
+    "redo-branch-is-not-cleared-baseline.log": "ad087812137c313bc9d20ef5b3b647e3ea0765888275b87cdc5f56bf56ba0d41",
+    "redo-branch-is-not-cleared-baseline-import.json": "470a3d1132533c7083d2c124b98a8aed80aa597af32526050073d5cfe6d06ee3",
+    "redo-branch-is-not-cleared-mutant.xml": "92ccbbf1c67a5162ff5a3dff2ab0d15fe5ae95de463e926c57426dc19debbc89",
+    "redo-branch-is-not-cleared-mutant.log": "766e4afabf9f23aaff4395bcf946ac880a329e06bb583cf2612a1d7d1eb545b9",
+    "redo-branch-is-not-cleared-mutant-import.json": "cc747774b5231e359dcb1774a316ba1e43da349dc64675f5414cf161e690baf1"
+  }
+}

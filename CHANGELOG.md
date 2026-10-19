@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added a bounded exhaustive state machine with an independent oracle, reviewed
+  deletion-minimal replay fixtures and isolated selected mutation evidence for
+  axis/group/duplicate-key/atomicity/redo contracts, without runtime/dependency changes.
 - Documented measured API/Python/Rust editor costs, explicit aggregation and large
   workload limits without streaming/SLA or silent history-cut claims. Kept the
   full-suite CI contract test robust to folded YAML/JUnit command formatting.

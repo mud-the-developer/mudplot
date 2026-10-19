@@ -124,6 +124,24 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 71 explores state space and selected test sensitivity.**
+An independent field/history/future oracle checks5704bounded traces/21128generated
+events, serialization and detached listener/public snapshots beyond the existing
+fixed-seed corpus. A greedy deletion shrinker records two reviewed redo regressions;
+deletion-minimal is not globally minimal or all-domain shrinking.
+
+Five owned-copy mutants (axis/group/duplicate/atomic/redo) are detected after25
+unmodified-control passes, with23intentional test failures. Real runtime was
+never patched; import isolation and original hashes agree. This is selected
+contract sensitivity, not whole-line mutation coverage.9new/52related/floor9/
+3216deselected/13Pyparsing warnings and9checks pass, activeLSP2clean.
+[Evidence](review_evidence/state_mutation_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS136/RUNNING6/OPEN7/DEFERRED1**. CI-03/05 are PASS only in this bounded scope.
+Keep test unit local duringce717CI39212306093; no runtime/dependency/lock/version/
+tag/deploy changes or release approval inferred.
+
+### Earlier review phase 70
+
 **Review phase 70 separates E2E costs and documents practical workload scope.**
 Same1k/10k raw-line/title actions retain API/editor specs and PNG pixels. Warm
 API public-save/close/read medians530/553ms, PythonHTTP+PNG561/597ms and Rust

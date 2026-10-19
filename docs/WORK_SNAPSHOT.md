@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest independent5704trace oracle, reviewed deletion-minimal redo fixtures and
+  five isolated mutants make CI-03/05 PASS in scope.52related/floor9passes and
+  25controlpasses→23intentional mutant failures are not whole mutation coverage.
+  Original runtime hashes/import isolation verified; no real checkout patch/reset.
+  Current test unit stays local duringce717CI39212306093, not new wholeCI proof.
+
 - Latest bounded same-data API/Python/Rust cold/warm/component probes plus explicit
   aggregation/history guidance make PERF-05/07/08 PASS in scope.79related/floor15
   passes preserve semantics/source/pixels; no streaming/SLA or new optimization.
@@ -531,7 +537,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   separates real passes, tool-absence skips, required-case failures and job scopes.
 - [E2E performance evidence](review_evidence/e2e_performance_verification.json)
   and [workload guide](PERFORMANCE.md) separate startup/JSON/render/HTTP/cache scopes.
-- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS134/RUNNING6/OPEN9/
+- [State/mutation evidence](review_evidence/state_mutation_verification.json)
+  retains exact bounded grammar, independent checks, shrunk traces and failure reasons.
+- [150-ID review tracker](REVIEW_CHECKLIST_STATUS.md): **PASS136/RUNNING6/OPEN7/
   DEFERRED1**. CI-01 awaits a new integrated run; release-only CI-07 is deferred. Unchecked items are not silently considered verified.
 
 Earlier feature/minimum/browser receipts have their own scope and predate later

@@ -18,6 +18,32 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 71차 — 독립상태oracle·축소fixture·격리선정mutant검사
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-state-mutations-xvltk6yv`와
+  [상태공간/선정mutant/checkout무변경](review_evidence/state_mutation_verification.json),
+  `tests/fixtures/state_machine_regressions.json`의검토한두trace를보존합니다.
+- 고정seed외에8event/depth1..4의4680trace와64/128checkpointprefix의3eventsuffix1024trace,
+  총5704trace/21128generatedevent검사를수행했습니다. 독립title/size/panel/history/futureoracle가
+  전체spec/JSONroundtrip/실패negativeindex무전이/반환·listener snapshot외부수정격리를확인합니다.
+  같은reducer를expectedstate계산기로재사용하지않고기존768-actionseed검사도유지했습니다.
+- Shrinker는한event삭제로더이상실패를유지할수없는deletion-minimal이지전역최소/Hypothesis전체
+  shrink보장은아닙니다. Controlledstaleredo의A→undo→B→redo와실제isolatedsource mutant가찾은
+  A→undo→A→redo를고정fixture로검토해기록하고정상Store에서다시통과시켰습니다.
+- 실제checkout은patch하지않고runtime/dashboard/tests소유copy의import경로를assert했습니다.
+  원copy의25baseline통과후secondary→primary축/그룹dtype추론/duplicate-last-wins/실패시이전target삭제/
+  redoclear누락의5선정mutant를넣어23의도test실패로모두검출했습니다. Groupmutant는4param중2만
+  실패하므로전체linecoverage/모든입력검출률이라고하지않습니다. Collection/import오류/skip은kill로세지않았습니다.
+- 축text소속누락/원group행혼합·분리/duplicate미거절/이전파일소실/최소redosignal의실패가맞고
+  원runtime3파일SHA는실험전후같았습니다. Reset/stash/checkout원복명령으로원work를덮지않았습니다.
+  실험뒤추가한fixture/test는의도된검토추가이며실험당시옛지문과현재지문을구별합니다.
+- 새9·관련52통과·floor9/3216deselected/경고13·isolated5×baseline/mutant대비·양platformtype/
+  Ruff265/생성계약/packaging9명령exit0·변경2경로activeLSPclean입니다. 13은모두3종Pyparsing이며
+  oracle의잘못된None-title가정을실제문자열default/typedtuple로수정했지Any/cast/ignore로숨기지않았습니다.
+- CI-03/05는이grammar/depth/선정계약범위PASS입니다. 제품runtime/새dependency/lock/version/tag/
+  publish는변경하지않고ce717CI39212306093의양Rust성공/3Python진행을보호해testunit은로컬보존합니다.
+  모든action조합/일반mutationcoverage/새현재소스전체CI를완료했다고하지않으며loop1/gates는유지합니다.
+
 ## 70차 — API/Python/Rust비용과대형지원범위·CI명령검사보존
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-e2e-costs-azds8gdv`와
@@ -1902,9 +1928,9 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 | PKG-09 | P1 | PASS | lock·빌드 격리·설치 재현 | pyproject.toml; scripts/check_wheel.py; scripts/check_minimum_versions.py | test_no_deps.py; packaging/minimum scripts |
 | CI-01 | P0 | RUNNING | 표준 검사 실제 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-02 | P1 | PASS | 브라우저·TeX skip 가시성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-03 | P1 | OPEN | 속성 기반 상태 테스트 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-03 | P1 | PASS | 속성 기반 상태 테스트 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-04 | P1 | OPEN | golden image의 역할과 오차 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
-| CI-05 | P1 | OPEN | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
+| CI-05 | P1 | PASS | 핵심 실패를 잡는 테스트인지 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-06 | P1 | PASS | CI 지원 환경과 병렬 실행 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-07 | P0 | DEFERRED | 릴리스 버전·태그·산출물 동일성 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
 | CI-08 | P1 | OPEN | 체크섬·OIDC provenance 검증 | .github/workflows/; CONTRIBUTING.md; scripts/check_release_version.py | test_release_preflight.py; workflow/artifact evidence not collected |
@@ -1918,7 +1944,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 
 ## 판정 범위와 다음 순서
 
-- 현재 상태: PASS 134, RUNNING 6, OPEN 9, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
+- 현재 상태: PASS 136, RUNNING 6, OPEN 7, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
 - 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045/046을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.

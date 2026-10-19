@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신독립5704traceoracle/검토한deletion-minimalredo2fixture/격리5mutant로CI-03/05는범위PASS입니다.
+  관련52/floor9와control25통과→mutant23의도실패는전체mutationcoverage가아닙니다. 원runtimeSHA/
+  isolatedimport가맞으며실제checkoutpatch/reset없습니다. ce717CI39212306093중testunit은로컬
+  보존해새소스전체CI를소급하지않습니다.
+
 - 최신동일데이터API/Python/Rustcold·warm·component/명시집계·history안내로PERF-05/07/08은
   범위PASS입니다. 관련79/floor15가의미/source/pixel을보존하며streaming/SLA/새최적화는없습니다.
   21dCI의literal명령포맷test1실패는whole-suite/60분/timing/JUnit/selector금지를유지해수정했고
@@ -443,7 +448,9 @@
   도구부재skip/필수case실패/job범위를구분했습니다.
 - [E2E성능 근거](review_evidence/e2e_performance_verification.json)와
   [workload안내](PERFORMANCE.ko.md)에시작/JSON/render/HTTP/cache범위를구분했습니다.
-- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS134/RUNNING6/OPEN9/DEFERRED1**.
+- [상태/mutation 근거](review_evidence/state_mutation_verification.json)에제한grammar/
+  독립검사/축소trace/실제실패사유를보존했습니다.
+- [150-ID 리뷰 대장](REVIEW_CHECKLIST_STATUS.md): **PASS136/RUNNING6/OPEN7/DEFERRED1**.
   CI-01은 새 통합 CI 전 진행 중이며 release-only CI-07은 보류입니다.
   미검증 항목을 통과로 취급하지 않습니다.
 

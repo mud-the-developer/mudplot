@@ -120,6 +120,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰71차에서상태공간과선정테스트민감도를검사했습니다.** 독립field/history/futureoracle가
+고정seed외5704제한trace/21128generatedevent·serialization/listener/publicsnapshot격리를확인합니다.
+Greedy삭제shrinker의검토redo2fixture는deletion-minimal이지전역최소/모든domain보장이아닙니다.
+
+소유copy의축/group/duplicate/atomic/redo5mutant는25control통과뒤23의도test실패로검출했습니다.
+실제runtime은patch하지않고isolatedimport/원SHA를확인했지모든line mutationcoverage는아닙니다.
+새9/관련52/floor9/3216deselected/Pyparsing13경고·품질9명령·activeLSP2clean,
+[근거](review_evidence/state_mutation_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS136/RUNNING6/OPEN7/DEFERRED1**입니다. CI-03/05는이제한범위PASS이고ce717CI39212306093중
+unit은로컬보존하며runtime/의존성/lock/버전/tag/배포변경이나release승인은없습니다.
+
+### 이전 리뷰70차
+
 **리뷰70차에서E2E비용과실제workload범위를분리했습니다.** 동일1k/10krawline/title의spec/
 pixel은같았고warmAPIpublicsave·close·read530/553ms/PythonHTTP+PNG561/597ms/Rust4215/4431ms는
 서로다른경로관찰이지언어/SLA보장이아닙니다.100component/3freshCLI/5고비용표본/colddefault·open은
