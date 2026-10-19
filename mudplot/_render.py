@@ -11,6 +11,7 @@ import contextvars
 import hashlib
 import inspect
 import itertools
+import math
 import re
 import warnings
 from dataclasses import replace
@@ -44,7 +45,7 @@ from ._semantics import (
     shared_scale_domains,
 )
 from ._stat import STAT_LAYER_TYPES, category_levels, stat_config, usable_rows
-from .spec import FigureSpec, LayerSpec, PanelSpec
+from .spec import MAX_RENDER_PIXELS, FigureSpec, LayerSpec, PanelSpec
 from .theme import spec_to_rcparams
 from .validate import assert_valid
 
@@ -2707,8 +2708,9 @@ def render(spec: FigureSpec, *, fmt: str = ""):
     (``citation``/``href``) is rendered; ``save()`` sets it from the file
     extension.
 
-    Raises ``ValueError`` (with all issues listed) if ``spec`` is invalid —
-    see :mod:`mudplot.validate`.
+    Raises ``ValueError`` if ``spec`` is invalid (with all issues listed) or
+    owned canvas work exceeds the 40-million-pixel effect budget. The source
+    DPI is not clamped; editor previews use their existing capped copy.
     """
     try:
         import matplotlib.pyplot as plt
@@ -2720,6 +2722,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
         ) from error
 
     assert_valid(spec)
+    _check_render_budget(spec.size, spec.dpi)
     domains = shared_scale_domains(spec)
 
     rc = spec_to_rcparams(
@@ -2752,6 +2755,7 @@ def render(spec: FigureSpec, *, fmt: str = ""):
         # Interactive HiDPI backends may round inches to device pixels.
         fig.set_size_inches((spec.size[0], spec.size[1]), forward=False)
         try:
+            _check_render_budget(fig.get_size_inches(), fig.dpi)
             gs = fig.add_gridspec(rows, cols, **gridspec_kw)
             axes_grid: list[list[object | None]] = [[None] * cols for _ in range(rows)]
             panel_axes = []
@@ -2824,6 +2828,19 @@ def _require_texsystem() -> None:
         )
 
 
+def _check_render_budget(size, dpi) -> None:
+    dpi = float(dpi)
+    width, height = (float(value) * dpi for value in size)
+    if (
+        not math.isfinite(width)
+        or not math.isfinite(height)
+        or width * height > MAX_RENDER_PIXELS
+    ):
+        raise ValueError(
+            f"render canvas exceeds {MAX_RENDER_PIXELS} pixels; reduce size or DPI"
+        )
+
+
 def _preview_dpi(spec: FigureSpec, *, max_dimension: int = 2000) -> float:
     """Bound editor preview pixels without changing the saved FigureSpec."""
     return min(spec.dpi, max_dimension / max(spec.size))
@@ -2839,6 +2856,15 @@ def _save_figure(fig, spec: FigureSpec, destination, fmt: str, *, tight=False) -
         "bbox_inches": "tight" if tight else None,
         "pad_inches": 0.05,
     }
+    _check_render_budget(fig.get_size_inches(), fig.dpi)
+    _check_render_budget(fig.get_size_inches(), spec.dpi)
+    if tight:
+        bbox = fig.get_tightbbox()
+        if bbox is not None:
+            pad = kwargs["pad_inches"]
+            _check_render_budget(
+                (bbox.width + 2 * pad, bbox.height + 2 * pad), spec.dpi
+            )
     if fmt:
         kwargs["format"] = fmt
     if fmt == "pdf":

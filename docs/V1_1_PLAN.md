@@ -124,6 +124,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 ## Current checkpoint
 
+**Review phase 65 separates source DPI from native effect work bounds.**
+FIND-045 now checks40million-pixel work before Figure creation and backend/save
+DPI/tight padded bbox, not in spec validation. Large source DPI stays valid and
+preview remains2000px/axis; oversized exact effects explicitly reject without
+silent output clamping. Accepted6000²/6320²PNG and bounded oversized SVG fixtures,
+old-target/cache/Figure ownership and explicit lower-DPI recovery agree.
+
+18new/315relatedpasses/4OSsymlinkskips,floor18/3142deselected/13Pyparsing warnings,
+8actualHTTP outcomes and10checks pass, activeLSP5clean. Scope is canvas area,
+not total RAM/CPU/caller-direct-Matplotlib protection; SEC-04 remains RUNNING.
+[Evidence](review_evidence/effect_budget_verification.json), [tracker](REVIEW_CHECKLIST_STATUS.md):
+**PASS123/RUNNING6/OPEN20/DEFERRED1**. Exact2a96CI39191652835ALL5SUCCESS
+validates prior041/042/043 and Linux/browser test fixes; publish queued structure+
+effect runtime for new whole CI. Versions/dependencies/locks/tag/deploy unchanged.
+
+### Earlier review phase 64
+
 **Review phase 64 bounds panel/layout/decode expansion before allocation.**
 FIND-044 uses one256panel/cell limit in shared decoding, action expansion and
 validation. AddPanel/SetLayout share _ensure_panel; raw arrays reject before

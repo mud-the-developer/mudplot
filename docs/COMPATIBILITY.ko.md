@@ -122,6 +122,17 @@ Sessionlock은후보render/commit을직렬화하며동시도착의FIFO공정성�
 Tab별독립panel선택·원격다중사용자충돌해결·새revision거절API가아닙니다. Python
 /action/rawform의JSONaction도기존HTML/redirectUI응답이지새JSONRPCroute가아닙니다.
 
+## 소유effect pixelbudget
+
+Ownedrender/save는40millionpixelcanvas작업상한을nativeFigure할당전과실제backend/outputDPI/
+padding포함tightbbox에서검사합니다. 현재layout/imagepipeline이설정DPI로할당할수있어vector
+목적지에도적용합니다. 초과는ValueError로명시size/DPI감소를안내하며출력을몰래downscale/재작성하지않습니다.
+
+SpecDPI한도가아니므로큰DPI문서도load/validate되며editor의2000px/축previewcopy와원DPI/state를
+유지합니다. Export실패는이전single-filebytes/staging소유권/cache를유지하고명시낮은DPI/size로회복할수
+있습니다. 작업area상한이지encoded파일크기/전체RSS/CPU/호출자의직접MatPlot효과보장은아니며다른
+layer/text/JSON복잡도는별도검토입니다.
+
 ## Bivariate해상도와자원범위
 
 Hist2d의정수/정수pair해상도는축당1..512또는3..513개의증가하는finiteedge를지원하고

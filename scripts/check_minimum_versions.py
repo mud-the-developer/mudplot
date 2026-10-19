@@ -43,6 +43,7 @@ TESTS = (
     "tests/test_review_http_boundaries.py",
     "tests/test_review_concurrent_render.py",
     "tests/test_review_output_contracts.py",
+    "tests/test_review_effect_budget.py",
     "tests/test_review_output_lifecycle.py",
     "tests/test_review_offline_execution.py",
     "tests/test_review_body_framing.py",

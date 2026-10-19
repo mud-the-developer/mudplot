@@ -66,8 +66,11 @@ supports gridsize up to512; oversized requests fail validation rather than being
 clamped or reaching native quadratic allocation. This specific guard is not a
 hard total memory/time limit. Figures/layouts are also limited to256panels/cells;
 creating indices0..255 still autoextend, while larger expansion and raw panel
-arrays fail before bulk PanelSpec construction. Other complexity/exact-export
-resource policy remains under review; Windows Job limits in review probes are test containment,
+arrays fail before bulk PanelSpec construction. Owned render/save effects now
+reject canvases above40millionpixels before native work, including backend/output
+DPI and padded tight bounds. This is not a source-DPI cap: the original spec and
+capped editor preview remain intact, and no output is silently downscaled.
+Other layer/text/CPU/total-memory policy remains under review; Windows Job limits in review probes are test containment,
 not an installed application sandbox. Unpatched stress payloads are kept private.
 
 ## File and execution boundaries

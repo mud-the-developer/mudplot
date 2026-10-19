@@ -35,6 +35,7 @@ from ._stat import (
 from ._violin_options import MAX_INNER_OBSERVATIONS
 from .spec import (
     MAX_FIGURE_PANELS,
+    MAX_RENDER_PIXELS,
     ECDFSpec,
     HistogramSpec,
     KDE2DSpec,
@@ -908,6 +909,7 @@ def capabilities() -> dict:
             "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
             "max_semantic_curves": MAX_CURVES,
         },
+        "render_budget": {"max_canvas_pixels": MAX_RENDER_PIXELS},
         "figure_structure": {
             "max_panels": MAX_FIGURE_PANELS,
             "max_layout_cells": MAX_FIGURE_PANELS,

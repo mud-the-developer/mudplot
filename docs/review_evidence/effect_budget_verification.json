@@ -1,0 +1,646 @@
+{
+  "source_sha256": {
+    "mudplot/spec.py": "8c84790a883fa0fa8236d38a277003d22956cc65a5c7d2b24e091fde4e92ac3a",
+    "mudplot/_render.py": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+    "mudplot/capabilities.py": "370264705f48c95b6fd9c489014e2755f8bdc58d5a6a09e4e5b505b0aba5babb",
+    "tests/test_review_effect_budget.py": "d7d8bedd5a578956148126f2f807e6e279b3b6482612c993306abe58a3a5674c",
+    "scripts/check_minimum_versions.py": "725bdfddbd217ef15a5b56147da55dfe10c27f9d9c5c0af00f5ca259a4d537f2",
+    "schemas/capabilities.json": "3a46f2da33d6b2c306ab30f2eec770abf11928105ad56e523455715a30144251",
+    "docs/REFERENCE.md": "eb73238645fa82654f26b8e00b0faff65e9e610d969124c8ca84948814c94f5c"
+  },
+  "before_effect_outcomes": [
+    {
+      "case": "effect-render-exact-400",
+      "input_bytes": 170,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.3015300999977626,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211361792,
+      "peak_committed_bytes": 231813120,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "render-exact",
+        "requested_pixels": [
+          4000,
+          4000
+        ],
+        "actual_pixels": [
+          4000,
+          4000
+        ],
+        "seconds": 1.1293274000054225
+      }
+    },
+    {
+      "case": "effect-export-png-600",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.643930999969598,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 215597056,
+      "peak_committed_bytes": 234762240,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "export-png",
+        "requested_pixels": [
+          6000,
+          6000
+        ],
+        "actual_pixels": [
+          6000,
+          6000
+        ],
+        "seconds": 1.2312849999871105
+      }
+    },
+    {
+      "case": "effect-export-png-632",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.4286874999525025,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 231387136,
+      "peak_committed_bytes": 250904576,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "export-png",
+        "requested_pixels": [
+          6320,
+          6320
+        ],
+        "actual_pixels": [
+          6320,
+          6320
+        ],
+        "seconds": 1.2641924999770708
+      }
+    },
+    {
+      "case": "effect-render-exact-633",
+      "input_bytes": 170,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.3925183999817818,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 230649856,
+      "peak_committed_bytes": 250425344,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "render-exact",
+        "requested_pixels": [
+          6330,
+          6330
+        ],
+        "actual_pixels": [
+          6330,
+          6330
+        ],
+        "seconds": 0.9810609999694861
+      }
+    },
+    {
+      "case": "effect-svg-large-scatter",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.9902916999999434,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211533824,
+      "peak_committed_bytes": 232308736,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "memory-budget-blocked",
+        "stage": "export-svg",
+        "seconds": 0.8303927999804728
+      }
+    },
+    {
+      "case": "effect-svg-large-heatmap",
+      "input_bytes": 164,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.3361522000050172,
+      "exit_code": 21,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211148800,
+      "peak_committed_bytes": 231878656,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "memory-budget-blocked",
+        "stage": "export-svg",
+        "seconds": 0.8964045000029728
+      }
+    },
+    {
+      "case": "effect-large-source-preview",
+      "input_bytes": 150,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.0461492000031285,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211288064,
+      "peak_committed_bytes": 232062976,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          10000000000,
+          10000000000
+        ],
+        "actual_pixels": [
+          2000,
+          2000
+        ],
+        "seconds": 0.8708642999990843
+      }
+    }
+  ],
+  "after_effect_outcomes": [
+    {
+      "case": "effect-render-exact-400",
+      "input_bytes": 170,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.2223297000164166,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211107840,
+      "peak_committed_bytes": 232013824,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "render-exact",
+        "requested_pixels": [
+          4000,
+          4000
+        ],
+        "actual_pixels": [
+          4000,
+          4000
+        ],
+        "seconds": 0.9247115000034682
+      }
+    },
+    {
+      "case": "effect-export-png-600",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.920713799947407,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 215257088,
+      "peak_committed_bytes": 234446848,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "export-png",
+        "requested_pixels": [
+          6000,
+          6000
+        ],
+        "actual_pixels": [
+          6000,
+          6000
+        ],
+        "seconds": 1.2223414999898523
+      }
+    },
+    {
+      "case": "effect-export-png-632",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.570063300023321,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 231460864,
+      "peak_committed_bytes": 250933248,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "export-png",
+        "requested_pixels": [
+          6320,
+          6320
+        ],
+        "actual_pixels": [
+          6320,
+          6320
+        ],
+        "seconds": 1.266425799985882
+      }
+    },
+    {
+      "case": "effect-render-exact-633",
+      "input_bytes": 170,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.0410259999916889,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65224704,
+      "peak_committed_bytes": 52416512,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "render-exact",
+        "error_type": "ValueError",
+        "message": "render canvas exceeds 40000000 pixels; reduce size or DPI",
+        "seconds": 0.3517199999769218
+      }
+    },
+    {
+      "case": "effect-svg-large-scatter",
+      "input_bytes": 168,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.6504620999912731,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 64847872,
+      "peak_committed_bytes": 51929088,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "export-svg",
+        "error_type": "ValueError",
+        "message": "render canvas exceeds 40000000 pixels; reduce size or DPI",
+        "seconds": 0.352725200005807
+      }
+    },
+    {
+      "case": "effect-svg-large-heatmap",
+      "input_bytes": 164,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 1.0367206000373699,
+      "exit_code": 22,
+      "wall_timeout": false,
+      "peak_rss_bytes": 65122304,
+      "peak_committed_bytes": 52518912,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "error",
+        "stage": "export-svg",
+        "error_type": "ValueError",
+        "message": "render canvas exceeds 40000000 pixels; reduce size or DPI",
+        "seconds": 0.35107370000332594
+      }
+    },
+    {
+      "case": "effect-large-source-preview",
+      "input_bytes": 150,
+      "memory_limit_bytes": 536870912,
+      "cpu_seconds_limit": 8,
+      "wall_seconds_limit": 12,
+      "seconds": 2.212984499987215,
+      "exit_code": 0,
+      "wall_timeout": false,
+      "peak_rss_bytes": 211095552,
+      "peak_committed_bytes": 231862272,
+      "job_assigned_before_resume": true,
+      "worker_result": {
+        "status": "ok",
+        "stage": "preview",
+        "requested_pixels": [
+          10000000000,
+          10000000000
+        ],
+        "actual_pixels": [
+          2000,
+          2000
+        ],
+        "seconds": 0.9087550999829546
+      }
+    }
+  ],
+  "http_effect_outcomes": [
+    {
+      "editor": "python",
+      "case": "exact-effect-rejected",
+      "format": "svg",
+      "status": 400,
+      "content_type": "text/html;charset=utf-8",
+      "source_dpi": 633,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "python",
+      "case": "exact-effect-rejected",
+      "format": "pdf",
+      "status": 400,
+      "content_type": "text/html;charset=utf-8",
+      "source_dpi": 633,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "python",
+      "case": "explicit-lower-dpi-recovery",
+      "format": "svg",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "source_dpi": 600,
+      "preview_edit_after_rejection": true
+    },
+    {
+      "editor": "python",
+      "case": "explicit-lower-dpi-recovery",
+      "format": "pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "source_dpi": 600,
+      "preview_edit_after_rejection": true
+    },
+    {
+      "editor": "rust",
+      "case": "exact-effect-rejected",
+      "format": "svg",
+      "status": 500,
+      "content_type": "text/plain; charset=utf-8",
+      "source_dpi": 633,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "case": "exact-effect-rejected",
+      "format": "pdf",
+      "status": 500,
+      "content_type": "text/plain; charset=utf-8",
+      "source_dpi": 633,
+      "spec_cache_preserved": true
+    },
+    {
+      "editor": "rust",
+      "case": "explicit-lower-dpi-recovery",
+      "format": "svg",
+      "status": 200,
+      "content_type": "image/svg+xml",
+      "source_dpi": 600,
+      "preview_edit_after_rejection": true
+    },
+    {
+      "editor": "rust",
+      "case": "explicit-lower-dpi-recovery",
+      "format": "pdf",
+      "status": 200,
+      "content_type": "application/pdf",
+      "source_dpi": 600,
+      "preview_edit_after_rejection": true
+    }
+  ],
+  "floor_warning_counts": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "root_cause": "FIND045validsourceDPI/exactcanvascouldreachnativeAgglayout/rasterizationallocationevenforvectoroutput.Shared40millionpixelEFFECTbudgetnowchecksbeforespecFigurecreation,actualbackendFigureDPI,nativeSaveoutputDPIandtightbboxincludingpadding.Notadpi/inputcapandNoimplicitDPIrewrite.",
+  "compatibility": "LargeDPIdeclarativespecremainsloadable/valid;editorrendercopycapped2000px/axisstillworksandsourceDPIretained.ExacteffectsabovebudgetfailValueErrorwithreduce-size/DPIadvice;vectorlayoutcanalsobeaffectedbecausecurrentownedrendererusesnativecanvaswork.Accepted6000square/6320squarePNGfilescomplete;40000000helperboundary/overflowandsmallsubnormalpreviewcalculationaretested.",
+  "ownership": "Selected9native-allocation/save-spytestssafelyfailedBEFOReffecthooks;afterall18pass.Atomicpathwriteskeepoldbytes/ownedstagingcleanup,helperdoesnotclosecallerFigure,failurebeforeownedFigureorinsideownedtrykeepscleanup.TightbboxchecksarenotonlynominalSpecpixelestimates.",
+  "resource_scope": "Guardisownedrender/saveworkarea,NOThardRSS/totalmemory/CPU/time/third-partyMatplotlibsandbox.PSAPI/JoblimitedWindowsfixturesobservepeakcostsnotallmax-data/copies.PrivatebeforeSVGimage/scatterbudgetstopsnowexplicitValueError;sourcepreviewstill4millionpixels.Exactexportguarddoesnotcompleteotherlayer/text/JSONresourcepolicy;SEC04RUNNING.",
+  "diagnostics_note": "Initialprivatehelperreferenceswereabsentbeforeimplementation;currentdirecttypedimport+definedhelperpassesactiveLSPallservers/cache/Pyright0andtests.Stalepreimplementationeventsrecordedfalse-positiveonlyafterproof\u2014notinlineignore/Any/getattr.No parser/schema/version/dependencychange.",
+  "environment_overrides": {
+    "effect-measurement": {
+      "child": "same explicitbaseCPython+venvsitepackages; pre-resume private WinJobcommitmemory/CPU/wallguard. Not product sandbox."
+    },
+    "floor-effects": {
+      "PYTEST_ADDOPTS": "-k \"test_review_effect_budget\" -p _qa_floor_warnings --tb=short",
+      "PYTHONPATH": "<owned-evidence>",
+      "MPLBACKEND": "Agg"
+    }
+  },
+  "checks": [
+    {
+      "name": "effect-measurement",
+      "argv": [
+        "python",
+        "<evidence>\\probe.py"
+      ],
+      "exit_code": 0,
+      "results": [],
+      "log_text_sha256": "27f389e80cca878b088e7b3f1fb95c25ec2b362272696240eadecc7dab9e09ab"
+    },
+    {
+      "name": "http-boundaries",
+      "argv": [
+        "python",
+        "<evidence>\\http_probe.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "8 actual Python/Rust effect rejection/recovery outcomes; source preview/edit preserved"
+      ],
+      "log_text_sha256": "229468f7c9d7b82d6d20ca27705094bed146e64002c169c6f327bb6e41eae0d9"
+    },
+    {
+      "name": "effect-connected",
+      "argv": [
+        "python",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_effect_budget.py",
+        "tests/test_review_output_contracts.py",
+        "tests/test_review_output_lifecycle.py",
+        "tests/test_review_style_dpi.py",
+        "tests/test_references.py",
+        "tests/test_layout.py",
+        "tests/test_dashboard_editor.py",
+        "tests/test_no_deps.py",
+        "--junitxml",
+        "<evidence>\\results.xml"
+      ],
+      "exit_code": 0,
+      "results": [
+        "SKIPPED [4] tests\\test_review_output_contracts.py:39: symlink creation requires host privileges",
+        "315 passed, 4 skipped in 246.30s (0:04:06)"
+      ],
+      "log_text_sha256": "4e50ceee4a8e72a5b3f9f0d178778cf3b8237a43dde29d4092fb89ad61f22757"
+    },
+    {
+      "name": "floor-effects",
+      "argv": [
+        "uv",
+        "run",
+        "--python",
+        "3.10",
+        "--locked",
+        "--script",
+        "scripts/check_minimum_versions.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "18 passed, 3142 deselected, 13 warnings in 4.78s"
+      ],
+      "log_text_sha256": "ba97b1c0bb9561bb90dfa6c167753b0e83215c29d9d8ecaded55ab811a0e35e8"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_text_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_text_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "results": [
+        "256 files already formatted"
+      ],
+      "log_text_sha256": "cc199a57a5c7fffcf8d4daf5a28ebb8dd97f626dacee6e2fd506ca4d72be1fff"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "python",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync"
+      ],
+      "log_text_sha256": "a90e4bbdeced0c6636518d2781af1f0b020fa1427a5e2a501c76b175aa0eef23"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "python",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_text_sha256": "ea9ebfa10ff54d78f4f8f88935d03015bc8dac521837f11aa3b4cadfd1b7a592"
+    }
+  ],
+  "raw_private_probe_sha256": {
+    "effect-before-results.json": "29fc1b4aebd71d3ee0ce5f3b6d2c1f0145585133ee328af3ce4f8170b6fb8674",
+    "effect_resource_results.json": "3a6fc0a66e7629c74121b098f365b3f123ef2a21ec282b51a1ac8bc7c652557d",
+    "probe.py": "b2eedb4d944e2fcb8606f077bf2d05a067f9ffda5b9c3b3e95c152ee4a6bca3d",
+    "guard_api.py": "4507054b7da8374e5d86d188d86548ab0dee40a67fa81e270b6c9ddf8e236dbc",
+    "worker.py": "02150657f6ed9557208b30149cd5678b39efb0f0884c9b060dcd443861ac4ecc",
+    "qa.py": "bc38a1401b089cf8c72f89553c11ff691978f0aabc1f6550794bb5bb1fd2d600",
+    "http_probe.py": "8783dc05cb72e158f64254ff158ce88acf21a8d9e824594d967b9cf9cdb2d894",
+    "http_effect_results.json": "8b5e39fbc08158aa593e92a666f110db2584f2c8ed53ae65f5f932b4a9cd2a7d",
+    "environment_overrides.json": "e2d05863356f6e7235469f0e2ff4cec51599089e8fc58a80387bf14a512b4de0",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "results.xml": "e0e56c22c6b0099bf2b84320b4bde15244012ab58e027293fb631e4cb814620a",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  },
+  "post_qa_doc_only_changes": [
+    {
+      "path": "mudplot/spec.py",
+      "qa_source_sha256": "0ce241cfedaafe2bd6828fe299dfa62668ac6b50a6a49a05143ba31b9418fbaa",
+      "final_source_sha256": "8c84790a883fa0fa8236d38a277003d22956cc65a5c7d2b24e091fde4e92ac3a",
+      "non_doc_ast_identical": true
+    },
+    {
+      "path": "mudplot/_render.py",
+      "qa_source_sha256": "0eeb757d58031db518747218bbb6beced459c7388540e375f2ada2356b2e5a6c",
+      "final_source_sha256": "8702211270a973ee4902d5c8bb6acf3f40e41ea1d9cdb829941d8fba399008d0",
+      "non_doc_ast_identical": true
+    }
+  ],
+  "post_doc_followup": {
+    "exit_code": 0,
+    "test_result": "18 passed",
+    "log_text_sha256": "d5ad8f79a8e15714204108ad31e0b45bb2f961be01f7df907b6dba137e8f8846"
+  }
+}

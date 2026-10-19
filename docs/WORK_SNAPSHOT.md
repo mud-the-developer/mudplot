@@ -28,6 +28,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 ## Verification and review state
 
+- Latest FIND-045 adds40millionpixel owned-effect checks before native canvas/
+  save/tightwork, preserving sourceDPI/capped previews and old output/cache on
+  failure.18new/315related/4OSskips/floor18/8HTTP pass; SEC-04 stillRUNNING for
+  other complexity/CPU/totalmemory scope. Exact2a96CI ALL5SUCCESS validates prior
+ 041/042/043; publish queued structure+effect for fresh exact-source CI.
+
 - Latest FIND-044 bounds raw/action/native figure expansion at256panels/cells,
   retaining positive-index auto-growth99/255 and accepted snapshots.11new/
   489related/2OSskips/floor11passes,6HTTP/13guarded outcomes agree. SEC-04 remains
@@ -478,6 +484,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   retains Tab counts, real zero-pointer journey and semantic/focus-review limits.
 - [Editor-asset evidence](review_evidence/editor_asset_verification.json)
   retains served/compiled hashes, controlled mismatch outcomes and incomplete smoke.
+- [Effect-budget evidence](review_evidence/effect_budget_verification.json)
+  retains DPI/source separation, native preflight, tight/atomic output and recovery.
 - [Structure-expansion evidence](review_evidence/structure_expansion_verification.json)
   retains pre-decode/pre-construction limits, accepted boundaries and guarded costs.
 - [Resource evidence](review_evidence/resource_amplification_verification.json) and

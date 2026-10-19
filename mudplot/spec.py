@@ -30,6 +30,8 @@ _UNION_ORIGINS = (Union, types.UnionType)
 SPEC_VERSION = "0.1"
 # Bound declarative expansion before panel construction and native layouts.
 MAX_FIGURE_PANELS = 256
+# Bound owned effect work, not the stored source DPI or capped previews.
+MAX_RENDER_PIXELS = 40_000_000
 
 # A migration is a plain dict -> dict function (bumping the "version" key
 # itself), keyed by the version it upgrades *from* -- kept dict->dict

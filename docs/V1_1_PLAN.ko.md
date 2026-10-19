@@ -120,6 +120,20 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 ## 현재 체크포인트
 
+**리뷰65차에서sourceDPI와nativeeffect작업상한을분리했습니다.** FIND-045는specvalidator가
+아닌Figure생성전/backend-saveDPI/paddedtightbbox에서40millionpixel을검사합니다. 큰sourceDPI/
+2000pxpreview는유지하고정확한효과초과는clamp없이거절합니다. 정상6000²/6320²PNG와큰
+SVGfixture/이전target·cache·Figure소유권/명시DPI회복이맞습니다.
+
+새18/관련315/OS4symlinkskip·floor18/3142deselected/Pyparsing13경고·실제HTTP8·품질10명령·
+activeLSP5clean입니다. Canvasarea상한이지전체RAM/CPU/직접MatPlot보장은아니라SEC-04는
+RUNNING입니다. [근거](review_evidence/effect_budget_verification.json)/ [대장](REVIEW_CHECKLIST_STATUS.md)은
+**PASS123/RUNNING6/OPEN20/DEFERRED1**입니다. 정확한2a96CI39191652835의5job모두성공으로
+이전041/042/043과Linux/browsertest를확인했고대기구조+effectruntime을게시해새전체CI를
+받으며버전/의존성/lock/tag/배포는유지합니다.
+
+### 이전 리뷰64차
+
 **리뷰64차에서panel/layout/decode확장을할당전에제한했습니다.** FIND-044는공통256panel/
 cell상한을decode/action/validation에사용하고AddPanel/SetLayout도_ensure_panel을거칩니다.
 Rawarray는개별paneldecode전거절하며99→100/255→256자동생성/경계/입력은보존됩니다.

@@ -22,6 +22,11 @@
 
 ## 검증과 리뷰 상태
 
+- 최신FIND-045는nativecanvas/save/tight작업전40millionpixel effect상한을두고sourceDPI/
+  cappedpreview/이전output·cache를보존합니다. 새18/관련315/OS4skip/floor18/HTTP8이맞지만
+  다른복잡도/CPU/총memory범위때문에SEC-04는RUNNING입니다. 정확한2a96CI5job성공으로
+  이전041/042/043을확인했고대기구조+effect를게시해새소스전체CI를받습니다.
+
 - 최신FIND-044는raw/action/nativefigure확장을256panels/cells로막고99/255자동생성과
   snapshot은유지합니다. 새11/관련489/OS2skip/floor11/HTTP6/제한측정13이맞으며SEC-04는
   export/다른복잡도정책으로RUNNING입니다. ApphardRAM/CPU보장은아니고2a96CI39191652835
@@ -396,6 +401,8 @@
   Tab횟수·실제pointer0경로·의미/focus검토범위를보존했습니다.
 - [Editorasset 근거](review_evidence/editor_asset_verification.json)에
   served/compiledhash·controlledmismatch·미확인smoke를보존했습니다.
+- [Effectbudget 근거](review_evidence/effect_budget_verification.json)에DPI/source분리·
+  native사전검사·tight/atomic출력/회복을보존했습니다.
 - [구조확장 근거](review_evidence/structure_expansion_verification.json)에
   decode/생성전상한·정상경계·제한자원관찰을보존했습니다.
 - [자원근거](review_evidence/resource_amplification_verification.json)와

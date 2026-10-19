@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Bound owned render/save canvas work to40millionpixels before native allocation,
+  including backend/output DPI and padded tight bounds, without rewriting source
+  DPI or capped previews. Oversized effects fail explicitly and preserve old output.
 - Bound figure expansion to256panels/layout cells before bulk construction or
   native geometry, retaining positive-index automatic growth inside the limit
   and explicit errors without truncating input figures.

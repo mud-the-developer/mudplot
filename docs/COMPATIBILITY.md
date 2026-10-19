@@ -141,6 +141,21 @@ selection, remote multi-user conflict resolution or a new revision/reject API.
 The Python `/action/raw` form's JSON action still uses an HTML/redirect UI
 response, not an invented JSON RPC route.
 
+## Owned effect pixel budget
+
+Owned render/save has a40million-pixel canvas work limit, checked before native
+Figure allocation and again for actual backend/output DPI and padded tight bounds.
+It also applies to vector destinations because the current layout/image pipeline
+can allocate at the configured DPI. Above the budget, ValueError asks callers to
+reduce size/DPI explicitly; accepted output values are not downscaled or rewritten.
+
+This is not a spec-DPI cap. Large-DPI documents remain loadable/valid and editor
+previews keep their existing2000px/axis copy, preserving original DPI/state.
+Failed exports retain prior single-file bytes/staging ownership and editor cache;
+an explicit lower-DPI/size request can recover. The limit is work area, not encoded
+file size, total RSS, CPU time or protection for caller-owned direct Matplotlib effects.
+Other layer/text/JSON complexity remains a separate resource review.
+
 ## Bivariate resolution and resource scope
 
 Hist2d supports integer or integer-pair resolutions in1..512per axis, or3..513

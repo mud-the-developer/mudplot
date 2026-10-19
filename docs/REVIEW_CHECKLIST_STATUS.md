@@ -18,6 +18,29 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 65차 — source보존과effectpixelbudget의분리
+
+- 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-effect-budget-keyuqfhr`와
+  [before/after7·tight/atomic·HTTP8](review_evidence/effect_budget_verification.json)을 보존합니다.
+- **FIND-045:** valid한큰DPI/작은spec도정확한render/save의Agg/layout/SVGimage작업에서
+  privateJobmemorybudget에걸렸습니다. Spec/DPIvalidator로막으면안전한cappedpreview까지
+  깨지므로공통_check_render_budget을effect전에만두었습니다. 40millionpixel상한을Figure생성전,
+  실제backenddpi/outputdpi/padding포함tightbbox에서검사하고원DPI/size를clamp하지않습니다.
+- Rawspec은여전히load/validate되고preview는2000²copy입니다. 정확한SVG/PDF도현재pipeline의
+  DPI기반canvaswork에따라초과ValueError입니다. Allocation/save-spy9baseline는안전하게실패했고
+  최종새18회귀가경계/floatoverflow/preview/source/이전파일/staging/Figure소유권을검사했습니다.
+- Privateguard의6000²/6320²PNG는완료됐고초과/큰vectorimage작업은allocationbudget중단에서
+  초기ValueError(~65MBpeakRSS)로바뀌었습니다. Python/RustHTTP8outcome은preview/edit/source를
+  보존하고거절400HTML/500plain을정상SVG로위장하지않으며명시낮은DPI제출뒤200으로회복합니다.
+- 관련315통과/Windows4symlinkskip·floor18통과/3142deselected/경고13·측정before/after7/
+  HTTP8·양platformtype/Ruff256/생성계약/packaging10명령exit0·변경5경로activeLSPclean입니다.
+  Helper구현전staleLSPevent는현재정의/activeallservers/cache/Pyright0으로확인했고codeignore/
+  Any/getattr를넣지않았습니다. QA뒤comment/docstring만바꾼것은기록SHA/비문서AST동일확인과18재통과로분리했습니다.
+- SEC-04는여전히RUNNING이며다른layer/text/CPU/총memory정책이남습니다. 이pixelarea상한을
+  hardRAM/time/sandbox로부르지않습니다. 기준2a96CI39191652835의5job모두성공으로이전041/042/
+  043및Linux확대/focus/fullnativebrowser검증을확인했습니다. 대기구조+effect를함께게시해새소스
+  전체CI를받고버전/의존성/lock/tag/배포·loop1은유지합니다.
+
 ## 64차 — Panel/layout/decode확장의사전상한
 
 - 로컬 `C:\Users\mud\AppData\Local\Temp\mudplot-structure-budget-eg46hd7n`와
@@ -1763,7 +1786,7 @@ OUT-04는 RUNNING입니다. 실제 Win32 delete-sharing lock, 읽기 전용 대�
 ## 판정 범위와 다음 순서
 
 - 현재 상태: PASS 123, RUNNING 6, OPEN 20, FAIL 0, BLOCKED 0, N/A 0, DEFERRED 1. 이는 완료율/안정성 확률이 아닙니다.
-- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
+- 확인된 production 결함: FIND-002/003/004/005/006/007/008/010/011/012/013/015/017/018/019/020/021/022/024/026/028/029/030/033/034/035/036/037/038/039/040/041/042/043/044/045을 재현 후 수정했습니다. CI 구성 FIND-023은 별도 실행 예산 결함입니다. FIND-014는 별도의 CI fixture 설치 환경 불일치입니다. FIND-001은 연결 검사 결함, FIND-009는 요청 선행 거부 보강이며 실제 전체 body 한도 우회를 확인한 것은 아닙니다. 미검증 영역의 결함 부재를 뜻하지 않습니다.
 - 다음: JSON/출력 ID의 기존 fixture 범위를 대조하고, editor/보안/Rust/패키징의 P0 경계를 증거 파일과 연결합니다. 기준을 완전히 충족한 ID만 닫습니다.
 - 원문 G0~G8 gate는 전체 PASS가 아닙니다. 전체 suite·전체 최소 환경·Rust MSRV·headless Linux·TeX/성능·dependency 보안 감사·release provenance는 이번 1차 검토에서 미실행입니다.
 - 비교 SHA의 clean main 실행은 별도 작업 트리/환경이 필요합니다. 현재 dirty tree를 reset/clean/revert하지 않습니다.
