@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 100차 — JSON-09 구조근거와남은의미검증매핑
+
+- [부분review-map](review-map.md)에JSON-09를추가검사필요로분류해누적23ID를검토했습니다. 기존139nullable+
+  대표token20+실제CLI PNG5+optionalmarker값4=168case가현재168P/0skip·fail이며전필드semantic완료는아닙니다.
+  [분리근거](review_evidence/review_map_default_semantics_gap.json)에source/test/node와적용context의남은작업을남깁니다.
+- 24model/272field/139nullable은구조규모이지coverage확률이아닙니다. 역할/layer별accept-reject-NA/자동값/
+  default/null의미와CLI-Rust-UI대조표가남아있고기존marker/stat/distribution회귀를우선재사용해야합니다.
+  대표token이두field명이라고다른137필드전부미검증이라추정하거나139codec검사를중복생성하지않습니다.
+- 기록된고유Pythonnode는342개이며JSON-09/BASE-05RUNNING·미분류127ID·원대장139PASS6RUNNING4OPEN1DEFERRED는
+  유지합니다. 첫private receipt가marker매개변수4개를1개로가정해165를기대했지만pytest는168P였고검증수만고쳐
+  verifier를다시실행했습니다. 통과test를재실행하거나receipt오류를제품test실패로세지않았습니다.
+- Runtime/테스트/원문/의존성/버전/UI기능변경없이기준98b4ecCI39470014411을보호해로컬보존하고
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 99차 — JSON-02/03/04/06/07 strict입력매핑
 
 - [부분review-map](review-map.md)에strict loader/API/CLI·adapter·Rustcodec의실제symbol/test/근거를연결해

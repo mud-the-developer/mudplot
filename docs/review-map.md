@@ -8,20 +8,22 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [history boundary/branch/failure provenance](review_evidence/review_map_history_core.json),
 [open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json),
 [bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json),
-[strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json).
+[strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json),
+[JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json).
 
 ## Scope and classification
 
-This is a **twenty-two-ID state/history/JSON mapping**, not a complete150-ID map.
-The remaining128 IDs have not been classified here. The candidate inventory still
+This is a **twenty-three-ID state/history/JSON mapping**, not a complete150-ID map.
+The remaining127 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All twenty-two below have existing coverage of the explicitly stated boundary; no new
-runtime/test code or compatibility decision was needed for this mapping unit.
+Twenty-two below have existing coverage of their explicitly stated boundary.
+JSON-09 is **additional test needed**: passing structural cases are not the missing
+all-field meaning matrix. No runtime/test code or compatibility decision was changed.
 AST checks only resolve references, not prove their semantic adequacy.
 
 The first five IDs were reviewed at `52acc3f30ce6afdc88a305966a3f9b323e98c76a`:
@@ -47,6 +49,11 @@ with matching source/fixture/final hash, not a newly run native/browser test.
 These are focused results, not a full-suite or release result. Source/body/log/JUnit hashes and
 expanded parameterized node IDs are recorded in the separate immutable artifacts.
 
+JSON-09's separate current168 cases(139nullable+20tokens+5CLI PNG+4marker values)
+bring recorded distinct Python nodes to342. The initial private receipt expected
+165 by miscounting four marker parameters as one; pytest passed168, and only that
+receipt assumption was corrected. Passing these cases does not close JSON-09.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -71,6 +78,7 @@ expanded parameterized node IDs are recorded in the separate immutable artifacts
 | JSON-04 | Existing coverage | 1 Python passed; fresh Rust integer codec | Signed decimal boundaries/known data fields, not rendering range |
 | JSON-06 | Existing coverage | 5 Python passed; fresh Rust/retained Native | Unicode pairs/lone surrogates/reserved object keys |
 | JSON-07 | Existing coverage | 7 Python passed; fresh Rust default/retained Native app | Current/omitted spec version vs unsupported/malformed versions |
+| JSON-09 | Additional test needed | 168 current structural/representative passed | Remaining role/layer/AUTO/default meaning matrix, not a product-failure finding |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -435,6 +443,41 @@ applies the application float/version policy. Do not force the two roles equal.
 Rust model11 includes other structural/capability/token tests; passing that group
 does not map all fields' default/AUTO semantics or complete JSON-01/08/09.
 
+## JSON-09 — structural evidence is not the full meaning matrix
+
+Implementation: `spec._from_dict`, `SpecBase.to_dict/from_dict`,
+`schema.json_schema/_dataclass_schema`, `io.to_json/from_json`, CLI `_cmd_migrate`.
+Contract: [COMPATIBILITY.md, JSON/defaults](COMPATIBILITY.md).
+
+- `tests/test_review_full_spec_fields.py::test_every_nullable_field_distinguishes_omitted_null_and_explicit_default` (139)
+- `tests/test_review_json_policies.py::test_render_token_fixture_schema_python_and_cli_migrate_agree` (20)
+- `tests/test_review_json_policies.py::test_fresh_cli_empty_render_token_matches_python_png` (5)
+- `tests/test_review_json_policies.py::test_optional_marker_omission_null_zero_and_explicit_value` (4)
+
+Current inventory is24 models/272 modeled fields/139 nullable fields—cardinality,
+not coverage probability. The nullable test checks schema+Python omitted→model
+default, explicit null/default and typed zero/False. The representative fixture has
+five layer/field combinations(line.marker,line.line_style,scatter.marker,
+scatter3d.marker,line3d.line_style), four variants each. Five empty tokens also
+render through actual CLI subprocess and match Python PNG. Marker size cases are
+omitted/null/0/7.5. Source-matched previous Rust model11 codec tests preserve raw
+fullfield/token representation; they were not rerun for this mapping unit.
+
+**Additional work needed:** a role/layer meaning matrix for applicable fields
+across schema/Python/CLI/Rust/UI, recording accept/reject/not-applicable rather
+than forcing every nullable option into every control. Nontrivial defaults include
+StatSpec.errorbar=`ci` versus null, LayerSpec.inner=`legacy` versus null, and
+marker_size0 versus automatic sizing. Structural equality alone does not specify
+the computed interval/glyph/auto value. Record prior-fixture semantic reload and
+possible default-change effects without inventing unsupported old spec versions.
+
+Reuse existing marker/stat/distribution renderer tests where they already cover
+these meanings; do not add139 duplicate codec cases or infer that other137 fields
+are uncovered merely because the token fixture names two fields. This row marks
+reviewed evidence insufficient to close the checklist item, not a demonstrated
+product failure. JSON-09 and BASE-05 remain RUNNING; formal ledger counts do not
+change just because the ID now has a source/test/gap map.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -485,10 +528,19 @@ uv run --no-sync python -m pytest -q --tb=short tests/test_review_json_contracts
 cargo test --locked --manifest-path mudplot-editor/Cargo.toml model::tests::
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_full_spec_fields.py::test_every_nullable_field_distinguishes_omitted_null_and_explicit_default \
+  tests/test_review_json_policies.py::test_render_token_fixture_schema_python_and_cli_migrate_agree \
+  tests/test_review_json_policies.py::test_fresh_cli_empty_render_token_matches_python_png \
+  tests/test_review_json_policies.py::test_optional_marker_omission_null_zero_and_explicit_value \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining128 IDs still need their own reviewed symbol/node/provenance links
+The remaining127 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
