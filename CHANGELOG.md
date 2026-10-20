@@ -13,6 +13,9 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added categorical swarm size ranks with typed level keys, explicit row selection,
+  reserved ordered size slots and observed-only guides. Reuse the unchanged pure
+  scatter/line rank helper while preserving numeric scales and calibrated packing.
 - Added opt-in numeric size-only swarm semantics with one selected row cohort,
   stable layer-local diameter mapping and matching non-data guides. Preserve
   legacy group colours, source/JSON/actions and calibrated joint packing; reject

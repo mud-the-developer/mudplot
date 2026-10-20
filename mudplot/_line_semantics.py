@@ -8,8 +8,8 @@ from matplotlib import pyplot as plt
 from matplotlib.lines import Line2D
 
 from ._lineplot import draw_lineplot
-from ._scatter_semantics import _categorical_fractions
 from ._semantics import (
+    categorical_fractions,
     category_key,
     line_semantic_input,
     numeric_guides,
@@ -42,7 +42,7 @@ def draw_semantic_lineplot(
         actual = [curve[role] for curve in curves]
         if kind == "categorical":
             levels[role] = semantic_levels(mapping_columns, cfg, role, pool)
-            fractions[role] = _categorical_fractions(actual, levels[role])
+            fractions[role] = categorical_fractions(actual, levels[role])
         else:
             _, bounds[role] = numeric_mapping(
                 values[role], getattr(cfg, f"{role}_norm")
@@ -121,7 +121,7 @@ def draw_semantic_lineplot(
             levels[role] if kind == "categorical" else numeric_guides(bounds[role])
         )
         ts = (
-            _categorical_fractions(selected, selected)
+            categorical_fractions(selected, selected)
             if kind == "categorical"
             else numeric_mapping(selected, bounds[role])[0]
         )

@@ -32,6 +32,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- New categorical swarm size/order:33new/1051related/floor149P/CLI2/full native
+  HTTP+browser pass; stable rank/cohort/observed-only guides with exact shared
+  helper AST preservation. Exact1dbCI ALL5P is prior numeric proof; new runtime
+  needs fresh wholeCI. Style/date/shared/facet remain unsupported, warnings retained.
 - New numeric size-only swarm:31new/1018related/floor116P/CLI2/fullnativeHTTP+
   browser pass; selected cohort/area-guides/JSON-source preserve, closed unsupported
   shared/facet/style/date modes. Exact3d51CI ALL5P is prior native-fix proof, not

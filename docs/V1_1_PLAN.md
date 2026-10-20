@@ -47,8 +47,10 @@ is authorized by this tracker.
   full 1923/minimum 1468 pass with real TeX and Rust 1.99/browser bridge.
 - [x] **B2b9 — Numeric size-only swarm:** one selected layer-local cohort, stable
   diameter mapping/non-data numeric guides, scalar legacy and physical packing preserved.
+- [x] **B2b10 — Categorical swarm sizes:** stable observed/explicit ranks,
+  selected source rows, reserved size slots and observed-only guides.
 - [ ] **B2b — Categorical remainder:** broader component/semantic mappings and
-  swarm categorical-size/style/date/shared/facet semantics.
+  swarm style/date/shared/facet semantics.
 - [x] **B3a — ECDF subset:** finite weighted empirical steps, tie/right-limit
   semantics, strict complements, per-curve proportion/percent/count, grouped
   color/dash slots, v/h/log observations and typed pure/JSON/editor contracts.
@@ -144,6 +146,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**Categorical size-only swarm.** Existing size_kind/size_order use typed keys and
+stable first-observed/explicit rank fractions; reserve empty size slots but show
+only observed guides. Bool/numeric selections distinct; max64 unambiguous labels,
+invalid classes not hidden by order; source/cohort/2000-row cap/packing preserved.
+Pure rank helper moved with exact AST body+args, reused by scatter/line/swarm.
+33new/1051related/floor149P3397deselected/CLI2/Rust22P6ignored/11checks/full Windows
+nativeHTTP+browser7layer0/LSP12clean. Main1/floor1058warnings(1057Pyparsing+1native
+invalidsetter) retained. [Scope](SWARM_CATEGORICAL_SIZE.md) and
+[evidence](review_evidence/swarm_categorical_size_verification.json).
+Exact1dbCI39431316561 ALL5SUCCESS is numeric baseline, not new categorical runtime.
+Publish for fresh wholeCI; no new fields/deps/versions; Loop8 active.
+
+### Earlier review phase 88
 
 **Numeric size-only swarm.** Opt-in parsed SemanticSpec maps one numeric column
 across selected category/hue rows, listwise missing-size drops, one layer-local

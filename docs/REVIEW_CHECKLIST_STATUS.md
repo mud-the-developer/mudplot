@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 89차 — Categorical swarm size/order
+
+- 기존SemanticSpec.size_kind/order로안정최초관측/명시rank를매핑합니다. 명시order는행을선택하고미관측
+  size슬롯도예약하지만guide/가짜관측을만들지않습니다. Bool/numerictypedkey구분·최대64명확한label·
+  malformedclass를order로숨기지않는검증과동일cohort/유효행2000/source/action/JSON보존을추가했습니다.
+- Scatter의기존순수rankhelper를공통_semantics로옮기고scatter/line/swarm에재사용했으며인자/본문AST동일을
+  pinned1db와확인했습니다. Numeric도sameguidepairs를쓰되기존수치결과를유지합니다. Partialapply로남은
+  guide소비식은중복재전송없이해결하고회귀검사를재실행했습니다. 새모델필드/의존성/버전은없습니다.
+- 새33/관련1051P경고1/floor149P3397deselected1058경고(1057Pyparsing+기존invalidsetter1)/CLI2/
+  Rust22P6ignored/품질11명령/전체WindowsnativeHTTP+실제browser7layer0/activeLSP12clean,
+  [검증](review_evidence/swarm_categorical_size_verification.json)을남깁니다. 시작8F21P와중간partial실패는
+  통과로세지않고actual오류해결뒤검증했습니다. 새별도예제/PNG/spec는열어확인했지만독립사람AT인증은아닙니다.
+- 정확한1db72a8CI39431316561의5job모두성공은이전numeric범위이며새categorical runtime은게시뒤새CI를받습니다.
+  Style/date/shared/facet/y2는미지원이고원대장139PASS/6RUNNING/4OPEN/1DEFERRED·남은v1.1/releasegate/
+  tag/publish경계는유지합니다. Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 88차 — 공개numeric size-only swarm
 
 - SemanticSpec의기존size/kind/norm/sizes/legend필드만사용해선택rowID와missing-size/category/value/group

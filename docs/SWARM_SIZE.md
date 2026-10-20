@@ -37,8 +37,9 @@ not acquire group references/URLs. A group legend uses the midpoint diameter.
 Circle packing uses actual per-point radii, strokes and gutters at final
 DPI/layout/scales, including existing orientation/dodge/native-category modes.
 Positive diameters whose areas underflow reject before artists. No arbitrary
-shape, semantic hue/style, categorical size, facet/dropna, named/shared scale,
-date role or y2 support is implied. Scalar marker_size plus mapped size rejects.
+shape, semantic hue/style, facet/dropna, named/shared scale,
+date role or y2 support is implied. [Categorical size/order](SWARM_CATEGORICAL_SIZE.md)
+is a separate opt-in subset. Scalar marker_size plus mapped size rejects.
 The legacy semantics=None path remains unchanged. No new model/action/spec fields
 or dependencies are required; raw semantic JSON is preserved by both editors.
 Dedicated size controls are not claimed. Successful Figures remain caller-owned.

@@ -1644,7 +1644,6 @@ def _draw_categorical_distribution(ax, columns, layer, color_iter, theme):
 
 def _draw_swarm_layer(ax, columns, layer: LayerSpec, color_iter):
     from ._categorical import swarm_size_mapping
-    from ._semantics import numeric_guides, numeric_mapping
     from ._swarm import SwarmCollection
 
     rows = distribution_rows(columns, layer)
@@ -1690,9 +1689,9 @@ def _draw_swarm_layer(ax, columns, layer: LayerSpec, color_iter):
         urls.append((ref.href if ref else None) if layer.group else layer.href)
     size = 6 if layer.marker_size is None else layer.marker_size
     config = layer.semantics
-    diameters = bounds = None
+    diameters = size_guides = None
     if config is not None:
-        diameters, bounds = swarm_size_mapping(columns, layer, rows)
+        diameters, size_guides = swarm_size_mapping(columns, layer, rows)
         size = (config.sizes[0] + config.sizes[1]) / 2
     line_width = 0.5 if layer.line_width is None else layer.line_width
     edge = layer.edge_color or "white"
@@ -1744,13 +1743,8 @@ def _draw_swarm_layer(ax, columns, layer: LayerSpec, color_iter):
             )
 
     if config is not None and config.legend:
-        assert bounds is not None
-        guides = numeric_guides(bounds)
-        fractions, _ = numeric_mapping(
-            guides, bounds if bounds[0] != bounds[1] else None
-        )
-        for value, t in zip(guides, fractions, strict=True):
-            diameter = config.sizes[0] * (1 - t) + config.sizes[1] * t
+        assert size_guides is not None
+        for value, diameter in size_guides:
             ax.plot(
                 [],
                 [],

@@ -46,7 +46,8 @@
   bridge 검증, 전체1923/최소1468 통과.
 - [x] **B2b9 — Numeric size-only swarm:** 동일선택layercohort·stable지름매핑/비데이터guide,
   legacy scalar/실제반지름packing보존.
-- [ ] **B2b — 범주형 나머지:** 추가구성요소·semantic과swarm categorical-size/style/date/shared/facet매핑.
+- [x] **B2b10 — Categoricalswarm크기:** 안정관측/명시rank와선택source행·예약크기/관측만guide.
+- [ ] **B2b — 범주형 나머지:** 추가구성요소·semantic과swarm style/date/shared/facet매핑.
 - [x] **B3a — ECDF 첫 범위:** 유한 가중 empirical step·반복값/오른쪽 극한,
   strict 보완형·곡선별 proportion/percent/count·그룹 색상/선 자리,
   v/h/log 관측 축·typed pure/JSON/editor 계약.
@@ -138,6 +139,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
+
+**Categorical size-only swarm.** 기존size_kind/size_order와typedkey로관측/명시rank를사용하고빈size슬롯은
+예약하되guide는관측level만표시합니다. Bool/numeric은별도선택·최대64명확label이며order로잘못된class를
+숨기지않고source/cohort/유효행2000/packing을보존합니다. Pure rankhelper는본문/인자AST동일이동으로
+scatter/line/swarm에서재사용합니다. 새33/관련1051/floor149P3397deselected/CLI2/Rust22P6ignored/품질11명령/
+전체WindowsnativeHTTP·browser7layer0/LSP12clean·주환경경고1/floor1058(1057Pyparsing+기존invalidsetter1)을
+보존하고[범위](SWARM_CATEGORICAL_SIZE.ko.md)와[근거](review_evidence/swarm_categorical_size_verification.json)를남깁니다.
+정확한1dbCI39431316561의5job성공은이전numeric이지새categorical runtime증명이아니며게시뒤새전체CI를받습니다.
+새필드/의존성/버전없이Loop8은유지합니다.
+
+### 이전 리뷰88차
 
 **Numeric size-only swarm.** 파싱한SemanticSpec으로선택category/huerow의numeric열하나를매핑하고
 missing-size동일cohort/한layer정규화/관측좌표없는정확한guide를사용합니다. Norm은filter가아닌clipping,

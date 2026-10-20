@@ -478,6 +478,15 @@ def line_semantic_input(columns, layer):
     return data, temporary, curves
 
 
+def categorical_fractions(values, selected):
+    lookup = {category_key(value): i for i, value in enumerate(selected)}
+    denominator = len(selected) - 1
+    return [
+        0.5 if denominator == 0 else lookup[category_key(value)] / denominator
+        for value in values
+    ]
+
+
 def numeric_mapping(values, bounds=None):
     """Clipped linear fractions; direct differences retain narrow high-value bits."""
     values = [float(v) for v in values]

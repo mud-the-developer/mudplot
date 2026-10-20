@@ -6,21 +6,13 @@ import numpy as np
 from matplotlib.lines import Line2D
 
 from ._semantics import (
+    categorical_fractions,
     category_key,
     numeric_guides,
     numeric_mapping,
     semantic_levels,
     semantic_rows,
 )
-
-
-def _categorical_fractions(values, selected):
-    lookup = {category_key(value): i for i, value in enumerate(selected)}
-    denominator = len(selected) - 1
-    return [
-        0.5 if denominator == 0 else lookup[category_key(value)] / denominator
-        for value in values
-    ]
 
 
 def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides=True):
@@ -84,7 +76,7 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
             _, size_bounds = numeric_mapping(mapping_values["size"], config.size_norm)
             fractions, _ = numeric_mapping(role_values["size"], size_bounds)
         else:
-            fractions = _categorical_fractions(role_values["size"], role_levels["size"])
+            fractions = categorical_fractions(role_values["size"], role_levels["size"])
         low, high = config.sizes
         diameters = [low * (1 - t) + high * t for t in fractions]
     diameters = np.asarray(diameters, dtype=float)

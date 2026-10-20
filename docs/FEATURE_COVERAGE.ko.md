@@ -38,7 +38,7 @@ Python 3.10 / Matplotlib 3.8 / NumPy 1.23 지원을 유지합니다.
 | `ecdfplot` | 부분: 반복값/가중 right-continuous ECDF·strict 보완형·곡선별 proportion/percent/count·그룹/순서/선·v/h·양수 log 관측값 | 연속 hue/size/style/date·y2/2-D·임의 kwargs; 유한 관측 범위만 표시 |
 | `rugplot` | 부분: x축 눈금 | y축, 높이·방향·semantic 옵션 |
 | `stripplot` | 부분: 재현 가능한 x jitter, group | 범주×hue 중첩, dodge/order/native scale, 가로 방향·jitter 옵션 |
-| `swarmplot` | 부분: 매 draw 원형 packing, 순서/hue/dodge/방향·layout/DPI/양수 log 값, 숫자 native/log 범주·numeric size-only매핑/guide; 과밀 행 보존/보고 | Categorical-size/style/date/shared/facet의미·임의marker/다른layer충돌; 유효 행 2000개 상한 |
+| `swarmplot` | 부분: 매 draw 원형 packing, 순서/hue/dodge/방향·layout/DPI/양수 log 값, 숫자 native/log 범주·numeric/categoricalsize매핑/guide; 과밀 행 보존/보고 | Style/date/shared/facet의미·임의marker/다른layer충돌; 유효 행 2000개 상한 |
 | `boxplot` | 부분: 범주×hue/배치/native log·IQR/분위수 whisker/notch·mean/fliers·독립 typed body/whisker/cap/median/mean/flier 스타일·data/axis 통계 | precomputed bxp·bootstrap median CI·cap 배치·임의/hue별 kwargs |
 | `violinplot` | 부분: 범주×hue/native log·상대 가중 Gaussian/역 ECDF 표시/질량 폭·bandwidth/grid/범위·inner 4종/None·두 hue split·width/area/count·명시적 data/axis fit | callable KDE·임의 hue split/inner kwargs·추가 size/style; 가중 step 분위수와 기존 선형 분위수는 다름 |
 | `boxenplot` | 부분: 셀별 letter value/깊이/폭·범주/hue/native log·독립 typed body/median/flier 스타일·data/axis 분위수 | 가중치·임의/띠별/hue별 구성 요소 kwargs·추가 매핑; 이름 깊이 최대 32 |
@@ -280,11 +280,13 @@ layout, 가로 방향·양수 log 값축 변환을 검증했습니다. 값은 �
 greedy O(n^2 log n)이며 레이어당 유효 행 2000개로 제한합니다. 최적 배치나
 서로 다른 레이어의 충돌 보장은 아닙니다. 과밀 시 gutter에 행을 보존하므로
 겹칠 수 있고 warn_thresh 기본 .05, 0이면 모든 과밀을 알립니다.
-숫자 native/log 범주 축은 지원하며 임의shape/categorical-size/style/date매핑·y2는아직미지원입니다.
+숫자 native/log 범주 축은 지원하며 임의shape/style/date매핑·y2는아직미지원입니다.
 
 Opt-in `semantics={"size": "mass"}`는선택layer-localdomain과정확한지름guide의numeric역할하나를
 추가합니다. Missing size도category/value/hue와같은cohort에서제외하고norm은filter가아닌clipping입니다.
 Facet/dropna/namedscale/semantic-hue-style은이subset에서거절합니다. [정확한범위](SWARM_SIZE.ko.md).
+Categoricalsize는관측/명시levelrank와size_order선택·예약크기/관측만guide를사용합니다. Bool/numeric은
+별도key이고최대64개명확한label입니다. [Categorical범위](SWARM_CATEGORICAL_SIZE.ko.md).
 
 반환Matplotlibcollection의native `set_sizes`(면적pt²)/linewidth배열(pt)편집은각쌍의반지름합과
 각점의gutter여유로실제DPI/layout/scale에서다시배치합니다. 보존행개수이하의비어있지않은유한비음수
