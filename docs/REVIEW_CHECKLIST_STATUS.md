@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 115차 — STAT-01/02/03 ordinarypoly 독립기준·meanCI·퇴화매핑
+
+- [부분review-map](review-map.md)에degree1..3/confidence50-95-99의독립normal-equations와defaultconfidenceNone,
+  ordinarypoly의퇴화/극단단위source/test를연결해누적53ID를분류했습니다. 현재29고유node P/0skip·fail/5.95초,
+  [분리근거](review_evidence/review_map_regression_oracles.json)에실제node/구현지문을남깁니다.
+- STAT연결관계10+16+19=45를29실행으로구분하고별도9행계수/예측/mean-predictionwidth/error/조건수assert표를
+  pytest수에더하지않습니다. README양언어/계약/실제polyfitcovariance정규근사mean-fit경로를대조했고prediction/
+  Student-t/새optional-model또는weightedCI로바꾸지않았습니다. 기존tolerance와자료는유지합니다.
+- Response1e-250..1e250/predictor1e-250..1e308의유한결과와rank-deficientdegree10실패-cause/이전SVG·임시파일·
+  figure·spec보존,missing/표본부족/상수x/높은degree명시거절을검사했습니다. 모든axis틱layout/모델가정/실제자료
+  통계coverage승인으로확대하지않고logistic/Huber/LOWESS/WLS/bootstrap은이번매핑의ordinarypoly범위가아닙니다.
+- 기록된고유Python통과node는863개이며기존확인경계52/JSON-09추가의미검사1·미분류97ID입니다. BASE-05JSON-09RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준47d042aCI39493638843을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 114차 — PLOT-05/09/10 현재축표·overlay·log정책매핑
 
 - [부분review-map](review-map.md)에공유/named/독립축·bar/stack/band/error·log유효영역의source/test를연결해

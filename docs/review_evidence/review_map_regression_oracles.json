@@ -1,0 +1,542 @@
+{
+  "kind": "partial-checklist-polynomial-regression-map",
+  "reviewed_ids": [
+    "STAT-01",
+    "STAT-02",
+    "STAT-03"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-05",
+    "DATA-06",
+    "DATA-07",
+    "DATA-08",
+    "DATA-09",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "PLOT-01",
+    "PLOT-02",
+    "PLOT-03",
+    "PLOT-04",
+    "PLOT-05",
+    "PLOT-06",
+    "PLOT-07",
+    "PLOT-08",
+    "PLOT-09",
+    "PLOT-10",
+    "PLOT-11",
+    "PLOT-12",
+    "STAT-01",
+    "STAT-02",
+    "STAT-03",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 53,
+  "remaining_unreviewed": 97,
+  "source_commit": "9357c4c123fdd655736f9f2d6aad22433a4c852b",
+  "source_sha256": {
+    "README.ko.md": "14ba50794d2c06fb9fe9764690f76c9d4b2d871b2a69ff78759eae709c4d3051",
+    "README.md": "4d9d8a7233e0e92475667715216e787bd3ccf00e4547252bf2cc18aa86dc5526",
+    "docs/COMPATIBILITY.md": "56cd8d73e003edb7c0553c92f1fa1f006589300e135140f1fa5478a982915502",
+    "docs/REFERENCE.md": "e4669a8e3f74405363f1807903a1c2a4ff2e5bd94faef0f13673835b9636cb43",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_review_numeric_geometry.py": "551126148f76c3e1518174d78ea1ec040cc35999baa24712591db57a919b3646",
+    "tests/test_review_regression_degenerate.py": "5c7984d8dd2971999821c448c21f0311cb219eef479d4511b1bea0e295748020"
+  },
+  "previous_artifact_sha256": "ba52d39b8caf3e779eed3184b54238ec5b0c5588c64ed492b6548a856df481a6",
+  "items": [
+    {
+      "id": "STAT-01",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_regression_fit",
+          "body_sha256": "363d493fbc27014d3ad5b9ccc6e07a013f409678e4cac8ea86e1ae93ec7b223c"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-3]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-3]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-3]",
+        "tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band"
+      ],
+      "mapped_passed_relations": 10
+    },
+    {
+      "id": "STAT-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_regression_fit",
+          "body_sha256": "363d493fbc27014d3ad5b9ccc6e07a013f409678e4cac8ea86e1ae93ec7b223c"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_series_layer",
+          "body_sha256": "8b9745dbe8b75fb08e50a3f972b48447acea8b3aca55c22928db21859da282d1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[50-3]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[95-3]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-1]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-2]",
+        "tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci[99-3]",
+        "tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1.0]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e-250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e+250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1.0]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e-250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e+250]"
+      ],
+      "mapped_passed_relations": 16
+    },
+    {
+      "id": "STAT-03",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_regression_fit",
+          "body_sha256": "363d493fbc27014d3ad5b9ccc6e07a013f409678e4cac8ea86e1ae93ec7b223c"
+        },
+        {
+          "ref": "mudplot/validate.py::validate",
+          "body_sha256": "5b96e8cb7ae4d5745ae0a63c006a5c22d0a310245e47b5122bb62d88a6099aac"
+        },
+        {
+          "ref": "mudplot/io.py::_atomic_destination",
+          "body_sha256": "deb6f1215b9f4aa6dd71fa345377759a8504db70aa1611fa721b5da887af6225"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss",
+        "tests/test_review_regression_degenerate.py::test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output",
+        "tests/test_review_regression_degenerate.py::test_polynomial_computation_scales_large_and_small_predictor_units",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion"
+      ],
+      "executed_nodes": [
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1.0]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e-250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[False-1e+250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1.0]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e-250]",
+        "tests/test_review_regression_degenerate.py::test_mean_band_matches_independent_ols_without_covariance_scale_loss[True-1e+250]",
+        "tests/test_review_regression_degenerate.py::test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[None-False]",
+        "tests/test_review_regression_degenerate.py::test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[None-True]",
+        "tests/test_review_regression_degenerate.py::test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[95-False]",
+        "tests/test_review_regression_degenerate.py::test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output[95-True]",
+        "tests/test_review_regression_degenerate.py::test_polynomial_computation_scales_large_and_small_predictor_units[1e-250]",
+        "tests/test_review_regression_degenerate.py::test_polynomial_computation_scales_large_and_small_predictor_units[1e+250]",
+        "tests/test_review_regression_degenerate.py::test_polynomial_computation_scales_large_and_small_predictor_units[1e+308]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw0-1-None-observations]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw1-1-95-observations]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw2-1-None-distinct]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw3-10-None-observations]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw4-1-95-finite]",
+        "tests/test_review_regression_degenerate.py::test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion[raw5-1-95-finite]"
+      ],
+      "mapped_passed_relations": 19
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <numericgeometry2bases+regression_degenerate whole> --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 29,
+    "mapped_relations": 45,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 5.95,
+    "log_sha256": "f988c8179b7a9552d1abf1c8641119e86b2e4645666bbbc199497931fdf701fc",
+    "junit_sha256": "c5446824a512a795b5168ad4b5f1e33a014ae1063693b7b75e937be28743a3eb"
+  },
+  "separate_assert_reference": {
+    "not_pytest_count": true,
+    "method": "Raw Vandermonde normal equations with inverse Gram/residual n-p variance/leverage/NormalDist quantile;not target np.polyfit",
+    "table": [
+      {
+        "degree": 1,
+        "confidence_percent": 50,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          6.621621621621621,
+          1.2702702702702704
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          2.8108108108108096,
+          5.986486486486486,
+          7.891891891891891,
+          11.702702702702702
+        ],
+        "mean_half_width": [
+          3.0389870036559135,
+          1.843871069129286,
+          1.8846997320925758,
+          3.4752145937350996
+        ],
+        "prediction_half_width_control": [
+          5.292522191387047,
+          4.709056132337644,
+          4.725192294297093,
+          5.554499582360611
+        ],
+        "absolute_fit_error_max": 2.6645352591003757e-15,
+        "design_condition_number": 2.282101496602834
+      },
+      {
+        "degree": 1,
+        "confidence_percent": 95,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          6.621621621621621,
+          1.2702702702702704
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          2.8108108108108096,
+          5.986486486486486,
+          7.891891891891891,
+          11.702702702702702
+        ],
+        "mean_half_width": [
+          8.830831120738779,
+          5.35800712550214,
+          5.476648971314783,
+          10.098441733604801
+        ],
+        "prediction_half_width_control": [
+          15.37925947648874,
+          13.683796407397029,
+          13.730685624438552,
+          16.140525679455774
+        ],
+        "absolute_fit_error_max": 2.6645352591003757e-15,
+        "design_condition_number": 2.282101496602834
+      },
+      {
+        "degree": 1,
+        "confidence_percent": 99,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          6.621621621621621,
+          1.2702702702702704
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          2.8108108108108096,
+          5.986486486486486,
+          7.891891891891891,
+          11.702702702702702
+        ],
+        "mean_half_width": [
+          11.605679367025976,
+          7.041614984436046,
+          7.1975368000826,
+          13.271602102272624
+        ],
+        "prediction_half_width_control": [
+          20.211773042206254,
+          17.98355686532776,
+          18.045179742191163,
+          21.21224642277404
+        ],
+        "absolute_fit_error_max": 2.6645352591003757e-15,
+        "design_condition_number": 2.282101496602834
+      },
+      {
+        "degree": 2,
+        "confidence_percent": 50,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.4020979020979025,
+          -0.020396270396270788,
+          1.0518648018648022
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          10.930069930069935,
+          1.6752622377622384,
+          2.433566433566434,
+          18.150349650349654
+        ],
+        "mean_half_width": [
+          0.34458188230296394,
+          0.19776766806914176,
+          0.22194732721522195,
+          0.3451714154667628
+        ],
+        "prediction_half_width_control": [
+          0.5016446874127163,
+          0.41475627702477796,
+          0.42681534046461944,
+          0.5020498230786231
+        ],
+        "absolute_fit_error_max": 3.552713678800501e-15,
+        "design_condition_number": 11.134447643168064
+      },
+      {
+        "degree": 2,
+        "confidence_percent": 95,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.4020979020979025,
+          -0.020396270396270788,
+          1.0518648018648022
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          10.930069930069935,
+          1.6752622377622384,
+          2.433566433566434,
+          18.150349650349654
+        ],
+        "mean_half_width": [
+          1.0013022122908346,
+          0.5746825753976321,
+          0.6449449642196928,
+          1.0030153054377677
+        ],
+        "prediction_half_width_control": [
+          1.4577026857397732,
+          1.2052182632785167,
+          1.240260056015177,
+          1.4588799479795618
+        ],
+        "absolute_fit_error_max": 3.552713678800501e-15,
+        "design_condition_number": 11.134447643168064
+      },
+      {
+        "degree": 2,
+        "confidence_percent": 99,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.4020979020979025,
+          -0.020396270396270788,
+          1.0518648018648022
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          10.930069930069935,
+          1.6752622377622384,
+          2.433566433566434,
+          18.150349650349654
+        ],
+        "mean_half_width": [
+          1.3159341704599397,
+          0.7552609280703444,
+          0.8476013595745908,
+          1.3181855564866143
+        ],
+        "prediction_half_width_control": [
+          1.9157460664623291,
+          1.5839252885320936,
+          1.6299780105677786,
+          1.9172932513081367
+        ],
+        "absolute_fit_error_max": 3.552713678800501e-15,
+        "design_condition_number": 11.134447643168064
+      },
+      {
+        "degree": 3,
+        "confidence_percent": 50,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.3998911860718348,
+          0.14691693870148304,
+          1.0702393906420022,
+          -0.016829887558941103
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          11.045701849836815,
+          1.5960963003264614,
+          2.6002176278563787,
+          18.03427638737757
+        ],
+        "mean_half_width": [
+          0.40846842423601515,
+          0.2392826191990242,
+          0.31083880543437226,
+          0.4092523259768888
+        ],
+        "prediction_half_width_control": [
+          0.5789283885994133,
+          0.4749397828980062,
+          0.5147158327585499,
+          0.5794817441869534
+        ],
+        "absolute_fit_error_max": 3.019806626980426e-14,
+        "design_condition_number": 41.89386418696588
+      },
+      {
+        "degree": 3,
+        "confidence_percent": 95,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.3998911860718348,
+          0.14691693870148304,
+          1.0702393906420022,
+          -0.016829887558941103
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          11.045701849836815,
+          1.5960963003264614,
+          2.6002176278563787,
+          18.03427638737757
+        ],
+        "mean_half_width": [
+          1.1869467254197394,
+          0.6953186695871368,
+          0.9032499952322655,
+          1.1892246239038662
+        ],
+        "prediction_half_width_control": [
+          1.6822772932469245,
+          1.3801023203610603,
+          1.4956854335978018,
+          1.6838852598941676
+        ],
+        "absolute_fit_error_max": 3.019806626980426e-14,
+        "design_condition_number": 41.89386418696588
+      },
+      {
+        "degree": 3,
+        "confidence_percent": 99,
+        "coefficient_basis": "ascending raw x powers",
+        "coefficients": [
+          1.3998911860718348,
+          0.14691693870148304,
+          1.0702393906420022,
+          -0.016829887558941103
+        ],
+        "evaluation_x": [
+          -3.0,
+          -0.5,
+          1.0,
+          4.0
+        ],
+        "mean_fit": [
+          11.045701849836815,
+          1.5960963003264614,
+          2.6002176278563787,
+          18.03427638737757
+        ],
+        "mean_half_width": [
+          1.5599124173728383,
+          0.9138036303496072,
+          1.1870717138180797,
+          1.562906083436197
+        ],
+        "prediction_half_width_control": [
+          2.2108871299781785,
+          1.8137618990565705,
+          1.9656638586940975,
+          2.2130003563648715
+        ],
+        "absolute_fit_error_max": 3.019806626980426e-14,
+        "design_condition_number": 41.89386418696588
+      }
+    ],
+    "raw_sha256": "964d7d49fb8053fe5c91f22868f5baecd2b0b0021f49e1f73eb606a84be0230e"
+  },
+  "scope": "Legacy/typed ordinary polynomial subsets only;degree1..3/confidence50-95-99/normal mean-fit CI (notprediction),confidenceNone default;response1e-250/1/1e250 and predictor1e-250/1e250/1e308 stable;rank degree10 warning-failure/no outputtemp-Gcf-state damage/structuralmissing-insufficient-distinct validation.",
+  "limits": [
+    "No blanketlogx/logistic/robust/LOWESS/WLSbootstrapweightsCI/modelassumptionsclaim.",
+    "Smallnormal-equationoraclemoderateconditionedfixtureonly;targetaffine-normalizespredictor-responsebeforepolyfitcovariance,thenrestoresunits.No t-interval/predictionband/pseudoinversefallbackintroduced.",
+    "Finite numerical computation does not guarantee Matplotlib all-axis-range layout/ticker representability.",
+    "29actualcasesnot45mappingrelations/referenceprobe9rowsarenotpytestcases.",
+    "Recorded863uniquepassedPythonmapnodes/53IDs52existing+JSON09additional/97unclassified/masterBASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "1efccdb615cde9ea538c559c5fbb4e77c91e27ec2a01f02c959d36b218f1768b"
+}

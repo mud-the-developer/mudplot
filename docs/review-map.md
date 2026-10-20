@@ -20,19 +20,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [dynamic registered-layer execution smoke and separate meaning controls](review_evidence/review_map_layer_smoke.json),
 [independent coordinate/matrix/projection/colour oracles](review_evidence/review_map_plot_oracles.json),
 [coordinate spaces/actual browser drag/annotation alpha evidence](review_evidence/review_map_coordinates_alpha.json),
-[shared-axis/raw-overlay/log policy evidence](review_evidence/review_map_axis_overlay_log.json).
+[shared-axis/raw-overlay/log policy evidence](review_evidence/review_map_axis_overlay_log.json),
+[independent polynomial mean-fit CI and degeneracy evidence](review_evidence/review_map_regression_oracles.json).
 
 ## Scope and classification
 
-This is a **fifty-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
-The remaining100 IDs have not been classified here. The candidate inventory still
+This is a **fifty-three-ID state/history/JSON/data/layer/statistics mapping**, not a complete150-ID map.
+The remaining97 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Forty-nine below have existing coverage of their explicitly stated boundary.
+Fifty-two below have existing coverage of their explicitly stated boundary.
 JSON-09 remains **additional test needed** for its all-field meaning matrix.
 DATA-01/05's earlier optional execution gaps were filled by the separate declared
 uv overlay run below, not by retroactively changing skipped receipts. Existing
@@ -114,6 +115,10 @@ PLOT-05/09/10 add37 distinct current passed regression nodes, giving834 recorded
 unique passed Python nodes. Separate current shared/named/log and raw-overlay
 assert probes produce numeric reference tables; they are not more pytest cases.
 
+STAT-01/02/03 add29 distinct current passed Python nodes, giving863 recorded unique
+passed nodes. Their45 ID/node relationships share tests; a separate9-row normal-
+equation reference table is not9 more pytest cases.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -166,6 +171,9 @@ assert probes produce numeric reference tables; they are not more pytest cases.
 | PLOT-10 | Existing coverage | 14 regressions + separate current log oracle | Legacy clip vs typed interval reject and masked logarithmic colour domains |
 | PLOT-11 | Existing coverage | 5 frame/transform + 1 actual Python browser passed | Existing data/axes/figure spaces and selected y2 inverted-log drag/history |
 | PLOT-12 | Existing coverage | 12 alpha passed; separate2 native-property probes | Explicit text+arrow opacity/alpha0 pixels/defaultRGBA/native z-order-clip, not arbitrary new options |
+| STAT-01 | Existing coverage | 10 current mapped node relations | Small degree1..3 independent normal equations, duplicates/permutations and legacy known line |
+| STAT-02 | Existing coverage | 16 current mapped node relations | Mean-fit normal CI vs prediction interval, confidence/default and response-scale restoration |
+| STAT-03 | Existing coverage | 19 current mapped node relations | Ordinary poly sample/rank/missing/large-small predictor-response failures or finite results |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -1074,6 +1082,52 @@ wide finite domains and out-of-range colour mapping have their stated policy.
 These probes/regressions are not a fresh huge-constant RGB/minimum-backend run,
 all viewer/extreme norm guarantee, new clip/zorder API or global resource bound.
 
+## STAT-01/02/03 — ordinary polynomial mean-fit scope
+
+Implementation: `_render._regression_fit` (predictor/response normalization,
+`np.polyfit`/covariance, unit restoration), `_draw_series_layer`, `validate`,
+`io._atomic_destination`. [English README](../README.md),
+[Korean README](../README.ko.md) and [numerical limits](COMPATIBILITY.md) describe
+an opt-in normal-approximation **mean-fit** band, not a prediction interval;
+default confidence is None. This mapping does not change that contract to a
+Student-t interval, optional-model/bootstrap CI or weighted uncertainty feature.
+
+Current independent nodes:
+
+- `tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci` (degree1..3×confidence50/95/99=9)
+- `tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band`
+
+The six-row asymmetric fixture includes duplicate x and a permutation control.
+The independent raw Vandermonde normal equations compute inverse Gram,
+coefficients, residual variance RSS/(n-degree-1), leverage and NormalDist critical
+value; the target uses conditioned np.polyfit instead. Predicted means and interval
+endpoints match unchanged1e-10 tolerance. Prediction-width control adds the extra1
+term and is strictly wider. A separate9-row assert probe records coefficients,
+evaluation points/means/mean and prediction widths, fit errors and design condition
+numbers for this moderate reference fixture. It is not9 extra pytest cases.
+Legacy no-confidence output keeps observations and fitted line, with no hidden band.
+
+All19 current cases in [test_review_regression_degenerate.py](../tests/test_review_regression_degenerate.py):
+
+- `test_mean_band_matches_independent_ols_without_covariance_scale_loss` (6)
+- `test_numerical_rank_deficiency_fails_with_cause_and_preserves_previous_output` (4)
+- `test_polynomial_computation_scales_large_and_small_predictor_units` (3)
+- `test_structural_degenerate_inputs_are_explicit_without_silent_row_deletion` (6)
+
+Legacy/typed poly response scales1/1e-250/1e250 restore independent mean/interval
+values; predictor scales1e-250/1e250/1e308 produce finite predictions/bands without
+mutating x/y. Numerically rank-deficient degree10 designs fail with a cause, no
+warning leakage, no partial SVG/temp/figure/spec damage. Missing x/y, insufficient
+observations, constant x and excessive degree reject explicitly rather than silently
+deleting observations or producing a plausible invalid band. Numerical finite
+results still do not guarantee every Matplotlib tick/layout range is representable.
+
+Mapped node relations10+16+19 overlap; the fresh run has29 unique tests, not45.
+Other logx/logistic/Huber/LOWESS/WLS/weighted/bootstrap/stat-model assumptions need
+their own source/test mapping and are not certified by these ordinary-poly cases.
+No new Native/Rust/browser/full-suite/performance/real-world coverage probability
+is claimed from these synthetic numerical oracles.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -1214,10 +1268,17 @@ uv run --no-sync python -m pytest -q --tb=short tests/test_review_coordinate_fra
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_numeric_geometry.py::test_regression_matches_independent_normal_equations_and_mean_not_prediction_ci \
+  tests/test_review_numeric_geometry.py::test_legacy_regression_default_has_no_confidence_band \
+  tests/test_review_regression_degenerate.py --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining100 IDs still need their own reviewed symbol/node/provenance links
+The remaining97 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
