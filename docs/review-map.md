@@ -3,19 +3,20 @@
 Original: [2026-10-16 checklist](../mudplot_review_checklist_detailed_2026-10-16.md).
 Candidate inventory/status: [review ledger](REVIEW_CHECKLIST_STATUS.md).
 Execution/source fingerprints: [first five state IDs](review_evidence/review_map_state_core.json),
-[determinism/indices/effect boundaries](review_evidence/review_map_state_boundaries.json).
+[determinism/indices/effect boundaries](review_evidence/review_map_state_boundaries.json),
+[cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json).
 
 ## Scope and classification
 
-This is an **eight-ID Python core mapping**, not a complete150-ID map.
-The remaining142 IDs, including STATE-03, have not been classified here. The candidate inventory still
+This is a **nine-ID state mapping**, not a complete150-ID map.
+The remaining141 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All eight below have existing coverage of the explicitly stated boundary; no new
+All nine below have existing coverage of the explicitly stated boundary; no new
 runtime/test code or compatibility decision was needed for this mapping unit.
 AST checks only resolve references, not prove their semantic adequacy.
 
@@ -24,14 +25,18 @@ The first five IDs were reviewed at `52acc3f30ce6afdc88a305966a3f9b323e98c76a`:
 were not run or counted. The next three were reviewed at doc-only `701e3be` with
 runtime unchanged: **35 unique passed nodes,0 skipped/failed,exit0**. Their38
 ID/node relationships overlap; do not count them as38 separate tests. Across the
-two runs,48 unique nodes executed, not51. These are focused results, not a new
-full-suite/CLI/browser/native/release result. Source/body/log/JUnit hashes and
+first two runs,48 unique nodes executed, not51. STATE-03 adds6 fresh Python
+nodes(4 failure cases deselected), giving54 unique fresh nodes across three runs,
+not57 summed ID relationships. Native provenance is a separate previous execution
+with matching source/fixture/final hash, not a newly run native/browser test.
+These are focused results, not a full-suite or release result. Source/body/log/JUnit hashes and
 expanded parameterized node IDs are recorded in the separate immutable artifacts.
 
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
 | STATE-02 | Existing coverage | 5 passed | Public snapshots, history payloads and independent listener copies |
+| STATE-03 | Existing coverage | 6 fresh Python passed; retained source-matched Native check | Ten-operation supported fixture/full-state cross-path equality, not every GUI control |
 | STATE-04 | Existing coverage | 2 passed | Functional apply parse/reducer failure isolation |
 | STATE-05 | Existing coverage | 2 passed | Sequential Plot/Store batch prefix commits and continued use |
 | STATE-06 | Existing coverage | 1 passed | Listener exception after commit, callback order and unsubscribe recovery |
@@ -73,6 +78,43 @@ The fixture mutation checks nested values, not only top-level identities. Histor
 SetData/SetMatrix payload edits cannot change replay; a corrupting first listener
 cannot change a later listener's state/action copy. Plot.action_log dictionary
 mutation is not separately selected by this five-case surface selection.
+
+## STATE-03 — supported cross-path state semantics
+
+Implementation: [api.py](../mudplot/api.py) module `apply`, `Plot.labels`/fluent
+builders; [store.py](../mudplot/store.py) `Store.dispatch_all`;
+[reducer.py](../mudplot/reducer.py) `reduce`;
+[__main__.py](../mudplot/__main__.py) `_cmd_apply`;
+[editor_server.py](../dashboard/editor_server.py) `EditorSession.dispatch_safe`,
+`EditorSession._commit_store`, `_build_action`, `_Handler.do_POST`;
+[Rust bridge](../mudplot-editor/src/python.rs) `PythonBridge.apply` and
+[Rust server](../mudplot-editor/src/lib.rs) `Session.apply`, `app`, `action_json`.
+Python references are AST-resolved; Rust impl/function source anchors were read
+and hashed, not described as an AST or binary-attestation proof.
+
+The existing [shared fixture](../tests/fixtures/review_state_paths.json) contains
+one initial spec and10 supported operations. Current fresh tests:
+
+- `tests/test_review_editor_paths.py::test_fluent_functional_and_store_paths_preserve_the_same_complete_state`
+- `tests/test_review_editor_paths.py::test_cli_matches_each_expected_intermediate_state`
+- `tests/test_review_editor_paths.py::test_python_session_matches_action_and_visual_form_paths` (2 routes)
+- `tests/test_review_editor_paths.py::test_python_http_state_matches_each_supported_action_or_form` (2 routes)
+
+The test-owned fluent builder, functional apply and Store compare final complete
+FigureSpec. CLI(entry main/file workflow), Python session and HTTP supported
+form/action routes compare intermediate specs. This is state semantics, not an
+identical fluent event order or UI-only history/dirty/active-panel contract.
+Four failure tests were deselected and are not evidence assigned to this ID here.
+
+The previously executed [full native proof](review_evidence/swarm_facets_verification.json)
+ran `scripts/rust_editor_smoke_test.py::_review_state_paths` for both agent and
+hybrid supported-form routes. Its source hashes28/raw receipts and fixture match
+current runtime; Rust lib/bridge source is unchanged since that execution base.
+The helper compares every intermediate spec and printed final normalized hash
+`926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9`, which fresh
+functional apply reproduces. Hybrid form uses4 explicit control steps,2 JSON-layer
+form steps and4 agent fallbacks—not10 visual GUI clicks. No new native/browser/
+Linux/MSRV run or independent binary attestation is claimed by this mapping unit.
 
 ## STATE-04 — functional apply isolation
 
@@ -175,10 +217,15 @@ uv run --no-sync python -m pytest -q --tb=short tests/test_review_core_boundarie
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short tests/test_review_editor_paths.py \
+  -k 'not test_python_failures' --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining142 IDs, including STATE-03's cross-path matrix, still need their
-own reviewed symbol/node/provenance links and classification. Do not infer missing coverage
+The remaining141 IDs still need their own reviewed symbol/node/provenance links
+and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.

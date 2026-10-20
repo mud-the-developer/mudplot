@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 94차 — STATE-03 교차경로매핑
+
+- [부분review-map](review-map.md)에공통fixture10작업의fluent/functional/Store/CLI/PythonSession·HTTP와
+  지원Nativeform/agent구현symbol·검사·정규화FigureSpec근거를연결해누적9ID로확장했습니다.
+- 현재Python기존검사6P/4failure-case선택제외/exit0이며Native는새로실행하지않았습니다.
+  [분리근거](review_evidence/review_map_state_paths.json)에서보존된전체Native실행의source28/raw지문·fixture/
+  최종정규화hash가현재와같음을검증했습니다. Hybridform은직접control4+JSONlayerform2+agentfallback4이고
+  모든GUIcontrol을클릭한검사나새Native/Linux/MSRV실행·binaryattestation으로확대하지않습니다.
+- 기존두묶음48고유실행과새6개를합쳐고유54개이며겹친ID관계를합산하지않습니다. 미검토141ID와
+  BASE-05RUNNING/원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다. 실패/dirty/history/UI-only상태는
+  이번STATE-03의그림상태동등성범위와구분하고기존PASS근거를소급수정하지않았습니다.
+- Runtime/테스트/원문/의존성/버전변경없이기준52accCI39461524891진행을보호해로컬보존합니다.
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 93차 — Core결정성/참조/효과경계매핑
 
 - [부분review-map](review-map.md)을STATE-07/08/09까지누적8ID로확장하고실제source/test본문과AST참조를

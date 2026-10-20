@@ -1,0 +1,182 @@
+{
+  "kind": "partial-checklist-cross-path-map",
+  "id": "STATE-03",
+  "classification": "existing-coverage",
+  "source_commit": "3bbc18d91a64f91788f321a82159cc1a5b628892",
+  "cumulative_reviewed_ids": [
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 9,
+  "remaining_unreviewed": 141,
+  "implementation": [
+    {
+      "ref": "mudplot/api.py::apply",
+      "resolution": "Python AST qualified definition",
+      "line_start": 1996,
+      "line_end": 2004,
+      "body_sha256": "7b093f9ed7cca58c1c8b19cc73e608ed70f32c9a4d07915c5a5e6c00562359f3"
+    },
+    {
+      "ref": "mudplot/api.py::Plot.labels",
+      "resolution": "Python AST qualified definition",
+      "line_start": 1744,
+      "line_end": 1758,
+      "body_sha256": "b8305ad8098f4c9068a55e0a81009728f1a4b9084be80ea02114b921b0d2c6fc"
+    },
+    {
+      "ref": "mudplot/store.py::Store.dispatch_all",
+      "resolution": "Python AST qualified definition",
+      "line_start": 108,
+      "line_end": 111,
+      "body_sha256": "f600af5d301108b5a6bd29d07d28b3fc337cd368d579805798f8ad0eec1594e1"
+    },
+    {
+      "ref": "mudplot/reducer.py::reduce",
+      "resolution": "Python AST qualified definition",
+      "line_start": 52,
+      "line_end": 259,
+      "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+    },
+    {
+      "ref": "mudplot/__main__.py::_cmd_apply",
+      "resolution": "Python AST qualified definition",
+      "line_start": 96,
+      "line_end": 114,
+      "body_sha256": "3052664c2fcd179bf9bb35db932a82c729f069ef9320c61548aa5ddd88156496"
+    },
+    {
+      "ref": "dashboard/editor_server.py::EditorSession.dispatch_safe",
+      "resolution": "Python AST qualified definition",
+      "line_start": 131,
+      "line_end": 137,
+      "body_sha256": "aa7a662d5a2bdb40952c1366a93ab4d97b1e2c98ce682b08a63b511cf9ce95c1"
+    },
+    {
+      "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+      "resolution": "Python AST qualified definition",
+      "line_start": 122,
+      "line_end": 129,
+      "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+    },
+    {
+      "ref": "dashboard/editor_server.py::_build_action",
+      "resolution": "Python AST qualified definition",
+      "line_start": 354,
+      "line_end": 488,
+      "body_sha256": "c8e562c7738fb07a5a545a052ba33419777ba540dd4e8c5d1a1f9babda20c030"
+    },
+    {
+      "ref": "dashboard/editor_server.py::_Handler.do_POST",
+      "resolution": "Python AST qualified definition",
+      "line_start": 664,
+      "line_end": 725,
+      "body_sha256": "fc7f6be8ccbede818a8684aaf9fa5869b6cd7e594be701c756dcde03e79f38bb"
+    },
+    {
+      "ref": "mudplot-editor/src/python.rs::PythonBridge.apply",
+      "resolution": "Manually read Rust source/impl and rustfmt method anchors, not AST semantic proof",
+      "line_start": 43,
+      "line_end": 62,
+      "body_sha256": "07c291c0ce8d7473b531220e01cfeefa885b296c6d0e883c9dadd67f45598ede"
+    },
+    {
+      "ref": "mudplot-editor/src/lib.rs::Session.apply",
+      "resolution": "Manually read Rust source/impl and rustfmt method anchors, not AST semantic proof",
+      "line_start": 140,
+      "line_end": 152,
+      "body_sha256": "d7148249c5552bf25f4d37fccbba4f023053a840bb1a5df661b6555c33abd8f2"
+    },
+    {
+      "ref": "mudplot-editor/src/lib.rs::app",
+      "resolution": "Manually read Rust source/impl and rustfmt method anchors, not AST semantic proof",
+      "line_start": 272,
+      "line_end": 301,
+      "body_sha256": "6fbf8d07f7a64b7d5f4bdcaf032aeb52434e927366f3de86b0d3b2281053f9c4"
+    },
+    {
+      "ref": "mudplot-editor/src/lib.rs::action_json",
+      "resolution": "Manually read Rust source/impl and rustfmt method anchors, not AST semantic proof",
+      "line_start": 513,
+      "line_end": 550,
+      "body_sha256": "23d24ee8d44ccf13f28531ddec9843dfb8fe04790190977edf544b4e1b49819e"
+    }
+  ],
+  "test_bases": [
+    "tests/test_review_editor_paths.py::test_fluent_functional_and_store_paths_preserve_the_same_complete_state",
+    "tests/test_review_editor_paths.py::test_cli_matches_each_expected_intermediate_state",
+    "tests/test_review_editor_paths.py::test_python_session_matches_action_and_visual_form_paths",
+    "tests/test_review_editor_paths.py::test_python_http_state_matches_each_supported_action_or_form"
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_editor_paths.py -k \"not test_python_failures\" --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 6,
+    "deselected": 4,
+    "skipped": 0,
+    "failed": 0,
+    "executed_nodes": [
+      "tests/test_review_editor_paths.py::test_fluent_functional_and_store_paths_preserve_the_same_complete_state",
+      "tests/test_review_editor_paths.py::test_cli_matches_each_expected_intermediate_state",
+      "tests/test_review_editor_paths.py::test_python_session_matches_action_and_visual_form_paths[action]",
+      "tests/test_review_editor_paths.py::test_python_session_matches_action_and_visual_form_paths[form]",
+      "tests/test_review_editor_paths.py::test_python_http_state_matches_each_supported_action_or_form[action]",
+      "tests/test_review_editor_paths.py::test_python_http_state_matches_each_supported_action_or_form[form]"
+    ],
+    "log_sha256": "31ca56ea3c9cb13b23f9e2b5b6c4fe25d04e33ee8e2f76740eb13fb56eb8149f",
+    "junit_sha256": "65ab07039bd8f09be06aeccd68a0cce9dbaf3c403747fe1e553b55d2eceb2bdd"
+  },
+  "fixture": {
+    "path": "tests\\fixtures\\review_state_paths.json",
+    "sha256": "bb2b325d13b6c428341f9cc21267170faf4b32f0f866f554257e690af5336925",
+    "steps": 10,
+    "final_canonical_spec_sha256": "926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9"
+  },
+  "retained_native": {
+    "artifact": "docs\\review_evidence\\swarm_facets_verification.json",
+    "artifact_sha256": "c8045139f00680b689a2443c81f932f3520406630b75432ea993568c11b1d2c3",
+    "matched_source_fingerprints": 28,
+    "fixture_matches_execution_source52": true,
+    "rust_runtime_unchanged_since_execution_base5afe": true,
+    "exit": 0,
+    "command": "uv run --no-sync python scripts/rust_editor_smoke_test.py --browser (previous run, not rerun in mapping unit)",
+    "helper": "scripts/rust_editor_smoke_test.py::_review_state_paths",
+    "raw_log_sha256": "e2dad8e19eeb67b3ee3c8ab7ec288e985f019f5da5112a19a18988d368eed74b",
+    "raw_result_sha256": "4bb6d03b13ac4aa582f7d477229eb9a3ca7bf72259072a0b1c98c2b2163e74f1",
+    "matching_final_spec_sha256": "926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+    "rust_agent_steps": 10,
+    "hybrid_form_explicit_control_steps": 4,
+    "hybrid_json_layer_form_steps": 2,
+    "hybrid_agent_fallback_steps": 4,
+    "fresh_native_execution": false
+  },
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot-editor/src/python.rs": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/api.py": "449aa3a1a4e07ebc8e469a6c48bb779d552a597ef975b408d2a6e28907f62425",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "scripts/rust_editor_smoke_test.py": "c9e1fe6de2bf9634cd83c0af1a294a32504269d695fad8f988c3c4765a086ace",
+    "tests/test_review_editor_paths.py": "f0dfd840e5abd3eb9d7186d6a070b53ac4748806fd09b9b5d6be3d7b764ebad7",
+    "tests\\fixtures\\review_state_paths.json": "bb2b325d13b6c428341f9cc21267170faf4b32f0f866f554257e690af5336925"
+  },
+  "previous_artifact_sha256": "540cbbdac832d57a61528e3885307fbeb3b74a154ec902c0793a40758701160f",
+  "limits": [
+    "Supported ten-operation fixture only, not every action/control or new Swarm scope.",
+    "Fluent/functional/Store final full FigureSpec equality; CLI/session/HTTP/native routes compare each intermediate spec.",
+    "Rust hybrid form route uses six supported control/layer-form steps and four agent fallbacks, not ten GUI clicks.",
+    "Fresh six Python pytest nodes plus previous source-matched Windows native execution: do not claim new native/browser/Linux/MSRV/binary attestation.",
+    "UI-only active panel/history/save/dirty behavior intentionally not compared here; failure nodes deselected and not mapped.",
+    "BASE05RUNNING/original139P6R4O1D unchanged;remaining141IDsnotclassifiedbythispartialmap."
+  ],
+  "verifier_sha256": "e547401b7348f5a1bd98221ab1c0aa0734e9e09743caf6f60eda36051bc893aa"
+}
