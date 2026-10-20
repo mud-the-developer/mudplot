@@ -36,11 +36,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   HTTP+browser pass. Empty frames add no data/guides, share original size domains;
   plain empty still invalid and SetData/filter/option boundaries remain. Exact52acc3f
   CI39461524891 ALL5SUCCESS verifies this runtime. Warnings retained.
-- BASE-05 partial map:29 classified IDs(28 existing scoped evidence, JSON-09 needs
-  additional meaning tests)/121 unclassified. Recorded446 unique Python receipts
-  and current source hashes rechecked, not a new446-case run. Runtime/tests remain
-  unchanged; exact98b4ec0CI39470014411 ALL5SUCCESS. Original statuses remain.
-  [Publication evidence](review_evidence/review_map_publication_extended.json).
+- BASE-05 partial map:39 classified IDs(38 scoped existing evidence, JSON-09 needs
+  additional meaning tests)/111 unclassified. Recorded758 passed Python nodes and
+  source receipts rechecked, not a new758-case run. Historical12 optional skips stay
+  recorded; separate declared uv overlay95P0skip actually executed those cases.
+  Runtime/tests remain unchanged; exact43965b6CI39478506917 ALL5SUCCESS.
+  [Publication evidence](review_evidence/review_map_publication_execution.json).
 - Named Swarm-only sizes:18new/1069related/floor167P/CLI2/full nativeHTTP+browser
   pass; original-row pooling/limits share sizes/guides only, local colours/rows keep.
   Mixed-family/facet/empty/style/date remain rejected. Exactee876CI ALL5P is prior

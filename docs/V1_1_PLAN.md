@@ -161,12 +161,12 @@ consume later size guide. SetData fills/empties cells without filter/source writ
 nativeHTTP+browser9cases0/LSP13clean; main1/floor1282warnings retained.
 [Scope](SWARM_FACETS.md), new PNG/spec and
 [evidence](review_evidence/swarm_facets_verification.json).
-Exact52acc3fCI39461524891 ALL5SUCCESS verifies this facet runtime; exact98b4ec0
-CI39470014411 ALL5SUCCESS verifies the same unchanged code under mapping docs.
-Partial BASE-05 classification29IDs(28 scoped existing evidence, JSON-09 additional
-meaning tests)/121 unclassified. Recorded446 Python receipts rechecked, not a new
-446-case run; original statuses remain.
-[Publication evidence](review_evidence/review_map_publication_extended.json).
+Exact52acc3fCI39461524891 and doc-only43965b6CI39478506917 ALL5SUCCESS verify
+this unchanged facet runtime. Partial BASE-05 classification39IDs(38 scoped existing
+evidence, JSON-09 additional meaning tests)/111 unclassified. Recorded758 passed
+Python nodes rechecked, not a new758-case run. Historical12 optional skips remain;
+a separate declared uv overlay95P0skip executed them later. Original statuses remain.
+[Publication evidence](review_evidence/review_map_publication_execution.json).
 No new fields/deps/versions or release claim; Loop8 active.
 
 ### Earlier review phase 90

@@ -148,10 +148,11 @@ collection/관측guide없이알려진categoryslot만유지합니다. 전체reser
 SetData로cell을채웠다비워도filter/source를다시쓰지않습니다. 새29/관련1098/floor196P3397deselected/
 CLI3/Rust22P6ignored/품질11명령/전체WindowsnativeHTTP·browser9case0/LSP13clean·주환경경고1/floor1282를
 보존하며[범위](SWARM_FACETS.ko.md)·새PNG/spec와[근거](review_evidence/swarm_facets_verification.json)를남깁니다.
-정확한52acc3f의CI39461524891과문서-only98b4ec0의CI39470014411 5job모두성공으로동일facetruntime을
-확인했습니다. Runtime/테스트는바꾸지않았습니다. BASE-05분류29ID(기존경계근거28·JSON-09추가의미검사1)/
-미분류121개·기록된446실행원본지문재확인이지새446실행이아닙니다. 원대장상태는유지합니다.
-[게시근거](review_evidence/review_map_publication_extended.json)를남기며새필드/의존성/버전·release완료주장없이Loop8을유지합니다.
+정확한52acc3f의CI39461524891과문서-only43965b6의CI39478506917 5job모두성공으로동일facetruntime을
+확인했습니다. Runtime/테스트는바꾸지않았습니다. BASE-05분류39ID(기존확인경계38·JSON-09추가의미검사1)/
+미분류111개·기록된758통과node원본지문재확인이지새758실행이아닙니다. 과거optional12skip은그대로보존하고
+별도선언uv overlay95P0skip으로나중실제실행했으며원대장상태는유지합니다.
+[게시근거](review_evidence/review_map_publication_execution.json)를남기며새필드/의존성/버전·release완료주장없이Loop8을유지합니다.
 
 ### 이전 리뷰90차
 

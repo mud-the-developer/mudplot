@@ -1,0 +1,174 @@
+{
+  "scope": "Publish six doc-only mapping/optional-execution/smoke commits after exact439CIterminal;notBASE05orJSON09completion/release approval",
+  "runtime_base": "43965b61b6f840b65659f8ec56b58eb3f91fd9d8",
+  "ci": {
+    "id": 39478506917,
+    "url": "https://github.com/mud-the-developer/mudplot/actions/runs/39478506917",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "lint-and-test (3.12)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "doc_commits_before_publication_note": [
+    "3b2e341f552650bc9e6e01f5f665754de8c18492",
+    "67e191674338d1be250096cc198d06e4f8952a52",
+    "43315d77aaf2fde668e8ed3c5abfb4e8edafe224",
+    "4e00b7748dc02b6d2270731152d5a39305513e4b",
+    "aa97332bba72b35de6599bf2d1caf3a99a7f86b3",
+    "5724c06b1a3dd19702a5ff6d1d5783d16e1b92a4"
+  ],
+  "runtime_test_schema_dependency_workflow_diff_empty": true,
+  "map_artifacts": [
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_core.json",
+      "sha256": "b2f40f3c29e1b942ba6232933d9804b36c670de380379b4b08902b00b13f9421",
+      "recorded_passed": 13,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_boundaries.json",
+      "sha256": "540cbbdac832d57a61528e3885307fbeb3b74a154ec902c0793a40758701160f",
+      "recorded_passed": 35,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_paths.json",
+      "sha256": "0a99770d9290e6ec3fe18900cd2edb8f2f7dab026ae7deeb91ff259980c673de",
+      "recorded_passed": 6,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_history_core.json",
+      "sha256": "599d026fc7ee2028c277c25f24c4faf476c135cbeffcec724ed848b80d3fc6bf",
+      "recorded_passed": 6,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_document_policy.json",
+      "sha256": "6c9c08ba40eeb834dc8667ebbdcd9da0e04d36aa677329891c2268cf4b28c6cd",
+      "recorded_passed": 4,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_history_design.json",
+      "sha256": "150a9f7de86272994f1bb509e0017bf32eef4052b9c5f21b47af130a52ca8dbd",
+      "recorded_passed": 14,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_json_input.json",
+      "sha256": "a3d3878a5c91171de6d7aefb25561723843881f99bcde36dcd0de6fbf7352239",
+      "recorded_passed": 96,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_default_semantics_gap.json",
+      "sha256": "5febf659937b60c9792f0a3e2f26b20f53139a900fbde09836ae39ab8171837a",
+      "recorded_passed": 168,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_structural_codec.json",
+      "sha256": "35a82103d34337e47a4d665c1499b307ad7936de10f6eaa5d2685d371f769c17",
+      "recorded_passed": 74,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_json_effects.json",
+      "sha256": "73137695bed9a60e2db537a7757479917807d94bc208011bcd791047177dfa97",
+      "recorded_passed": 30,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_data_boundaries.json",
+      "sha256": "3a394869b4dbba002d835ae4e8061b4fbfaac05085be8aca5c143b98bd890f94",
+      "recorded_passed": 59,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_adapter_missing.json",
+      "sha256": "33c22365e3e0e9a1bf8db8e4ce450c1209978d53a316bb60b036f37c0281f48f",
+      "recorded_passed": 19,
+      "recorded_skipped": 5
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_groups_scalars.json",
+      "sha256": "4d51a50a56046c338fc73f19b7099115fe658271e0e197603cc466a587f93663",
+      "recorded_passed": 77,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_data_policies.json",
+      "sha256": "94e0e941698af3c6d7232ed74a022a3381e821c23ff8fe08fcad2bce9057b319",
+      "recorded_passed": 74,
+      "recorded_skipped": 7
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_optional_execution.json",
+      "sha256": "281c71b927fc816011fdf5f989b5b1dccdf5425c4e8c7ac469ec71720a048ec0",
+      "recorded_passed": 95,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_layer_smoke.json",
+      "sha256": "b8ba5b29930204bc9c3e42fd1b6f2971816db511556a84e57d54a3fa4c36b1c0",
+      "recorded_passed": 58,
+      "recorded_skipped": 0
+    }
+  ],
+  "receipt_recheck": {
+    "recorded_unique_passed_python_nodes": 758,
+    "historical_optional_skipped_nodes": 12,
+    "historical_skips_now_executed_in_separate_zero_skip_overlay": true,
+    "new_full_suite_or_native_run_this_publication_unit": false,
+    "passed_node_set_sha256": "e9a79e66d185436dfdc9f8ea034f653c6f099abf201098397305bdded49e1eff"
+  },
+  "classified_ids": 39,
+  "classification_counts": {
+    "existing-coverage": 38,
+    "additional-tests-needed": 1
+  },
+  "unclassified_ids": 111,
+  "additional_tests_needed": [
+    "JSON-09"
+  ],
+  "base05_status": "RUNNING",
+  "json09_status": "RUNNING",
+  "original_status_counts": {
+    "PASS": 139,
+    "RUNNING": 6,
+    "OPEN": 4,
+    "DEFERRED": 1
+  },
+  "limits": [
+    "Historical skip receipts are unchanged;separate95P0skipoverlaytestedall12later\u2014no retroactivepass.",
+    "Registry/galleryexecutiontierdoesnotmeanall41artistsemantics/GUIcontrols/humanATapproval.",
+    "Job success literal,not all warnings/required-skipaudit.",
+    "No runtime/deps/defaults/versions/release-tag/controllerchanges."
+  ]
+}
