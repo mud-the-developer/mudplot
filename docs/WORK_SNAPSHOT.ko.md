@@ -28,8 +28,10 @@
 - Swarmfacet/선택빈frame은새29/관련1098/floor196P/CLI3/전체nativeHTTP·browser가맞고원본size-domain과
   점/guide없는빈frame을유지합니다. Plainempty거절과SetData/filter/옵션경계도보존합니다. 정확한52acc3f의
   CI39461524891 5job모두성공으로해당runtime을확인했고경고를보존합니다.
-- BASE-05부분매핑은검토12ID/이문서미분류138개이고게시전체선택재검사60P입니다. 문서매핑으로runtime/
-  테스트를바꾸지않고BASE-05/원대장상태수는유지합니다. [게시근거](review_evidence/review_map_publication.json).
+- BASE-05부분매핑은분류29ID(기존경계근거28·JSON-09추가의미검사필요1)/미분류121개입니다. 기록된446고유
+  Python실행의원본지문을재확인했지만새446실행은아닙니다. Runtime/테스트는같고정확한98b4ec0의
+  CI39470014411 5job모두성공을확인했습니다. BASE-05/원대장상태수는유지합니다.
+  [게시근거](review_evidence/review_map_publication_extended.json).
 - NamedSwarm-onlysize는새18/관련1069/floor167P/CLI2/전체nativeHTTP·browser가맞고원본rowpool/
   상한·sizeguide만공유하며관측/색은로컬입니다. Mixed-family/facet/빈cell/style/date는거절하고정확한
   ee876CI5job성공은이전categorical이지새runtime증명이아니므로새CI를받습니다. 경고/일부neighbor미확인보존합니다.
