@@ -18,6 +18,19 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 106차 — DATA-04/06 rawgroup·scalar경계매핑
+
+- [부분review-map](review-map.md)에legacyrawgroup의원본Python동등성과지원scalar/미지원객체구분source/test를
+  연결해누적35ID로확장했습니다. 기존group6/scalar71=77P/0skip·fail이며별도합성4figure의rowID/group값/
+  caption/RGBA/관측범례대응도assert후모두닫았습니다. [분리근거](review_evidence/review_map_groups_scalars.json).
+- Raw문자1/숫자1분리·기본numeric1/1.0/True통합·null/빈label과동일strcaption가능성은문서계약대로유지하고
+  typedordered/semantic/statgroup정책을억지로합치지않았습니다. Scalar는지원builtin/결측만정규화하고
+  Decimal/complex/unsupportedlongdouble/customobject를null/문자열/반올림으로숨기지않습니다.
+- Same-type/cyclicitem과unknownself-inequality검사를구분하지만임의Pythonmethodsecuritysandbox는아닙니다.
+  기록된고유Python통과node는601개이고기존optional5skip은별도입니다. 미분류115ID/BASE-05JSON-09RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준43965bCI39478506917을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 105차 — DATA-01/03 실행가능adapter·결측cohort매핑
 
 - [부분review-map](review-map.md)에현재9형식의값/원본/linegap-scatterpair-statcohort와x결측/실제문자None/

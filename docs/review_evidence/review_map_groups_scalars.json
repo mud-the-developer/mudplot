@@ -1,0 +1,448 @@
+{
+  "kind": "partial-checklist-groups-scalars-map",
+  "reviewed_ids": [
+    "DATA-04",
+    "DATA-06"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-06",
+    "DATA-07",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 35,
+  "remaining_unreviewed": 115,
+  "source_commit": "67e191674338d1be250096cc198d06e4f8952a52",
+  "source_sha256": {
+    "docs/COMPATIBILITY.md": "56cd8d73e003edb7c0553c92f1fa1f006589300e135140f1fa5478a982915502",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "tests/test_review_group_identity.py": "f9c94d64d83e9c56f9dcc062741d807a886556988ef9e0b939dd7fcd2a33bd25",
+    "tests/test_review_scalar_boundaries.py": "583e446452b6781b01260803a44fbfbc9682cd62fe95a6a67f31517673042378"
+  },
+  "previous_artifact_sha256": "33c22365e3e0e9a1bf8db8e4ce450c1209978d53a316bb60b036f37c0281f48f",
+  "items": [
+    {
+      "id": "DATA-04",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_unique_stable",
+          "body_sha256": "1bb327c3a346f717a8c4ab18db82af10b32e8c8720de88c4a35f06b94e8afc92"
+        },
+        {
+          "ref": "mudplot/_render.py::_series_masks",
+          "body_sha256": "59f7daf55d644691665f0a0e4ea29561b17f54a70f0c73672344df0c692c590c"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference",
+        "tests/test_review_group_identity.py::test_raw_mixed_string_and_number_groups_keep_their_original_observations"
+      ],
+      "executed_nodes": [
+        "tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups0-expected0]",
+        "tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups1-expected1]",
+        "tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups2-expected2]",
+        "tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference[groups3-expected3]",
+        "tests/test_review_group_identity.py::test_raw_mixed_string_and_number_groups_keep_their_original_observations[line]",
+        "tests/test_review_group_identity.py::test_raw_mixed_string_and_number_groups_keep_their_original_observations[scatter]"
+      ],
+      "fresh_passed": 6,
+      "reviewed_boundary": "LegacyrawgroupPython-equalitymembership/first-seenroworder/string-numberdistinct/numeric1-1.0-Trueunified/null-emptylabels/strcaptioncollisionsdocumented. Two actualrawartistcases plus fourcolour/groupassertprobes. Notalltypedsemantic/statfamily group policy."
+    },
+    {
+      "id": "DATA-06",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::_plain_value",
+          "body_sha256": "7c6208abaac1ddf9920f8d9a4b6c6f91786f690f2760959985375fa2dca8b875"
+        },
+        {
+          "ref": "mudplot/data.py::_to_list",
+          "body_sha256": "923ad79e12a5ba00d1cfa23e36c9c1c3d7bc53436eb64ae6fab26af903ec551f"
+        },
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        },
+        {
+          "ref": "mudplot/io.py::_validate_json_value",
+          "body_sha256": "91bc4c70728e9f4ef8b4d6bbe507ea1471efdbcacb3e4ada11e2e0d0e54e8f86"
+        },
+        {
+          "ref": "mudplot/io.py::to_json",
+          "body_sha256": "f1703a6fb2746076dc3a8999d22133cbda20a23dc9057961dc91a6abc0633350"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection",
+        "tests/test_review_scalar_boundaries.py::test_nonreflexive_custom_object_is_not_treated_as_missing_or_stringified",
+        "tests/test_review_scalar_boundaries.py::test_fresh_same_type_item_result_does_not_recurse_forever",
+        "tests/test_review_scalar_boundaries.py::test_item_conversion_cycle_is_not_followed_through_unsupported_classes",
+        "tests/test_review_scalar_boundaries.py::test_item_protocol_returning_a_plain_supported_value_stays_supported",
+        "tests/test_review_scalar_boundaries.py::test_pandas_known_missing_scalars_remain_null"
+      ],
+      "executed_nodes": [
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value0--3]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value1--9223372036854775808]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value2-18446744073709551615]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value3-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value4-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-1.25-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value6-True]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value7-False]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-\\ud55c\\uae00 \\u03a9 \\U0001f600-\\ud55c\\uae00 \\u03a9 \\U0001f600]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value9-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value10-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-nan-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value12-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value13-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[mapping-value14-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value0--3]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value1--9223372036854775808]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value2-18446744073709551615]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value3-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value4-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-1.25-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value6-True]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value7-False]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-\\ud55c\\uae00 \\u03a9 \\U0001f600-\\ud55c\\uae00 \\u03a9 \\U0001f600]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value9-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value10-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-nan-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value12-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value13-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[records-value14-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value0--3]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value1--9223372036854775808]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value2-18446744073709551615]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value3-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value4-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-1.25-1.25]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value6-True]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value7-False]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-\\ud55c\\uae00 \\u03a9 \\U0001f600-\\ud55c\\uae00 \\u03a9 \\U0001f600]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value9-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value10-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-nan-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value12-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value13-None]",
+        "tests/test_review_scalar_boundaries.py::test_supported_numpy_scalars_cross_json_with_correct_builtin_values[object-array-value14-None]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-value0]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-value1]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-value2]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-value3]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-value4]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-(1+2j)]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[mapping-(nan+0j)]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-value0]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-value1]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-value2]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-value3]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-value4]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-(1+2j)]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[records-(nan+0j)]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-value0]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-value1]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-value2]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-value3]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-value4]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-(1+2j)]",
+        "tests/test_review_scalar_boundaries.py::test_unsupported_scalars_remain_objects_until_explicit_json_rejection[object-array-(nan+0j)]",
+        "tests/test_review_scalar_boundaries.py::test_nonreflexive_custom_object_is_not_treated_as_missing_or_stringified",
+        "tests/test_review_scalar_boundaries.py::test_fresh_same_type_item_result_does_not_recurse_forever",
+        "tests/test_review_scalar_boundaries.py::test_item_conversion_cycle_is_not_followed_through_unsupported_classes",
+        "tests/test_review_scalar_boundaries.py::test_item_protocol_returning_a_plain_supported_value_stays_supported",
+        "tests/test_review_scalar_boundaries.py::test_pandas_known_missing_scalars_remain_null"
+      ],
+      "fresh_passed": 71,
+      "reviewed_boundary": "SupportedNumPyscalars45acrossmapping-records-objectarrays/builtinexacttypes;unsupportedDecimal-complex-longdouble21remainidentityuntilstrictJSONrejection;nonreflexivecustomobjectnotNaN/stringified;itemself-chain/cyclebounds;plainitemhugeintallowed;PandasNA-NaTnull. Notarbitraryusermethodsandbox/everyNumPydtype."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_group_identity.py tests/test_review_scalar_boundaries.py --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 77,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 1.71,
+    "log_sha256": "40d8531b4c86c93dcb5bafe654f69b6e644c6ca4df2b0dd559033d062ac7644d",
+    "junit_sha256": "45fd30dac6c4cbd9109fadd4081aa98a544ae0efb21c2d6087c2c3515cd92c52"
+  },
+  "separate_group_colour_probe": {
+    "not_pytest_count": true,
+    "figures": 4,
+    "correspondence": [
+      {
+        "groups": [
+          "1",
+          1
+        ],
+        "series": [
+          {
+            "input_group_values": [
+              "1"
+            ],
+            "row_ids": [
+              0
+            ],
+            "caption": "1",
+            "rgba": [
+              0.9372549019607843,
+              0.4235294117647059,
+              0.4666666666666667,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              1
+            ],
+            "row_ids": [
+              1
+            ],
+            "caption": "1",
+            "rgba": [
+              0.0,
+              0.6901960784313725,
+              0.6901960784313725,
+              1.0
+            ]
+          }
+        ],
+        "legend_labels": [
+          "1",
+          "1"
+        ]
+      },
+      {
+        "groups": [
+          "1",
+          1,
+          null
+        ],
+        "series": [
+          {
+            "input_group_values": [
+              "1"
+            ],
+            "row_ids": [
+              0
+            ],
+            "caption": "1",
+            "rgba": [
+              0.9372549019607843,
+              0.4235294117647059,
+              0.4666666666666667,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              1
+            ],
+            "row_ids": [
+              1
+            ],
+            "caption": "1",
+            "rgba": [
+              0.0,
+              0.6901960784313725,
+              0.6901960784313725,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              null
+            ],
+            "row_ids": [
+              2
+            ],
+            "caption": "None",
+            "rgba": [
+              0.5450980392156862,
+              0.6274509803921569,
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "legend_labels": [
+          "1",
+          "1",
+          "None"
+        ]
+      },
+      {
+        "groups": [
+          "A",
+          1,
+          1.0,
+          true
+        ],
+        "series": [
+          {
+            "input_group_values": [
+              "A"
+            ],
+            "row_ids": [
+              0
+            ],
+            "caption": "A",
+            "rgba": [
+              0.9372549019607843,
+              0.4235294117647059,
+              0.4666666666666667,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              1,
+              1.0,
+              true
+            ],
+            "row_ids": [
+              1,
+              2,
+              3
+            ],
+            "caption": "1",
+            "rgba": [
+              0.0,
+              0.6901960784313725,
+              0.6901960784313725,
+              1.0
+            ]
+          }
+        ],
+        "legend_labels": [
+          "A",
+          "1"
+        ]
+      },
+      {
+        "groups": [
+          "",
+          null,
+          "1",
+          1,
+          true
+        ],
+        "series": [
+          {
+            "input_group_values": [
+              ""
+            ],
+            "row_ids": [
+              0
+            ],
+            "caption": "",
+            "rgba": [
+              0.9372549019607843,
+              0.4235294117647059,
+              0.4666666666666667,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              null
+            ],
+            "row_ids": [
+              1
+            ],
+            "caption": "None",
+            "rgba": [
+              0.7333333333333333,
+              0.592156862745098,
+              0.2,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              "1"
+            ],
+            "row_ids": [
+              2
+            ],
+            "caption": "1",
+            "rgba": [
+              0.050980392156862744,
+              0.6980392156862745,
+              0.7019607843137254,
+              1.0
+            ]
+          },
+          {
+            "input_group_values": [
+              1,
+              true
+            ],
+            "row_ids": [
+              3,
+              4
+            ],
+            "caption": "1",
+            "rgba": [
+              0.5450980392156862,
+              0.6274509803921569,
+              1.0,
+              1.0
+            ]
+          }
+        ],
+        "legend_labels": [
+          "None",
+          "1",
+          "1"
+        ]
+      }
+    ],
+    "raw_sha256": "841509895471e7de7f5e14a16b080770f06051665b9e25edeae40d5b9ca1359f"
+  },
+  "limits": [
+    "LegacydefaultPython-equalitygroupsdifferfromexplicitorderedtypedbool-numericorsemanticcaptionambiguityrules;no forcedunification.",
+    "DecimalInfinity/builtinInfboundaryelsewhereJSON02;these71selectedcasesnotallscalars/dependencies/dtypes.",
+    "User.item()canexecutecallercode;conversionboundsnotPythonmethodsecuritysandbox.",
+    "FourprobeFiguresclosed;no newrepotests/runtime/features/deps/versions/optionalinstall.",
+    "Combined601unique passedPythonmapnodes+5optionalSKIPsseparate;35reviewedIDs115unclassified;BASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "b061b57662b725ac6ad126e0261d347317aeb59b07ed6297ac70e453f26fb4b3"
+}

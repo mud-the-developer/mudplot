@@ -13,19 +13,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json),
 [render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json),
 [table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json),
-[available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json).
+[available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json),
+[legacy group identity and scalar conversion evidence](review_evidence/review_map_groups_scalars.json).
 
 ## Scope and classification
 
-This is a **thirty-three-ID state/history/JSON/data mapping**, not a complete150-ID map.
-The remaining117 IDs have not been classified here. The candidate inventory still
+This is a **thirty-five-ID state/history/JSON/data mapping**, not a complete150-ID map.
+The remaining115 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Thirty-one below have existing coverage of their explicitly stated boundary.
+Thirty-three below have existing coverage of their explicitly stated boundary.
 JSON-09 and DATA-01 are **additional test needed**: respectively the all-field
 meaning matrix and current optional-adapter execution/provenance are incomplete.
 Existing tests may fill those gaps; neither classification proves a product bug
@@ -77,6 +78,10 @@ DATA-01/03 record19 new unique passed Python nodes and5 explicit optional skips.
 Recorded passed-node total is524; skipped cases are never counted as passes.
 Both IDs reuse9 passed adapter cases, so do not sum9+19 as28 new executed tests.
 
+DATA-04/06 add77 distinct passed Python nodes(6 legacy group/71 scalar), giving601
+recorded unique passed nodes plus the same5 optional skips, not606 passes. Separate
+four synthetic group/RGBA/legend probes are not pytest cases.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -111,6 +116,8 @@ Both IDs reuse9 passed adapter cases, so do not sum9+19 as28 new executed tests.
 | DATA-01 | Additional test needed | 9 available formats passed; 5 optional formats skipped | Current all-format execution/provenance gap, not a product-failure finding |
 | DATA-02 | Existing coverage | 49 fresh Python passed | Row widths/types/column keys before pivot, missing columns and effect failure preservation |
 | DATA-03 | Existing coverage | 19 passed; same 5 optional cases skipped | Tested source-preserving missing normalization/line gaps/scatter pairs/stat cohort; not all formats |
+| DATA-04 | Existing coverage | 6 fresh Python passed; separate4 group/RGBA probes | Legacy Python-equality membership/order/caption policy, not uniform semantic/stat grouping |
+| DATA-06 | Existing coverage | 71 fresh Python passed | Supported scalar builtin normalization vs explicit unsupported-object rejection/bounded item conversion |
 | DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
@@ -671,6 +678,52 @@ These19 passed nodes prove the stated installed paths/contexts, not every missin
 scalar or exotic/optional format. Five shared optional cases remain skipped and
 source nonmutation does not imply sandboxing user-provided Python methods.
 
+## DATA-04 — preserve declared group identity, not caption inference
+
+Implementation: `_render._unique_stable`, `_series_masks` with object dtype;
+contract [COMPATIBILITY.md](COMPATIBILITY.md).
+
+- `tests/test_review_group_identity.py::test_default_raw_group_identity_does_not_depend_on_array_string_inference` (4)
+- `tests/test_review_group_identity.py::test_raw_mixed_string_and_number_groups_keep_their_original_observations` (line/scatter2)
+
+Default raw groups use original Python equality and first-seen order. String
+`"1"` differs from numeric1; numeric1/1.0/True merge. Null is a legacy raw group;
+empty labels may be unlabeled. Captions remain `str(key)`, so distinct string and
+numeric IDs may both display `"1"` without merging their observations. Caller
+normalization can disambiguate labels; this unit does not rewrite group values.
+
+Four separate synthetic scatter probes record exact row IDs/group values/caption/
+RGBA and emitted legend labels, assert distinct series colours and unchanged
+source, and close all figures. They add no pytest cases. Explicit ordered raw
+bool/numeric keys and typed semantic/statistical group rules differ by context;
+this selection proves legacy raw paths, not every grouping rule in all families.
+
+## DATA-06 — supported values, not silent unsupported coercion
+
+Implementation: `data._plain_value`, `_to_list`, `to_columns`;
+`io._validate_json_value`, `to_json`.
+
+Current nodes in [test_review_scalar_boundaries.py](../tests/test_review_scalar_boundaries.py):
+
+- `test_supported_numpy_scalars_cross_json_with_correct_builtin_values` (45)
+- `test_unsupported_scalars_remain_objects_until_explicit_json_rejection` (21)
+- `test_nonreflexive_custom_object_is_not_treated_as_missing_or_stringified`
+- `test_fresh_same_type_item_result_does_not_recurse_forever`
+- `test_item_conversion_cycle_is_not_followed_through_unsupported_classes`
+- `test_item_protocol_returning_a_plain_supported_value_stays_supported`
+- `test_pandas_known_missing_scalars_remain_null`
+
+All71 ran. Mapping/record/object-array inputs preserve exact supported int/float/
+bool/Unicode values or recognized NumPy/Pandas missing→None. Finite unsupported
+Decimal/longdouble/complex objects retain identity until strict JSON rejects them
+with a type-specific error; Decimal NaN is not a generic missing sentinel.
+Unknown self-inequality/stringification is not invoked to guess missing values;
+unsupported same-type/cyclic item conversion is not followed recursively. A
+supported plain huge-int item result remains valid. `item()` may still execute
+caller code; these conversion bounds are not a Python-method security sandbox.
+Builtin Infinity/strict JSON behavior is separately mapped under JSON-02, not a
+new implicit null conversion. This is not every dtype/dependency object taxonomy.
+
 ## DATA-07 — parameters and caller-owned resources
 
 Implementation: `data.to_columns` query/finally and borrowed cursor paths,
@@ -784,10 +837,16 @@ uv run --no-sync python -m pytest -q --tb=short tests/test_review_missing_data.p
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_group_identity.py tests/test_review_scalar_boundaries.py \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining117 IDs still need their own reviewed symbol/node/provenance links
+The remaining115 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
