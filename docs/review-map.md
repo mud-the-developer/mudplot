@@ -10,19 +10,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json),
 [strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json),
 [JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json),
-[modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json).
+[modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json),
+[render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json).
 
 ## Scope and classification
 
-This is a **twenty-five-ID state/history/JSON mapping**, not a complete150-ID map.
-The remaining125 IDs have not been classified here. The candidate inventory still
+This is a **twenty-nine-ID state/history/JSON mapping**, not a complete150-ID map.
+The remaining121 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Twenty-four below have existing coverage of their explicitly stated boundary.
+Twenty-eight below have existing coverage of their explicitly stated boundary.
 JSON-09 is **additional test needed**: passing structural cases are not the missing
 all-field meaning matrix. No runtime/test code or compatibility decision was changed.
 AST checks only resolve references, not prove their semantic adequacy.
@@ -60,6 +61,10 @@ Python total to416. Their selected Rust2 tests are separate reruns of existing
 codec/consumer nodes, not a growing unique Rust/Python combined count. Three
 Rust-output→Python comparisons are an additional assert probe, not pytest cases.
 
+JSON-05/10/11/12 add30 distinct current Python nodes, bringing the recorded unique
+total to446. The real sync checker ran first and returned0 for all four generated
+targets. No new full-suite, Native/Rust/browser or resource benchmark is claimed.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -83,10 +88,14 @@ Rust-output→Python comparisons are an additional assert probe, not pytest case
 | JSON-02 | Existing coverage | 35 Python passed; retained Native app | Strict nonfinite/overflow rejection vs adapter missing normalization |
 | JSON-03 | Existing coverage | 48 Python passed; fresh Rust strict codec | Recursive equal/different duplicate keys and output preservation |
 | JSON-04 | Existing coverage | 1 Python passed; fresh Rust integer codec | Signed decimal boundaries/known data fields, not rendering range |
+| JSON-05 | Existing coverage | 16 fresh Python passed | Exact huge JSON integers versus clear render failure/output/figure/editor preservation |
 | JSON-06 | Existing coverage | 5 Python passed; fresh Rust/retained Native | Unicode pairs/lone surrogates/reserved object keys |
 | JSON-07 | Existing coverage | 7 Python passed; fresh Rust default/retained Native app | Current/omitted spec version vs unsupported/malformed versions |
 | JSON-08 | Existing coverage | 1 fresh Python + selected Rust consumer passed | Known base unknown-field ignore vs Any metadata and additive capabilities acceptance |
 | JSON-09 | Additional test needed | 168 current structural/representative passed | Remaining role/layer/AUTO/default meaning matrix, not a product-failure finding |
+| JSON-10 | Existing coverage | 1 fresh Python passed | Canonical representation invariance with list-order/type counterexamples |
+| JSON-11 | Existing coverage | Sync first0 + 5 fresh Python passed | Isolated intentional drift and registry/schema/cap/reference agreement |
+| JSON-12 | Existing coverage | 8 bounded-child Python passed | Damage/depth/valid-large-array handling, previous output and next-input recovery |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -526,6 +535,59 @@ reviewed evidence insufficient to close the checklist item, not a demonstrated
 product failure. JSON-09 and BASE-05 remain RUNNING; formal ledger counts do not
 change just because the ID now has a source/test/gap map.
 
+## JSON-05 — structure is not arbitrary-precision plotting
+
+Implementation: `_render._float_array`, `_x_values`, `render`; `io._atomic_destination`;
+`EditorSession.load_spec`, `_commit_store`.
+
+- `tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures` (15)
+- `tests/test_review_render_contracts.py::test_json_05_failed_editor_open_preserves_state_history_preview_and_recovery` (1)
+
+10^1000 survives JSON and Plot reconstruction exactly. Selected x/y/matrix/style/
+size cases across PNG/PDF/SVG instead fail clearly through CLI, preserve previous
+sentinel output bytes, leave the figure set unchanged and add no temporary files.
+Editor invalid open keeps spec/history/PNG and can recover with a valid document.
+This does not ban large integers everywhere or claim arbitrary-precision rendering/
+a fresh Native huge-coordinate test. Numeric conversion normalizes overflow errors;
+render owns Figure cleanup and output replacement stays atomic.
+
+## JSON-10 — canonical without erasing data meaning
+
+Implementation: `io.to_json`, `io.from_json`.
+`tests/test_review_json_policies.py::test_canonical_keys_whitespace_and_unicode_do_not_reorder_or_coerce_data`
+compares public `sort_keys=True,indent=None` output hashes after key-order,
+whitespace and Unicode-escape variants. Reversed data lists and int→float controls
+must differ. This is the existing Python canonical policy, not a global list sort,
+all-language canonicalization or cryptographic semantic-collision guarantee.
+
+## JSON-11 — generated outputs and registry drift
+
+Implementation: [check_schema_sync.py](../scripts/check_schema_sync.py)
+`_regenerate`, `main`; `capabilities`, `json_schema`.
+
+- `tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy` (4 targets)
+- `tests/test_review_generated_drift.py::test_layer_action_registry_schema_capabilities_and_reference_agree`
+
+The real checker first returned0 for figure schema, capabilities, REFERENCE and
+PLOT_GALLERY. Tests copy targets to isolated temporary storage, introduce drift,
+require failure plus exact target/regeneration hint, restore original bytes and
+require success. The registry case checks action dataclass fields and layer/schema/
+cap/reference names agree. Originals are not manually patched or regenerated in
+place to hide drift; the checker generates fresh temporary expected outputs.
+
+## JSON-12 — bounded corrupt inputs and recovery
+
+Implementation: `io._loads_json`, `from_json`, `_atomic_destination`, CLI `_cmd_migrate`.
+
+- `tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover` (4)
+- `tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover` (4)
+
+Truncated JSON, bad UTF-8,3,000 nested arrays and a valid20,000-int array run in
+20-second bounded children. Invalid cases fail without Traceback/output replacement;
+valid large data is lossless. Both CLI and direct-loader children then accept a
+normal recovery payload. These synthetic sizes/timeouts are not a global CPU/RAM/
+HTTP sandbox, unbounded resource guarantee or every encoding/depth taxonomy.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -595,10 +657,20 @@ cargo test --locked --manifest-path mudplot-editor/Cargo.toml \
   model::tests::capabilities_accept_additive_top_level_and_layer_metadata -- --exact
 ```
 
+```sh
+uv run --no-sync python scripts/check_schema_sync.py
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_render_contracts.py tests/test_review_generated_drift.py \
+  tests/test_review_json_policies.py::test_canonical_keys_whitespace_and_unicode_do_not_reorder_or_coerce_data \
+  tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover \
+  tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining125 IDs still need their own reviewed symbol/node/provenance links
+The remaining121 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.

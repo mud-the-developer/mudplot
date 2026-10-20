@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 102차 — JSON-05/10/11/12 effect·canonical·drift·복구매핑
+
+- [부분review-map](review-map.md)에거대정수구조/렌더범위분리·canonical·생성물drift·손상입력복구를연결해
+  누적29ID를검토했습니다. 실제sync를먼저실행해4target일치/exit0,현재선택검사30P/0skip·fail/111.37초를
+  [분리근거](review_evidence/review_map_json_effects.json)에남깁니다.
+- 10^1000의x/y/matrix/style/size×PNG-PDF-SVG는구조를보존하면서명확한실패/기존출력·figure·임시파일을
+  보호하고편집기복구를검사합니다. Canonical은키/공백/escape만정규화하며list순서/int-float대조를유지합니다.
+- Drift는격리복사본을의도적으로틀리게해실패·regenerate힌트/복원성공을확인하고원본생성물을수동패치하지
+  않았습니다. 손상/UTF8/깊이3000/유효20karray는20초boundedchild에서오류·무손실·다음정상입력복구를검사하며
+  전역CPU-RAM/HTTPsandbox나임의정밀도plotting/모든언어canonical보장으로확대하지않습니다.
+- 기록된고유Pythonnode는446개이고미분류121ID/JSON-09추가의미검사필요/BASE-05RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준98b4ecCI39470014411을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 101차 — JSON-01/08 구조왕복과additive소비자매핑
 
 - [부분review-map](review-map.md)에현재modeled구조와unknown-field/추가capability정책의source/test를연결해

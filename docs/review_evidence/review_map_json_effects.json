@@ -1,0 +1,232 @@
+{
+  "kind": "partial-checklist-json-effects-map",
+  "reviewed_ids": [
+    "JSON-05",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12"
+  ],
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 29,
+  "remaining_unreviewed": 121,
+  "source_commit": "e5bf9c64f7271e25624bd0d70cd4e8a2298e0e41",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "docs/PLOT_GALLERY.md": "4f1511b9472dd7b2086059c185965b29a9a382254610356ccde5a8744c63ddc4",
+    "docs/REFERENCE.md": "e4669a8e3f74405363f1807903a1c2a4ff2e5bd94faef0f13673835b9636cb43",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/capabilities.py": "2e76a36156fc2feac651945fe17ab971e007e7bedec355946fca7a04d6c23252",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/schema.py": "2af0a68a6a497b7f13d633331dabc394bfdc92baca693152d44c8385ac8d7484",
+    "schemas/capabilities.json": "c69c2239410b58b5bcc41024ac46ddba6927405df1d8a91bafff1bf290a924f0",
+    "schemas/figure_spec.schema.json": "9f10da048cea5c17706eb31195a3eb049fa58dd85e1ee16d19af9566a09e2cca",
+    "scripts/check_schema_sync.py": "18ea9ee278f1999e74b145366b9cbb671c7ead5a58aa5cb1ffd7ed498d2a43d0",
+    "tests/test_review_generated_drift.py": "0c1fc46e61f7b0637b996834b0af22f9b94d2a37d5bdf71a4a030f93de10591f",
+    "tests/test_review_json_policies.py": "78732f796868716f88f5b033aa7a81b19a7a1378069744b74c045f07cce005ed",
+    "tests/test_review_render_contracts.py": "82d2c805065236aadd1672008a59eb5d55fc836c3a7f3b717d37f602478b3db9"
+  },
+  "previous_artifact_sha256": "35a82103d34337e47a4d665c1499b307ad7936de10f6eaa5d2685d371f769c17",
+  "items": [
+    {
+      "id": "JSON-05",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_float_array",
+          "body_sha256": "356513da544f41e1079974be05dd2b54b81d6c2ebcad36d7629618bcf3569ff4"
+        },
+        {
+          "ref": "mudplot/_render.py::_x_values",
+          "body_sha256": "47eb302a0bbc1402c9a3aa52c9a3af2c78c34fb890a451a75ca21a0da36755b5"
+        },
+        {
+          "ref": "mudplot/_render.py::render",
+          "body_sha256": "34004f3abfaaa8cb4118fe0733fd713c95eef8853ff5bfebe71acca0fa32cce9"
+        },
+        {
+          "ref": "mudplot/io.py::_atomic_destination",
+          "body_sha256": "deb6f1215b9f4aa6dd71fa345377759a8504db70aa1611fa721b5da887af6225"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.load_spec",
+          "body_sha256": "7a165a7296ec18807f6ef20ed8360799886999cd0af0e7271186ffe7646fde51"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+          "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures",
+        "tests/test_review_render_contracts.py::test_json_05_failed_editor_open_preserves_state_history_preview_and_recovery"
+      ],
+      "executed_nodes": [
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[png-x]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[png-y]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[png-matrix]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[png-style]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[png-size]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[pdf-x]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[pdf-y]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[pdf-matrix]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[pdf-style]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[pdf-size]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[svg-x]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[svg-y]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[svg-matrix]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[svg-style]",
+        "tests/test_review_render_contracts.py::test_json_05_unrepresentable_values_preserve_output_and_close_figures[svg-size]",
+        "tests/test_review_render_contracts.py::test_json_05_failed_editor_open_preserves_state_history_preview_and_recovery"
+      ],
+      "fresh_passed": 16,
+      "reviewed_boundary": "10**1000 structural input exact; x/y/matrix/style/size x PNG-PDF-SVG CLI failure no traceback/sentinel-output replacement/newtemp/Gcfleak; editor prospective failure preserves state/history/PNG and valid recovery. Not arbitraryprecision plotting/Nativehugeinputrun."
+    },
+    {
+      "id": "JSON-10",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::to_json",
+          "body_sha256": "f1703a6fb2746076dc3a8999d22133cbda20a23dc9057961dc91a6abc0633350"
+        },
+        {
+          "ref": "mudplot/io.py::from_json",
+          "body_sha256": "71149ab1b95076cf969aa666058de248e39da6fe4aa61a74ff3a8f930f886268"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_policies.py::test_canonical_keys_whitespace_and_unicode_do_not_reorder_or_coerce_data"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_policies.py::test_canonical_keys_whitespace_and_unicode_do_not_reorder_or_coerce_data"
+      ],
+      "fresh_passed": 1,
+      "reviewed_boundary": "Object key-order/whitespace/Unicodeescape representation normalize via publicsorted-keys JSON hash; reverse data list/int-to-floatcontrols differ. Not globalRustcanonicalization/crypto semanticcollisionproof."
+    },
+    {
+      "id": "JSON-11",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "scripts/check_schema_sync.py::_regenerate",
+          "body_sha256": "fd3835bc38adc3c5749ced2ca50036f6dbc2e6fed4768d00af95f8e6a333339c"
+        },
+        {
+          "ref": "scripts/check_schema_sync.py::main",
+          "body_sha256": "6620f281c22b0ac4af62be3511d41f3ff9b52a7668507414eafa77f6bcc1f768"
+        },
+        {
+          "ref": "mudplot/capabilities.py::capabilities",
+          "body_sha256": "856c6b0073fe27381889eeb3bba1b9320ab8e9cd2062a196004255dad618483f"
+        },
+        {
+          "ref": "mudplot/schema.py::json_schema",
+          "body_sha256": "19b91837356964d541147b0b5bffdc3f6d101f332fe19ea8d603559f01ec7fda"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy",
+        "tests/test_review_generated_drift.py::test_layer_action_registry_schema_capabilities_and_reference_agree"
+      ],
+      "executed_nodes": [
+        "tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy[schemas/figure_spec.schema.json]",
+        "tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy[schemas/capabilities.json]",
+        "tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy[docs/REFERENCE.md]",
+        "tests/test_review_generated_drift.py::test_checker_rejects_drift_then_accepts_restored_copy[docs/PLOT_GALLERY.md]",
+        "tests/test_review_generated_drift.py::test_layer_action_registry_schema_capabilities_and_reference_agree"
+      ],
+      "fresh_passed": 5,
+      "reviewed_boundary": "Real sync first0/fourtargets current; isolated copy drift fail+target/regenerate hint then byte-restore pass; action/layerfields/schema/cap/ref registries equal. Original generated artifacts never patched togreen."
+    },
+    {
+      "id": "JSON-12",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::_loads_json",
+          "body_sha256": "2aed4913974139a0b3dd8ce80b16240f6001aeb09d1af07b51f9ef39968977ed"
+        },
+        {
+          "ref": "mudplot/io.py::from_json",
+          "body_sha256": "71149ab1b95076cf969aa666058de248e39da6fe4aa61a74ff3a8f930f886268"
+        },
+        {
+          "ref": "mudplot/__main__.py::_cmd_migrate",
+          "body_sha256": "e9d9a77bbfa5d97b0abeea837636bc358c77d8ca896f453f13ba550241b98bc0"
+        },
+        {
+          "ref": "mudplot/io.py::_atomic_destination",
+          "body_sha256": "deb6f1215b9f4aa6dd71fa345377759a8504db70aa1611fa721b5da887af6225"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover",
+        "tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover[truncated]",
+        "tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover[bad_utf8]",
+        "tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover[deep]",
+        "tests/test_review_json_policies.py::test_cli_damage_does_not_replace_output_and_next_migrate_can_recover[large_valid]",
+        "tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover[truncated]",
+        "tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover[bad_utf8]",
+        "tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover[deep]",
+        "tests/test_review_json_policies.py::test_bounded_child_json_checks_are_errors_or_lossless_and_can_recover[large_valid]"
+      ],
+      "fresh_passed": 8,
+      "reviewed_boundary": "Truncated/badUTF8/deep3000arrays/valid20kints in20s boundedchildren; invalid output intact/noTraceback; validarraylossless; nextgoodpayloadrecovers. Not CPU-RAM/globalHTTPsandbox/unboundedtimeguarantee."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python scripts/check_schema_sync.py THEN uv run --no-sync python -m pytest -q --tb=short <render16/drift5/canonical1/damage8 exact nodes> --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 30,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 111.37,
+    "sync_first_exit": 0,
+    "sync_targets": 4,
+    "log_sha256": "c86a7e8d57585058bb932c1211d57a11f7a2bfb5cf4000d32d9dabd76aabc076",
+    "junit_sha256": "91c07cd5ec3d7663665afa50ad2778c3388297d9d1ed5a9a55ecc979593fef7f",
+    "sync_log_sha256": "7647807c9c51648e8d0b8613b50899e4da04799357f7e17823f21e1b0b3befcb"
+  },
+  "limits": [
+    "NewcurrentPythoncasesonly,no freshRust/native/browser or generalresourcebenchmark.",
+    "JSON09additional-tests-needed remains;classificationexisting-coverageonlystatedboundedfixture/assertion scope.",
+    "Deep3000/array20k children20s synthetic,not all Unicode/encoding/depth/resource taxonomy.",
+    "Canonical preserves list order/types;not all-language canonical or cryptographicsemanticguarantee.",
+    "Combined446uniquePythonmapnodes;BASE05RUNNING139P6R4O1D unchanged;121IDsnotclassifiedhere."
+  ],
+  "verifier_sha256": "810eabbd3e4fa0b4e6bf5ccfab19182002d551c6805b80d9bd23db1ad8a0de41"
+}
