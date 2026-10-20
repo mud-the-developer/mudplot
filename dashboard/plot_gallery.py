@@ -81,6 +81,13 @@ GALLERY_EXAMPLES = tuple(
             "주어진높이와명시edge를사용하며관측을다시binning하지않습니다.",
         ),
         (
+            "eventplot",
+            "series",
+            "Numeric event train",
+            "Supplied event positions with raw-coordinate offset and mark length.",
+            "주어진event위치와raw좌표offset/표식길이를사용합니다.",
+        ),
+        (
             "regplot",
             "series",
             "Regression",

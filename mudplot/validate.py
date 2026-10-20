@@ -107,6 +107,7 @@ _AXIS_ROUTABLE_TYPES = {
     "line",
     "stem",
     "stairs",
+    "eventplot",
     "regplot",
     "scatter",
     "stripplot",
@@ -1355,6 +1356,30 @@ def _check_stem_data(cols, layer, panel, where, issues):
         issues.append(f"{where}: log stem heads and baseline must be positive")
 
 
+def _check_eventplot_data(cols, layer, panel, where, issues):
+    offset = _check_discrete_options(layer, where, issues)
+    if offset is None or not isinstance(layer.x, str) or layer.x not in cols:
+        return
+    values = cols[layer.x]
+    if not 1 <= len(values) <= MAX_ROWS:
+        issues.append(f"{where}: eventplot requires 1..{MAX_ROWS} numeric events")
+        return
+    if any(not _finite(value) for value in values):
+        issues.append(f"{where}: event positions must be finite numeric, not bool")
+    length = 1 if layer.width is None else layer.width
+    if not _finite(length) or length <= 0:
+        issues.append(f"{where}: event length must be finite positive, not bool")
+        return
+    lower, upper = offset - length / 2, offset + length / 2
+    if not _finite(lower) or not _finite(upper) or lower >= upper:
+        issues.append(f"{where}: event endpoints must be finite and distinct")
+    value_axis = panel.y2 if layer.axis == "y2" else panel.y
+    if panel.x.scale != "linear" or (
+        value_axis is not None and value_axis.scale != "linear"
+    ):
+        issues.append(f"{where}: eventplot currently requires linear axes")
+
+
 def _check_stairs_data(cols, layer, panel, where, issues):
     baseline = _check_discrete_options(layer, where, issues)
     if baseline is None or not isinstance(layer.x, str) or layer.x not in cols:
@@ -1928,6 +1953,8 @@ def validate(spec: FigureSpec) -> list[str]:
                 _check_stem_data(cols, layer, panel, where, issues)
             elif layer.type == "stairs":
                 _check_stairs_data(cols, layer, panel, where, issues)
+            elif layer.type == "eventplot":
+                _check_eventplot_data(cols, layer, panel, where, issues)
 
             if (
                 layer.type in _MATRIX_LAYER_TYPES

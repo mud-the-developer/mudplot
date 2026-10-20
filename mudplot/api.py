@@ -142,6 +142,31 @@ class Plot:
             )
         )
 
+    def eventplot(
+        self,
+        x: str,
+        *,
+        offset: float = 0.0,
+        length: float = 1.0,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Draw one numeric event train with raw-coordinate vertical marks."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="eventplot",
+                    x=x,
+                    baseline=offset,
+                    width=length,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def regplot(
         self,
         x: str,

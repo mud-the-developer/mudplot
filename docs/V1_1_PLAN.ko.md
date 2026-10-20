@@ -117,6 +117,8 @@
   닫힌미지원mapping검사와실제gallery예제.
 - [x] **B6b — Pre-binnedstairs:** 주어진높이/N+1edge·수직unfilledlinearprimary/y2/rawbaseline,
   묵시hist추정/mapping은없음.
+- [x] **B6c — Numericeventtrain:** 수직raw좌표offset/length/중복·원본보존,
+  엄격한linearprimary-y2단일train범위.
 - [ ] **B6 — Matplotlib 범위:** 나머지 primitive/신호/vector/mesh/triangle/3D,
   축·정규화·범례·레이아웃 확장.
 
@@ -132,7 +134,19 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
-현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
+사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
+
+**B6subset:numericeventtrain.** 기존x/baseline/width필드로한train의수직rawoffset±length/2표식을
+구성하며축비율rug나rate추론이아닙니다. 유한nonbool1..10000events/양수length/유한·서로다른끝점/
+linearCartesianprimary-y2만지원하고중복/원본/SetData/JSON/actions는보존합니다. Nativeartist만정렬하고
+source는정렬하지않으며group/h/date/log/facet/weights는거절합니다. 새32/관련572/floor34P/
+3378deselected/Pyparsing13·CLI2/Rust22P6ignored/품질11명령/전체WindowsnativeHTTP·browser0/
+LSP11clean,[범위](EVENTPLOT.ko.md)·실제PNG/spec와[근거](review_evidence/v11_eventplot_verification.json)를
+남깁니다. 첫floor0폭dashedlegend실패를보존하고폭0의보이지않는dash만제거해0stroke/source설정/
+양수폭dash를유지했습니다. Epsilon이나label제거는없습니다. 정확한5eCI39399554406의5job성공은이전
+HTMX보완이지새eventruntime증명이아니며새전체CI를받습니다. 버전/의존성/lock/schema필드는유지합니다.
+
+### 이전 리뷰82차
 
 **Browser대기후속.** 기준071CI39377685379의minimum/양nativeOS는통과했지만Python3.10복구검사가
 시간초과했고3.12는cancel이었습니다. 일반probe10P를해결증명으로쓰지않고200msswap/100mssettle조건으로

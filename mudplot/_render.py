@@ -56,6 +56,7 @@ _SERIES_TYPES = {
     "line",
     "stem",
     "stairs",
+    "eventplot",
     "regplot",
     "scatter",
     "stripplot",
@@ -487,6 +488,20 @@ def _draw_series_layer(
             color=layer.color or next(color_iter),
             linewidth=layer.line_width,
             linestyle=layer.line_style or "-",
+            alpha=layer.alpha,
+            label=_decorate(layer.label, layer.citation, layer.href),
+        )
+
+    if layer.type == "eventplot":
+        return target.eventplot(
+            _col(data_cols, layer.x),
+            orientation="horizontal",
+            lineoffsets=0 if layer.baseline is None else layer.baseline,
+            linelengths=1 if layer.width is None else layer.width,
+            colors=layer.color or next(color_iter),
+            linewidths=layer.line_width,
+            # Matplotlib 3.8 rejects zero-width dashed legend handles.
+            linestyles="-" if layer.line_width == 0 else layer.line_style or "-",
             alpha=layer.alpha,
             label=_decorate(layer.label, layer.citation, layer.href),
         )

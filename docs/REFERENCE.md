@@ -64,6 +64,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`, `y`
 - **optional**: `yerr`, `xerr`, `y_lower`, `y_upper`, `group`, `hue_order`, `label`, `color`, `error_color`, `error_line_width`, `capsize`, `capthick`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`
 
+### `eventplot`
+
+- **required**: `x`
+- **optional**: `baseline`, `width`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+
 ### `heatmap`
 
 - **required**: `matrix`

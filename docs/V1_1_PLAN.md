@@ -120,6 +120,8 @@ is authorized by this tracker.
   primary/y2/positive log; closed unsupported mappings, raw-data gallery example.
 - [x] **B6b — Pre-binned stairs:** explicit supplied heights/N+1 edges, vertical
   unfilled linear primary/y2/raw baseline; no implicit hist estimation/mappings.
+- [x] **B6c — Numeric event train:** vertical raw-coordinate offset/length,
+  duplicates/source preserved, strict linear primary/y2 single-train subset.
 - [ ] **B6 — Native Matplotlib breadth:** remaining primitive/signal/vector/
   mesh/triangle/3-D families, richer axes/normalization/legends/layouts.
 
@@ -136,8 +138,23 @@ completion requires its documented scope and tests, not merely a function name.
 
 **Operator target is now v1.1 completion**, superseding the earlier v1-only
 stabilization limit. Implement documented subsets and verify backward behavior;
-this is not full upstream parity or authorization to tag/publish. No autonomous
-loop is currently registered; this request does not recreate expired scheduling.
+this is not full upstream parity or authorization to tag/publish. Operator-created
+Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**B6 subset: numeric event train.** Reuse existing x/baseline/width fields for one
+train of vertical raw offset±length/2 marks, not axis-fraction rug or rate inference.
+Finite nonbool1..10000events/positive length/finite distinct endpoints, linear
+Cartesian primary/y2 only. Duplicates/source/SetData/JSON/actions retained; native
+sorts artist positions, not source. Strictly reject group/h/date/log/facet/weights.
+32new/572related/floor34P3378deselected13Pyparsing,CLI2/Rust22P6ignored/11checks/
+full Windows nativeHTTP+browser0/LSP11clean. First floor zero-width dashed legend
+failure is retained; invisible dash pattern only removed at width0, no epsilon or
+label removal, positive-width dash preserved. [Scope](EVENTPLOT.md), real PNG/spec,
+[evidence](review_evidence/v11_eventplot_verification.json).
+Exact5eCI39399554406ALL5SUCCESS validates prior HTMX wait, not new event runtime.
+Publish this subset for fresh wholeCI; versions/dependencies/locks/schema fields unchanged.
+
+### Earlier review phase 82
 
 **Browser settlement follow-up.** Baseline071CI39377685379 passed minimum and both
 native OS jobs; Python3.10 recovery timed out and3.12was cancelled. Normal probe

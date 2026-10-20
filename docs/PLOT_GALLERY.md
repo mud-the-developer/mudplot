@@ -182,6 +182,40 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/stairs.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#stairs)
 
+### `eventplot` — Numeric event train
+
+![Numeric event train](images/plots/eventplot.png)
+
+Supplied event positions with raw-coordinate offset and mark length.
+
+주어진event위치와raw좌표offset/표식길이를사용합니다.
+
+**Required / 필수:** `x`
+
+**Optional / 선택:** `baseline`, `width`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"event": [0.3, 1.0, 1.2, 1.2, 2.8, 3.1]}
+plot = (
+    mp.plot(data)
+    .eventplot("event", offset=2, length=1, line_width=1.4)
+    .labels(
+        x="Event position (a.u.)", y="Raw offset (a.u.)", title="Synthetic event train"
+    )
+    .legend(show=False)
+    .size(4.5, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/eventplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#eventplot)
+
 ### `regplot` — Regression
 
 ![Regression](images/plots/regplot.png)

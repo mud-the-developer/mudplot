@@ -1,0 +1,192 @@
+{
+  "source_sha256": {
+    "mudplot/api.py": "948481058a1ea8129c60f715226098e12e231c975ab8ce78a91792708fce03f1",
+    "mudplot/_render.py": "6c9ae4d904f8bc9f3a8c29dfbfa52fbbfe3e898d0efdff68c6f16d854f84092c",
+    "mudplot/validate.py": "5c908e1ce2d68d433bbc7d0e430bc047465de7b36b2df0b3edef0545af65b4e2",
+    "mudplot/spec.py": "4868a0692dbd45aa087b9e79c4d02f55d0ec06154ce593fd495f277ffd3eea82",
+    "mudplot/capabilities.py": "6e42ef435580e57a019541a10f659fd132316a31b1fefdae63dff0da376a2938",
+    "dashboard/plot_gallery.py": "9d157c310026c0610b6566c6a453491bb001c850b54b412d99c78939e33100b6",
+    "examples/plots/eventplot.py": "869761183e4a951ec05856a5b2eec1101c07c73b29236dadfd07ed734c0d479f",
+    "tests/test_eventplot.py": "c1e13d5439428403ac729a6489de850ed9dd24c500190cc4ba46b1ef47d31c42",
+    "scripts/check_minimum_versions.py": "381f963d1740fc20d4be392e2b4fb835abf4d9e1f26b5bafca5fc560b573fe53",
+    "schemas/capabilities.json": "11cf23c80d17727436ee76cdaeb8f4802a4990bb5559d691224de249346acde6",
+    "docs/REFERENCE.md": "d9fc48d78332336461a6e3c3b42492c4924d4fafbb440e1b551a27018b550e96",
+    "docs/PLOT_GALLERY.md": "123879c0366933630564c49f9fe1cb885c5c172c147e14cad44d96666e410bf3",
+    "docs/EVENTPLOT.md": "3f6dbb0647fed6ce6b499a76b30fac184f6ca9c26fff6b5038c14b84253d8a0b",
+    "docs/EVENTPLOT.ko.md": "3e0c2537d5a2d6a5bae4810280f075be8c7a3aef1b5d745fd30a427eace3d2fa",
+    "docs/FEATURE_COVERAGE.md": "48760e74cc9a7b2f92f4aa30e40171e5a170ec6a1bbbee44186c27abb192358f",
+    "docs/FEATURE_COVERAGE.ko.md": "e693da3c923623f72103423181b19f9d7b0f1b69fbc382f80a35a85d82417e69",
+    "docs/images/plots/eventplot.mplot.json": "760373ebbbd23e5cb242180e0db274daa66f1ae1f4314a33c8fe5e83fefe8bdb",
+    "docs/images/plots/eventplot.png": "5ccec5c7358ddc792e1119b1384530d33866313ef904c1b2d7597592ebae96b0",
+    "scripts/rust_editor_smoke_test.py": "4f347f470893dec22d792c9b592fe33a207535f4ec10503b09c596d277317e32",
+    "mudplot-editor/src/model.rs": "8638ea577c8061b580d78e7dc22f8f5462e036fd0b42a6e89e6b86a426eaebdf"
+  },
+  "cli": [
+    {
+      "kind": "primary",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "raw_offset_length_preserved": true,
+      "png_sha256": "93b0433c7ad16e38f6cd6c376426851d1b4e4c1f20431a9a3f42bfc0291f4fea"
+    },
+    {
+      "kind": "y2",
+      "apply_render_exit": 0,
+      "source_intact": true,
+      "raw_offset_length_preserved": true,
+      "png_sha256": "b2315d861832b68603d67bccf5198b5e0360e5114a8c81ec8778252e4eb5d7bd"
+    }
+  ],
+  "native_full": {
+    "argv": [
+      "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+      "-u",
+      "scripts/rust_editor_smoke_test.py",
+      "--browser"
+    ],
+    "exit": 0,
+    "seconds": 941.0530104637146,
+    "scope": "Full Windows native smoke sequence and actual browser;notLinuxMSRV1.88"
+  },
+  "scope": "B6single numeric train ofverticalraw-coordinateevents,1..10000finite-nonboolpositions;LayerSpec.x column/baselineoffsetNone0/widthlengthNone1.No newmodel-action-specfields/deps/version. Lengthfinitepositive/endpointsfinite-distinct;no overflow-clamp/underflow-collapse. LinearCartprimary-y2only,closedunsupportedgroup/semantic/facet-dropna/weights/log-date-polar3D. Source/duplicates/JSON/actions/SetDatapreserved. Nativeartistpositionssort;NO inputorderpromiseforartist.No binning/rate/densityinference;distinctfromaxis-fractionrug.",
+  "oracles": "Manualsegmentsx1,2,2/y.7,.3(rawoffset.5,length.4),source2,1,2unchanged/duplicatecount3,defaultsingle-event0\u00b1.5/y2,explicitlinewidth0andpositive2dashes,invalidvalues/markoverflow-collapse/mappings/log/projections/rowcap/oldPNG-Gcf/sourceSetData/facetrejectionwithoutmutation. Allkindfixtures/gallery/nativewhole sequencecallerpathschecked.",
+  "first_floor_failure": "Matplotlib3.8zero-widthdashedlegendpatternraisesall-zero-dashValueError. Firstfloor1F32P/receipts/source/logretained\u2014notP. Fixonlyzero-widthinvisibleartistdash\u2192solidNonepattern,strokeexact0/source-dashunchanged;positivewidthdashpreserved. ActualpublicCollectionstylelistnarrowed(noAny/cast/ignore),legendrenderexercised. Added0/2testcase\u2192new32/finalfloor34includinggallery2.Noepswidth/labelremoval/testweakening.",
+  "gallery": "OnlynewPNG/spec/source;authorviewedraw1.5..2.5eventmarks. Duplicateoverlapverifiedbyartistnotpixelcount.No independenthumanAT/certification/oldimagebaselinechanges.",
+  "baseline": "Exact5e6b1ddCI39399554406ALL5SUCCESSvalidatespriorHTMXwaitfixnotthisnewruntime. NewwholeCIforcurrenteventplotneeded. OperatorLoop8activecron5m,notdeleted/recreated;Loop7notcurrentlylisted,do notinferrecreation.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "seconds": 339.9073123931885,
+      "results": [
+        "572 passed in 336.95s (0:05:36)"
+      ],
+      "log_sha256": "ed09b1b3bbd3b4127e50f15960ed61ae7fd544f0f56b0210beff6f925ab1e4ee"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "seconds": 7.0687432289123535,
+      "results": [
+        "34 passed, 3378 deselected, 13 warnings in 4.61s"
+      ],
+      "log_sha256": "10a226d44f8cbac978502d5be211b9b0a5c108cd52715baa9f4ff1f411d01264"
+    },
+    {
+      "name": "rust-format",
+      "exit_code": 0,
+      "seconds": 0.09259819984436035,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rust-test",
+      "exit_code": 0,
+      "seconds": 9.57715892791748,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 5.11s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "f4f70588faecf2ca609ebeb72d71928350cb1bc0936d0c598ba5e091dc22bfd4"
+    },
+    {
+      "name": "rust-build",
+      "exit_code": 0,
+      "seconds": 0.8253557682037354,
+      "results": [],
+      "log_sha256": "4a2168061ce973078110a9d1b5dd8cf4518aba4f97851e762d44793459fcaddb"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "seconds": 7.3208160400390625,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "seconds": 7.98395037651062,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "seconds": 0.05138111114501953,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "seconds": 0.04638981819152832,
+      "results": [
+        "276 files already formatted"
+      ],
+      "log_sha256": "0585600054b1cf3cd35eb7d6163d69187b5b15cdf6f840b0f9e4af5f22676d24"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "seconds": 8.476016521453857,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "a3fe381e5f4d37731c417d0c33779d35f1dcbb22e858ae3541fc0601992b0f80"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "seconds": 19.66511559486389,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "41bfcfc92f5fc3ec6de487ed2ea50f919a0074af6f7ef67c4bd6bd4d02b36c4f"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 13,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 6
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 6
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "e2641de7363f891aa42708abeaa282916c9160bc2ebfd3a4f2883d0363bcf027",
+    "cli.json": "51c662be2cfcc4e324964ae9dc575df7c356c7eb15cc2115e4f5fed440189bc6",
+    "results.xml": "c659aa6b602c170826ec52ad8be753aa1c6461ec873683e618429b2a1953ecc4",
+    "floor_warning_counts.json": "4d657e642a260135e3407d97f9196eacec89854f60308ec6ffb4329e3ae6cb23",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "native_full.py": "f5fadc3fbc6ad45a477252dca35103cb10b31296d6115079e19c31dc5fb6d26f",
+    "native-result.json": "cac18176f30fa34d72de8e0a1cfd79cdea455aeaf3d76a3eb99b76f17ddcbd82",
+    "native-browser.log": "88bd182aaa27050d5dfbb0ba7f7262f39f228d21199e439a8d8d538f4d13c992",
+    "first-floor.log": "a9623d8804a92bf697f4ac4a47817703fd355d2799f5c692819db764e86f5b13",
+    "first-receipts.json": "8f4b91435653baf813a3247724c9a84a14d851cf4a46de24d658a33b7f18e739",
+    "first-source.json": "0f1f9d4d30db69af086d05290ed174efe9484e8e9e0151336071b410750b79ec"
+  }
+}

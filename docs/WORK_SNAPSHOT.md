@@ -30,9 +30,12 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
 
 - **Latest operator target: v1.1 completion.** This supersedes the earlier v1-only
   stabilization limit, not release/tag/publish authority or full upstream parity.
-  No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
-  hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
-  but broader remainders/gates and new whole-source CI are still outstanding.
+  Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
+  is inferred. Broader remainders/gates still remain.
+- Latest B6 single numeric event train:32new/572related/floor34/CLI2/full native
+  HTTP+browser pass; raw offset/length/source/duplicates with strict linear limits.
+  Initial floor dashed-zero legend failure retained/fixed without epsilon or lost
+  label. Exact5eCI ALL5P validates prior HTMX, new event source needs wholeCI.
 - Browser sync now waits for actual HTMX request/swap/settle completion after
   networkidle. Controlled delayed-DOM recovery failed before and passes after;
   all eight importing browser modules42P on3.12/isolated3.10. Preserve initial

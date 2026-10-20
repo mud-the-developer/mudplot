@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added bounded single-train numeric event plots with raw-coordinate offset/length,
+  preserved duplicate events and linear primary-y2 routing, executable gallery and
+  full native smoke coverage. Handle zero-width dashed legends on Matplotlib3.8
+  without epsilon widths, dropped labels or changes to positive-width dashes.
 - Added pre-binned vertical stairs from supplied heights and explicit N+1 edges,
   raw baseline/linear primary-y2 routing and strict unsupported-option rejection,
   with executable gallery and native JSON/PNG undo/redo coverage.

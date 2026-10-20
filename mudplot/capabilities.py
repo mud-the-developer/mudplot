@@ -101,6 +101,19 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "eventplot": {
+        "required": ["x"],
+        "optional": [
+            "baseline",
+            "width",
+            "label",
+            "color",
+            "line_width",
+            "line_style",
+            "alpha",
+            "axis",
+        ],
+    },
     "regplot": {
         "required": ["x", "y"],
         "optional": [
@@ -858,6 +871,12 @@ def capabilities() -> dict:
             "geometry": "vertical outline, scalar baseline default zero; no rebinning",
             "max_rows": MAX_ROWS,
             "limits": "linear primary/y2 only; no fill/open/group/facet/weights",
+        },
+        "eventplot": {
+            "positions": "one numeric train, source and duplicate events retained",
+            "geometry": "vertical marks; baseline offset, width length in raw units",
+            "max_rows": MAX_ROWS,
+            "limits": "linear primary/y2; no group/facet/weights/log/date mappings",
         },
         "regression": {
             "fields": _action_fields(RegressionSpec),

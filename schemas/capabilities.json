@@ -52,6 +52,21 @@
         "axis"
       ]
     },
+    "eventplot": {
+      "required": [
+        "x"
+      ],
+      "optional": [
+        "baseline",
+        "width",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "axis"
+      ]
+    },
     "regplot": {
       "required": [
         "x",
@@ -1162,6 +1177,12 @@
     "geometry": "vertical outline, scalar baseline default zero; no rebinning",
     "max_rows": 10000,
     "limits": "linear primary/y2 only; no fill/open/group/facet/weights"
+  },
+  "eventplot": {
+    "positions": "one numeric train, source and duplicate events retained",
+    "geometry": "vertical marks; baseline offset, width length in raw units",
+    "max_rows": 10000,
+    "limits": "linear primary/y2; no group/facet/weights/log/date mappings"
   },
   "regression": {
     "fields": [

@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 83차 — Raw좌표의단일numeric event train
+
+- 사용자Loop8반복실행에서이월stateMachine을실제9P로확인하고B6eventplot을구현했습니다. 기존rug의
+  축비율표식과다르게xevent위치/baselineoffset/widthlength의raw끝점을사용하고새model/action/specfield/
+  의존성/버전없이source·중복/SetData/JSON/actions를보존합니다. Nativeartist정렬은source정렬이아닙니다.
+- 유한nonbool1..10000events/양수length/유한·서로다른표현가능끝점/linearprimary-y2단일train만지원하고
+  group/h/facet/dropna/semantic/weights/date/log/polar3D는거절합니다. 실제새PNG/spec/source를추가해확인했고
+  독립사람AT는아닙니다. 새32/관련572/floor34P3378deselected/Pyparsing13/CLI2/Rust22P6ignored/품질11명령/
+  전체WindowsnativeHTTP+browser4종layer/activeLSP11clean,[근거](review_evidence/v11_eventplot_verification.json)를남깁니다.
+- 첫floor1F32P는Matplotlib3.8의0폭dashedlegend all-zero dash오류였습니다. 실패/source/log/receipt를보존하고
+  invisible0stroke의dash만solidNone으로제거해source설정/0폭/label을유지했습니다. 양수폭dash는실제Collection
+  publicstyle검사로보존했고cast/Any/ignore나epsilon폭/테스트약화는없습니다.
+- 정확한5e6b1ddCI39399554406의5job모두성공으로이전HTMX대기를확인했습니다. 새eventruntime은새전체CI를
+  받으며원대장139PASS/6RUNNING/4OPEN/1DEFERRED·나머지v1.1/releasegate/tag/publish경계는유지합니다.
+  Loop8은실행후에도활성유지합니다. Loop7은현재목록에없으며저희가재생성/삭제하지않습니다.
+
 ## 82차 — HTMX의request/swap/settle을구분하는browser검증
 
 - 기준071CI39377685379는minimum·양Rustjob성공/Python3.10의복구fileBdraft대기1F4150P46skip25경고/
