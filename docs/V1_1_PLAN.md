@@ -143,6 +143,20 @@ stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
 
+**Native swarm resize calibration fix.** Returned artist size areas/linewidth
+arrays now pack with actual per-pair radii and per-point gutters. Retain mixed
+non-dodged hues jointly, source/raw values/uniform offset oracles/DPI/layout/log/
+inversion/cycling and warn-once crowd retention. Invalid or nonrepresentable
+native arrays reject before offset mutation; no public size-semantic API added.
+30new/616related/floor83P3399deselected; main1native-setter warning/floor642warnings
+(641Pyparsing+1same deliberate invalid setter),8checks/LSP3clean.
+[Evidence](review_evidence/swarm_native_sizes_verification.json): measured native
+pair gap18.750001875→52.083338542px for required52.083333333px, source unchanged.
+Baseline24cdCI39415317017 bothRustP/Python+minimum still running; keep this fix
+local without cancelling good jobs. B2b public size/style/date semantics remain open.
+
+### Earlier review phase 84
+
 **B6 subset: numeric interval band.** Existing x/y/baseline/width store starts/
 positive durations/raw bottom/positive height. Retain overlaps/source/SetData/
 JSON/actions, no sorting/merging/estimation. Finite numeric1..10000intervals and

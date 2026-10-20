@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 86차 — Native swarm artist의크기별packing보정
+
+- 이전회차read-only재현의set_sizes([16,400])간격18.750001875px/필요52.083333333px겹침을수정했습니다.
+  쌍별(r_i+r_j)금지구간과각점반지름을뺀gutter를쓰고미래큰marker를위해active제거도보수적으로합니다.
+  모든점을최대지름으로강제하지않아falsegap/falsecrowding을만들지않습니다.
+- 기존scalar/동일vectoroffset3oracle을정확히보존하고mixednon-dodgedhue1collection/raw값/DPIresize/
+  log-native범주/반전/배열순환/RNG불변/과밀보존·한번씩계수·warnonce/invalid오프셋불변을검사했습니다.
+  Nativeareaspt²/linewidthpt의유효비어있지않은행이하배열만지원하며긴배열·표현불가geometry는거절합니다.
+- 새30/관련616P경고1/floor83P3399deselected642경고(641Pyparsing/고의inflinewidthsetterRuntimeWarning1),
+  품질8명령/activeLSP3clean,[검증](review_evidence/swarm_native_sizes_verification.json)을남깁니다.
+  최초16F3P는보존하고잘못설계한giantcirclefixture의2crowded기하도expected2로유지해tall-narrow1case와분리했습니다.
+  현재쌍거리52.083338542px≥필요거리이며source는유지됩니다. Any/cast/ignore/epsilonclamp는없습니다.
+- 공개SemanticSpec.size/date/style/JSON필드/의존성/버전은추가하지않았습니다. 아직진행중인기준24cdCI39415317017의
+  Python/minimumjob을취소하지않고로컬보존합니다. 원대장139PASS/6RUNNING/4OPEN/1DEFERRED와나머지
+  v1.1/releasegate/tag/publish경계는유지하며Loop8을완료때삭제·pause하지않습니다.
+
 ## 85차 — 대기interval unit 게시
 
 - 정확한8eec4baCI39408472076의5job모두성공을확인했습니다. 이전회차의4P1R대기는역사그대로두고

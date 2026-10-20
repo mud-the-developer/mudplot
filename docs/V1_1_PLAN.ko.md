@@ -138,6 +138,16 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
 
+**Native swarm크기보정.** 반환artist의size면적/linewidth배열을실제쌍반지름과각점gutter로배치합니다.
+Non-dodgedhue공동배치/source·raw값/uniformoffsetoracle/DPI/layout/log/반전/짧은배열순환/과밀보존·
+warn-once를유지하고잘못되거나표현불가한배열은offset변경전에거절합니다. 공개size-semanticAPI는없습니다.
+새30/관련616/floor83P3399deselected·주환경nativeinvalidsetter경고1/floor642(641Pyparsing+동일setter1),
+품질8명령/LSP3clean,[근거](review_evidence/swarm_native_sizes_verification.json)를남깁니다. 실제native쌍간격은
+18.750001875→52.083338542px로필요52.083333333px를충족하고source는유지했습니다. 기준24cdCI39415317017의
+양Rust통과/Python·minimum진행을보호해로컬보존하며B2b공개size/style/date매핑은계속미완료입니다.
+
+### 이전 리뷰84차
+
 **B6subset:numericintervalband.** 기존x/y/baseline/width로start/양수duration/rawbottom/양수height를
 저장하고sorting/병합/추정없이겹침/source/SetData/JSON/actions를보존합니다. 유한numeric1..10000구간과
 표현가능·구별가능float끝점이필요하며2**53단위폭붕괴/overflow·0/음수duration-height/date/log/group/facet은

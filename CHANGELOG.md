@@ -4,6 +4,13 @@ All notable changes to this project are documented here.
 
 ## [Unreleased]
 
+### Fixed
+
+- Repack native swarm artist size/linewidth arrays using pairwise radii and
+  individual gutters, preserving scalar geometry, rows, transforms and crowding
+  warnings. Reject invalid arrays before changing offsets; no new public size
+  semantic mapping is implied.
+
 ### Added
 
 - Added bounded single-band numeric interval plots with explicit start/duration,

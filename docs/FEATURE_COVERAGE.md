@@ -313,6 +313,15 @@ retains rows at gutters with possible overlap; warn_thresh defaults to .05 and
 0 reports any crowding. Numeric native/log categories are supported;
 arbitrary shape/size mappings and y2 remain unsupported.
 
+Native edits on the returned Matplotlib collection may use `set_sizes` (areas in
+pt²) and linewidth arrays (pt). Packing then uses pairwise radius sums and each
+point's own gutter allowance at actual DPI/layout/scales. Nonempty finite
+nonnegative arrays up to the retained row count are supported; shorter arrays
+cycle, longer arrays reject rather than inventing marks. Nonrepresentable packing
+geometry rejects before changing offsets. Oversized/colliding rows remain and
+are counted once, with the existing warn-once policy. These are artist-only edits:
+they do not alter LayerSpec, JSON or add a public size-column semantic mapping.
+
 ### Letter-value first subset
 
 `boxenplot(value, group=category)` or `boxenplot(category, value, group=hue)`

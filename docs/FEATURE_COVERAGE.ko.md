@@ -282,6 +282,12 @@ greedy O(n^2 log n)이며 레이어당 유효 행 2000개로 제한합니다. �
 겹칠 수 있고 warn_thresh 기본 .05, 0이면 모든 과밀을 알립니다.
 숫자 native/log 범주 축은 지원하며 임의 shape/size 매핑·y2는 아직 미지원입니다.
 
+반환Matplotlibcollection의native `set_sizes`(면적pt²)/linewidth배열(pt)편집은각쌍의반지름합과
+각점의gutter여유로실제DPI/layout/scale에서다시배치합니다. 보존행개수이하의비어있지않은유한비음수
+배열을지원하고짧은배열은순환하며긴배열은점을추가하지않고거절합니다. 표현불가packing기하는offset변경
+전에실패하고oversized/충돌행은보존·한번씩세며기존warn-once를유지합니다. Artist편집만해당하며
+LayerSpec/JSON을변경하거나공개size열semantic매핑을추가한것은아닙니다.
+
 ### 첫 letter-value 범위
 
 `boxenplot(value, group=category)` 또는 `boxenplot(category, value, group=hue)`는

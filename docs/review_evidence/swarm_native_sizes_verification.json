@@ -1,0 +1,172 @@
+{
+  "source_sha256": {
+    "mudplot/_swarm.py": "13c11eb1b6b8ddd0ba5590b1cb6f76d8cef9bb6441460f58e0b399409abf90d2",
+    "tests/test_swarm_sizes.py": "9f1bd3b5ee46881112304e314dda9db121a009c97e7b0f7874f4cdad70cd46f3",
+    "scripts/check_minimum_versions.py": "4589010dcf7c291c6688ac8d66e2de42221659c4bcba6ff7537f41e3e4093133",
+    "docs/FEATURE_COVERAGE.md": "45093f2670d56f231df40802980a1599292179d6cd2f293bf95e8ee9df5575a4",
+    "docs/FEATURE_COVERAGE.ko.md": "1443287352ca66a3bbfd4cfd0aa2827509cd351c1228cbbf128a1fe91305e7e6"
+  },
+  "scope": "Native returned SwarmCollection valid set_sizes(area pt\u00b2)/linewidth(pt)arrays only;no publicSemanticSpec size API/model/action/schema/capabilityfields/dependencies/version. Nonempty1Dfinite-nonnegativearraysup toretainedN,shortarrayscycle/longrejectratherthaninventmarks;unrepresentablepackinggeometryrejectbeforeoffsetmutation.",
+  "fix": "Per-rowdiameter/radius;pairclearancer_i+r_j;activeevictionusesneighbor+maxfutureradiuswhilecurrentintervalsuseactualpairradii,avoidingfalsegapsfrommaxradiuspacking. Eachpointgutteravailable/2-r_i;negativeallowancemarkoversized/collisionunioncountonce.Crowdedrowsretained/warnonce;source/rawvaluecoordinates/stableties/scalaroffsets/RNG/layout/DPI/log/native-category/inversionkept.",
+  "oracles": "ThreefrozenoldscalaroffsetvectorsEXACTplusuniformvectorparity;randomvariablepairs/gutters/determinism;futurelarger-markerretentionand20-2-2pair11not20;mixednon-dodgedhueonecollection/orientv-h/DPI72-200+nativechange/resize/logvalues/lognativecategories+inversion/arraycycling/zeroarea-stroke/invalidarrays/oldoffsets/noRNG/source-specunchanged.",
+  "reproduced_pair": {
+    "before_distance_px": 18.75000187499984,
+    "after_distance_px": 52.08333854166665,
+    "required_px": 52.083333333333336,
+    "source_spec_unchanged": true,
+    "native_sizes_points_squared": [
+      16,
+      400
+    ]
+  },
+  "before_tests": "Original behavior16failed3legacy-oraclepassed. An interimoversizefixture wronglyexpected1whenhugecirclealsocoveredneighbor:keptthatgeometryexpected2andaddedtallnarrowgeometryonlyoneoversized;notweakerassertion.",
+  "validation": "New30/existing53swarm83passed;connected616passed1intentionalinvalid-native-setterRuntimeWarning. Floor83passed3399deselected642warnings(641Pyparsing+1nativeinflinewidthsetter);notwarning-free/hidden. No productlegend-orparserchanges.",
+  "baseline": "24cd395CI39415317017bothRustpassed/Pythonbothandminimumstillrunning.Nopushcancel;keepunitlocaluntilterminalbaseline/newwholeCI. OperatorLoop8activeunchanged.",
+  "cache": "Ruffcachewritepermissionwarningobserved;subsequentQAusedprivatecache.No config/ACLchange.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "seconds": 191.465966463089,
+      "results": [
+        "616 passed, 1 warning in 189.21s (0:03:09)"
+      ],
+      "log_sha256": "c591f2583afc84bb1b8f4aea0e802fa50021a5844f144ff04a4d57b5ec5dbf22"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "seconds": 40.00145220756531,
+      "results": [
+        "83 passed, 3399 deselected, 642 warnings in 35.64s"
+      ],
+      "log_sha256": "bc7cccb4362b9d84fc49b5d0d1b9e8e036e6f6557d0bedfbc7c04aec394ff084"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "seconds": 1.6992387771606445,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "seconds": 0.6912434101104736,
+      "results": [
+        "279 files already formatted"
+      ],
+      "log_sha256": "b19d179c4b7ef6a7b3dca05724fe3680bd1b329a78249c27aa75d121e5551902"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "seconds": 8.919971704483032,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "seconds": 9.756800651550293,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "seconds": 10.66616702079773,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "26bac2a494db933e8cb9d02c233ddb1395f1e0574fb30318b1a7f59b5ecf1f06"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "seconds": 21.10224676132202,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "baa3207c6a03ed5af610d860e1feea6d676e212a7b3d6abf1ac26c461d93a02f"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 642,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 116
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 263
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 147
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      },
+      {
+        "category": "RuntimeWarning",
+        "message": "invalid value encountered in double_scalars",
+        "count": 1
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "7e423227a587c1c8ecc807977a5a5a828489d851c230f8bbf62ef734ece6badf",
+    "before.log": "dfd87cccd8546f296a5fdf07066068e7fc1b181fac2781554fb659eaed4d8056",
+    "pairwise-probe.json": "66e3b602b50c5884943aec4aa3b7d56e930ab5dc09a49e9c48f46c10d5e36b5e",
+    "results.xml": "124747fe0753d0dd461f1e1dd3f8c741a59c1e21f09eccc5bb0f5f46f5d7bad6",
+    "floor_warning_counts.json": "857e86fdd6ea607274400a14e089e8133354dd65e786c220d83bcae5769de973",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79"
+  }
+}
