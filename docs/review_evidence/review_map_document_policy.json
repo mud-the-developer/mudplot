@@ -1,0 +1,185 @@
+{
+  "kind": "partial-checklist-document-noop-map",
+  "reviewed_ids": [
+    "HIST-04",
+    "HIST-05"
+  ],
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 14,
+  "remaining_unreviewed": 136,
+  "source_commit": "98b4ec06287b0bb7ed43c64873ded6110406183c",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "docs/COMPATIBILITY.md": "56cd8d73e003edb7c0553c92f1fa1f006589300e135140f1fa5478a982915502",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "scripts/rust_editor_smoke_test.py": "c9e1fe6de2bf9634cd83c0af1a294a32504269d695fad8f988c3c4765a086ace",
+    "tests/test_editor_browser.py": "6d8c49553372eb60c50039849457ecba4bbdd311c34177067b7e7753f528f505",
+    "tests/test_review_history_policies.py": "6d561582ce32694526efd3113d30b9f034ddb5dfe3d9e2f782e92b27aac45f0f"
+  },
+  "previous_artifact_sha256": "599d026fc7ee2028c277c25f24c4faf476c135cbeffcec724ed848b80d3fc6bf",
+  "items": [
+    {
+      "id": "HIST-04",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.load_spec",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 161,
+          "line_end": 166,
+          "body_sha256": "7a165a7296ec18807f6ef20ed8360799886999cd0af0e7271186ffe7646fde51"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.reset",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 155,
+          "line_end": 159,
+          "body_sha256": "ee33c9aae6e0d46672d91f22ebe8875e10736693230e019ea4fc62a34f7356f8"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 122,
+          "line_end": 129,
+          "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+        },
+        {
+          "ref": "mudplot/store.py::Store.undo",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 88,
+          "line_end": 96,
+          "body_sha256": "1b1356b4a0233ba6e9211e74d6ee4003e3efedeba777c1c894a14e48c2d7e9d3"
+        },
+        {
+          "ref": "mudplot/store.py::Store.redo",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 98,
+          "line_end": 106,
+          "body_sha256": "c80dc0065d4ed775b6bd64ec3202a9fcfe5ae848beba46ce0891c44aaee6a37d"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.open",
+          "resolution": "Manually reviewed Rust impl/method source anchors, not AST or binary proof",
+          "body_sha256": "7b090bab93137563acf5ee186c14f0dcb0c9290f7f3981f3380986168fbe1693"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.reset",
+          "resolution": "Manually reviewed Rust impl/method source anchors, not AST or binary proof",
+          "body_sha256": "c3f01d433165f269ba2a49a9b707a0e8aff76a166e8a45211493486eb7b50a2f"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_history_policies.py::test_python_open_and_reset_start_fresh_history_without_touching_imported_files",
+        "tests/test_editor_browser.py::test_open_reset_and_download_keep_python_document_history_and_source_files_separate"
+      ],
+      "executed_nodes": [
+        "tests/test_review_history_policies.py::test_python_open_and_reset_start_fresh_history_without_touching_imported_files",
+        "tests/test_editor_browser.py::test_open_reset_and_download_keep_python_document_history_and_source_files_separate"
+      ],
+      "fresh_passed": 2,
+      "reviewed_boundary": "Fresh Python open/reset histories and empty boundaries, selection0/spec-PNG/JSON-SVGexports/sourceA-Bbytes; real picker/unsavedAedit/openB/undo-redo/downloadB/reset/defaultdownload. Rust open/reset undoable/startup reset are distinct documented policies. No persistent dirty-bit/automatic source-overwrite/save-target feature."
+    },
+    {
+      "id": "HIST-05",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 56,
+          "line_end": 70,
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store.history",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 52,
+          "line_end": 54,
+          "body_sha256": "0592ac0daaaf85f21986acb9174795d8eb2a1be62d8d0d260373948ccf89b36e"
+        },
+        {
+          "ref": "mudplot/store.py::Store.subscribe",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 113,
+          "line_end": 120,
+          "body_sha256": "cef085f4f57a0686645ea60f417481d754b0d4ede2ab0cdaf3c10fa00135d593"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.dispatch_safe",
+          "resolution": "Python AST definition/manual source review",
+          "line_start": 131,
+          "line_end": 137,
+          "body_sha256": "aa7a662d5a2bdb40952c1366a93ab4d97b1e2c98ce682b08a63b511cf9ce95c1"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.apply",
+          "resolution": "Manually reviewed Rust impl/method source anchors, not AST or binary proof",
+          "body_sha256": "d7148249c5552bf25f4d37fccbba4f023053a840bb1a5df661b6555c33abd8f2"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_history_policies.py::test_store_noop_is_an_event_and_clears_the_old_redo_branch",
+        "tests/test_review_history_policies.py::test_python_editor_noop_keeps_an_event_and_identical_successful_preview"
+      ],
+      "executed_nodes": [
+        "tests/test_review_history_policies.py::test_store_noop_is_an_event_and_clears_the_old_redo_branch",
+        "tests/test_review_history_policies.py::test_python_editor_noop_keeps_an_event_and_identical_successful_preview"
+      ],
+      "fresh_passed": 2,
+      "reviewed_boundary": "Equal SetTitle remains event/snapshot, not state difference; history/listener increments, clears prior redo, same-state undo removes one event, Python PNG/saved spec-SVGcurrent. Retained Native repeated no-op snapshot/undo-redo JSON-PNG parity. No equality-based event coalescing or invented dirty flag."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <four exact policy/browser nodes> --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 4,
+    "skipped": 0,
+    "failed": 0,
+    "browser_required_executed": true,
+    "seconds": 20.51,
+    "log_sha256": "8075019e06c7fa9ef4c9fd4f3e4a5df541d1e64457b607277481d0e587a98160",
+    "junit_sha256": "a419522f69e62c3711695431a4f07ed002fa3553c713e300526f09d35994cb20"
+  },
+  "retained_native": {
+    "fresh_execution": false,
+    "artifact": "docs\\review_evidence\\swarm_facets_verification.json",
+    "artifact_sha256": "c8045139f00680b689a2443c81f932f3520406630b75432ea993568c11b1d2c3",
+    "matched_source_fingerprints": 28,
+    "raw8_verified": true,
+    "exit": 0,
+    "helper": {
+      "ref": "scripts/rust_editor_smoke_test.py::_review_document_policies",
+      "resolution": "Python AST definition/manual source review",
+      "line_start": 174,
+      "line_end": 249,
+      "body_sha256": "588a919fe4ec4bbd2aae2d86acad77a07186cbb10b348405d7f9309117578417"
+    },
+    "raw_log_sha256": "e2dad8e19eeb67b3ee3c8ab7ec288e985f019f5da5112a19a18988d368eed74b",
+    "raw_result_sha256": "4bb6d03b13ac4aa582f7d477229eb9a3ca7bf72259072a0b1c98c2b2163e74f1"
+  },
+  "limits": [
+    "Different Python/Rust open-reset policies preserved, no new dirty/current-file feature.",
+    "Fresh four nodes include one actual browser case; receipt rejects any skip.",
+    "Retained source-matched Windows Native run, not a new Native/browser/Linux/MSRV/binary attestation.",
+    "Historical history-policy artifact CI39050108296 was CANCELLED overall; not used as ALL5 success.",
+    "No HIST06seeded replay/HIST07drag/HIST08checkpoint execution claimed.",
+    "BASE05RUNNING/original139P6R4O1D unchanged;other136IDsunclassifiedhere;64unique fresh Python nodes recorded across mapping runs."
+  ],
+  "verifier_sha256": "6beadb5e2315425add310226043ba6319d7d0a1c2593955fbf3f65a18e1270ab"
+}

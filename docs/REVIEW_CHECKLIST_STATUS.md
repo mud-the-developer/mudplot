@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 97차 — HIST-04/05 문서정책과no-op매핑
+
+- [부분review-map](review-map.md)에open/reset과no-op의실제정책/source/test를연결해누적14ID로확장했습니다.
+  현재기존단위3개+실제Pythonbrowser1개가4P/0skip·fail/exit0이며receipt에서browser실행을필수확인했습니다.
+  [분리근거](review_evidence/review_map_document_policy.json)에source/body/원본log-JUnit-verifier지문을남깁니다.
+- Pythonfreshhistory와Rustundoablesnapshot/startupreset은계약대로다르며업로드파일자동덮어쓰기나별도persistent
+  dirty/save-target기능은없습니다. No-op은같은상태라도event/listener/snapshot을남기고이전redo를비우므로
+  임의최적화로이벤트를제거하지않습니다. 실제picker/unsavededit/openB/download/reset와원본파일보존도확인했습니다.
+- Native는현재source와맞는보존전체실행의_document_policies만별도로검증했고새Native실행이아닙니다.
+  과거취소CI39050108296을ALL5성공으로재해석하지않습니다. 기록된고유Pythonnode는64개이며미검토136ID/
+  BASE-05RUNNING/원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다. HIST06longreplay/07drag/08checkpoint는
+  이번실행범위가아니며runtime/테스트/원문/의존성/버전은바꾸지않았습니다.
+- 기준98b4ecCI39470014411진행을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 96차 — 문서매핑게시와52acc기준CI확인
 
 - 정확한52acc3f30ce6afdc88a305966a3f9b323e98c76a의CI39461524891 5job이모두성공한뒤대기문서매핑

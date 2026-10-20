@@ -5,19 +5,20 @@ Candidate inventory/status: [review ledger](REVIEW_CHECKLIST_STATUS.md).
 Execution/source fingerprints: [first five state IDs](review_evidence/review_map_state_core.json),
 [determinism/indices/effect boundaries](review_evidence/review_map_state_boundaries.json),
 [cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json),
-[history boundary/branch/failure provenance](review_evidence/review_map_history_core.json).
+[history boundary/branch/failure provenance](review_evidence/review_map_history_core.json),
+[open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json).
 
 ## Scope and classification
 
-This is a **twelve-ID state/history mapping**, not a complete150-ID map.
-The remaining138 IDs have not been classified here. The candidate inventory still
+This is a **fourteen-ID state/history mapping**, not a complete150-ID map.
+The remaining136 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All twelve below have existing coverage of the explicitly stated boundary; no new
+All fourteen below have existing coverage of the explicitly stated boundary; no new
 runtime/test code or compatibility decision was needed for this mapping unit.
 AST checks only resolve references, not prove their semantic adequacy.
 
@@ -31,8 +32,10 @@ first two runs,48 unique nodes executed, not51. STATE-03 adds6 fresh Python
 nodes(4 failure cases deselected), giving54 unique fresh nodes across three runs,
 not57 summed ID relationships. HIST-01/02/03 add6 previously unselected nodes,
 giving60 unique fresh pytest nodes across four focused runs, not63 summed ID
-relationships. The separate13-row cursor/hash assert probe is not a pytest count.
-Native provenance is a separate previous execution
+relationships. HIST-04/05 add4 new nodes(unit3/Python real-browser1), yielding64
+unique executed pytest nodes across the mapping runs. The browser case must execute;
+receipt checks reject any skip. The separate13-row cursor/hash assert probe is not
+a pytest count. Native provenance is a separate previous execution
 with matching source/fixture/final hash, not a newly run native/browser test.
 These are focused results, not a full-suite or release result. Source/body/log/JUnit hashes and
 expanded parameterized node IDs are recorded in the separate immutable artifacts.
@@ -51,6 +54,8 @@ expanded parameterized node IDs are recorded in the separate immutable artifacts
 | HIST-01 | Existing coverage | 1 fresh Python passed; retained Native check | Complete replay/boundaries plus separate cursor/hash probe |
 | HIST-02 | Existing coverage | 1 fresh Python passed; retained Native check | Branch invalidation and saved spec/preview coherence |
 | HIST-03 | Existing coverage | 4 fresh Python passed; retained Native check | Validation/import/real render failures retain spec/history/PNG/future |
+| HIST-04 | Existing coverage | 1 unit + 1 actual Python browser passed; retained Native check | Distinct open/reset policies/current downloads/source files untouched; no dirty feature invented |
+| HIST-05 | Existing coverage | 2 fresh Python passed; retained Native check | Equal-value events/listeners/history/redo invalidation and preview coherence |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -262,6 +267,47 @@ There is no new Native per-stage PNG hash table, Linux/MSRV/browser/binary
 attestation or claim about every OS/bridge fault. Existing direct equality
 assertions and the fresh Python/probe provenance are recorded separately.
 
+## HIST-04 — existing document/open/reset policies
+
+Contract: [COMPATIBILITY.md, state/action semantics](COMPATIBILITY.md).
+Implementation: [Python session](../dashboard/editor_server.py) `EditorSession.load_spec`,
+`reset`, `_commit_store`; `Store.undo`, `Store.redo`; Rust `Session.open`, `reset`.
+
+- `tests/test_review_history_policies.py::test_python_open_and_reset_start_fresh_history_without_touching_imported_files`
+- `tests/test_editor_browser.py::test_open_reset_and_download_keep_python_document_history_and_source_files_separate`
+
+Fresh Python unit checks A/future/undo/open B starts a fresh history, selected
+panel0, empty undo/redo boundaries, current JSON/SVG and unchanged source A/B bytes.
+Reset starts the default empty document and fresh history. The fresh actual browser
+case uses the file picker, unsaved A edit, open B, undo/redo, real JSON download B,
+reset/default download, and verifies both source files unchanged. Both nodes ran;
+no browser skip was counted as success.
+
+Neither editor binds uploaded filenames to automatic overwrites or implements a
+separate persistent dirty-bit/save-target feature. Do not invent one to satisfy
+checklist terminology. Rust open/reset deliberately remain undoable snapshots;
+reset returns startup state, not the last import. Current-source-matched retained
+`_review_document_policies` Native execution checks A/future/open B/undo-redo/Bedit/
+reset/undo-redo and JSON/PNG coherence. This is not a new Native/browser/Linux/MSRV
+run or binary attestation. Historical canceled CI39050108296 is not used as an
+ALL5-success result.
+
+## HIST-05 — equal-valued changes remain events
+
+Implementation: `Store._dispatch`, `Store.history`, `Store.subscribe`;
+`EditorSession.dispatch_safe`; Rust `Session.apply`.
+
+- `tests/test_review_history_policies.py::test_store_noop_is_an_event_and_clears_the_old_redo_branch`
+- `tests/test_review_history_policies.py::test_python_editor_noop_keeps_an_event_and_identical_successful_preview`
+
+SetTitle A after A/B/undo A leaves identical state but adds a history event and
+listener notification, clears old redo and permits same-state undo to drop one
+event. Python editor keeps the no-op action with identical successful PNG/current
+saved spec and SVG. The retained Native helper tests repeated no-op snapshots and
+old-redo invalidation with JSON/PNG equality. This does not optimize events away
+or assert a dirty bit which the documented editor does not have. Long seeded
+replay, drag coalescing and checkpoint policy are separate items, not run here.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -288,10 +334,19 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_history_policies.py::test_python_open_and_reset_start_fresh_history_without_touching_imported_files \
+  tests/test_review_history_policies.py::test_store_noop_is_an_event_and_clears_the_old_redo_branch \
+  tests/test_review_history_policies.py::test_python_editor_noop_keeps_an_event_and_identical_successful_preview \
+  tests/test_editor_browser.py::test_open_reset_and_download_keep_python_document_history_and_source_files_separate \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining138 IDs still need their own reviewed symbol/node/provenance links
+The remaining136 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
