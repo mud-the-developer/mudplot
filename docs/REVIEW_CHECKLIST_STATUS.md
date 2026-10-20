@@ -18,6 +18,14 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 85차 — 대기interval unit 게시
+
+- 정확한8eec4baCI39408472076의5job모두성공을확인했습니다. 이전회차의4P1R대기는역사그대로두고
+  로컬480068a의20source/8raw지문과11검사/CLI2/native전체browser0를재확인해변경없이게시합니다.
+- 새기능수정은없고Ruff/양플랫폼타입/cargoformat/schema/Git상태를확인합니다. 부모성공을새intervalruntime
+  전체증명으로확대하지않고새CI를받습니다. 원대장139PASS/6RUNNING/4OPEN/1DEFERRED와남은v1.1/
+  releasegate/tag/publish경계는유지하며Loop8을완료때삭제·pause하지않습니다.
+
 ## 84차 — Raw좌표의단일numeric interval band
 
 - 사용자Loop8반복에서broken_barh를기존x/y/baseline/width의start/duration/bottom/height로구현했습니다.

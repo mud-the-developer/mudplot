@@ -26,8 +26,8 @@
   권한은아닙니다. 사용자등록Loop8의5분반복이활성이며종료하거나다른만료loop를재생성하지않습니다.
   나머지remainder/gate는남아있습니다.
 - 최신B6numericintervalband는새39/관련613/floor41/CLI2/전체nativeHTTP·browser가맞고rawfloat끝점/
-  양수duration-height/source·겹침을보존합니다. 기준8eeminimum/양RustP·Python진행을보호해로컬보존후
-  게시·새CI를받습니다.
+  양수duration-height/source·겹침을보존합니다. 정확한8eeCI39408472076의5job이모두성공해대기480068a의
+  source불변확인후게시하며이전job을취소하지않았습니다. 새interval소스는새전체CI를받습니다.
 - 최신B6단일numericeventtrain은새32/관련572/floor34/CLI2/전체nativeHTTP·browser가맞으며raw좌표
   offset/length/원본·중복과엄격한linear제한을보존합니다. 첫floor0폭dashedlegend실패는보존하고
   epsilon/label제거없이수정했습니다. 정확한5eCI5job성공은이전HTMX이지새event전체증명이아닙니다.

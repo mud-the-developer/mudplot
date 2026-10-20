@@ -151,8 +151,8 @@ negative duration-height and unsupported date/log/group/facet mappings.
 39new/613related/floor41P3411deselected13Pyparsing/CLI2/Rust22P6ignored/11checks/
 full Windows nativeHTTP+browser5layercases0/LSP11clean. [Scope](BROKEN_BARH.md),
 real PNG/spec, [evidence](review_evidence/v11_interval_band_verification.json).
-Baseline8eeCI39408472076 minimum and bothRust pass; Python jobs still running.
-Keep this unit local to avoid cancelling them; fresh Linux/fullCI after publish.
+Exact8eeCI39408472076 completed ALL5SUCCESS. The held local480068a unit is
+verified unchanged and published now; this interval runtime still needs fresh wholeCI.
 No new model/action/spec fields, dependencies, locks or versions; Loop8 stays active.
 
 ### Earlier review phase 83
