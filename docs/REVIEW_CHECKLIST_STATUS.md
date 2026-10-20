@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 104차 — DATA-02/07 입력구조와SQL소유권매핑
+
+- [부분review-map](review-map.md)에pivot전구조검증·열참조/길이와SQLparams/owned-borrowedcursor계약의
+  source/test를연결해누적31ID로확장했습니다. 기존구조49/SQL10=59P/0skip·fail이며실제pandasduplicate열
+  2case도실행했습니다. [분리근거](review_evidence/review_map_data_boundaries.json).
+- Record/row위치오류·이름문자열화충돌·희소행union/None·길이불일치보존후검증·편집기PNG-history-redo와
+  CLI기존출력보존을확인했고조용한padding/truncation/자동정렬을넣지않았습니다. 부정duck프로토콜은현재없는
+  PyArrow/Polars실제호환성통과가아니며DATA-01전체동등성은별도미분류입니다.
+- Query+params는그대로DB-API에전달하고만든cursor만성공/실패후한번닫습니다. Caller연결/borrowedcursor/
+  transaction은유지하며close오류도이전exceptioncontext와함께전파합니다. 외부DB접속이나새소유권정책은없습니다.
+- 기록된고유Pythonnode는505개이며미분류119ID/JSON-09추가의미검사필요/BASE-05RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준43965bCI39478506917을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 103차 — 문서매핑29ID 게시와98b4ec기준CI확인
 
 - 정확한98b4ec06287b0bb7ed43c64873ded6110406183c의CI39470014411 5job모두성공뒤대기문서여섯commit과

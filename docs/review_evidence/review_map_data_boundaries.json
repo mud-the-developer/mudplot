@@ -1,0 +1,231 @@
+{
+  "kind": "partial-checklist-data-boundary-map",
+  "reviewed_ids": [
+    "DATA-02",
+    "DATA-07"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-02",
+    "DATA-07",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 31,
+  "remaining_unreviewed": 119,
+  "source_commit": "43965b61b6f840b65659f8ec56b58eb3f91fd9d8",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_review_data_contracts.py": "9f3ae59c3852c04410c0f557c5b3741030d70c10218a0e0388f9be592b8f47d5",
+    "tests/test_review_sql_ownership.py": "c22d31048a84e69c29132111e2fa278b43ea89160454ce411669009822b5b153"
+  },
+  "previous_artifact_sha256": "73137695bed9a60e2db537a7757479917807d94bc208011bcd791047177dfa97",
+  "items": [
+    {
+      "id": "DATA-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::_column_names",
+          "body_sha256": "f11547acbe44cba49bbb345dc8723be5c18b04bbb6b0adada4966bc9210cf78b"
+        },
+        {
+          "ref": "mudplot/data.py::_records_to_columns",
+          "body_sha256": "a77dba0fb6f2117bba1c0ea1ecc39fb688bc901cecb49f1f93ac994975644c13"
+        },
+        {
+          "ref": "mudplot/data.py::_row_values",
+          "body_sha256": "ce9a3b960e61f82b03ea259ebfc0cb6fa9c6003959365afca9ecb8a3bf9b5faa"
+        },
+        {
+          "ref": "mudplot/data.py::_rows_to_columns",
+          "body_sha256": "2aa92dc196a5a85db63e9599742c2a37761b8ec610e18c73a1adf08ffa9ce954"
+        },
+        {
+          "ref": "mudplot/data.py::_cursor_to_columns",
+          "body_sha256": "9791f7d676528c0324a26415c6172489d0712f7f93765f573f6a44d219ee79a1"
+        },
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        },
+        {
+          "ref": "mudplot/validate.py::_check_column",
+          "body_sha256": "c5cc6e345677d2d11889c9c54084a5e02ff7526b8afb750257080858dc99b251"
+        },
+        {
+          "ref": "mudplot/validate.py::_check_data_integrity",
+          "body_sha256": "cb9195c095f9a1a5bed5da2f55820a681b4383528ab5cfb531ca80627bd8d863"
+        },
+        {
+          "ref": "mudplot/__main__.py::_cmd_apply",
+          "body_sha256": "3052664c2fcd179bf9bb35db932a82c729f069ef9320c61548aa5ddd88156496"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+          "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_data_contracts.py::test_data_02_ragged_positional_rows_report_location_and_preserve_input",
+        "tests/test_review_data_contracts.py::test_data_02_db_cursor_row_width_matches_description_before_pivot",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns",
+        "tests/test_review_data_contracts.py::test_data_02_record_key_collision_reports_record_index",
+        "tests/test_review_data_contracts.py::test_data_02_sparse_records_keep_union_order_and_missing_values",
+        "tests/test_review_data_contracts.py::test_data_02_mismatched_columns_are_preserved_then_rejected_by_validation",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column",
+        "tests/test_review_data_contracts.py::test_data_02_real_pandas_duplicate_names_fail_without_input_changes",
+        "tests/test_review_data_contracts.py::test_data_02_bad_editor_data_preserves_state_history_preview_and_redo",
+        "tests/test_review_data_contracts.py::test_data_02_bad_cli_data_action_preserves_input_and_existing_output",
+        "tests/test_review_data_contracts.py::test_data_02_sqlite_row_objects_remain_supported",
+        "tests/test_review_data_contracts.py::test_data_02_valid_positional_and_db_rows_keep_values_and_order"
+      ],
+      "executed_nodes": [
+        "tests/test_review_data_contracts.py::test_data_02_ragged_positional_rows_report_location_and_preserve_input[rows0]",
+        "tests/test_review_data_contracts.py::test_data_02_ragged_positional_rows_report_location_and_preserve_input[rows1]",
+        "tests/test_review_data_contracts.py::test_data_02_ragged_positional_rows_report_location_and_preserve_input[rows2]",
+        "tests/test_review_data_contracts.py::test_data_02_ragged_positional_rows_report_location_and_preserve_input[rows3]",
+        "tests/test_review_data_contracts.py::test_data_02_db_cursor_row_width_matches_description_before_pivot[rows0]",
+        "tests/test_review_data_contracts.py::test_data_02_db_cursor_row_width_matches_description_before_pivot[rows1]",
+        "tests/test_review_data_contracts.py::test_data_02_db_cursor_row_width_matches_description_before_pivot[rows2]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[adapter-None]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[adapter-3]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[adapter-invalid2]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[adapter-x]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[builder-None]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[builder-3]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[builder-invalid2]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_records_report_the_invalid_record_index[builder-x]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[rows-ab0]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[rows-ab1]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[rows-invalid2]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[rows-None]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[rows-3]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[cursor-ab0]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[cursor-ab1]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[cursor-invalid2]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[cursor-None]",
+        "tests/test_review_data_contracts.py::test_data_02_mixed_rows_do_not_become_character_or_key_columns[cursor-3]",
+        "tests/test_review_data_contracts.py::test_data_02_record_key_collision_reports_record_index",
+        "tests/test_review_data_contracts.py::test_data_02_sparse_records_keep_union_order_and_missing_values",
+        "tests/test_review_data_contracts.py::test_data_02_mismatched_columns_are_preserved_then_rejected_by_validation[mapping]",
+        "tests/test_review_data_contracts.py::test_data_02_mismatched_columns_are_preserved_then_rejected_by_validation[dataframe]",
+        "tests/test_review_data_contracts.py::test_data_02_mismatched_columns_are_preserved_then_rejected_by_validation[arrow]",
+        "tests/test_review_data_contracts.py::test_data_02_mismatched_columns_are_preserved_then_rejected_by_validation[to_dict]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[line-x]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[line-y]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[line-group]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[scatter-x]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[scatter-y]",
+        "tests/test_review_data_contracts.py::test_data_02_missing_column_error_identifies_the_layer_and_column[scatter-group]",
+        "tests/test_review_data_contracts.py::test_data_02_real_pandas_duplicate_names_fail_without_input_changes[names0]",
+        "tests/test_review_data_contracts.py::test_data_02_real_pandas_duplicate_names_fail_without_input_changes[names1]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_editor_data_preserves_state_history_preview_and_redo[x]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_editor_data_preserves_state_history_preview_and_redo[y]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_editor_data_preserves_state_history_preview_and_redo[g]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_editor_data_preserves_state_history_preview_and_redo[length]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_cli_data_action_preserves_input_and_existing_output[x]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_cli_data_action_preserves_input_and_existing_output[y]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_cli_data_action_preserves_input_and_existing_output[g]",
+        "tests/test_review_data_contracts.py::test_data_02_bad_cli_data_action_preserves_input_and_existing_output[length]",
+        "tests/test_review_data_contracts.py::test_data_02_sqlite_row_objects_remain_supported",
+        "tests/test_review_data_contracts.py::test_data_02_valid_positional_and_db_rows_keep_values_and_order"
+      ],
+      "fresh_passed": 49,
+      "reviewed_boundary": "Ragged positional/DB widths and bad row/record types fail with positions before pivot;stringified duplicate names reject/sparse union stable;unequal columns preserved then validate rejects;missingxygroup/realPandasdups/editor+CLIstate-history-PNG-redo/outputrecover;SQLiteRow/validrows supported.DucknegativeprotocolsnotrealArrowcompat."
+    },
+    {
+      "id": "DATA-07",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        },
+        {
+          "ref": "mudplot/data.py::_cursor_to_columns",
+          "body_sha256": "9791f7d676528c0324a26415c6172489d0712f7f93765f573f6a44d219ee79a1"
+        },
+        {
+          "ref": "mudplot/data.py::_column_names",
+          "body_sha256": "f11547acbe44cba49bbb345dc8723be5c18b04bbb6b0adada4966bc9210cf78b"
+        },
+        {
+          "ref": "mudplot/data.py::_row_values",
+          "body_sha256": "ce9a3b960e61f82b03ea259ebfc0cb6fa9c6003959365afca9ecb8a3bf9b5faa"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure",
+        "tests/test_review_sql_ownership.py::test_minimal_connection_cursor_without_close_keeps_duck_protocol_support",
+        "tests/test_review_sql_ownership.py::test_owned_cursor_close_failure_is_not_silently_swallowed",
+        "tests/test_review_sql_ownership.py::test_borrowed_cursor_is_not_closed_and_remains_reusable",
+        "tests/test_review_sql_ownership.py::test_sqlite_named_values_are_bound_without_commit_or_connection_close"
+      ],
+      "executed_nodes": [
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure[None]",
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure[execute]",
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure[fetch]",
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure[shape]",
+        "tests/test_review_sql_ownership.py::test_connection_query_closes_only_its_own_cursor_even_on_failure[duplicate]",
+        "tests/test_review_sql_ownership.py::test_minimal_connection_cursor_without_close_keeps_duck_protocol_support",
+        "tests/test_review_sql_ownership.py::test_owned_cursor_close_failure_is_not_silently_swallowed[False]",
+        "tests/test_review_sql_ownership.py::test_owned_cursor_close_failure_is_not_silently_swallowed[True]",
+        "tests/test_review_sql_ownership.py::test_borrowed_cursor_is_not_closed_and_remains_reusable",
+        "tests/test_review_sql_ownership.py::test_sqlite_named_values_are_bound_without_commit_or_connection_close"
+      ],
+      "fresh_passed": 10,
+      "reviewed_boundary": "query+params identity forwarded/no interpolation;ownedcursorcloseonce on success/execute-fetch-shape-dup failure;callerconnectionclose-commit-rollback forbidden;duckcursorwithoutclose accepted;closefailure propagates with priorerrorcontext;borrowedSQLitecursor reusable/namedboundquote-null/intransaction preserved.No externalDBdrivers."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_data_contracts.py tests/test_review_sql_ownership.py --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 59,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 11.65,
+    "real_pandas_duplicate_cases_executed": 2,
+    "log_sha256": "5bfaa1b6eadb130ed3467a47bf17dee5f567f39bfdc637d9a26feca0ae707ea7",
+    "junit_sha256": "215d08471925b6fe3ace712e46124e6bd77f365c11842f5d7f47dd005bd304d0"
+  },
+  "limits": [
+    "DATA01all-formatsemantic equivalence not mapped here;PyArrow/Polars absent currently,ducknegativeinputsnotoptionalcompatibilityPASS.",
+    "No packages installed/no external DB network;DBAPI fake failures and real in-memorySQLite only.",
+    "Do not reject duplicatexobservations or resize unequalcolumns just to rectangularize; preserve sparse-recordorder/Nonepolicy.",
+    "SQLconnectionownershipdiffersfromadaptercreatedcursor;closefailurecontextpreservednot swallowed.",
+    "No freshRust/native/browser/fullsuite/resourcebenchmark claim;runtime/tests/fields/deps/version unchanged.",
+    "Cumulative505unique Pythonmapnodes/31IDswithJSON09additional-tests-needed;119unclassified/BASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "6c724d8349f6ec57d1d439262943747bc2d5d46588720b1d69495d14b9eb4b6e"
+}

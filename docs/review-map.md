@@ -11,19 +11,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json),
 [JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json),
 [modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json),
-[render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json).
+[render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json),
+[table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json).
 
 ## Scope and classification
 
-This is a **twenty-nine-ID state/history/JSON mapping**, not a complete150-ID map.
-The remaining121 IDs have not been classified here. The candidate inventory still
+This is a **thirty-one-ID state/history/JSON/data mapping**, not a complete150-ID map.
+The remaining119 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Twenty-eight below have existing coverage of their explicitly stated boundary.
+Thirty below have existing coverage of their explicitly stated boundary.
 JSON-09 is **additional test needed**: passing structural cases are not the missing
 all-field meaning matrix. No runtime/test code or compatibility decision was changed.
 AST checks only resolve references, not prove their semantic adequacy.
@@ -65,6 +66,10 @@ JSON-05/10/11/12 add30 distinct current Python nodes, bringing the recorded uniq
 total to446. The real sync checker ran first and returned0 for all four generated
 targets. No new full-suite, Native/Rust/browser or resource benchmark is claimed.
 
+DATA-02/07 add59 distinct current Python nodes(49 structure/10 SQL ownership),
+bringing recorded unique Python nodes to505. Real pandas cases ran without skips;
+duck-protocol negative tests do not imply real PyArrow/Polars compatibility.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -96,6 +101,8 @@ targets. No new full-suite, Native/Rust/browser or resource benchmark is claimed
 | JSON-10 | Existing coverage | 1 fresh Python passed | Canonical representation invariance with list-order/type counterexamples |
 | JSON-11 | Existing coverage | Sync first0 + 5 fresh Python passed | Isolated intentional drift and registry/schema/cap/reference agreement |
 | JSON-12 | Existing coverage | 8 bounded-child Python passed | Damage/depth/valid-large-array handling, previous output and next-input recovery |
+| DATA-02 | Existing coverage | 49 fresh Python passed | Row widths/types/column keys before pivot, missing columns and effect failure preservation |
+| DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -588,6 +595,53 @@ valid large data is lossless. Both CLI and direct-loader children then accept a
 normal recovery payload. These synthetic sizes/timeouts are not a global CPU/RAM/
 HTTP sandbox, unbounded resource guarantee or every encoding/depth taxonomy.
 
+## DATA-02 — rectangular input boundaries, not silent repair
+
+Implementation: [data.py](../mudplot/data.py) `_column_names`, `_records_to_columns`,
+`_row_values`, `_rows_to_columns`, `_cursor_to_columns`, `to_columns`;
+[validate.py](../mudplot/validate.py) `_check_column`, `_check_data_integrity`;
+CLI `_cmd_apply` and `EditorSession._commit_store` prospective commit.
+
+All49 current parameterized nodes in [test_review_data_contracts.py](../tests/test_review_data_contracts.py)
+ran. Exact expanded names are recorded in the artifact. They cover ragged
+positional rows(4), DB description/width(3), bad records(8), bad rows(10), stringified
+key collision(1), sparse union order/None(1), unequal columns(4), missing x/y/group
+for line/scatter(6), real pandas duplicate names(2), editor failure retention(4),
+CLI source/previous output retention(4), SQLiteRow support(1), valid rows/order(1).
+
+Malformed widths/types identify row/record positions before zip/pivot. Records
+must be mappings; strings/bytes/map keys are not positional rows. Stringifying
+column names must not overwrite a previous column. Sparse records keep first-seen
+union order and None; unequal columns remain unchanged at ingestion then validation
+rejects them. No padding/truncation or sorting/duplicate-x repair is introduced.
+Editor invalid open/action keeps spec/history/PNG/redo; CLI failure keeps input and
+sentinel output. Duck DataFrame/Arrow/to_dict malformed fixtures test dispatch
+boundaries, not real third-party compatibility. DATA-01's all-format equality
+remains separately unmapped here, including absent current PyArrow/Polars execution.
+
+## DATA-07 — parameters and caller-owned resources
+
+Implementation: `data.to_columns` query/finally and borrowed cursor paths,
+`_cursor_to_columns`, `_column_names`, `_row_values`.
+
+All10 nodes in [test_review_sql_ownership.py](../tests/test_review_sql_ownership.py)
+ran (expanded parameter names in the artifact):
+
+- `test_connection_query_closes_only_its_own_cursor_even_on_failure` (5)
+- `test_minimal_connection_cursor_without_close_keeps_duck_protocol_support`
+- `test_owned_cursor_close_failure_is_not_silently_swallowed` (2)
+- `test_borrowed_cursor_is_not_closed_and_remains_reusable`
+- `test_sqlite_named_values_are_bound_without_commit_or_connection_close`
+
+Connection+query creates one owned cursor, forwards query/params identity and
+closes it once on success/execute/fetch/shape/duplicate failure. A minimal supported
+cursor without close stays valid. Close failure propagates with the earlier execute
+exception as context, not silently swallowed. Borrowed executed SQLite cursor
+remains reusable; caller connection and transaction remain open with no commit or
+rollback. Named quote/injection-looking strings and nulls are bound through DB-API
+params, not interpolated. Synthetic lifecycle probes plus in-memory SQLite are not
+external DB-driver/network coverage. No ownership policy was changed by mapping.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -667,10 +721,16 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_data_contracts.py tests/test_review_sql_ownership.py \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining121 IDs still need their own reviewed symbol/node/provenance links
+The remaining119 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
