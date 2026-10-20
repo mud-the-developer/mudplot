@@ -1,0 +1,235 @@
+{
+  "kind": "partial-checklist-source-test-result-map",
+  "reviewed_ids": [
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "reviewed_count": 3,
+  "cumulative_reviewed_ids": [
+    "STATE-01",
+    "STATE-02",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 8,
+  "original_id_count": 150,
+  "not_reviewed_in_combined_map": 142,
+  "source_commit": "701e3bea4fcb99f10aacceebcf8611cca6424e95",
+  "previous_artifact_sha256": "b2f40f3c29e1b942ba6232933d9804b36c670de380379b4b08902b00b13f9421",
+  "source_sha256": {
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/actions.py": "e3e05dd14a4746c708f3abc61eeeaf93cb1ed9bdf293f4dcce385d661fa3f34d",
+    "mudplot/capabilities.py": "2e76a36156fc2feac651945fe17ab971e007e7bedec355946fca7a04d6c23252",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/schema.py": "2af0a68a6a497b7f13d633331dabc394bfdc92baca693152d44c8385ac8d7484",
+    "mudplot/theme.py": "b5e06c51bc1d90d08f5af283c07f4fc859b7974a696647a5a0c3dcc7a8bea51a",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_review_core_boundaries.py": "f6a03dffb96fb227d761187032372306eb0b5711ac7061a798693c9c2b8d8be1"
+  },
+  "original_checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "manual_review": "Current implementation/test bodies read. Cached review graph was old5afe, so source references were verified directly. AST resolution alone/past063evidence/test filenames are not semantic coverage; no runtime/tests changed.",
+  "execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_core_boundaries.py --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 35,
+    "deselected": 0,
+    "skipped": 0,
+    "failed": 0,
+    "mapped_relations": 38,
+    "overlap_note": "Three nodes are shared across IDs; do not sum ID rows into a 38-test suite.",
+    "log_sha256": "7a917aa4ab24cbdc31dd58e723eda10a3ee1d694674986c9590c8950d965fd3b",
+    "junit_sha256": "a466a1cf0b3527de7d0630d90f72228d758630928f1742155f52e34c405b88e3"
+  },
+  "items": [
+    {
+      "id": "STATE-07",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/reducer.py::reduce",
+          "line_start": 52,
+          "line_end": 259,
+          "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+        },
+        {
+          "ref": "mudplot/reducer.py::reduce_all",
+          "line_start": 262,
+          "line_end": 266,
+          "body_sha256": "b87e5b244913f9d2cf5767cd579eb33c7c5ba90aa5b3b837e3012497ce466070"
+        },
+        {
+          "ref": "mudplot/theme.py::theme_preset",
+          "line_start": 38,
+          "line_end": 68,
+          "body_sha256": "e4c3b9ee670441bb2e09fc93a0864675f9a7dc2e5fb83e4c3ffda91010f89d93"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_core_boundaries.py::test_core_hash_survives_fresh_process_cwd_clock_rng_and_interleaved_styles",
+        "tests/test_review_core_boundaries.py::test_previous_render_style_cannot_change_reducer_result"
+      ],
+      "executed_nodes": [
+        "tests/test_review_core_boundaries.py::test_core_hash_survives_fresh_process_cwd_clock_rng_and_interleaved_styles",
+        "tests/test_review_core_boundaries.py::test_previous_render_style_cannot_change_reducer_result"
+      ],
+      "mapped_passed_nodes": 2,
+      "reviewed_boundary": "Two fresh -S processes vary CWD, time.time, hash/Python-random seeds0/97 and four interleaved themes; same normalized state hash and Python RNG unchanged. Separate previous real render/style does not affect reducer. Not every environment variable/callback/NumPy RNG scenario."
+    },
+    {
+      "id": "STATE-08",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/reducer.py::reduce",
+          "line_start": 52,
+          "line_end": 259,
+          "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+        },
+        {
+          "ref": "mudplot/reducer.py::_ensure_panel",
+          "line_start": 25,
+          "line_end": 31,
+          "body_sha256": "4e3bac721f39b800920a83522c7760ecbe1ffc1de5ad67543fb77fd57151d8bf"
+        },
+        {
+          "ref": "mudplot/actions.py::action_from_dict",
+          "line_start": 407,
+          "line_end": 429,
+          "body_sha256": "b897defcd42fd2efdc3ee0502a4299f94a8befb0fdf0fe2e9336e27af7d4f3b2"
+        },
+        {
+          "ref": "mudplot/validate.py::validate",
+          "line_start": 1692,
+          "line_end": 2336,
+          "body_sha256": "5b96e8cb7ae4d5745ae0a63c006a5c22d0a310245e47b5122bb62d88a6099aac"
+        },
+        {
+          "ref": "mudplot/validate.py::assert_valid",
+          "line_start": 2339,
+          "line_end": 2344,
+          "body_sha256": "fbb39782b78961b675004b334cd22e390373dff6ef7658b86c2a01efcb3f2cd9"
+        },
+        {
+          "ref": "mudplot/_render.py::render",
+          "line_start": 2869,
+          "line_end": 2975,
+          "body_sha256": "34004f3abfaaa8cb4118fe0733fd713c95eef8853ff5bfebe71acca0fa32cce9"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target",
+        "tests/test_review_core_boundaries.py::test_missing_panels_extend_but_absent_layers_do_not_modify_existing_panels",
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state"
+      ],
+      "executed_nodes": [
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer--1]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-2]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-True]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-False]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-0.0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-1.5]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[RemoveLayer-None]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar--1]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-2]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-True]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-False]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-0.0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-1.5]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[SetColorbar-None]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>--1]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-2]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-True]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-False]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-0.0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-1.5]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-0]",
+        "tests/test_review_core_boundaries.py::test_invalid_layer_indices_never_select_a_different_target[<lambda>-None]",
+        "tests/test_review_core_boundaries.py::test_missing_panels_extend_but_absent_layers_do_not_modify_existing_panels",
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects[layer0]",
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects[layer1]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[-1]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[True]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[False]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[0.0]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[0]",
+        "tests/test_review_core_boundaries.py::test_invalid_panel_indices_and_unknown_wire_actions_preserve_state[None]"
+      ],
+      "mapped_passed_nodes": 33,
+      "reviewed_boundary": "24invalidlayerindexcases across RemoveLayer/SetColorbar/SetLayerAt; plainpositivepanel2autoextension vs absentlayerreject; two absentcolumn/matrixrefs allow reducer construction then validate/render error parity; six invalidpaneltypes/unknown string action reject preserving state/action/history and recovery. Maxpanelcap/wirekeytype taxonomy not exhaustively selected."
+    },
+    {
+      "id": "STATE-09",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/reducer.py::reduce",
+          "line_start": 52,
+          "line_end": 259,
+          "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+        },
+        {
+          "ref": "mudplot/reducer.py::reduce_all",
+          "line_start": 262,
+          "line_end": 266,
+          "body_sha256": "b87e5b244913f9d2cf5767cd579eb33c7c5ba90aa5b3b837e3012497ce466070"
+        },
+        {
+          "ref": "mudplot/validate.py::validate",
+          "line_start": 1692,
+          "line_end": 2336,
+          "body_sha256": "5b96e8cb7ae4d5745ae0a63c006a5c22d0a310245e47b5122bb62d88a6099aac"
+        },
+        {
+          "ref": "mudplot/validate.py::assert_valid",
+          "line_start": 2339,
+          "line_end": 2344,
+          "body_sha256": "fbb39782b78961b675004b334cd22e390373dff6ef7658b86c2a01efcb3f2cd9"
+        },
+        {
+          "ref": "mudplot/schema.py::json_schema",
+          "line_start": 81,
+          "line_end": 90,
+          "body_sha256": "19b91837356964d541147b0b5bffdc3f6d101f332fe19ea8d603559f01ec7fda"
+        },
+        {
+          "ref": "mudplot/capabilities.py::capabilities",
+          "line_start": 792,
+          "line_end": 1204,
+          "body_sha256": "856c6b0073fe27381889eeb3bba1b9320ab8e9cd2062a196004255dad618483f"
+        },
+        {
+          "ref": "mudplot/_render.py::render",
+          "line_start": 2869,
+          "line_end": 2975,
+          "body_sha256": "34004f3abfaaa8cb4118fe0733fd713c95eef8853ff5bfebe71acca0fa32cce9"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_core_boundaries.py::test_core_hash_survives_fresh_process_cwd_clock_rng_and_interleaved_styles",
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects"
+      ],
+      "executed_nodes": [
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects[layer0]",
+        "tests/test_review_core_boundaries.py::test_reduce_can_build_invalid_references_but_render_validates_before_effects[layer1]",
+        "tests/test_review_core_boundaries.py::test_core_hash_survives_fresh_process_cwd_clock_rng_and_interleaved_styles"
+      ],
+      "mapped_passed_nodes": 3,
+      "reviewed_boundary": "Operation-phase audit/import guards block data-file/write/directory/network/subprocess and optional imports while representative schema/capabilities/validate/reduce calls run; readonly Python .py/.pyc imports allowed. Initial core import occurs before hook, blocked optional modules absent checked. Separate validate/render error parity and source order assert_valid before Figure allocation; rendering backend imports are allowed before validation. Not interpreter/malicious Python method sandbox."
+    }
+  ],
+  "limits": [
+    "Combined map8IDs only;remaining142includeSTATE03cross-path not classified here.",
+    "Audit guard permits readonly trusted Python code loading, not a sandbox or initial-interpreter effect proof.",
+    "Render may import its backend before assert_valid, but Figure allocation follows validation.",
+    "Original139PASS6RUNNING4OPEN1DEFERRED/BASE05RUNNING unchanged;no full-suite/native/Linux/release claim."
+  ],
+  "verifier_sha256": "846fa3b1bd694b3c44d91cd8bdd15e9a24b4e26cf71ab6d9addfcb3e59a074c9"
+}

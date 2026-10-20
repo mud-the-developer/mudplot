@@ -18,6 +18,19 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 93차 — Core결정성/참조/효과경계매핑
+
+- [부분review-map](review-map.md)을STATE-07/08/09까지누적8ID로확장하고실제source/test본문과AST참조를
+  연결했습니다. 오래된graph위치는직접source로재확인했고과거19차결과를현재통과로복사하지않았습니다.
+- 기존core-boundary검사35고유node가현재source에서35P/0skip·fail/exit0입니다. 세ID에38연결관계가있어도
+  38테스트로부풀리지않고기존13node와합쳐고유실행48개로기록합니다.
+  [별도근거](review_evidence/review_map_state_boundaries.json)는기존5IDartifact를덮지않습니다.
+- Pythonreadonlycodeimport를허용하는operation-phaseaudit/optional-import차단과render의Figure생성전검증을
+  구분하며인터프리터/임의Pythonmethodsandbox로확대하지않습니다. 지원positivepanel자동확장은계속계약입니다.
+  나머지142ID(STATE-03포함)는이번문서에서미검토이고기존status/coverage를그사실만으로내리지않습니다.
+- Runtime/테스트/원문/의존성/버전변경없이기준52accCI39461524891진행을보호해로컬보존합니다. BASE-05RUNNING/
+  원대장139PASS/6RUNNING/4OPEN/1DEFERRED는유지하며Loop8을완료때삭제·pause하지않습니다.
+
 ## 92차 — BASE-05 부분symbol/test/result매핑
 
 - [부분review-map](review-map.md)에STATE-01/02/04/05/06의실제구현symbol·기존pytestnode·합성fixture의
