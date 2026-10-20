@@ -18,6 +18,19 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 108차 — 임시uv overlay의실제optional실행
+
+- DATA-01/05의현재optional실행공백을기존세파일로확인했습니다. `uv run --no-sync --with pyarrow --with polars`
+  임시overlay에서95P/0skip·fail이며실제버전은PyArrow26.0.0/Polars2.0.0입니다.
+  [별도근거](review_evidence/review_map_optional_execution.json)에선언환경/정확한재현pin/원본지문을남깁니다.
+- Project/uv.lock/.venv설정과base환경버전·optional부재가전후같고core/기본환경에패키지를설치하거나소스/테스트/
+  dependencyfile을바꾸지않았습니다. 원래12skip영수증은역사기록그대로두고같은12node가이번실행에서실제로
+  통과했음을별도로검증했습니다. 과거skip을소급통과로고치지않습니다.
+- DATA-01/05는이환경의실행한경계에서기존근거로갱신해38ID중기존37/JSON-09추가의미검사필요1입니다.
+  95개중중복70개를새검사로더하지않고고유통과node는675+25=700입니다. 미분류112ID/BASE-05JSON-09RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED·버전과남은releasegate는유지합니다. 새Native/Rust/browser/성능실행이아닙니다.
+- 기준43965bCI39478506917진행을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 107차 — DATA-05/08/09 정밀도·layer경계·정렬매핑
 
 - [부분review-map](review-map.md)에날짜dtype/정밀도와빈/단일/상수자료·raw/통계정렬의source/test를연결해

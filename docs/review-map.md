@@ -15,7 +15,8 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json),
 [available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json),
 [legacy group identity and scalar conversion evidence](review_evidence/review_map_groups_scalars.json),
-[temporal precision and per-layer boundary/order evidence](review_evidence/review_map_data_policies.json).
+[temporal precision and per-layer boundary/order evidence](review_evidence/review_map_data_policies.json),
+[real optional-adapter execution in an unchanged-base uv overlay](review_evidence/review_map_optional_execution.json).
 
 ## Scope and classification
 
@@ -27,11 +28,11 @@ Prior phase-specific evidence is not invalidated or re-labelled by this partial 
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Thirty-five below have existing coverage of their explicitly stated boundary.
-JSON-09, DATA-01 and DATA-05 are **additional test needed**: the all-field meaning
-matrix, current optional-adapter execution and real optional timestamp paths need
-additional evidence. Existing tests may fill those gaps; none proves a product bug
-or requires duplicated tests/new UI. No runtime/test code or policy was changed.
+Thirty-seven below have existing coverage of their explicitly stated boundary.
+JSON-09 remains **additional test needed** for its all-field meaning matrix.
+DATA-01/05's earlier optional execution gaps were filled by the separate declared
+uv overlay run below, not by retroactively changing skipped receipts. Existing
+tests filled those gaps; no duplicate tests/UI/production policy was added.
 AST checks only resolve references, not prove their semantic adequacy.
 
 The first five IDs were reviewed at `52acc3f30ce6afdc88a305966a3f9b323e98c76a`:
@@ -87,6 +88,12 @@ DATA-05/08/09 add74 distinct passed Python nodes and7 optional timestamp skips.
 Recorded unique passed total is675, with12 separate optional skipped nodes—not687
 passes. This unit assigns only its layer/input/range-specific boundaries.
 
+The subsequent uv optional overlay run executes all95 existing missing/temporal/
+table-library cases with0 skips. Twelve historically skipped nodes now actually
+pass in this separate run, plus13 new table-library nodes. Recorded unique passed
+Python nodes are700, not675+95; previously passed repetitions are not added again.
+Old12 skipped receipts remain unchanged historical facts, not retroactive passes.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -118,11 +125,11 @@ passes. This unit assigns only its layer/input/range-specific boundaries.
 | JSON-10 | Existing coverage | 1 fresh Python passed | Canonical representation invariance with list-order/type counterexamples |
 | JSON-11 | Existing coverage | Sync first0 + 5 fresh Python passed | Isolated intentional drift and registry/schema/cap/reference agreement |
 | JSON-12 | Existing coverage | 8 bounded-child Python passed | Damage/depth/valid-large-array handling, previous output and next-input recovery |
-| DATA-01 | Additional test needed | 9 available formats passed; 5 optional formats skipped | Current all-format execution/provenance gap, not a product-failure finding |
+| DATA-01 | Existing coverage | Declared optional overlay95/95 run; all14 formats executed | Source/values/order/missing/group compatibility in stated versions; prior5skip preserved |
 | DATA-02 | Existing coverage | 49 fresh Python passed | Row widths/types/column keys before pivot, missing columns and effect failure preservation |
-| DATA-03 | Existing coverage | 19 passed; same 5 optional cases skipped | Tested source-preserving missing normalization/line gaps/scatter pairs/stat cohort; not all formats |
+| DATA-03 | Existing coverage | Initial19P5skip, later optional run all24 passed | Source-preserving missing/gaps/pairs/stat cohort in declared adapters, not every scalar/context |
 | DATA-04 | Existing coverage | 6 fresh Python passed; separate4 group/RGBA probes | Legacy Python-equality membership/order/caption policy, not uniform semantic/stat grouping |
-| DATA-05 | Additional test needed | 51 current passed; 7 optional timestamp skips | Stated precision/TZ/locale/dtype policy; real Polars/Arrow evidence still needed |
+| DATA-05 | Existing coverage | Initial51P7skip, later optional run all58 passed | Stated precision/TZ/locale/dtype policy in recorded versions, not all date ranges/locales |
 | DATA-06 | Existing coverage | 71 fresh Python passed | Supported scalar builtin normalization vs explicit unsupported-object rejection/bounded item conversion |
 | DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
 | DATA-08 | Existing coverage | 17 fresh Python passed | Selected raw-empty/stat-empty/singleton/constant layer expectations, not all-layer uniform policy |
@@ -625,7 +632,7 @@ Implementation: `data.to_columns`, `_plain_value`, `_to_list`,
 `_records_to_columns`, `_rows_to_columns`, `_cursor_to_columns`.
 
 `tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree`
-currently passes9 shapes: mapping, records, rows, NumPy object2D, structured NumPy,
+initially passed9 base-environment shapes: mapping, records, rows, NumPy object2D, structured NumPy,
 nullable pandas, SQLite connection/query, borrowed SQLite cursor, generic to_dict.
 The declared positional format supplies generated column names; values/order/
 missing/group meaning are compared through the corresponding names, not forced
@@ -633,13 +640,16 @@ into a nonexistent common naming contract. Source objects/JSON remain unchanged;
 borrowed cursor/connection reuse remains valid.
 
 Real PyArrow, chunked Arrow, dictionary Arrow, Polars and categorical Polars
-are5 explicit skips because those packages are absent here. They are not5 passes,
-and a duck-protocol negative fixture does not replace real optional execution.
-The tests already exist: obtain actual optional runs in a declared environment or
-source-matched retained provenance before completing current all-format evidence.
-No packages were installed and no old master DATA-01 PASS is downgraded merely
-because this environment lacks optional modules. This map classifies its current
-execution gap, not historical results or a demonstrated adapter defect.
+were5 explicit skips in that base run, not5 passes. The new declared uv overlay
+actually executes all14 format variants plus the real table-library cases; the
+source/values/typed integers/booleans/Unicode/nulls/empty/duplicate-column/unsupported
+scalar checks pass. A duck-protocol negative fixture is still not a substitute.
+
+The base environment still has no PyArrow/Polars and was not modified. Only a uv
+`--with` temporary overlay supplied PyArrow26.0.0/Polars2.0.0; exact versions and
+protected project/lock/base-version before/after hashes are recorded. The prior
+skips and historical master PASS remain untouched; current classification now has
+actual optional evidence for these versions, not a new test/driver guarantee.
 
 ## DATA-02 — rectangular input boundaries, not silent repair
 
@@ -662,8 +672,8 @@ union order and None; unequal columns remain unchanged at ingestion then validat
 rejects them. No padding/truncation or sorting/duplicate-x repair is introduced.
 Editor invalid open/action keeps spec/history/PNG/redo; CLI failure keeps input and
 sentinel output. Duck DataFrame/Arrow/to_dict malformed fixtures test dispatch
-boundaries, not real third-party compatibility. DATA-01's all-format current
-execution remains incomplete and is classified separately as additional evidence needed.
+boundaries, not real third-party compatibility. DATA-01's real optional evidence
+comes separately from the declared overlay, not these malformed duck fixtures.
 
 ## DATA-03 — normalized missing values are not invented observations
 
@@ -682,9 +692,10 @@ missing x as a gap/masked row, never a fabricated `"None"` tick; a literal strin
 `"None"` stays a category across shared axes/twins. Pandas NaT becomes None and
 ISO dates remain categorical labels, not a new continuous date-axis contract.
 
-These19 passed nodes prove the stated installed paths/contexts, not every missing
-scalar or exotic/optional format. Five shared optional cases remain skipped and
-source nonmutation does not imply sandboxing user-provided Python methods.
+The initial19 passed/5 skipped receipt proves only its installed paths. The
+later optional overlay actually passes all24 cases, including the five formerly
+skipped formats. Neither is every missing scalar/context, and source nonmutation
+does not imply sandboxing user-provided Python methods.
 
 ## DATA-04 — preserve declared group identity, not caption inference
 
@@ -758,9 +769,9 @@ external DB-driver/network coverage. No ownership policy was changed by mapping.
 ## DATA-05 — supported precision, not implicit date-axis conversion
 
 Implementation: `data._plain_value`, `_to_list`, `to_columns` dtype-preserving
-scalar/column/2D row paths. Current tests in
+scalar/column/2D row paths. Initial tests in
 [test_review_temporal_precision.py](../tests/test_review_temporal_precision.py)
-record51 passed and7 real optional skips. NumPy ns/ps/fs/as in8 shapes preserve
+record51 passed and7 real optional skips; the later declared overlay passes all58. NumPy ns/ps/fs/as in8 shapes preserve
 exact ISO text/NaT→None and source arrays; coarse D/s/ms/us formats stay stable.
 Plain2D protocol stays valid while ambiguous2D datetime columns reject rather
 than collapse cells. Numeric int epoch remains numeric without a datetime dtype.
@@ -768,12 +779,11 @@ Two child processes vary TZ(UTC/Honolulu) with LC_ALL=C; pandas ns offsets in fo
 zones remain exact. ISO date strings do not silently become numeric lineplot x.
 
 A Polars-shaped lossy formatter mock proves rejection-before-values but is not
-actual library compatibility. Real Polars ns in three zones plus DST transition,
-and Arrow ns in three zones are7 explicit skips because packages are absent.
-Use current actual runs or precisely retained-source provenance before completing
-those paths; no new tests/packages were added here. The stated1970 near-epoch
-high-resolution/2026 offsets and two-TZ/C locale checks are not all datetime64
-ranges, historical tzdata/locales or continuous native-date axes.
+actual library compatibility. The new overlay actually executes real Polars ns in
+three zones plus DST transition and Arrow ns in three zones: all7 pass separately
+from their earlier skipped receipts. The stated1970 near-epoch high-resolution/
+2026 offsets and two-TZ/C locale checks are still not all datetime64 ranges,
+historical tzdata/locales, all library versions or continuous native-date axes.
 
 ## DATA-08 — empty/singular means different things per layer
 
@@ -813,6 +823,24 @@ becomes mean4.5, sort=False preserves first-observed[2,1,0], sort=True yields
 bars remain valid. Ordered facets keep raw duplicate paths/style slots/NaN gaps;
 raw bars retain supplied heights/errors/dodge/hatches. Six current nodes check
 these contexts, not universal sorting/aggregation or all cross-family guides.
+
+## Optional execution update — environment, not a production change
+
+Existing `tests/test_review_missing_data.py`, `tests/test_review_temporal_precision.py`
+and `tests/test_review_table_formats.py` ran together in an ephemeral uv overlay:
+**95 passed,0 skipped/failed**. Actual versions: PyArrow26.0.0, Polars2.0.0,
+NumPy2.5.2, pandas3.0.5, Matplotlib3.11.1, pytest9.1.1. The executed `--with` inputs
+were unpinned; the reproduction command below pins the recorded optional versions.
+Project pyproject/uv.lock/.venv config hashes, base numeric-library versions and
+base optional-package absence matched before/after. No source/test/core-dependency/
+lock/base-venv/global-Python change or new package install into the main environment.
+
+The new receipt preserves old snapshots and identifies all12 formerly skipped
+node IDs as actually executed now. DATA-01/05 move from additional-execution-needed
+to existing coverage only for this declared version/fixture scope. This does not
+close JSON-09 semantics, certify past/future timezone or library compatibility,
+or count95 repeated nodes as95 new cases. No fresh Native/Rust/browser/sandbox/
+performance run is implied by these Python table-library tests.
 
 ## Reproduction and next coverage boundary
 
@@ -920,6 +948,12 @@ uv run --no-sync python -m pytest -q --tb=short \
   tests/test_raw_group_order.py::test_raw_bar_preserves_supplied_values_errors_and_sparse_dodge_hatch_slots \
   tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions \
   --junitxml=<private-results.xml>
+```
+
+```sh
+uv run --no-sync --with pyarrow==26.0.0 --with polars==2.0.0 python -m pytest -q --tb=short \
+  tests/test_review_missing_data.py tests/test_review_temporal_precision.py \
+  tests/test_review_table_formats.py --junitxml=<private-results.xml>
 ```
 
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
