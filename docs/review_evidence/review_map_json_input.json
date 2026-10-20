@@ -1,0 +1,327 @@
+{
+  "kind": "partial-checklist-strict-json-input-map",
+  "reviewed_ids": [
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-06",
+    "JSON-07"
+  ],
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-06",
+    "JSON-07",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 22,
+  "remaining_unreviewed": 128,
+  "source_commit": "195510f63ce53e9a72e0f8048940fb83b3a2731b",
+  "source_sha256": {
+    "mudplot-editor/src/model.rs": "758db2c8262c8c6091cde793e1c8a8ec5da40963b388f5d1ffd5dcf142b11f65",
+    "mudplot/__main__.py": "46f833fd28a6280e758924b70dd12feabc9645714ade9215ef010c9342d08bbf",
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/spec.py": "99e0cd0043274f6f9cec4cf54a9de043a3ada64b304064a78df11677428d2792",
+    "scripts/rust_editor_smoke_test.py": "c9e1fe6de2bf9634cd83c0af1a294a32504269d695fad8f988c3c4765a086ace",
+    "tests/fixtures/review_json_boundaries.json": "b193953f8ef3e250a77d854562b2f0d8907186f921160316cbe6816740d81341",
+    "tests/test_review_json_contracts.py": "31877ce6e610722f54e5542f5ae3bfd50a6550278c77b72fee7315fd58834af9"
+  },
+  "previous_artifact_sha256": "150a9f7de86272994f1bb509e0017bf32eef4052b9c5f21b47af130a52ca8dbd",
+  "items": [
+    {
+      "id": "JSON-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::_loads_json",
+          "body_sha256": "2aed4913974139a0b3dd8ce80b16240f6001aeb09d1af07b51f9ef39968977ed"
+        },
+        {
+          "ref": "mudplot/io.py::_reject_json_constant",
+          "body_sha256": "6c782ca6c1ba36abb7a267cfcb5c5a90ce5d150b5ac9cac14944045f8f69bb41"
+        },
+        {
+          "ref": "mudplot/io.py::_validate_json_value",
+          "body_sha256": "91bc4c70728e9f4ef8b4d6bbe507ea1471efdbcacb3e4ada11e2e0d0e54e8f86"
+        },
+        {
+          "ref": "mudplot/data.py::_plain_value",
+          "body_sha256": "7c6208abaac1ddf9920f8d9a4b6c6f91786f690f2760959985375fa2dca8b875"
+        },
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[validate-NaN]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[validate-Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[validate--Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[validate-1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[validate--1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[migrate-NaN]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[migrate-Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[migrate--Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[migrate-1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[migrate--1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[apply-NaN]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[apply-Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[apply--Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[apply-1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[apply--1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[render-NaN]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[render-Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[render--Infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[render-1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change[render--1e400]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[mapping-missing]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[mapping-positive_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[mapping-negative_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[records-missing]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[records-positive_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[records-negative_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[rows-missing]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[rows-positive_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[rows-negative_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[numpy-missing]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[numpy-positive_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[numpy-negative_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[pandas-missing]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[pandas-positive_infinity]",
+        "tests/test_review_json_contracts.py::test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection[pandas-negative_infinity]"
+      ],
+      "fresh_python_passed": 35
+    },
+    {
+      "id": "JSON-03",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::_reject_duplicate_keys",
+          "body_sha256": "2e197f33c102047546a10bc397ead6613775a7ea0db0cb09d2c55a1311746f73"
+        },
+        {
+          "ref": "mudplot/io.py::_loads_json",
+          "body_sha256": "2aed4913974139a0b3dd8ce80b16240f6001aeb09d1af07b51f9ef39968977ed"
+        },
+        {
+          "ref": "mudplot/__main__.py::_cmd_apply",
+          "body_sha256": "3052664c2fcd179bf9bb35db932a82c729f069ef9320c61548aa5ddd88156496"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[from_json-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[plot-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths[file-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[validate-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[migrate-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[apply-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"dpi\":100,\"dpi\":100}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"dpi\":100,\"dpi\":200}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"theme\":{\"font\":{\"size\":11,\"size\":11}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"theme\":{\"font\":{\"size\":11,\"size\":12}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_rejects_duplicate_specs_and_preserves_output[render-{\"data\":{\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetTitle\",\"text\":\"A\",\"text\":\"A\"}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetTitle\",\"text\":\"A\",\"text\":\"B\"}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetFont\",\"params\":{\"size\":11,\"size\":11}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetFont\",\"params\":{\"size\":11,\"size\":12}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetData\",\"columns\":{\"unused\":[{\"key\":1,\"key\":1}]}}]",
+        "tests/test_review_json_contracts.py::test_json_03_cli_action_duplicates_do_not_apply_a_partial_result[{\"type\":\"SetData\",\"columns\":{\"unused\":[{\"key\":1,\"key\":2}]}}]"
+      ],
+      "fresh_python_passed": 48
+    },
+    {
+      "id": "JSON-04",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::to_json",
+          "body_sha256": "f1703a6fb2746076dc3a8999d22133cbda20a23dc9057961dc91a6abc0633350"
+        },
+        {
+          "ref": "mudplot/io.py::from_json",
+          "body_sha256": "71149ab1b95076cf969aa666058de248e39da6fe4aa61a74ff3a8f930f886268"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_contracts.py::test_json_04_known_data_fields_preserve_signed_integer_boundaries"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_contracts.py::test_json_04_known_data_fields_preserve_signed_integer_boundaries"
+      ],
+      "fresh_python_passed": 1
+    },
+    {
+      "id": "JSON-06",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/io.py::_validate_json_value",
+          "body_sha256": "91bc4c70728e9f4ef8b4d6bbe507ea1471efdbcacb3e4ada11e2e0d0e54e8f86"
+        },
+        {
+          "ref": "mudplot/io.py::_reject_duplicate_keys",
+          "body_sha256": "2e197f33c102047546a10bc397ead6613775a7ea0db0cb09d2c55a1311746f73"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_contracts.py::test_json_06_normal_unicode_and_valid_surrogate_pairs_remain_structural_data",
+        "tests/test_review_json_contracts.py::test_json_06_nested_reserved_keys_and_lone_surrogates_are_rejected"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_contracts.py::test_json_06_normal_unicode_and_valid_surrogate_pairs_remain_structural_data[{\"data\":{\"columns\":{\"label\":[\"\\ud55c\\uae00 <&> \\u03a9 \\U0001f600\"]}}}]",
+        "tests/test_review_json_contracts.py::test_json_06_normal_unicode_and_valid_surrogate_pairs_remain_structural_data[{\"data\":{\"columns\":{\"label\":[\"\\\\ud55c\\\\uae00 <&> \\\\u03a9 \\\\ud83d\\\\ude00\"]}}}]",
+        "tests/test_review_json_contracts.py::test_json_06_nested_reserved_keys_and_lone_surrogates_are_rejected[{\"data\":{\"columns\":{\"unused\":[{\"$serde_json::private::Number\":\"1\"}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_06_nested_reserved_keys_and_lone_surrogates_are_rejected[{\"data\":{\"columns\":{\"unused\":[{\"value\":\"\\\\ud800\"}]}}}]",
+        "tests/test_review_json_contracts.py::test_json_06_nested_reserved_keys_and_lone_surrogates_are_rejected[{\"data\":{\"columns\":{\"unused\":[{\"value\":\"\\\\udfff\"}]}}}]"
+      ],
+      "fresh_python_passed": 5
+    },
+    {
+      "id": "JSON-07",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/spec.py::migrate_spec_dict",
+          "body_sha256": "6fa0af602498b398734b1a7d4d5fc712f21ba3ba72934d679bb83d91d6cb482b"
+        },
+        {
+          "ref": "mudplot/io.py::from_json",
+          "body_sha256": "71149ab1b95076cf969aa666058de248e39da6fe4aa61a74ff3a8f930f886268"
+        },
+        {
+          "ref": "mudplot/__main__.py::_cmd_migrate",
+          "body_sha256": "e9d9a77bbfa5d97b0abeea837636bc358c77d8ca896f453f13ba550241b98bc0"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[99.0]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[0.0]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[1]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[False]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[None]",
+        "tests/test_review_json_contracts.py::test_json_07_unknown_or_malformed_versions_never_replace_cli_output[version6]"
+      ],
+      "fresh_python_passed": 7
+    }
+  ],
+  "fresh_python": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_json_contracts.py --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 96,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.94,
+    "optional_numpy_pandas_cases_executed": true,
+    "log_sha256": "14337d797f4dd1bbd1f6c0c2df80ed0ce72d78c2654e80704b4d2b8a598e8687",
+    "junit_sha256": "7356377045a60280604639ebbe6a89d76401409837a3c71037033ebe4e5f38d3"
+  },
+  "fresh_rust": {
+    "command": "cargo test --locked --manifest-path mudplot-editor/Cargo.toml model::tests::",
+    "exit": 0,
+    "passed_unique_tests": 11,
+    "failed": 0,
+    "ignored": 0,
+    "executed_tests": [
+      "model::tests::action_envelope_preserves_typed_kind_and_fields",
+      "model::tests::figure_spec_round_trip_preserves_arbitrary_precision_json_integers",
+      "model::tests::figure_spec_round_trip_preserves_schema_fields",
+      "model::tests::omitted_spec_version_uses_the_embedded_current_default",
+      "model::tests::strict_json_rejects_duplicate_keys_at_any_depth",
+      "model::tests::strict_json_rejects_reserved_number_objects_without_reinterpreting_them",
+      "model::tests::strict_json_preserves_signed_integer_boundaries_and_valid_unicode",
+      "model::tests::generated_capabilities_cover_visual_controls",
+      "model::tests::render_token_fixture_preserves_omission_null_empty_and_explicit_values",
+      "model::tests::capabilities_accept_additive_top_level_and_layer_metadata",
+      "model::tests::full_field_fixture_preserves_types_values_and_array_order"
+    ],
+    "log_sha256": "160c83f2a4436c003c8cbcff3be559a226f6940914198bae07b2045f44b09919",
+    "scope": "Model codec group run;only stated strict/integers/Unicode/omitted-version tests mapped,not allJSON01/08/09semantics."
+  },
+  "retained_native": {
+    "fresh_execution": false,
+    "artifact": "docs\\review_evidence\\swarm_facets_verification.json",
+    "artifact_sha256": "c8045139f00680b689a2443c81f932f3520406630b75432ea993568c11b1d2c3",
+    "source28_raw8_match_current": true,
+    "corpus_sha256": "b193953f8ef3e250a77d854562b2f0d8907186f921160316cbe6816740d81341",
+    "exit": 0,
+    "raw_log_sha256": "e2dad8e19eeb67b3ee3c8ab7ec288e985f019f5da5112a19a18988d368eed74b",
+    "helper": "scripts/rust_editor_smoke_test.py::_review_json_boundaries",
+    "invalid_specs": 19,
+    "invalid_actions": 11,
+    "valid_specs": 2
+  },
+  "limits": [
+    "NaN adapter values normalize toNone;Infinity is retained then strict serialization rejects,not missing-data normalization.",
+    "Python arbitrary ints and Rust decimal integer strings structural only,not arbitrary-precision rendering(JSON05).",
+    "Rust raw arbitrary-precision envelope differs from application bridge:future version strings/large exponent grammar are not a second Python validator;retained Native app path rejects invalid specs atomically.",
+    "SPEC_VERSION0.1 differs from package1.0.0;MIGRATIONSempty/current-or-omitted accepted,do not invent old0.0 support.",
+    "Unicode/reserved strict tests not everyconstructed-Python-dict key taxonomy.",
+    "RetainedNative52executionnotnewNative/browser/Linux/MSRV/binaryattestation;source+fixture+rawhashverified.",
+    "JSON01/05/08/09/10/11/12notmappedhere;BASE05RUNNING139P6R4O1Dunchanged;remaining128IDsunclassified.",
+    "Cumulative174unique Python nodes;Rust11 reported separately,not added to Python count."
+  ],
+  "verifier_sha256": "2e75be8cb4a3271f1745e44f622d0d099c6eb29e3c3a52db3ad2573c784c9dd2"
+}

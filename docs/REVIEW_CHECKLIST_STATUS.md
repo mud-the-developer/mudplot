@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 99차 — JSON-02/03/04/06/07 strict입력매핑
+
+- [부분review-map](review-map.md)에strict loader/API/CLI·adapter·Rustcodec의실제symbol/test/근거를연결해
+  누적22ID로확장했습니다. 현재Python96P/0skip·fail(NumPy/pandas포함),Rustmodel11P/0fail·ignored이며
+  Rust추가구조검사통과를JSON-01/08/09의모든semantic증명으로확대하지않습니다.
+- [분리근거](review_evidence/review_map_json_input.json)는NaN결측정규화/Infinity유지후JSON거절,중첩동일·상이
+  duplicate키,정수decimal구조보존/렌더범위분리,Unicode허용·거절,현재/생략version과미지원version을구분합니다.
+  Rustrawarbitrary-precisionenvelope와Pythonbridge의float/version검증을동일정책으로강제하지않습니다.
+- 보존Nativecorpus19spec/11action거절·2허용은source/fixture/raw지문이맞는application경로이지새Native실행이
+  아닙니다. Python174고유node와Rust11은별도집계하고JSON-05/09등미검토128ID/BASE-05RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다. Verifier의WindowsGitpath오류만고친뒤재실행했고
+  통과테스트를재실행하거나오류를테스트성공으로세지않았습니다.
+- Runtime/테스트/원문/의존성/버전변경없이기준98b4ecCI39470014411을보호해로컬보존하고
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 98차 — HIST-06/07/08 replay·gesture·checkpoint매핑
 
 - [부분review-map](review-map.md)에seededreplay2/checkpoint9/실제browser3의source/test를연결해누적17ID로

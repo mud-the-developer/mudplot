@@ -7,19 +7,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json),
 [history boundary/branch/failure provenance](review_evidence/review_map_history_core.json),
 [open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json),
-[bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json).
+[bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json),
+[strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json).
 
 ## Scope and classification
 
-This is a **seventeen-ID state/history mapping**, not a complete150-ID map.
-The remaining133 IDs have not been classified here. The candidate inventory still
+This is a **twenty-two-ID state/history/JSON mapping**, not a complete150-ID map.
+The remaining128 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All seventeen below have existing coverage of the explicitly stated boundary; no new
+All twenty-two below have existing coverage of the explicitly stated boundary; no new
 runtime/test code or compatibility decision was needed for this mapping unit.
 AST checks only resolve references, not prove their semantic adequacy.
 
@@ -35,7 +36,10 @@ not57 summed ID relationships. HIST-01/02/03 add6 previously unselected nodes,
 giving60 unique fresh pytest nodes across four focused runs, not63 summed ID
 relationships. HIST-04/05 add4 new nodes(unit3/Python real-browser1), yielding64
 unique executed pytest nodes across those runs. HIST-06/07/08 add14 distinct nodes
-(replay2/checkpoint9/real-browser3), bringing the recorded unique total to78.
+(replay2/checkpoint9/real-browser3), bringing that recorded unique total to78.
+The strict JSON input run adds96 distinct Python nodes(0 skip), for174 unique
+Python nodes across recorded runs. Rust model11 passed is a separate count, not
+185 Python cases; its broader structural tests do not close JSON-01/08/09 here.
 Historical performance profile is not a new timing run. The browser cases must execute;
 receipt checks reject any skip. The separate13-row cursor/hash assert probe is not
 a pytest count. Native provenance is a separate previous execution
@@ -62,6 +66,11 @@ expanded parameterized node IDs are recorded in the separate immutable artifacts
 | HIST-06 | Existing coverage | 2 seeded replay passed | Bounded768-action sequences and128 undo/redo each, exact states/hashes |
 | HIST-07 | Existing coverage | 3 actual browser passed | Measured mouse-release commits/independent edits and keyboard burst semantics |
 | HIST-08 | Existing coverage | 9 checkpoint passed; historical profile/design | One prior64-action state, no history truncation/public limit or new performance claim |
+| JSON-02 | Existing coverage | 35 Python passed; retained Native app | Strict nonfinite/overflow rejection vs adapter missing normalization |
+| JSON-03 | Existing coverage | 48 Python passed; fresh Rust strict codec | Recursive equal/different duplicate keys and output preservation |
+| JSON-04 | Existing coverage | 1 Python passed; fresh Rust integer codec | Signed decimal boundaries/known data fields, not rendering range |
+| JSON-06 | Existing coverage | 5 Python passed; fresh Rust/retained Native | Unicode pairs/lone surrogates/reserved object keys |
+| JSON-07 | Existing coverage | 7 Python passed; fresh Rust default/retained Native app | Current/omitted spec version vs unsupported/malformed versions |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -373,6 +382,59 @@ remain unknown, not zero or completed. One extra full supported Spec is not a ha
 OS RSS bound or a long-lived GUI leak guarantee. Other fields in that artifact
 are historical, not refreshed by this mapping.
 
+## JSON-02/03/04/06/07 — strict input and structural boundaries
+
+Implementation: [io.py](../mudplot/io.py) `_loads_json`, `_reject_json_constant`,
+`_reject_duplicate_keys`, `_validate_json_value`, `to_json`, `from_json`;
+[data.py](../mudplot/data.py) `_plain_value`, `to_columns`;
+[spec.py](../mudplot/spec.py) `migrate_spec_dict`;
+[CLI](../mudplot/__main__.py) `_cmd_apply`, `_cmd_migrate`;
+[Rust codec](../mudplot-editor/src/model.rs) `from_json_strict`,
+`StrictJsonVisitor.visit_map`, `reject_reserved_keys`, `FigureSpec` envelope.
+Source bodies were read; fresh Python96 and Rust model11 passed without skipped
+NumPy/pandas adapter cases. Only the stated boundaries are assigned to these IDs.
+
+In [test_review_json_contracts.py](../tests/test_review_json_contracts.py), exact
+base nodes (parameter expansions in the machine-readable artifact):
+
+- JSON-02: `test_json_02_nonfinite_raw_spec_numbers_fail_without_output_change` (20),
+  `test_json_02_adapter_missing_normalization_is_separate_from_infinity_rejection` (15).
+  Strict NaN/Infinity/-Infinity/exponent overflow fail before replacing outputs.
+  Adapter NaN/NA becomes None; Infinity remains a value then strict serialization
+  rejects it, rather than silently treating it as missing.
+- JSON-03: `test_json_03_public_loaders_reject_equal_and_different_duplicates_at_all_depths` (18),
+  `test_json_03_cli_rejects_duplicate_specs_and_preserves_output` (24),
+  `test_json_03_cli_action_duplicates_do_not_apply_a_partial_result` (6).
+  Root/nested/array-object equal and unequal duplicates reject across selected
+  loaders and CLI validate/migrate/apply/render; source/previous output survive.
+- JSON-04: `test_json_04_known_data_fields_preserve_signed_integer_boundaries` (1).
+  Python known data fields preserve positive/negative2^53, signed/unsigned64-bit
+  boundaries and larger integers as ints, not floats. Fresh Rust
+  `model::tests::strict_json_preserves_signed_integer_boundaries_and_valid_unicode`
+  checks the same supported data path/decimal strings; the arbitrary-precision
+  envelope test is separate. This is not JSON-05 renderer precision support.
+- JSON-06: `test_json_06_normal_unicode_and_valid_surrogate_pairs_remain_structural_data` (2),
+  `test_json_06_nested_reserved_keys_and_lone_surrogates_are_rejected` (3).
+  Fresh Rust reserved-key, duplicate-key and signed-integer/Unicode tests preserve
+  normal text/pairs and reject reserved object keys/lone surrogates. This selected
+  file does not exhaust every directly constructed Python non-string map-key case.
+- JSON-07: `test_json_07_unknown_or_malformed_versions_never_replace_cli_output` (7).
+  `SPEC_VERSION=0.1` is distinct from package1.0.0; migration registry is empty.
+  Current or omitted version works, unknown/unimplemented-old/malformed values
+  fail without overwriting output. Rust's omitted-version/default-null test is a
+  structural envelope test, not a second Python version-policy validator.
+
+The retained source-matched Native `_review_json_boundaries` execution rejects
+19 specs/11 actions and accepts2 Unicode/current-or-omitted cases while preserving
+state/PNG. Its source28/raw8 and corpus equal the captured52 source. It supplies
+application-path evidence for JSON-02/06/07, not a new Native/browser/Linux/MSRV run
+or a new HTTP duplicate-key test. Raw Rust arbitrary-precision JSON may retain
+large finite lexical numbers/future version strings; Python bridge validation
+applies the application float/version policy. Do not force the two roles equal.
+
+Rust model11 includes other structural/capability/token tests; passing that group
+does not map all fields' default/AUTO semantics or complete JSON-01/08/09.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -417,10 +479,16 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short tests/test_review_json_contracts.py \
+  --junitxml=<private-results.xml>
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml model::tests::
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining133 IDs still need their own reviewed symbol/node/provenance links
+The remaining128 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
