@@ -1,0 +1,272 @@
+{
+  "kind": "partial-checklist-plot-numeric-oracle-map",
+  "reviewed_ids": [
+    "PLOT-02",
+    "PLOT-03",
+    "PLOT-04",
+    "PLOT-06",
+    "PLOT-07",
+    "PLOT-08"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-05",
+    "DATA-06",
+    "DATA-07",
+    "DATA-08",
+    "DATA-09",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "PLOT-01",
+    "PLOT-02",
+    "PLOT-03",
+    "PLOT-04",
+    "PLOT-06",
+    "PLOT-07",
+    "PLOT-08",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 45,
+  "remaining_unreviewed": 105,
+  "source_commit": "47d042aca0f181ff2b08a7f26f1e7552a2f9b6fc",
+  "source_sha256": {
+    "mudplot/_heatmap_render.py": "dc837fe55c2d30f2cd731e3fad3124490ca4169fdefbd41a1c1949398402c17a",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/_scatter_semantics.py": "a64f0882985b1168b95f05689dca736d8fb6d172c3ceb59178a656a80783e7e3",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_review_numeric_geometry.py": "551126148f76c3e1518174d78ea1ec040cc35999baa24712591db57a919b3646",
+    "tests/test_review_projection_colours.py": "8268439d6b7d3776f2fb04d8b677007138a332396122bc57d354d463c1828384"
+  },
+  "previous_artifact_sha256": "b8ba5b29930204bc9c3e42fd1b6f2971816db511556a84e57d54a3fa4c36b1c0",
+  "items": [
+    {
+      "id": "PLOT-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_x_values",
+          "body_sha256": "47eb302a0bbc1402c9a3aa52c9a3af2c78c34fb890a451a75ca21a0da36755b5"
+        },
+        {
+          "ref": "mudplot/_render.py::_apply_axis",
+          "body_sha256": "cbd04cc616976e88b275f2d0633d07ce7774631046c308d773cc9ace7eb3f1d5"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_categorical_positions_align_across_native_layer_permutations"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_categorical_positions_align_across_native_layer_permutations[order0]",
+        "tests/test_review_numeric_geometry.py::test_categorical_positions_align_across_native_layer_permutations[order1]"
+      ],
+      "fresh_passed": 2,
+      "reviewed_boundary": "NativeLine-scatter-barpermutations2useABCsamecategoryregistryticks/artistx/centers/rawsourceexact;notallsharing/projectioncategories."
+    },
+    {
+      "id": "PLOT-03",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_series_masks",
+          "body_sha256": "59f7daf55d644691665f0a0e4ea29561b17f54a70f0c73672344df0c692c590c"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_panel",
+          "body_sha256": "21f93f2e2ab933c36d9edca1ecc71b9a2a953c740cb7b1dc6c30f4b0b5864c54"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_ordered_group_styles_are_reserved_across_panel_permutations"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_ordered_group_styles_are_reserved_across_panel_permutations"
+      ],
+      "fresh_passed": 1,
+      "reviewed_boundary": "ExplicitABCorderedhues/redundantencodingreservedcolor-marker-linestyleacrosssparseAB/BCpanelsandreversepanelorder;notallsemantic/statgroup/legendfamilies."
+    },
+    {
+      "id": "PLOT-04",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_target_axes",
+          "body_sha256": "27b0d3a2c2085317212e84a4119aa50ce2cb71614a91669fd90b8b9082023f10"
+        },
+        {
+          "ref": "mudplot/_render.py::_apply_axis",
+          "body_sha256": "cbd04cc616976e88b275f2d0633d07ce7774631046c308d773cc9ace7eb3f1d5"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_panel",
+          "body_sha256": "21f93f2e2ab933c36d9edca1ecc71b9a2a953c740cb7b1dc6c30f4b0b5864c54"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_secondary_log_axis_keeps_its_artists_labels_limits_and_annotations"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_secondary_log_axis_keeps_its_artists_labels_limits_and_annotations"
+      ],
+      "fresh_passed": 1,
+      "reviewed_boundary": "Primarysmall1-3vsy2log10-1000/limits1-10000/rightunits/line-hline-textaxesidentity/combinedlegend;no freshallformat-save/DPI/dragcoordinatesprobe."
+    },
+    {
+      "id": "PLOT-06",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_draw_matrix_layer",
+          "body_sha256": "8a869e34254d98d0416446ce3aa1b33899005e6dbba38386b6bb725b411280be"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_3d_layer",
+          "body_sha256": "69967049fa8c882c4a3745c1dab94acdef7ab6aa71af3f72ec0cabb3ce27be76"
+        },
+        {
+          "ref": "mudplot/_heatmap_render.py::draw_heatmap",
+          "body_sha256": "e5d4068f6469dd2663b9ae63c9d8b727d3cc24b15c2da996d0561e0de0a204ab"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_numeric_geometry.py::test_asymmetric_heatmap_cell_annotation_and_origin_contract",
+        "tests/test_review_numeric_geometry.py::test_asymmetric_3d_matrix_receives_column_x_row_y_grid",
+        "tests/test_review_numeric_geometry.py::test_contours_on_asymmetric_plane_match_native_xy_level_geometry"
+      ],
+      "executed_nodes": [
+        "tests/test_review_numeric_geometry.py::test_asymmetric_heatmap_cell_annotation_and_origin_contract",
+        "tests/test_review_numeric_geometry.py::test_asymmetric_3d_matrix_receives_column_x_row_y_grid[surface]",
+        "tests/test_review_numeric_geometry.py::test_asymmetric_3d_matrix_receives_column_x_row_y_grid[wireframe]",
+        "tests/test_review_numeric_geometry.py::test_contours_on_asymmetric_plane_match_native_xy_level_geometry[contour]",
+        "tests/test_review_numeric_geometry.py::test_contours_on_asymmetric_plane_match_native_xy_level_geometry[contourf]"
+      ],
+      "fresh_passed": 5,
+      "reviewed_boundary": "Asymmetric2x3matrix11-23heatupperorigin/extent/celltextXY/sourcepreserved;surface-wiremeshXcolumnYrowZexact;contour-plane11+x+10yindependentlevel/pathassertions.Notallmasked-log-clusteroptions."
+    },
+    {
+      "id": "PLOT-07",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_draw_series_layer",
+          "body_sha256": "8b9745dbe8b75fb08e50a3f972b48447acea8b3aca55c22928db21859da282d1"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_3d_layer",
+          "body_sha256": "69967049fa8c882c4a3745c1dab94acdef7ab6aa71af3f72ec0cabb3ce27be76"
+        },
+        {
+          "ref": "mudplot/validate.py::validate",
+          "body_sha256": "5b96e8cb7ae4d5745ae0a63c006a5c22d0a310245e47b5122bb62d88a6099aac"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_projection_colours.py::test_quiver_tip_is_data_vector_under_unequal_axis_units",
+        "tests/test_review_projection_colours.py::test_3d_line_and_scatter_preserve_asymmetric_xyz",
+        "tests/test_review_projection_colours.py::test_polar_radians_have_expected_cardinal_positions_without_data_rewrite",
+        "tests/test_review_projection_colours.py::test_incompatible_projection_is_rejected_without_silent_cartesian_fallback"
+      ],
+      "executed_nodes": [
+        "tests/test_review_projection_colours.py::test_quiver_tip_is_data_vector_under_unequal_axis_units[2.0-0.0]",
+        "tests/test_review_projection_colours.py::test_quiver_tip_is_data_vector_under_unequal_axis_units[0.0-1.0]",
+        "tests/test_review_projection_colours.py::test_quiver_tip_is_data_vector_under_unequal_axis_units[2.0-1.0]",
+        "tests/test_review_projection_colours.py::test_3d_line_and_scatter_preserve_asymmetric_xyz",
+        "tests/test_review_projection_colours.py::test_polar_radians_have_expected_cardinal_positions_without_data_rewrite",
+        "tests/test_review_projection_colours.py::test_incompatible_projection_is_rejected_without_silent_cartesian_fallback"
+      ],
+      "fresh_passed": 6,
+      "reviewed_boundary": "QuiverthreevectorsunequalunitsactualtransformedpolygonTip==dataendpointat1e-5/anglesxy-scaleunitsxy;asymmetricXYZline-scatter;polar0pi/2piE-N-Wradians;incompatiblepolarhistValueError/sourceexact.Notallvector/polar3Dprojectioncontracts."
+    },
+    {
+      "id": "PLOT-08",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_heatmap_render.py::colour_norm",
+          "body_sha256": "a7f9d246cf2f4a1442d05d949a146e31a59857264ceb5f940279e701b2ef4fe7"
+        },
+        {
+          "ref": "mudplot/_heatmap_render.py::draw_colourbar",
+          "body_sha256": "5d28997eee7690ba86e4085e0db9df3904c8e96817976c1f7e6b66fbb96bc392"
+        },
+        {
+          "ref": "mudplot/_scatter_semantics.py::draw_semantic_scatter",
+          "body_sha256": "3c03c61dd63dcd31fafe69d84594a59ed841bb3680f7ae0abe6c153ae3dc20ad"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_series_layer",
+          "body_sha256": "8b9745dbe8b75fb08e50a3f972b48447acea8b3aca55c22928db21859da282d1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_projection_colours.py::test_heatmap_domains_map_outside_missing_without_panel_leak",
+        "tests/test_review_projection_colours.py::test_numeric_semantic_hue_bounds_are_mapping_not_row_selection",
+        "tests/test_review_projection_colours.py::test_typed_heatmap_null_is_explicitly_rejected_not_silently_imputed",
+        "tests/test_review_projection_colours.py::test_native_scatter_color_domain_missing_and_constants_are_finite"
+      ],
+      "executed_nodes": [
+        "tests/test_review_projection_colours.py::test_heatmap_domains_map_outside_missing_without_panel_leak",
+        "tests/test_review_projection_colours.py::test_numeric_semantic_hue_bounds_are_mapping_not_row_selection",
+        "tests/test_review_projection_colours.py::test_typed_heatmap_null_is_explicitly_rejected_not_silently_imputed",
+        "tests/test_review_projection_colours.py::test_native_scatter_color_domain_missing_and_constants_are_finite[values0]",
+        "tests/test_review_projection_colours.py::test_native_scatter_color_domain_missing_and_constants_are_finite[values1]",
+        "tests/test_review_projection_colours.py::test_native_scatter_color_domain_missing_and_constants_are_finite[values2]"
+      ],
+      "fresh_passed": 6,
+      "reviewed_boundary": "Independentfixedperpanelclims/masked999/colorbar-mappable/axislims/RGBAclip[-5,0,5,10,20];semhueexplicitnormnotrowfilter(5rows/guide0-5-10);typedheatnullreject;scatterconstant-allmissing-somemissingmaskandfinitecolorbar.Notallnorm/log/subnormalranges."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <numericgeometry6bases/9cases> tests/test_review_projection_colours.py --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 21,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 11.67,
+    "log_sha256": "3b7292cc11884c2edc1bc48bd466548b8d6ab47a5e9fa3b5e4533e68a12643c7",
+    "junit_sha256": "5ccb4fb6411ee927255b7d78153bc54c49c140284c8590c8421becc34273c3bb"
+  },
+  "security_gate_observed": {
+    "ci": 39493638843,
+    "head": "47d042aca0f181ff2b08a7f26f1e7552a2f9b6fc",
+    "python312_audit_step": "success",
+    "python310_audit_step": "skipped by workflow condition",
+    "whole_ci": "in_progress not passed"
+  },
+  "limits": [
+    "Existingfixtureexpectations/tolerancesunchanged;no implementation/goldenimage/weakassertionfix.",
+    "Rawrenderer/statistical/semanticmappingrolesnotuniform;selectedsourcesread+ASTrefsbodyhashnotallbranchcoverage.",
+    "No freshNative/Rust/browser/all-format-export/independenthumanAT/fullsuite/profilingclaim.",
+    "PLOT05sharedaxes/PLOT09uncertainty/PLOT10log/PLOT11annotations/PLOT12zordernotmappedbyoverlappingfixturealone.",
+    "Recorded779uniquePythonmapnodes/45reviewed44existing+JSON09additional/105unclassified/masterBASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "16611e5758e186a0f637be5441e8578da598bab7f14b6332ffbe7e819409a8de"
+}
