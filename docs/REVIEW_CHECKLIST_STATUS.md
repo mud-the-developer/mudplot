@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 113차 — PLOT-11/12 좌표계·alpha·native속성매핑
+
+- [부분review-map](review-map.md)에선택Cartesiandata-anchor/axes-title/figure-legend와annotationopacity의
+  source/test를연결해누적47ID를분류했습니다. 현재frame-transform5+실제Chromiumdrag1+alpha12=18P/0skip·fail,
+  22.68초이며기존pointer2%tolerance/wait/renderer는바꾸지않았습니다.
+  [분리근거](review_evidence/review_map_coordinates_alpha.json).
+- Invertedlogx/y2log의실제drag는선택panel/y2만변경하고undo-redo/JSON을유지합니다. 미지원polartext는계속
+  거절합니다. 명시alpha0/.35는text/arrow모두전달되고0은basepixel을바꾸지않으며defaultRGBA-opacity/SVG도검사합니다.
+- 별도두합성callorder의line/scatter/band/text/annotatealpha-zorder-clip_on을직접nativeMatplotlibcontrol과비교하고
+  source유지/Figureclose를확인했습니다. Probe를pytest수에더하지않고새zorder/clip API/모든pixel겹침·viewer·GUI·AT
+  승인으로확대하지않습니다. Native기본순서와속성은그대로입니다.
+- 기록된고유Python통과node는797개이고기존확인경계46/JSON-09추가의미검사1·미분류103ID입니다. BASE-05JSON-09RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준47d042aCI39493638843을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 112차 — PLOT-02/03/04/06/07/08 독립수치oracle매핑
 
 - 새47d042a/CI39493638843의3.12auditstep성공을확인한뒤문서매핑을재개했습니다. 3.10auditstep은workflow조건상

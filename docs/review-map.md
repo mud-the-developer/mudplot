@@ -18,19 +18,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [temporal precision and per-layer boundary/order evidence](review_evidence/review_map_data_policies.json),
 [real optional-adapter execution in an unchanged-base uv overlay](review_evidence/review_map_optional_execution.json),
 [dynamic registered-layer execution smoke and separate meaning controls](review_evidence/review_map_layer_smoke.json),
-[independent coordinate/matrix/projection/colour oracles](review_evidence/review_map_plot_oracles.json).
+[independent coordinate/matrix/projection/colour oracles](review_evidence/review_map_plot_oracles.json),
+[coordinate spaces/actual browser drag/annotation alpha evidence](review_evidence/review_map_coordinates_alpha.json).
 
 ## Scope and classification
 
-This is a **forty-five-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
-The remaining105 IDs have not been classified here. The candidate inventory still
+This is a **forty-seven-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
+The remaining103 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Forty-four below have existing coverage of their explicitly stated boundary.
+Forty-six below have existing coverage of their explicitly stated boundary.
 JSON-09 remains **additional test needed** for its all-field meaning matrix.
 DATA-01/05's earlier optional execution gaps were filled by the separate declared
 uv overlay run below, not by retroactively changing skipped receipts. Existing
@@ -104,6 +105,10 @@ PLOT-02/03/04/06/07/08 add21 distinct current passed Python oracle nodes, bringi
 recorded unique passed nodes to779. New audit CI step on the certifi-patched source
 has succeeded, but the whole CI run is not complete. No tolerance/assertion changed.
 
+PLOT-11/12 add18 distinct current passed Python nodes, giving797 recorded unique
+passed nodes. One required actual Chromium drag case executed with0 skips; two
+native-default property probes are separate assertions, not pytest cases.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -151,6 +156,8 @@ has succeeded, but the whole CI run is not complete. No tolerance/assertion chan
 | PLOT-06 | Existing coverage | 5 current oracle passed | Asymmetric2x3 heatmap/mesh/contour native XY/value orientation |
 | PLOT-07 | Existing coverage | 6 current oracle passed | Quiver unequal-unit tip/3DXYZ/polar radians and invalid projection rejection |
 | PLOT-08 | Existing coverage | 6 current oracle passed | Independent norm-mask-colorbar/RGBA mapping and scalar missing/constant domains |
+| PLOT-11 | Existing coverage | 5 frame/transform + 1 actual Python browser passed | Existing data/axes/figure spaces and selected y2 inverted-log drag/history |
+| PLOT-12 | Existing coverage | 12 alpha passed; separate2 native-property probes | Explicit text+arrow opacity/alpha0 pixels/defaultRGBA/native z-order-clip, not arbitrary new options |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -967,6 +974,54 @@ No new Native/Rust/browser, all-format export or human AT/aesthetics certificati
 is claimed by this21-case run. PLOT-05/09/10/11/12 and other IDs still need their
 own reviewed mapping; overlapping fixtures do not automatically assign coverage.
 
+## PLOT-11 — coordinate spaces through actual editor transforms
+
+Implementation: `EditorSession._extract_layout`,
+`editor_view._preview_handles_html`, `_data_to_img_frac`, `_axes_frac_to_img_frac`,
+`_render._draw_marker_layer`, `_draw_panel`.
+
+Current nodes:
+
+- `tests/test_review_coordinate_frames.py::test_layout_handle_frames_match_selected_primary_secondary_axes_and_figure` (3 size/DPI/panel contexts)
+- `tests/test_review_coordinate_frames.py::test_renderer_artist_positions_match_data_axes_and_figure_transforms`
+- `tests/test_review_coordinate_frames.py::test_unsupported_noncartesian_text_is_rejected_before_handle_layout`
+- `tests/test_review_coordinate_browser.py::test_secondary_data_drag_matches_log_inverted_transform_and_history`
+
+The Cartesian fixture uses inverted log x100→1, primary y0..4 and secondary log
+y10..1000, data text/arrow anchors, axes title[.25,.9], figure legend[.8,.7].
+Primary/secondary handle entries retain their own scales/limits; renderer transData,
+transAxes and transFigure correspondence is checked without state mutation. Polar
+text remains unsupported and failed open preserves editor spec/PNG/layout.
+
+The real Chromium case drags selected panel1's y2 text through .4/.65 image
+fractions, checks expected data[10^1.2,10^2.3] within the existing2% pointer tolerance,
+keeps primary text/other panel unchanged, then undo/redo/JSON roundtrip. This ran,
+not skipped; no tolerance/wait was weakened. It does not create arbitrary coordinate
+options, non-Cartesian annotation support, every viewport/DPI or Rust GUI parity.
+
+## PLOT-12 — explicit opacity and native default ordering/clipping
+
+Implementation: `_render._draw_marker_layer`, `_draw_series_layer`.
+Current nodes in [test_review_annotation_alpha.py](../tests/test_review_annotation_alpha.py):
+
+- `test_explicit_annotation_alpha_reaches_text_and_arrow_on_own_axis` (8)
+- `test_alpha_zero_adds_no_pixels_to_matching_base_figure` (2)
+- `test_default_annotation_stays_opaque_and_svg_has_both_explicit_opacities`
+- `test_default_annotation_preserves_legacy_rgba_colour_opacity`
+
+Primary/y2 text and optional arrow receive explicit alpha0/.35 together. Alpha0
+adds no pixels to the same base Agg canvas. Defaults keep opaque behavior and
+RGBA colour's128/255 opacity; SVG contains both requested opacities. Source JSON
+is unchanged and test Figures close.
+
+Two separate synthetic line/scatter/band/text/annotation scenes in opposite call
+orders compare alpha/zorder/clip_on to directly constructed native Matplotlib
+controls, including out-of-axis text positions. Attributes match and source JSON
+is unchanged; all probe Figures close. Native z-order remains native across kinds;
+call order does not expose a new arbitrary zorder/clip_on API. These are property
+comparisons, not pixel occlusion/clip-path geometry certification for every overlap,
+backend or viewer, and not extra pytest cases.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -1101,10 +1156,16 @@ uv run --no-sync python -m pytest -q --tb=short \
   tests/test_review_projection_colours.py --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short tests/test_review_coordinate_frames.py \
+  tests/test_review_coordinate_browser.py tests/test_review_annotation_alpha.py \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining105 IDs still need their own reviewed symbol/node/provenance links
+The remaining103 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
