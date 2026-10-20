@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 92차 — BASE-05 부분symbol/test/result매핑
+
+- [부분review-map](review-map.md)에STATE-01/02/04/05/06의실제구현symbol·기존pytestnode·합성fixture의
+  확인경계·기존coverage분류와결과를연결했습니다. Moduleapply와Plot.apply는별도AST경로로검증하며
+  임의batchrollback을강제하거나새테스트를중복추가하지않았습니다.
+- 현재source의선택검사13P/2deselected/0skip·fail/exit0이며HIST두node는실행하지않았습니다.
+  [검증자료](review_evidence/review_map_state_core.json)에source/body/원문/log/JUnit/verifier지문과확장nodeID를
+  남겼습니다. AST해석/테스트존재/수집은semantic coverage증명이아니며본문을읽은경계만매핑했습니다.
+- 150ID중이번문서에서검토한것은5개이고다른145개/STATE-03cross-path는아직이문서에분류하지않았습니다.
+  기존phase별PASS근거를무효화하거나미검토를미커버리지로간주하지않습니다. BASE-05는RUNNING,
+  원대장139PASS/6RUNNING/4OPEN/1DEFERRED를유지하며전체suite/native/release재검증주장은없습니다.
+- Runtime/테스트/원문/의존성/버전변경없이기준52accCI39461524891진행을보호해로컬보존합니다.
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 91차 — Swarmfacet/선택빈cell frame계약
 
 - 명시filter/dropna의Swarm빈cohort만허용하고plainempty는계속거절합니다. 검증의마지막usable조건만

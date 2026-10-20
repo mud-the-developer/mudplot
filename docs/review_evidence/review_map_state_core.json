@@ -1,0 +1,232 @@
+{
+  "kind": "partial-checklist-source-test-result-map",
+  "reviewed_ids": [
+    "STATE-01",
+    "STATE-02",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06"
+  ],
+  "reviewed_count": 5,
+  "original_id_count": 150,
+  "not_reviewed_in_this_map": 145,
+  "source_commit": "52acc3f30ce6afdc88a305966a3f9b323e98c76a",
+  "manual_review": "Current source and test bodies were read; AST only verifies reference identity, not semantic coverage. This records existing Python coverage, not exhaustive ID/product PASS or BASE-05 completion. No runtime/test changes.",
+  "source_sha256": {
+    "mudplot/api.py": "449aa3a1a4e07ebc8e469a6c48bb779d552a597ef975b408d2a6e28907f62425",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "tests/test_review_state_contracts.py": "bb4e6fbb0da60e040260e314d98cd32a69e11d1dc10770c91a7c0986abcc80df"
+  },
+  "original_checklist_sha256": "9d930cba701275bfa12d99974b5a44f97723074da262a51d6d2f6fdb3f040d84",
+  "execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_state_contracts.py -k \"test_state_01 or test_state_02 or test_state_04 or test_state_05 or test_state_06\" --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed": 13,
+    "deselected": 2,
+    "skipped": 0,
+    "failed": 0,
+    "log_sha256": "87dabc721013483bb37282603dad9b429e14ba3fc27efd1bfbde6efb803b99e2",
+    "junit_sha256": "74b36ba419155cf5eeb9ecfec86c8a64092bafa2129c8ec75c7809a6f7236a4e"
+  },
+  "items": [
+    {
+      "id": "STATE-01",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/reducer.py::reduce",
+          "line_start": 52,
+          "line_end": 259,
+          "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+        },
+        {
+          "ref": "mudplot/reducer.py::_safe_replace",
+          "line_start": 34,
+          "line_end": 49,
+          "body_sha256": "19905a20dc8bdef0b2cc12d22af341b6a8a4cb70b5850b5716de481a59df6545"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_state_01_nested_reducer_output_cannot_mutate_input_or_action",
+        "tests/test_review_state_contracts.py::test_state_01_nested_reducer_failure_preserves_both_inputs"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_state_01_nested_reducer_output_cannot_mutate_input_or_action",
+        "tests/test_review_state_contracts.py::test_state_01_nested_reducer_failure_preserves_both_inputs[action0]",
+        "tests/test_review_state_contracts.py::test_state_01_nested_reducer_failure_preserves_both_inputs[action1]"
+      ],
+      "executed_passed": 3,
+      "reviewed_boundary": "Nested source/action isolation on AddLayer success and RemoveLayer/SetFont failure; mutate returned columns/matrices/theme/references. Not every action variant."
+    },
+    {
+      "id": "STATE-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/api.py::Plot.spec",
+          "line_start": 57,
+          "line_end": 58,
+          "body_sha256": "a0f5900f826852f56df67f06e394eb6f7a91c4a8eaaf6681e8bab4f6a3065397"
+        },
+        {
+          "ref": "mudplot/store.py::Store.state",
+          "line_start": 47,
+          "line_end": 49,
+          "body_sha256": "b2a7a331f3f8822ac813333f0b7dd2b300af9fc16e07c773c6c07a1cdaf9e596"
+        },
+        {
+          "ref": "mudplot/store.py::Store.history",
+          "line_start": 52,
+          "line_end": 54,
+          "body_sha256": "0592ac0daaaf85f21986acb9174795d8eb2a1be62d8d0d260373948ccf89b36e"
+        },
+        {
+          "ref": "mudplot/store.py::Store.dispatch",
+          "line_start": 72,
+          "line_end": 74,
+          "body_sha256": "8216de31563d5ac22f5646c90660fbe9d5e0f5a33494f740862040032cffd432"
+        },
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "line_start": 56,
+          "line_end": 70,
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store.subscribe",
+          "line_start": 113,
+          "line_end": 120,
+          "body_sha256": "cef085f4f57a0686645ea60f417481d754b0d4ede2ab0cdaf3c10fa00135d593"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_state_02_nested_public_snapshots_are_independent",
+        "tests/test_review_state_contracts.py::test_state_02_nested_history_actions_are_independent_and_replay_is_unchanged",
+        "tests/test_review_state_contracts.py::test_state_02_listeners_receive_separate_nested_snapshots_and_payloads"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_state_02_nested_public_snapshots_are_independent[plot]",
+        "tests/test_review_state_contracts.py::test_state_02_nested_public_snapshots_are_independent[store]",
+        "tests/test_review_state_contracts.py::test_state_02_nested_public_snapshots_are_independent[dispatch]",
+        "tests/test_review_state_contracts.py::test_state_02_nested_history_actions_are_independent_and_replay_is_unchanged",
+        "tests/test_review_state_contracts.py::test_state_02_listeners_receive_separate_nested_snapshots_and_payloads"
+      ],
+      "executed_passed": 5,
+      "reviewed_boundary": "Plot.spec/Store.state/dispatch snapshots, nested history payloads, separate listener copies; state/history/replay unaffected. Plot.action_log dictionary mutation is not separately selected here."
+    },
+    {
+      "id": "STATE-04",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/api.py::apply",
+          "line_start": 1996,
+          "line_end": 2004,
+          "body_sha256": "7b093f9ed7cca58c1c8b19cc73e608ed70f32c9a4d07915c5a5e6c00562359f3"
+        },
+        {
+          "ref": "mudplot/reducer.py::reduce_all",
+          "line_start": 262,
+          "line_end": 266,
+          "body_sha256": "b87e5b244913f9d2cf5767cd579eb33c7c5ba90aa5b3b837e3012497ce466070"
+        },
+        {
+          "ref": "mudplot/reducer.py::reduce",
+          "line_start": 52,
+          "line_end": 259,
+          "body_sha256": "0d8d3c8a358a48d4f28102e242d0d765a0f63fe008129cb7919a781008a8a1bb"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_state_04_functional_apply_failure_preserves_caller_inputs",
+        "tests/test_review_state_contracts.py::test_state_04_functional_apply_parse_failure_does_not_leak_first_action"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_state_04_functional_apply_failure_preserves_caller_inputs",
+        "tests/test_review_state_contracts.py::test_state_04_functional_apply_parse_failure_does_not_leak_first_action"
+      ],
+      "executed_passed": 2,
+      "reviewed_boundary": "Functional apply: later reducer failure and unknown action parse failure preserve caller state/actions and return no partial result."
+    },
+    {
+      "id": "STATE-05",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/api.py::Plot.apply",
+          "line_start": 69,
+          "line_end": 75,
+          "body_sha256": "bd47865f2cf03e3dadfe9528fc6507c09c8cfe67751b3c44afead9e134ac8853"
+        },
+        {
+          "ref": "mudplot/store.py::Store.dispatch_all",
+          "line_start": 108,
+          "line_end": 111,
+          "body_sha256": "f600af5d301108b5a6bd29d07d28b3fc337cd368d579805798f8ad0eec1594e1"
+        },
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "line_start": 56,
+          "line_end": 70,
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store.undo",
+          "line_start": 88,
+          "line_end": 96,
+          "body_sha256": "1b1356b4a0233ba6e9211e74d6ee4003e3efedeba777c1c894a14e48c2d7e9d3"
+        },
+        {
+          "ref": "mudplot/store.py::Store.redo",
+          "line_start": 98,
+          "line_end": 106,
+          "body_sha256": "c80dc0065d4ed775b6bd64ec3202a9fcfe5ae848beba46ce0891c44aaee6a37d"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_state_05_plot_apply_keeps_completed_prefix_and_can_continue",
+        "tests/test_review_state_contracts.py::test_state_05_store_dispatch_all_commits_prefix_and_invalidates_old_redo"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_state_05_plot_apply_keeps_completed_prefix_and_can_continue",
+        "tests/test_review_state_contracts.py::test_state_05_store_dispatch_all_commits_prefix_and_invalidates_old_redo"
+      ],
+      "executed_passed": 2,
+      "reviewed_boundary": "Sequential Plot.apply and Store.dispatch_all keep the committed prefix. Separate assertions check action history/visible cursor via undo-redo and continued use; no batch rollback required."
+    },
+    {
+      "id": "STATE-06",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "line_start": 56,
+          "line_end": 70,
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store.subscribe",
+          "line_start": 113,
+          "line_end": 120,
+          "body_sha256": "cef085f4f57a0686645ea60f417481d754b0d4ede2ab0cdaf3c10fa00135d593"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_state_06_listener_failure_occurs_after_commit_and_is_not_rollback"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_state_06_listener_failure_occurs_after_commit_and_is_not_rollback"
+      ],
+      "executed_passed": 1,
+      "reviewed_boundary": "Listener order, exception propagation after commit, no later callback after failure, unsubscribe/continued dispatch/undo retain committed state."
+    }
+  ],
+  "limits": [
+    "STATE-03 CLI/editor cross-path provenance not mapped here.",
+    "Other145 IDs are not classified by this partial artifact; do not derive coverage from their status or filename candidates.",
+    "No new full-suite/native/browser/release validation.",
+    "Original inventory counts139PASS6RUNNING4OPEN1DEFERRED and BASE-05 RUNNING remain unchanged."
+  ],
+  "verifier_sha256": "556307fc727641dfb58dd71fd2f2fabbd2759177a5327cd3be0354503a4664fa"
+}
