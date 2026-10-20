@@ -1,0 +1,125 @@
+{
+  "scope": "Selective audit-tool transitive CA-bundle security lock patch;not application version/release change",
+  "source_commit_before_patch": "6bc3eb295b00e1a05f71c3f67b1a73b7b7951169",
+  "advisory": {
+    "ghsa_id": "GHSA-6q48-6c7w-9gw2",
+    "published_at": "2026-10-20T19:35:05Z",
+    "severity": "critical",
+    "summary": "certifi bundles emSign root CAs with compromised intermediate CA keys",
+    "updated_at": "2026-10-20T19:35:06Z",
+    "url": "https://github.com/advisories/GHSA-6q48-6c7w-9gw2",
+    "vulnerabilities": [
+      {
+        "first_patched_version": "2026.10.19",
+        "package": {
+          "ecosystem": "pip",
+          "name": "certifi"
+        },
+        "vulnerable_version_range": ">= 2019.03.09, < 2026.10.19"
+      }
+    ]
+  },
+  "ci_original": {
+    "id": 39487189523,
+    "url": "https://github.com/mud-the-developer/mudplot/actions/runs/39487189523",
+    "head": "6bc3eb295b00e1a05f71c3f67b1a73b7b7951169",
+    "status_observed": "in_progress",
+    "jobs_observed": [
+      {
+        "name": "minimum-render",
+        "status": "in_progress",
+        "conclusion": ""
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "status": "completed",
+        "conclusion": "cancelled"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "status": "completed",
+        "conclusion": "failure"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "first_failure": "Python3.12 Audit all committed Python dependency locks;root/minimum clean,audit-self certifi vulnerability.",
+    "python310_cancelled_not_passed": true,
+    "downstream_missing_junit_not_separate_product_test_failure": true
+  },
+  "lock_patch": {
+    "path": "scripts/audit_dependencies.py.lock",
+    "generator": "uv0.12.23 lock --script scripts/audit_dependencies.py --upgrade-package certifi==2026.10.19",
+    "package_count_before": 29,
+    "package_count_after": 29,
+    "only_changed_package": "certifi",
+    "old_version": "2026.7.22",
+    "new_version": "2026.10.19",
+    "other_28_packages_identical": true,
+    "manifest_requires_python_unchanged": true,
+    "generated_format_revision": [
+      3,
+      5
+    ],
+    "do_not_manually_revert_generator_revision": true,
+    "before_sha256": "18480247d860a85db78a8dd633397cfef0c2b29c1932f6b3107c46330c43507f",
+    "after_sha256": "0af5fb0b7dc346a4f22f289bece28bf895a3d72183f12877698dfd12e2e48e53"
+  },
+  "protected_sha256": {
+    "uv.lock": "90d286e6c7469b6677b23128b01a548b8147820cc27cd07c126122ba55334dcf",
+    "scripts/check_minimum_versions.py.lock": "720b9d4f80e019d8c324c2a7a6e9c7eb8e152c2115195c19c1d16e038c7ace34",
+    "scripts/audit_dependencies.py": "ad0be55fb12b461fca347a17cf51318d43e7650789669b47af700d7be15e5e09",
+    "pyproject.toml": "eb9841fe370249ab71fcadbf02d44b5770b9394e7ea482b20d81ab435074681e",
+    "mudplot-editor/Cargo.lock": "65db0cb65790c44815b4cc714cfae7e390668c6abb0158c267b1ae90ba04b6df",
+    ".github/workflows/ci.yml": "d572e18ada96da2e99cb9ace3db2d9df76653f87c21829d23581d0f3df0868b3"
+  },
+  "local_verification": {
+    "audit_before": {
+      "command": "uv run --locked --script scripts/audit_dependencies.py",
+      "exit": 1,
+      "results": "root+minimum no known vulnerabilities;audit lock certifi finding1"
+    },
+    "audit_after": {
+      "same_command": true,
+      "exit": 0,
+      "clean_lock_count": 3
+    },
+    "targeted_release_tests": {
+      "passed": 3,
+      "skipped": 0,
+      "failed": 0,
+      "exit": 0
+    },
+    "wheel_sdist": {
+      "exit": 0,
+      "package_version": "1.0.0"
+    },
+    "initial_diff_assertion": "Audit-after passed but first metadata-equality assertion rejected UV generated revision3to5;corrected verifier permits only known generator revision plus certifi package delta. No test failure hidden."
+  },
+  "raw_sha256": {
+    "python312-job-raw.log": "73579c06f058392151051ba145ec7217581f6e7ba8ed3a187a629f96e00421b7",
+    "python312-job-sanitized.log": "7ec90e221ce223c79bf06567d06afb682a7ec5837f40f24d171f23740970eb6c",
+    "advisory.json": "175f8f1289572fd13d601d3a79f72cfe163b7673a9066b4eb534d36d6fc797c9",
+    "audit-before.log": "4e0df0e2a5590e0889dbad195b53b81ac97af1ebaea7f51adb50bd15269388de",
+    "audit-after.log": "9de9b346b9cfed2d580c651822b9a40856c6276ae021688e8c466582949cdb9a",
+    "release-results.xml": "a897803e46b3373114243565eb06d7e14eb9099a1250c0326a893954faf8ba60",
+    "release-tests.log": "17d6f5b2ce481bb3cac1224050c668fd7a4fabb2a6fde93316f5577da569d6f0",
+    "packaging.log": "4c69c128595eab11c78f1ec1132a4d4b88ac499a5d9a211898ab3e8867ef1b37"
+  },
+  "limits": [
+    "Advisory DB snapshot known finding addressed;not a general Python or Rust security guarantee.",
+    "No audit ignore/suppression/deletedcheck/TLSbypass/workflow policy change.",
+    "No fresh whole pytest/browser/native/Linux/minimum suite after lock patch;new CI required.",
+    "CI original failed/cancelled/missing outcomes retained,not rerun or retroactivepass.",
+    "Remaining pre-push jobs not manually cancelled;Loop8 remains active.",
+    "Mapping still39IDs/JSON09additional/111unclassified/original139P6R4O1D unchanged."
+  ]
+}

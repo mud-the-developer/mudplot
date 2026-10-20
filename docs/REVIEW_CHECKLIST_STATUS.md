@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 111차 — Audit-tool lock의criticalcertifi갱신
+
+- 매핑작업은중단했고현재6bc3eb2/CI39487189523에서Python3.12audit step4실패를원본joblog로확인했습니다.
+  Root/minimum은clean,자체audit-scriptlock certifi2026.7.22만GHSA-6q48-6c7w-9gw2 critical에해당하며
+  GitHubprimaryadvisory의patched2026.10.19를확인했습니다. [전후근거](review_evidence/audit_certifi_patch_verification.json).
+- `uv lock --script scripts/audit_dependencies.py --upgrade-package certifi==2026.10.19`로해당packageentry만
+  생성갱신했습니다. 다른28packages/manifest/root-minimumlock/auditorcode/workflow/Cargo/패키지version은같습니다.
+  UV0.12.23자동lockformatrevision3→5는그대로보존하며수동해시/ignore/검사삭제/TLSbypass를하지않았습니다.
+- 현재로컬audit전exit1(동일1취약점)/후exit0(3locks모두knownfinding없음),release3P/packaging0입니다.
+  첫diff검증이formatrevision동일까지요구해중단된사실을보존하고package-delta+생성revision만허용해수정검증했습니다.
+  새전체pytest/native/browser/Linux/minimum suite성공으로확대하지않고새CI를받아야합니다.
+- Python3.10cancel과후속missingJUnit오류는통과/새제품test실패로세지않습니다. 나머지CIjob을수동취소하거나
+  push-cancel하지않고완료까지로컬보존합니다. 기존39ID부분분류/JSON-09추가의미검사/미분류111/
+  원대장139PASS6RUNNING4OPEN1DEFERRED·버전/release경계와Loop8활성은유지합니다.
+
 ## 110차 — 문서매핑39ID 게시와43965b기준CI확인
 
 - 정확한43965b61b6f840b65659f8ec56b58eb3f91fd9d8의CI39478506917 5job모두성공뒤대기문서여섯commit과

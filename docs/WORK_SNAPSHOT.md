@@ -32,6 +32,11 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- Current CI6bc3eb2/39487189523 failed Python3.12 before tests: newly published
+  critical certifi advisory in the audit tool's own lock; Python3.10 cancelled,
+  not passed. Selective certifi2026.10.19/generated lock revision5 passes all three
+  local audits, release tests3P and packaging. Fresh CI still required; no ignore.
+  [Scoped evidence](review_evidence/audit_certifi_patch_verification.json).
 - Swarm facets/selected empty frames:29new/1098related/floor196P/CLI3/full native
   HTTP+browser pass. Empty frames add no data/guides, share original size domains;
   plain empty still invalid and SetData/filter/option boundaries remain. Exact52acc3f

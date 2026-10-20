@@ -6,6 +6,9 @@ All notable changes to this project are documented here.
 
 ### Fixed
 
+- Update only the audit script's transitive certifi lock to2026.10.19 for
+  GHSA-6q48-6c7w-9gw2. Keep application/minimum locks and audit enforcement unchanged;
+  UV's generated script-lock format revision advances without a package release.
 - Repack native swarm artist size/linewidth arrays using pairwise radii and
   individual gutters, preserving scalar geometry, rows, transforms and crowding
   warnings. Reject invalid arrays before changing offsets; no new public size

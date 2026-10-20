@@ -25,6 +25,10 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 사용자등록Loop8의5분반복이활성이며종료하거나다른만료loop를재생성하지않습니다.
   나머지remainder/gate는남아있습니다.
+- 현재6bc3eb2/CI39487189523의Python3.12는test전에audit-tool자체lock의새criticalcertifiadvisory로
+  실패했고3.10은취소이지통과가아닙니다. 선택patch2026.10.19/UV생성lockrevision5후로컬3lockaudit/
+  release3P/packaging은통과했지만새CI가필요하며ignore는없습니다.
+  [제한근거](review_evidence/audit_certifi_patch_verification.json).
 - Swarmfacet/선택빈frame은새29/관련1098/floor196P/CLI3/전체nativeHTTP·browser가맞고원본size-domain과
   점/guide없는빈frame을유지합니다. Plainempty거절과SetData/filter/옵션경계도보존합니다. 정확한52acc3f의
   CI39461524891 5job모두성공으로해당runtime을확인했고경고를보존합니다.
