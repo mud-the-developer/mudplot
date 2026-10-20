@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 107차 — DATA-05/08/09 정밀도·layer경계·정렬매핑
+
+- [부분review-map](review-map.md)에날짜dtype/정밀도와빈/단일/상수자료·raw/통계정렬의source/test를연결해
+  누적38ID를분류했습니다. 현재74P/7optionalskip/0fail이며Polars4·Arrow3skip은통과가아닙니다.
+  [분리근거](review_evidence/review_map_data_policies.json)에날짜51P7skip/layer경계17P/정렬6P를남깁니다.
+- NumPyns-ps-fs-as/coarseISO/NaT/Pandasns4zone/TZ2C-locale와정수epoch비변환은실행한범위이고realoptional
+  timestamp는추가실행/정확한source보존근거가필요합니다. LossyPolarsmock거절을실제Polars호환성으로대체하지않고
+  continuousnative-dateaxis/모든datetime64범위·과거tzdata·locale인증으로확대하지않습니다.
+- Rawempty는유효한빈figure,통계empty/allmissing은거절,단일estimate는warning과함께유지/interval생략,
+  box-violinconstant는유한퇴화분포입니다. Rawduplicatepath/NaNgap/공급bar-error는그대로이고lineplot은명시적으로
+  중복x평균/sort별순서/perhue첫관측과단조band조건을적용합니다. 한정책으로모든layer를합치지않습니다.
+- 기록된고유Python통과node는675개이며기존optional5+새7=12skip은별도입니다. 미분류112ID/추가근거필요3/
+  BASE-05JSON-09RUNNING·원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준43965bCI39478506917을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 106차 — DATA-04/06 rawgroup·scalar경계매핑
 
 - [부분review-map](review-map.md)에legacyrawgroup의원본Python동등성과지원scalar/미지원객체구분source/test를

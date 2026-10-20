@@ -1,0 +1,286 @@
+{
+  "kind": "partial-checklist-temporal-boundary-order-map",
+  "reviewed_ids": [
+    "DATA-05",
+    "DATA-08",
+    "DATA-09"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-05",
+    "DATA-06",
+    "DATA-07",
+    "DATA-08",
+    "DATA-09",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 38,
+  "remaining_unreviewed": 112,
+  "source_commit": "43315d77aaf2fde668e8ed3c5abfb4e8edafe224",
+  "source_sha256": {
+    "mudplot/_estimate.py": "681fcdb596569fda751839d99f9202fa6c1053ed53dc1cd3e48b4a662a5ab3ac",
+    "mudplot/_lineplot.py": "f9dbc013b6d11cc92368cff4620528bc2e05cbb330065cdaea40d26859d33ffd",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/_stat.py": "0786605360f0ddcbacc2fb6f351295d95f7fe6b8d4b8a26b1ae1c87fd7cbef27",
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_box_violin.py": "39e5d6d5c05e7f8966d3d11e769eb8cce2db125f16d611211217628394229eb1",
+    "tests/test_lineplot.py": "128fa34daaa77b746b50dfacaf82118dc27a5b97b2f8332bb9cc8bd79ef4e4dc",
+    "tests/test_raw_group_order.py": "c247cfa4c4cdd7ea4c7b6000241e9ad9914567240ecb4d12f13ed04508d90708",
+    "tests/test_review_data_edges.py": "29a804819256f6d9a58ecdfe5ddb6621bff56025d0bc7ad55fb771164490f3be",
+    "tests/test_review_temporal_precision.py": "f0ea2a63f85f7e8cac11a7a402e106ce5edeb39718559776edcf4cbfcf14c218"
+  },
+  "previous_artifact_sha256": "4d51a50a56046c338fc73f19b7099115fe658271e0e197603cc466a587f93663",
+  "items": [
+    {
+      "id": "DATA-05",
+      "classification": "additional-tests-needed",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::_plain_value",
+          "body_sha256": "7c6208abaac1ddf9920f8d9a4b6c6f91786f690f2760959985375fa2dca8b875"
+        },
+        {
+          "ref": "mudplot/data.py::_to_list",
+          "body_sha256": "923ad79e12a5ba00d1cfa23e36c9c1c3d7bc53436eb64ae6fab26af903ec551f"
+        },
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved",
+        "tests/test_review_temporal_precision.py::test_plain_2d_array_protocol_does_not_require_numpy_dtype_metadata",
+        "tests/test_review_temporal_precision.py::test_two_dimensional_datetime_column_is_rejected_instead_of_collapsing_cells",
+        "tests/test_review_temporal_precision.py::test_nonlossless_polars_formatter_is_rejected_before_emitting_values",
+        "tests/test_review_temporal_precision.py::test_timestamp_normalization_does_not_depend_on_process_timezone_or_locale",
+        "tests/test_review_temporal_precision.py::test_date_strings_do_not_silently_become_supported_numeric_lineplot_coordinates",
+        "tests/test_review_temporal_precision.py::test_timestamp_epoch_number_is_not_coerced_without_a_datetime_dtype",
+        "tests/test_review_temporal_precision.py::test_pandas_nanoseconds_and_timezone_offsets_are_preserved",
+        "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting",
+        "tests/test_review_temporal_precision.py::test_polars_dst_changes_keep_both_offsets_and_nanoseconds",
+        "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values"
+      ],
+      "executed_nodes": [
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[scalar-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[scalar-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[scalar-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[scalar-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[zero_dim-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[zero_dim-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[zero_dim-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[zero_dim-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[column-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[column-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[column-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[column-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[object_column-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[object_column-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[object_column-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[object_column-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[records-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[records-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[records-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[records-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[rows-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[rows-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[rows-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[rows-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[array2d-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[array2d-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[array2d-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[array2d-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[structured-ns-1970-01-01T00:00:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[structured-ps-1970-01-01T00:00:01.123456789012]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[structured-fs-1970-01-01T00:00:01.123456789012345]",
+        "tests/test_review_temporal_precision.py::test_numpy_high_precision_time_is_iso_not_an_epoch_integer[structured-as-1970-01-01T00:00:01.123456789012345678]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[False-D-2026-01-02]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[False-s-2026-01-02T09:30:01]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[False-ms-2026-01-02T09:30:01.123000]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[False-us-2026-01-02T09:30:01.123456]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[True-D-2026-01-02]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[True-s-2026-01-02T09:30:01]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[True-ms-2026-01-02T09:30:01.123000]",
+        "tests/test_review_temporal_precision.py::test_existing_numpy_coarse_precision_format_is_preserved[True-us-2026-01-02T09:30:01.123456]",
+        "tests/test_review_temporal_precision.py::test_plain_2d_array_protocol_does_not_require_numpy_dtype_metadata",
+        "tests/test_review_temporal_precision.py::test_two_dimensional_datetime_column_is_rejected_instead_of_collapsing_cells",
+        "tests/test_review_temporal_precision.py::test_nonlossless_polars_formatter_is_rejected_before_emitting_values",
+        "tests/test_review_temporal_precision.py::test_timestamp_normalization_does_not_depend_on_process_timezone_or_locale[UTC]",
+        "tests/test_review_temporal_precision.py::test_timestamp_normalization_does_not_depend_on_process_timezone_or_locale[Pacific/Honolulu]",
+        "tests/test_review_temporal_precision.py::test_date_strings_do_not_silently_become_supported_numeric_lineplot_coordinates",
+        "tests/test_review_temporal_precision.py::test_timestamp_epoch_number_is_not_coerced_without_a_datetime_dtype",
+        "tests/test_review_temporal_precision.py::test_pandas_nanoseconds_and_timezone_offsets_are_preserved[None-2026-01-02T09:30:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_pandas_nanoseconds_and_timezone_offsets_are_preserved[UTC-2026-01-02T09:30:01.123456789+00:00]",
+        "tests/test_review_temporal_precision.py::test_pandas_nanoseconds_and_timezone_offsets_are_preserved[Asia/Kolkata-2026-01-02T15:00:01.123456789+05:30]",
+        "tests/test_review_temporal_precision.py::test_pandas_nanoseconds_and_timezone_offsets_are_preserved[America/New_York-2026-01-02T04:30:01.123456789-05:00]"
+      ],
+      "fresh_passed": 51,
+      "skipped_nodes": [
+        "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[None-2026-01-02T09:30:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[UTC-2026-01-02T09:30:01.123456789+00:00]",
+        "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[Asia/Kolkata-2026-01-02T15:00:01.123456789+05:30]",
+        "tests/test_review_temporal_precision.py::test_polars_dst_changes_keep_both_offsets_and_nanoseconds",
+        "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[None-2026-01-02T09:30:01.123456789]",
+        "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[UTC-2026-01-02T09:30:01.123456789+00:00]",
+        "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[Asia/Kolkata-2026-01-02T15:00:01.123456789+05:30]"
+      ],
+      "reviewed_boundary": "NumPyns-ps-fs-as8shapes32/coarse8/plain2D1/ambiguousdatetimecolumn1/lossyPolarsDUCK1/TZUTC-HonoluluLC_ALLC2/ISO-not-numeric-lineplot1/integerEpochnotdtype1/PandasnsTZ4=51pass;realPolarsns3+DST1+Arrow3SKIPnotproved. Additional current optional execution/provenance needed;notnewcontinuousdateaxis."
+    },
+    {
+      "id": "DATA-08",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/validate.py::_check_statistical_layer",
+          "body_sha256": "a8685837f08ec3d92cd0369c5eec651fdc18c54a9b25d1f720cfed4940f67a00"
+        },
+        {
+          "ref": "mudplot/_estimate.py::summarize",
+          "body_sha256": "e7ee6dcc144ef093a435b4f7056e6b3a7e03e30904420be17e5979a36a839c50"
+        },
+        {
+          "ref": "mudplot/_lineplot.py::draw_lineplot",
+          "body_sha256": "822b9d241ada0622a16ffb25ff081af5543f7cf883b338024ae2f38e5f18ab58"
+        },
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_data_edges.py::test_named_empty_raw_data_is_a_valid_empty_figure",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations",
+        "tests/test_review_data_edges.py::test_singleton_estimate_stays_visible_without_a_fabricated_interval",
+        "tests/test_lineplot.py::test_singletons_break_bands_but_do_not_invent_or_remove_point_estimates",
+        "tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions"
+      ],
+      "executed_nodes": [
+        "tests/test_review_data_edges.py::test_named_empty_raw_data_is_a_valid_empty_figure[line]",
+        "tests/test_review_data_edges.py::test_named_empty_raw_data_is_a_valid_empty_figure[scatter]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[False-barplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[False-pointplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[False-countplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[False-lineplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[True-barplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[True-pointplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[True-countplot]",
+        "tests/test_review_data_edges.py::test_statistical_layers_reject_no_usable_observations[True-lineplot]",
+        "tests/test_review_data_edges.py::test_singleton_estimate_stays_visible_without_a_fabricated_interval[barplot]",
+        "tests/test_review_data_edges.py::test_singleton_estimate_stays_visible_without_a_fabricated_interval[pointplot]",
+        "tests/test_lineplot.py::test_singletons_break_bands_but_do_not_invent_or_remove_point_estimates",
+        "tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions[values0-box]",
+        "tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions[values0-violin]",
+        "tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions[values1-box]",
+        "tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions[values1-violin]"
+      ],
+      "fresh_passed": 17,
+      "skipped_nodes": [],
+      "reviewed_boundary": "Namedemptyrawline-scatter2noartists/JSONsame;bar-point-count-lineplotempty-allmissing8reject;bar-pointsingletons2warn-estimate3-noFakeInterval;lineplotSDsingletonkeeps3estimatesbreaksbands1;box-violinconstant-singleton4finite-degenerate4. Notalllayeredgecases/fullGaussian-density-nullfamilytable."
+    },
+    {
+      "id": "DATA-09",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_lineplot.py::draw_lineplot",
+          "body_sha256": "822b9d241ada0622a16ffb25ff081af5543f7cf883b338024ae2f38e5f18ab58"
+        },
+        {
+          "ref": "mudplot/_stat.py::usable_rows",
+          "body_sha256": "d9649b3731925ae91c0a054e587fcf17405908e4d8daf65bc49077362bc81413"
+        },
+        {
+          "ref": "mudplot/_estimate.py::summarize",
+          "body_sha256": "e7ee6dcc144ef093a435b4f7056e6b3a7e03e30904420be17e5979a36a839c50"
+        },
+        {
+          "ref": "mudplot/_render.py::_series_masks",
+          "body_sha256": "59f7daf55d644691665f0a0e4ea29561b17f54a70f0c73672344df0c692c590c"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_data_edges.py::test_raw_paths_keep_duplicates_but_lineplot_explicitly_aggregates",
+        "tests/test_lineplot.py::test_first_observed_x_order_is_per_hue_and_bands_reject_self_crossing",
+        "tests/test_raw_group_order.py::test_raw_line_keeps_duplicate_x_original_path_order_and_same_styles_in_each_cell",
+        "tests/test_raw_group_order.py::test_ordered_raw_line_preserves_coordinate_gaps_instead_of_joining_across_them",
+        "tests/test_raw_group_order.py::test_raw_bar_preserves_supplied_values_errors_and_sparse_dodge_hatch_slots"
+      ],
+      "executed_nodes": [
+        "tests/test_review_data_edges.py::test_raw_paths_keep_duplicates_but_lineplot_explicitly_aggregates[False-expected_x0-expected_y0]",
+        "tests/test_review_data_edges.py::test_raw_paths_keep_duplicates_but_lineplot_explicitly_aggregates[True-expected_x1-expected_y1]",
+        "tests/test_lineplot.py::test_first_observed_x_order_is_per_hue_and_bands_reject_self_crossing",
+        "tests/test_raw_group_order.py::test_raw_line_keeps_duplicate_x_original_path_order_and_same_styles_in_each_cell",
+        "tests/test_raw_group_order.py::test_ordered_raw_line_preserves_coordinate_gaps_instead_of_joining_across_them",
+        "tests/test_raw_group_order.py::test_raw_bar_preserves_supplied_values_errors_and_sparse_dodge_hatch_slots"
+      ],
+      "fresh_passed": 6,
+      "skipped_nodes": [],
+      "reviewed_boundary": "Rawduplicates/sourcepathunchangedvslineplotduplicatexmean4.5andsortFalsefirstobserved/sortTrueascending2;perhuefirstobserved+nonmonotonebandreject-barsaccept1;orderedrawlinepath-style1/gaps1/rawbarheights-errors-sparsedodge-hatches1. Notuniversalautosort/aggregration/crossfamilyguides."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <temporal58+edges14+selected lineplot2 raw3 distributions4> --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 74,
+    "skipped_unique_nodes": 7,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 13.47,
+    "skipped_nodes": [
+      "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[None-2026-01-02T09:30:01.123456789]",
+      "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[UTC-2026-01-02T09:30:01.123456789+00:00]",
+      "tests/test_review_temporal_precision.py::test_polars_nanoseconds_use_lossless_native_formatting[Asia/Kolkata-2026-01-02T15:00:01.123456789+05:30]",
+      "tests/test_review_temporal_precision.py::test_polars_dst_changes_keep_both_offsets_and_nanoseconds",
+      "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[None-2026-01-02T09:30:01.123456789]",
+      "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[UTC-2026-01-02T09:30:01.123456789+00:00]",
+      "tests/test_review_temporal_precision.py::test_arrow_supported_nanosecond_conversion_retains_values[Asia/Kolkata-2026-01-02T15:00:01.123456789+05:30]"
+    ],
+    "log_sha256": "ab919977d0e8462045dadb1c39ae14fc5988020f9e8f8f3e575b64e9cdb4bed6",
+    "junit_sha256": "508f330fe39f9fe1732c7c433b4db4c9f36d860cffc823677922dc2997db6afd"
+  },
+  "required_additional_work": [
+    "DATA05actualPolarsns-threezones-DST/Arrowthreezonesexecutionsorprecise retained-sourceproof;mockformatterrejectnotlibrarycompatibility.",
+    "No newproductiontestdefinitionsnecessarilyneeded;optionalcurrentexecutiongapnotproductdefect/no historicalDATA05PASSdowngrade."
+  ],
+  "limits": [
+    "Only1970near-epochns-ps-fs-asrangeandstated2026zones;not allhistoricTzData/locale/datetime64range.",
+    "LC_ALLC/TZtwochildrennotalllocalecompatibility;numericEpochintstaysnumericwithoutdatetimeDtype.",
+    "Per-layerempty/statisticalsingular/sortingpoliciesnotunified;Swarmselectedemptyrulesseparateexistingcoverage.",
+    "No installs/runtime/test/schema/deps/versionchanges or newRust-native-browser/fullsuite run.",
+    "Cumulative675uniquepassedPythonmapnodesplus12explicitoptionalskipnodesnotpassed;38reviewed35existing3additional;112unclassified.",
+    "BASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "4b6a614e59ba446ee1589aa40024e83940ed16ae1fd396aaff3fbd36a73b6087"
+}

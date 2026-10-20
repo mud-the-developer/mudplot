@@ -14,22 +14,23 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json),
 [table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json),
 [available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json),
-[legacy group identity and scalar conversion evidence](review_evidence/review_map_groups_scalars.json).
+[legacy group identity and scalar conversion evidence](review_evidence/review_map_groups_scalars.json),
+[temporal precision and per-layer boundary/order evidence](review_evidence/review_map_data_policies.json).
 
 ## Scope and classification
 
-This is a **thirty-five-ID state/history/JSON/data mapping**, not a complete150-ID map.
-The remaining115 IDs have not been classified here. The candidate inventory still
+This is a **thirty-eight-ID state/history/JSON/data mapping**, not a complete150-ID map.
+The remaining112 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Thirty-three below have existing coverage of their explicitly stated boundary.
-JSON-09 and DATA-01 are **additional test needed**: respectively the all-field
-meaning matrix and current optional-adapter execution/provenance are incomplete.
-Existing tests may fill those gaps; neither classification proves a product bug
+Thirty-five below have existing coverage of their explicitly stated boundary.
+JSON-09, DATA-01 and DATA-05 are **additional test needed**: the all-field meaning
+matrix, current optional-adapter execution and real optional timestamp paths need
+additional evidence. Existing tests may fill those gaps; none proves a product bug
 or requires duplicated tests/new UI. No runtime/test code or policy was changed.
 AST checks only resolve references, not prove their semantic adequacy.
 
@@ -82,6 +83,10 @@ DATA-04/06 add77 distinct passed Python nodes(6 legacy group/71 scalar), giving6
 recorded unique passed nodes plus the same5 optional skips, not606 passes. Separate
 four synthetic group/RGBA/legend probes are not pytest cases.
 
+DATA-05/08/09 add74 distinct passed Python nodes and7 optional timestamp skips.
+Recorded unique passed total is675, with12 separate optional skipped nodes—not687
+passes. This unit assigns only its layer/input/range-specific boundaries.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -117,8 +122,11 @@ four synthetic group/RGBA/legend probes are not pytest cases.
 | DATA-02 | Existing coverage | 49 fresh Python passed | Row widths/types/column keys before pivot, missing columns and effect failure preservation |
 | DATA-03 | Existing coverage | 19 passed; same 5 optional cases skipped | Tested source-preserving missing normalization/line gaps/scatter pairs/stat cohort; not all formats |
 | DATA-04 | Existing coverage | 6 fresh Python passed; separate4 group/RGBA probes | Legacy Python-equality membership/order/caption policy, not uniform semantic/stat grouping |
+| DATA-05 | Additional test needed | 51 current passed; 7 optional timestamp skips | Stated precision/TZ/locale/dtype policy; real Polars/Arrow evidence still needed |
 | DATA-06 | Existing coverage | 71 fresh Python passed | Supported scalar builtin normalization vs explicit unsupported-object rejection/bounded item conversion |
 | DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
+| DATA-08 | Existing coverage | 17 fresh Python passed | Selected raw-empty/stat-empty/singleton/constant layer expectations, not all-layer uniform policy |
+| DATA-09 | Existing coverage | 6 fresh Python passed | Raw duplicates/path/gaps/bar values vs explicit lineplot aggregation/sort/per-hue order |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -747,6 +755,65 @@ rollback. Named quote/injection-looking strings and nulls are bound through DB-A
 params, not interpolated. Synthetic lifecycle probes plus in-memory SQLite are not
 external DB-driver/network coverage. No ownership policy was changed by mapping.
 
+## DATA-05 — supported precision, not implicit date-axis conversion
+
+Implementation: `data._plain_value`, `_to_list`, `to_columns` dtype-preserving
+scalar/column/2D row paths. Current tests in
+[test_review_temporal_precision.py](../tests/test_review_temporal_precision.py)
+record51 passed and7 real optional skips. NumPy ns/ps/fs/as in8 shapes preserve
+exact ISO text/NaT→None and source arrays; coarse D/s/ms/us formats stay stable.
+Plain2D protocol stays valid while ambiguous2D datetime columns reject rather
+than collapse cells. Numeric int epoch remains numeric without a datetime dtype.
+Two child processes vary TZ(UTC/Honolulu) with LC_ALL=C; pandas ns offsets in four
+zones remain exact. ISO date strings do not silently become numeric lineplot x.
+
+A Polars-shaped lossy formatter mock proves rejection-before-values but is not
+actual library compatibility. Real Polars ns in three zones plus DST transition,
+and Arrow ns in three zones are7 explicit skips because packages are absent.
+Use current actual runs or precisely retained-source provenance before completing
+those paths; no new tests/packages were added here. The stated1970 near-epoch
+high-resolution/2026 offsets and two-TZ/C locale checks are not all datetime64
+ranges, historical tzdata/locales or continuous native-date axes.
+
+## DATA-08 — empty/singular means different things per layer
+
+Implementation: `validate._check_statistical_layer`, `_estimate.summarize`,
+`_lineplot.draw_lineplot`, `data.to_columns`.
+
+Current nodes in [test_review_data_edges.py](../tests/test_review_data_edges.py):
+
+- `test_named_empty_raw_data_is_a_valid_empty_figure` (line/scatter2)
+- `test_statistical_layers_reject_no_usable_observations` (four kinds×empty/all-missing8)
+- `test_singleton_estimate_stays_visible_without_a_fabricated_interval` (bar/point2)
+
+Additional current nodes:
+`tests/test_lineplot.py::test_singletons_break_bands_but_do_not_invent_or_remove_point_estimates`;
+`tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions` (4).
+Raw named empty figures have no artists and survive JSON. Undefined empty/all-null
+statistics reject without rewriting source. Singleton estimates3 remain while
+intervals omit with warnings; lineplot keeps the middle estimate and breaks its
+SD bands. Box/violin singleton/constant vertices are finite and exactly y4.
+These17 pass assertions do not impose one empty/singular policy on all density,
+Swarm/log/weighted/facet/projection combinations.
+
+## DATA-09 — preserve raw paths, aggregate only when declared
+
+Implementation: `_lineplot.draw_lineplot`, `_stat.usable_rows`,
+`_estimate.summarize`, `_render._series_masks`.
+
+- `tests/test_review_data_edges.py::test_raw_paths_keep_duplicates_but_lineplot_explicitly_aggregates` (sort False/True2)
+- `tests/test_lineplot.py::test_first_observed_x_order_is_per_hue_and_bands_reject_self_crossing`
+- `tests/test_raw_group_order.py::test_raw_line_keeps_duplicate_x_original_path_order_and_same_styles_in_each_cell`
+- `tests/test_raw_group_order.py::test_ordered_raw_line_preserves_coordinate_gaps_instead_of_joining_across_them`
+- `tests/test_raw_group_order.py::test_raw_bar_preserves_supplied_values_errors_and_sparse_dodge_hatch_slots`
+
+Raw x[2,1,2,0]/y[4,1,5,0] remains that path. Statistical duplicate x2 explicitly
+becomes mean4.5, sort=False preserves first-observed[2,1,0], sort=True yields
+[0,1,2]. Per-hue first order remains separate; nonmonotonic SD bands reject while
+bars remain valid. Ordered facets keep raw duplicate paths/style slots/NaN gaps;
+raw bars retain supplied heights/errors/dodge/hatches. Six current nodes check
+these contexts, not universal sorting/aggregation or all cross-family guides.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -843,10 +910,22 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_temporal_precision.py tests/test_review_data_edges.py \
+  tests/test_lineplot.py::test_first_observed_x_order_is_per_hue_and_bands_reject_self_crossing \
+  tests/test_lineplot.py::test_singletons_break_bands_but_do_not_invent_or_remove_point_estimates \
+  tests/test_raw_group_order.py::test_raw_line_keeps_duplicate_x_original_path_order_and_same_styles_in_each_cell \
+  tests/test_raw_group_order.py::test_ordered_raw_line_preserves_coordinate_gaps_instead_of_joining_across_them \
+  tests/test_raw_group_order.py::test_raw_bar_preserves_supplied_values_errors_and_sparse_dodge_hatch_slots \
+  tests/test_box_violin.py::test_constant_and_singleton_cells_are_real_degenerate_distributions \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining115 IDs still need their own reviewed symbol/node/provenance links
+The remaining112 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
