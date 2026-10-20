@@ -216,6 +216,40 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/eventplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#eventplot)
 
+### `broken_barh` — Numeric interval band
+
+![Numeric interval band](images/plots/broken_barh.png)
+
+Explicit start/duration intervals retain overlaps in one raw band.
+
+명시start/duration구간과겹침을한rawband에보존합니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `baseline`, `width`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"start": [0.0, 0.5, 2.4, 2.8], "duration": [1.2, 0.5, 1.5, 0.6]}
+plot = (
+    mp.plot(data)
+    .broken_barh("start", "duration", bottom=1, height=0.7, alpha=0.7)
+    .labels(
+        x="Interval position (a.u.)", y="Raw band", title="Synthetic interval overlaps"
+    )
+    .legend(show=False)
+    .size(4.5, 3.5)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/broken_barh.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#broken_barh)
+
 ### `regplot` — Regression
 
 ![Regression](images/plots/regplot.png)

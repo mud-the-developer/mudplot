@@ -108,6 +108,7 @@ _AXIS_ROUTABLE_TYPES = {
     "stem",
     "stairs",
     "eventplot",
+    "broken_barh",
     "regplot",
     "scatter",
     "stripplot",
@@ -1356,6 +1357,45 @@ def _check_stem_data(cols, layer, panel, where, issues):
         issues.append(f"{where}: log stem heads and baseline must be positive")
 
 
+def _check_interval_data(cols, layer, panel, where, issues):
+    bottom = _check_discrete_options(layer, where, issues)
+    if bottom is None or not all(
+        isinstance(name, str) and name in cols for name in (layer.x, layer.y)
+    ):
+        return
+    starts, durations = cols[layer.x], cols[layer.y]
+    if len(starts) != len(durations):
+        return
+    if not 1 <= len(starts) <= MAX_ROWS:
+        issues.append(f"{where}: broken_barh requires 1..{MAX_ROWS} intervals")
+        return
+    if any(not _finite(value) for value in [*starts, *durations]):
+        issues.append(f"{where}: intervals must be finite numeric, not bool")
+        return
+    if any(duration <= 0 for duration in durations):
+        issues.append(f"{where}: interval durations must be positive")
+        return
+    for start, duration in zip(starts, durations, strict=True):
+        left = float(start)
+        right = left + float(duration)
+        if not _finite(right) or right <= left:
+            issues.append(f"{where}: interval endpoints must be finite and distinct")
+            break
+    height = 1 if layer.width is None else layer.width
+    if not _finite(height) or height <= 0:
+        issues.append(f"{where}: band height must be finite positive, not bool")
+        return
+    lower = float(bottom)
+    upper = lower + float(height)
+    if not _finite(upper) or upper <= lower:
+        issues.append(f"{where}: band endpoints must be finite and distinct")
+    value_axis = panel.y2 if layer.axis == "y2" else panel.y
+    if panel.x.scale != "linear" or (
+        value_axis is not None and value_axis.scale != "linear"
+    ):
+        issues.append(f"{where}: broken_barh currently requires linear axes")
+
+
 def _check_eventplot_data(cols, layer, panel, where, issues):
     offset = _check_discrete_options(layer, where, issues)
     if offset is None or not isinstance(layer.x, str) or layer.x not in cols:
@@ -1955,6 +1995,8 @@ def validate(spec: FigureSpec) -> list[str]:
                 _check_stairs_data(cols, layer, panel, where, issues)
             elif layer.type == "eventplot":
                 _check_eventplot_data(cols, layer, panel, where, issues)
+            elif layer.type == "broken_barh":
+                _check_interval_data(cols, layer, panel, where, issues)
 
             if (
                 layer.type in _MATRIX_LAYER_TYPES

@@ -88,6 +88,13 @@ GALLERY_EXAMPLES = tuple(
             "주어진event위치와raw좌표offset/표식길이를사용합니다.",
         ),
         (
+            "broken_barh",
+            "series",
+            "Numeric interval band",
+            "Explicit start/duration intervals retain overlaps in one raw band.",
+            "명시start/duration구간과겹침을한rawband에보존합니다.",
+        ),
+        (
             "regplot",
             "series",
             "Regression",

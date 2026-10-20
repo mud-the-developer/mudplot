@@ -167,6 +167,33 @@ class Plot:
             )
         )
 
+    def broken_barh(
+        self,
+        starts: str,
+        durations: str,
+        *,
+        bottom: float = 0.0,
+        height: float = 1.0,
+        label: str | None = None,
+        panel: int = 0,
+        **style,
+    ) -> Plot:
+        """Draw numeric start/duration intervals in one raw-coordinate band."""
+        return self.dispatch(
+            A.AddLayer(
+                LayerSpec(
+                    type="broken_barh",
+                    x=starts,
+                    y=durations,
+                    baseline=bottom,
+                    width=height,
+                    label=label,
+                    **style,
+                ),
+                panel=panel,
+            )
+        )
+
     def regplot(
         self,
         x: str,

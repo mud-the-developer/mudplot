@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 84차 — Raw좌표의단일numeric interval band
+
+- 사용자Loop8반복에서broken_barh를기존x/y/baseline/width의start/duration/bottom/height로구현했습니다.
+  Row-aligned1..10000유한nonbool구간·양수duration-height와실제float렌더좌표에서구별가능한끝점이필요하며
+  overlap/중복/source/JSON/actions/SetData를보존하고sort/병합/추정/역전/clamp는없습니다.
+- 큰정수2**53폭1·1e300폭1붕괴/overflow와band끝점도artist전에거절합니다. Linearprimary-y2단일filledband와
+  colour/edge/alpha/linewidth/dash만지원하고date/log/group/facet/dropna/semantic/weights/polar3D는거절합니다.
+  새model/action/specfield·의존성/lock/버전없이기존fixturex/y와모든caller를연결했습니다.
+- 새39/관련613/floor41P3411deselected/Pyparsing13/CLI2/Rust22P6ignored/품질11명령/
+  전체WindowsnativeHTTP+실제browser5layer0/activeLSP11clean,
+  [구간기하·CLI·native검증](review_evidence/v11_interval_band_verification.json)을남겼습니다. 새PNG/spec/source는
+  실제열어확인했지만독립사람AT/가독성인증은아니며기존baseline/private증거는덮지않았습니다.
+- 기준8eeCI39408472076minimum/양Rust통과와진행Pythonjob을구분하며현재unit은로컬보존해goodrun을
+  취소하지않습니다. 게시뒤새전체CI/LinuxMSRV가필요하고원대장139PASS/6RUNNING/4OPEN/1DEFERRED/
+  나머지v1.1·releasegate/tag/publish경계는유지합니다. Loop8은끝나도활성유지합니다.
+
 ## 83차 — Raw좌표의단일numeric event train
 
 - 사용자Loop8반복실행에서이월stateMachine을실제9P로확인하고B6eventplot을구현했습니다. 기존rug의

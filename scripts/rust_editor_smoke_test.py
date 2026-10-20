@@ -69,6 +69,7 @@ def _review_recent_layer_contracts(base: str) -> None:
         mp.plot(source).regplot("x", "y", weights="w").size(4, 3),
         mp.plot(source).stairs("y", [0, 1, 3, 4], baseline=0.5).size(4, 3),
         mp.plot(source).eventplot("x", offset=1, length=0.4).size(4, 3),
+        mp.plot(source).broken_barh("x", "w", bottom=1, height=0.5).size(4, 3),
     ]
     for plot in examples:
         expected = json.loads(plot.to_json())
@@ -92,7 +93,7 @@ def _review_recent_layer_contracts(base: str) -> None:
         assert capture() == after
     _submit(base, "/open", {"json": json.dumps(original[0])})
     assert capture() == original
-    print("Native layer boundary OK: stem/WLS/stairs/event JSON and PNG undo/redo")
+    print("Native layer boundary OK: stem/WLS/stairs/event/interval JSON and PNG")
 
 
 def _review_history_contracts(base: str) -> None:

@@ -419,7 +419,7 @@ this spacing as documented above; broader mappings remain gaps. [Executable comp
 | `stem` | Partial: vertical numeric primary/y2 stems, explicit raw baseline, source order/duplicates and positive log axes | No horizontal/group/facet/semantic mappings; [scope](STEM.md) |
 | `stairs` | Partial: supplied heights/explicit N+1 edges, vertical outline/raw baseline/linear primary-y2 | No rebinning, fill/open/log/group/facet; [scope](STAIRS.md) |
 | `eventplot` | Partial: single numeric train, vertical raw offset/length, linear primary-y2 | No group/facet/log/date mappings; [scope](EVENTPLOT.md) |
-| `broken_barh` | Missing | Interval timelines |
+| `broken_barh` | Partial: start/duration intervals in one raw bottom/height band, overlaps retained, linear primary-y2 | No dates/group/facet/log mappings; [scope](BROKEN_BARH.md) |
 | Histograms, boxplots, violins, ECDF | Partial families; dedicated weighted ECDF/proportion/percent/count/complement/v-h, grouped histogram stack/dodge and unfilled layer/stack steps | Histogram step+dodge/filled steps/fill/poly/discrete/auto-bin/bivariate controls, precomputed box statistics and wider distribution controls |
 | Scalar images and contour fields | Partial | Explicit coordinate grids/extents, masks, RGB(A) images, `pcolor`/`pcolormesh`, `spy` and detailed contour controls |
 | Triangulated fields | Missing | `triplot`, `tripcolor`, `tricontour`/`tricontourf` and triangulated surfaces |

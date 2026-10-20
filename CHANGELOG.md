@@ -6,6 +6,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added bounded single-band numeric interval plots with explicit start/duration,
+  raw bottom/height, overlap/source preservation and linear primary-y2 routing.
+  Reject nonpositive, overflowed or float-collapsed geometry before artists, with
+  executable gallery/spec and full native HTTP/browser coverage.
 - Added bounded single-train numeric event plots with raw-coordinate offset/length,
   preserved duplicate events and linear primary-y2 routing, executable gallery and
   full native smoke coverage. Handle zero-width dashed legends on Matplotlib3.8

@@ -119,6 +119,8 @@
   묵시hist추정/mapping은없음.
 - [x] **B6c — Numericeventtrain:** 수직raw좌표offset/length/중복·원본보존,
   엄격한linearprimary-y2단일train범위.
+- [x] **B6d — Numericintervalband:** 명시start/양수duration·rawbottom/height·겹침보존,
+  엄격float끝점/linearprimary-y2subset.
 - [ ] **B6 — Matplotlib 범위:** 나머지 primitive/신호/vector/mesh/triangle/3D,
   축·정규화·범례·레이아웃 확장.
 
@@ -135,6 +137,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
+
+**B6subset:numericintervalband.** 기존x/y/baseline/width로start/양수duration/rawbottom/양수height를
+저장하고sorting/병합/추정없이겹침/source/SetData/JSON/actions를보존합니다. 유한numeric1..10000구간과
+표현가능·구별가능float끝점이필요하며2**53단위폭붕괴/overflow·0/음수duration-height/date/log/group/facet은
+거절합니다. 새39/관련613/floor41P3411deselected/Pyparsing13/CLI2/Rust22P6ignored/품질11명령/
+전체WindowsnativeHTTP·browser5layer0/LSP11clean,[범위](BROKEN_BARH.ko.md)·실제PNG/spec와
+[근거](review_evidence/v11_interval_band_verification.json)를남깁니다. 기준8eeCI39408472076의minimum/
+양Rust는통과했지만Pythonjob은진행중이므로취소하지않고로컬보존후새Linux/전체CI를받습니다.
+새model/action/specfield·의존성/lock/버전은없으며Loop8은활성유지합니다.
+
+### 이전 리뷰83차
 
 **B6subset:numericeventtrain.** 기존x/baseline/width필드로한train의수직rawoffset±length/2표식을
 구성하며축비율rug나rate추론이아닙니다. 유한nonbool1..10000events/양수length/유한·서로다른끝점/

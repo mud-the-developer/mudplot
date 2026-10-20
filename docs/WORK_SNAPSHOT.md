@@ -32,6 +32,9 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- Latest B6 numeric interval band:39new/613related/floor41/CLI2/full nativeHTTP+
+  browser pass, raw float endpoints/positive durations-height/source-overlap safety.
+  Baseline8ee minimum/bothRustP,PythonjobsR; unit local until safe to publish/newCI.
 - Latest B6 single numeric event train:32new/572related/floor34/CLI2/full native
   HTTP+browser pass; raw offset/length/source/duplicates with strict linear limits.
   Initial floor dashed-zero legend failure retained/fixed without epsilon or lost

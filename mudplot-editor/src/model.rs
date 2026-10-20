@@ -337,6 +337,7 @@ mod tests {
         assert_eq!(capabilities.layers["stem"].required, ["x", "y"]);
         assert_eq!(capabilities.layers["stairs"].required, ["x", "bins"]);
         assert_eq!(capabilities.layers["eventplot"].required, ["x"]);
+        assert_eq!(capabilities.layers["broken_barh"].required, ["x", "y"]);
         assert!(
             capabilities.layers["stem"]
                 .optional

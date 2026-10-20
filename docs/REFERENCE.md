@@ -34,6 +34,11 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 - **required**: `x`
 - **optional**: `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `k_depth`, `components`, `width_method`, `outlier_prop`, `trust_alpha`, `showfliers`, `showmedians`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
 
+### `broken_barh`
+
+- **required**: `x`, `y`
+- **optional**: `baseline`, `width`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`, `axis`
+
 ### `clustermap`
 
 - **required**: `matrix`

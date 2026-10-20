@@ -114,6 +114,20 @@ LAYER_TYPES: dict[str, dict[str, list[str]]] = {
             "axis",
         ],
     },
+    "broken_barh": {
+        "required": ["x", "y"],
+        "optional": [
+            "baseline",
+            "width",
+            "label",
+            "color",
+            "edge_color",
+            "line_width",
+            "line_style",
+            "alpha",
+            "axis",
+        ],
+    },
     "regplot": {
         "required": ["x", "y"],
         "optional": [
@@ -877,6 +891,12 @@ def capabilities() -> dict:
             "geometry": "vertical marks; baseline offset, width length in raw units",
             "max_rows": MAX_ROWS,
             "limits": "linear primary/y2; no group/facet/weights/log/date mappings",
+        },
+        "broken_barh": {
+            "intervals": "x=start, y=positive duration; rows/overlaps retained",
+            "band": "baseline=bottom, width=positive raw height; defaults 0/1",
+            "max_rows": MAX_ROWS,
+            "limits": "linear primary/y2 single band; no date/group/facet mappings",
         },
         "regression": {
             "fields": _action_fields(RegressionSpec),

@@ -381,7 +381,7 @@ Log 값/범주는 양수여야 하고 유한 범위를 넘는 도형을 조용�
 | stem | 부분: 수직numericprimary/y2/rawbaseline·원본순서/반복위치·양수log | Horizontal/group/facet/semantic미지원. [범위](STEM.ko.md) |
 | stairs | 부분: 주어진높이/명시N+1edge·수직outline/rawbaseline/linearprimary-y2 | Rebinning/fill/open/log/group/facet미지원. [범위](STAIRS.ko.md) |
 | eventplot | 부분: 단일numerictrain·수직rawoffset/length·linearprimary-y2 | Group/facet/log/date미지원. [범위](EVENTPLOT.ko.md) |
-| broken_barh | 미지원 | 구간timeline |
+| broken_barh | 부분: start/duration·단일rawbottom/heightband·겹침보존·linearprimary-y2 | Date/group/facet/log미지원. [범위](BROKEN_BARH.ko.md) |
 | hist/box/violin/ECDF | 부분: 전용 가중 ECDF·proportion/percent/count·보완형·v/h, 그룹 histogram stack/dodge·빈 layer/stack step | Histogram step+dodge/채운 step/fill/poly/discrete/자동 bin/2변량, precomputed box 통계와 추가 분포 옵션 |
 | image/contour | 부분 | 좌표 grid/extent, mask, RGB(A) 이미지, pcolor/pcolormesh/spy와 contour 상세 설정 |
 | triangulated field | 미지원 | triplot/tripcolor/tricontour/tricontourf/trisurf |

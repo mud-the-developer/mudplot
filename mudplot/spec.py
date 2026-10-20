@@ -468,7 +468,7 @@ class SemanticSpec(SpecBase):
 @dataclass
 class LayerSpec(SpecBase):
     # line | stem | stairs | scatter | bar | errorbar | band | hline | vline
-    # | eventplot | annotate | text
+    # | eventplot | broken_barh | annotate | text
     # | hist | box | heatmap | violin | kde | ecdf | rug | regplot | stripplot
     # | stackplot | hist2d | hexbin | quiver | pie | contour | contourf
     # | scatter3d
@@ -499,7 +499,7 @@ class LayerSpec(SpecBase):
     alpha: float = 1.0
     # bar geometry / outlines (bar_width is the total span of a category)
     bar_width: float | None = None
-    baseline: float | None = None  # raw bars/stem/stairs baseline or event offset
+    baseline: float | None = None  # raw bar/band bottom, stem/stairs/event offset
     edge_color: str | None = None
     # Raw-data statistical layers; None selects documented type defaults.
     stat: StatSpec | None = None
@@ -549,7 +549,7 @@ class LayerSpec(SpecBase):
     regression: RegressionSpec | None = None  # opt-in models/residuals
     # box/violin: one column keeps x-as-value; optional y enables category/hue.
     # None preserves legacy native defaults (violin medians remain enabled).
-    width: float | None = None  # distribution width or eventplot mark length
+    width: float | None = None  # distribution width, event length or band height
     whis: float | list[float] | None = None  # box IQR multiplier or percentiles
     components: DistributionComponentsSpec | None = None  # box/boxen only
     notch: bool | None = None

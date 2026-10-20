@@ -122,6 +122,8 @@ is authorized by this tracker.
   unfilled linear primary/y2/raw baseline; no implicit hist estimation/mappings.
 - [x] **B6c — Numeric event train:** vertical raw-coordinate offset/length,
   duplicates/source preserved, strict linear primary/y2 single-train subset.
+- [x] **B6d — Numeric interval band:** explicit start/positive duration and raw
+  bottom/height, overlaps retained, strict float geometry/linear primary-y2 subset.
 - [ ] **B6 — Native Matplotlib breadth:** remaining primitive/signal/vector/
   mesh/triangle/3-D families, richer axes/normalization/legends/layouts.
 
@@ -140,6 +142,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**B6 subset: numeric interval band.** Existing x/y/baseline/width store starts/
+positive durations/raw bottom/positive height. Retain overlaps/source/SetData/
+JSON/actions, no sorting/merging/estimation. Finite numeric1..10000intervals and
+representable distinct float endpoints; reject 2**53 unit collapse/overflow, zero/
+negative duration-height and unsupported date/log/group/facet mappings.
+39new/613related/floor41P3411deselected13Pyparsing/CLI2/Rust22P6ignored/11checks/
+full Windows nativeHTTP+browser5layercases0/LSP11clean. [Scope](BROKEN_BARH.md),
+real PNG/spec, [evidence](review_evidence/v11_interval_band_verification.json).
+Baseline8eeCI39408472076 minimum and bothRust pass; Python jobs still running.
+Keep this unit local to avoid cancelling them; fresh Linux/fullCI after publish.
+No new model/action/spec fields, dependencies, locks or versions; Loop8 stays active.
+
+### Earlier review phase 83
 
 **B6 subset: numeric event train.** Reuse existing x/baseline/width fields for one
 train of vertical raw offset±length/2 marks, not axis-fraction rug or rate inference.
