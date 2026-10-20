@@ -16,19 +16,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json),
 [legacy group identity and scalar conversion evidence](review_evidence/review_map_groups_scalars.json),
 [temporal precision and per-layer boundary/order evidence](review_evidence/review_map_data_policies.json),
-[real optional-adapter execution in an unchanged-base uv overlay](review_evidence/review_map_optional_execution.json).
+[real optional-adapter execution in an unchanged-base uv overlay](review_evidence/review_map_optional_execution.json),
+[dynamic registered-layer execution smoke and separate meaning controls](review_evidence/review_map_layer_smoke.json).
 
 ## Scope and classification
 
-This is a **thirty-eight-ID state/history/JSON/data mapping**, not a complete150-ID map.
-The remaining112 IDs have not been classified here. The candidate inventory still
+This is a **thirty-nine-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
+The remaining111 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Thirty-seven below have existing coverage of their explicitly stated boundary.
+Thirty-eight below have existing coverage of their explicitly stated boundary.
 JSON-09 remains **additional test needed** for its all-field meaning matrix.
 DATA-01/05's earlier optional execution gaps were filled by the separate declared
 uv overlay run below, not by retroactively changing skipped receipts. Existing
@@ -94,6 +95,10 @@ pass in this separate run, plus13 new table-library nodes. Recorded unique passe
 Python nodes are700, not675+95; previously passed repetitions are not added again.
 Old12 skipped receipts remain unchanged historical facts, not retroactive passes.
 
+PLOT-01 adds58 distinct current passed Python nodes, bringing recorded unique
+passed nodes to758. Its registry is dynamic; observed41 kinds is not a permanent
+constant. Smoke execution and selected representative meaning controls stay separate.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -134,6 +139,7 @@ Old12 skipped receipts remain unchanged historical facts, not retroactive passes
 | DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
 | DATA-08 | Existing coverage | 17 fresh Python passed | Selected raw-empty/stat-empty/singleton/constant layer expectations, not all-layer uniform policy |
 | DATA-09 | Existing coverage | 6 fresh Python passed | Raw duplicates/path/gaps/bar values vs explicit lineplot aggregation/sort/per-hue order |
+| PLOT-01 | Existing coverage | 58 fresh Python passed, actual dynamic gallery smoke | Registry/execution tier for all current kinds; separate representative meaning tier, not all-kind artist/UI approval |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -842,6 +848,45 @@ close JSON-09 semantics, certify past/future timezone or library compatibility,
 or count95 repeated nodes as95 new cases. No fresh Native/Rust/browser/sandbox/
 performance run is implied by these Python table-library tests.
 
+## PLOT-01 — dynamic registry and execution are a distinct tier
+
+Implementation: [site.py](../dashboard/site.py) `build_site`;
+[plot_gallery.py](../dashboard/plot_gallery.py) `build_example`, `render_plot_gallery`;
+`_render.render`, `_draw_panel`, `capabilities`, `json_schema`;
+`editor_server._build_action`, `editor_view.render_page`.
+
+Fresh selected nodes:
+
+- All6 nodes in `tests/test_capabilities_consistency.py`
+- All6 nodes in `tests/test_schema_export.py`
+- `tests/test_dashboard.py::test_build_site_produces_index_and_gallery`
+- `tests/test_dashboard_editor.py::test_any_layer_form_is_driven_by_every_registered_layer_type`
+- `tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json` (dynamic registered-kind parameters)
+- All3 nodes in `tests/test_review_visual_contracts.py`
+
+The current registry, renderer-known sets, gallery names and newly generated
+PNG/spec filename sets agree exactly. In this snapshot there are41 kinds, but
+membership/counts are taken from capabilities, not frozen into a permanent smoke
+roster. Each example validates, round-trips through Plot JSON, saves a real PNG
+and editable spec, then closes its Figure. Artifacts live only in owned pytest
+temporary directories; existing repo gallery images are not overwritten.
+Per-kind PNG/spec hashes are recorded. LayerSpec schema type is string/defaultline,
+not a layer-kind enum: advertised field names must fit schema properties, while
+kind registration is checked separately. Registry metadata alone is not execution.
+
+Python advanced JSON-layer form options and builders cover every registered kind;
+this is not clicking every visual control or a new Rust/browser UI run. Generated
+reference/demo comparisons keep their existing numeric tolerance and fields/types
+checks; no assertion was weakened to pass the gallery.
+
+**Meaning tier is separate:** the three visual-contract nodes verify repeated
+same-environment image+independent scatter offsets, a deliberately pixel-identical
+wrong group-collapse control, and a colour change with unchanged numeric meaning.
+Thus a PNG can be identical and semantically wrong, or visually different and still
+numerically correct. These representative witnesses are not per-kind validation
+of all41 coordinates/estimates/projections or independent human readability/AT
+approval. Other PLOT semantic items require their own source/test mappings.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -956,10 +1001,19 @@ uv run --no-sync --with pyarrow==26.0.0 --with polars==2.0.0 python -m pytest -q
   tests/test_review_table_formats.py --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_capabilities_consistency.py tests/test_schema_export.py \
+  tests/test_dashboard.py::test_build_site_produces_index_and_gallery \
+  tests/test_dashboard_editor.py::test_any_layer_form_is_driven_by_every_registered_layer_type \
+  tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json \
+  tests/test_review_visual_contracts.py --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining112 IDs still need their own reviewed symbol/node/provenance links
+The remaining111 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.

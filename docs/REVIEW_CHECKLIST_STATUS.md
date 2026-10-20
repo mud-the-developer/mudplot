@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 109차 — PLOT-01 동적실행smoke와의미control분리
+
+- [부분review-map](review-map.md)에현재등록집합/renderer/gallery/field-schema/UIJSONbuilder의source/test와
+  실제gallery실행을연결해누적39ID를분류했습니다. 현재선택58P/0skip·fail/40.43초,
+  [별도근거](review_evidence/review_map_layer_smoke.json)에실행시점41종PNG/spec의새임시출력지문을기록합니다.
+- 등록수41은영구상수가아니고capabilities집합을동적으로비교합니다. SchemaLayerSpec.type은string이지kind-enum이
+  아니므로필드구조호환과kind집합일치를구분합니다. JSONformoption/builder의모든kind지원은모든GUIcontrol을
+  클릭한검사가아니며gallery는검증/JSON왕복/savePNG/Figureclose후원본이미지를덮지않았습니다.
+- 대표visualcontrol3개는독립offset/grouporacle·pixel동일하지만의미오류인반례·appearance만달라지는대조를
+  분리해증명합니다. 모든41artist좌표/추정/투영의의미완료나독립사람AT인증으로확대하지않습니다.
+- 기록된고유Python통과node는758개이고분류39중기존경계근거38/JSON-09추가의미검사필요1입니다. 미분류111ID/
+  BASE-05JSON-09RUNNING·원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준43965bCI39478506917을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 108차 — 임시uv overlay의실제optional실행
 
 - DATA-01/05의현재optional실행공백을기존세파일로확인했습니다. `uv run --no-sync --with pyarrow --with polars`

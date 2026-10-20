@@ -1,0 +1,547 @@
+{
+  "kind": "partial-checklist-registered-layer-smoke-map",
+  "id": "PLOT-01",
+  "classification": "existing-coverage",
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-05",
+    "DATA-06",
+    "DATA-07",
+    "DATA-08",
+    "DATA-09",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "PLOT-01",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 39,
+  "remaining_unreviewed": 111,
+  "source_commit": "aa97332bba72b35de6599bf2d1caf3a99a7f86b3",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f",
+    "dashboard/plot_gallery.py": "26a3ca07ac750814ec92dc0d37246e11310fa3ec4b25da5147db3ed19d148546",
+    "dashboard/site.py": "ecc32e4bba6a0077a5e7b1c34666e92b96415a2ecc07b7e8c9f18544f9cde20a",
+    "examples/plots/annotate.py": "3daed8a8d9e5dc8dc42cd470fe007bc6625359f564ad3a2db4a15a950aeb7cb4",
+    "examples/plots/band.py": "ca39b80246296746d94b08ce58d89742ad0c93ee436876bcce1bfdb3d1751414",
+    "examples/plots/bar.py": "8e277db2eaa030fbf91d6767155eda8bd820619c5cf0f13f99554168646a7177",
+    "examples/plots/barplot.py": "0ab5b5e5fa2d0bfcf8b3015ef067bf0564fdd8c157f9db40cd05bbc7ee479da3",
+    "examples/plots/box.py": "99f7d94e8f21899c5ff768ca40f736f4bc90c36bd41aeb9de494f91b716253fd",
+    "examples/plots/boxenplot.py": "995e4ccb052ef77320d43e3f4f0dcd25cce572a96ea74fe581990445019786c3",
+    "examples/plots/broken_barh.py": "e125eee5880d2fe04b2d69c6be4832bffdae741cc8da54faf3dc475815723a8f",
+    "examples/plots/clustermap.py": "37f7f0b2331a14c0c3467151cdf298884d2e4b34c730f03a72191bd877db71a0",
+    "examples/plots/contour.py": "007515410761e693bc01c8682917f241c41348955a2c8daf183551afcd8d3dc5",
+    "examples/plots/contourf.py": "c8df29a3b25a381676a6bc8489358cabac0ac80b7ef1aa5add7b5dfc560d16d7",
+    "examples/plots/countplot.py": "bb601faabb468151fc04fb31c2d03b810dc02556a0e99a818fd8c0db23445c89",
+    "examples/plots/ecdf.py": "88c8e086fdafef4ec29ce281faae972ca133567b73e5ff67db5f884b91e43095",
+    "examples/plots/errorbar.py": "a0b8cb18d1ae2b5ba17130718d603be4aebdbc28b1a2db7757f6be7641453fb0",
+    "examples/plots/eventplot.py": "869761183e4a951ec05856a5b2eec1101c07c73b29236dadfd07ed734c0d479f",
+    "examples/plots/heatmap.py": "b491ab65289dff764c53bbb60d48dbdbb897fa90240790ac32f7d442178d2ad2",
+    "examples/plots/hexbin.py": "59d3d578edebdc15ab6644cc5dfa9e32d63d3cd7e57444cdf8c24315d147fb60",
+    "examples/plots/hist.py": "02af2d680ff6da2922312c13a08c3163dc43aa9a3e4cfa3ffd53876499c095d6",
+    "examples/plots/hist2d.py": "b99584983394534c73dc1b646093223481ad490108579e7c0673ec424b804032",
+    "examples/plots/hline.py": "6658dc010e721faa48c2475a672e9f61ea498089f4daa57b8745f4e25a394769",
+    "examples/plots/kde.py": "fb580486b306ab567f5c1b8e76db0a36ae4abacd1ffa894e950cc8ed831250a1",
+    "examples/plots/kde2d.py": "ae19b4749294e501c8162d7ddd6cc02bafa1fd2b4ca4a713e428adbe9e0a26bc",
+    "examples/plots/line.py": "22dc074234edf90b5965ed5f459c6c80b94c56cc69b73146c9a5c04702acbce2",
+    "examples/plots/line3d.py": "0f1fce0d219a4abe821bb8ff76e787f46797d4d94139d4c3b27d584e15c71012",
+    "examples/plots/lineplot.py": "7f2a7b4a16312d7124ecc26993d113163538e0d76eaddec8ed13d3d53416ec6e",
+    "examples/plots/pie.py": "71eeac214e9a074c7cc09c10eeda5a7b9141dce73bda9600cfc33d33aa8e4d1f",
+    "examples/plots/pointplot.py": "321801e3c3ff8263fee5be31a2c947d6a0154d12df0f0f53d918c93d503f18d4",
+    "examples/plots/quiver.py": "2247e9be91f50e004f0889b363a8e3f9f2cf998fd070ef1bec3ac9df480a6496",
+    "examples/plots/regplot.py": "905c3fe7b3d9a0610a9d078714718af158b83dd80a968119d9d1e39b812ddae0",
+    "examples/plots/rug.py": "901dcfc229046d518930dcbbbce9d7a6581e6af2678dfb72d874b4b3a21713b4",
+    "examples/plots/scatter.py": "60f630bc80b36691048de70916ad5339cb2eef59076b749494c9e1732727c4a1",
+    "examples/plots/scatter3d.py": "c7429bb5ab5cc94832180f9c2f77f3e5f1c4361ad506df24ff76a9cd6f191f37",
+    "examples/plots/stackplot.py": "cd9e2a44d6178f7b343b5d17d1d278efba2872a10f7a82ce42c66df68bc284ca",
+    "examples/plots/stairs.py": "4d9592543f90588b2fb3bba89125ff426fe9a6f86642b8c22206a991ff33ba3a",
+    "examples/plots/stem.py": "8db9ae4ab0b2abe8dd1b4162fd0f1232fe26e4e4565bc68eccd5aabd9cb0fa01",
+    "examples/plots/stripplot.py": "6306e8569a403b65580d79f8dfa8f777d19761b9e335c8131916f3faa65ab62a",
+    "examples/plots/surface.py": "b98c8443b86997c3a229d6554d54f51cbe40311b7b2452ea50ddffbcb31bc81c",
+    "examples/plots/swarmplot.py": "63bf0cc9021e82d9ce5ff175b6d11ff17de68bd454558006960d3c333582d70d",
+    "examples/plots/text.py": "bb8e15c654e0c6cbf76b0857f726a4b48f506e39276f915967ca7444847755b0",
+    "examples/plots/violin.py": "786c70f783bf0138e957b501476b5bfa4159d1465ee8af1faf5b05f57636dadd",
+    "examples/plots/vline.py": "32891255febccd3f1a6d2c04e8dfacd53f5c01fc81fe708fa19133070c37abfe",
+    "examples/plots/wireframe.py": "370ee94bcbc08c77d12858b2fb50df1bd02dc367b8c05e735f494dcdd5fa822c",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/capabilities.py": "2e76a36156fc2feac651945fe17ab971e007e7bedec355946fca7a04d6c23252",
+    "mudplot/schema.py": "2af0a68a6a497b7f13d633331dabc394bfdc92baca693152d44c8385ac8d7484",
+    "tests/test_capabilities_consistency.py": "d67a9e4a0ec1dedaf54c2c6df321e27b6ac05a88bebde2055b3b35e8894f073c",
+    "tests/test_dashboard.py": "d2ef9b8cbe949eaaf5b7050efe9cea7d37e65ef2b6c5b619969a4b6b38dd06b6",
+    "tests/test_dashboard_editor.py": "38706b7b3f21f0c5d140d5e00fcf3f6a3b97a93bc79b70a6f9bee6e459d3bd85",
+    "tests/test_review_visual_contracts.py": "aac54f68bc3b061c867b848d5d3573388b02e17e09797730d98c5801fe7dfe33",
+    "tests/test_schema_export.py": "0e89814ed53c99b51e1b9fd8b1cc17099e75411e8c999b3c0d6cd38a735be551"
+  },
+  "previous_artifact_sha256": "281c71b927fc816011fdf5f989b5b1dccdf5425c4e8c7ac469ec71720a048ec0",
+  "implementation": [
+    {
+      "ref": "dashboard/site.py::build_site",
+      "body_sha256": "dab6ea94b3e36d7f8dbbe2a2c1458bbdc88ac9e842e91fcb2a5e6db2429e6ba9"
+    },
+    {
+      "ref": "dashboard/plot_gallery.py::build_example",
+      "body_sha256": "ab55768b8cd89d92363d4ef9869848bf508552975e7b0b980137c232cc733c6c"
+    },
+    {
+      "ref": "dashboard/plot_gallery.py::render_plot_gallery",
+      "body_sha256": "70f0ebe8e7be74185547a217a4f881232905776cd13ba72cb94e79bd69a09739"
+    },
+    {
+      "ref": "mudplot/_render.py::render",
+      "body_sha256": "34004f3abfaaa8cb4118fe0733fd713c95eef8853ff5bfebe71acca0fa32cce9"
+    },
+    {
+      "ref": "mudplot/_render.py::_draw_panel",
+      "body_sha256": "21f93f2e2ab933c36d9edca1ecc71b9a2a953c740cb7b1dc6c30f4b0b5864c54"
+    },
+    {
+      "ref": "mudplot/capabilities.py::capabilities",
+      "body_sha256": "856c6b0073fe27381889eeb3bba1b9320ab8e9cd2062a196004255dad618483f"
+    },
+    {
+      "ref": "mudplot/schema.py::json_schema",
+      "body_sha256": "19b91837356964d541147b0b5bffdc3f6d101f332fe19ea8d603559f01ec7fda"
+    },
+    {
+      "ref": "dashboard/editor_server.py::_build_action",
+      "body_sha256": "c8e562c7738fb07a5a545a052ba33419777ba540dd4e8c5d1a1f9babda20c030"
+    },
+    {
+      "ref": "dashboard/editor_view.py::render_page",
+      "body_sha256": "2513cf212a8bb5732da57fe4057d4ea55d68b9cc8a7a3add0992838116186f0d"
+    }
+  ],
+  "test_bases": [
+    "tests/test_capabilities_consistency.py::test_axis_field_advertised_exactly_for_routable_types",
+    "tests/test_capabilities_consistency.py::test_every_layer_type_field_is_a_real_layerspec_field",
+    "tests/test_capabilities_consistency.py::test_every_layer_type_is_handled_by_the_renderer",
+    "tests/test_capabilities_consistency.py::test_every_renderer_type_is_advertised_in_capabilities",
+    "tests/test_capabilities_consistency.py::test_group_field_advertised_exactly_for_groupable_types",
+    "tests/test_capabilities_consistency.py::test_rust_editor_versions_and_default_spec_follow_python_contract",
+    "tests/test_dashboard.py::test_build_site_produces_index_and_gallery",
+    "tests/test_dashboard_editor.py::test_any_layer_form_is_driven_by_every_registered_layer_type",
+    "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json",
+    "tests/test_review_visual_contracts.py::test_appearance_control_changes_image_without_changing_numeric_meaning",
+    "tests/test_review_visual_contracts.py::test_pixel_identical_control_can_still_have_wrong_group_semantics",
+    "tests/test_review_visual_contracts.py::test_same_environment_repetition_and_numeric_oracle_are_exact",
+    "tests/test_schema_export.py::test_capabilities_file_is_in_sync",
+    "tests/test_schema_export.py::test_demo_pdfs_omit_volatile_timestamps",
+    "tests/test_schema_export.py::test_demo_specs_are_current",
+    "tests/test_schema_export.py::test_figure_spec_schema_file_is_in_sync",
+    "tests/test_schema_export.py::test_reference_docs_file_is_in_sync",
+    "tests/test_schema_export.py::test_schema_is_valid_json_schema_shape"
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <cap6/schema6/gallery1/editor-register1+dynamic-json-layer-builders/visual3> --basetemp=<owned-private> --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 58,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 40.43,
+    "executed_nodes": [
+      "tests/test_capabilities_consistency.py::test_every_layer_type_field_is_a_real_layerspec_field",
+      "tests/test_capabilities_consistency.py::test_every_layer_type_is_handled_by_the_renderer",
+      "tests/test_capabilities_consistency.py::test_every_renderer_type_is_advertised_in_capabilities",
+      "tests/test_capabilities_consistency.py::test_group_field_advertised_exactly_for_groupable_types",
+      "tests/test_capabilities_consistency.py::test_rust_editor_versions_and_default_spec_follow_python_contract",
+      "tests/test_capabilities_consistency.py::test_axis_field_advertised_exactly_for_routable_types",
+      "tests/test_schema_export.py::test_figure_spec_schema_file_is_in_sync",
+      "tests/test_schema_export.py::test_capabilities_file_is_in_sync",
+      "tests/test_schema_export.py::test_reference_docs_file_is_in_sync",
+      "tests/test_schema_export.py::test_demo_specs_are_current",
+      "tests/test_schema_export.py::test_demo_pdfs_omit_volatile_timestamps",
+      "tests/test_schema_export.py::test_schema_is_valid_json_schema_shape",
+      "tests/test_dashboard.py::test_build_site_produces_index_and_gallery",
+      "tests/test_dashboard_editor.py::test_any_layer_form_is_driven_by_every_registered_layer_type",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[annotate]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[band]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[bar]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[barplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[box]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[boxenplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[broken_barh]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[clustermap]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[contour]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[contourf]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[countplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[ecdf]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[errorbar]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[eventplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[heatmap]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[hexbin]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[hist]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[hist2d]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[hline]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[kde]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[kde2d]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[line]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[line3d]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[lineplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[pie]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[pointplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[quiver]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[regplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[rug]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[scatter]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[scatter3d]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[stackplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[stairs]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[stem]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[stripplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[surface]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[swarmplot]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[text]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[violin]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[vline]",
+      "tests/test_dashboard_editor.py::test_build_action_accepts_every_registered_layer_type_as_json[wireframe]",
+      "tests/test_review_visual_contracts.py::test_same_environment_repetition_and_numeric_oracle_are_exact",
+      "tests/test_review_visual_contracts.py::test_pixel_identical_control_can_still_have_wrong_group_semantics",
+      "tests/test_review_visual_contracts.py::test_appearance_control_changes_image_without_changing_numeric_meaning"
+    ],
+    "log_sha256": "e5361d455a53b87c8ef152e5d466bd6de40c63af487b21587a0fd7d5a6cc7251",
+    "junit_sha256": "fa89929de0259d681796c6002ca5570692de54af2f9b5dc801e1a958e7f91e82"
+  },
+  "registry_snapshot": {
+    "observed_count": 41,
+    "not_permanent_count": true,
+    "layers": [
+      "annotate",
+      "band",
+      "bar",
+      "barplot",
+      "box",
+      "boxenplot",
+      "broken_barh",
+      "clustermap",
+      "contour",
+      "contourf",
+      "countplot",
+      "ecdf",
+      "errorbar",
+      "eventplot",
+      "heatmap",
+      "hexbin",
+      "hist",
+      "hist2d",
+      "hline",
+      "kde",
+      "kde2d",
+      "line",
+      "line3d",
+      "lineplot",
+      "pie",
+      "pointplot",
+      "quiver",
+      "regplot",
+      "rug",
+      "scatter",
+      "scatter3d",
+      "stackplot",
+      "stairs",
+      "stem",
+      "stripplot",
+      "surface",
+      "swarmplot",
+      "text",
+      "violin",
+      "vline",
+      "wireframe"
+    ],
+    "renderer_gallery_output_sets_equal": true,
+    "schema_LayerSpec_type": "string/defaultline,not layer-kind enum",
+    "advertised_fields_all_schema_properties": true
+  },
+  "per_kind_execution": {
+    "annotate": {
+      "example": "examples/plots/annotate.py",
+      "png_sha256": "f17b8d39f07b5efeddba9abb18c4670ce81a812ac5db1e262e7c62eda9b26f6a",
+      "spec_sha256": "b018056c0c06ab093b08bad22a98f4bc99522e4f253ffdcd13f526228d9e9a18",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "band": {
+      "example": "examples/plots/band.py",
+      "png_sha256": "dbdd1debcbee183e5abe2718844ae06cdfbc16acac4ee7abefb4fb612fc524de",
+      "spec_sha256": "0a5257741cfb810fee676475745174ba85d19d2b4f0c2d1e442aaca61e855c7f",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "bar": {
+      "example": "examples/plots/bar.py",
+      "png_sha256": "ef31404e70ba295ccfa8d3e7f51616d6e7c84f59fedbc54cc3eceefacb5ed26e",
+      "spec_sha256": "e30e23e01b35d100ba108e57075f438854afab05946192ed3f9db1d9aa766c69",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "barplot": {
+      "example": "examples/plots/barplot.py",
+      "png_sha256": "ac45748cf0cb782cc31f94cbe46e8e34ed0b7ae972eaef61fc3acb979031ffde",
+      "spec_sha256": "c6cb26741b06b5b585fe5c00a851856a7e8ace700d5d74f161b460992d6ac5e0",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "box": {
+      "example": "examples/plots/box.py",
+      "png_sha256": "54c5d7d9d02824c6fdaf9a43dac7d66045d3fea5e3d2182bc69c69aaacfa2a0b",
+      "spec_sha256": "6db806d2a76088894493bffb802273b3ab81ceba8fb2aec83a8352d08cca35f9",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "boxenplot": {
+      "example": "examples/plots/boxenplot.py",
+      "png_sha256": "f21342be77fd14a668b3f0229ad6329decf206e23ce2158aed1ee461bf4a32b5",
+      "spec_sha256": "0f79cee2f8f7ba85b62b9b8919d9197d7f669aea83cf002838b925e59da2b112",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "broken_barh": {
+      "example": "examples/plots/broken_barh.py",
+      "png_sha256": "f042f5e22df5ca3b208819646491a33e58dc7015d544d6ee86dec4d42f2bc14d",
+      "spec_sha256": "95d746226b329df615e039086e68be6839dff3bdc30cb123b7fc3062bdc752ac",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "clustermap": {
+      "example": "examples/plots/clustermap.py",
+      "png_sha256": "9b50c50253f2de72d53462931af2b1addaade7d1881aac5edf53944b5a3b9861",
+      "spec_sha256": "e58b022543afa86cede1876fe1a2397f1f61231a25959410d515469ba03be43f",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "contour": {
+      "example": "examples/plots/contour.py",
+      "png_sha256": "9b8e5bb169487db85e2476bfca7716e1cca7dfcfdda6a177b81b3e4a874066f4",
+      "spec_sha256": "3e131c3c066ffcfd5d8527f0eb40e5654900b9678bce442d6af397d2945a6009",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "contourf": {
+      "example": "examples/plots/contourf.py",
+      "png_sha256": "167fc50cbde10016d6bcb91129ebfbfc064ba3c5ff954232880f753b5a046bf1",
+      "spec_sha256": "45395f7fe1487ac0afe81f0c2c00500836db0bc88e389848a0b66ae772e2b461",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "countplot": {
+      "example": "examples/plots/countplot.py",
+      "png_sha256": "d13de6f7e204a960b039f8e3671af341f7b0825180637cce909b03ca89ec5b73",
+      "spec_sha256": "d570cd461ada52811d99344ea3428cf9ede5a10df777f94eba5c6cac28f050c7",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "ecdf": {
+      "example": "examples/plots/ecdf.py",
+      "png_sha256": "faa514f5d4b5f955ebce476ad21949fd788867018e5b90256412b926adebcebc",
+      "spec_sha256": "958116977ba893c993372a69eb17689f493e07dba680b170c846700afcef1fb3",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "errorbar": {
+      "example": "examples/plots/errorbar.py",
+      "png_sha256": "1817e224d19005a7709723d08cabfe106c250c188f22b798c5e3c7a21424b1a3",
+      "spec_sha256": "126c0bf7f732a5b7ef0c6f0f52de3745305c7005886587a5a537a66e38851788",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "eventplot": {
+      "example": "examples/plots/eventplot.py",
+      "png_sha256": "5ccec5c7358ddc792e1119b1384530d33866313ef904c1b2d7597592ebae96b0",
+      "spec_sha256": "760373ebbbd23e5cb242180e0db274daa66f1ae1f4314a33c8fe5e83fefe8bdb",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "heatmap": {
+      "example": "examples/plots/heatmap.py",
+      "png_sha256": "78eb2e4d6a06e3d2789bdf4da1129fa100716fa6361d0ed5354bb80deea867dc",
+      "spec_sha256": "01618bd427c6787ec20d8af15348a30414baf0ffbfe3e41a5665ba22b2954243",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "hexbin": {
+      "example": "examples/plots/hexbin.py",
+      "png_sha256": "81d7f8fbf2c02d755112fc719e82649f7672b6f31c387eff862794f0b46e21bc",
+      "spec_sha256": "f56dd90a45a7b9994aaa1bed048545dfdfb75cde7bd5b1434226d29db3d376e4",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "hist": {
+      "example": "examples/plots/hist.py",
+      "png_sha256": "352783d26ba2daf0e07fc6e405fc2e1b23a24f3dfe26f1ce45f89548801c8ee2",
+      "spec_sha256": "f51b32c8a5ccb81f89e81fcaa5602e35922438b798e4ea03dca5f7c3ecdd16bb",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "hist2d": {
+      "example": "examples/plots/hist2d.py",
+      "png_sha256": "4e36d892bbb0008f258ae28b34ebe9b88348dd664af21c0ef36af29b71953f86",
+      "spec_sha256": "0db3491f521e7aac76c4b068811b4c99a23eb35e290e567e941dd646b57f9ddb",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "hline": {
+      "example": "examples/plots/hline.py",
+      "png_sha256": "149d4d177a0711a041be8813dc005132fb092f717d994447892c7fea18211d76",
+      "spec_sha256": "f18572c525fa7e4f13e553a490a799a700da5a00df7e937219034dc2111cb212",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "kde": {
+      "example": "examples/plots/kde.py",
+      "png_sha256": "e287d8affb2b764ec45b9479ced0d937550a9031b0082da78b773d5566013f0c",
+      "spec_sha256": "a83d74a24857712b469dacdba8effcd42a9d25b1c9006f609d7bf662d27999fc",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "kde2d": {
+      "example": "examples/plots/kde2d.py",
+      "png_sha256": "02dbf2f8e44af134f59cd4ab3acff352640729dbecd5ee747b60bf935e6e16d4",
+      "spec_sha256": "3c5a225252783ec1b4e08028aa542b22454c164e3496abea44ae28cd15aab1b7",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "line": {
+      "example": "examples/plots/line.py",
+      "png_sha256": "4f8c8a57e73d1b1571f142c3edbb66abaef0c722af87a13f45b167bf99b58ce4",
+      "spec_sha256": "a7d497c0f1dea3a4c32100a6c38ee9b41f18a7374b7ae917c0cb9e9f667b867b",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "line3d": {
+      "example": "examples/plots/line3d.py",
+      "png_sha256": "94b4146bdc2ccabad7ad6383314a3e92eb675822bfda0951cf5b6a8b8ac43977",
+      "spec_sha256": "e7f3735737f7599d50bb990262bc43a9de13bf67ce71cd798c6bc54f22975dfc",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "lineplot": {
+      "example": "examples/plots/lineplot.py",
+      "png_sha256": "fca34206a507f9e3ac49054271103f8533d9a6f86db3cd9aa84293a11486fd14",
+      "spec_sha256": "2a7d57f3521f561fb57a57548aea2568d14a7ae9f7031d101ce643637097cd4b",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "pie": {
+      "example": "examples/plots/pie.py",
+      "png_sha256": "e6b642b91cf8123e150437c1b9d3eabc0606e1d05bf2266a58110da0985f1027",
+      "spec_sha256": "f116cb2c67f483d52169926831ad1f23db936bfd3ee65b55542561a9cf6da12f",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "pointplot": {
+      "example": "examples/plots/pointplot.py",
+      "png_sha256": "8ab4576f45c6a1cc31e06d5370f981e765275ceac1b230d949d3e2a159785f76",
+      "spec_sha256": "b0af12125aa565157ad2c432af4eda41aa719cbbc3c5c418d5cd643262dee9f0",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "quiver": {
+      "example": "examples/plots/quiver.py",
+      "png_sha256": "f969688cbe5b4ca2d454754bcbbc4b56ed46a99b5f79072af74987cf4823e4c7",
+      "spec_sha256": "132e6e911d3f56c9c66879bfae118ffe67d4fa28efaa5174a82d8d93f43481eb",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "regplot": {
+      "example": "examples/plots/regplot.py",
+      "png_sha256": "c0701ce4fb3a27c8063eca7d5ab205cbf82176b17fb0de800b08e5a863b9145f",
+      "spec_sha256": "3f7fca488d50355f06b6b32a014b0ca6cd9d7c290772d0a91c013887fdaa4106",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "rug": {
+      "example": "examples/plots/rug.py",
+      "png_sha256": "087788408e19a2efc2cd7df05763835ff1866022f8d2fa0eabf33075c7e566cd",
+      "spec_sha256": "1914c634f0c28fffb835ab26fb36e7dfc43fead399cb0fa1702abde0d1e7f7e5",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "scatter": {
+      "example": "examples/plots/scatter.py",
+      "png_sha256": "0b70c6540a79ca3eb350dd33da3d5b7181546b1fb8cb7a0bf923d92104e46a60",
+      "spec_sha256": "8150e9bc05132974a4300efef29ab39098c8af69dbb59bd0274cfc4715a1790f",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "scatter3d": {
+      "example": "examples/plots/scatter3d.py",
+      "png_sha256": "24ef7dfb2120a981d9e9e31b5dd923eaa9e932ad65750e900dcbcd850345a815",
+      "spec_sha256": "f8594ec46e0e100d059ca54814c3c0fe9ad6eac6e7f0224c53e4cd7a9b65bef7",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "stackplot": {
+      "example": "examples/plots/stackplot.py",
+      "png_sha256": "0f2ee8cdd8327ed70f7b4f2f81616dbb449c22998f1be1364d011cc30c12e489",
+      "spec_sha256": "4c2a11894e3c31e8519cb42f309c8c535ffbd9108a09edec5331609d755ab3f0",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "stairs": {
+      "example": "examples/plots/stairs.py",
+      "png_sha256": "553364e83a643e852332e0c4f8df3b236bed4631e47af0bc90032171fd584645",
+      "spec_sha256": "0dc4641b9f8bcbf6ac173ae81b60ce238a71e736b299ec4b08f5f4d170a4737d",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "stem": {
+      "example": "examples/plots/stem.py",
+      "png_sha256": "569f0fb845ead14fd35349cb5fdda452cd2f53283907fe224402d5b62595e9e1",
+      "spec_sha256": "50512a21f2148fd3791659ceefd59dcae50e1e69ba3ade03923f23322bb2fd32",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "stripplot": {
+      "example": "examples/plots/stripplot.py",
+      "png_sha256": "3f147553f426486579a0d70164b671f08f1afb126d523315a5adfb95c9e07f09",
+      "spec_sha256": "92fa2b7b888385d1809290bce503b27fffcb8f0ee2d56ac42cd2140bdb802c6a",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "surface": {
+      "example": "examples/plots/surface.py",
+      "png_sha256": "e44d44a3993a21ef8f0f6fb1c4c93c3ada0581a66255b442bada767bbc66097f",
+      "spec_sha256": "fa7a1b13056d11f15968c6943b3e8af01a604e57fe40ab9d8b170efe95ca20d6",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "swarmplot": {
+      "example": "examples/plots/swarmplot.py",
+      "png_sha256": "0d6c7cf29834f0d03be458c87b01e70123847b14c2ab5ea0648946d1db336196",
+      "spec_sha256": "40ea9932a59128e06db708918788dc466090b7852d91edb09e55041d64f83161",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "text": {
+      "example": "examples/plots/text.py",
+      "png_sha256": "599f8f675e81b704408f5946190f2a797b80657566ccbcae944f223222f11c61",
+      "spec_sha256": "03eae6a67152eae424d7e91ae7eb7de1fd8211b74245805009921cd58af8ccfc",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "violin": {
+      "example": "examples/plots/violin.py",
+      "png_sha256": "392daf92b456645cfb7ec16ef9700ba3e4a40656a61c2b185cb167517cd31495",
+      "spec_sha256": "b988100d307f9e868d7c6cc17db909a7375fa275c89d892de92ef53868b41db5",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "vline": {
+      "example": "examples/plots/vline.py",
+      "png_sha256": "979506326657f65b3674856e55c4b42213438fc58f8f977a79ac31f91f77f972",
+      "spec_sha256": "7bdfdbda670d042efd1173a726ce9db098a5dae7454220b7e53960b2f327b97a",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    },
+    "wireframe": {
+      "example": "examples/plots/wireframe.py",
+      "png_sha256": "caeaad92c15d850ec331af0e5f4e7bff2aced1e6e90f52d4f9748e8a9d9f3865",
+      "spec_sha256": "1520359750afa0990a1cde0614ac412a35cd0a1755e592b7307ebd0e22797d23",
+      "coverage_tier": "ActualPNG-save/spec-validate-roundtrip smoke; not per-kind artist-meaning approval"
+    }
+  },
+  "meaning_tier": {
+    "selected_witnesses": [
+      "tests/test_review_visual_contracts.py::test_same_environment_repetition_and_numeric_oracle_are_exact",
+      "tests/test_review_visual_contracts.py::test_pixel_identical_control_can_still_have_wrong_group_semantics",
+      "tests/test_review_visual_contracts.py::test_appearance_control_changes_image_without_changing_numeric_meaning"
+    ],
+    "scope": "Onlyrepresentativescatter-groupcounterexamples/numeric-offsetoracles. Pixelidenticalwronggroupcontrolanddifferentcolourcorrectmeaningkeptseparate. No all41artistmeaning/humanATapproval."
+  },
+  "limits": [
+    "JSONadvancedformdropdown/all-kindbuilderparse are not browserclickingallcontrols/Rustvisualformscompletion.",
+    "Gallerynew41PNG+specinsidetesttempONLY,no existingrepoassets/userfilesoverwrite;Gcfcleanupassertedbytest.",
+    "No freshRust/Native/browser/fullsuite/sandbox/performance/humanaestheticsapproval.",
+    "Classificationexistingcoverageforruntimekindset-smokewithseparatemeaningwitnesses;otherPLOTsemanticsmustbemappedindividually.",
+    "Recorded758uniquepassedPythonmapnodes+historical12skipreceiptslaterexecutedin95Poptionaloverlay;39reviewed38existing1additional(JSON09)/111unclassified/master139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "8e7de581451d9e1c4d387d968a6baa298d699ac6e044d87db4423c9818a9c843"
+}
