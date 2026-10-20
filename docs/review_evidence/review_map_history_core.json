@@ -1,0 +1,355 @@
+{
+  "kind": "partial-checklist-history-map",
+  "reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03"
+  ],
+  "reviewed_count": 3,
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 12,
+  "remaining_unreviewed": 138,
+  "source_commit": "d499da9166a7dab100d76ac0a32d80f986475e14",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "mudplot-editor/src/lib.rs": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "scripts/rust_editor_smoke_test.py": "c9e1fe6de2bf9634cd83c0af1a294a32504269d695fad8f988c3c4765a086ace",
+    "tests/test_review_editor_paths.py": "f0dfd840e5abd3eb9d7186d6a070b53ac4748806fd09b9b5d6be3d7b764ebad7",
+    "tests/test_review_state_contracts.py": "bb4e6fbb0da60e040260e314d98cd32a69e11d1dc10770c91a7c0986abcc80df"
+  },
+  "previous_artifact_sha256": "0a99770d9290e6ec3fe18900cd2edb8f2f7dab026ae7deeb91ff259980c673de",
+  "items": [
+    {
+      "id": "HIST-01",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store._replay",
+          "resolution": "Python AST qualified definition",
+          "line_start": 76,
+          "line_end": 86,
+          "body_sha256": "8d35082f94bb7a55aa1525ded056dd248aae1a6446ab4881d7871b6ba0649581"
+        },
+        {
+          "ref": "mudplot/store.py::Store.undo",
+          "resolution": "Python AST qualified definition",
+          "line_start": 88,
+          "line_end": 96,
+          "body_sha256": "1b1356b4a0233ba6e9211e74d6ee4003e3efedeba777c1c894a14e48c2d7e9d3"
+        },
+        {
+          "ref": "mudplot/store.py::Store.redo",
+          "resolution": "Python AST qualified definition",
+          "line_start": 98,
+          "line_end": 106,
+          "body_sha256": "c80dc0065d4ed775b6bd64ec3202a9fcfe5ae848beba46ce0891c44aaee6a37d"
+        },
+        {
+          "ref": "mudplot/store.py::Store.history",
+          "resolution": "Python AST qualified definition",
+          "line_start": 52,
+          "line_end": 54,
+          "body_sha256": "0592ac0daaaf85f21986acb9174795d8eb2a1be62d8d0d260373948ccf89b36e"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.undo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 165,
+          "line_end": 177,
+          "body_sha256": "0deff5f96158b996dedf3972d0c4c298dcb600989b19f6e34b0f041bc29feec5"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.redo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 179,
+          "line_end": 190,
+          "body_sha256": "88d98ce2aeb494c8a708392978b43294b36a0946cad1d29a324b8ebbf9ae93b6"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_hist_01_undo_redo_visits_every_expected_state_and_stops_at_boundaries"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_hist_01_undo_redo_visits_every_expected_state_and_stops_at_boundaries"
+      ],
+      "fresh_passed": 1,
+      "native_helpers": [
+        "scripts/rust_editor_smoke_test.py::_review_history_contracts"
+      ],
+      "reviewed_boundary": "Three distinct actions, complete undo/redo and repeated end boundaries compare exact states/history-prefix cursors. Separate13-row assert probe records cursor/state hashes. Not long-history resource or every action variant."
+    },
+    {
+      "id": "HIST-02",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "resolution": "Python AST qualified definition",
+          "line_start": 56,
+          "line_end": 70,
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.dispatch_safe",
+          "resolution": "Python AST qualified definition",
+          "line_start": 131,
+          "line_end": 137,
+          "body_sha256": "aa7a662d5a2bdb40952c1366a93ab4d97b1e2c98ce682b08a63b511cf9ce95c1"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+          "resolution": "Python AST qualified definition",
+          "line_start": 122,
+          "line_end": 129,
+          "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.undo",
+          "resolution": "Python AST qualified definition",
+          "line_start": 139,
+          "line_end": 145,
+          "body_sha256": "c4c6efaf8198ccbb5066d0222d4f8c9f476442acacb8684bb66478d04dd9ca4d"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.redo",
+          "resolution": "Python AST qualified definition",
+          "line_start": 147,
+          "line_end": 153,
+          "body_sha256": "397d497f80e071e0166056d25591e84bb9c910c8c1f0765dbe3d0783976f7977"
+        },
+        {
+          "ref": "mudplot/io.py::save_spec",
+          "resolution": "Python AST qualified definition",
+          "line_start": 136,
+          "line_end": 137,
+          "body_sha256": "15282df731e46397bafe4b4aa08a913ba1c70106cf2fe4503345c3a6a4b56427"
+        },
+        {
+          "ref": "mudplot/io.py::load_spec",
+          "resolution": "Python AST qualified definition",
+          "line_start": 140,
+          "line_end": 141,
+          "body_sha256": "0a8bfbd03b9f105a96a8b33f87aed85a113455aef8e7d71cdfc0003814a9a31c"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.apply",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 140,
+          "line_end": 152,
+          "body_sha256": "d7148249c5552bf25f4d37fccbba4f023053a840bb1a5df661b6555c33abd8f2"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.undo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 165,
+          "line_end": 177,
+          "body_sha256": "0deff5f96158b996dedf3972d0c4c298dcb600989b19f6e34b0f041bc29feec5"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.redo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 179,
+          "line_end": 190,
+          "body_sha256": "88d98ce2aeb494c8a708392978b43294b36a0946cad1d29a324b8ebbf9ae93b6"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_state_contracts.py::test_hist_02_editor_branch_keeps_saved_state_history_and_preview_on_new_branch"
+      ],
+      "executed_nodes": [
+        "tests/test_review_state_contracts.py::test_hist_02_editor_branch_keeps_saved_state_history_and_preview_on_new_branch"
+      ],
+      "fresh_passed": 1,
+      "native_helpers": [
+        "scripts/rust_editor_smoke_test.py::_review_history_contracts"
+      ],
+      "reviewed_boundary": "A-B-C/undoB/dispatchD invalidates C redo; Python state/history/PNG and saved-load Spec remain D. Retained Native checks spec.json/PNG D branch and open snapshot. No UI save-dialog/dirty-target/reset taxonomy claim."
+    },
+    {
+      "id": "HIST-03",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.dispatch_safe",
+          "resolution": "Python AST qualified definition",
+          "line_start": 131,
+          "line_end": 137,
+          "body_sha256": "aa7a662d5a2bdb40952c1366a93ab4d97b1e2c98ce682b08a63b511cf9ce95c1"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession._commit_store",
+          "resolution": "Python AST qualified definition",
+          "line_start": 122,
+          "line_end": 129,
+          "body_sha256": "8b89854c3d9e1cd0f38a40392b17194e23b123c3cc70eefb96b5229097994e08"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.load_spec",
+          "resolution": "Python AST qualified definition",
+          "line_start": 161,
+          "line_end": 166,
+          "body_sha256": "7a165a7296ec18807f6ef20ed8360799886999cd0af0e7271186ffe7646fde51"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.redo",
+          "resolution": "Python AST qualified definition",
+          "line_start": 147,
+          "line_end": 153,
+          "body_sha256": "397d497f80e071e0166056d25591e84bb9c910c8c1f0765dbe3d0783976f7977"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.apply",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 140,
+          "line_end": 152,
+          "body_sha256": "d7148249c5552bf25f4d37fccbba4f023053a840bb1a5df661b6555c33abd8f2"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.undo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 165,
+          "line_end": 177,
+          "body_sha256": "0deff5f96158b996dedf3972d0c4c298dcb600989b19f6e34b0f041bc29feec5"
+        },
+        {
+          "ref": "mudplot-editor/src/lib.rs::Session.redo",
+          "resolution": "Manually read impl/rustfmt source anchors, not AST semantic proof",
+          "line_start": 179,
+          "line_end": 190,
+          "body_sha256": "88d98ce2aeb494c8a708392978b43294b36a0946cad1d29a324b8ebbf9ae93b6"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future"
+      ],
+      "executed_nodes": [
+        "tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future[invalid_action]",
+        "tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future[damaged_json]",
+        "tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future[render_action]",
+        "tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future[render_import]"
+      ],
+      "fresh_passed": 4,
+      "native_helpers": [
+        "scripts/rust_editor_smoke_test.py::_review_failure_contracts"
+      ],
+      "reviewed_boundary": "Four failures: invalid SetSize validation, damaged import JSON, actual Matplotlib invalid-colour AddLayer and import render failure. Python exact state/history/PNG/redo future and recovery. Source-matched prior Native HTTP checks same four faults/spec-PNG/future/recovery. Not all OS/bridge/browser failure classes."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_state_contracts.py::test_hist_01_undo_redo_visits_every_expected_state_and_stops_at_boundaries tests/test_review_state_contracts.py::test_hist_02_editor_branch_keeps_saved_state_history_and_preview_on_new_branch tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future --junitxml=<private-results.xml>",
+    "exit": 0,
+    "passed_unique_nodes": 6,
+    "skipped": 0,
+    "failed": 0,
+    "deselected": 0,
+    "log_sha256": "69fd374c390f41cd9f3a2ff1164be310b2507d0d80fd43a6830e704f7c5f7c64",
+    "junit_sha256": "b494dc72410db531344807246021be8c5545f83b729699a61a30fd6baaf9ef87"
+  },
+  "separate_assert_probe": {
+    "not_pytest_count": true,
+    "fixture": "tests/test_review_state_contracts.py::_nested_plot",
+    "event_count": 13,
+    "cursor_state_hashes": [
+      {
+        "event": "initial",
+        "cursor": 0,
+        "state_sha256": "3117f37a3fc1387c26b27abdb621ac6d777a235a76d38f9cf5536750e131f963"
+      },
+      {
+        "event": "dispatch",
+        "cursor": 1,
+        "state_sha256": "a078124caf48d55bddcf8f9583832e5288c8281a5a4a9fc5535aac52f4e66d66"
+      },
+      {
+        "event": "dispatch",
+        "cursor": 2,
+        "state_sha256": "77595ecfd422727ad68caf53fad71558cdccd7f0a233d48bc8506fcea6f40993"
+      },
+      {
+        "event": "dispatch",
+        "cursor": 3,
+        "state_sha256": "7f35203e3707bd109ccb9bf00632494b5ba0dd0b8a40dd2455114d90e9365218"
+      },
+      {
+        "event": "redo-end-boundary",
+        "cursor": 3,
+        "state_sha256": "7f35203e3707bd109ccb9bf00632494b5ba0dd0b8a40dd2455114d90e9365218"
+      },
+      {
+        "event": "undo",
+        "cursor": 2,
+        "state_sha256": "77595ecfd422727ad68caf53fad71558cdccd7f0a233d48bc8506fcea6f40993"
+      },
+      {
+        "event": "undo",
+        "cursor": 1,
+        "state_sha256": "a078124caf48d55bddcf8f9583832e5288c8281a5a4a9fc5535aac52f4e66d66"
+      },
+      {
+        "event": "undo",
+        "cursor": 0,
+        "state_sha256": "3117f37a3fc1387c26b27abdb621ac6d777a235a76d38f9cf5536750e131f963"
+      },
+      {
+        "event": "undo-start-boundary",
+        "cursor": 0,
+        "state_sha256": "3117f37a3fc1387c26b27abdb621ac6d777a235a76d38f9cf5536750e131f963"
+      },
+      {
+        "event": "redo",
+        "cursor": 1,
+        "state_sha256": "a078124caf48d55bddcf8f9583832e5288c8281a5a4a9fc5535aac52f4e66d66"
+      },
+      {
+        "event": "redo",
+        "cursor": 2,
+        "state_sha256": "77595ecfd422727ad68caf53fad71558cdccd7f0a233d48bc8506fcea6f40993"
+      },
+      {
+        "event": "redo",
+        "cursor": 3,
+        "state_sha256": "7f35203e3707bd109ccb9bf00632494b5ba0dd0b8a40dd2455114d90e9365218"
+      },
+      {
+        "event": "redo-end-boundary",
+        "cursor": 3,
+        "state_sha256": "7f35203e3707bd109ccb9bf00632494b5ba0dd0b8a40dd2455114d90e9365218"
+      }
+    ],
+    "raw_sha256": "9f8242ece71e3b207549912c039f995c237507810895c08990aef7c4e9ec5349"
+  },
+  "retained_native": {
+    "fresh_execution": false,
+    "artifact": "docs\\review_evidence\\swarm_facets_verification.json",
+    "artifact_sha256": "c8045139f00680b689a2443c81f932f3520406630b75432ea993568c11b1d2c3",
+    "source28_and_raw8_match_current": true,
+    "exit": 0,
+    "raw_log_sha256": "e2dad8e19eeb67b3ee3c8ab7ec288e985f019f5da5112a19a18988d368eed74b",
+    "raw_result_sha256": "4bb6d03b13ac4aa582f7d477229eb9a3ca7bf72259072a0b1c98c2b2163e74f1",
+    "history_helper_precedes_new_layer_scenarios": true,
+    "limits": "Previous Windows native execution only; no new browser/Linux/MSRV/binary attestation. Spec/PNG equality assertions, not new per-stage Native PNG-hash receipt table."
+  },
+  "limits": [
+    "CoreStore replay and editor prospective render-before-commit are separate contracts.",
+    "Python opens fresh history/Rust open undoable; no policy unification.",
+    "HIST04reset-open-dirty-target/HIST05noop/HIST06longhistory/HIST07drag/HIST08checkpoint not mapped here.",
+    "Combined focused pytest runs60unique nodes, not a full suite or event/probe count.",
+    "BASE05RUNNING/original139P6R4O1D unchanged;remaining138IDsnotclassifiedbythismap."
+  ],
+  "verifier_sha256": "5780544e03a24b46a8bed1a5e03a3ec6e7abaf6f082eb5e11df601d4756646db"
+}

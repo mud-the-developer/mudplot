@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 95차 — HIST-01/02/03 경계·분기·실패매핑
+
+- [부분review-map](review-map.md)에기본undo/redo·분기·편집기실패원자성의source/test를연결해누적12ID로
+  확장했습니다. 새Python선택검사6P/0skip·fail/exit0과별도합성fixture13행cursor/hashassertprobe를
+  [별도근거](review_evidence/review_map_history_core.json)에남기며probe를pytest수에더하지않습니다.
+- Native는새로실행하지않고보존전체실행의source28/raw8지문과history/failurehelper완료로그를검증했습니다.
+  신선한history검사가새layer시나리오전에실행되는순서를보존하고Pythonfreshopen/Rustundoablesnapshot을
+  같은정책으로강제하지않습니다. Spec/PNG직접동등성검사이지새Native단계별PNG해시표/GUI전체fault검증은아닙니다.
+- 기록된고유Python실행은60개이며겹친관계·probe·보존Native를합산하지않습니다. HIST-04이후의open/reset/
+  dirty/저장대상·긴이력·drag/checkpoint전체는이번매핑이아니고미검토138ID는여전히남았습니다.
+  BASE-05RUNNING/원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다.
+- Runtime/테스트/원문/의존성/버전변경없이기준52accCI39461524891진행을보호해로컬보존합니다.
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 94차 — STATE-03 교차경로매핑
 
 - [부분review-map](review-map.md)에공통fixture10작업의fluent/functional/Store/CLI/PythonSession·HTTP와

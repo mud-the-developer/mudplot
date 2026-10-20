@@ -4,30 +4,35 @@ Original: [2026-10-16 checklist](../mudplot_review_checklist_detailed_2026-10-16
 Candidate inventory/status: [review ledger](REVIEW_CHECKLIST_STATUS.md).
 Execution/source fingerprints: [first five state IDs](review_evidence/review_map_state_core.json),
 [determinism/indices/effect boundaries](review_evidence/review_map_state_boundaries.json),
-[cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json).
+[cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json),
+[history boundary/branch/failure provenance](review_evidence/review_map_history_core.json).
 
 ## Scope and classification
 
-This is a **nine-ID state mapping**, not a complete150-ID map.
-The remaining141 IDs have not been classified here. The candidate inventory still
+This is a **twelve-ID state/history mapping**, not a complete150-ID map.
+The remaining138 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All nine below have existing coverage of the explicitly stated boundary; no new
+All twelve below have existing coverage of the explicitly stated boundary; no new
 runtime/test code or compatibility decision was needed for this mapping unit.
 AST checks only resolve references, not prove their semantic adequacy.
 
 The first five IDs were reviewed at `52acc3f30ce6afdc88a305966a3f9b323e98c76a`:
 **13 passed,2 deselected,0 skipped/failed,exit0**. The two deselected HIST nodes
-were not run or counted. The next three were reviewed at doc-only `701e3be` with
+were not run or counted in that first run; the separate HIST run below executes
+them later. The next three were reviewed at doc-only `701e3be` with
 runtime unchanged: **35 unique passed nodes,0 skipped/failed,exit0**. Their38
 ID/node relationships overlap; do not count them as38 separate tests. Across the
 first two runs,48 unique nodes executed, not51. STATE-03 adds6 fresh Python
 nodes(4 failure cases deselected), giving54 unique fresh nodes across three runs,
-not57 summed ID relationships. Native provenance is a separate previous execution
+not57 summed ID relationships. HIST-01/02/03 add6 previously unselected nodes,
+giving60 unique fresh pytest nodes across four focused runs, not63 summed ID
+relationships. The separate13-row cursor/hash assert probe is not a pytest count.
+Native provenance is a separate previous execution
 with matching source/fixture/final hash, not a newly run native/browser test.
 These are focused results, not a full-suite or release result. Source/body/log/JUnit hashes and
 expanded parameterized node IDs are recorded in the separate immutable artifacts.
@@ -43,8 +48,11 @@ expanded parameterized node IDs are recorded in the separate immutable artifacts
 | STATE-07 | Existing coverage | 2 passed, shared nodes | Fresh process/CWD/clock/Python-RNG/hash seed and previous render/theme isolation |
 | STATE-08 | Existing coverage | 33 passed | Layer/panel references, intentional panel extension and validate/render parity |
 | STATE-09 | Existing coverage | 3 passed, shared nodes | Guarded core operations and validation before Figure allocation |
+| HIST-01 | Existing coverage | 1 fresh Python passed; retained Native check | Complete replay/boundaries plus separate cursor/hash probe |
+| HIST-02 | Existing coverage | 1 fresh Python passed; retained Native check | Branch invalidation and saved spec/preview coherence |
+| HIST-03 | Existing coverage | 4 fresh Python passed; retained Native check | Validation/import/real render failures retain spec/history/PNG/future |
 
-The last three rows refer to35 unique tests, not their38 summed relationships.
+STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
 ## STATE-01 — reducer inputs
 
@@ -204,6 +212,56 @@ Render may import its backend before validation, but source inspection confirms
 `assert_valid` precedes Figure allocation. The two missing-reference cases verify
 error parity; they do not independently audit every possible render effect.
 
+## HIST-01 — undo/redo and boundaries
+
+Implementation: [store.py](../mudplot/store.py) `Store._replay`, `Store.undo`,
+`Store.redo`, `Store.history`; [Rust session](../mudplot-editor/src/lib.rs)
+`Session.undo`, `Session.redo`.
+
+- `tests/test_review_state_contracts.py::test_hist_01_undo_redo_visits_every_expected_state_and_stops_at_boundaries`
+
+Three distinct title/size/palette actions visit every expected state and history
+prefix, then repeat empty/start/end boundaries. A separate assert-based probe
+using `_nested_plot` records13 event/cursor/state-hash rows in the linked history
+artifact; it does not add13 pytest cases. The retained Native
+`scripts/rust_editor_smoke_test.py::_review_history_contracts` checks JSON/PNG at
+every step and begins before new-layer scenarios, preserving fresh-history bounds.
+This is basic replay, not long-history/resource coverage.
+
+## HIST-02 — branch after undo
+
+Implementation: `Store._dispatch`; [Python session](../dashboard/editor_server.py)
+`EditorSession.dispatch_safe`, `_commit_store`, `undo`, `redo`;
+[IO](../mudplot/io.py) `save_spec`, `load_spec`; Rust `Session.apply`, `undo`, `redo`.
+
+- `tests/test_review_state_contracts.py::test_hist_02_editor_branch_keeps_saved_state_history_and_preview_on_new_branch`
+
+A→B→C, undo→B, dispatch→D cannot redo C. Python exact state/history/PNG and a
+saved-load spec remain on D; retained Native history helper checks the same
+JSON/PNG branch coherence. Python opens fresh history while Rust open is an
+undoable snapshot. This mapping does not change that policy or cover the entire
+reset/open/dirty/save-target matrix (HIST-04).
+
+## HIST-03 — editor failure atomicity
+
+Implementation: Python `EditorSession.dispatch_safe`, `_commit_store`, `load_spec`,
+`redo`; Rust `Session.apply`, `undo`, `redo` (prospective render before commit).
+
+- `tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future` (4 cases)
+
+The four modes are invalid SetSize validation, damaged JSON, actual Matplotlib
+invalid-colour action render and invalid-colour spec import render. The colour
+fixture deliberately passes pure validate to exercise the effect failure. Python
+compares exact state/history/PNG and redo-future bytes then recovers normally.
+The retained `scripts/rust_editor_smoke_test.py::_review_failure_contracts` exercises
+the same four Native HTTP failures and JSON/PNG/future/recovery assertions.
+
+The linked retained full Native execution has matching source28/raw8 fingerprints
+and successful history/failure log markers. It was not rerun for this mapping.
+There is no new Native per-stage PNG hash table, Linux/MSRV/browser/binary
+attestation or claim about every OS/bridge fault. Existing direct equality
+assertions and the fresh Python/probe provenance are recorded separately.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -222,10 +280,18 @@ uv run --no-sync python -m pytest -q --tb=short tests/test_review_editor_paths.p
   -k 'not test_python_failures' --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_state_contracts.py::test_hist_01_undo_redo_visits_every_expected_state_and_stops_at_boundaries \
+  tests/test_review_state_contracts.py::test_hist_02_editor_branch_keeps_saved_state_history_and_preview_on_new_branch \
+  tests/test_review_editor_paths.py::test_python_failures_preserve_spec_history_preview_and_future \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining141 IDs still need their own reviewed symbol/node/provenance links
+The remaining138 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
