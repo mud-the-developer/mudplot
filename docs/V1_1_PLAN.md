@@ -152,8 +152,9 @@ native arrays reject before offset mutation; no public size-semantic API added.
 (641Pyparsing+1same deliberate invalid setter),8checks/LSP3clean.
 [Evidence](review_evidence/swarm_native_sizes_verification.json): measured native
 pair gap18.750001875→52.083338542px for required52.083333333px, source unchanged.
-Baseline24cdCI39415317017 bothRustP/Python+minimum still running; keep this fix
-local without cancelling good jobs. B2b public size/style/date semantics remain open.
+Exact24cdCI39415317017 finished ALL5SUCCESS. Heldb7350de source/checks are
+verified unchanged and published now for fresh wholeCI, without cancelling jobs.
+B2b public size/style/date semantics remain open.
 
 ### Earlier review phase 84
 

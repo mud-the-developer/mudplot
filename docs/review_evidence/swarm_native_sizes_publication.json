@@ -1,0 +1,55 @@
+{
+  "held_commit": "b7350dea91a0b1b471a1cbc6c8ea1547aa96c2a8",
+  "base_ci": {
+    "headSha": "24cd3955f4d5776e5089019cb1dcfa4c85724af7",
+    "status": "completed",
+    "conclusion": "success",
+    "run": 39415317017,
+    "jobs": [
+      {
+        "databaseId": 118602801441,
+        "name": "lint-and-test (3.10)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "databaseId": 118602801581,
+        "name": "rust-editor (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "databaseId": 118602801732,
+        "name": "minimum-render",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "databaseId": 118602801823,
+        "name": "rust-editor (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "databaseId": 118602801876,
+        "name": "lint-and-test (3.12)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "source5_and_raw6_match": true,
+  "local_checks8_exit0": true,
+  "runtime_unchanged_since_held_commit": true,
+  "measured_pair": {
+    "before_distance_px": 18.75000187499984,
+    "after_distance_px": 52.08333854166665,
+    "required_px": 52.083333333333336,
+    "source_spec_unchanged": true,
+    "native_sizes_points_squared": [
+      16,
+      400
+    ]
+  },
+  "scope": "Parent interval all5CI success permits normal publication,not proof for newer swarm effect. Previous held-attempt/failure/warning evidence unchanged. Fresh CI needed;public size semantics not added;Loop8 remains active."
+}

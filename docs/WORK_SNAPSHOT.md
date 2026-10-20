@@ -34,8 +34,8 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   is inferred. Broader remainders/gates still remain.
 - Native swarm size-array fix: pairwise radii/per-point gutters preserve old scalar
   geometry while normal artist edits no longer overlap.30new/616related/floor83P,
-  native invalid-setter warning retained; no public size-semantic API. Baseline24cd
-  Python/minimumR/bothRustP; keep local until safe publish/newCI.
+  native invalid-setter warning retained; no public size-semantic API. Exact24cd
+  CI39415317017 ALL5P; heldb7350de verified unchanged and published for new CI.
 - Latest B6 numeric interval band:39new/613related/floor41/CLI2/full nativeHTTP+
   browser pass, raw float endpoints/positive durations-height/source-overlap safety.
   Exact8eeCI39408472076 ALL5P; held480068a verified unchanged and published now.

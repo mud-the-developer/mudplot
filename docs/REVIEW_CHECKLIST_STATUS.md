@@ -18,6 +18,14 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 87차 — 대기native swarm unit 게시
+
+- 정확한24cd395CI39415317017의5job모두성공을확인했습니다. 이전회차의대기상태는역사그대로두고
+  b7350de의source5/raw6/품질8명령과쌍간격보정·legacyoracle/경고기록을불변확인해게시합니다.
+- 추가runtime/필드/의존성변경없이Ruff/양플랫폼타입/schema/Git을다시확인하고새전체CI를받습니다.
+  부모interval성공을새swarm runtime증명이나공개size-semantic완료로확대하지않습니다. 원대장139PASS/
+  6RUNNING/4OPEN/1DEFERRED·나머지v1.1/releasegate/tag/publish경계를유지하며Loop8을삭제/pause하지않습니다.
+
 ## 86차 — Native swarm artist의크기별packing보정
 
 - 이전회차read-only재현의set_sizes([16,400])간격18.750001875px/필요52.083333333px겹침을수정했습니다.
