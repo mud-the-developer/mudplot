@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 98차 — HIST-06/07/08 replay·gesture·checkpoint매핑
+
+- [부분review-map](review-map.md)에seededreplay2/checkpoint9/실제browser3의source/test를연결해누적17ID로
+  확장했습니다. 현재14P/0skip·fail/exit0이며실제gesturetrace는100move×2동안요청0/release1과
+  독립title편집을포함한3event/undo경계를기록합니다. [분리근거](review_evidence/review_map_history_design.json).
+- Seed20261016/24301각768actions+128undo/128redo의정확상태/history/hash와단일이전64-actioncache의
+  branch/custom-reducer/실패/listener/no-op/snapshot/SetData분리를기존테스트로확인했습니다.
+  이력truncation/새publicmemorylimit/corecoalescer/EscgestureAPI는도입하지않았습니다.
+- 기존profile/designartifact의관련6source지문은같지만timing은재실행한현재수치가아닙니다. 대형세target의
+  stopped/incomplete와unknown시간은그대로보존하고완료/0초/OS메모리상한/장시간GUIleak보장으로과장하지않습니다.
+- 기록된고유Pythonnode는78개이며미검토133ID/BASE-05RUNNING/원대장139PASS6RUNNING4OPEN1DEFERRED를
+  유지합니다. Runtime/테스트/원문/의존성/버전변경없이기준98b4ecCI39470014411을보호해로컬보존하고
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 97차 — HIST-04/05 문서정책과no-op매핑
 
 - [부분review-map](review-map.md)에open/reset과no-op의실제정책/source/test를연결해누적14ID로확장했습니다.

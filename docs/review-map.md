@@ -6,19 +6,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [determinism/indices/effect boundaries](review_evidence/review_map_state_boundaries.json),
 [cross-path fixture and retained Native provenance](review_evidence/review_map_state_paths.json),
 [history boundary/branch/failure provenance](review_evidence/review_map_history_core.json),
-[open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json).
+[open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json),
+[bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json).
 
 ## Scope and classification
 
-This is a **fourteen-ID state/history mapping**, not a complete150-ID map.
-The remaining136 IDs have not been classified here. The candidate inventory still
+This is a **seventeen-ID state/history mapping**, not a complete150-ID map.
+The remaining133 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-All fourteen below have existing coverage of the explicitly stated boundary; no new
+All seventeen below have existing coverage of the explicitly stated boundary; no new
 runtime/test code or compatibility decision was needed for this mapping unit.
 AST checks only resolve references, not prove their semantic adequacy.
 
@@ -33,7 +34,9 @@ nodes(4 failure cases deselected), giving54 unique fresh nodes across three runs
 not57 summed ID relationships. HIST-01/02/03 add6 previously unselected nodes,
 giving60 unique fresh pytest nodes across four focused runs, not63 summed ID
 relationships. HIST-04/05 add4 new nodes(unit3/Python real-browser1), yielding64
-unique executed pytest nodes across the mapping runs. The browser case must execute;
+unique executed pytest nodes across those runs. HIST-06/07/08 add14 distinct nodes
+(replay2/checkpoint9/real-browser3), bringing the recorded unique total to78.
+Historical performance profile is not a new timing run. The browser cases must execute;
 receipt checks reject any skip. The separate13-row cursor/hash assert probe is not
 a pytest count. Native provenance is a separate previous execution
 with matching source/fixture/final hash, not a newly run native/browser test.
@@ -56,6 +59,9 @@ expanded parameterized node IDs are recorded in the separate immutable artifacts
 | HIST-03 | Existing coverage | 4 fresh Python passed; retained Native check | Validation/import/real render failures retain spec/history/PNG/future |
 | HIST-04 | Existing coverage | 1 unit + 1 actual Python browser passed; retained Native check | Distinct open/reset policies/current downloads/source files untouched; no dirty feature invented |
 | HIST-05 | Existing coverage | 2 fresh Python passed; retained Native check | Equal-value events/listeners/history/redo invalidation and preview coherence |
+| HIST-06 | Existing coverage | 2 seeded replay passed | Bounded768-action sequences and128 undo/redo each, exact states/hashes |
+| HIST-07 | Existing coverage | 3 actual browser passed | Measured mouse-release commits/independent edits and keyboard burst semantics |
+| HIST-08 | Existing coverage | 9 checkpoint passed; historical profile/design | One prior64-action state, no history truncation/public limit or new performance claim |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
 
@@ -308,6 +314,65 @@ old-redo invalidation with JSON/PNG equality. This does not optimize events away
 or assert a dirty bit which the documented editor does not have. Long seeded
 replay, drag coalescing and checkpoint policy are separate items, not run here.
 
+## HIST-06 — bounded seeded replay
+
+Implementation: `Store._dispatch`, `_replay`, `undo`, `redo`; `reduce_all`.
+
+- `tests/test_review_history_policies.py::test_seeded_long_history_replay_matches_exact_states_without_numeric_drift` (seeds20261016/24301)
+
+Each seed generates768 valid title/size/font/limit actions, compares each dispatch
+state, then128 undo/128 redo/history cursors and full apply/canonical state hash.
+This is exact bounded replay, not unlimited history performance or leak proof.
+
+## HIST-07 — measure existing gestures before coalescing
+
+Implementation: [editor_view.py](../dashboard/editor_view.py) `_DRAG_JS` mouse
+move/release and180ms keyboard post queue; `EditorSession.dispatch_safe`.
+
+- `tests/test_review_gesture_browser.py::test_mouse_gestures_commit_once_and_keep_independent_edits_and_undo`
+- `tests/test_editor_browser.py::test_arrow_keys_nudge_the_title`
+- `tests/test_editor_browser.py::test_a_burst_of_nudges_is_not_dropped`
+
+Fresh real-browser trace records two gestures of100 moves each: zero requests
+while moving, one on release. Focus-only click emits zero edits. Independent title
+change between gestures remains a separate event; undo reverses one gesture while
+preserving the title. Keyboard tests retain nudge/burst effects. Existing behavior
+already gives these boundaries, so the retained design deliberately adds no new
+core coalescer, Esc cancel or gesture API. Measured round-trip samples are local
+observations, not a latency service guarantee.
+
+## HIST-08 — one internal checkpoint, no truncation
+
+Implementation: `Store.__init__`, `_dispatch`, `_replay`, `state`, `history`;
+[profiler](../scripts/profile_history_costs.py) `collect_case` preserves partial/null
+measurements instead of treating missing timing as zero.
+
+All nine existing nodes in [test_review_history_checkpoint.py](../tests/test_review_history_checkpoint.py) were executed:
+
+- `test_near_tail_checkpoint_is_single_prior_state_and_replay_stays_exact`
+- `test_branch_below_checkpoint_invalidates_only_cache_not_history_semantics`
+- `test_branch_at_checkpoint_reuses_valid_prefix_and_clears_redo`
+- `test_public_snapshot_mutation_cannot_change_internal_checkpoint`
+- `test_custom_reducer_keeps_full_replay_and_gets_no_default_cache`
+- `test_failed_dispatch_does_not_replace_valid_checkpoint`
+- `test_listener_failure_after_checkpoint_commit_does_not_roll_back`
+- `test_noop_at_cache_boundary_is_still_an_event`
+- `test_setdata_checkpoint_and_action_payloads_remain_detached`
+
+The default pure reducer retains one previous64-action boundary state, deep-copies
+before replay, falls back before the cached prefix, and invalidates it on an older
+branch. Custom reducers keep full replay/call counts. All history/redo/no-op/
+listener/snapshot semantics remain; no public memory limit or history truncation.
+
+The [historical profile/design record](review_evidence/history_improvement_verification.json)
+includes fixed9-case before/after and two memory comparisons. Six relevant store/
+reducer/gesture/checkpoint/profiler hashes still match, but the old timing is not
+rerun or promoted to current performance. Three large targets remain stopped/
+incomplete (10,000rows×1,000actions;100,000×100;100,000×1,000). Unknown timings
+remain unknown, not zero or completed. One extra full supported Spec is not a hard
+OS RSS bound or a long-lived GUI leak guarantee. Other fields in that artifact
+are historical, not refreshed by this mapping.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -343,10 +408,19 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short \
+  tests/test_review_history_policies.py::test_seeded_long_history_replay_matches_exact_states_without_numeric_drift \
+  tests/test_review_history_checkpoint.py tests/test_review_gesture_browser.py \
+  tests/test_editor_browser.py::test_arrow_keys_nudge_the_title \
+  tests/test_editor_browser.py::test_a_burst_of_nudges_is_not_dropped \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining136 IDs still need their own reviewed symbol/node/provenance links
+The remaining133 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.

@@ -1,0 +1,475 @@
+{
+  "kind": "partial-checklist-history-design-map",
+  "reviewed_ids": [
+    "HIST-06",
+    "HIST-07",
+    "HIST-08"
+  ],
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 17,
+  "remaining_unreviewed": 133,
+  "source_commit": "bb613e714d980e40fabfb21031dea87f31ba3e5b",
+  "source_sha256": {
+    "dashboard/editor_server.py": "ae016f24a1d63a6a53f618a8601db5430306bf77c96c12f1b8b59f5daa88a456",
+    "dashboard/editor_view.py": "bed3a58e0311e560291f5526257a67d0ea93df6d3c410fee2b6931506a56cc7f",
+    "mudplot/reducer.py": "5d197217026779c5adb26d0d8ddd1d42518c240f9f14097c3c91cf653cfa0be4",
+    "mudplot/store.py": "aea846096c744c66c6e4550a1a0250699e529d49a2431be0aefb1f354c34c972",
+    "scripts/profile_history_costs.py": "a98afbeefb68fb9383e30d11fbf133f7516810be87a758414db84fbf1cdddcec",
+    "tests/test_editor_browser.py": "6d8c49553372eb60c50039849457ecba4bbdd311c34177067b7e7753f528f505",
+    "tests/test_review_coordinate_frames.py": "e6adf5dbeb6130d4e5fdb9d03fa731a5a76c35a9625b63074a4abdddf9fc8cd5",
+    "tests/test_review_gesture_browser.py": "31b41f5e17c01e817c88a90920578e199d578adde25b72234728305d35a9974d",
+    "tests/test_review_history_checkpoint.py": "43d38dad83ff1161873bff3d666071110089c0b573c91eed2c4d939670c77ef2",
+    "tests/test_review_history_policies.py": "6d561582ce32694526efd3113d30b9f034ddb5dfe3d9e2f782e92b27aac45f0f"
+  },
+  "previous_artifact_sha256": "6c9c08ba40eeb834dc8667ebbdcd9da0e04d36aa677329891c2268cf4b28c6cd",
+  "items": [
+    {
+      "id": "HIST-06",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store._replay",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "8d35082f94bb7a55aa1525ded056dd248aae1a6446ab4881d7871b6ba0649581"
+        },
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store.undo",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "1b1356b4a0233ba6e9211e74d6ee4003e3efedeba777c1c894a14e48c2d7e9d3"
+        },
+        {
+          "ref": "mudplot/store.py::Store.redo",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "c80dc0065d4ed775b6bd64ec3202a9fcfe5ae848beba46ce0891c44aaee6a37d"
+        },
+        {
+          "ref": "mudplot/reducer.py::reduce_all",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "b87e5b244913f9d2cf5767cd579eb33c7c5ba90aa5b3b837e3012497ce466070"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_history_policies.py::test_seeded_long_history_replay_matches_exact_states_without_numeric_drift"
+      ],
+      "executed_nodes": [
+        "tests/test_review_history_policies.py::test_seeded_long_history_replay_matches_exact_states_without_numeric_drift[20261016]",
+        "tests/test_review_history_policies.py::test_seeded_long_history_replay_matches_exact_states_without_numeric_drift[24301]"
+      ],
+      "fresh_passed": 2,
+      "reviewed_boundary": "Seeds20261016/24301,768validactions each+128undo/128redo/exactstate-history/fullapply-canonicalhash. Bounded replay correctness, not unbounded performance/leak guarantee."
+    },
+    {
+      "id": "HIST-07",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "dashboard/editor_view.py::_DRAG_JS",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "aa508606815cee6c6841b150c410b864af526e45ad8fc9700b1bb1cea01e929f"
+        },
+        {
+          "ref": "dashboard/editor_server.py::EditorSession.dispatch_safe",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "aa7a662d5a2bdb40952c1366a93ab4d97b1e2c98ce682b08a63b511cf9ce95c1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_gesture_browser.py::test_mouse_gestures_commit_once_and_keep_independent_edits_and_undo",
+        "tests/test_editor_browser.py::test_arrow_keys_nudge_the_title",
+        "tests/test_editor_browser.py::test_a_burst_of_nudges_is_not_dropped"
+      ],
+      "executed_nodes": [
+        "tests/test_review_gesture_browser.py::test_mouse_gestures_commit_once_and_keep_independent_edits_and_undo",
+        "tests/test_editor_browser.py::test_arrow_keys_nudge_the_title",
+        "tests/test_editor_browser.py::test_a_burst_of_nudges_is_not_dropped"
+      ],
+      "fresh_passed": 3,
+      "reviewed_boundary": "Actualbrowser2gestures\u00d7100moves/no POST whilemoving/one onrelease;focusclick0;independentSetTitlebetweenmoveskept3events/undoonegesture. Keyboard nudge/burst remains. Existingpointer-release+180mskeyboardqueue;no newcorecoalescer/Esc/gestureAPI."
+    },
+    {
+      "id": "HIST-08",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/store.py::Store.__init__",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "59f0a3795a9a43d4d8027d2197049f90e74ab3f71f3553590b93eab31bf37279"
+        },
+        {
+          "ref": "mudplot/store.py::Store._dispatch",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "2fbb64def92b269d0b655bb2b724820d09b164467188dce20bdb95f321edc4a4"
+        },
+        {
+          "ref": "mudplot/store.py::Store._replay",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "8d35082f94bb7a55aa1525ded056dd248aae1a6446ab4881d7871b6ba0649581"
+        },
+        {
+          "ref": "mudplot/store.py::Store.state",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "b2a7a331f3f8822ac813333f0b7dd2b300af9fc16e07c773c6c07a1cdaf9e596"
+        },
+        {
+          "ref": "mudplot/store.py::Store.history",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "0592ac0daaaf85f21986acb9174795d8eb2a1be62d8d0d260373948ccf89b36e"
+        },
+        {
+          "ref": "scripts/profile_history_costs.py::collect_case",
+          "resolution": "AST definition/string-source anchor plus manual source review, not semantic proof",
+          "body_sha256": "da228d451190f496670dd6c3df3dad5b73110e3c2fb0dc66e83552b1559e0928"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_history_checkpoint.py::test_near_tail_checkpoint_is_single_prior_state_and_replay_stays_exact",
+        "tests/test_review_history_checkpoint.py::test_branch_below_checkpoint_invalidates_only_cache_not_history_semantics",
+        "tests/test_review_history_checkpoint.py::test_branch_at_checkpoint_reuses_valid_prefix_and_clears_redo",
+        "tests/test_review_history_checkpoint.py::test_public_snapshot_mutation_cannot_change_internal_checkpoint",
+        "tests/test_review_history_checkpoint.py::test_custom_reducer_keeps_full_replay_and_gets_no_default_cache",
+        "tests/test_review_history_checkpoint.py::test_failed_dispatch_does_not_replace_valid_checkpoint",
+        "tests/test_review_history_checkpoint.py::test_listener_failure_after_checkpoint_commit_does_not_roll_back",
+        "tests/test_review_history_checkpoint.py::test_noop_at_cache_boundary_is_still_an_event",
+        "tests/test_review_history_checkpoint.py::test_setdata_checkpoint_and_action_payloads_remain_detached"
+      ],
+      "executed_nodes": [
+        "tests/test_review_history_checkpoint.py::test_near_tail_checkpoint_is_single_prior_state_and_replay_stays_exact",
+        "tests/test_review_history_checkpoint.py::test_branch_below_checkpoint_invalidates_only_cache_not_history_semantics",
+        "tests/test_review_history_checkpoint.py::test_branch_at_checkpoint_reuses_valid_prefix_and_clears_redo",
+        "tests/test_review_history_checkpoint.py::test_public_snapshot_mutation_cannot_change_internal_checkpoint",
+        "tests/test_review_history_checkpoint.py::test_custom_reducer_keeps_full_replay_and_gets_no_default_cache",
+        "tests/test_review_history_checkpoint.py::test_failed_dispatch_does_not_replace_valid_checkpoint",
+        "tests/test_review_history_checkpoint.py::test_listener_failure_after_checkpoint_commit_does_not_roll_back",
+        "tests/test_review_history_checkpoint.py::test_noop_at_cache_boundary_is_still_an_event",
+        "tests/test_review_history_checkpoint.py::test_setdata_checkpoint_and_action_payloads_remain_detached"
+      ],
+      "fresh_passed": 9,
+      "reviewed_boundary": "One prior64-actionstate/defaultpure-reduceridentityonly;fallbackbeforecache/branchinvalidate/snapshots/customreducercallcounts/failure/no-op/listener/SetDatapayloadisolation/fullhistorykept. No truncation/newpubliclimit/hardOSRSSbound;retainedprofilehistoricalnotnewtimings."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <selected replay/checkpoint/gesture/keyboard nodes> --basetemp=<owned-private> --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 14,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 43.11,
+    "required_browser_nodes_executed": 3,
+    "log_sha256": "55258af41142e4befcce5dd39241402bbcbd55747898072236ee88237b6fbfe8",
+    "junit_sha256": "ee054386744c51655b948f74de1c149a8fbbbb834ad170003104ce97ae44c86c"
+  },
+  "fresh_gesture_trace": {
+    "gestures": [
+      {
+        "move_steps": 100,
+        "requests_while_moving": 0,
+        "requests_on_release": 1,
+        "commit_roundtrip_ms": 743.7614000518806
+      },
+      {
+        "move_steps": 100,
+        "requests_while_moving": 0,
+        "requests_on_release": 1,
+        "commit_roundtrip_ms": 813.320700020995
+      }
+    ],
+    "requests": [
+      {
+        "x": [
+          "15.91332821501428"
+        ],
+        "y": [
+          "200.63973659624182"
+        ],
+        "type": [
+          "set_layer_at"
+        ],
+        "panel": [
+          "1"
+        ],
+        "layer_index": [
+          "3"
+        ]
+      },
+      {
+        "type": [
+          "set_title"
+        ],
+        "panel": [
+          "1"
+        ],
+        "text": [
+          "independent edit"
+        ]
+      },
+      {
+        "x": [
+          "7.959391059651585"
+        ],
+        "y": [
+          "80.05379112450626"
+        ],
+        "type": [
+          "set_layer_at"
+        ],
+        "panel": [
+          "1"
+        ],
+        "layer_index": [
+          "3"
+        ]
+      }
+    ],
+    "committed_history": [
+      {
+        "type": "SetLayerAt",
+        "layer_index": 3,
+        "at": [
+          15.91332821501428,
+          200.63973659624182
+        ],
+        "panel": 1
+      },
+      {
+        "type": "SetTitle",
+        "text": "independent edit",
+        "panel": 1,
+        "citation": null,
+        "href": null
+      },
+      {
+        "type": "SetLayerAt",
+        "layer_index": 3,
+        "at": [
+          7.959391059651585,
+          80.05379112450626
+        ],
+        "panel": 1
+      }
+    ],
+    "original_at": [
+      10,
+      100
+    ],
+    "first_at": [
+      15.91332821501428,
+      200.63973659624182
+    ],
+    "second_at": [
+      7.959391059651585,
+      80.05379112450626
+    ],
+    "undo_boundary_verified": true,
+    "policy": "Mouse-up submits once; no new core coalescer."
+  },
+  "fresh_gesture_raw_sha256": "3930cb72b00abb314c28db6201780f532f5eda802f38a9f697ddba2d2893eaf2",
+  "retained_profile": {
+    "artifact": "docs\\review_evidence\\history_improvement_verification.json",
+    "artifact_sha256": "b2844c57d99fd2e2f674d97fe5dbb36d4da08920db0e821c88e2e95795ac31b0",
+    "relevant_source_hashes_match": [
+      "mudplot/store.py",
+      "mudplot/reducer.py",
+      "dashboard/editor_view.py",
+      "tests/test_review_history_checkpoint.py",
+      "tests/test_review_gesture_browser.py",
+      "scripts/profile_history_costs.py"
+    ],
+    "case_statuses": {
+      "before_profile": [
+        {
+          "rows": 1000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 1000,
+          "target_history": 100,
+          "status": "completed",
+          "completed_actions": 100
+        },
+        {
+          "rows": 1000,
+          "target_history": 1000,
+          "status": "completed",
+          "completed_actions": 1000
+        },
+        {
+          "rows": 10000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 10000,
+          "target_history": 100,
+          "status": "completed",
+          "completed_actions": 100
+        },
+        {
+          "rows": 10000,
+          "target_history": 1000,
+          "status": "stopped",
+          "completed_actions": 372
+        },
+        {
+          "rows": 100000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 100000,
+          "target_history": 100,
+          "status": "stopped",
+          "completed_actions": 38
+        },
+        {
+          "rows": 100000,
+          "target_history": 1000,
+          "status": "stopped",
+          "completed_actions": 38
+        }
+      ],
+      "after_profile": [
+        {
+          "rows": 1000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 1000,
+          "target_history": 100,
+          "status": "completed",
+          "completed_actions": 100
+        },
+        {
+          "rows": 1000,
+          "target_history": 1000,
+          "status": "completed",
+          "completed_actions": 1000
+        },
+        {
+          "rows": 10000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 10000,
+          "target_history": 100,
+          "status": "completed",
+          "completed_actions": 100
+        },
+        {
+          "rows": 10000,
+          "target_history": 1000,
+          "status": "stopped",
+          "completed_actions": 372
+        },
+        {
+          "rows": 100000,
+          "target_history": 10,
+          "status": "completed",
+          "completed_actions": 10
+        },
+        {
+          "rows": 100000,
+          "target_history": 100,
+          "status": "stopped",
+          "completed_actions": 38
+        },
+        {
+          "rows": 100000,
+          "target_history": 1000,
+          "status": "stopped",
+          "completed_actions": 37
+        }
+      ]
+    },
+    "checkpoint_memory_comparison": [
+      {
+        "rows": 1000,
+        "actions": 256,
+        "checkpoint_stride": 64,
+        "retained_checkpoint_count": 1,
+        "checkpoint_cursor": 192,
+        "modes": {
+          "cached": {
+            "retained_python_bytes": 182304,
+            "peak_traced_python_bytes": 332488,
+            "undo_ms_without_tracing": 25.62410000246018,
+            "state_sha256": "839ef3261e47b033e88f6e2aa10061f1e4e4ed9713583bbb6803ed76a503fc2d"
+          },
+          "full-replay-custom-pure-control": {
+            "retained_python_bytes": 131200,
+            "peak_traced_python_bytes": 281384,
+            "undo_ms_without_tracing": 105.33760004909709,
+            "state_sha256": "839ef3261e47b033e88f6e2aa10061f1e4e4ed9713583bbb6803ed76a503fc2d"
+          }
+        },
+        "additional_traced_retained_bytes": 51104,
+        "scope": "Standard Store default versus an equivalent custom pure reducer wrapper that retains full replay by contract; tracing measures retained Python allocations, not all RSS/native memory. Timings measured after tracing stopped."
+      },
+      {
+        "rows": 10000,
+        "actions": 256,
+        "checkpoint_stride": 64,
+        "retained_checkpoint_count": 1,
+        "checkpoint_cursor": 192,
+        "modes": {
+          "cached": {
+            "retained_python_bytes": 869104,
+            "peak_traced_python_bytes": 1248248,
+            "undo_ms_without_tracing": 218.58300000894815,
+            "state_sha256": "3b82ceeb9d131ca0305c26c468901234e19272d40754dd7f61148ae4c4d070de"
+          },
+          "full-replay-custom-pure-control": {
+            "retained_python_bytes": 589096,
+            "peak_traced_python_bytes": 968240,
+            "undo_ms_without_tracing": 860.282699984964,
+            "state_sha256": "3b82ceeb9d131ca0305c26c468901234e19272d40754dd7f61148ae4c4d070de"
+          }
+        },
+        "additional_traced_retained_bytes": 280008,
+        "scope": "Standard Store default versus an equivalent custom pure reducer wrapper that retains full replay by contract; tracing measures retained Python allocations, not all RSS/native memory. Timings measured after tracing stopped."
+      }
+    ],
+    "coalescing_decision": "Observed100mousemoves/gesture\u21920requestsduringmovement/1onrelease,twoindependentgesturesseparatedbytitleeditremain3eventsandundoonegestureatonce.Focus-onlyclick0events.Existingkeyboardburstcoalescingtestedseparately.No newcorecoalescer/Esc-cancel/gestureAPIintroduced.",
+    "checkpoint_decision": "Measurednear-tailreplaycostjustifiesONEprevious64-actionboundaryinternalstate(defaultpure-reduceridentityONLY). Capturepreviousinternalstateoncommitaftercursor64n;deepcopybefore_replay,fallbacKinitialifcursorbeforecache,discardcachewhenbranchbelowprefix. Fullhistory/redo/noop/listenerfailure/snapshotcontractsretained.Customreducersfullreplay/callcountsunchanged.Nohistorytruncation/newpublicconfig.Persistence/otherprocessRusthistorynotchanged.ExtramemoryONEfullsupportedSpec,notanOShardmemorybound.",
+    "fresh_profile_run": false
+  },
+  "limits": [
+    "Historical profile measurements not new current timing/general speedup or OS memory limits.",
+    "Stopped/incomplete10000x1000/100000x100/100000x1000cases remain incomplete;unknown timing is not zero.",
+    "One extra full Spec checkpoint only;no history truncation/default config and custom reducers unchanged.",
+    "Pointer release existing behavior means no newcorecoalescer/Esc cancel/gesture API requested.",
+    "Combined mapping78unique executed pytest nodes,not a full suite.",
+    "BASE05RUNNING139P6R4O1D unchanged;remaining133IDsnotclassifiedhere."
+  ],
+  "verifier_sha256": "e3dd54e5f0f01dcb87546e2315a8541c982d0148baf9f3ed34d264178ba2ffb4"
+}
