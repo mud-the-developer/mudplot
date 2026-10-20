@@ -1,0 +1,209 @@
+{
+  "kind": "partial-checklist-adapter-missing-map",
+  "reviewed_ids": [
+    "DATA-01",
+    "DATA-03"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-07",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 33,
+  "remaining_unreviewed": 117,
+  "source_commit": "3b2e341f552650bc9e6e01f5f665754de8c18492",
+  "source_sha256": {
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/_stat.py": "0786605360f0ddcbacc2fb6f351295d95f7fe6b8d4b8a26b1ae1c87fd7cbef27",
+    "mudplot/data.py": "5d23739aa8b85f322aead09cd694ab152b92a13320e449c9bf04fb07df741007",
+    "tests/test_review_missing_data.py": "a0eb3ce0cf108e64a1ddec7ab8464886ea5b7ee67cd15be53155345cfd28c431"
+  },
+  "previous_artifact_sha256": "3a394869b4dbba002d835ae4e8061b4fbfaac05085be8aca5c143b98bd890f94",
+  "items": [
+    {
+      "id": "DATA-01",
+      "classification": "additional-tests-needed",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::to_columns",
+          "body_sha256": "af52ecd7f66bc84e055b5d156625c549ba69dd429a8c6df76ced95ccd309a8f1"
+        },
+        {
+          "ref": "mudplot/data.py::_plain_value",
+          "body_sha256": "7c6208abaac1ddf9920f8d9a4b6c6f91786f690f2760959985375fa2dca8b875"
+        },
+        {
+          "ref": "mudplot/data.py::_to_list",
+          "body_sha256": "923ad79e12a5ba00d1cfa23e36c9c1c3d7bc53436eb64ae6fab26af903ec551f"
+        },
+        {
+          "ref": "mudplot/data.py::_records_to_columns",
+          "body_sha256": "a77dba0fb6f2117bba1c0ea1ecc39fb688bc901cecb49f1f93ac994975644c13"
+        },
+        {
+          "ref": "mudplot/data.py::_rows_to_columns",
+          "body_sha256": "2aa92dc196a5a85db63e9599742c2a37761b8ec610e18c73a1adf08ffa9ce954"
+        },
+        {
+          "ref": "mudplot/data.py::_cursor_to_columns",
+          "body_sha256": "9791f7d676528c0324a26415c6172489d0712f7f93765f573f6a44d219ee79a1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree"
+      ],
+      "executed_nodes": [
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[mapping]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[records]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[rows]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[numpy]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[structured]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[pandas]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[sql]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[cursor]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[to_dict]"
+      ],
+      "fresh_passed": 9,
+      "skipped_nodes": [
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[pyarrow]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_chunks]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_dictionary]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars_categorical]"
+      ]
+    },
+    {
+      "id": "DATA-03",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/data.py::_plain_value",
+          "body_sha256": "7c6208abaac1ddf9920f8d9a4b6c6f91786f690f2760959985375fa2dca8b875"
+        },
+        {
+          "ref": "mudplot/data.py::_to_list",
+          "body_sha256": "923ad79e12a5ba00d1cfa23e36c9c1c3d7bc53436eb64ae6fab26af903ec551f"
+        },
+        {
+          "ref": "mudplot/_render.py::_x_values",
+          "body_sha256": "47eb302a0bbc1402c9a3aa52c9a3af2c78c34fb890a451a75ca21a0da36755b5"
+        },
+        {
+          "ref": "mudplot/_render.py::_series_masks",
+          "body_sha256": "59f7daf55d644691665f0a0e4ea29561b17f54a70f0c73672344df0c692c590c"
+        },
+        {
+          "ref": "mudplot/_stat.py::usable_rows",
+          "body_sha256": "d9649b3731925ae91c0a054e587fcf17405908e4d8daf65bc49077362bc81413"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category",
+        "tests/test_review_missing_data.py::test_literal_none_label_is_distinct_from_missing_x_across_shared_axes_and_twins",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree",
+        "tests/test_review_missing_data.py::test_pandas_nat_x_is_missing_instead_of_a_literal_tick"
+      ],
+      "executed_nodes": [
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[False-line-x0]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[False-line-x1]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[False-scatter-x0]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[False-scatter-x1]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[True-line-x0]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[True-line-x1]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[True-scatter-x0]",
+        "tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category[True-scatter-x1]",
+        "tests/test_review_missing_data.py::test_literal_none_label_is_distinct_from_missing_x_across_shared_axes_and_twins",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[mapping]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[records]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[rows]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[numpy]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[structured]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[pandas]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[sql]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[cursor]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[to_dict]",
+        "tests/test_review_missing_data.py::test_pandas_nat_x_is_missing_instead_of_a_literal_tick"
+      ],
+      "fresh_passed": 19,
+      "skipped_nodes": [
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[pyarrow]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_chunks]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_dictionary]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars]",
+        "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars_categorical]"
+      ]
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_missing_data.py --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 19,
+    "skipped_unique_nodes": 5,
+    "failed": 0,
+    "exit": 0,
+    "seconds": 11.29,
+    "skipped_nodes": [
+      "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[pyarrow]",
+      "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_chunks]",
+      "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[arrow_dictionary]",
+      "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars]",
+      "tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree[polars_categorical]"
+    ],
+    "log_sha256": "71dfe0791bf0ca1ff5486ceb4bff3fdbc1677f1fe3105526b68dc4a737b132c0",
+    "junit_sha256": "6d94732f399afed6fb1b0b3ebd597b6fb7e4f41e01ff0b8eeba1806c956dd8e5"
+  },
+  "available_adapter_paths": [
+    "mapping",
+    "records",
+    "rows",
+    "numpy",
+    "structured",
+    "pandas",
+    "sql",
+    "cursor",
+    "to_dict"
+  ],
+  "required_additional_work": [
+    "Execute real PyArrow/chunked/dictionary and Polars/categorical variants in declared environment or verify exact retained-source provenance;not install packages/changecore just to hide skip.",
+    "Existing tests already define these paths: current execution gap does not prove a product defect or demand duplicate tests."
+  ],
+  "reviewed_missing_contract": "Six-rowinputyNone/sourcevaluespreserved;linegapsrawgroups,scatterpairmask,pergroupstatmeanserrorbarNone;rawcategoricalxmissingkeepsNaNgap/noNonecategory/literalNonecategorydistinctsharedaxes-twins/PandasNaTISO-null/sourceunchanged. DateISOstringscategoricalnotcontinuousdateaxis.",
+  "limits": [
+    "DATA01partial9executed5skip,not14PASS;Data03existingcoverageonlytestedpaths/rowcontexts,notallmissing-scalar/exoticformats.",
+    "Both IDs reuse nine passed nodes;unique current count19,not28 mapping relations.",
+    "No packages installed/PyArrowPolars absent;no freshRust/native/browser/fullsuite/environmentcompatibilityclaim.",
+    "HistoricalDATA01masterPASSnotinvalidatedbycurrentoptionalabsence;thismapclassifiescurrentexecutionprovenancegap.",
+    "Combined524unique passedPythonmapnodesplus5explicitoptional-skipsnotpassed;33IDs classificationexisting31+additional2;117IDsunclassified.",
+    "BASE05JSON09RUNNING/original139P6R4O1Dunchanged;runtime/tests/defaults/schema/deps/version unchanged."
+  ],
+  "verifier_sha256": "6be7ca1a55dc79e5e38868ba511700c577210193299ff10778c1fbf7add57dab"
+}

@@ -18,6 +18,18 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 105차 — DATA-01/03 실행가능adapter·결측cohort매핑
+
+- [부분review-map](review-map.md)에현재9형식의값/원본/linegap-scatterpair-statcohort와x결측/실제문자None/
+  PandasNaT경계를연결해누적33ID를분류했습니다. 현재19P/5optionalskip/0fail이며5skip은PyArrow3·Polars2로
+  통과수가아닙니다. [분리근거](review_evidence/review_map_adapter_missing.json)에skipnode와사유를남깁니다.
+- DATA-01은실제optional전체실행/정확한보존source근거가추가로필요하다고분류하고DATA-03은실행한경계의
+  기존근거로분류합니다. 같은9node를두ID가재사용해28실행으로부풀리지않습니다. 현재환경부재를과거DATA-01
+  masterPASS무효/제품결함/새중복테스트요구로보지않고optional설치를이회차에서하지않았습니다.
+- 기록된고유Python통과node는524개이며별도optional5skip은합산하지않습니다. 미분류117ID/JSON-09추가의미검사/
+  BASE-05RUNNING·원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준43965bCI39478506917을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 104차 — DATA-02/07 입력구조와SQL소유권매핑
 
 - [부분review-map](review-map.md)에pivot전구조검증·열참조/길이와SQLparams/owned-borrowedcursor계약의

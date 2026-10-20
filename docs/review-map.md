@@ -12,21 +12,24 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json),
 [modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json),
 [render-range/canonical/drift/recovery evidence](review_evidence/review_map_json_effects.json),
-[table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json).
+[table-structure and SQL ownership evidence](review_evidence/review_map_data_boundaries.json),
+[available-adapter/missing-cohort and explicit optional-skip evidence](review_evidence/review_map_adapter_missing.json).
 
 ## Scope and classification
 
-This is a **thirty-one-ID state/history/JSON/data mapping**, not a complete150-ID map.
-The remaining119 IDs have not been classified here. The candidate inventory still
+This is a **thirty-three-ID state/history/JSON/data mapping**, not a complete150-ID map.
+The remaining117 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Thirty below have existing coverage of their explicitly stated boundary.
-JSON-09 is **additional test needed**: passing structural cases are not the missing
-all-field meaning matrix. No runtime/test code or compatibility decision was changed.
+Thirty-one below have existing coverage of their explicitly stated boundary.
+JSON-09 and DATA-01 are **additional test needed**: respectively the all-field
+meaning matrix and current optional-adapter execution/provenance are incomplete.
+Existing tests may fill those gaps; neither classification proves a product bug
+or requires duplicated tests/new UI. No runtime/test code or policy was changed.
 AST checks only resolve references, not prove their semantic adequacy.
 
 The first five IDs were reviewed at `52acc3f30ce6afdc88a305966a3f9b323e98c76a`:
@@ -70,6 +73,10 @@ DATA-02/07 add59 distinct current Python nodes(49 structure/10 SQL ownership),
 bringing recorded unique Python nodes to505. Real pandas cases ran without skips;
 duck-protocol negative tests do not imply real PyArrow/Polars compatibility.
 
+DATA-01/03 record19 new unique passed Python nodes and5 explicit optional skips.
+Recorded passed-node total is524; skipped cases are never counted as passes.
+Both IDs reuse9 passed adapter cases, so do not sum9+19 as28 new executed tests.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -101,7 +108,9 @@ duck-protocol negative tests do not imply real PyArrow/Polars compatibility.
 | JSON-10 | Existing coverage | 1 fresh Python passed | Canonical representation invariance with list-order/type counterexamples |
 | JSON-11 | Existing coverage | Sync first0 + 5 fresh Python passed | Isolated intentional drift and registry/schema/cap/reference agreement |
 | JSON-12 | Existing coverage | 8 bounded-child Python passed | Damage/depth/valid-large-array handling, previous output and next-input recovery |
+| DATA-01 | Additional test needed | 9 available formats passed; 5 optional formats skipped | Current all-format execution/provenance gap, not a product-failure finding |
 | DATA-02 | Existing coverage | 49 fresh Python passed | Row widths/types/column keys before pivot, missing columns and effect failure preservation |
+| DATA-03 | Existing coverage | 19 passed; same 5 optional cases skipped | Tested source-preserving missing normalization/line gaps/scatter pairs/stat cohort; not all formats |
 | DATA-07 | Existing coverage | 10 fresh Python passed | Bound params, owned vs borrowed cursor/connection/transaction lifetime and cleanup failure context |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
@@ -595,6 +604,28 @@ valid large data is lossless. Both CLI and direct-loader children then accept a
 normal recovery payload. These synthetic sizes/timeouts are not a global CPU/RAM/
 HTTP sandbox, unbounded resource guarantee or every encoding/depth taxonomy.
 
+## DATA-01 — optional execution is not inferred from imports or old status
+
+Implementation: `data.to_columns`, `_plain_value`, `_to_list`,
+`_records_to_columns`, `_rows_to_columns`, `_cursor_to_columns`.
+
+`tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree`
+currently passes9 shapes: mapping, records, rows, NumPy object2D, structured NumPy,
+nullable pandas, SQLite connection/query, borrowed SQLite cursor, generic to_dict.
+The declared positional format supplies generated column names; values/order/
+missing/group meaning are compared through the corresponding names, not forced
+into a nonexistent common naming contract. Source objects/JSON remain unchanged;
+borrowed cursor/connection reuse remains valid.
+
+Real PyArrow, chunked Arrow, dictionary Arrow, Polars and categorical Polars
+are5 explicit skips because those packages are absent here. They are not5 passes,
+and a duck-protocol negative fixture does not replace real optional execution.
+The tests already exist: obtain actual optional runs in a declared environment or
+source-matched retained provenance before completing current all-format evidence.
+No packages were installed and no old master DATA-01 PASS is downgraded merely
+because this environment lacks optional modules. This map classifies its current
+execution gap, not historical results or a demonstrated adapter defect.
+
 ## DATA-02 — rectangular input boundaries, not silent repair
 
 Implementation: [data.py](../mudplot/data.py) `_column_names`, `_records_to_columns`,
@@ -616,8 +647,29 @@ union order and None; unequal columns remain unchanged at ingestion then validat
 rejects them. No padding/truncation or sorting/duplicate-x repair is introduced.
 Editor invalid open/action keeps spec/history/PNG/redo; CLI failure keeps input and
 sentinel output. Duck DataFrame/Arrow/to_dict malformed fixtures test dispatch
-boundaries, not real third-party compatibility. DATA-01's all-format equality
-remains separately unmapped here, including absent current PyArrow/Polars execution.
+boundaries, not real third-party compatibility. DATA-01's all-format current
+execution remains incomplete and is classified separately as additional evidence needed.
+
+## DATA-03 — normalized missing values are not invented observations
+
+Implementation: `data._plain_value`, `_to_list`, `_render._x_values`,
+`_series_masks`, `_stat.usable_rows`.
+
+- `tests/test_review_missing_data.py::test_missing_categorical_x_never_creates_a_none_category` (8)
+- `tests/test_review_missing_data.py::test_literal_none_label_is_distinct_from_missing_x_across_shared_axes_and_twins`
+- `tests/test_review_missing_data.py::test_adapter_values_and_layer_missing_cohorts_agree` (9 passed,5 optional skipped)
+- `tests/test_review_missing_data.py::test_pandas_nat_x_is_missing_instead_of_a_literal_tick`
+
+For six-row A/B data, source y=None stays in the spec; raw lines retain NaN gaps,
+scatter masks corresponding pairs, and grouped lineplot(errorbar=None) estimates
+use complete rows without shifting identities. Explicit line/scatter x tests keep
+missing x as a gap/masked row, never a fabricated `"None"` tick; a literal string
+`"None"` stays a category across shared axes/twins. Pandas NaT becomes None and
+ISO dates remain categorical labels, not a new continuous date-axis contract.
+
+These19 passed nodes prove the stated installed paths/contexts, not every missing
+scalar or exotic/optional format. Five shared optional cases remain skipped and
+source nonmutation does not imply sandboxing user-provided Python methods.
 
 ## DATA-07 — parameters and caller-owned resources
 
@@ -727,10 +779,15 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short tests/test_review_missing_data.py \
+  --junitxml=<private-results.xml>
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining119 IDs still need their own reviewed symbol/node/provenance links
+The remaining117 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
