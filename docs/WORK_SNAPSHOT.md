@@ -32,6 +32,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- Named Swarm-only sizes:18new/1069related/floor167P/CLI2/full nativeHTTP+browser
+  pass; original-row pooling/limits share sizes/guides only, local colours/rows keep.
+  Mixed-family/facet/empty/style/date remain rejected. Exactee876CI ALL5P is prior
+  categorical proof; new runtime needs fresh CI. Warnings/partial neighbor coverage retained.
 - New categorical swarm size/order:33new/1051related/floor149P/CLI2/full native
   HTTP+browser pass; stable rank/cohort/observed-only guides with exact shared
   helper AST preservation. Exact1dbCI ALL5P is prior numeric proof; new runtime

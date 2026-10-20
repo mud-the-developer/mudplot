@@ -123,21 +123,27 @@ def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
     ]
 
 
-def swarm_size_mapping(columns, layer, rows):
-    """One selected layer domain; sizes are diameters, never observed counts."""
-    config = layer.semantics
+def swarm_size_mapping(columns, config, rows, *, domain=None):
+    """Map local observations against a selected local or named size domain."""
     values = [columns[config.size][row] for row in rows]
+    mapping_columns = columns if domain is None else domain["columns"]
+    mapping_rows = rows if domain is None else domain["rows"]
+    mapping_values = [mapping_columns[config.size][row] for row in mapping_rows]
     if config.size_kind == "numeric":
-        fractions, bounds = numeric_mapping(values, config.size_norm)
+        fractions, bounds = numeric_mapping(mapping_values, config.size_norm)
+        if domain is not None:
+            fractions, _ = numeric_mapping(
+                values, bounds if bounds[0] != bounds[1] else None
+            )
         guide_values = numeric_guides(bounds)
         guide_fractions, _ = numeric_mapping(
             guide_values, bounds if bounds[0] != bounds[1] else None
         )
         guides = list(zip(guide_values, guide_fractions, strict=True))
     else:
-        selected = semantic_levels(columns, config, "size", rows)
+        selected = semantic_levels(mapping_columns, config, "size", mapping_rows)
         fractions = categorical_fractions(values, selected)
-        observed = {category_key(value) for value in values}
+        observed = {category_key(value) for value in mapping_values}
         guides = [
             (value, t)
             for value, t in zip(
@@ -161,7 +167,15 @@ def swarm_size_issues(columns, layer, panel):
     if issues or not isinstance(config, SemanticSpec):
         return issues
     defaults = SemanticSpec()
-    allowed = {"size", "size_kind", "size_order", "size_norm", "sizes", "legend"}
+    allowed = {
+        "size",
+        "size_kind",
+        "size_order",
+        "size_norm",
+        "sizes",
+        "legend",
+        "scale_id",
+    }
     for field in fields(config):
         if field.name not in allowed and getattr(config, field.name) != getattr(
             defaults, field.name
@@ -193,7 +207,7 @@ def swarm_size_issues(columns, layer, panel):
         ):
             return [f"swarm size levels exceed {MAX_LEVELS}/have ambiguous labels"]
     try:
-        swarm_size_mapping(columns, layer, rows)
+        swarm_size_mapping(columns, config, rows)
     except (ValueError, OverflowError) as exc:
         issues.append(str(exc))
     return issues

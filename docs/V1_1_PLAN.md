@@ -49,8 +49,10 @@ is authorized by this tracker.
   diameter mapping/non-data numeric guides, scalar legacy and physical packing preserved.
 - [x] **B2b10 — Categorical swarm sizes:** stable observed/explicit ranks,
   selected source rows, reserved size slots and observed-only guides.
+- [x] **B2b11 — Named Swarm size domains:** pooled original-row sizes/guides,
+  local observations/colours, duplicate-guide suppression and pure pooled limits.
 - [ ] **B2b — Categorical remainder:** broader component/semantic mappings and
-  swarm style/date/shared/facet semantics.
+  swarm style/date/mixed-family shared/facet semantics.
 - [x] **B3a — ECDF subset:** finite weighted empirical steps, tie/right-limit
   semantics, strict complements, per-curve proportion/percent/count, grouped
   color/dash slots, v/h/log observations and typed pure/JSON/editor contracts.
@@ -146,6 +148,21 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**Swarm-only named shared sizes.** Existing scale_id pools deduplicated original
+source rows for numeric bounds/categorical ranks and per-panel size guides only.
+Local observations/colours/refs/packing remain; mixed relational-family IDs,
+facet/dropna/empty cells/style/date/y2 still reject. Validate per-layer2000/pool10000/
+64levels/config conflicts and pooled area underflow before artists/output writes.
+18new/1069related/floor167P3397deselected/CLI2/Rust22P6ignored/11checks/full Windows
+nativeHTTP+browser8cases0. Active changedLSP12clean (earlier neighbor5unconfirmed,
+not whole-workspace proof); main1/floor1058warnings retained.
+[Scope](SWARM_SHARED_SIZE.md), separate PNG/spec and
+[evidence](review_evidence/swarm_named_size_verification.json).
+Exactee876CI39441022593 ALL5SUCCESS is categorical baseline, not this new runtime.
+Publish for fresh wholeCI; no new fields/deps/versions; Loop8 active.
+
+### Earlier review phase 89
 
 **Categorical size-only swarm.** Existing size_kind/size_order use typed keys and
 stable first-observed/explicit rank fractions; reserve empty size slots but show

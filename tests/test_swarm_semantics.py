@@ -193,7 +193,7 @@ def test_invalid_or_all_missing_selected_sizes_fail_before_artists(value):
     [
         {"hue": "g"},
         {"style": "g"},
-        {"scale_id": "shared"},
+        {"scale_id": ""},
         {"size_kind": "categorical", "size_norm": [0, 1]},
         {"dashes": ["--"]},
         {"hue_kind": "numeric"},

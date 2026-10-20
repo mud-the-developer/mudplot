@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 90차 — NamedSwarm-only shared size domain
+
+- 기존scale_id/typed설정signature/원본rowunion을재사용해Swarm의전용distribution_rows선택만pool합니다.
+  관측/색/URL/cell/packing은로컬이고크기domain/guide만공유합니다. 중복sourceID를제거·원본순으로정렬해
+  categorical rank가layer등록순서에영향받지않고같은panel의sizeguide는enabledmember에서한번만표시합니다.
+- Per-layer2000/pool고유행10000/64level/설정충돌·pooledarea underflow를순수검증하고이전출력파일을보호합니다.
+  Swarm과scatter/line의동일ID혼합/facet-dropna/빈cell/style/date/y2는거절하며기존relational공유와localfallback은유지합니다.
+- 새18/관련1069P경고1/floor167P3397deselected1058경고(1057Pyparsing+기존invalidsetter1)/CLI2/
+  Rust22P6ignored/품질11명령/전체WindowsnativeHTTP+실제browser8case0,
+  [검증](review_evidence/swarm_named_size_verification.json)을남깁니다. Activechanged12clean이나이전neighbor
+  일부inconclusive는보존하고전역Pyright양플랫폼0과구분합니다. 기존미지원회귀는invalidname/style/facet경계로
+  정밀화하고물리기하검사는유지했습니다. 새별도PNG/spec는열어확인했지만독립사람AT인증은아닙니다.
+- 정확한ee87669CI39441022593의5job모두성공은이전categorical범위이며새sharedruntime은게시뒤새CI를받습니다.
+  새model/action/specfield·의존성/버전없이원대장139PASS/6RUNNING/4OPEN/1DEFERRED·나머지v1.1/releasegate/
+  tag/publish경계는유지하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 89차 — Categorical swarm size/order
 
 - 기존SemanticSpec.size_kind/order로안정최초관측/명시rank를매핑합니다. 명시order는행을선택하고미관측

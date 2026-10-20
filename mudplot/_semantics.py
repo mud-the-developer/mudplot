@@ -338,6 +338,7 @@ def _scale_signature(value):
 
 def shared_scale_domains(spec):
     """Pool deduplicated selected row ids in original table order, no effects."""
+    from ._categorical import distribution_rows, swarm_size_issues
     from ._facet import panel_columns, panel_filter_issues, panel_rows
 
     domains = {}
@@ -352,11 +353,14 @@ def shared_scale_domains(spec):
         )
         for layer in panel.layers:
             config = layer.semantics
-            if layer.type not in ("scatter", "lineplot") or not isinstance(
+            if layer.type not in ("scatter", "lineplot", "swarmplot") or not isinstance(
                 config, SemanticSpec
             ):
                 continue
-            if config.scale_id is None or data_issues(columns, layer, panel):
+            if config.scale_id is None:
+                continue
+            swarm = layer.type == "swarmplot"
+            if (swarm_size_issues if swarm else data_issues)(columns, layer, panel):
                 continue
             settings = config.to_dict()
             if config.hue is not None and config.hue_kind == "numeric":
@@ -374,11 +378,16 @@ def shared_scale_domains(spec):
                     "conflict": False,
                     "offset": 0,
                     "colors": 0,
+                    "family": "swarm" if swarm else "relational",
                 },
             )
+            if domain["family"] != ("swarm" if swarm else "relational"):
+                domain["invalid"] = (
+                    "swarm named sizes cannot mix with relational families"
+                )
             if domain["signature"] != signature:
                 domain["conflict"] = True
-            selected = semantic_rows(columns, layer)
+            selected = (distribution_rows if swarm else semantic_rows)(columns, layer)
             domain["rows"].update(
                 selected
                 if original_rows is None
@@ -406,6 +415,8 @@ def shared_scale_domains(spec):
 
 
 def shared_scale_issues(spec):
+    from ._categorical import swarm_size_mapping
+
     issues = []
     domains = shared_scale_domains(spec)
     for scale_id, domain in domains.items():
@@ -417,7 +428,14 @@ def shared_scale_issues(spec):
             continue
         if len(domain["rows"]) > MAX_ROWS:
             issues.append(f"{prefix}: pooled rows exceed {MAX_ROWS}")
+            if domain["family"] == "swarm":
+                continue
         config = domain["config"]
+        if domain["family"] == "swarm":
+            try:
+                swarm_size_mapping(domain["columns"], config, domain["rows"])
+            except (ValueError, OverflowError) as exc:
+                issues.append(f"{prefix}: {exc}")
         for role in ("hue", "size", "style"):
             name = getattr(config, role)
             kind = "categorical" if role == "style" else getattr(config, f"{role}_kind")

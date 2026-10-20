@@ -116,6 +116,7 @@ TESTS = (
     "tests/test_swarm_sizes.py",
     "tests/test_swarm_semantics.py",
     "tests/test_swarm_categorical_size.py",
+    "tests/test_swarm_shared_sizes.py",
     "tests/test_boxen.py",
     "tests/test_categorical_scales.py",
     "tests/test_violin_options.py",

@@ -47,7 +47,8 @@
 - [x] **B2b9 — Numeric size-only swarm:** 동일선택layercohort·stable지름매핑/비데이터guide,
   legacy scalar/실제반지름packing보존.
 - [x] **B2b10 — Categoricalswarm크기:** 안정관측/명시rank와선택source행·예약크기/관측만guide.
-- [ ] **B2b — 범주형 나머지:** 추가구성요소·semantic과swarm style/date/shared/facet매핑.
+- [x] **B2b11 — NamedSwarm크기domain:** 원본rowpool크기/guide·로컬관측/색·중복guide제거·purepooled상한.
+- [ ] **B2b — 범주형 나머지:** 추가구성요소·semantic과swarm style/date/mixed-familyshared/facet매핑.
 - [x] **B3a — ECDF 첫 범위:** 유한 가중 empirical step·반복값/오른쪽 극한,
   strict 보완형·곡선별 proportion/percent/count·그룹 색상/선 자리,
   v/h/log 관측 축·typed pure/JSON/editor 계약.
@@ -139,6 +140,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
+
+**Swarm-onlynamedshared size.** 기존scale_id로중복제거원본row를pool해numericbounds/categoricalranks/
+패널별sizeguide만공유하고로컬관측/색/인용/packing은유지합니다. 다른relationalfamilyID혼합/facet-dropna/
+빈cell/style/date/y2는거절하며layer2000/pool10000/64level/설정충돌/pooledarea underflow를artist·출력전에
+검사합니다. 새18/관련1069/floor167P3397deselected/CLI2/Rust22P6ignored/품질11명령/전체WindowsnativeHTTP·
+browser8case0입니다. ActivechangedLSP12clean이지만이전neighbor5미확인을보존하고전체workspace완료로
+확대하지않으며주환경경고1/floor1058도기록합니다. [범위](SWARM_SHARED_SIZE.ko.md)·별도PNG/spec와
+[근거](review_evidence/swarm_named_size_verification.json)를남깁니다. 정확한ee876CI39441022593의5job성공은
+이전categorical이지새runtime증명이아니므로게시뒤새전체CI를받습니다. 새필드/의존성/버전없이Loop8유지합니다.
+
+### 이전 리뷰89차
 
 **Categorical size-only swarm.** 기존size_kind/size_order와typedkey로관측/명시rank를사용하고빈size슬롯은
 예약하되guide는관측level만표시합니다. Bool/numeric은별도선택·최대64명확label이며order로잘못된class를

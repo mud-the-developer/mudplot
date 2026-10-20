@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 사용자등록Loop8의5분반복이활성이며종료하거나다른만료loop를재생성하지않습니다.
   나머지remainder/gate는남아있습니다.
+- NamedSwarm-onlysize는새18/관련1069/floor167P/CLI2/전체nativeHTTP·browser가맞고원본rowpool/
+  상한·sizeguide만공유하며관측/색은로컬입니다. Mixed-family/facet/빈cell/style/date는거절하고정확한
+  ee876CI5job성공은이전categorical이지새runtime증명이아니므로새CI를받습니다. 경고/일부neighbor미확인보존합니다.
 - 새categorical swarm크기/order는새33/관련1051/floor149P/CLI2/전체nativeHTTP·browser가맞고
   안정rank/cohort/관측만guide와공통helper동일AST를보존합니다. 정확한1dbCI5job성공은이전numeric이지
   새runtime전체증명이아니며새CI를받습니다. Style/date/shared/facet미지원과경고기록은유지합니다.

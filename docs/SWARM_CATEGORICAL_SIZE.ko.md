@@ -29,10 +29,11 @@ sizeorder로숨기지않으며결측은category/value/group/size동일cohort에�
 Legend=False는크기guide만생략하고mapping은유지합니다. Numeric의clipping/중간값경로는변경하지않고
 categorical에numeric size_norm을주면거절합니다.
 
-단일primaryCartesianlayer만지원하며semantic hue/style/date/y2/facet-dropna/named-sharedscale/
+PrimaryCartesianlayer에서semantic hue/style/date/y2/facet-dropna/cross-familysharedscale/
 동시scalar marker_size는계속거절합니다. 유효행2000상한은명시선택뒤적용하고양수면적표현불가는
 artist전에실패합니다. Epsilon/source강제변환이나새model/action/specfield/의존성은없습니다.
-성공Figure는호출자가소유하며close해야합니다.
+성공Figure는호출자가소유하며close해야합니다. [Swarm-onlynamed size](SWARM_SHARED_SIZE.ko.md)는
+pooledcategoricalrank를공유할수있습니다.
 
 양editorrawJSON은보존하지만전용control/독립사람가독성·AT인증완료를주장하지않습니다.
 자원상한은전체CPU/RAM/sandbox보장이아니며더넓은style/date/facet의미는남습니다.

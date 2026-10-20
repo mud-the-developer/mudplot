@@ -36,7 +36,8 @@ Legend=False removes size guides, not mapping. Existing clipping/midpoint behavi
 for numeric size is unchanged; numeric size_norm is invalid for categorical size.
 
 Single primary Cartesian layers only: semantic hue/style, dates, y2, facet/dropna,
-named/shared scales and simultaneous scalar marker_size are still rejected.
+cross-family shared scales and simultaneous scalar marker_size remain rejected.
+[Swarm-only named sizes](SWARM_SHARED_SIZE.md) can share pooled category ranks.
 The2,000-usable-row limit applies after explicit row selection. Nonrepresentable
 positive areas fail before artists; no epsilon or source coercion. No model/action/
 spec fields or dependencies are added. Successful Figures remain caller-owned.

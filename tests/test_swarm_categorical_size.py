@@ -267,14 +267,14 @@ def test_categorical_sizes_keep_physical_clearance_on_native_log_categories(
         plt.close(fig)
 
 
-def test_categorical_mapping_cannot_silently_gain_facet_shared_or_style_support():
+def test_categorical_mapping_rejects_facet_bad_scale_and_style():
     source = {
         "cat": ["A", "A"],
         "value": [1, 2],
         "class": ["low", "high"],
         "g": ["u", "v"],
     }
-    for extra in ({"scale_id": "shared"}, {"style": "g"}, {"hue": "g"}):
+    for extra in ({"scale_id": ""}, {"style": "g"}, {"hue": "g"}):
         p = mp.plot(source).swarmplot(
             "cat",
             "value",

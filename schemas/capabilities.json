@@ -2079,7 +2079,9 @@
     "size_semantics": "numeric or categorical size; selected layer guides",
     "size_order": "categorical row selection, reserved ranks, observed guides",
     "size_cohort": "drop missing size with category/value/hue; source retained",
-    "size_scope": "no facet/dropna/named scale, semantic hue/style or dates",
+    "size_scale_id": "Swarm-only named original-row pool; sizes not colours",
+    "size_pool": "deduplicated original rows <=10000; categorical levels <=64",
+    "size_scope": "no facet/dropna/mixed-family pool, semantic hue/style/date",
     "line_width": "points in [0,1000]; default 0.5",
     "category_scale": "ordinal or native numeric/log; x remains category in h",
     "value_scales": [

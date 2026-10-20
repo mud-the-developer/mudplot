@@ -82,6 +82,10 @@ def _review_recent_layer_contracts(base: str) -> None:
             },
         )
         .size(4, 3),
+        mp.plot(source)
+        .swarmplot("x", "y", semantics={"size": "w", "scale_id": "native_size"})
+        .swarmplot("x", "y", semantics={"size": "w", "scale_id": "native_size"})
+        .size(4, 3),
     ]
     for plot in examples:
         expected = json.loads(plot.to_json())

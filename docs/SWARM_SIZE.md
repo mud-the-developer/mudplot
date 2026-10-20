@@ -26,7 +26,9 @@ source rows/data/actions/JSON are not rewritten. Selected bool/Inf/string sizes
 reject. An unselected invalid size does not affect a plot, but strict JSON still
 rejects nonfinite numbers anywhere in the source table.
 
-One layer's selected cohort across all cells defines its numeric domain. Explicit
+By default, one layer's selected cohort defines its numeric domain.
+[Swarm-only named scales](SWARM_SHARED_SIZE.md) can opt into pooled size domains.
+Explicit
 size_norm clips the mapping, never filters observations. Stable normalization
 handles narrow high-magnitude and wide finite ranges; a constant domain maps to
 the midpoint diameter and one guide. Guide circles use that same scale and have
@@ -37,7 +39,7 @@ not acquire group references/URLs. A group legend uses the midpoint diameter.
 Circle packing uses actual per-point radii, strokes and gutters at final
 DPI/layout/scales, including existing orientation/dodge/native-category modes.
 Positive diameters whose areas underflow reject before artists. No arbitrary
-shape, semantic hue/style, facet/dropna, named/shared scale,
+shape, semantic hue/style, facet/dropna or cross-family shared scale,
 date role or y2 support is implied. [Categorical size/order](SWARM_CATEGORICAL_SIZE.md)
 is a separate opt-in subset. Scalar marker_size plus mapped size rejects.
 The legacy semantics=None path remains unchanged. No new model/action/spec fields

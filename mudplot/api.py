@@ -376,7 +376,7 @@ class Plot:
         x stays categorical, y numeric; positive log-value axes are supported.
         Numeric dodge is the hue span (None auto, 0 packs hues together).
         Overcrowding retains all rows and warns, not a fake jitter approximation.
-        Optional semantics maps numeric/categorical sizes with layer-local guides.
+        Optional semantics maps local or Swarm-only named numeric/categorical sizes.
         """
         config = None
         if semantics is not None:

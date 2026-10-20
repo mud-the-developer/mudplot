@@ -13,6 +13,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added Swarm-only named size domains across unfiltered layers, with pooled
+  original-row numeric/categorical scales, per-panel guide deduplication and pure
+  pooled limits. Keep observations/legacy colours local and reject mixed-family
+  domains and facet/empty-cell combinations rather than silently renormalizing.
 - Added categorical swarm size ranks with typed level keys, explicit row selection,
   reserved ordered size slots and observed-only guides. Reuse the unchanged pure
   scatter/line rank helper while preserving numeric scales and calibrated packing.
