@@ -9,19 +9,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [open/reset/no-op policy and Python browser proof](review_evidence/review_map_document_policy.json),
 [bounded replay/gesture/checkpoint evidence](review_evidence/review_map_history_design.json),
 [strict JSON input and Rust codec evidence](review_evidence/review_map_json_input.json),
-[JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json).
+[JSON-09 structural evidence and remaining semantic work](review_evidence/review_map_default_semantics_gap.json),
+[modeled-field cross-language codec and additive metadata evidence](review_evidence/review_map_structural_codec.json).
 
 ## Scope and classification
 
-This is a **twenty-three-ID state/history/JSON mapping**, not a complete150-ID map.
-The remaining127 IDs have not been classified here. The candidate inventory still
+This is a **twenty-five-ID state/history/JSON mapping**, not a complete150-ID map.
+The remaining125 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Twenty-two below have existing coverage of their explicitly stated boundary.
+Twenty-four below have existing coverage of their explicitly stated boundary.
 JSON-09 is **additional test needed**: passing structural cases are not the missing
 all-field meaning matrix. No runtime/test code or compatibility decision was changed.
 AST checks only resolve references, not prove their semantic adequacy.
@@ -54,6 +55,11 @@ bring recorded distinct Python nodes to342. The initial private receipt expected
 165 by miscounting four marker parameters as one; pytest passed168, and only that
 receipt assumption was corrected. Passing these cases does not close JSON-09.
 
+JSON-01/08 add74 distinct current Python nodes, bringing the recorded unique
+Python total to416. Their selected Rust2 tests are separate reruns of existing
+codec/consumer nodes, not a growing unique Rust/Python combined count. Three
+Rust-output→Python comparisons are an additional assert probe, not pytest cases.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -73,11 +79,13 @@ receipt assumption was corrected. Passing these cases does not close JSON-09.
 | HIST-06 | Existing coverage | 2 seeded replay passed | Bounded768-action sequences and128 undo/redo each, exact states/hashes |
 | HIST-07 | Existing coverage | 3 actual browser passed | Measured mouse-release commits/independent edits and keyboard burst semantics |
 | HIST-08 | Existing coverage | 9 checkpoint passed; historical profile/design | One prior64-action state, no history truncation/public limit or new performance claim |
+| JSON-01 | Existing coverage | 73 fresh Python + selected Rust codec passed | All modeled-field structure/types/order and three actual Rust-output→Python probes; not renderability |
 | JSON-02 | Existing coverage | 35 Python passed; retained Native app | Strict nonfinite/overflow rejection vs adapter missing normalization |
 | JSON-03 | Existing coverage | 48 Python passed; fresh Rust strict codec | Recursive equal/different duplicate keys and output preservation |
 | JSON-04 | Existing coverage | 1 Python passed; fresh Rust integer codec | Signed decimal boundaries/known data fields, not rendering range |
 | JSON-06 | Existing coverage | 5 Python passed; fresh Rust/retained Native | Unicode pairs/lone surrogates/reserved object keys |
 | JSON-07 | Existing coverage | 7 Python passed; fresh Rust default/retained Native app | Current/omitted spec version vs unsupported/malformed versions |
+| JSON-08 | Existing coverage | 1 fresh Python + selected Rust consumer passed | Known base unknown-field ignore vs Any metadata and additive capabilities acceptance |
 | JSON-09 | Additional test needed | 168 current structural/representative passed | Remaining role/layer/AUTO/default meaning matrix, not a product-failure finding |
 
 STATE-07/08/09 refer to35 unique tests, not their38 summed relationships.
@@ -443,6 +451,46 @@ applies the application float/version policy. Do not force the two roles equal.
 Rust model11 includes other structural/capability/token tests; passing that group
 does not map all fields' default/AUTO semantics or complete JSON-01/08/09.
 
+## JSON-01/08 — modeled structure and additive metadata
+
+Implementation: `SpecBase.to_dict/from_dict`, `spec._from_dict`, `io.to_json/from_json`;
+[Rust model](../mudplot-editor/src/model.rs) `FigureSpec`, `Capabilities` and strict
+serde conversion. Fixture [review_full_spec_fields.json](../tests/fixtures/review_full_spec_fields.json)
+contains24 current model types/272 fields in three filled/alternate/nullable figures.
+They deliberately combine incompatible options and are not renderable plots.
+
+Current selected nodes in `tests/test_review_full_spec_fields.py`:
+
+- `test_structural_fixture_covers_all_dataclasses_and_nondefault_fields` (1)
+- `test_checked_in_fixture_matches_current_fields_and_generator` (1)
+- `test_every_structurally_supported_field_survives_python_json` (6)
+- `test_each_model_default_preserves_nested_types_and_nullable_values` (24)
+- `test_registered_layer_examples_round_trip_supported_values` (41)
+
+All73 passed. Filled variants exercise every modeled nondefault field; defaults
+preserve nested types, ASCII/non-ASCII JSON preserves types/values/list order, and
+registered examples validate before codec comparison. Existing139 nullable cases
+were deselected because their independent JSON-09 provenance is already recorded.
+Rust `model::tests::full_field_fixture_preserves_types_values_and_array_order`
+was freshly run with test-only `MUDPLOT_CODEC_PROBE_OUT=<owned-private>` and wrote
+three actual Rust-serialized figures. Separate type-aware recursive assertions
+compared keys/JSON types/list order/values to the fixture and reloaded each through
+both `mp.from_json` and `Plot.from_json`. No production probe endpoint was added.
+
+JSON-08 current node:
+`tests/test_review_json_policies.py::test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata`.
+Known-version base figure/theme/panel/layer unknown fields are ignored by Python;
+Any data metadata survives, while an unknown spec version rejects. Typed closed
+configs retain their own unknown-field rejection rule. This does not require
+unsupported fields to survive a Python round-trip.
+
+Fresh Rust `model::tests::capabilities_accept_additive_top_level_and_layer_metadata`
+adds top-level metadata and layer metadata to the embedded capability document;
+its known consumer summary remains identical. Additive consumer acceptance is
+separate from Python spec unknown-field policy. This pair is fresh selected
+Rust2, not a new Native HTTP/browser/Linux/MSRV run, binary attestation, every
+visual-control approval or JSON-09 semantic meaning completion.
+
 ## JSON-09 — structural evidence is not the full meaning matrix
 
 Implementation: `spec._from_dict`, `SpecBase.to_dict/from_dict`,
@@ -537,10 +585,20 @@ uv run --no-sync python -m pytest -q --tb=short \
   --junitxml=<private-results.xml>
 ```
 
+```sh
+uv run --no-sync python -m pytest -q --tb=short tests/test_review_full_spec_fields.py \
+  tests/test_review_json_policies.py::test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata \
+  -k 'not every_nullable_field' --junitxml=<private-results.xml>
+MUDPLOT_CODEC_PROBE_OUT=<owned-private> cargo test --locked --manifest-path mudplot-editor/Cargo.toml \
+  model::tests::full_field_fixture_preserves_types_values_and_array_order -- --exact
+cargo test --locked --manifest-path mudplot-editor/Cargo.toml \
+  model::tests::capabilities_accept_additive_top_level_and_layer_metadata -- --exact
+```
+
 The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining127 IDs still need their own reviewed symbol/node/provenance links
+The remaining125 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.

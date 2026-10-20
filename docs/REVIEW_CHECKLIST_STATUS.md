@@ -18,6 +18,21 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 101차 — JSON-01/08 구조왕복과additive소비자매핑
+
+- [부분review-map](review-map.md)에현재modeled구조와unknown-field/추가capability정책의source/test를연결해
+  누적25ID를검토했습니다. Python74P/139nullable선택제외/0skip·fail,Rust선택2P이며선택제외139는앞서기록한
+  별도JSON-09실행을중복하지않은것입니다. [분리근거](review_evidence/review_map_structural_codec.json).
+- 24model/272field의3구조fixture를Rusttest-only출력으로직접직렬화한뒤Python두loader에재입력해정확한JSON
+  타입/값/키/list순서를assert했습니다. 별도3probe를pytest수에더하지않으며구조fixture의서로양립불가능옵션을
+  실제렌더조합/모든UIcontrol의미완료로보지않습니다.
+- 알려진base필드의unknown무시/Anydata-metadata보존과Rustcapability의top-level/layer추가metadata허용은
+  별도계약입니다. Closedtyped옵션거절을없애거나미지원필드보존을강제하지않았습니다. 기록된고유Pythonnode는
+  416개이며Rust재선택2를누적고유수로합산하지않습니다. JSON-09추가검사필요/미분류125ID/BASE-05RUNNING/
+  원대장139PASS6RUNNING4OPEN1DEFERRED는유지합니다.
+- Runtime/테스트/원문/의존성/버전/productionprobe변경없이기준98b4ecCI39470014411을보호해로컬보존하고
+  Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 100차 — JSON-09 구조근거와남은의미검증매핑
 
 - [부분review-map](review-map.md)에JSON-09를추가검사필요로분류해누적23ID를검토했습니다. 기존139nullable+

@@ -1,0 +1,227 @@
+{
+  "kind": "partial-checklist-structural-codec-map",
+  "reviewed_ids": [
+    "JSON-01",
+    "JSON-08"
+  ],
+  "cumulative_reviewed_ids": [
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 25,
+  "remaining_unreviewed": 125,
+  "source_commit": "ecfede821e9e00277abd32afeed34f2d447f1b92",
+  "source_sha256": {
+    "dashboard/plot_gallery.py": "26a3ca07ac750814ec92dc0d37246e11310fa3ec4b25da5147db3ed19d148546",
+    "mudplot-editor/src/model.rs": "758db2c8262c8c6091cde793e1c8a8ec5da40963b388f5d1ffd5dcf142b11f65",
+    "mudplot/capabilities.py": "2e76a36156fc2feac651945fe17ab971e007e7bedec355946fca7a04d6c23252",
+    "mudplot/io.py": "157c56f7daee1f865a2497926cc512dd8df533c28561bf18c63e97d087d7b467",
+    "mudplot/spec.py": "99e0cd0043274f6f9cec4cf54a9de043a3ada64b304064a78df11677428d2792",
+    "schemas/capabilities.json": "c69c2239410b58b5bcc41024ac46ddba6927405df1d8a91bafff1bf290a924f0",
+    "tests/fixtures/review_full_spec_fields.json": "3fef66ebbfffb670f37b6fab0acea8bd9d34fd98c1b3d5a04828e7b93c545e3a",
+    "tests/test_review_full_spec_fields.py": "3b075484d37835110b52ac98fdc09bbb2726ee82a2254a9f6d1ec06fbe7d2444",
+    "tests/test_review_json_policies.py": "78732f796868716f88f5b033aa7a81b19a7a1378069744b74c045f07cce005ed"
+  },
+  "previous_artifact_sha256": "5febf659937b60c9792f0a3e2f26b20f53139a900fbde09836ae39ab8171837a",
+  "items": [
+    {
+      "id": "JSON-01",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/spec.py::SpecBase.to_dict",
+          "body_sha256": "05e68e16f241dbd8266a35686361e2f08fd847374e08e96fcda21f1bc9d42b1b"
+        },
+        {
+          "ref": "mudplot/spec.py::SpecBase.from_dict",
+          "body_sha256": "3d2c4ee1cdb56ce9fc6856a92ee100636fdb6adb410fd035569bb1c126940bd0"
+        },
+        {
+          "ref": "mudplot/spec.py::_from_dict",
+          "body_sha256": "66e16c2cca1735ce1ca5a1d64d69f6f9002f87b7d3ff3bfe31bc3869bfa30d9b"
+        },
+        {
+          "ref": "mudplot/io.py::to_json",
+          "body_sha256": "f1703a6fb2746076dc3a8999d22133cbda20a23dc9057961dc91a6abc0633350"
+        },
+        {
+          "ref": "mudplot/io.py::from_json",
+          "body_sha256": "71149ab1b95076cf969aa666058de248e39da6fe4aa61a74ff3a8f930f886268"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_full_spec_fields.py::test_structural_fixture_covers_all_dataclasses_and_nondefault_fields",
+        "tests/test_review_full_spec_fields.py::test_checked_in_fixture_matches_current_fields_and_generator",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values"
+      ],
+      "executed_nodes": [
+        "tests/test_review_full_spec_fields.py::test_structural_fixture_covers_all_dataclasses_and_nondefault_fields",
+        "tests/test_review_full_spec_fields.py::test_checked_in_fixture_matches_current_fields_and_generator",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[False-filled]",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[False-alternate-unions]",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[False-nullable]",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[True-filled]",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[True-alternate-unions]",
+        "tests/test_review_full_spec_fields.py::test_every_structurally_supported_field_survives_python_json[True-nullable]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[AxesSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[AxisSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[ClusterSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[ComponentStyleSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[DataSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[DistributionComponentsSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[ECDFSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[FigureSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[FontSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[GridSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[HeatmapSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[HistogramSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[KDE2DSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[KDESpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[LayerSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[LegendSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[PaletteSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[PanelSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[ReferenceSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[RegressionSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[SemanticSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[StatSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[ThemeSpec]",
+        "tests/test_review_full_spec_fields.py::test_each_model_default_preserves_nested_types_and_nullable_values[TicksSpec]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[line]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[lineplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[stem]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[stairs]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[eventplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[broken_barh]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[regplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[scatter]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[stripplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[swarmplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[stackplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[quiver]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[bar]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[barplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[pointplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[countplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[errorbar]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[band]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[hist]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[box]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[boxenplot]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[violin]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[kde]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[ecdf]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[rug]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[kde2d]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[hist2d]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[hexbin]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[heatmap]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[clustermap]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[contour]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[contourf]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[hline]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[vline]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[text]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[annotate]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[pie]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[scatter3d]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[line3d]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[surface]",
+        "tests/test_review_full_spec_fields.py::test_registered_layer_examples_round_trip_supported_values[wireframe]"
+      ],
+      "fresh_python_passed": 73
+    },
+    {
+      "id": "JSON-08",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/spec.py::_from_dict",
+          "body_sha256": "66e16c2cca1735ce1ca5a1d64d69f6f9002f87b7d3ff3bfe31bc3869bfa30d9b"
+        },
+        {
+          "ref": "mudplot/spec.py::migrate_spec_dict",
+          "body_sha256": "6fa0af602498b398734b1a7d4d5fc712f21ba3ba72934d679bb83d91d6cb482b"
+        },
+        {
+          "ref": "mudplot/capabilities.py::capabilities",
+          "body_sha256": "856c6b0073fe27381889eeb3bba1b9320ab8e9cd2062a196004255dad618483f"
+        }
+      ],
+      "test_bases": [
+        "tests/test_review_json_policies.py::test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata"
+      ],
+      "executed_nodes": [
+        "tests/test_review_json_policies.py::test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata"
+      ],
+      "fresh_python_passed": 1
+    }
+  ],
+  "fresh_python": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_full_spec_fields.py tests/test_review_json_policies.py::test_known_version_ignores_unknown_dataclass_fields_but_keeps_data_metadata -k \"not every_nullable_field\" --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 74,
+    "deselected": 139,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 0.91,
+    "log_sha256": "bbd7ff0744aac61af8e687646d5d5f4e340a9b8ce4fdecfa3e6f044d0d497c5f",
+    "junit_sha256": "b4efbd9a9589a761be40af49cb7e78b9e9f9b707be8592f96c47608cf8b3c82c"
+  },
+  "fresh_rust": {
+    "passed_selected_tests": 2,
+    "failed": 0,
+    "ignored": 0,
+    "exit": 0,
+    "codec_command": "MUDPLOT_CODEC_PROBE_OUT=<owned-private> cargo test --locked --manifest-path mudplot-editor/Cargo.toml model::tests::full_field_fixture_preserves_types_values_and_array_order -- --exact",
+    "caps_command": "cargo test --locked --manifest-path mudplot-editor/Cargo.toml model::tests::capabilities_accept_additive_top_level_and_layer_metadata -- --exact",
+    "codec_log_sha256": "cd75910812fd8775275981106a733e7dba4d33b5216582d1d8b9894b0fd90554",
+    "caps_log_sha256": "7c93453f05ad342da17b64f0ff4380795bb33875f488eb9c7c60f808c9140d3f"
+  },
+  "additional_assert_probe": {
+    "not_pytest_count": true,
+    "rust_output_figures": 3,
+    "raw_output_sha256": "48d2da2b5c34b030512bb52175df970b2b919c8b95fa2aabb2de78a9fd495777",
+    "comparison": "Exact recursive JSON types/keys/list order/value checked against shared fixture,then bothPythonfrom_jsonandPlot.from_jsonrestored values. Empty fieldwise diffs."
+  },
+  "fixture_scope": {
+    "models": 24,
+    "modeled_fields": 272,
+    "figures": 3,
+    "renderable_claim": false
+  },
+  "limits": [
+    "Fullfieldfixtureintentionallycombinesincompatiblesemanticoptions;structural/schema-validnotrenderabilityorUIcontrolapproval.",
+    "KnownbaseFigure/theme/panel/layerunknownfieldsignoredbyPython;Anydata-metadataretained;closedtypedconfigskeepownunknown-fieldrejectrules.",
+    "Rustcapabilitiesconsumeracceptsadditivetop-level/layeroptionmetadatawithoutchangingknownsummary;unsupportedfieldroundtripnotimposedonPython.",
+    "FreshRust2repeatselectednodesalreadyseeninpriorRustgroup;do notsumasunquefutureRustcount.",
+    "139nullablecasesdeselectednotrerun/notcounted;JSON09additional-tests-neededremains.",
+    "Recorded416uniquePythonmapnodes/25reviewedIDs/125unclassified;BASE05RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "ee5b4552facc7a030ae3751a6cc6c0bf26ccfbf38e31100dbd2fd7e78e884229"
+}
