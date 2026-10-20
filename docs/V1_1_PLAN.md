@@ -161,8 +161,11 @@ consume later size guide. SetData fills/empties cells without filter/source writ
 nativeHTTP+browser9cases0/LSP13clean; main1/floor1282warnings retained.
 [Scope](SWARM_FACETS.md), new PNG/spec and
 [evidence](review_evidence/swarm_facets_verification.json).
-Exact5afeCI39452186380 ALL5SUCCESS is named-size baseline, not new facet runtime.
-Publish for fresh wholeCI; no new fields/deps/versions; Loop8 active.
+Exact52acc3fCI39461524891 ALL5SUCCESS verifies this facet runtime. Queued mapping
+and publication notes change docs only, not runtime/tests. Partial BASE-05 map12IDs/
+138 unclassified here, focused60P; original statuses remain.
+[Publication evidence](review_evidence/review_map_publication.json).
+No new fields/deps/versions or release claim; Loop8 active.
 
 ### Earlier review phase 90
 

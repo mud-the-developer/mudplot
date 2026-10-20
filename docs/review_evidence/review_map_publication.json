@@ -1,0 +1,76 @@
+{
+  "scope": "Publish four doc-only partial BASE05 mappings after exact52runtimeCI terminal;notBASE05completion or release approval",
+  "runtime_base": "52acc3f30ce6afdc88a305966a3f9b323e98c76a",
+  "ci": {
+    "id": 39461524891,
+    "url": "https://github.com/mud-the-developer/mudplot/actions/runs/39461524891",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "minimum-render",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "doc_commits_before_publication_note": [
+    "701e3bea4fcb99f10aacceebcf8611cca6424e95",
+    "3bbc18d91a64f91788f321a82159cc1a5b628892",
+    "d499da9166a7dab100d76ac0a32d80f986475e14",
+    "c0d94dc861cc7ffafe3c51c70e42e54ca0de5b01"
+  ],
+  "runtime_test_schema_dependency_workflow_diff_empty": true,
+  "map_artifact_sha256": {
+    "docs\\review_evidence\\review_map_state_core.json": "b2f40f3c29e1b942ba6232933d9804b36c670de380379b4b08902b00b13f9421",
+    "docs\\review_evidence\\review_map_state_boundaries.json": "540cbbdac832d57a61528e3885307fbeb3b74a154ec902c0793a40758701160f",
+    "docs\\review_evidence\\review_map_state_paths.json": "0a99770d9290e6ec3fe18900cd2edb8f2f7dab026ae7deeb91ff259980c673de",
+    "docs\\review_evidence\\review_map_history_core.json": "599d026fc7ee2028c277c25f24c4faf476c135cbeffcec724ed848b80d3fc6bf"
+  },
+  "focused_publication_recheck": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short tests/test_review_state_contracts.py tests/test_review_core_boundaries.py tests/test_review_editor_paths.py --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 60,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "seconds": 54.65,
+    "log_sha256": "e296b27530f80492c484c16cb46d1dd03289a9f56dcd84acf42d3201b4fc9e27",
+    "junit_sha256": "18ccf0b1c02b4b6a6c49e50526acff098b40a6ad20894e0c43aa0110bd1ae921",
+    "mapped_node_set_sha256": "61601eb527e3d30520f52b5d21f5ce36871b3f7e55b854988400b677b9233f71"
+  },
+  "reviewed_ids": 12,
+  "unreviewed_ids": 138,
+  "base05_status": "RUNNING",
+  "original_status_counts": {
+    "PASS": 139,
+    "RUNNING": 6,
+    "OPEN": 4,
+    "DEFERRED": 1
+  },
+  "limits": [
+    "CI verifies exact52runtime;queued mappings/publication note change documentation only.",
+    "Job success is recorded literally, not an audit of every CI warning/skipped required-path case.",
+    "60 focused current tests are not a second full-suite/native/browser run.",
+    "No new fields/dependencies/versions/tag/publish-release/controller authority;Loop8 stays active."
+  ]
+}

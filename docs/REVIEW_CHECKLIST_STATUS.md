@@ -18,6 +18,17 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 96차 — 문서매핑게시와52acc기준CI확인
+
+- 정확한52acc3f30ce6afdc88a305966a3f9b323e98c76a의CI39461524891 5job이모두성공한뒤대기문서매핑
+  네commit과CI대기안내정리만한번에게시합니다. [원본source/상태근거](review_evidence/review_map_publication.json)를
+  남기며기준작업을push-cancel하지않았습니다. 문서매핑전후runtime/테스트/schema/의존성/workflow는같습니다.
+- 매핑에연결된기존세testfile을함께재실행해60고유node P/0skip·fail/exit0,54.65초입니다. 네artifact의
+  source/body/provenance와private로그·JUnit·기존Native지문/12ID표/원문150ID/상태수를재확인했습니다.
+  Job성공을모든warning/skip필수경로감사나새전체suite/native실행으로과장하지않습니다.
+- BASE-05는부분매핑12ID만검토했고138개는이문서에서미분류입니다. BASE-05RUNNING/원대장139PASS/
+  6RUNNING/4OPEN/1DEFERRED·남은v1.1/release/tagpublish경계와버전을유지하며Loop8은그대로활성입니다.
+
 ## 95차 — HIST-01/02/03 경계·분기·실패매핑
 
 - [부분review-map](review-map.md)에기본undo/redo·분기·편집기실패원자성의source/test를연결해누적12ID로
