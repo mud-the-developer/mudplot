@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 114차 — PLOT-05/09/10 현재축표·overlay·log정책매핑
+
+- [부분review-map](review-map.md)에공유/named/독립축·bar/stack/band/error·log유효영역의source/test를연결해
+  누적50ID를분류했습니다. 현재repo선택37P/0skip·fail이며별도읽고hash검증한기존assert-probe를새소유tmp사본에서
+  실행했습니다. [분리근거](review_evidence/review_map_axis_overlay_log.json)에9축표/3충돌/8log·rawgeometry출력을남깁니다.
+- 과거overlayprobe의rawgeometryprefix만분리했고옛alpha-helper exec/golden부분은실행하지않았습니다. 수작업
+  signedstack0→[1,2,3]→[5,1,5]→[3,4,6]·duplicateunsortedband·sparsebar-CI-x/yerror와독립축/y2labels/limits가
+  현재assert를통과한것이지옛수치를새통과로복사한것이아닙니다. Probe수를pytest에더하지않습니다.
+- Legacylognativeclip/source보존과typedderivedinterval거절·maskedzeroLogNorm/cellaxeslinear는서로다른계약입니다.
+  모든norm/viewer/극단영역/최소환경RGB대조를새로실행했다거나새clip/zorder/API를도입했다고하지않습니다.
+- 기록된고유Python통과node는834개이고분류50중기존확인경계49/JSON-09추가의미검사1·미분류100개입니다.
+  BASE-05JSON-09RUNNING/원대장139PASS6RUNNING4OPEN1DEFERRED를유지합니다. Runtime/테스트/원문/의존성/버전변경없이
+  기준47d042aCI39493638843을보호해로컬보존하고Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 113차 — PLOT-11/12 좌표계·alpha·native속성매핑
 
 - [부분review-map](review-map.md)에선택Cartesiandata-anchor/axes-title/figure-legend와annotationopacity의

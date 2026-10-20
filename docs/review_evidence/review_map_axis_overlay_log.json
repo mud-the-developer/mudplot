@@ -1,0 +1,772 @@
+{
+  "kind": "partial-checklist-axis-overlay-log-map",
+  "reviewed_ids": [
+    "PLOT-05",
+    "PLOT-09",
+    "PLOT-10"
+  ],
+  "cumulative_reviewed_ids": [
+    "DATA-01",
+    "DATA-02",
+    "DATA-03",
+    "DATA-04",
+    "DATA-05",
+    "DATA-06",
+    "DATA-07",
+    "DATA-08",
+    "DATA-09",
+    "HIST-01",
+    "HIST-02",
+    "HIST-03",
+    "HIST-04",
+    "HIST-05",
+    "HIST-06",
+    "HIST-07",
+    "HIST-08",
+    "JSON-01",
+    "JSON-02",
+    "JSON-03",
+    "JSON-04",
+    "JSON-05",
+    "JSON-06",
+    "JSON-07",
+    "JSON-08",
+    "JSON-09",
+    "JSON-10",
+    "JSON-11",
+    "JSON-12",
+    "PLOT-01",
+    "PLOT-02",
+    "PLOT-03",
+    "PLOT-04",
+    "PLOT-05",
+    "PLOT-06",
+    "PLOT-07",
+    "PLOT-08",
+    "PLOT-09",
+    "PLOT-10",
+    "PLOT-11",
+    "PLOT-12",
+    "STATE-01",
+    "STATE-02",
+    "STATE-03",
+    "STATE-04",
+    "STATE-05",
+    "STATE-06",
+    "STATE-07",
+    "STATE-08",
+    "STATE-09"
+  ],
+  "cumulative_reviewed_count": 50,
+  "remaining_unreviewed": 100,
+  "source_commit": "44e6bd967d581e59af92139f59cf225f33750a22",
+  "source_sha256": {
+    "mudplot/_heatmap.py": "8608ca654892b4e15dfc2e5d1040095a9a4226ce4bea6df76d97e78d46a5f572",
+    "mudplot/_heatmap_render.py": "dc837fe55c2d30f2cd731e3fad3124490ca4169fdefbd41a1c1949398402c17a",
+    "mudplot/_render.py": "da96d7c4d046335dcfe2f51e0c0c0590c4933c0d9b98e42c22d124efb451b3bf",
+    "mudplot/validate.py": "98b96ef868844ce5b041d25adaba79a73048d04ad19bcc4b46d1bdcfc72f7fb0",
+    "tests/test_bar_uncertainty.py": "ea24150b48206272b8521b2af3e7883c1d2233a4b4d53e5d5635eca918c8f215",
+    "tests/test_heatmap_options.py": "334ecebe7603ce9d24fb1bca71a3f4e3244128410d73c95640a2ed5d0b34f84f",
+    "tests/test_layout.py": "bd970bbbb867bf48426fe6228dfbb71ddb840f78cfc94814de4922ebe606cac3",
+    "tests/test_statistical_scales.py": "efe51e283ccf89bb87382da1db2a0b590c6e1553d27d889c3b269ceae85e192f"
+  },
+  "previous_artifact_sha256": "6c80e23ae9565fc5a2afb21f367699d744e2f2fea830ad0d7ec2504a643cc473",
+  "items": [
+    {
+      "id": "PLOT-05",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/_render.py::_link_shared_axes",
+          "body_sha256": "88bfba1558d41350fb546f125f8282688296cee5a5b6b0dfc77407b623069642"
+        },
+        {
+          "ref": "mudplot/_render.py::_link_named_axes",
+          "body_sha256": "56a6a779bde6b8744cc4e76315b8ee2ca609e49922d5984df45fbe884c17195c"
+        },
+        {
+          "ref": "mudplot/validate.py::_check_shared_category_scales",
+          "body_sha256": "962439e847cc6478a374361fc97e81795669f1effbe0365f7d603f93b12764b1"
+        },
+        {
+          "ref": "mudplot/validate.py::validate",
+          "body_sha256": "5b96e8cb7ae4d5745ae0a63c006a5c22d0a310245e47b5122bb62d88a6099aac"
+        }
+      ],
+      "test_bases": [
+        "tests/test_layout.py::test_mixed_2d_3d_figure_still_shares_2d_axes_after_layout_change",
+        "tests/test_layout.py::test_secondary_yaxis_and_colorbar_render_cleanly_together",
+        "tests/test_statistical_scales.py::test_shared_mixed_modes_string_primitives_and_native_secondary_rejected"
+      ],
+      "executed_nodes": [
+        "tests/test_layout.py::test_mixed_2d_3d_figure_still_shares_2d_axes_after_layout_change",
+        "tests/test_layout.py::test_secondary_yaxis_and_colorbar_render_cleanly_together",
+        "tests/test_statistical_scales.py::test_shared_mixed_modes_string_primitives_and_native_secondary_rejected[barplot]",
+        "tests/test_statistical_scales.py::test_shared_mixed_modes_string_primitives_and_native_secondary_rejected[pointplot]",
+        "tests/test_statistical_scales.py::test_shared_mixed_modes_string_primitives_and_native_secondary_rejected[countplot]"
+      ],
+      "fresh_passed": 5,
+      "reviewed_boundary": "2Dsubsetsharingnot3D/y2-colorbarownership/native-ordinalmodesreject;probe9axisrowscolumn-named-empty-y2independentlabels-limits-ticks+3scale-limit-modeconflicts."
+    },
+    {
+      "id": "PLOT-09",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/validate.py::_check_uncertainty",
+          "body_sha256": "2f0e088bcd7f223b8261dc402a5b6eaf0e0c8886b82cd42559903584008260ad"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_series_layer",
+          "body_sha256": "8b9745dbe8b75fb08e50a3f972b48447acea8b3aca55c22928db21859da282d1"
+        }
+      ],
+      "test_bases": [
+        "tests/test_bar_uncertainty.py::test_absolute_ci_endpoints_render_exactly_without_symmetrizing",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers",
+        "tests/test_bar_uncertainty.py::test_grouped_bar_sd_is_centered_on_each_dodged_bar_and_not_rescaled",
+        "tests/test_bar_uncertainty.py::test_misaligned_interval_columns_report_validation_issue_not_index_error",
+        "tests/test_bar_uncertainty.py::test_missing_categories_keep_errorbars_with_their_own_group",
+        "tests/test_bar_uncertainty.py::test_negative_and_zero_bars_keep_errors_at_the_signed_value",
+        "tests/test_bar_uncertainty.py::test_zero_uncertainty_and_bounds_at_center_remain_valid"
+      ],
+      "executed_nodes": [
+        "tests/test_bar_uncertainty.py::test_grouped_bar_sd_is_centered_on_each_dodged_bar_and_not_rescaled",
+        "tests/test_bar_uncertainty.py::test_absolute_ci_endpoints_render_exactly_without_symmetrizing[bar]",
+        "tests/test_bar_uncertainty.py::test_absolute_ci_endpoints_render_exactly_without_symmetrizing[errorbar]",
+        "tests/test_bar_uncertainty.py::test_missing_categories_keep_errorbars_with_their_own_group[False]",
+        "tests/test_bar_uncertainty.py::test_missing_categories_keep_errorbars_with_their_own_group[True]",
+        "tests/test_bar_uncertainty.py::test_negative_and_zero_bars_keep_errors_at_the_signed_value",
+        "tests/test_bar_uncertainty.py::test_zero_uncertainty_and_bounds_at_center_remain_valid",
+        "tests/test_bar_uncertainty.py::test_misaligned_interval_columns_report_validation_issue_not_index_error",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[yerr--1]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[yerr-nan]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[yerr-inf]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[yerr-True]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[yerr-0.1]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[xerr--1]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[xerr-nan]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[xerr-inf]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[xerr-True]",
+        "tests/test_bar_uncertainty.py::test_error_magnitudes_must_be_nonnegative_finite_numbers[xerr-0.1]"
+      ],
+      "fresh_passed": 18,
+      "reviewed_boundary": "Dodgedsignedzero-bars/SDrelativevsabsoluteCI/sparsecategories/errors-x-y/zero-valid/nonnegative-finite-misalignederrors;probeRawstackmanualcumulativeandunsortedduplicatebandinputedgespreserved."
+    },
+    {
+      "id": "PLOT-10",
+      "classification": "existing-coverage",
+      "implementation": [
+        {
+          "ref": "mudplot/validate.py::_check_statistical_scales",
+          "body_sha256": "e0a7ea22195f04f9c252f89a7534842047ae20cd8b939e92d32f2a7cd2ea7230"
+        },
+        {
+          "ref": "mudplot/_render.py::_draw_stat_ranges",
+          "body_sha256": "3200f2ec1b2f0cc5714d906742ef09631812a42cb77a90965006d174065ad4e8"
+        },
+        {
+          "ref": "mudplot/_heatmap_render.py::colour_norm",
+          "body_sha256": "a7f9d246cf2f4a1442d05d949a146e31a59857264ceb5f940279e701b2ef4fe7"
+        },
+        {
+          "ref": "mudplot/_heatmap.py::heatmap_issues",
+          "body_sha256": "b62dc363b003c7504265ba511ca16444293352d61b633ef63d96b721ae37b161"
+        }
+      ],
+      "test_bases": [
+        "tests/test_heatmap_options.py::test_center_requires_diverging_palette_and_cell_axes_are_not_log_colour_axes",
+        "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite",
+        "tests/test_heatmap_options.py::test_derived_nonrepresentable_colour_span_preserves_existing_output",
+        "tests/test_heatmap_options.py::test_log_norm_masked_zero_and_original_value_annotation",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels",
+        "tests/test_statistical_scales.py::test_raw_log_mean_unchanged_and_invalid_bounds_never_clipped",
+        "tests/test_statistical_scales.py::test_shape_errors_native_log_inverse_and_baseline_overflow_fail_clearly"
+      ],
+      "executed_nodes": [
+        "tests/test_statistical_scales.py::test_raw_log_mean_unchanged_and_invalid_bounds_never_clipped",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels[categories0]",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels[categories1]",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels[categories2]",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels[categories3]",
+        "tests/test_statistical_scales.py::test_native_log_rejects_non_numeric_or_non_positive_levels[categories4]",
+        "tests/test_statistical_scales.py::test_shape_errors_native_log_inverse_and_baseline_overflow_fail_clearly",
+        "tests/test_heatmap_options.py::test_log_norm_masked_zero_and_original_value_annotation",
+        "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[linear-0]",
+        "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[linear-1e+308]",
+        "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[log-0.1]",
+        "tests/test_heatmap_options.py::test_constant_colour_ranges_remain_finite[log-1e-320]",
+        "tests/test_heatmap_options.py::test_center_requires_diverging_palette_and_cell_axes_are_not_log_colour_axes",
+        "tests/test_heatmap_options.py::test_derived_nonrepresentable_colour_span_preserves_existing_output"
+      ],
+      "fresh_passed": 14,
+      "reviewed_boundary": "Legacylograwdataunchanged-nativeoffscreenclip;typednonpositive-derivedintervalreject;nativecategorylevelsbaseline/inverseoverflows;typedLogNormmaskexplicitboundsconstantfinite/colourvsaxisnormseparate. Notalllognormsdomainpolicy."
+    }
+  ],
+  "fresh_execution": {
+    "command": "uv run --no-sync python -m pytest -q --tb=short <selected layout/statistical-scale/heatmap/bar-uncertainty nodes> --junitxml=<private-results.xml>",
+    "passed_unique_nodes": 37,
+    "failed": 0,
+    "skipped": 0,
+    "exit": 0,
+    "log_sha256": "ef6b7f08beb5f6bfb42b8c268ded7bb9fc3b3faea6ab2b296e3e2911f4110f27",
+    "junit_sha256": "c0b51f4d6341163a78d78a1743c6e9022af401b3febfb39a3a9817e4535c0b97"
+  },
+  "separate_current_assert_probes": {
+    "not_pytest_count": true,
+    "axis_reference": {
+      "shared": [
+        {
+          "mode": "column",
+          "panel": 0,
+          "xlim": [
+            1.0,
+            100.0
+          ],
+          "ylim": [
+            0.0,
+            10.0
+          ],
+          "xticks": [
+            0.1,
+            1.0,
+            10.0,
+            100.0,
+            1000.0
+          ],
+          "yticks": [
+            0.0,
+            2.0,
+            4.0,
+            6.0,
+            8.0,
+            10.0
+          ],
+          "xlabel": "x0",
+          "ylabel": "y0",
+          "xscale": "log",
+          "yscale": "linear",
+          "empty": false
+        },
+        {
+          "mode": "column",
+          "panel": 1,
+          "xlim": [
+            200.0,
+            2.0
+          ],
+          "ylim": [
+            50.0,
+            350.0
+          ],
+          "xticks": [
+            1.0,
+            10.0,
+            100.0,
+            1000.0
+          ],
+          "yticks": [
+            50.0,
+            100.0,
+            150.0,
+            200.0,
+            250.0,
+            300.0,
+            350.0
+          ],
+          "xlabel": "x1",
+          "ylabel": "y1",
+          "xscale": "log",
+          "yscale": "linear",
+          "empty": false
+        },
+        {
+          "mode": "column",
+          "panel": 2,
+          "xlim": [
+            1.0,
+            100.0
+          ],
+          "ylim": [
+            0.0,
+            1.0
+          ],
+          "xticks": [
+            0.1,
+            1.0,
+            10.0,
+            100.0,
+            1000.0
+          ],
+          "yticks": [
+            0.0,
+            0.2,
+            0.4,
+            0.6000000000000001,
+            0.8,
+            1.0
+          ],
+          "xlabel": "x2",
+          "ylabel": "y2",
+          "xscale": "log",
+          "yscale": "linear",
+          "empty": true
+        },
+        {
+          "mode": "column",
+          "panel": 3,
+          "xlim": [
+            200.0,
+            2.0
+          ],
+          "ylim": [
+            400.0,
+            800.0
+          ],
+          "xticks": [
+            1.0,
+            10.0,
+            100.0,
+            1000.0
+          ],
+          "yticks": [
+            400.0,
+            500.0,
+            600.0,
+            700.0,
+            800.0
+          ],
+          "xlabel": "x3",
+          "ylabel": "y3",
+          "xscale": "log",
+          "yscale": "linear",
+          "empty": false
+        },
+        {
+          "mode": "secondary",
+          "panel": 0,
+          "ylim": [
+            1.0,
+            10000.0
+          ],
+          "ylabel": "sec",
+          "yscale": "log"
+        },
+        {
+          "mode": "named",
+          "panel": 0,
+          "xlim": [
+            1.0,
+            200.0
+          ],
+          "ylim": [
+            0.0,
+            10.0
+          ],
+          "xlabel": "x0",
+          "ylabel": "y0",
+          "xscale": "log",
+          "yscale": "linear"
+        },
+        {
+          "mode": "named",
+          "panel": 1,
+          "xlim": [
+            2.0,
+            200.0
+          ],
+          "ylim": [
+            50.0,
+            350.0
+          ],
+          "xlabel": "x1",
+          "ylabel": "y1",
+          "xscale": "log",
+          "yscale": "linear"
+        },
+        {
+          "mode": "named",
+          "panel": 2,
+          "xlim": [
+            0.8912509381337456,
+            11.220184543019636
+          ],
+          "ylim": [
+            0.0,
+            1.0
+          ],
+          "xlabel": "x2",
+          "ylabel": "y2",
+          "xscale": "log",
+          "yscale": "linear"
+        },
+        {
+          "mode": "named",
+          "panel": 3,
+          "xlim": [
+            1.0,
+            200.0
+          ],
+          "ylim": [
+            400.0,
+            800.0
+          ],
+          "xlabel": "x3",
+          "ylabel": "y3",
+          "xscale": "log",
+          "yscale": "linear"
+        }
+      ],
+      "conflicts": [
+        {
+          "case": "scale",
+          "issues": [
+            "shared x axes have conflicting scale declarations"
+          ]
+        },
+        {
+          "case": "named_limits",
+          "issues": [
+            "named shared x axes have conflicting limits"
+          ]
+        },
+        {
+          "case": "named_with_mode",
+          "issues": [
+            "named shared x axes cannot mix figure sharing modes",
+            "named shared x axes cannot mix figure sharing modes"
+          ]
+        }
+      ],
+      "log": [
+        {
+          "case": "line",
+          "raw_x": [
+            -1.0,
+            0.0,
+            1.0,
+            10.0
+          ],
+          "xlim": [
+            0.8912509381337456,
+            11.220184543019636
+          ],
+          "nonpositive_policy": "Matplotlib native transform clip off display, raw values unchanged",
+          "warning_count": 0
+        },
+        {
+          "case": "scatter",
+          "raw_x": [
+            -1.0,
+            0.0,
+            1.0,
+            10.0
+          ],
+          "xlim": [
+            0.8912509381337456,
+            11.220184543019636
+          ],
+          "nonpositive_policy": "Matplotlib native transform clip off display, raw values unchanged",
+          "warning_count": 0
+        },
+        {
+          "case": "wide_positive_axis_linear_colour",
+          "xlim": [
+            9.999999999999416e-221,
+            1.0000000000000584e+220
+          ],
+          "colour_clim": [
+            -1.0,
+            1.0
+          ],
+          "raw_x": [
+            1e-200,
+            1,
+            1e+200
+          ]
+        },
+        {
+          "case": "typed_nonpositive_derived_interval",
+          "error": "log-value estimate/interval endpoints must be positive; use axis statistics or another interval"
+        },
+        {
+          "case": "supported_heatmap_log_norm",
+          "clim": [
+            1e-200,
+            1e+200
+          ],
+          "masked_nonpositive": 2,
+          "normalized_values": [
+            0,
+            0.5,
+            1
+          ],
+          "cell_axes": "linear"
+        },
+        {
+          "case": "nonpositive_unmasked",
+          "issues": [
+            "panel 0 layer 0 (heatmap): log heatmap requires positive unmasked values"
+          ]
+        },
+        {
+          "case": "nonpositive_vmin",
+          "issues": [
+            "panel 0 layer 0 (heatmap): log heatmap bounds must be positive"
+          ]
+        },
+        {
+          "case": "unsupported_symlog_norm",
+          "issues": [
+            "panel 0 layer 0 (heatmap): heatmap norm must be linear or log"
+          ]
+        }
+      ]
+    },
+    "overlay_reference": {
+      "bars": [
+        {
+          "indices": [
+            0,
+            1,
+            2
+          ],
+          "centers": [
+            -0.19999999999999998,
+            0.8,
+            -0.19999999999999998
+          ],
+          "widths": [
+            0.36800000000000005,
+            0.36800000000000005,
+            0.36800000000000005
+          ],
+          "heights": [
+            -2.0,
+            0.0,
+            3.0
+          ],
+          "error_segments": [
+            [
+              [
+                -0.19999999999999998,
+                -2.6
+              ],
+              [
+                -0.19999999999999998,
+                -1.7
+              ]
+            ],
+            [
+              [
+                0.8,
+                -0.2
+              ],
+              [
+                0.8,
+                0.5
+              ]
+            ],
+            [
+              [
+                -0.19999999999999998,
+                2.1
+              ],
+              [
+                -0.19999999999999998,
+                4.2
+              ]
+            ]
+          ]
+        },
+        {
+          "indices": [
+            3,
+            4
+          ],
+          "centers": [
+            0.2,
+            2.2
+          ],
+          "widths": [
+            0.36800000000000005,
+            0.36800000000000005
+          ],
+          "heights": [
+            4.0,
+            -1.0
+          ],
+          "error_segments": [
+            [
+              [
+                0.2,
+                3.5
+              ],
+              [
+                0.2,
+                4.9
+              ]
+            ],
+            [
+              [
+                2.2,
+                -1.4
+              ],
+              [
+                2.2,
+                -0.09999999999999998
+              ]
+            ]
+          ]
+        }
+      ],
+      "horizontal_errors": [
+        [
+          [
+            1.9,
+            4.0
+          ],
+          [
+            2.1,
+            4.0
+          ]
+        ],
+        [
+          [
+            -0.2,
+            -1.0
+          ],
+          [
+            0.2,
+            -1.0
+          ]
+        ],
+        [
+          [
+            1.7,
+            5.0
+          ],
+          [
+            2.3,
+            5.0
+          ]
+        ]
+      ],
+      "vertical_errors": [
+        [
+          [
+            2.0,
+            3.0
+          ],
+          [
+            2.0,
+            4.5
+          ]
+        ],
+        [
+          [
+            0.0,
+            -1.2
+          ],
+          [
+            0.0,
+            -0.5
+          ]
+        ],
+        [
+          [
+            2.0,
+            4.8
+          ],
+          [
+            2.0,
+            6.0
+          ]
+        ]
+      ],
+      "stack": [
+        {
+          "group": 0,
+          "manual_lower": [
+            0,
+            0,
+            0
+          ],
+          "manual_upper": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "group": 1,
+          "manual_lower": [
+            1,
+            2,
+            3
+          ],
+          "manual_upper": [
+            5,
+            1,
+            5
+          ]
+        },
+        {
+          "group": 2,
+          "manual_lower": [
+            5,
+            1,
+            5
+          ],
+          "manual_upper": [
+            3,
+            4,
+            6
+          ]
+        }
+      ],
+      "band_input": {
+        "x": [
+          2,
+          0,
+          1,
+          1
+        ],
+        "lo": [
+          1,
+          -1,
+          0,
+          0.5
+        ],
+        "hi": [
+          3,
+          1,
+          2,
+          1.5
+        ]
+      }
+    },
+    "historical_source_hashes_verified": true,
+    "historical_alpha_exec_simulation_excluded": true,
+    "private_raw_sha256": {
+      "axis_probe.py": "4a00b65ed08fce6604cdf9dc26393ed352efbd19ba434cd2ff69000fd50052e8",
+      "raw_overlay_probe.py": "4894335a5b83f559c2ccf39f9b3341b2c80700e89d8c451880a2411606be3738",
+      "axis_reference.json": "222bdc2e6a548b5d1b7ca951114ea1e3fe5ea5f85065e3ebacbe8ad80a5e75dc",
+      "overlay_reference.json": "c40280d7ff800aa0d4c5f61ee4c00f3703ba3b0885dc3125cc9d3acc287fcf19",
+      "axis-probe.log": "22edf5ba6c950fa3745fae956e0d32001e0b5d67cf15f2ac6e530ab3c1c296e3",
+      "overlay-probe.log": "d389fc61a25ae85b7165b85268050e7dd0dcaf6e1bbf36f47d82f357059da08d"
+    },
+    "origin_artifacts": {
+      "docs\\review_evidence\\axis_domain_verification.json": "452a97c9e0c432ebc235e07a9a1c4d8a9c238c4f3a5563dacd04e79be0a9be31",
+      "docs\\review_evidence\\overlay_alpha_verification.json": "3a292c4d7502698ab485e1cdd72b347a85e0da861ecaf412f37a6570acb28558"
+    }
+  },
+  "limits": [
+    "Newcurrentassert-probesoutputsownedtemp,nothistoricaltablecopiedaspresentpass;probesnotextra pytestcounts.",
+    "No oldalphahelperexec/goldenrewriting/source changes or newzorder-clipAPI.",
+    "No newlargeconstantcolourRGBfloorprobe/Rust/native/browser/wholeCI or all viewer-norm-extremerangeguarantee.",
+    "Rawlognativeclip-vs-typedderivedreject/maskedLogNormcolour-vs-linearcellaxesaredifferentdeclaredpolicies.",
+    "Recorded834uniquePythonmapnodes/50reviewed49existing+JSON09additional/100unclassified;BASE05JSON09RUNNING139P6R4O1Dunchanged."
+  ],
+  "verifier_sha256": "80dafac658a566737aaef26d5c2bf4bad755b9f6592877a0fb5c744359b170bb"
+}

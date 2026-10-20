@@ -19,19 +19,20 @@ Execution/source fingerprints: [first five state IDs](review_evidence/review_map
 [real optional-adapter execution in an unchanged-base uv overlay](review_evidence/review_map_optional_execution.json),
 [dynamic registered-layer execution smoke and separate meaning controls](review_evidence/review_map_layer_smoke.json),
 [independent coordinate/matrix/projection/colour oracles](review_evidence/review_map_plot_oracles.json),
-[coordinate spaces/actual browser drag/annotation alpha evidence](review_evidence/review_map_coordinates_alpha.json).
+[coordinate spaces/actual browser drag/annotation alpha evidence](review_evidence/review_map_coordinates_alpha.json),
+[shared-axis/raw-overlay/log policy evidence](review_evidence/review_map_axis_overlay_log.json).
 
 ## Scope and classification
 
-This is a **forty-seven-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
-The remaining103 IDs have not been classified here. The candidate inventory still
+This is a **fifty-ID state/history/JSON/data/layer mapping**, not a complete150-ID map.
+The remaining100 IDs have not been classified here. The candidate inventory still
 contains all150 original IDs, but filenames and PASS labels are not coverage proof.
 BASE-05 remains RUNNING; original counts139PASS/6RUNNING/4OPEN/1DEFERRED are unchanged.
 Prior phase-specific evidence is not invalidated or re-labelled by this partial map.
 
 For each reviewed ID, classify as **existing coverage**, **additional test needed**
 or **design decision needed** after reading the implementation and assertions.
-Forty-six below have existing coverage of their explicitly stated boundary.
+Forty-nine below have existing coverage of their explicitly stated boundary.
 JSON-09 remains **additional test needed** for its all-field meaning matrix.
 DATA-01/05's earlier optional execution gaps were filled by the separate declared
 uv overlay run below, not by retroactively changing skipped receipts. Existing
@@ -109,6 +110,10 @@ PLOT-11/12 add18 distinct current passed Python nodes, giving797 recorded unique
 passed nodes. One required actual Chromium drag case executed with0 skips; two
 native-default property probes are separate assertions, not pytest cases.
 
+PLOT-05/09/10 add37 distinct current passed regression nodes, giving834 recorded
+unique passed Python nodes. Separate current shared/named/log and raw-overlay
+assert probes produce numeric reference tables; they are not more pytest cases.
+
 | ID | Classification | Selected execution | Reviewed boundary |
 | --- | --- | --- | --- |
 | STATE-01 | Existing coverage | 3 passed | Nested reducer input/action isolation on success and two failures |
@@ -153,9 +158,12 @@ native-default property probes are separate assertions, not pytest cases.
 | PLOT-02 | Existing coverage | 2 current oracle passed | Category positions/ticks across permuted raw line/scatter/bar inputs |
 | PLOT-03 | Existing coverage | 1 current oracle passed | Explicit ordered-hue style reservation across sparse/reversed panels |
 | PLOT-04 | Existing coverage | 1 current oracle passed | Primary/y2 log artist ownership/limits/labels/annotation/combined legend |
+| PLOT-05 | Existing coverage | 5 regressions + separate current axis table | 2D subset/shared/named/empty/y2 independence and declared mode/limit conflicts |
 | PLOT-06 | Existing coverage | 5 current oracle passed | Asymmetric2x3 heatmap/mesh/contour native XY/value orientation |
 | PLOT-07 | Existing coverage | 6 current oracle passed | Quiver unequal-unit tip/3DXYZ/polar radians and invalid projection rejection |
 | PLOT-08 | Existing coverage | 6 current oracle passed | Independent norm-mask-colorbar/RGBA mapping and scalar missing/constant domains |
+| PLOT-09 | Existing coverage | 18 regressions + separate current raw-overlay oracle | Dodged signed bars/absolute-asymmetric errors/sparse categories/manual stack/band paths |
+| PLOT-10 | Existing coverage | 14 regressions + separate current log oracle | Legacy clip vs typed interval reject and masked logarithmic colour domains |
 | PLOT-11 | Existing coverage | 5 frame/transform + 1 actual Python browser passed | Existing data/axes/figure spaces and selected y2 inverted-log drag/history |
 | PLOT-12 | Existing coverage | 12 alpha passed; separate2 native-property probes | Explicit text+arrow opacity/alpha0 pixels/defaultRGBA/native z-order-clip, not arbitrary new options |
 
@@ -1022,6 +1030,50 @@ call order does not expose a new arbitrary zorder/clip_on API. These are propert
 comparisons, not pixel occlusion/clip-path geometry certification for every overlap,
 backend or viewer, and not extra pytest cases.
 
+## PLOT-05/09/10 — current axis/overlay/log references
+
+Implementation: `_render._link_shared_axes`, `_link_named_axes`,
+`validate._check_shared_category_scales`, `validate`; `_check_uncertainty`,
+`_draw_series_layer`, `_check_statistical_scales`, `_draw_stat_ranges`,
+`_heatmap_render.colour_norm`, `_heatmap.heatmap_issues`.
+
+Fresh37 regression cases are expanded by exact node in the linked artifact:
+
+- PLOT-05: `test_mixed_2d_3d_figure_still_shares_2d_axes_after_layout_change`,
+  `test_secondary_yaxis_and_colorbar_render_cleanly_together`,
+  `test_shared_mixed_modes_string_primitives_and_native_secondary_rejected` (3).
+- PLOT-09: grouped SD dodge centers, absolute CI endpoints(bar/errorbar2), sparse
+  category/error alignment(2), negative/zero heights, zero intervals, misaligned
+  interval-column validation and nonnegative/finite x/y error regression variants.
+- PLOT-10: unchanged raw-log mean/typed invalid bounds, nonnumeric/nonpositive
+  native category levels, inverse/baseline overflow, masked-zero LogNorm annotations,
+  four finite constant colour ranges, colour-vs-cell-axis norm and nonrepresentable
+  colour span preserving previous output. These are defined acceptance/reject/mask
+  policies, not one rule for every log input or field.
+
+**Separate current assert probes:** the earlier axis probe source hash was verified,
+read and copied byte-for-byte into a new owned temporary directory, then executed
+on current source. Its9 shared/named/empty/y2 axis rows,3 declaration conflicts
+and8 log cases are newly asserted, not historical table numbers copied as passes.
+Column0/2 and1/3 share ticks/limits, inverted explicit200→2 affects only that column,
+labels/independent y/y2log remain separate; named0/3 excludes other panels and
+conflicting declared scales/limits/mixed sharing modes reject.
+
+The earlier overlay source was hash-verified/read, but only its raw geometry prefix
+was copied into a new owned probe; historical alpha-helper exec/golden simulation
+was excluded. Current negative/zero bars, sparse hue dodge/hatches and asymmetric
+CI match source rows; horizontal/vertical errors keep directions. Signed stack
+boundaries assert0→[1,2,3]→[5,1,5]→[3,4,6]. Duplicate/unsorted band lower/upper
+vertices preserve supplied input edge order. Figures close and fresh reference
+JSON/log/script hashes are recorded separately, not as new pytest test counts.
+
+Legacy log values remain in the source and native clipping remains native; typed
+nonpositive derived intervals reject rather than clip into a fake estimate.
+Typed LogNorm accepts explicitly masked zero while cell axes stay linear; constant/
+wide finite domains and out-of-range colour mapping have their stated policy.
+These probes/regressions are not a fresh huge-constant RGB/minimum-backend run,
+all viewer/extreme norm guarantee, new clip/zorder API or global resource bound.
+
 ## Reproduction and next coverage boundary
 
 ```sh
@@ -1166,6 +1218,6 @@ The public artifacts contain synthetic fixtures/test names and hashes, not raw
 logs, secrets or user-local absolute paths. Private raw receipts are not a durable
 web download. Recheck symbol/source fingerprints after implementation changes.
 
-The remaining103 IDs still need their own reviewed symbol/node/provenance links
+The remaining100 IDs still need their own reviewed symbol/node/provenance links
 and classification. Do not infer missing coverage
 from their omission here or infer completion from a test filename/collection/pass.
