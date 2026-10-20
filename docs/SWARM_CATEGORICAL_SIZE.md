@@ -35,7 +35,8 @@ URLs/citations. Colour groups stay observed-only and pack jointly when not dodge
 Legend=False removes size guides, not mapping. Existing clipping/midpoint behavior
 for numeric size is unchanged; numeric size_norm is invalid for categorical size.
 
-Single primary Cartesian layers only: semantic hue/style, dates, y2, facet/dropna,
+Primary Cartesian layers support [facets/selected empty frames](SWARM_FACETS.md).
+Semantic hue/style, dates, y2,
 cross-family shared scales and simultaneous scalar marker_size remain rejected.
 [Swarm-only named sizes](SWARM_SHARED_SIZE.md) can share pooled category ranks.
 The2,000-usable-row limit applies after explicit row selection. Nonrepresentable

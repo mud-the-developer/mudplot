@@ -18,6 +18,23 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 91차 — Swarmfacet/선택빈cell frame계약
+
+- 명시filter/dropna의Swarm빈cohort만허용하고plainempty는계속거절합니다. 검증의마지막usable조건만
+  Swarm선택범위에서분리하며옵션/열/native-log/width-dodge/선언area 검사는생략하지않습니다. 빈renderer는
+  알려진categoryframe/예약색slot만유지하고collection/관측guide를추가하지않습니다.
+- All-reservedsemanticdomain은empty정규화를계산하지않고빈첫layer가뒤populatednamedguide를소비하지않습니다.
+  원본rowpool/로컬관측·URL·packing/JSON/actions와facet의cell/layer상한·실패원자성을보존하며SetData로빈cell을
+  채웠다다비워도filters/panels/source는유지합니다. 다른distributionfamily의empty검증은변경하지않았습니다.
+- 새29/관련1098P경고1/floor196P3397deselected1282경고(1281Pyparsing+기존invalidsetter1)/CLI3/
+  Rust22P6ignored/품질11명령/전체WindowsnativeHTTP+실제browser9case0/activechangedLSP13clean,
+  [검증](review_evidence/swarm_facets_verification.json)을남깁니다. 시작14F8P의constructor제한을기능확장으로
+  해결했고기존미지원회귀는invalid-column/설정거절로정밀화했습니다. 새PNG는열어frame/guide를확인했으나
+  독립사람AT인증이나새live-template mapper/전용editorcontrol완료는아닙니다.
+- 정확한5afe280CI39452186380의5job모두성공은이전named-size범위이고새facetruntime은게시뒤새전체CI를받습니다.
+  새model/action/specfield·의존성/버전없이원대장139PASS/6RUNNING/4OPEN/1DEFERRED·남은v1.1/releasegate/
+  tag/publish경계는유지합니다. Loop8은완료를이유로삭제/pause하지않습니다.
+
 ## 90차 — NamedSwarm-only shared size domain
 
 - 기존scale_id/typed설정signature/원본rowunion을재사용해Swarm의전용distribution_rows선택만pool합니다.

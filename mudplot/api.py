@@ -377,6 +377,7 @@ class Plot:
         Numeric dodge is the hue span (None auto, 0 packs hues together).
         Overcrowding retains all rows and warns, not a fake jitter approximation.
         Optional semantics maps local or Swarm-only named numeric/categorical sizes.
+        Explicit facet selections preserve empty frames without inventing observations.
         """
         config = None
         if semantics is not None:

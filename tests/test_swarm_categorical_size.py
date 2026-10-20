@@ -287,5 +287,5 @@ def test_categorical_mapping_rejects_facet_bad_scale_and_style():
     )
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history

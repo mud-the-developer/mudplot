@@ -1656,6 +1656,14 @@ def _draw_swarm_layer(
 
     rows = distribution_rows(columns, layer)
     categories, groups = distribution_levels(columns, layer, rows)
+    if not rows:
+        if not layer.color:
+            for _ in groups:
+                next(color_iter)
+        if categories:
+            positions, spacing, labels = _category_geometry(ax, categories, layer)
+            _finish_category_axis(ax, positions, spacing, labels, layer)
+        return
     horizontal = layer.orient == "h"
     positions, spacing, labels = _category_geometry(ax, categories, layer)
     width = (0.8 if layer.width is None else layer.width) * spacing
@@ -2514,7 +2522,14 @@ def _draw_panel(ax, spec: FigureSpec, panel: PanelSpec, *, domains=None):
             scale_id = layer.semantics.scale_id
             guide_key = (scale_id, layer.type)
             show_guides = scale_id is None or guide_key not in shown_scales
-            if scale_id is not None and layer.semantics.legend:
+            if (
+                scale_id is not None
+                and layer.semantics.legend
+                and (
+                    layer.type != "swarmplot"
+                    or distribution_rows(spec.data.columns, layer)
+                )
+            ):
                 shown_scales.add(guide_key)
             if layer.type == "swarmplot":
                 _draw_swarm_layer(

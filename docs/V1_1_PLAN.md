@@ -51,8 +51,10 @@ is authorized by this tracker.
   selected source rows, reserved size slots and observed-only guides.
 - [x] **B2b11 — Named Swarm size domains:** pooled original-row sizes/guides,
   local observations/colours, duplicate-guide suppression and pure pooled limits.
+- [x] **B2b12 — Swarm selected facets/empty frames:** original-row size domains,
+  frame-only reserved cells/all-empty semantic grids and stable SetData filters.
 - [ ] **B2b — Categorical remainder:** broader component/semantic mappings and
-  swarm style/date/mixed-family shared/facet semantics.
+  swarm style/date/mixed-family sharing and wider live-grid controls.
 - [x] **B3a — ECDF subset:** finite weighted empirical steps, tie/right-limit
   semantics, strict complements, per-curve proportion/percent/count, grouped
   color/dash slots, v/h/log observations and typed pure/JSON/editor contracts.
@@ -148,6 +150,21 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**Swarm facets and selected empty frames.** Existing explicit filters/dropna and
+facet materialization pool original selected size rows; empty cells add no
+collection/observed guides, known category slots remain, all-reserved domains
+avoid normalization. Plain unfiltered empty layers still reject; bad empty-cell
+options/columns/scales/declared area remain validated. First empty layer does not
+consume later size guide. SetData fills/empties cells without filter/source writes.
+29new/1098related/floor196P3397deselected/CLI3/Rust22P6ignored/11checks/full Windows
+nativeHTTP+browser9cases0/LSP13clean; main1/floor1282warnings retained.
+[Scope](SWARM_FACETS.md), new PNG/spec and
+[evidence](review_evidence/swarm_facets_verification.json).
+Exact5afeCI39452186380 ALL5SUCCESS is named-size baseline, not new facet runtime.
+Publish for fresh wholeCI; no new fields/deps/versions; Loop8 active.
+
+### Earlier review phase 90
 
 **Swarm-only named shared sizes.** Existing scale_id pools deduplicated original
 source rows for numeric bounds/categorical ranks and per-panel size guides only.

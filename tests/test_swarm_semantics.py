@@ -229,17 +229,17 @@ def test_scalar_override_and_nonrepresentable_areas_preserve_existing_output(
     assert path.read_bytes() == b"previous"
 
 
-def test_facet_and_panel_dropna_are_explicitly_rejected_without_plot_mutation():
+def test_invalid_facet_and_dropna_columns_preserve_plot_state():
     p = mp.plot(
         {"cat": ["A", "A"], "value": [1, 2], "mass": [0, 10], "g": ["u", "v"]}
     ).swarmplot("cat", "value", semantics={"size": "mass"})
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history
     spec = p.spec
-    spec.panels[0].dropna = ["mass"]
-    assert any("not supported" in issue for issue in mp.validate(spec))
+    spec.panels[0].dropna = ["missing"]
+    assert any("does not exist" in issue for issue in mp.validate(spec))
 
 
 def test_selected_group_links_stay_on_observations_not_numeric_guides():

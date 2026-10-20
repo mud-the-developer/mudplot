@@ -185,15 +185,19 @@ def swarm_size_issues(columns, layer, panel):
         issues.append("swarm semantics requires one size column")
     if layer.marker_size is not None:
         issues.append("scalar marker_size is not supported with mapped swarm size")
-    if panel.filters or panel.dropna:
-        issues.append("swarm size facet/dropna mappings are not supported")
+    if any(d > 0 and d * d == 0 for d in config.sizes):
+        issues.append("positive semantic marker area is not representable")
     if issues:
         return issues
     if config.size not in columns:
         return ["swarm size column is missing"]
     rows = distribution_rows(columns, layer)
     if not rows:
-        return ["swarm size mapping has no usable observations"]
+        return (
+            []
+            if panel.filters or panel.dropna
+            else ["swarm size mapping has no usable observations"]
+        )
     values = [columns[config.size][row] for row in rows]
     if config.size_kind == "numeric":
         if any(not finite_number(value) for value in values):

@@ -13,6 +13,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added Swarm facet/filter selection with pooled size domains and frame-only
+  reserved empty cells, including fully empty semantic grids and stable SetData
+  filters. Keep plain empty layers invalid and all option/column/geometry guards;
+  empty first layers no longer consume later populated size guides.
 - Added Swarm-only named size domains across unfiltered layers, with pooled
   original-row numeric/categorical scales, per-panel guide deduplication and pure
   pooled limits. Keep observations/legacy colours local and reject mixed-family

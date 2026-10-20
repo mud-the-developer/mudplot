@@ -431,7 +431,7 @@ def shared_scale_issues(spec):
             if domain["family"] == "swarm":
                 continue
         config = domain["config"]
-        if domain["family"] == "swarm":
+        if domain["family"] == "swarm" and domain["rows"]:
             try:
                 swarm_size_mapping(domain["columns"], config, domain["rows"])
             except (ValueError, OverflowError) as exc:

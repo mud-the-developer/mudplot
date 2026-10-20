@@ -27,8 +27,9 @@ Scale_id/legend외semantic설정은동일해야하며충돌은실패합니다. S
 섞으면거절하고기존scatter/line/이름없는Swarmlocal경로는유지합니다. Layer유효행2000/독립pooled고유행10000/
 최대64명확한categoricallevel을artist전에검사하고pooledarea underflow도순수검증해기존출력파일을보호합니다.
 
-필터없고비어있지않은primaryCartesianSwarmlayer만지원합니다. Facet/paneldropna/빈cell/y2/
-semantic-hue-style-date/scalar marker_size동시지정은계속거절합니다. 수동panel과서로다른로컬cohort는가능하며
+PrimaryCartesianSwarm은명시facet/filter/dropna선택을지원하고[선택된빈cell](SWARM_FACETS.ko.md)은
+관측/guide없는frame입니다. 일반unfilteredemptylayer는거절하며y2/semantic-hue-style-date/mixed-familydomain/
+scalar marker_size동시지정도계속거절합니다. 수동panel과서로다른로컬cohort는가능하며
 새model/action/specfield/의존성/버전은없습니다. 양editorrawJSON은보존하지만전용UIcontrol완료는아닙니다.
 
 성공Figure는호출자가close하고합성예제는독립사람가독성/AT인증이아닙니다. 행상한은전체CPU/RAM/sandbox

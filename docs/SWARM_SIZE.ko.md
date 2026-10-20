@@ -31,7 +31,8 @@ Legacygroup색guide는panellegend설정으로제어하고대표지름은중간�
 
 최종DPI/layout/scale의실제반지름·stroke·gutter로packing하고기존orientation/dodge/nativecategory를
 유지합니다. 양수지름의면적underflow는artist전에거절합니다. Shape/semantic-hue-style/
-facet-dropna/cross-familysharedscale/date/y2지원은아니며scalar marker_size와mappedsize동시지정도거절합니다.
+cross-familysharedscale/date/y2지원은아니며scalar marker_size와mappedsize동시지정도거절합니다.
+[Facet/선택빈frame](SWARM_FACETS.ko.md)은선택원본행의size공유domain을사용합니다.
 [Categorical size/order](SWARM_CATEGORICAL_SIZE.ko.md)는별도opt-in범위입니다.
 Semantics=None의legacy경로는유지하고새model/action/specfield/의존성은없습니다. 양editor는rawJSON을
 보존하지만전용sizecontrol완료를주장하지않습니다. 성공Figure는호출자가close해야합니다.

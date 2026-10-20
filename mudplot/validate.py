@@ -671,7 +671,9 @@ def _check_ecdf_layer(cols, layer, panel, where, issues) -> None:
                 break
 
 
-def _check_distribution_layer(cols, layer, where: str, issues: list[str]) -> None:
+def _check_distribution_layer(
+    cols, layer, where: str, issues: list[str], *, allow_empty: bool = False
+) -> None:
     category, value, hue = distribution_columns(layer)
     if layer.orient not in ("v", "h"):
         issues.append(f"{where}: orient must be 'v' or 'h'")
@@ -780,7 +782,7 @@ def _check_distribution_layer(cols, layer, where: str, issues: list[str]) -> Non
     ):
         issues.append(f"{where}: observations must be finite numbers or missing")
         valid_columns = False
-    if valid_columns and not distribution_rows(cols, layer):
+    if valid_columns and not allow_empty and not distribution_rows(cols, layer):
         issues.append(f"{where}: no usable observations after dropping missing rows")
 
 
@@ -870,10 +872,11 @@ def _check_distribution_scales(cols, layer, panel, where, issues):
         if layer.order is not None and not isinstance(layer.order, (list, tuple)):
             return
         levels = layer.order if layer.order is not None else list(dict.fromkeys(values))
-        try:
-            native_category_geometry(levels, cat_axis.scale)
-        except ValueError as exc:
-            issues.append(f"{where}: {exc}")
+        if levels or layer.type != "swarmplot" or not (panel.filters or panel.dropna):
+            try:
+                native_category_geometry(levels, cat_axis.scale)
+            except ValueError as exc:
+                issues.append(f"{where}: {exc}")
         width = 0.8 if layer.width is None else layer.width
         if not _finite(width) or not 0 < width <= 1:
             issues.append(f"{where}: native width must be in (0,1]")
@@ -2058,7 +2061,13 @@ def validate(spec: FigureSpec) -> list[str]:
                 _check_ecdf_layer(cols, layer, panel, where, issues)
 
             if layer.type == "swarmplot":
-                _check_distribution_layer(cols, layer, where, issues)
+                _check_distribution_layer(
+                    cols,
+                    layer,
+                    where,
+                    issues,
+                    allow_empty=bool(panel.filters or panel.dropna),
+                )
                 issues.extend(
                     f"{where}: {issue}"
                     for issue in swarm_size_issues(cols, layer, panel)

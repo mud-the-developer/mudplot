@@ -32,6 +32,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- Swarm facets/selected empty frames:29new/1098related/floor196P/CLI3/full native
+  HTTP+browser pass. Empty frames add no data/guides, share original size domains;
+  plain empty still invalid and SetData/filter/option boundaries remain. Exact5afe
+  CI ALL5P is prior named-size proof; this runtime needs fresh CI. Warnings retained.
 - Named Swarm-only sizes:18new/1069related/floor167P/CLI2/full nativeHTTP+browser
   pass; original-row pooling/limits share sizes/guides only, local colours/rows keep.
   Mixed-family/facet/empty/style/date remain rejected. Exactee876CI ALL5P is prior

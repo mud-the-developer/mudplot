@@ -47,7 +47,7 @@ argument in every upstream signature.
 | `ecdfplot` | Partial: right-continuous weighted/tied ECDF, strict complement, per-curve proportion/percent/count, group/order/dash, v/h and positive observation logs | Continuous hue/size/style/date, y2/2-D and arbitrary kwargs; finite observed support only |
 | `rugplot` | Partial: x-axis `rug` | y-axis marks, height/orientation and semantic controls |
 | `stripplot` | Partial: deterministic x jitter and grouping | Nested categories/hue dodge, order/native scale, orientation and more jitter controls |
-| `swarmplot` | Partial: circular display-space packing on every draw; order/hue/dodge/orientation, layout/DPI/positive log values, native numeric/log categories; numeric/categorical size mapping/guides; retain/report overcrowding | Style/date/mixed-family shared/facet semantics, arbitrary markers and cross-layer collisions; limit 2000 usable rows/layer |
+| `swarmplot` | Partial: circular display-space packing on every draw; order/hue/dodge/orientation, layout/DPI/positive log values, native numeric/log categories; numeric/categorical size mapping/guides; retain/report overcrowding | Style/date/mixed-family shared semantics, live-grid controls, arbitrary markers and cross-layer collisions; limit 2000 usable rows/layer |
 | `boxplot` | Partial: category × hue/geometry/native log, IQR/percentile whiskers/notches, mean/fliers, independently typed body/whisker/cap/median/mean/flier styles and explicit data/axis statistics | Precomputed bxp, bootstrap median CI, cap geometry and arbitrary/per-hue kwargs |
 | `violinplot` | Partial: category × hue/native log, weighted relative Gaussian/inverse-ECDF marks/mass widths, bandwidth/grid/support, four inner modes/None, two-hue split, width/area/count and explicit data/axis fit | Callable KDE, arbitrary-hue split/inner kwargs and wider size/style mappings; weighted step quantiles differ from old linear quantiles |
 | `boxenplot` | Partial: per-cell letter values/depths/widths, category/hue/native log, independently typed body/median/flier styles and explicit data/axis quantiles | Weights, arbitrary/per-band/per-hue component kwargs and wider mappings; named depths capped at 32 |
@@ -315,8 +315,10 @@ arbitrary shape, style/date mappings and y2 remain unsupported.
 
 Opt-in `semantics={"size": "mass"}` adds one numeric size role with a selected
 layer-local domain and honest diameter guides. Missing size joins the same
-category/value/hue cohort; norms clip rather than filter. Facet/dropna/mixed-family
-scales and semantic hue/style are rejected. [Exact scope](SWARM_SIZE.md).
+category/value/hue cohort; norms clip rather than filter. Mixed-family scales and
+semantic hue/style are rejected. [Exact scope](SWARM_SIZE.md).
+Explicit Swarm facets/filter/dropna keep original-row size domains and reserve
+empty cells as frames without points/observed guides. [Scope](SWARM_FACETS.md).
 Swarm-only named sizes pool deduplicated original rows, not observations/colours;
 guides share the size domain once per panel. [Shared scope](SWARM_SHARED_SIZE.md).
 Categorical size uses stable observed/explicit level ranks, with size_order row

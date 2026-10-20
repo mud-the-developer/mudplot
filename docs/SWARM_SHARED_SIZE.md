@@ -34,9 +34,11 @@ Per-layer2,000 usable rows, independent pooled10,000 unique rows and64 unambiguo
 categorical levels are validated before artists. Pooled area underflow is checked
 by pure validation, preserving an existing output on failure.
 
-Only unfiltered nonempty primary Cartesian Swarm layers are supported here.
-Facet/panel dropna, empty cells, y2, semantic hue/style/date and scalar marker_size
-overrides remain rejected. Manual panels and different local cohorts are valid.
+Primary Cartesian Swarm supports explicit facet/filter/dropna selection.
+[Selected empty cells](SWARM_FACETS.md) are frames without observations/guides;
+unfiltered plain empty layers still reject. Manual panels and different local
+cohorts are valid. y2, semantic hue/style/date, mixed-family domains and scalar
+marker_size overrides remain rejected.
 No new model/action/spec fields, dependencies or versions are needed. Raw semantic
 JSON survives both editors; dedicated UI controls are not claimed.
 

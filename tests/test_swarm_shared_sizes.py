@@ -338,12 +338,12 @@ def test_pooled_positive_area_underflow_is_rejected_by_pure_validation():
     assert any("representable" in issue for issue in mp.validate(p.spec))
 
 
-def test_shared_size_does_not_enable_facets_or_dropna_by_accident():
+def test_shared_size_does_not_allow_invalid_facet_or_dropna_columns():
     p = _numeric()
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history
     spec = p.spec
-    spec.panels[0].dropna = ["mass"]
-    assert any("not supported" in issue for issue in mp.validate(spec))
+    spec.panels[0].dropna = ["missing"]
+    assert any("does not exist" in issue for issue in mp.validate(spec))
