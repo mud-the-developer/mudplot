@@ -1,0 +1,148 @@
+{
+  "source_sha256": {
+    "tests/test_editor_browser.py": "6d8c49553372eb60c50039849457ecba4bbdd311c34177067b7e7753f528f505",
+    "tests/test_review_editor_recovery_browser.py": "d765d5fc8aeb1088f214004575b9d1b42271584bdb65ec27fc943b605eec315e"
+  },
+  "baseline": {
+    "run": 39377685379,
+    "head": "071eb6fdbd01c0421e38b6ec0cbc4af3f70c89f3",
+    "minimum_and_rust_both_os": "success",
+    "python310": "1failed4150passed46skipped25warnings;recoveryfileBtextarea30stimeout",
+    "python312": "cancelled;notpass",
+    "required3": "allpassedbutstrictgatecorrectlyrejectedoverallfailure"
+  },
+  "investigation": "Unchangednormalrecoveryinstrumentation10passes,notrootfixproof. ObservednetworkidlehelpernotwaitingHTMXlifecycle. Controlled200msswap/100mssettledelayreproducedserver-new-document/DOM-old-errorrace. ExactCIfileBtimeoutnotcapturedlocally,buttheprovenstale-DOMclassisconsistent;do notclaimproductionfile-loadingregressionfixed.",
+  "fix": "Testhelperkeepsnetworkidlethenwaitsno .htmx-request/.htmx-swapping/.htmx-settling.Defaulttimeouts/assertionsunchanged,no sleeps/retriesadded. Recoverytestnormal0/20anddelayed200/100retainALLatomicity/history/PNG/SVG/source/downloadassertions.No app/runtime/schema/dependency/versionchanges.",
+  "regression_before": {
+    "passed": 1,
+    "failed": 1,
+    "skipped": 0
+  },
+  "regression_after": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_py312": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_py310_final": {
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0
+  },
+  "first_py310": {
+    "results": {
+      "passed": 41,
+      "failed": 1,
+      "skipped": 0
+    },
+    "failure": "Robustimportspeccomparisonfailedonce.Notclaimedresolved:expectedatfailureuncaptured;freshsame-envrebuiltspecdiff[]/isolated1P/core32P/finalfull42P.No floatcomparisonorconditionweakened."
+  },
+  "browser_py310_isolated": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0
+  },
+  "browser_py310_core": {
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0
+  },
+  "qa_observed": "Ruff274/format/globalLinuxWindowsPyright/schema-cap-reference-gallery/cargofmt/wheel0;cargo22P6ignored. ChangedtestsLSPactiveprobe separate. NewLinuxCIneeded;WindowsPy3.10envmatcheslockedNumPy2.2.6/MPL3.10.9/Playwright1.63/Pytest9.1.1withoutchangingmain.venv.",
+  "normal_instrumented_runs": [
+    {
+      "iteration": 1,
+      "passed": true,
+      "seconds": 7.51600000000326,
+      "error": null
+    },
+    {
+      "iteration": 2,
+      "passed": true,
+      "seconds": 6.811999999976251,
+      "error": null
+    },
+    {
+      "iteration": 3,
+      "passed": true,
+      "seconds": 7.703000000037719,
+      "error": null
+    },
+    {
+      "iteration": 4,
+      "passed": true,
+      "seconds": 7.875,
+      "error": null
+    },
+    {
+      "iteration": 5,
+      "passed": true,
+      "seconds": 6.39100000000326,
+      "error": null
+    },
+    {
+      "iteration": 6,
+      "passed": true,
+      "seconds": 6.296999999962281,
+      "error": null
+    },
+    {
+      "iteration": 7,
+      "passed": true,
+      "seconds": 6.312000000034459,
+      "error": null
+    },
+    {
+      "iteration": 8,
+      "passed": true,
+      "seconds": 6.2189999999827705,
+      "error": null
+    },
+    {
+      "iteration": 9,
+      "passed": true,
+      "seconds": 6.4060000000172295,
+      "error": null
+    },
+    {
+      "iteration": 10,
+      "passed": true,
+      "seconds": 6.937999999965541,
+      "error": null
+    }
+  ],
+  "controlled_delay_run": [
+    {
+      "iteration": 1,
+      "passed": false,
+      "seconds": 5.514999999955762,
+      "error": "Traceback (most recent call last):\n  File \"C:\\Users\\mud\\AppData\\Local\\Temp\\mudplot-ci-py310-review-ajxz89mp\\probe_delayed.py\", line 29, in <module>\n    with pytest.MonkeyPatch.context() as mp:scenario(Watched(),mp,folder)\n                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\mud\\Desktop\\repo\\mudplot\\tests\\test_review_editor_recovery_browser.py\", line 132, in test_file_failures_and_vector_export_failures_preserve_state_then_recover\n    assert page.locator(\".error\").count() == 0\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+    }
+  ],
+  "raw_sha256": {
+    "python310.log": "bf3ed9feac3d310576edaa54430e0256d1392b8926a04eb0ab4f3e2e393463f7",
+    "probe.py": "ea2ce9e8df6b7d8e2a161150d8de7365f058c9968b0475f9a89008c1e4ff0f41",
+    "probe_delayed.py": "013cb29f97f8e86f5c2ae14e145c540de517edae88f1b571f0c70bb5bb599254",
+    "probe-results.json": "252c68571270cb244c6394ad08016458b99127ac8f9af39accf28c7af4b9c896",
+    "delayed-swap/probe-results.json": "5b31c4426103dbcb47e616958f21e430fdbcf5117799743e2ccb9fb20fdeb4dd",
+    "delayed-swap/iteration-1/events.json": "3b187b3683ee1d7cc28e1507dd1b997fcb41960811ed41d277cdb7f8461fc72f",
+    "delayed-swap/iteration-1/trace.zip": "d2ad516106b913d4d78677ada96debe4a33899a27d9b4f0375e049709dd63dde",
+    "before-test_editor_browser.py": "2b865e8edbce7588e2d5b4eeb0932631c84c55adb681dffbbd6481c6afc18691",
+    "before-test_review_editor_recovery_browser.py": "4a45a924e287e4252fb69d1eb06c0bb4bf870b83c0c67a5664600c010bfac511",
+    "delayed-before.xml": "89376914ea15d559e4b5a5ee08f0a73c330c6f6d7d634bb664e1e113a433ef5b",
+    "delayed-after.xml": "1ca4bd82760464ccaa486a58688a895fa2a25d306b78acb49a56baf3072ec387",
+    "browser-connected.log": "4dfc68e3b11de6934e87ee973599ad26209634ff0ebcfe25780f785a042958f8",
+    "browser-connected.xml": "99e9fcc78963a82ca1fe722f9dd630e23b8022ec095036291ee7acd1249155be",
+    "first-browser-py310.log": "8e0d8676369ca4fc47e47c129cf0e6a9e1c3469c9ffb1e9f0f584a4221bb295f",
+    "first-browser-py310.xml": "f3a30c2be87299af7b70872973b6eb1fd5a96ea5a72d4f91ae2e221bc8043244",
+    "browser-py310.log": "1b2a2ae37fe9c9cc03caa9e65dbcd0f1944bdf5129460a43090a96f90246663c",
+    "browser-py310.xml": "1df125421e48f18fbfb44789d8fc787e06f268885b0cdc87186bc453e6116c7b",
+    "robust-diff.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "probe_regression.py": "a20393d0fd24a08ab72f2120dc7079ac1660bc842588d2daa37c03059ba68673",
+    "robust-py310-isolated.xml": "c61ec35eb6e78ad6da0d77d49f2156ef56eb7888e8ed281f892fc23b249bec66",
+    "browser-core-py310-observed.xml": "2340559ee629100a4c6bd66313ea6c4f3cd4215b32074dafd6e9ebdffb4bf7ea"
+  }
+}

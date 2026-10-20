@@ -134,6 +134,16 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
 
+**Browser대기후속.** 기준071CI39377685379의minimum/양nativeOS는통과했지만Python3.10복구검사가
+시간초과했고3.12는cancel이었습니다. 일반probe10P를해결증명으로쓰지않고200msswap/100mssettle조건으로
+서버상태는앞섰지만DOM이오래된race를재현했습니다. Networkidle을유지한뒤HTMXrequest/swapping/settling
+class가사라지길기다리며기존recoveryassertion/timeout값은유지합니다. 일반+지연검사는1P1F→2P,
+공통helper를쓰는8browser파일42P를기존3.12와별도locked3.10에서확인했습니다. 최초3.10robust비교1F는
+보존하고후속단독/core/fullP를그원인수정으로주장하지않습니다.
+[근거](review_evidence/browser_htmx_settle_verification.json). App/schema/의존성변경없이새Linux/전체CI를받습니다.
+
+### 이전 리뷰81차
+
 **Native smoke격리수정.** 추가recent-layer검사를fresh-start history경계검사앞에넣어Rust의undo가능한
 open기록이남았습니다. Spec/PNG복구만으로history가비워지지않아기준6dCI39280267725의Windows와
 Python3.12nativebrowser단계가같은assert로실패했습니다(4151P/46skippytest는통과). 실패를재현한뒤

@@ -78,14 +78,11 @@ def _spec(url: str) -> dict:
 
 
 def _settle(page):
-    """Wait until no editor request is in flight.
-
-    Every action re-renders the whole app body, so a control clicked while
-    an earlier swap is still on the wire belongs to a DOM that is about to
-    be replaced. A user doesn't hit that (they wait for the screen), but a
-    test driving clicks back to back does.
-    """
+    """Wait for network and HTMX DOM changes before resolving the next control."""
     page.wait_for_load_state("networkidle")
+    page.wait_for_function(
+        "() => !document.querySelector('.htmx-request, .htmx-swapping, .htmx-settling')"
+    )
 
 
 def _wait_until(read, ok, timeout: float = 10.0):

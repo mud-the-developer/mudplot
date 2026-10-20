@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- Browser대기는networkidle뒤HTMXrequest/swap/settle완료도기다립니다. 제어된지연DOM복구는수정전실패/
+  수정후통과이고helper사용8module42P를3.12/별도3.10에서확인했습니다. 별도robust비교최초실패는보존하며
+  제품/timeout완화는없고새CI는필요합니다.
 - Native smoke순서를수정했습니다. Rustopen은undo가능하므로recent-layer검사전에fresh-history경계를
   검사해야합니다. 기준6dWindows/Py3.12native실패를재현하고assertion유지한채전체로컬nativeHTTP/
   브라우저0·연결118P/Rust22P6ignored/품질10검사를확인했습니다. 새CI가필요하며과거fullsuite를소급하지않습니다.

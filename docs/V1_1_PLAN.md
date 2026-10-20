@@ -139,6 +139,19 @@ stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
 
+**Browser settlement follow-up.** Baseline071CI39377685379 passed minimum and both
+native OS jobs; Python3.10 recovery timed out and3.12was cancelled. Normal probe
+10P did not prove a fix. A controlled200ms-swap/100ms-settle reproduces stale DOM
+while server state has advanced; networkidle alone is not the HTMX lifecycle.
+Keep it, then wait for request/swapping/settling classes to disappear. Preserve all
+recovery assertions/timeouts; add normal+delayed cases. Before1P1F→after2P;
+all eight helper-importing browser files42P on main3.12 and isolated locked3.10.
+A first3.10robust-compare1F remains recorded/notclaimedfixed; later isolated/core/
+full checks pass. [Evidence](review_evidence/browser_htmx_settle_verification.json).
+No app/schema/dependency changes; current Linux/fullCI still required.
+
+### Earlier review phase 81
+
 **Native smoke isolation fix.** The added recent-layer scenario ran before the
 fresh-start history boundary test; Rust open is undoable, so restoring spec/PNG
 alone left earlier history. Baseline6dCI39280267725failed the same assertion on

@@ -6,6 +6,7 @@ import threading
 
 import matplotlib.pyplot as plt
 import mudplot as mp
+import pytest
 from dashboard.editor_server import EditorSession, make_server
 from mudplot import _render as renderer
 
@@ -14,8 +15,11 @@ from test_editor_browser import _settle, _wait_until
 pytest_plugins = ["test_editor_browser"]
 
 
+@pytest.mark.parametrize(
+    "swap_delay,settle_delay", [(0, 20), (200, 100)], ids=["normal", "delayed-dom"]
+)
 def test_file_failures_and_vector_export_failures_preserve_state_then_recover(
-    browser, monkeypatch, tmp_path
+    browser, monkeypatch, tmp_path, swap_delay, settle_delay
 ):
     first = (
         mp.plot({"x": [1, 2], "y": [2, 3]})
@@ -49,6 +53,12 @@ def test_file_failures_and_vector_export_failures_preserve_state_then_recover(
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     page = browser.new_page(viewport={"width": 1400, "height": 1000})
+    page.add_init_script(
+        "document.addEventListener('DOMContentLoaded', () => {"
+        f"window.htmx.config.defaultSwapDelay = {swap_delay};"
+        f"window.htmx.config.defaultSettleDelay = {settle_delay};"
+        "});"
+    )
     timeline = []
     errors = []
     page.on("pageerror", lambda error: errors.append(str(error)))

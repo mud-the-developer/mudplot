@@ -18,6 +18,22 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 82차 — HTMX의request/swap/settle을구분하는browser검증
+
+- 기준071CI39377685379는minimum·양Rustjob성공/Python3.10의복구fileBdraft대기1F4150P46skip25경고/
+  Python3.12cancel이었습니다. 이전에도간헐적이던실패를단순재시도로닫지않고FileReader/HTMX이벤트를관측했습니다.
+- 일반10회probe는통과했지만해결증명이아닙니다. 200msswap/100mssettle조건에서서버가새문서상태여도
+  DOM에이전오류가남는동기화race를제어재현했습니다. 실제CI의fileBtimeout과정확히같은타이밍을포착한것은
+  아니므로제품파일로딩수정으로확대하지않습니다. 공통_settle은networkidle을유지한채HTMXrequest/swapping/
+  settling완료도기다리고normal/delayedcase의기존원자성/소스/PNG/SVG/history/downloadassertion을유지합니다.
+- 수정전1P1F/수정후2P,helper를쓰는8browsermodule42P를기존3.12와별도locked3.10.22환경에서확인했습니다.
+  최초3.10묶음은41P1F(robustimport비교)였으며기대값당시포착은못했습니다. 저장실제값과새기대값차이[]/
+  단독1P/core32P/최종전체42P를그원인수정으로주장하지않습니다. 로그와trace를보존합니다.
+- global타입/Ruff274/schema/cargo22P6ignored/packaging·activeLSP2clean,
+  [전후검증](review_evidence/browser_htmx_settle_verification.json)을남기고제품/schema/의존성/버전/timeout값/
+  CIgate는변경하지않았습니다. 새Linux전체CI가필요하며원대장139PASS/6RUNNING/4OPEN/1DEFERRED와
+  나머지v1.1/releasegate/tag/publish/자동loop경계를유지합니다.
+
 ## 81차 — Native smoke의fresh-history전제복구
 
 - 기준6dCI39280267725는minimum성공/WindowsnativeHTTP실패/Python3.12nativebrowser실패/나머지cancel로
