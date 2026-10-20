@@ -45,8 +45,10 @@ is authorized by this tracker.
 - [x] **B2b8 — Weighted violin:** relative covariance/effective n, inverse weighted
   ECDF marks, count-mass widths, paired rows/native log geometry; 78 new tests,
   full 1923/minimum 1468 pass with real TeX and Rust 1.99/browser bridge.
-- [ ] **B2b — Categorical remainder:** broader component/semantic mappings
-  and swarm size/style/date semantics.
+- [x] **B2b9 — Numeric size-only swarm:** one selected layer-local cohort, stable
+  diameter mapping/non-data numeric guides, scalar legacy and physical packing preserved.
+- [ ] **B2b — Categorical remainder:** broader component/semantic mappings and
+  swarm categorical-size/style/date/shared/facet semantics.
 - [x] **B3a — ECDF subset:** finite weighted empirical steps, tie/right-limit
   semantics, strict complements, per-curve proportion/percent/count, grouped
   color/dash slots, v/h/log observations and typed pure/JSON/editor contracts.
@@ -142,6 +144,20 @@ completion requires its documented scope and tests, not merely a function name.
 stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. Operator-created
 Loop8 is active every5minutes; do not delete it or recreate other expired schedules.
+
+**Numeric size-only swarm.** Opt-in parsed SemanticSpec maps one numeric column
+across selected category/hue rows, listwise missing-size drops, one layer-local
+normalizer and exact empty-coordinate guides. Norms clip not filter; 2000 usable
+rows/source/JSON/action/URL alignment and scalar legacy retained. Reject facet/
+dropna/named scales/semantic hue-style/categorical size/date/y2/scalar override and
+unrepresentable positive areas. [Scope](SWARM_SIZE.md), real separate PNG/spec.
+31new/1018related/floor116P3397deselected/CLI2/Rust22P6ignored/11checks/full Windows
+nativeHTTP+browser6layer0/LSP11clean. Main1/floor834warnings(833Pyparsing+1native
+invalid setter) retained. [Evidence](review_evidence/swarm_numeric_size_verification.json).
+Exact3d51CI39421985154 ALL5SUCCESS validates prior native fix, not new public
+runtime. Publish for fresh wholeCI; no new fields/dependencies/versions. Loop8 active.
+
+### Earlier review phase 86
 
 **Native swarm resize calibration fix.** Returned artist size areas/linewidth
 arrays now pack with actual per-pair radii and per-point gutters. Retain mixed

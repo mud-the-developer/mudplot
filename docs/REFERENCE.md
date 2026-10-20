@@ -187,7 +187,7 @@ _Auto-generated from `mudplot.capabilities()` / `mudplot.json_schema()` — spec
 ### `swarmplot`
 
 - **required**: `x`, `y`
-- **optional**: `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
+- **optional**: `group`, `semantics`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
 
 ### `text`
 

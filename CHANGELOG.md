@@ -13,6 +13,10 @@ All notable changes to this project are documented here.
 
 ### Added
 
+- Added opt-in numeric size-only swarm semantics with one selected row cohort,
+  stable layer-local diameter mapping and matching non-data guides. Preserve
+  legacy group colours, source/JSON/actions and calibrated joint packing; reject
+  unsupported facet/shared/style/date mappings and ambiguous scalar overrides.
 - Added bounded single-band numeric interval plots with explicit start/duration,
   raw bottom/height, overlap/source preservation and linear primary-y2 routing.
   Reject nonpositive, overflowed or float-collapsed geometry before artists, with

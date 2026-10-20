@@ -356,6 +356,11 @@ mod tests {
                     .contains(&field.into())
             );
         }
+        assert!(
+            capabilities.layers["swarmplot"]
+                .optional
+                .contains(&"semantics".into())
+        );
         assert_eq!(capabilities.layers["lineplot"].required, ["x", "y"]);
         assert!(
             capabilities.layers["lineplot"]

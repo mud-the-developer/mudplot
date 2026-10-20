@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 사용자등록Loop8의5분반복이활성이며종료하거나다른만료loop를재생성하지않습니다.
   나머지remainder/gate는남아있습니다.
+- 새numeric size-only swarm은새31/관련1018/floor116P/CLI2/전체nativeHTTP·browser가맞고선택cohort/
+  area-guide/JSON-source와명시미지원shared/facet/style/date경계를보존합니다. 정확한3d51CI5job성공은
+  이전native보정이지새publicruntime전체증명이아니며게시뒤새CI를받고경고를보존합니다.
 - Native swarm배열크기편집은쌍별반지름/각점gutter로기존scalar기하를보존하며겹침을수정했습니다.
   새30/관련616/floor83P와의도적nativeinvalidsetter경고를기록하고공개size-semanticAPI는추가하지않았습니다.
   정확한24cdCI39415317017의5job이모두성공해대기b7350de를불변확인후게시하고새CI를받습니다.

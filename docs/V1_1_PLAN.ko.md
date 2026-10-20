@@ -44,8 +44,9 @@
 - [x] **B2b8 — 가중 violin:** 상대 공분산/effective n·역 가중 ECDF 표시·
   질량 폭·행 쌍/native log 도형. 새 테스트 78개와 실제 TeX, Rust1.99/브라우저
   bridge 검증, 전체1923/최소1468 통과.
-- [ ] **B2b — 범주형 나머지:** 추가 구성 요소·semantic·swarm
-  size/style/date 매핑 옵션.
+- [x] **B2b9 — Numeric size-only swarm:** 동일선택layercohort·stable지름매핑/비데이터guide,
+  legacy scalar/실제반지름packing보존.
+- [ ] **B2b — 범주형 나머지:** 추가구성요소·semantic과swarm categorical-size/style/date/shared/facet매핑.
 - [x] **B3a — ECDF 첫 범위:** 유한 가중 empirical step·반복값/오른쪽 극한,
   strict 보완형·곡선별 proportion/percent/count·그룹 색상/선 자리,
   v/h/log 관측 축·typed pure/JSON/editor 계약.
@@ -137,6 +138,17 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 **사용자목표는v1.1완성으로다시확장됐습니다.** 이전v1안정화전용scope를대체하며문서화한
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 사용자등록Loop8의5분반복이활성이며종료하거나다른만료schedule을자동재생성하지않습니다.
+
+**Numeric size-only swarm.** 파싱한SemanticSpec으로선택category/huerow의numeric열하나를매핑하고
+missing-size동일cohort/한layer정규화/관측좌표없는정확한guide를사용합니다. Norm은filter가아닌clipping,
+유효행2000/source/JSON/action/URL정렬/legacyscalar는보존하고facet/dropna/namedscale/semantic-hue-style/
+categoricalsize/date/y2/scalaroverride·양수면적표현불가는거절합니다. [범위](SWARM_SIZE.ko.md)와별도실제PNG/spec,
+새31/관련1018/floor116P3397deselected/CLI2/Rust22P6ignored/품질11명령/전체WindowsnativeHTTP·browser6layer0/
+LSP11clean입니다. 주환경경고1/floor834(833Pyparsing+nativeinvalidsetter1)를보존하고
+[근거](review_evidence/swarm_numeric_size_verification.json)를남깁니다. 정확한3d51CI39421985154의5job성공은
+이전native보정이지새publicruntime증명이아니므로게시뒤새전체CI를받습니다. 새필드/의존성/버전없이Loop8유지합니다.
+
+### 이전 리뷰86차
 
 **Native swarm크기보정.** 반환artist의size면적/linewidth배열을실제쌍반지름과각점gutter로배치합니다.
 Non-dodgedhue공동배치/source·raw값/uniformoffsetoracle/DPI/layout/log/반전/짧은배열순환/과밀보존·

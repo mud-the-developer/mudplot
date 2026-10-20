@@ -32,6 +32,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   stabilization limit, not release/tag/publish authority or full upstream parity.
   Operator-createdLoop8 is active every5m; no cancellation or expired-loop revival
   is inferred. Broader remainders/gates still remain.
+- New numeric size-only swarm:31new/1018related/floor116P/CLI2/fullnativeHTTP+
+  browser pass; selected cohort/area-guides/JSON-source preserve, closed unsupported
+  shared/facet/style/date modes. Exact3d51CI ALL5P is prior native-fix proof, not
+  this new public runtime; publish for fresh wholeCI. Warning counts remain explicit.
 - Native swarm size-array fix: pairwise radii/per-point gutters preserve old scalar
   geometry while normal artist edits no longer overlap.30new/616related/floor83P,
   native invalid-setter warning retained; no public size-semantic API. Exact24cd

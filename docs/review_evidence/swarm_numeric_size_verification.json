@@ -1,0 +1,230 @@
+{
+  "source_sha256": {
+    "mudplot/api.py": "a4b42a7cf44fd51ebbeddc8dae057c1de485c2592d631543533454b5f92ed49b",
+    "mudplot/_categorical.py": "2e3602412265e03e33747d78a16e18acface648ed12c563942d842b74e294b53",
+    "mudplot/_render.py": "de35026d8860ea445db1d9ec17f9b7658f43dd03f41cf0f44e8100f68643a359",
+    "mudplot/validate.py": "d9dce73547154f1c28870e2a577e47755537087547c50b9f739f979455cef10c",
+    "mudplot/capabilities.py": "185c82480edfb1310b6c53cf13280c8013b20eeffa76c6da434f112471104712",
+    "tests/test_swarm_semantics.py": "e137c8005f180ef799c50841e0facc8488847fb0f60c548cc02245295875cc43",
+    "tests/test_swarm_sizes.py": "fa5f758329e14def26c71bb5005091a8bd25f41fa62d5890f503cb3d9cbb91d7",
+    "scripts/check_minimum_versions.py": "b7feab9465b26b164daed4a58fb8f2e3694fe9e30d3818bd49d4280a971bd450",
+    "scripts/rust_editor_smoke_test.py": "331fcad17d2103ab44123f1744b7502d9e375c5707b1087f9650dd3dd40bcf2d",
+    "mudplot-editor/src/model.rs": "758db2c8262c8c6091cde793e1c8a8ec5da40963b388f5d1ffd5dcf142b11f65",
+    "schemas/capabilities.json": "04da55b495b556a43a323fcd4021f3b0311e38652a71cd8c610b0e450b6461b6",
+    "docs/REFERENCE.md": "e4669a8e3f74405363f1807903a1c2a4ff2e5bd94faef0f13673835b9636cb43",
+    "docs/PLOT_GALLERY.md": "4f1511b9472dd7b2086059c185965b29a9a382254610356ccde5a8744c63ddc4",
+    "docs/FEATURE_COVERAGE.md": "0ec7c7422e56e9691625b21ea41da2271a060b6e3aca77ee86fde7c033522397",
+    "docs/FEATURE_COVERAGE.ko.md": "d031f8eb6f82e5302a912194ab36abb7d5fda0d676e0c888f063cbdfc5c36348",
+    "docs/SWARM_SIZE.md": "c8ce58c3d9aeb6bff4797e7ff10ddeead821c7352e620937cf02440b0b7c9ae5",
+    "docs/SWARM_SIZE.ko.md": "3350e28fd98c7787f20c465c6079e1ea5d2307db8317b8ae2a66fa12f30b30ab",
+    "examples/swarm_size_semantics.py": "0bd8f49610300ebccce1b3355e24cd320c823ecc256b86951af586f7feb96ddc",
+    "docs/images/swarm_size_semantics.mplot.json": "5ab0a1677a1e2d82482f681c03aba2f739eefed4459067463adc7b56edfa4f35",
+    "docs/images/swarm_size_semantics.png": "bf799023585278f999712ce1cbb27162bfd496387d66faa73befde06fcaf7518"
+  },
+  "cli": [
+    {
+      "legend": true,
+      "apply_render_exit": 0,
+      "source_unchanged": true,
+      "numeric_semantics_preserved": true,
+      "png_sha256": "6ef56719e98bd5e4f656789e7048580b92f45f7df3022e48abf2e119732d0761"
+    },
+    {
+      "legend": false,
+      "apply_render_exit": 0,
+      "source_unchanged": true,
+      "numeric_semantics_preserved": true,
+      "png_sha256": "2234661a333d003f76464329385cbff9c6f2e5f8701e7658b1943dbe7041db96"
+    }
+  ],
+  "native_full": {
+    "argv": [
+      "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+      "-u",
+      "scripts/rust_editor_smoke_test.py",
+      "--browser"
+    ],
+    "exit": 0,
+    "seconds": 855.8830304145813,
+    "scope": "Full Windows native HTTP and actual browser including public size-only swarm;notLinuxMSRV1.88"
+  },
+  "scope": "PublicSwarmSemanticSpecnumericSIZEONLY. Reuseexistingfields/no dependencies/version/model-action-schemafieldchanges. Oneunfilteredlayer-localdomainofselectedrowIDsacrossallcategory/huecells.Missing-sizejoinscategory-value-groupcohort/order-hue-orderselection/2000usablelimit;source/action/JSONnotrewritten. BoolInf/stringselectedsizefails;unselectedinvaliddoesnotplottouchbutstrictJSONnonfiniteanywherestillfails.",
+  "mapping": "Reusegenericoption_issues+closedfirstsubsetfields(size,size_kindnumeric,size_norm,sizes,legend). Stable numeric_mapping handlesnarrowhighvalues/widefinitespan/clipping-not-filter/singletonmidpoint.Diameterspts\u2192pt\u00b2areas. Declaredrangeandobservedpositivearea underflowfailbeforeartists/oldoutputpreserved. Noscalar-marker_sizeambiguity/facet-dropna/namedscale/semantic-hue-style/categoricalsize/date/y2. LegacysemanticsNoneandgroupcoloursunchanged.",
+  "guides": "Neutralnumericdiameterguideslo-mid-hi/dedupeconstantuseSAMEbounds/mapandEMPTYcoordinates;noobservations/counts/sourceURLs/citationsinvented.Groupguideslegacyobservedcolours/refsandmidpointdiameter;semanticlegendFalseomitssizeguidesnotmapping/legacygrouplegend. OneCollectionjointnon-dodgedhueperrowareasusesexistingcalibratedkernel.",
+  "tests": "New31(corebefore11F14P;JSONunsafe-unselectedInfroundtripcorrectlyfailed;splitplot-vsstrictserializationregressionratherthanweakeningIO). Source-numericareas0/5/10\u21929/36/81/guides3-6-9/missingcohort/hue-orderobservedrefs/guideURLsnone/no fakecoords/strictunknownconfigbuilderatomicity/constant/narrow1e300ULP/widespan\u00b11e308/clipping/realDPI-log-orient-resize-gutters/scalaroverride-areaUnderflow/invalidoptions/facetfailurewithoutmutation/selectedrow2000bound. Oldblanketunsupportedtestpurposefullytightenedtounsupportedsharedscale;nativeeditregressionsunchanged.",
+  "gallery": "OnlyNEWstandaloneexample/swarm_size_semanticsPNG-spec;readrealPNG/groupcolours+neutralguide.NotindependenthumanAT/aestheticcertification/dedicatedUIcontrols;legacygalleryimage/sourceunchanged.Generatedcap-reference-galleryoptionalfieldssynced.",
+  "baseline": "Exact3d51bb5CI39421985154ALL5SUCCESSvalidatespriornativeartist-sizefix\u2014notthisnewpublicmappingruntime. NewwholeCIneeded.OperatorLoop8active/no cancellation.",
+  "checks": [
+    {
+      "name": "connected",
+      "exit_code": 0,
+      "seconds": 518.7869062423706,
+      "results": [
+        "1018 passed, 1 warning in 516.25s (0:08:36)"
+      ],
+      "log_sha256": "1add2a762dcf83a6dae9dbbcb7b9709a26a96ad68ea044797ec4efe23dce924a"
+    },
+    {
+      "name": "floor",
+      "exit_code": 0,
+      "seconds": 46.60310697555542,
+      "results": [
+        "116 passed, 3397 deselected, 834 warnings in 43.64s"
+      ],
+      "log_sha256": "4014ad5a2e9c40d218171bb97d5729d88c03ee02972f270f00b290741f815619"
+    },
+    {
+      "name": "rust-format",
+      "exit_code": 0,
+      "seconds": 0.4360237121582031,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "rust-test",
+      "exit_code": 0,
+      "seconds": 5.288375377655029,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 5.11s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "07959d066a778b68c8f9ac0a5c364cdabb2b1636281ccf94d2da08bb6c9ff534"
+    },
+    {
+      "name": "rust-build",
+      "exit_code": 0,
+      "seconds": 0.8674333095550537,
+      "results": [],
+      "log_sha256": "536a334ddbaa047d9cd6a5bde841be961cd51cdafcd4e652b93c9d14538ff7b1"
+    },
+    {
+      "name": "ruff",
+      "exit_code": 0,
+      "seconds": 0.03668713569641113,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "exit_code": 0,
+      "seconds": 0.05121111869812012,
+      "results": [
+        "281 files already formatted"
+      ],
+      "log_sha256": "860fa5a89adc38b8b90ac9c76cfa58c23fcb5ff0dec30f3a745ee4f0ed40dd24"
+    },
+    {
+      "name": "linux-type",
+      "exit_code": 0,
+      "seconds": 6.968167781829834,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "exit_code": 0,
+      "seconds": 7.589937925338745,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "exit_code": 0,
+      "seconds": 7.7601752281188965,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "845ce3f036439c437b33525170457a044b098832695fa88a0782760326d313e5"
+    },
+    {
+      "name": "wheel",
+      "exit_code": 0,
+      "seconds": 17.23214054107666,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "b6feb822a94a6f80625e55b5dab044fcbce70e3c39704b3df2fac324f80a52db"
+    }
+  ],
+  "floor_warnings": {
+    "exitstatus": 0,
+    "total": 834,
+    "rows": [
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'enablePackrat' deprecated - use 'enable_packrat'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'endQuoteChar' argument is deprecated, use 'end_quote_char'",
+        "count": 1
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'leaveWhitespace' deprecated - use 'leave_whitespace'",
+        "count": 2
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'oneOf' deprecated - use 'one_of'",
+        "count": 5
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseAll' argument is deprecated, use 'parse_all'",
+        "count": 164
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'parseString' deprecated - use 'parse_string'",
+        "count": 359
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'resetCache' deprecated - use 'reset_cache'",
+        "count": 195
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setName' deprecated - use 'set_name'",
+        "count": 45
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'setParseAction' deprecated - use 'set_parse_action'",
+        "count": 60
+      },
+      {
+        "category": "PyparsingDeprecationWarning",
+        "message": "'unquoteResults' argument is deprecated, use 'unquote_results'",
+        "count": 1
+      },
+      {
+        "category": "RuntimeWarning",
+        "message": "invalid value encountered in double_scalars",
+        "count": 1
+      }
+    ]
+  },
+  "raw_sha256": {
+    "qa.py": "ec3bc9970aa953dc6f52479240fb22f98435c0ce82b4fbc553807cb58937210f",
+    "cli.json": "4ae6d8599fab5ee131cb5c1a77f7851c7930fe9d3adc3732d0216873c9757a6a",
+    "results.xml": "01dbd18316edb4e437f13b31a8980b8fd1f444a9086d7f1ee364c07755f6e4f3",
+    "floor_warning_counts.json": "c6ae607f2240b0122fef24b0dd35037355d41ac1b315cd5ee0a94b72ede5a69e",
+    "_qa_floor_warnings.py": "27dfb3ee4a200b78f06e77bd1e82b7d18c061140e25bbb788071a7d94b216d79",
+    "native_full.py": "7e4453f1113ee76f7f3b11fcb57473766ce16d2c70ce82bfe3945371528ff525",
+    "native-result.json": "6754a8c2556250992ec0b6c26538d4b7b35f4eedb7f46046fbc5a47f84aa47c9",
+    "native-browser.log": "439e2be0bad86be44b9730d63837cfc3a8fb27e29886381381f150897adaa021"
+  }
+}

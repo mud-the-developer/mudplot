@@ -21,6 +21,7 @@ from ._categorical import (
     distribution_columns,
     distribution_rows,
     native_category_geometry,
+    swarm_size_issues,
 )
 from ._cluster import cluster_issues
 from ._components import _color, component_issues
@@ -2058,6 +2059,10 @@ def validate(spec: FigureSpec) -> list[str]:
 
             if layer.type == "swarmplot":
                 _check_distribution_layer(cols, layer, where, issues)
+                issues.extend(
+                    f"{where}: {issue}"
+                    for issue in swarm_size_issues(cols, layer, panel)
+                )
                 width = 0.8 if layer.width is None else layer.width
                 if not _finite(width) or not 0 < width <= 1:
                     issues.append(f"{where}: swarm width must be in (0, 1]")

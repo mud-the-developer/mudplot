@@ -7,12 +7,14 @@ both x and y opts into category-by-hue nesting, with x always categorical.
 from __future__ import annotations
 
 import math
+from dataclasses import fields
 from itertools import pairwise
 from numbers import Real
 
 from ._ecdf import finite_number
+from ._semantics import numeric_mapping, option_issues
 from ._stat import is_missing
-from .spec import LayerSpec
+from .spec import LayerSpec, SemanticSpec
 
 DISTRIBUTION_TYPES = frozenset({"box", "violin", "boxenplot"})
 MAX_VIOLIN_POINTS = 1000
@@ -61,7 +63,12 @@ def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
     """Listwise-drop missing rows and apply explicit category/hue selection."""
     category, value, hue = distribution_columns(layer)
     weight = layer.weights if layer.type == "violin" else None
-    names = [name for name in (category, value, hue, weight) if name is not None]
+    size = (
+        layer.semantics.size
+        if layer.type == "swarmplot" and isinstance(layer.semantics, SemanticSpec)
+        else None
+    )
+    names = [name for name in (category, value, hue, weight, size) if name is not None]
     if not all(isinstance(name, str) and name in columns for name in names):
         return []
     if any(
@@ -88,6 +95,55 @@ def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
             or columns[weight][i] != 0
         )
     ]
+
+
+def swarm_size_mapping(columns, layer, rows):
+    """One selected layer domain; sizes are diameters, never observed counts."""
+    config = layer.semantics
+    fractions, bounds = numeric_mapping(
+        [columns[config.size][row] for row in rows], config.size_norm
+    )
+    low, high = config.sizes
+    diameters = [low * (1 - t) + high * t for t in fractions]
+    if any(d > 0 and d * d == 0 for d in [low, high, *diameters]):
+        raise ValueError("positive semantic marker area is not representable")
+    return diameters, bounds
+
+
+def swarm_size_issues(columns, layer, panel):
+    config = layer.semantics
+    if config is None:
+        return []
+    issues = option_issues(config)
+    if issues or not isinstance(config, SemanticSpec):
+        return issues
+    defaults = SemanticSpec()
+    allowed = {"size", "size_kind", "size_norm", "sizes", "legend"}
+    for field in fields(config):
+        if field.name not in allowed and getattr(config, field.name) != getattr(
+            defaults, field.name
+        ):
+            issues.append(f"swarm semantic {field.name} is not supported")
+    if config.size is None or config.size_kind != "numeric":
+        issues.append("swarm semantics supports one numeric size column only")
+    if layer.marker_size is not None:
+        issues.append("scalar marker_size is not supported with mapped swarm size")
+    if panel.filters or panel.dropna:
+        issues.append("swarm size facet/dropna mappings are not supported")
+    if issues:
+        return issues
+    if config.size not in columns:
+        return ["swarm size column is missing"]
+    rows = distribution_rows(columns, layer)
+    if not rows:
+        return ["swarm size mapping has no usable observations"]
+    if any(not finite_number(columns[config.size][row]) for row in rows):
+        return ["swarm sizes must be finite numeric, not bool, after selection"]
+    try:
+        swarm_size_mapping(columns, layer, rows)
+    except (ValueError, OverflowError) as exc:
+        issues.append(str(exc))
+    return issues
 
 
 def distribution_levels(columns: dict, layer: LayerSpec, rows: list[int]):

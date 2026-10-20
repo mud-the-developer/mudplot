@@ -358,6 +358,7 @@ class Plot:
         y: str,
         *,
         group: str | None = None,
+        semantics: SemanticSpec | dict | None = None,
         orient: str = "v",
         order: list[Any] | None = None,
         hue_order: list[Any] | None = None,
@@ -375,7 +376,18 @@ class Plot:
         x stays categorical, y numeric; positive log-value axes are supported.
         Numeric dodge is the hue span (None auto, 0 packs hues together).
         Overcrowding retains all rows and warns, not a fake jitter approximation.
+        Optional semantics maps one numeric size column with layer-local guides.
         """
+        config = None
+        if semantics is not None:
+            data = (
+                semantics.to_dict()
+                if isinstance(semantics, SemanticSpec)
+                else semantics
+            )
+            config = SemanticSpec.from_dict(data)
+        if config is not None and not isinstance(config, SemanticSpec):
+            raise TypeError("semantics must decode to SemanticSpec")
         return self.dispatch(
             A.AddLayer(
                 LayerSpec(
@@ -383,6 +395,7 @@ class Plot:
                     x=x,
                     y=y,
                     group=group,
+                    semantics=config,
                     orient=orient,
                     order=order,
                     hue_order=hue_order,

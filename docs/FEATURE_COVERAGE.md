@@ -47,7 +47,7 @@ argument in every upstream signature.
 | `ecdfplot` | Partial: right-continuous weighted/tied ECDF, strict complement, per-curve proportion/percent/count, group/order/dash, v/h and positive observation logs | Continuous hue/size/style/date, y2/2-D and arbitrary kwargs; finite observed support only |
 | `rugplot` | Partial: x-axis `rug` | y-axis marks, height/orientation and semantic controls |
 | `stripplot` | Partial: deterministic x jitter and grouping | Nested categories/hue dodge, order/native scale, orientation and more jitter controls |
-| `swarmplot` | Partial: circular display-space packing on every draw; order/hue/dodge/orientation, layout/DPI/positive log values, native numeric/log categories; retain/report overcrowding | Arbitrary marker/size mappings, optimal packing and cross-layer collision guarantees; limit 2000 usable rows/layer |
+| `swarmplot` | Partial: circular display-space packing on every draw; order/hue/dodge/orientation, layout/DPI/positive log values, native numeric/log categories; numeric size-only mapping/guides; retain/report overcrowding | Categorical size/style/date/shared/facet semantics, arbitrary markers and cross-layer collisions; limit 2000 usable rows/layer |
 | `boxplot` | Partial: category × hue/geometry/native log, IQR/percentile whiskers/notches, mean/fliers, independently typed body/whisker/cap/median/mean/flier styles and explicit data/axis statistics | Precomputed bxp, bootstrap median CI, cap geometry and arbitrary/per-hue kwargs |
 | `violinplot` | Partial: category × hue/native log, weighted relative Gaussian/inverse-ECDF marks/mass widths, bandwidth/grid/support, four inner modes/None, two-hue split, width/area/count and explicit data/axis fit | Callable KDE, arbitrary-hue split/inner kwargs and wider size/style mappings; weighted step quantiles differ from old linear quantiles |
 | `boxenplot` | Partial: per-cell letter values/depths/widths, category/hue/native log, independently typed body/median/flier styles and explicit data/axis quantiles | Weights, arbitrary/per-band/per-hue component kwargs and wider mappings; named depths capped at 32 |
@@ -303,7 +303,7 @@ Required statistical distinctions:
 
 ### Swarm first subset
 
-`swarmplot(category, value, group=hue)` packs uniform circles in display space
+`swarmplot(category, value, group=hue)` defaults to uniform circles in display space
 on every draw, not seeded jitter. Marker/stroke size, DPI, current limits and
 layout, horizontal orientation and positive log-value transforms are tested.
 Values remain exact; orders reserve empty slots and non-dodged hues pack jointly.
@@ -311,7 +311,12 @@ Packing is stable greedy O(n^2 log n), bounded to 2000 usable rows/layer. It is
 not an optimal packing solver or a cross-layer collision guarantee. Overcrowding
 retains rows at gutters with possible overlap; warn_thresh defaults to .05 and
 0 reports any crowding. Numeric native/log categories are supported;
-arbitrary shape/size mappings and y2 remain unsupported.
+arbitrary shape, categorical-size/style/date mappings and y2 remain unsupported.
+
+Opt-in `semantics={"size": "mass"}` adds one numeric size role with a selected
+layer-local domain and honest diameter guides. Missing size joins the same
+category/value/hue cohort; norms clip rather than filter. Facet/dropna/named scales
+and semantic hue/style are rejected in this subset. [Exact scope](SWARM_SIZE.md).
 
 Native edits on the returned Matplotlib collection may use `set_sizes` (areas in
 pt²) and linewidth arrays (pt). Packing then uses pairwise radius sums and each
@@ -320,7 +325,8 @@ nonnegative arrays up to the retained row count are supported; shorter arrays
 cycle, longer arrays reject rather than inventing marks. Nonrepresentable packing
 geometry rejects before changing offsets. Oversized/colliding rows remain and
 are counted once, with the existing warn-once policy. These are artist-only edits:
-they do not alter LayerSpec, JSON or add a public size-column semantic mapping.
+they do not alter LayerSpec or JSON. The separate numeric SemanticSpec mapping
+above is the declarative path for serializable size-column semantics.
 
 ### Letter-value first subset
 

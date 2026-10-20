@@ -18,6 +18,24 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 88차 — 공개numeric size-only swarm
+
+- SemanticSpec의기존size/kind/norm/sizes/legend필드만사용해선택rowID와missing-size/category/value/group
+  cohort를공유하고유효행2000상한과domain/observedguide에동일선택을적용했습니다. 안정numeric정규화/
+  diameter→area/constant중간값·한guide/normclipping(행filter아님)·구간/관측양수면적underflow거절을연결했습니다.
+- 관측좌표없는sizeproxy는같은지름mapping·중립색이며group인용/URL을상속하지않고legacygrouprefs는선택행에
+  정렬됩니다. LegacysemanticsNone·jointnon-dodgedhuepacking은유지하며scalaroverride/facet-dropna/namedscale/
+  semantic-hue-style/categoricalsize/date/y2는명시거절합니다. 전용editorcontrol이나전체B2b완료는아닙니다.
+- 새31/관련1018P경고1/floor116P3397deselected834경고(833Pyparsing+기존invalidsetter1)/CLI2/Rust22P6ignored/
+  품질11명령/전체WindowsnativeHTTP+browser6종0/activeLSP11clean,
+  [검증](review_evidence/swarm_numeric_size_verification.json)을남겼습니다. 새example/PNG/spec를열어guide와size를
+  확인했지만독립사람AT인증은아닙니다. 기존gallery/baseline/원래JSON비유한수거절규칙은완화하지않았습니다.
+- 시작11F14P에서구현했고선택밖Inf의strictJSON실패는경계를분리해그대로거절하는회귀검사로남겼습니다.
+  이전blanket미지원검사는의도한새numeric범위를허용하되sharedscale미지원검사로정밀화했고native기하검사는유지합니다.
+- 정확한3d51bb5CI39421985154의5job모두성공은이전native보정이며새runtime은게시뒤새전체CI를받습니다.
+  새model/action/specfield·의존성/버전은없고원대장139PASS/6RUNNING/4OPEN/1DEFERRED·나머지v1.1/
+  releasegate/tag/publish경계는유지합니다. Loop8을끝났다는이유로삭제/pause하지않습니다.
+
 ## 87차 — 대기native swarm unit 게시
 
 - 정확한24cd395CI39415317017의5job모두성공을확인했습니다. 이전회차의대기상태는역사그대로두고

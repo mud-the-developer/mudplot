@@ -214,9 +214,9 @@ def test_invalid_native_linewidth_arrays_reject_without_repacking(widths):
         plt.close(fig)
 
 
-def test_native_edit_does_not_claim_declarative_size_semantics():
+def test_native_edit_does_not_claim_shared_size_semantics():
     p = mp.plot({"cat": ["A", "A"], "value": [1, 1], "size": [2, 3]}).swarmplot(
-        "cat", "value", semantics={"size": "size"}
+        "cat", "value", semantics={"size": "size", "scale_id": "shared"}
     )
     with pytest.raises(ValueError, match="not supported"):
         p.render()

@@ -377,7 +377,7 @@ Circular observations repack in display space on each draw, including positive l
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
+**Optional / 선택:** `group`, `semantics`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
