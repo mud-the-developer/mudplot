@@ -25,17 +25,17 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 사용자등록Loop8의5분반복이활성이며종료하거나다른만료loop를재생성하지않습니다.
   나머지remainder/gate는남아있습니다.
-- 현재6bc3eb2/CI39487189523의Python3.12는test전에audit-tool자체lock의새criticalcertifiadvisory로
+- 과거6bc3eb2/CI39487189523의Python3.12는test전에audit-tool자체lock의새criticalcertifiadvisory로
   실패했고3.10은취소이지통과가아닙니다. 선택patch2026.10.19/UV생성lockrevision5후로컬3lockaudit/
-  release3P/packaging은통과했지만새CI가필요하며ignore는없습니다.
+  release3P/packaging뒤정확한47d042a의CI39493638843 5job모두성공을확인했고ignore는없습니다.
   [제한근거](review_evidence/audit_certifi_patch_verification.json).
 - Swarmfacet/선택빈frame은새29/관련1098/floor196P/CLI3/전체nativeHTTP·browser가맞고원본size-domain과
   점/guide없는빈frame을유지합니다. Plainempty거절과SetData/filter/옵션경계도보존합니다. 정확한52acc3f의
   CI39461524891 5job모두성공으로해당runtime을확인했고경고를보존합니다.
-- BASE-05부분매핑은분류39ID(기존확인경계38·JSON-09추가의미검사1)/미분류111개입니다. 기록된758고유통과node와
-  source지문을재확인했지만새758실행은아닙니다. 과거optional12skip기록은유지하고별도uv overlay95P0skip으로
-  같은case를실제실행했습니다. Runtime/테스트는같고정확한43965b6의CI39478506917 5job모두성공을확인했습니다.
-  BASE-05/원대장상태는유지합니다. [게시근거](review_evidence/review_map_publication_execution.json).
+- BASE-05부분매핑은분류53ID(기존확인경계52·JSON-09추가의미검사1)/미분류97개입니다. 기록된863고유통과node와
+  source지문을재확인했지만새863실행은아닙니다. 과거optional12skip기록은유지하고별도uv overlay95P0skip으로
+  같은case를실제실행했습니다. 문서매핑으로Runtime/테스트는바꾸지않고47d042a의CI39493638843 5job성공을확인했습니다.
+  BASE-05/원대장상태는유지합니다. [게시근거](review_evidence/review_map_publication_post_audit.json).
 - NamedSwarm-onlysize는새18/관련1069/floor167P/CLI2/전체nativeHTTP·browser가맞고원본rowpool/
   상한·sizeguide만공유하며관측/색은로컬입니다. Mixed-family/facet/빈cell/style/date는거절하고정확한
   ee876CI5job성공은이전categorical이지새runtime증명이아니므로새CI를받습니다. 경고/일부neighbor미확인보존합니다.

@@ -1,0 +1,204 @@
+{
+  "scope": "Publish four doc-only numeric/coordinate/stat mappings after security-patch47CIterminal;notBASE05orJSON09closure/release approval",
+  "runtime_base": "47d042aca0f181ff2b08a7f26f1e7552a2f9b6fc",
+  "ci": {
+    "id": 39493638843,
+    "url": "https://github.com/mud-the-developer/mudplot/actions/runs/39493638843",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "rust-editor (ubuntu-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.12)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "lint-and-test (3.10)",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "minimum-render",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "rust-editor (windows-latest)",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ]
+  },
+  "security_fix": {
+    "certifi": "2026.10.19",
+    "advisory": "GHSA-6q48-6c7w-9gw2",
+    "evidence": "docs\\review_evidence\\audit_certifi_patch_verification.json",
+    "evidence_sha256": "3511f31f8814ef44dbc06b572fd1f596d8ceffbafd0b906cbc037d9174179170",
+    "old_ci39487189523": "failure/Python3.10cancelled retained,not retroactivepass"
+  },
+  "doc_commits_before_publication_note": [
+    "b533efc423f4427966162f94622c556e14953118",
+    "44e6bd967d581e59af92139f59cf225f33750a22",
+    "9357c4c123fdd655736f9f2d6aad22433a4c852b",
+    "57a52c2241a9b5258c9e8ecf01bf185bf6b952b8"
+  ],
+  "runtime_test_schema_dependency_workflow_diff_empty": true,
+  "map_artifacts": [
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_core.json",
+      "sha256": "b2f40f3c29e1b942ba6232933d9804b36c670de380379b4b08902b00b13f9421",
+      "recorded_passed": 13,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_boundaries.json",
+      "sha256": "540cbbdac832d57a61528e3885307fbeb3b74a154ec902c0793a40758701160f",
+      "recorded_passed": 35,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_state_paths.json",
+      "sha256": "0a99770d9290e6ec3fe18900cd2edb8f2f7dab026ae7deeb91ff259980c673de",
+      "recorded_passed": 6,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_history_core.json",
+      "sha256": "599d026fc7ee2028c277c25f24c4faf476c135cbeffcec724ed848b80d3fc6bf",
+      "recorded_passed": 6,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_document_policy.json",
+      "sha256": "6c9c08ba40eeb834dc8667ebbdcd9da0e04d36aa677329891c2268cf4b28c6cd",
+      "recorded_passed": 4,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_history_design.json",
+      "sha256": "150a9f7de86272994f1bb509e0017bf32eef4052b9c5f21b47af130a52ca8dbd",
+      "recorded_passed": 14,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_json_input.json",
+      "sha256": "a3d3878a5c91171de6d7aefb25561723843881f99bcde36dcd0de6fbf7352239",
+      "recorded_passed": 96,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_default_semantics_gap.json",
+      "sha256": "5febf659937b60c9792f0a3e2f26b20f53139a900fbde09836ae39ab8171837a",
+      "recorded_passed": 168,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_structural_codec.json",
+      "sha256": "35a82103d34337e47a4d665c1499b307ad7936de10f6eaa5d2685d371f769c17",
+      "recorded_passed": 74,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_json_effects.json",
+      "sha256": "73137695bed9a60e2db537a7757479917807d94bc208011bcd791047177dfa97",
+      "recorded_passed": 30,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_data_boundaries.json",
+      "sha256": "3a394869b4dbba002d835ae4e8061b4fbfaac05085be8aca5c143b98bd890f94",
+      "recorded_passed": 59,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_adapter_missing.json",
+      "sha256": "33c22365e3e0e9a1bf8db8e4ce450c1209978d53a316bb60b036f37c0281f48f",
+      "recorded_passed": 19,
+      "recorded_skipped": 5
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_groups_scalars.json",
+      "sha256": "4d51a50a56046c338fc73f19b7099115fe658271e0e197603cc466a587f93663",
+      "recorded_passed": 77,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_data_policies.json",
+      "sha256": "94e0e941698af3c6d7232ed74a022a3381e821c23ff8fe08fcad2bce9057b319",
+      "recorded_passed": 74,
+      "recorded_skipped": 7
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_optional_execution.json",
+      "sha256": "281c71b927fc816011fdf5f989b5b1dccdf5425c4e8c7ac469ec71720a048ec0",
+      "recorded_passed": 95,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_layer_smoke.json",
+      "sha256": "b8ba5b29930204bc9c3e42fd1b6f2971816db511556a84e57d54a3fa4c36b1c0",
+      "recorded_passed": 58,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_plot_oracles.json",
+      "sha256": "dae8c3638557e5fc21376b36fb0ce47296f4fc0fb5e2c038a544901b039906cf",
+      "recorded_passed": 21,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_coordinates_alpha.json",
+      "sha256": "6c80e23ae9565fc5a2afb21f367699d744e2f2fea830ad0d7ec2504a643cc473",
+      "recorded_passed": 18,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_axis_overlay_log.json",
+      "sha256": "ba52d39b8caf3e779eed3184b54238ec5b0c5588c64ed492b6548a856df481a6",
+      "recorded_passed": 37,
+      "recorded_skipped": 0
+    },
+    {
+      "artifact": "docs\\review_evidence\\review_map_regression_oracles.json",
+      "sha256": "d3ae14e13420723e3fd5ab5819f0ad24bedb550d88b8c049a1fcc5e27668099f",
+      "recorded_passed": 29,
+      "recorded_skipped": 0
+    }
+  ],
+  "receipt_recheck": {
+    "recorded_unique_passed_python_nodes": 863,
+    "historical_optional_skipped_nodes": 12,
+    "all_historical_skips_later_executed_in_separate95P0skip_overlay": true,
+    "new_fullsuite_or_native_run_this_publication": false,
+    "passed_node_set_sha256": "d099c4b668a1a61d41b34e4184d722eac6f43fdfc154101ca441ccdfa79b98ec"
+  },
+  "classified_ids": 53,
+  "classification_counts": {
+    "existing-coverage": 52,
+    "additional-tests-needed": 1
+  },
+  "unclassified_ids": 97,
+  "additional_tests_needed": [
+    "JSON-09"
+  ],
+  "base05_status": "RUNNING",
+  "json09_status": "RUNNING",
+  "original_status_counts": {
+    "PASS": 139,
+    "RUNNING": 6,
+    "OPEN": 4,
+    "DEFERRED": 1
+  },
+  "limits": [
+    "Knowncriticalauditorlockfindingfixedandfresh47CIall5P,not allPython/Rustsecurityguarantee.",
+    "Recorded focused receipts rechecked,not a new863suite/native-browser/modelbootstraptest.",
+    "SyntheticPLOT/polymean-fitboundariesnotallartist/control/realworldstatcoverage.",
+    "Job success literal,not audit ofeverywarning/requiredskippath.",
+    "No source/runtime/tests/versions/deps/defaults/release-tags/controllerchange by queued docs."
+  ]
+}
