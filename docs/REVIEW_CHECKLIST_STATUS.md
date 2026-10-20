@@ -18,6 +18,20 @@
 - 파일: environment.json(버전/원문 SHA256/변경 파일 SHA256), git-status.txt, tracked-diff.patch, contracts.log, contracts.xml, receipt.json.
 - 담당: coding assistant; 관련 PR/tag/배포 없음. 기존 변경 전체를 이번 작업으로 귀속하지 않습니다.
 
+## 81차 — Native smoke의fresh-history전제복구
+
+- 기준6dCI39280267725는minimum성공/WindowsnativeHTTP실패/Python3.12nativebrowser실패/나머지cancel로
+  끝났습니다. Python3.12의4151P/46skip/17경고와필수3경로는통과했으므로pytest실패로오인하지않습니다.
+- 제가추가한recent-layer검사를기존fresh-start history경계앞에둔순서가원인이었습니다. Rustopen은
+  undo가능하므로spec/PNG를되돌려도past가남고추가undo의no-opassert가올바르게실패했습니다.
+  로컬원순서로재현한뒤경계검사를첫번째로옮긴2줄/주석수정만했습니다. 제품history/assertion/timeout은그대로입니다.
+- 실제전체WindowsnativeHTTP+브라우저를실행해history/새3layer/document-noop/DPIpreview/crosspath/
+  failureatomicity/HTTPsecurity/JSONcorpus/GUI를통과했습니다. native887초0은실제receipt이며전체도구900초
+  한도에서시작후중단된연결검사는통과로세지않고별도118P로완료했습니다. Rust22P6ignored/10검사/
+  activeLSP1clean,[전후실패와결과](review_evidence/native_smoke_history_isolation.json)를남겼습니다.
+- 새소스Linux/MSRV/전체CI가필요하며의존성/schema/버전/기능을추가하지않았습니다. 원대장139PASS/
+  6RUNNING/4OPEN/1DEFERRED/나머지v1.1·releasegate/tag/publish/자동loop경계는유지합니다.
+
 ## 80차 — 원격의존성병합과한번의통합push
 
 - 사용자명시요청으로로컬7789481/2eacc44와원격e752175의Dependabotmerges를433df14로비파괴병합하고

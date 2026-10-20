@@ -134,6 +134,16 @@ bootstrap CI만 지원하고, 추정값은 동일 단위 평균이 아닌 관측
 subset구현/기존동작회귀를진행합니다. 전체upstream동등성/tag·publish권한은아닙니다.
 현재자동loop등록은없으며이요청으로만료schedule을자동재생성하지않습니다.
 
+**Native smoke격리수정.** 추가recent-layer검사를fresh-start history경계검사앞에넣어Rust의undo가능한
+open기록이남았습니다. Spec/PNG복구만으로history가비워지지않아기준6dCI39280267725의Windows와
+Python3.12nativebrowser단계가같은assert로실패했습니다(4151P/46skippytest는통과). 실패를재현한뒤
+history검사를처음으로옮기고제품동작/assertion/timeout은유지했습니다. 실제Windows전체nativeHTTP/
+브라우저0·연결118P/Rust22P6ignored·10검사/LSP1clean,
+[근거](review_evidence/native_smoke_history_isolation.json)를남깁니다. 887초native성공후전체900초
+도구예산에서중단된나머지검사는별도완료했고중단을통과로세지않습니다. 새CI는필요합니다.
+
+### 이전 리뷰80차
+
 **병합후통합검증.** 사용자가한번에merge/push를요청해원격e752175의의존성업데이트와로컬두commit을
 모두보존하고lockedvenv를동기화했습니다. 전체4165P/32skip/17경고·필수browser/PGF/Tectonic3P/
 최소100P/Rust22P6ignored/nativeHTTP3/품질13명령/Python3lock감사가맞고stairsfixture의bins누락을

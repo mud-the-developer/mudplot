@@ -1,0 +1,207 @@
+{
+  "source_sha256": {
+    "scripts/rust_editor_smoke_test.py": "6843a9b095db57a72eb448511e5d349101314af01bcbff725186acee60a09d0a"
+  },
+  "baseline": {
+    "run": 39280267725,
+    "head": "6d4121b8f5e7abc604014d7aa4db691246eca275",
+    "overall": "failure",
+    "minimum": "success",
+    "rust_windows": "unit tests passed;HTTPsmoke failed historyempty-boundaryassert",
+    "python312": "4151passed46skipped17warnings/required3pass/243typepass;laternative-browserSMOKEfailedsamehistoryassert,notpytestfailure",
+    "other_jobs": "cancelled,notpass"
+  },
+  "reproduction": "Unchangedfullnative--browserlocallyfailedsamehistoryassertafterrecentlayerhelper. Rustopenisundoable:helperrestoresJSON/PNGbutpast-historyremains;historyhelperoriginallyassumesstartupemptyhistory. Focusednewhelperalonecouldnotdetectscenarioordering.",
+  "fix": "Runexistinghistory-boundaryhelperFIRSTbeforemutatingscenarios,withonewhycomment.Allhistoryassertions/productundo-openbehavior/timeoutsunchanged. No engine/parser/schema/dependency/versionchanges.",
+  "after": "FullWindowsnativeHTTPandactualbrowser--browserexit0:history/recent3layers/document-noop/previewDPI/wholecontrolcrosspath/failureatomicity/Host-Origin-size-pathsecurity/JSONcorpusandGUIpassed. LocalRust1.99notLinuxMSRV1.88proof;freshCIneeded.",
+  "budget": "Native-browserreceipt0took886.93s;overalltool900sbudgetendedsubsequentconnectedafter2progressdots(noresult,notpass). NoownedPythonchildremained. Preservecompletednativepass;separatelaterremainingchecksactual118P.",
+  "checks": [
+    {
+      "name": "native-browser",
+      "argv": [
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+        "-u",
+        "scripts/rust_editor_smoke_test.py",
+        "--browser"
+      ],
+      "exit_code": 0,
+      "seconds": 886.9286649227142,
+      "results": [
+        "History boundary/branch OK: spec and PNG agree at every undo/redo step",
+        "Stem/WLS/stairs native boundary OK: exact JSON and cached PNG undo/redo",
+        "Document/no-op policies OK: open/reset snapshots, redo invalidation and current JSON/PNG",
+        "Preview boundary contract OK: [{\"dpi\": 499, \"preview_pixels\": [1996, 1497], \"size\": [4, 3]}, {\"dpi\": 500, \"preview_pixels\": [2000, 1500], \"size\": [4, 3]}, {\"dpi\": 501, \"preview_pixels\": [2000, 1500], \"size\": [4, 3]}, {\"dpi\": 499, \"preview_pixels\": [1497, 1996], \"size\": [3, 4]}, {\"dpi\": 500, \"preview_pixels\": [1500, 2000], \"size\": [3, 4]}, {\"dpi\": 501, \"preview_pixels\": [1500, 2000], \"size\": [3, 4]}]",
+        "Cross-path state OK (supported forms/agent): 926e9f349bcb681d626b8c9e1a2215fcd39932d5a923bf48ed3975a47fc9f6c9",
+        "Failure atomicity OK: validation/JSON/render failures retain spec/PNG/redo",
+        "HTTP boundary OK: Host/Origin/16MiB/path policies and security headers",
+        "JSON boundary corpus OK: 19 specs/11 actions rejected, 2 accepted; spec/preview retained",
+        "Rust editor smoke test OK"
+      ],
+      "log_sha256": "600aabe2ce7fcbbe6ce617425051edf94d7b43e4e5f60325a1f8a96361238ff5"
+    },
+    {
+      "name": "connected",
+      "argv": [
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+        "-m",
+        "pytest",
+        "-q",
+        "--tb=short",
+        "tests/test_review_history_policies.py",
+        "tests/test_review_state_machine.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_stem.py",
+        "tests/test_stairs.py",
+        "tests/test_regression_weights.py",
+        "--junitxml",
+        "C:\\Users\\mud\\AppData\\Local\\Temp\\mudplot-ci-6d-review-fwjec2n1\\connected.xml"
+      ],
+      "exit_code": 0,
+      "seconds": 70.80633974075317,
+      "results": [
+        "118 passed in 69.52s (0:01:09)"
+      ],
+      "log_sha256": "cdbdb3dc449b8050ece55a6aff45c62249b797e9c5eb0d60d8409cd59a2bfa59"
+    },
+    {
+      "name": "rust-test",
+      "argv": [
+        "cargo",
+        "test",
+        "--locked",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "exit_code": 0,
+      "seconds": 8.06557822227478,
+      "results": [
+        "test result: ok. 21 passed; 0 failed; 6 ignored; 0 measured; 0 filtered out; finished in 6.08s",
+        "test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s",
+        "test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s"
+      ],
+      "log_sha256": "47e28acdc14e0b6fd1bc4a4938d72d34cff737343753a0e51ec0c0396edadd28"
+    },
+    {
+      "name": "rust-format",
+      "argv": [
+        "cargo",
+        "fmt",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6556534767150879,
+      "results": [],
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "ruff",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.23057818412780762,
+      "results": [
+        "All checks passed!"
+      ],
+      "log_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "name": "format",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "ruff",
+        "format",
+        "--check",
+        "."
+      ],
+      "exit_code": 0,
+      "seconds": 0.23091697692871094,
+      "results": [
+        "274 files already formatted"
+      ],
+      "log_sha256": "e3ef58579eb566e7de49eea46e9563c2e14da7a5f45a42fd33f95010938b335b"
+    },
+    {
+      "name": "linux-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Linux"
+      ],
+      "exit_code": 0,
+      "seconds": 7.408163785934448,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "windows-type",
+      "argv": [
+        "uv",
+        "run",
+        "--no-sync",
+        "pyright",
+        "--pythonplatform",
+        "Windows"
+      ],
+      "exit_code": 0,
+      "seconds": 8.538304090499878,
+      "results": [
+        "0 errors, 0 warnings, 0 informations"
+      ],
+      "log_sha256": "6d88a1b220adb7a3d62092b6e38431f0b3fe8babe9864fab90e5849766260332"
+    },
+    {
+      "name": "schema",
+      "argv": [
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+        "scripts/check_schema_sync.py"
+      ],
+      "exit_code": 0,
+      "seconds": 7.336589097976685,
+      "results": [
+        "OK: schemas/figure_spec.schema.json is in sync",
+        "OK: schemas/capabilities.json is in sync",
+        "OK: docs/REFERENCE.md is in sync",
+        "OK: docs/PLOT_GALLERY.md is in sync"
+      ],
+      "log_sha256": "e8f6f7e39ecd3b7e49772954f2db26b16edacc123195dd90369b0631ef5e436b"
+    },
+    {
+      "name": "wheel",
+      "argv": [
+        "C:\\Users\\mud\\Desktop\\repo\\mudplot\\.venv\\Scripts\\python.exe",
+        "scripts/check_wheel.py"
+      ],
+      "exit_code": 0,
+      "seconds": 18.34661102294922,
+      "results": [
+        "Successfully built mudplot-1.0.0.tar.gz and mudplot-1.0.0-py3-none-any.whl",
+        "distribution packaging OK: C:\\Users\\mud\\AppData\\Local\\Temp\\tmpw3nyi7we\\mudplot-1.0.0.tar.gz, C:\\Users\\mud\\AppData\\Local\\Temp\\tmpw3nyi7we\\mudplot-1.0.0-py3-none-any.whl"
+      ],
+      "log_sha256": "2b1bf7d973af82ff2db10b8d1ea6582dba11beba7b26cf573b05acb1ad548da6"
+    }
+  ],
+  "raw_sha256": {
+    "rust-windows.log": "6486bfd145e35cc88bd9942ce35b0805300a812fd842b920b7f684340e98bd76",
+    "python312.log": "569dfc977a81f8db40558a1c396255d2e10a3d8a6bcdb0a0a8748acaa67938e9",
+    "native-before.log": "5e19450d4a226ac87f14c8b5434be8edfeeba704957765181cf7e6f84186bc4b",
+    "native-after-browser.log": "c2085996df2bc1ec4c992f90ab6059f42361d708416348439c75c3c5d839700c",
+    "native-browser.log": "c2085996df2bc1ec4c992f90ab6059f42361d708416348439c75c3c5d839700c",
+    "connected.xml": "8ca98fe709c71b3fded3af94ac998217b807ccbd7a3fb1bd21a97000c8352840",
+    "verify.py": "3edc1e4c9550d2acbbfc5fdacd34ca0cd2728e789d5f8e800373e7c763055024"
+  }
+}

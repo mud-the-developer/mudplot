@@ -628,8 +628,9 @@ def main(*, browser: bool = False) -> int:
                     ) from error
                 time.sleep(0.1)
 
-        _review_recent_layer_contracts(base)
+        # History boundaries require fresh startup state before scenario edits.
         _review_history_contracts(base)
+        _review_recent_layer_contracts(base)
         _review_document_policies(base)
         _review_preview_contracts(base)
         with _request(f"{base}/") as response:

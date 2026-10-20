@@ -33,6 +33,10 @@ coding session. Package/editor **1.0.0** and spec **0.1** remain unchanged.
   No automatic loop is registered/recreated. B4 adds explicit ungrouped hist2d/
   hexbin centers with paired hist/KDE marginals;17new/198related/floor17/CLI2pass,
   but broader remainders/gates and new whole-source CI are still outstanding.
+- Fixed native smoke scenario order: fresh-history boundary checks must run before
+  recent-layer opens, which are undoable in Rust. Baseline6dWindows/Py3.12native
+  smoke failure reproduced; all assertions kept. Full local nativeHTTP+browser0/
+  connected118P/Rust22P6ignored/10checks pass. New CI needed, not stale full-suite proof.
 - Integrated operator-merged e752175 dependency updates without rewriting either
   history; synced the locked venv. Post-merge full4165P/32skip/17warnings,required
   browser/PGF/Tectonic3P,floor100P,Rust22P6ignored,nativeHTTP3/schema/wheel and all

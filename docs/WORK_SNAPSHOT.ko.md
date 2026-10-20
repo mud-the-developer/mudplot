@@ -25,6 +25,9 @@
 - **최신사용자목표는v1.1완성입니다.** 이전v1전용안정화scope를대체하되tag/publish/전체upstream동등성
   권한은아닙니다. 자동loop는등록/재생성하지않았습니다. B4의ungroupedhist2d/hexbin중심+pairedhist/KDE는
   새17/관련198/floor17/CLI2가맞지만다른remainder/gate/새소스전체CI는남아있습니다.
+- Native smoke순서를수정했습니다. Rustopen은undo가능하므로recent-layer검사전에fresh-history경계를
+  검사해야합니다. 기준6dWindows/Py3.12native실패를재현하고assertion유지한채전체로컬nativeHTTP/
+  브라우저0·연결118P/Rust22P6ignored/품질10검사를확인했습니다. 새CI가필요하며과거fullsuite를소급하지않습니다.
 - 사용자mergee752175의의존성업데이트를양histories보존해통합·lockedvenv동기화했습니다. 병합뒤
   전체4165P/32skip/17경고·필수browser/PGF/Tectonic3P/floor100P/Rust22P6ignored/nativeHTTP3/
   schema/wheel/Python3lock감사가맞고stairsfixture의bins누락을고쳤습니다. 최초browser/Rust시간실패는

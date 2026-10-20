@@ -139,6 +139,18 @@ stabilization limit. Implement documented subsets and verify backward behavior;
 this is not full upstream parity or authorization to tag/publish. No autonomous
 loop is currently registered; this request does not recreate expired scheduling.
 
+**Native smoke isolation fix.** The added recent-layer scenario ran before the
+fresh-start history boundary test; Rust open is undoable, so restoring spec/PNG
+alone left earlier history. Baseline6dCI39280267725failed the same assertion on
+Windows and Python3.12's native browser step (its4151P/46skip pytest had passed).
+Reproduce the failure, then run history boundaries first; no product behavior,
+assertion or timeout change. Full Windows native HTTP+browser0,118connectedP,
+Rust22P6ignored/10checks/LSP1clean. [Evidence](review_evidence/native_smoke_history_isolation.json).
+One overall900s tool budget ended after the successful887s native run; remaining
+checks completed separately, not counted as an interrupted pass. New CI required.
+
+### Earlier review phase 80
+
 **Post-merge integration verification.** Operator requested one normal merge/push.
 Remote e752175 dependency updates and both local feature commits are preserved;
 locked venv resynced. Full4165P/32skip/17warnings,requiredbrowser/PGF/Tectonic3P,
