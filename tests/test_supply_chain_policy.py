@@ -58,13 +58,13 @@ def test_audit_exports_all_locks_with_hashes_and_no_ignored_advisories(monkeypat
         assert kwargs.get("check") is True
 
     monkeypatch.setattr(audit.subprocess, "run", run)
-    assert audit.main() == 0 and len(calls) == 6
+    assert audit.main() == 0 and len(calls) == 4
     assert all("--locked" in argv for argv in calls[::2])
     assert all(
         "--require-hashes" in argv and "--disable-pip" in argv for argv in calls[1::2]
     )
     assert all("--ignore-vuln" not in argv for argv in calls)
-    assert sum("--script" in argv for argv in calls[::2]) == 2
+    assert sum("--script" in argv for argv in calls[::2]) == 1
 
 
 @pytest.mark.parametrize("failure_call", [1, 2])

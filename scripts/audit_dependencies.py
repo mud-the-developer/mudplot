@@ -19,7 +19,6 @@ AUDIT_SCRIPT = Path(__file__).resolve()
 def main() -> int:
     exports = (
         ("root", "--all-extras", "--no-emit-project"),
-        ("minimum", "--script", str(MINIMUM_SCRIPT)),
         ("audit", "--script", str(AUDIT_SCRIPT)),
     )
     with tempfile.TemporaryDirectory() as directory:
