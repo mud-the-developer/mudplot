@@ -26,6 +26,24 @@ TeX 엔진이 없으면 TeX 의존 테스트는 건너뜁니다. 일반 CI는
 Tectonic/pdflatex로 PGF 테스트를 실행하며, nightly/release 매트릭스는
 LuaLaTeX, BibTeX, biber까지 검사합니다.
 
+## 문서 사이트
+
+`docs/`, `examples/`, 저장소 루트의 원본 Markdown을 수정하세요. 공개할 새 문서는
+앱에 복제하지 말고 `site/content.mjs`의 언어 및 탐색 목록에 추가합니다.
+Node 22 이상에서 `site/`의 lockfile을 사용해 빌드합니다.
+
+```sh
+cd site
+npm ci --ignore-scripts
+npm run build
+python3 scripts/check-export.py
+python3 -m http.server --directory out 8000
+```
+
+PR 검사는 Pages 설정을 조회하지 않고 저장소 접두사가 있는 정적 출력을 확인합니다.
+기본 브랜치 배포에는 GitHub Pages에 설정된 기본 경로를 사용합니다. 문서 앱과
+빌드 산출물은 Python 소스 아카이브에 포함하지 않습니다.
+
 ## 필수 CI 경로와 skip 증거
 
 Localoptionaltest는도구가없으면skip할수있지만실행성공은아닙니다. Workflow는skip사유포함

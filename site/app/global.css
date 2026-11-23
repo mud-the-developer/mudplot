@@ -1,0 +1,109 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@theme {
+  --font-sans: system-ui, 'Noto Sans CJK KR', sans-serif;
+  --color-fd-background: #fafafa;
+  --color-fd-foreground: #242424;
+  --color-fd-muted-foreground: #505050;
+  --color-fd-primary: #1c4b70;
+  --color-fd-primary-foreground: #fff;
+  --color-fd-ring: #424242;
+}
+
+:root {
+  --mudplot-blue: #80c5ff;
+  --mudplot-amber: #eab532;
+}
+
+.dark {
+  --color-fd-background: #151515;
+  --color-fd-foreground: #f3f3f3;
+  --color-fd-muted-foreground: #c5c5c5;
+  --color-fd-primary: var(--mudplot-blue);
+  --color-fd-primary-foreground: #242424;
+  --color-fd-ring: #e0e0e0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-fd-ring);
+  outline-offset: 3px;
+}
+
+.welcome {
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  padding: clamp(1rem, 5vw, 4rem);
+  background: #f1f1f1;
+  color: #242424;
+}
+
+.welcome-panel {
+  width: min(100%, 42rem);
+  padding: clamp(1.5rem, 6vw, 4rem);
+  border: 1px solid #cdcdcd;
+  border-radius: 1.5rem;
+  background: #fafafa;
+  box-shadow: inset 0 1px #fff, 0 12px 36px #0000000b;
+}
+
+.welcome-kicker {
+  width: fit-content;
+  border-block-end: 3px solid var(--mudplot-amber);
+  padding-block-end: .35rem;
+  color: #505050;
+  font-size: .75rem;
+  font-weight: 650;
+  letter-spacing: .12em;
+}
+
+.welcome h1 {
+  margin-block: .75rem .5rem;
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 650;
+  letter-spacing: -.065em;
+  line-height: 1.05;
+}
+
+.welcome-intro { font-size: clamp(1.125rem, 4vw, 1.5rem); font-weight: 550; }
+.welcome-detail { margin-block: .4rem 1.5rem; color: #505050; }
+.welcome-links { display: flex; flex-wrap: wrap; gap: .75rem; }
+.welcome-links a, .language-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .55rem;
+  width: fit-content;
+  min-height: 2.75rem;
+  padding: .5rem .85rem;
+  border: 1px solid #707070;
+  border-radius: .65rem;
+  color: inherit;
+  font-weight: 620;
+}
+.welcome-links .welcome-primary { background: var(--mudplot-blue); border-color: #496175; }
+.welcome-links a:hover, .language-link:hover { text-decoration: underline; text-underline-offset: .2em; }
+.welcome-repo { display: inline-block; margin-top: 1.25rem; color: #1c4b70; text-decoration: underline; }
+.welcome :focus-visible { outline-color: #424242; }
+
+.doc-heading { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: .65rem; }
+.language-link { font-size: .875rem; background: var(--color-fd-secondary); }
+.mudplot-markdown { overflow-wrap: anywhere; }
+.mudplot-markdown pre { overflow-x: auto; border-radius: .6rem; background: var(--color-fd-card); padding: 1rem; }
+.mudplot-markdown pre code { background: none; border: 0; padding: 0; }
+.mudplot-markdown img { max-width: 100%; height: auto; }
+.mudplot-markdown details { padding: .5rem .75rem; border: 1px solid var(--color-fd-border); border-radius: .6rem; }
+.mudplot-markdown summary { cursor: pointer; }
+.mudplot-markdown table { display: block; max-width: 100%; overflow-x: auto; }
+.mudplot-markdown td code { white-space: nowrap; }
+
+#nd-subnav, #nd-sidebar, #nd-tocnav {
+  background-color: var(--color-fd-background);
+  backdrop-filter: none;
+}
+.backdrop-blur-xs { backdrop-filter: none; background-color: #0003; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

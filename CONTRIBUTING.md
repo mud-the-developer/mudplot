@@ -26,6 +26,25 @@ TeX-dependent tests skip when no TeX engine is installed. CI runs the normal
 PGF suite with Tectonic/pdflatex; the scheduled/release matrix also covers
 LuaLaTeX, BibTeX, and biber.
 
+## Documentation site
+
+Edit the canonical Markdown in `docs/`, `examples/`, or the repository root.
+Add user-facing pages to the language and navigation manifest, `site/content.mjs`,
+instead of copying their contents into the app. Documentation builds use Node
+22 or later and the locked dependencies in `site/`:
+
+```sh
+cd site
+npm ci --ignore-scripts
+npm run build
+python3 scripts/check-export.py
+python3 -m http.server --directory out 8000
+```
+
+PRs verify a static export under the repository prefix without reading Pages
+settings. The default-branch deployment uses GitHub's configured Pages base path.
+The app and its build outputs are not included in the Python source archive.
+
 ## Required CI paths and skip evidence
 
 Local optional tests may skip when a tool is absent; skip is not tool execution.

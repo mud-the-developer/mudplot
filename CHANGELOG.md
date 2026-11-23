@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## [Unreleased]
+
+- Added a bilingual Fumadocs site built from the repository guides and deployed separately from Python releases. Moved the long README guides into the documentation.
+- 저장소 가이드를 바탕으로 이중 언어 Fumadocs 사이트를 추가했습니다. Python 릴리스와 별도로 배포하며, README의 상세 안내를 문서로 옮겼습니다.
+
 ## [2.0.0]
 
 Package and editor metadata align at 2.0.0. The JSON wire schema remains 0.1.
@@ -501,8 +506,8 @@ moving legends away from primary data when the twin is empty.
   v/h·이름 있는 local uniform/none jitter를 추가합니다. 이전 raw-x 기본값·JSON과
   관측값은 보존합니다. 실제 Rust/browser history·재개방·설치 최소 환경 API/CLI의
   제한 기능 인수를 기록하며 최종 고정 제품 자격 검증은 별도입니다.
-- CND01's real Python/Rust comparison triggered active-panel x/y/y2/z controls and native title/legend/text/annotation handles in Rust. Shared installed preview metadata uses actual PNG pixels, preserving clocks, source data, history, and existing generic forms. Local evidence is in `docs/review_evidence/v2_rust_specialized_controls.json`; schema 0.1 and package 1.1.0 remain unchanged.
-- CND01 실제 비교에 따라 Rust 활성 패널 x/y/y2/z 제어와 native 제목·범례·text/annotate 이동을 추가합니다. 설치 가능한 공통 preview metadata는 실제 PNG 픽셀을 사용하고 시간 설정·원자료·history·기존 generic form을 유지합니다. 로컬 근거는 `docs/review_evidence/v2_rust_specialized_controls.json`이며 schema 0.1·package 1.1.0은 바꾸지 않습니다.
+- CND01's real Python/Rust comparison triggered active-panel x/y/y2/z controls and native title/legend/text/annotation handles in Rust. Shared installed preview metadata uses actual PNG pixels, preserving clocks, source data, history, and existing generic forms. Schema 0.1 and package 1.1.0 remain unchanged.
+- CND01 실제 비교에 따라 Rust 활성 패널 x/y/y2/z 제어와 native 제목·범례·text/annotate 이동을 추가합니다. 설치 가능한 공통 preview metadata는 실제 PNG 픽셀을 사용하고 시간 설정·원자료·history·기존 generic form을 유지합니다. Schema 0.1·package 1.1.0은 바꾸지 않습니다.
 - M01 custom same-shaped heatmap annotation strings (up to 512 characters/cell)
   and finite x/y tick rotations now round-trip separately from scalar colour
   values. Masked cells suppress text; clustermap reorders text, masks and labels
