@@ -2,15 +2,16 @@
 
 All notable changes to this project are documented here.
 
-## [2.0.0] - local candidate (unpublished; qualification incomplete)
+## [2.0.0]
 
 Package and editor metadata align at 2.0.0. The JSON wire schema remains 0.1.
-This entry does not record a publication or a passing release qualification.
+Artifacts are available from the [official GitHub release](https://github.com/mud-the-developer/mudplot/releases/tag/v2.0.0)
+once the release workflow publishes them.
 
 The combined panel legend stays above populated secondary-y marks without
 moving legends away from primary data when the twin is empty.
 
-### Added — v2 work in progress / v2 진행 중
+### Added / 추가
 
 - N14 adds finite literal patches/Path codes, native tables, mixed-coordinate
   annotation anchors, shared spans and named physical stroke/shadow effects.

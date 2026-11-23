@@ -93,18 +93,18 @@ benchmark하세요.
 
 ## 상태
 
-**v2.0.0** 로컬 후보이며 아직 발행하지 않았고 릴리스 검증도 끝나지 않았습니다.
+현재 버전: **v2.0.0**.
 JSON wire는 0.1을 유지하며, Matplotlib이 기본 렌더러입니다. [호환성 정책](docs/COMPATIBILITY.ko.md),
 아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-이 후보에는 범위가 정해진 v2 워크플로가 포함되어 있습니다.
+이 버전에는 범위가 정해진 v2 워크플로가 포함되어 있습니다.
 [실행 예제와 업그레이드 안내](examples/README.ko.md)에서 시작하세요.
 등록 레이어 66종은 **Matplotlib·Seaborn과 전체 기능이 동등하다는 뜻이 아닙니다.**
 [지원 범위](docs/FEATURE_COVERAGE.ko.md)에서 적용 가능한 조합을 확인하고,
 [v2 검증 기준](docs/V2_SCOPE.ko.md)에서 소스 검증과 설치본 검증을 구분합니다.
-최종 2.0.0 배포 산출물과 TeX 검증은 완료되지 않았습니다.
+릴리스 워크플로는 산출물 및 TeX 검증을 통과한 뒤에 배포합니다.
 
 **엔진 (`mudplot/`)의 구현 범위는 아래와 같습니다.** 최신 전체/최소환경/대상
 검증 결과와 적용 범위는 [개발 체크포인트](docs/V1_1_PLAN.ko.md#현재-체크포인트)를
@@ -209,8 +209,7 @@ FigureSpec/JSON, 원본 측정값과 Matplotlib 기본 동작은 유지합니다
 
 ## 설치
 
-이 checkout은 v2.0.0 로컬 후보입니다. 태그나 릴리스는 발행하지 않았으므로
-후보는 현재 checkout에서 설치하세요.
+소스에서 v2.0.0을 설치하려면 해당 버전의 checkout에서 다음 명령을 실행하세요.
 
 ```bash
 # Core package만 (필수 외부 의존성 0)
@@ -220,14 +219,14 @@ python -m pip install .
 python -m pip install '.[render]'
 ```
 
-아래는 발행 예정 metadata이며 **아직 다운로드 가능한 주소가 아닙니다**:
-`https://github.com/mud-the-developer/mudplot/releases/download/v2.0.0/mudplot-2.0.0-py3-none-any.whl`.
-기존 v1.0.0 산출물은 그대로 유지합니다. 발행 경로는 GitHub-only이며 PyPI
-trusted publishing은 활성화하지 않았습니다.
+릴리스 워크플로가 산출물을 게시하면 [공식 v2.0.0 GitHub 릴리스](https://github.com/mud-the-developer/mudplot/releases/tag/v2.0.0)에서
+wheel 또는 소스 아카이브를 내려받을 수 있습니다. 배포는 GitHub에서만 진행하며
+PyPI trusted publishing은 활성화하지 않았습니다.
+[wheel 다운로드](https://github.com/mud-the-developer/mudplot/releases/download/v2.0.0/mudplot-2.0.0-py3-none-any.whl)는
+게시 후에만 사용할 수 있습니다.
 
-wheel에는 `mudplot` engine만 포함됩니다. 로컬 후보의 Python dashboard·Rust editor는
-이 checkout에서 함께 실행하고, 발행 후에는 같은 release tag를 사용해 template과
-계약 version을 맞추세요.
+wheel에는 `mudplot` 엔진만 포함됩니다. Python dashboard와 Rust editor는
+템플릿과 계약 버전이 일치하도록 같은 checkout이나 `v2.0.0` 태그에서 실행하세요.
 
 개발:
 

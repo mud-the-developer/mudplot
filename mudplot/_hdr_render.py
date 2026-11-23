@@ -851,9 +851,9 @@ class HDRCollection(PolyCollection):
                                 "native HDR path transform changed topology"
                             )
                     digest.update(struct.pack(">Q", count))
-                    digest.update(memoryview(vertices).cast("B"))
-                    digest.update(memoryview(codes))
-                    digest.update(memoryview(native_vertices).cast("B"))
+                    digest.update(vertices.data.cast("B"))
+                    digest.update(codes.data)
+                    digest.update(native_vertices.data.cast("B"))
                     if measure:
                         for axis in (0, 1):
                             values = native_vertices[:, axis]

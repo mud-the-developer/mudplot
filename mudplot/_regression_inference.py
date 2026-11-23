@@ -644,17 +644,22 @@ def _compute(columns, layer, cohorts, plans, source_ids, polynomial_fit):
         dz = _nuisance(columns, config, diagnostic_rows)
         qx, qz = _rows_array(columns, layer.x, query), _nuisance(columns, config, query)
         grid = np.empty(0) if config.residual else _grid(x, config.model)
-        reference = (
-            None
-            if z is None
-            else np.asarray(
+        grid_z = None
+        if config.residual:
+            parts = [(dx, dz)]
+        elif z is None:
+            parts = [(grid, None), (qx, qz)]
+        else:
+            reference = np.asarray(
                 [config.partial.reference[name] for name in config.partial.columns]
             )
-        )
-        grid_z = None if z is None else np.tile(reference, (len(grid), 1))
-        parts = [(dx, dz)] if config.residual else [(grid, grid_z), (qx, qz)]
-        if not config.residual and z is not None:
-            parts += [(x, z), (x, np.tile(reference, (len(x), 1)))]
+            grid_z = np.tile(reference, (len(grid), 1))
+            parts = [
+                (grid, grid_z),
+                (qx, qz),
+                (x, z),
+                (x, np.tile(reference, (len(x), 1))),
+            ]
         point, normal_bounds = _evaluate(
             x,
             y,

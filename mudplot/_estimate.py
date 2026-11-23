@@ -634,14 +634,19 @@ def summarize(
                 typed_units=typed_units,
             )
             if axis_log:
-                coordinates = [center] if lower is None else [center, lower, upper]
+                log_center = float(center)
+                if lower is None:
+                    assert upper is None
+                    coordinates = [log_center]
+                else:
+                    assert upper is not None
+                    coordinates = [log_center, lower, upper]
                 with np.errstate(over="ignore", under="ignore", invalid="ignore"):
                     raw = np.power(10.0, coordinates)
                 if np.any(~np.isfinite(raw)) or np.any(raw <= 0):
                     raise ValueError(
                         "inverse log statistics exceed finite positive range"
                     )
-                assert (lower is None) == (upper is None)
                 if (
                     lower is not None
                     and upper is not None

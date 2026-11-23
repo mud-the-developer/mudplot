@@ -98,20 +98,20 @@ benchmark those workloads.
 
 ## Status
 
-**v2.0.0** local candidate (unpublished and not yet release-qualified).
+Current version: **v2.0.0**.
 The JSON wire remains 0.1 and Matplotlib is the canonical renderer. See the [compatibility policy](docs/COMPATIBILITY.md),
 [`DESIGN.md`](DESIGN.md) for architecture and the milestone log,
 [`CHANGELOG.md`](CHANGELOG.md) for
 version-by-version detail, and [`ROADMAP.md`](ROADMAP.md) for concrete next
 steps (more layer types, quality work, and the Rust editor).
 
-This candidate includes bounded v2 workflows.
+This version includes bounded v2 workflows.
 Start with the [executable workflow and upgrade guide](examples/README.md).
 The 66 registered layer types are **not** full Matplotlib or Seaborn parity.
 See [feature coverage](docs/FEATURE_COVERAGE.md) for applicable combinations
 and [v2 evidence and gates](docs/V2_SCOPE.md) for the distinction between
-source checks, installed milestones and final release qualification. Final
-2.0.0 artifact and TeX qualification are not verified.
+source checks, installed milestones and final release qualification. The
+release workflow publishes only after artifact and TeX verification pass.
 
 **Engine (`mudplot/`) — implemented surfaces below.** See the
 [development checkpoint](docs/V1_1_PLAN.md#current-checkpoint) for the latest
@@ -227,8 +227,7 @@ already been published. See the [release checklist](docs/V1_1_RELEASE_CHECKLIST.
 
 ## Installation
 
-This checkout is the local v2.0.0 candidate; no tag or release has been
-published by this work. Install the candidate from this checkout:
+To install v2.0.0 from source, run these commands from its checkout:
 
 ```bash
 # Core package only (zero required third-party dependencies)
@@ -238,14 +237,15 @@ python -m pip install .
 python -m pip install '.[render]'
 ```
 
-The reserved wheel URL below is release metadata, **not an available download**:
-`https://github.com/mud-the-developer/mudplot/releases/download/v2.0.0/mudplot-2.0.0-py3-none-any.whl`.
-Existing v1.0.0 assets remain unchanged. Publishing remains GitHub-only; PyPI
-trusted publishing is not enabled.
+Once the release workflow publishes the assets, download the wheel or source
+archive from the [official v2.0.0 GitHub release](https://github.com/mud-the-developer/mudplot/releases/tag/v2.0.0).
+The [wheel download](https://github.com/mud-the-developer/mudplot/releases/download/v2.0.0/mudplot-2.0.0-py3-none-any.whl)
+is available only once published.
+Publishing is GitHub-only; PyPI trusted publishing is not enabled.
 
 The wheel contains the `mudplot` engine only. Run the Python dashboard and Rust
-editor from this same checkout for the local candidate, or from a matching
-release tag after publication, so templates and contracts stay aligned.
+editor from this same checkout or the matching `v2.0.0` tag so templates and
+contracts stay aligned.
 
 Development:
 

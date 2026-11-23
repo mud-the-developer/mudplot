@@ -311,6 +311,7 @@ def compute_spectrum(columns, layer):
                 y = coefficients(layer.y)
                 cross = (x.conj() * y).mean(axis=0)
             if c.kind == "coherence":
+                assert cross is not None
                 denominator = power.mean(axis=0) * (np.abs(y) ** 2).mean(axis=0)
                 values = np.ma.array(
                     np.abs(cross) ** 2 / denominator, mask=denominator == 0
@@ -328,6 +329,7 @@ def compute_spectrum(columns, layer):
                     )
                 factor /= normalization
                 if c.kind == "csd":
+                    assert cross is not None
                     cross = cross * factor
                     values = np.abs(cross)
                 elif c.kind == "spectrogram":
