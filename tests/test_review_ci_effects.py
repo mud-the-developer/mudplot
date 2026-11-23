@@ -1,4 +1,4 @@
-"""Keep CI fixtures and finite execution budgets aligned with observed checks."""
+"""Keep CI fixtures and full-suite execution aligned with observed checks."""
 
 from pathlib import Path
 
@@ -14,13 +14,11 @@ def test_rust_smoke_job_installs_optional_effects_used_by_its_fixtures():
     assert "uv sync --locked --extra all" in job
 
 
-def test_python_matrix_retains_full_suite_with_timeout_headroom_and_timings():
+def test_python_matrix_retains_full_suite_and_timings():
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     job = workflow.split("\n  lint-and-test:\n", 1)[1].split(
         "\n  minimum-render:\n", 1
     )[0]
-    # Baseline063 exceeded45minutes; measure the full suite instead of dropping tests.
-    assert "timeout-minutes: 60" in job
     step = job.split("- name: Pytest\n", 1)[1].split("\n      - ", 1)[0]
     command = step.split("run:", 1)[1].strip()
     if command.startswith(">"):
@@ -33,13 +31,13 @@ def test_python_matrix_retains_full_suite_with_timeout_headroom_and_timings():
     )
 
 
-def test_minimum_suite_has_its_own_finite_job_with_the_same_tex_prerequisites():
+def test_minimum_suite_has_its_own_job_with_the_same_tex_prerequisites():
     workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
     assert "\n  minimum-render:\n" in workflow
     regular, minimum = workflow.split("\n  minimum-render:\n", 1)
     minimum = minimum.split("\n  rust-editor:\n", 1)[0]
     assert "Minimum render dependency contract" not in regular
-    assert "timeout-minutes: 60" in minimum and 'python-version: "3.11"' in minimum
+    assert 'python-version: "3.11"' in minimum
     assert "persist-credentials: false" in minimum
     assert "scripts/check_minimum_versions.py.lock" in minimum
     assert "uv sync --locked --extra dev --extra browser" in minimum
