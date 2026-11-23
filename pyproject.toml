@@ -71,6 +71,7 @@ exclude = [
     "/src/pretext/**",
     "/src/SciencePlots/**",
     "/mudplot-editor/target/**",
+    "/site/**",
     "**/.mudplot-pgf-*/**",
     "**/.mudplot-write-*.tmp",
     "**/.mudplot-backup-*.bak",

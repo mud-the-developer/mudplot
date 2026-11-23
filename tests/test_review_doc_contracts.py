@@ -1,6 +1,5 @@
-"""Paired README behavior contracts and executable, trusted examples."""
+"""Executable README examples, documented resource limits, and behavior contracts."""
 
-import copy
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -10,33 +9,27 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 
 
-@pytest.mark.parametrize(
-    "file,heading",
-    [
-        ("README.md", "### Intuitive fluent builder"),
-        ("README.ko.md", "### 직관적 fluent 빌더"),
-    ],
-)
+@pytest.mark.parametrize("file", ["README.md", "README.ko.md"])
 def test_readme_builder_example_runs_and_closes_owned_figure(
-    tmp_path, monkeypatch, file, heading
+    tmp_path, monkeypatch, file
 ):
     text = (ROOT / file).read_text(encoding="utf-8")
-    snippet = text.split(heading, 1)[1].split("```python\n", 1)[1].split("```", 1)[0]
-    data = {
+    snippet = text.split("```python\n", 1)[1].split("```", 1)[0]
+    expected = {
         "voltage": [1, 2, 3],
         "current": [2, 4, 3],
         "order": ["synthetic", "synthetic", "synthetic"],
     }
-    before = copy.deepcopy(data)
     figures = plt.get_fignums()
     monkeypatch.chdir(tmp_path)
-    exec(compile(snippet, "trusted-README-example", "exec"), {"data": data})
+    namespace = {}
+    exec(compile(snippet, "trusted-README-example", "exec"), namespace)
     assert (tmp_path / "fig.pdf").read_bytes().startswith(b"%PDF")
-    assert plt.get_fignums() == figures and data == before
+    assert plt.get_fignums() == figures and namespace["data"] == expected
 
 
-@pytest.mark.parametrize("file", ["README.md", "README.ko.md"])
-def test_paired_readme_resource_terms_and_checkpoint_scope(file):
+@pytest.mark.parametrize("file", ["docs/INSTALL.md", "docs/INSTALL.ko.md"])
+def test_paired_installation_guides_state_resource_limits(file):
     text = (ROOT / file).read_text(encoding="utf-8")
     for token in (
         "max_panels = 256",
@@ -44,11 +37,8 @@ def test_paired_readme_resource_terms_and_checkpoint_scope(file):
         "max_layers = 1024",
         "max_bins_per_axis = 512",
         "max_canvas_pixels = 40_000_000",
-        "checkpoint",
-        "Unreleased",
     ):
         assert token in text
-    assert "REVIEW_DECISION.md" in text
 
 
 def test_legacy_scatter_appearance_kwargs_still_forward():

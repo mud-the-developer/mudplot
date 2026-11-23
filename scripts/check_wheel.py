@@ -22,6 +22,7 @@ HTMX_SHA256 = "449317ade7881e949510db614991e195c3a099c4c791c24dacec55f9f4a2a452"
 SDIST_FILES = (
     "LICENSE",
     "README.md",
+    "README.ko.md",
     "SECURITY.md",
     "SECURITY.ko.md",
     "pyproject.toml",
@@ -36,6 +37,18 @@ SDIST_FILES = (
     "scripts/check_python_bridge_paths.py",
     "scripts/check_request_body_limits.py",
     "docs/PLOT_GALLERY.md",
+    "docs/GUIDE.md",
+    "docs/GUIDE.ko.md",
+    "docs/INSTALL.md",
+    "docs/INSTALL.ko.md",
+    "docs/PUBLICATION.md",
+    "docs/PUBLICATION.ko.md",
+    "docs/AUTOMATION.md",
+    "docs/AUTOMATION.ko.md",
+    "docs/UNCERTAINTY.md",
+    "docs/UNCERTAINTY.ko.md",
+    "docs/COMPARISONS.md",
+    "docs/COMPARISONS.ko.md",
     "examples/README.md",
     "examples/README.ko.md",
     "docs/V2_EXAMPLE_EVIDENCE.md",
@@ -1154,6 +1167,7 @@ def main() -> int:
             "mudplot-editor/target",
             "src/pretext",
             "src/SciencePlots",
+            "site",
         ):
             if any(f"/{forbidden}/" in name for name in sdist_names):
                 missing.append(f"sdist must not contain {forbidden}")
