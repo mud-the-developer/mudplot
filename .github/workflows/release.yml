@@ -20,7 +20,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 240
     permissions:
       contents: read
       id-token: write
@@ -77,8 +77,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            texlive-latex-base texlive-latex-recommended texlive-luatex \
-            texlive-pictures texlive-bibtex-extra biber ghostscript
+            texlive-latex-base texlive-latex-recommended texlive-pictures \
+            texlive-xetex texlive-luatex texlive-bibtex-extra biber ghostscript
           curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
             "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
           echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
@@ -108,8 +108,8 @@ jobs:
           if-no-files-found: error
       - name: Minimum render dependency contract
         run: |
-          uv python install 3.10
-          uv run --python 3.10 --locked --script \
+          uv python install 3.11
+          uv run --python 3.11 --locked --script \
             scripts/check_minimum_versions.py
       - name: Schema/docs export is in sync
         run: uv run python scripts/check_schema_sync.py
@@ -120,8 +120,8 @@ jobs:
       - name: Build and reproduce verified sdist/wheel from the source archive
         run: |
           rm -rf dist dist-rebuild
-          uv run python scripts/check_wheel.py --out-dir dist
-          uv run python scripts/check_wheel.py --out-dir dist-rebuild
+          uv run python scripts/check_wheel.py --render --out-dir dist
+          uv run python scripts/check_wheel.py --render --out-dir dist-rebuild
           diff -u \
             <(cd dist && sha256sum mudplot-*) \
             <(cd dist-rebuild && sha256sum mudplot-*)
@@ -136,6 +136,19 @@ jobs:
             --manifest-path mudplot-editor/Cargo.toml -- -D warnings
           cargo test --locked --manifest-path mudplot-editor/Cargo.toml
           uv run python scripts/rust_editor_smoke_test.py --browser
+      - name: Required specialized Rust browser consumers (source bridge)
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/mudplot-specialized-target
+          MUDPLOT_BRIDGE_SOURCE_ROOT: ${{ github.workspace }}
+          MUDPLOT_REQUIRE_BROWSER: "1"
+          MPLBACKEND: Agg
+        run: |
+          sudo apt-get install -y poppler-utils
+          cargo build --locked --manifest-path mudplot-editor/Cargo.toml
+          MUDPLOT_EDITOR_BIN="$CARGO_TARGET_DIR/debug/mudplot-editor" \
+          MUDPLOT_BRIDGE_PYTHON="$PWD/.venv/bin/python" \
+            uv run --no-sync pytest -q tests/test_rust_specialized_controls.py \
+              --junitxml=release-specialized-browser.xml
       - name: Build release checksums
         run: (cd dist && sha256sum mudplot-* > SHA256SUMS)
       - name: Attest release artifacts

@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "feature_ids": ["C01"],
+  "status": "in-progress-functional-batch-not-browser-or-installed-qualified",
+  "contract": {
+    "legacy": "New strip field omitted when None; old raw-x path and local seed 0 unchanged. hue_order alone remains legacy.",
+    "opt_in": "StripSpec or explicit order/nondefault orient/dodge/native_scale",
+    "jitter_policy": ["uniform", "none"],
+    "seed": "non-bool integer 0..2**32-1, local NumPy default_rng",
+    "jitter": "half-width fraction [0,0.5], default 0.15",
+    "unit": "minimum selected/reserved category axis spacing; dodge*spacing/hue_slots for positive multi-hue dodge",
+    "dodge": "total span fraction [0,1], None/0 overlays",
+    "native": "numeric spacing, log10 category spacing, explicit F02 canonical-day temporal view",
+    "selection": "category/value/group listwise missing exclusion and explicit category/hue orders; source data retained",
+    "orientation": "x categorical and y measured under both v/h"
+  },
+  "observed_checks": [
+    {
+      "command": "uv run pytest -q tests/test_strip_categories.py",
+      "outcome": "22 passed in 6.48s before final slot-width refinement; superseded by combined cohort below"
+    },
+    {
+      "command": "uv run pytest -q tests/test_strip_categories.py tests/test_categorical_scales.py tests/test_swarm.py tests/test_swarm_facets.py tests/test_temporal_native.py tests/test_capabilities_consistency.py tests/test_review_full_spec_fields.py",
+      "outcome": "399 passed in 59.82s"
+    },
+    {
+      "command": "uv run python examples/strip_categories.py artifacts/v2_strip_categories",
+      "outcome": "PASS nested v/h, reserved slots, native log, dates, JSON/action/source preservation; actual PNG/SVG/PDF and editable JSON generated"
+    },
+    {
+      "command": "uv run ruff check mudplot/_strip.py mudplot/spec.py mudplot/api.py mudplot/__init__.py mudplot/_render.py mudplot/validate.py mudplot/_temporal_data.py mudplot/_facet.py mudplot/capabilities.py mudplot/docs.py tests/test_strip_categories.py examples/strip_categories.py",
+      "outcome": "All checks passed after correcting five new style findings"
+    },
+    {
+      "command": "uv run python scripts/check_schema_sync.py",
+      "outcome": "schema, capabilities, REFERENCE synchronized; gallery drift identified and regenerated via its existing gallery_markdown generator, not rerun yet"
+    }
+  ],
+  "visual_review": "Actual 3000x2100 PNG read: category/hue reservations, v/h, native log and date-y panels retain points. Initial crowded date-x example changed to readable date-y; regenerated raster inspected. No claim of a separate PDF/SVG visual review.",
+  "artifacts": "artifacts/v2_strip_categories/strip_categories.{png,svg,pdf,mplot.json}",
+  "remaining_C01_gates": [
+    "real Chromium/Rust action and human layer-field edit, rejection safety, undo/redo, save/reopen and export",
+    "installed API/CLI paths and supported minimum profile",
+    "parent source and raster/vector review and acceptance"
+  ],
+  "remaining_product_scope": "F01 independent roles and all other catalogue gaps remain mandatory; C01 is not closed and no v2/version/release claim is made.",
+  "git_or_publication_actions": false
+}

@@ -12,7 +12,7 @@ import typing
 from dataclasses import MISSING, fields, is_dataclass
 from typing import Union, get_args, get_origin
 
-from .spec import FigureSpec
+from .spec import DataSpec, FigureSpec
 
 __all__ = ["json_schema"]
 
@@ -27,11 +27,14 @@ _PRIMITIVES = {
 }
 
 
-def _schema_for(tp, defs: dict):
+def _schema_for(tp, defs: dict) -> dict[str, object]:
     origin = get_origin(tp)
 
     if tp in _PRIMITIVES:
         return dict(_PRIMITIVES[tp])
+
+    if origin is typing.Literal:
+        return {"enum": list(get_args(tp))}
 
     if origin in _UNION_ORIGINS:
         args = get_args(tp)
@@ -69,6 +72,25 @@ def _dataclass_schema(cls, defs: dict) -> dict:
             prop = {**prop, "default": f.default}
         elif f.default_factory is MISSING:  # no default at all -> required
             required.append(f.name)
+        if cls is DataSpec and f.name == "matrices":
+            item = get_args(hints[f.name])[1]
+            prop["additionalProperties"] = _schema_for(item, defs)
+        bounds = {
+            key: f.metadata[key]
+            for key in ("minItems", "maxItems")
+            if key in f.metadata
+        }
+        if bounds:
+            array = (
+                prop
+                if prop.get("type") == "array"
+                else next(
+                    item
+                    for item in typing.cast("list[dict[str, object]]", prop["anyOf"])
+                    if item.get("type") == "array"
+                )
+            )
+            array.update(bounds)
         props[f.name] = prop
     schema = {"type": "object", "properties": props}
     if getattr(cls, "_reject_unknown_fields", False):

@@ -1,6 +1,556 @@
 {
+  "live_facet_templates": {
+    "opt_in": "Plot.facet(live=True) / SetLiveFacets",
+    "field": "FigureSpec.facet_template; omitted by legacy materialized defaults",
+    "edit": "Plot.facet_template / SetFacetTemplate explicitly replaces all fixed cells",
+    "saved_views": "materialized panels/local overrides remain authoritative on load",
+    "selectors": "resolved creation orders/selectors frozen; SetData never adds cells",
+    "orders": "same-channel category/hue slots retained; explicit orders/reset recapture",
+    "local_edits": "ordinary panel actions local; later whole replacement supersedes overrides",
+    "layout": "N13 nesting/rename/reorder/placement preserve frozen typed selectors; whole-template replacement retains actual stable IDs and placements",
+    "detach": "removing a live cell leaves saved views; replacing facets/joint/pair or extending/changing the implicit grid detaches the live recipe",
+    "validation": "all generated frozen-selector views checked; no phantom unfiltered layer",
+    "limits": "existing64 cells/total layers/row domains and swarm per-layer/scope bounds"
+  },
+  "axis_controls": {
+    "status": "N12 isolated implementation; qualification/integration tracked separately",
+    "fields": {
+      "ScaleOptionsSpec": [
+        {
+          "name": "base",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "subs",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "linthresh",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "linscale",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "linear_width",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "LocatorSpec": [
+        {
+          "name": "kind",
+          "type": "str",
+          "required": false,
+          "default": "auto"
+        },
+        {
+          "name": "values",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "step",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "offset",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "nbins",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "integer",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "prune",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "count",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "subdivisions",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "subs",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "unit",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "interval",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "weekday",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "FormatterSpec": [
+        {
+          "name": "kind",
+          "type": "str",
+          "required": false,
+          "default": "auto"
+        },
+        {
+          "name": "labels",
+          "type": "list[str] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "scientific",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "use_offset",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "powerlimits",
+          "type": "list[int] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "mathtext",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "notation",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "precision",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "prefix",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "suffix",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "xmax",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "decimals",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "unit",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "separator",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "style",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "label_only_base",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "half",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "use_overline",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "pattern",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "TickSpec": [
+        {
+          "name": "locator",
+          "type": "LocatorSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "formatter",
+          "type": "FormatterSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "rotation",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "AxisTransformSpec": [
+        {
+          "name": "kind",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "factor",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "offset",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "source_unit",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "target_unit",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "reverse",
+          "type": "bool",
+          "required": false,
+          "default": false
+        }
+      ],
+      "SecondaryAxisSpec": [
+        {
+          "name": "transform",
+          "type": "AxisTransformSpec",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "label",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "major_ticks",
+          "type": "TickSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "minor_ticks",
+          "type": "TickSpec or None",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    "api": "ticks / axis_scale / secondary_xaxis / secondary_axis",
+    "actions": [
+      "SetAxisTicks",
+      "SetAxisScale",
+      "SetDerivedAxis"
+    ],
+    "scales": [
+      "linear",
+      "log",
+      "symlog",
+      "asinh",
+      "logit"
+    ],
+    "locators": [
+      "auto",
+      "none",
+      "fixed",
+      "multiple",
+      "max_n",
+      "linear",
+      "auto_minor",
+      "log",
+      "symlog",
+      "asinh",
+      "logit",
+      "calendar"
+    ],
+    "formatters": [
+      "auto",
+      "none",
+      "fixed",
+      "scalar",
+      "number",
+      "percent",
+      "engineering",
+      "log",
+      "logit",
+      "date",
+      "concise_date"
+    ],
+    "date_patterns": [
+      "iso_date",
+      "iso_datetime",
+      "time",
+      "month",
+      "year",
+      "subsecond"
+    ],
+    "transforms": [
+      "affine",
+      "celsius_fahrenheit",
+      "radians_degrees",
+      "seconds_milliseconds",
+      "hertz_period",
+      "reciprocal",
+      "unix_seconds"
+    ],
+    "axis_fields": [
+      "scale_options",
+      "major_ticks",
+      "minor_ticks"
+    ],
+    "panel_fields": [
+      "secondary_x",
+      "secondary_y"
+    ],
+    "legacy": "all new fields appended/None/omit_none; old SetScale JSON unchanged; independent y2 not repurposed",
+    "tick_units": "axis coordinates; fixed temporal positions are UTC days since 1970, not source timestamp units",
+    "fixed": "finite nonbool strictly increasing/distinct after float conversion; literal labels require matching fixed positions",
+    "formats": "safe finite named notation/precision; no user format templates, width, eval, attribute lookup or serialized callbacks",
+    "numeric_precision": "0..12 decimals; general precision1..12; literal prefix/suffix/unit<=32 characters",
+    "ordinal": "auto preserves existing category locations/labels; only auto/none/fixed compatible, never numeric half-category ticks",
+    "calendar": "explicit TemporalSpec clock; UTC/fixed offset; named year/month/week/day/hour/minute/second/microsecond and auto",
+    "calendar_precision": "N12 date/auto/concise use canonical datetime/timedelta, not distant-epoch num2date rounding; fixed AUTO is date+6-digit ISO timestamp; old no-opt-in policies unchanged",
+    "concise_policy": "Matplotlib3.8 finite level/zero/offset/trailing-zero policy with canonical datetimes; fixed temporal positions supported; adapted-policy license/changes in bundled _matplotlib_notice.txt",
+    "new_scales": "symlog/asinh/logit: finite Cartesian raw numeric geometry; unsupported statistical/categorical/projection combinations reject",
+    "domain_view": "pure paired x/y (band x/y/y2) view ignores native missing/nonfinite gaps only for domain checks; source/native parsing/paths/order remain unchanged",
+    "native_collection_limits": "new-scale bar/errorbar/stem/broken_barh restore prior native DataLim/minpos/ignore then union actual raw new artist geometry, including embedded bar errors, for Matplotlib3.8 correctness. Event exception only actual logit Y-lane half-length geometry; other event/legacy log/linear paths unchanged, no fake origin",
+    "log_parameters": "base/subs apply everywhere existing log is valid; native log10 category spacing is multiplicatively equivalent. Scale subs are minor policy; automatic major locations remain base powers and explicit locator subs can override either rank",
+    "logit_domain": "strict open(0,1); constant p view uses native0.1 widening on min(p,1-p), contains data/complement symmetric; unrepresentable native inverse/domain precision errors, no epsilon/clipping",
+    "secondary": "derived top x/right y only; analytic closed registry with declared units, view-only conversion; linear/log parents; right derived y conflicts with independent y2",
+    "secondary_precision": "validate actual visible bounds on every native refresh, including later zoom; target ULP propagated through analytic inverse; collapse/nonfinite/domain failures reject",
+    "secondary_date": "unix_seconds converts canonical UTC1970 day*86400, never source input unit/origin or Matplotlib global epoch",
+    "sharing": "existing legal all/row/col/share_id groups; mixed named/figure modes remain rejected; exact explicit conflicts reject; None inheritance only new options in effective view, no source/clock mutation",
+    "editor": "both UIs keep granular fields; linear/log inverse correct for all bases; new nonlinear DATA drag disabled per actual target with reason, unaffected primary handles survive nonlinear y2; title/legend fractions remain",
+    "max_ticks_per_level": 512,
+    "max_figure_configured_ticks": 16384,
+    "max_formatted_tick_characters": 512,
+    "resource_scope": "physical axis/rank active-location/format operations, shared inheritance included; preflight before native grids/rules/requested expansion; repeated calls replace counts; not cached-Tick RAM bound/SLA or old-limit increase"
+  },
+  "signal_spectra": {
+    "api": "Plot.spectrum / LayerSpec.spectrum / SpectrumSpec",
+    "required": "fs: finite positive nonbool samples/second (Hz)",
+    "kinds": [
+      "spectrogram",
+      "psd",
+      "csd",
+      "coherence",
+      "magnitude",
+      "angle",
+      "phase"
+    ],
+    "windows": [
+      "boxcar",
+      "hann",
+      "hamming",
+      "blackman"
+    ],
+    "detrend": [
+      "none",
+      "mean",
+      "linear"
+    ],
+    "sides": [
+      "onesided",
+      "twosided"
+    ],
+    "scaling": [
+      "density",
+      "spectrum"
+    ],
+    "scale": [
+      "linear",
+      "dB"
+    ],
+    "segmented": "nfft=None means 256; full windows only; trailing partial retained but unused",
+    "whole": "magnitude/angle/phase use entire signal; nfft=None, overlap=0",
+    "padding": "pad_to >= effective window length; actual FFT parity defines Nyquist",
+    "source": "real plain JSON samples; missing/nonfinite/bool reject; no row dropping",
+    "csd": "display abs(mean(conj(FFT_x)*FFT_y)); computed phase is not set to zero",
+    "phase": "radians in ascending frequency order; zero coefficients undefined gaps; unwrap contiguous defined runs",
+    "coherence": ">=2 complete windows; zero-power bins undefined; no significance claim",
+    "coherence_numeric": "positive consumed-prefix channel scaling before detrend/FFT, then per-frequency maxima across segment vectors before powers/cross; exact zero bins stay zero; physical CSD unchanged",
+    "line_references": "nonempty labels/citation/href validated by shared core helpers; native SVG links and PGF figcite/href",
+    "scalar_color": "shared finite named/hex colour contract; clabel requires a spectrogram colourbar",
+    "zero_stroke": "line_width=0 uses native no-line style, retaining exact frequency/value artist data",
+    "coherence_precision": "if channel normalization would erase nonzero consumed samples, raise floating-point precision error before FFT; unused trailing partial never influences normalization",
+    "undefined": "derived gaps; all undefined rejects; no positive floor",
+    "axes": "primary Cartesian linear nontemporal; no groups/semantics/weights/selectors",
+    "max_samples_per_channel": 1000000,
+    "max_fft": 65536,
+    "max_complex_cells": 1048576,
+    "fft_precision_limit": "zero computed coefficient/power yields derived gaps; float64 window/detrend/FFT may round tiny true bins to zero; masks are not physical proof of exact zeros or high-dynamic-range exact/relative accuracy"
+  },
   "spec_version": "0.1",
+  "temporal_axes": {
+    "status": "F02 in progress; Cartesian statistics/distributions connected",
+    "api": "Plot.date_axis / SetTemporalAxis / AxisSpec.temporal",
+    "layers": [
+      "band",
+      "bar",
+      "barplot",
+      "box",
+      "boxenplot",
+      "broken_barh",
+      "countplot",
+      "ecdf",
+      "ecdf2d",
+      "errorbar",
+      "eventplot",
+      "hexbin",
+      "hist",
+      "hist2d",
+      "kde",
+      "kde2d",
+      "line",
+      "lineplot",
+      "pointplot",
+      "regplot",
+      "rug",
+      "scatter",
+      "stackplot",
+      "stairs",
+      "stem",
+      "stripplot",
+      "swarmplot",
+      "violin"
+    ],
+    "literal_layers": [
+      "hline",
+      "vline",
+      "text",
+      "annotate"
+    ],
+    "literal_units": "canonical day coordinates; temporal_coordinates converts explicit inputs",
+    "density_units": "per day for each temporal observation dimension",
+    "uncertainty": "absolute endpoints share the declared clock; numeric error columns use input unit without origin, ISO errors use days",
+    "interval_duration": "input numeric unit without origin; days for ISO starts",
+    "native_literals": "stair edges, baselines, event offsets/lengths and interval band geometry use canonical axis units; ISO stair edges allowed",
+    "bounds": "numeric plotting bounds use days; ISO bin edges for hist and clips for univariate KDE/violin",
+    "axes": [
+      "x",
+      "y",
+      "y2"
+    ],
+    "projection": "Cartesian 2-D, linear scale only",
+    "timezones": "UTC or fixed offsets; naive inputs require explicit timezone",
+    "coordinate_unit": "UTC days since 1970; bounds use the same coordinates",
+    "numeric_input": "explicit s/ms/us/ns/day unit and ISO origin required",
+    "precision": "microseconds; unsupported precision/float collapse rejects",
+    "source": "raw values, ordering, semantic columns and row IDs preserved",
+    "unsupported": "other layer families reject until connected; F02 not complete"
+  },
   "layers": {
+    "spectrum": {
+      "required": [
+        "x",
+        "spectrum"
+      ],
+      "optional": [
+        "y",
+        "label",
+        "color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "citation",
+        "href"
+      ]
+    },
     "line": {
       "required": [
         "x",
@@ -8,6 +558,14 @@
       ],
       "optional": [
         "group",
+        "semantics",
+        "line",
+        "native_style",
+        "orient",
+        "order",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "hue_order",
         "label",
         "color",
@@ -17,7 +575,9 @@
         "marker",
         "marker_size",
         "alpha",
-        "axis"
+        "axis",
+        "path_effects",
+        "transforms"
       ]
     },
     "stem": {
@@ -34,7 +594,14 @@
         "marker",
         "marker_size",
         "alpha",
-        "axis"
+        "axis",
+        "orient",
+        "group",
+        "hue_order",
+        "semantics",
+        "colorbar",
+        "clabel",
+        "cmap_kind"
       ]
     },
     "stairs": {
@@ -49,7 +616,10 @@
         "line_width",
         "line_style",
         "alpha",
-        "axis"
+        "axis",
+        "stairs",
+        "group",
+        "hue_order"
       ]
     },
     "eventplot": {
@@ -64,7 +634,14 @@
         "line_width",
         "line_style",
         "alpha",
-        "axis"
+        "axis",
+        "group",
+        "hue_order",
+        "lane_step",
+        "semantics",
+        "colorbar",
+        "clabel",
+        "cmap_kind"
       ]
     },
     "broken_barh": {
@@ -81,7 +658,10 @@
         "line_width",
         "line_style",
         "alpha",
-        "axis"
+        "axis",
+        "group",
+        "hue_order",
+        "lane_step"
       ]
     },
     "regplot": {
@@ -91,6 +671,11 @@
       ],
       "optional": [
         "regression",
+        "semantics",
+        "edge_color",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "weights",
         "degree",
         "confidence",
@@ -103,7 +688,8 @@
         "marker",
         "marker_size",
         "alpha",
-        "axis"
+        "axis",
+        "orient"
       ]
     },
     "scatter": {
@@ -113,18 +699,23 @@
       ],
       "optional": [
         "semantics",
+        "native_style",
         "group",
         "hue_order",
         "label",
         "color",
         "marker",
+        "edge_color",
+        "line_width",
         "marker_size",
         "alpha",
         "c",
+        "scalar_display",
         "cmap_kind",
         "colorbar",
         "clabel",
-        "axis"
+        "axis",
+        "path_effects"
       ]
     },
     "stripplot": {
@@ -134,6 +725,17 @@
       ],
       "optional": [
         "jitter",
+        "strip",
+        "semantics",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "edge_color",
+        "line_width",
+        "orient",
+        "order",
+        "dodge",
+        "native_scale",
         "group",
         "hue_order",
         "label",
@@ -141,7 +743,8 @@
         "marker",
         "marker_size",
         "alpha",
-        "axis"
+        "axis",
+        "transforms"
       ]
     },
     "swarmplot": {
@@ -166,7 +769,12 @@
         "line_width",
         "marker",
         "marker_size",
-        "alpha"
+        "alpha",
+        "pack_scope",
+        "axis",
+        "cmap_kind",
+        "colorbar",
+        "clabel"
       ]
     },
     "stackplot": {
@@ -201,7 +809,58 @@
         "quiver_scale",
         "quiver_width",
         "alpha",
-        "axis"
+        "axis",
+        "vector",
+        "group",
+        "hue_order"
+      ]
+    },
+    "barbs": {
+      "required": [
+        "x",
+        "y",
+        "u",
+        "v",
+        "vector"
+      ],
+      "optional": [
+        "color",
+        "line_width",
+        "alpha",
+        "axis",
+        "group",
+        "hue_order",
+        "label"
+      ]
+    },
+    "streamplot": {
+      "required": [
+        "vector"
+      ],
+      "optional": [
+        "color",
+        "line_width",
+        "alpha",
+        "label"
+      ]
+    },
+    "quiver3d": {
+      "required": [
+        "x",
+        "y",
+        "z",
+        "u",
+        "v",
+        "w",
+        "vector"
+      ],
+      "optional": [
+        "color",
+        "line_width",
+        "alpha",
+        "group",
+        "hue_order",
+        "label"
       ]
     },
     "bar": {
@@ -215,6 +874,7 @@
         "label",
         "color",
         "bar_width",
+        "bar_geometry",
         "edge_color",
         "line_width",
         "yerr",
@@ -228,12 +888,34 @@
         "axis"
       ]
     },
+    "barh": {
+      "required": [
+        "x",
+        "y"
+      ],
+      "optional": [
+        "group",
+        "hue_order",
+        "label",
+        "color",
+        "bar_width",
+        "bar_geometry",
+        "edge_color",
+        "line_width",
+        "alpha",
+        "axis"
+      ]
+    },
     "barplot": {
       "required": [
         "x",
         "y"
       ],
       "optional": [
+        "semantics",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "stat",
         "native_scale",
@@ -255,7 +937,8 @@
         "capsize",
         "capthick",
         "alpha",
-        "axis"
+        "axis",
+        "transforms"
       ]
     },
     "pointplot": {
@@ -264,6 +947,10 @@
         "y"
       ],
       "optional": [
+        "semantics",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "stat",
         "native_scale",
@@ -283,7 +970,8 @@
         "capsize",
         "capthick",
         "alpha",
-        "axis"
+        "axis",
+        "transforms"
       ]
     },
     "lineplot": {
@@ -293,7 +981,12 @@
       ],
       "optional": [
         "semantics",
+        "line",
+        "order",
+        "native_scale",
         "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "stat",
         "orient",
@@ -312,7 +1005,9 @@
         "error_line_width",
         "capsize",
         "capthick",
-        "alpha"
+        "alpha",
+        "axis",
+        "transforms"
       ]
     },
     "countplot": {
@@ -337,7 +1032,13 @@
         "edge_color",
         "line_width",
         "alpha",
-        "axis"
+        "axis",
+        "semantics",
+        "colorbar",
+        "clabel",
+        "line_style",
+        "cmap_kind",
+        "transforms"
       ]
     },
     "errorbar": {
@@ -362,7 +1063,9 @@
         "marker_size",
         "line_width",
         "alpha",
-        "axis"
+        "axis",
+        "error_magnitudes",
+        "native_style"
       ]
     },
     "band": {
@@ -377,7 +1080,68 @@
         "label",
         "color",
         "alpha",
-        "axis"
+        "axis",
+        "orient",
+        "fill",
+        "native_style",
+        "line_width",
+        "path_effects"
+      ]
+    },
+    "hlines": {
+      "required": [
+        "segments"
+      ],
+      "optional": [
+        "native_style",
+        "label",
+        "color",
+        "line_style",
+        "line_width",
+        "alpha",
+        "axis",
+        "path_effects"
+      ]
+    },
+    "vlines": {
+      "required": [
+        "segments"
+      ],
+      "optional": [
+        "native_style",
+        "label",
+        "color",
+        "line_style",
+        "line_width",
+        "alpha",
+        "axis",
+        "path_effects"
+      ]
+    },
+    "hspan": {
+      "required": [
+        "span"
+      ],
+      "optional": [
+        "native_style",
+        "label",
+        "color",
+        "alpha",
+        "axis",
+        "path_effects"
+      ]
+    },
+    "vspan": {
+      "required": [
+        "span"
+      ],
+      "optional": [
+        "native_style",
+        "label",
+        "color",
+        "alpha",
+        "axis",
+        "path_effects"
       ]
     },
     "hline": {
@@ -414,7 +1178,9 @@
       "optional": [
         "color",
         "alpha",
-        "axis"
+        "axis",
+        "annotation",
+        "path_effects"
       ]
     },
     "annotate": {
@@ -426,8 +1192,31 @@
         "to",
         "color",
         "alpha",
+        "axis",
+        "annotation",
+        "path_effects"
+      ]
+    },
+    "patch": {
+      "required": [
+        "patch"
+      ],
+      "optional": [
+        "native_style",
+        "path_effects",
+        "label",
+        "color",
+        "edge_color",
+        "line_width",
+        "alpha",
         "axis"
       ]
+    },
+    "table": {
+      "required": [
+        "table"
+      ],
+      "optional": []
     },
     "hist": {
       "required": [
@@ -444,7 +1233,14 @@
         "color",
         "edge_color",
         "line_width",
-        "alpha"
+        "alpha",
+        "axis",
+        "semantics",
+        "colorbar",
+        "clabel",
+        "line_style",
+        "cmap_kind",
+        "transforms"
       ]
     },
     "boxenplot": {
@@ -464,6 +1260,13 @@
         "stat_scale",
         "k_depth",
         "components",
+        "boxen",
+        "weights",
+        "semantics",
+        "axis",
+        "colorbar",
+        "clabel",
+        "cmap_kind",
         "width_method",
         "outlier_prop",
         "trust_alpha",
@@ -506,7 +1309,13 @@
         "line_style",
         "marker",
         "marker_size",
-        "alpha"
+        "alpha",
+        "box",
+        "semantics",
+        "axis",
+        "cmap_kind",
+        "colorbar",
+        "clabel"
       ]
     },
     "hist2d": {
@@ -516,12 +1325,23 @@
       ],
       "optional": [
         "bins",
+        "histogram2d",
+        "group",
+        "hue_order",
+        "semantics",
+        "orient",
+        "label",
+        "color",
+        "edge_color",
+        "line_width",
+        "line_style",
         "density",
         "cmap_kind",
         "colorbar",
         "clabel",
         "alpha",
-        "axis"
+        "axis",
+        "transforms"
       ]
     },
     "hexbin": {
@@ -545,6 +1365,7 @@
       ],
       "optional": [
         "heatmap",
+        "scalar_display",
         "cmap_kind",
         "colorbar",
         "clabel",
@@ -577,7 +1398,8 @@
         "colorbar",
         "clabel",
         "alpha",
-        "levels"
+        "levels",
+        "grid"
       ]
     },
     "contourf": {
@@ -589,7 +1411,137 @@
         "colorbar",
         "clabel",
         "alpha",
+        "levels",
+        "grid"
+      ]
+    },
+    "imshow": {
+      "required": [
+        "grid"
+      ],
+      "optional": [
+        "matrix",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "scalar_display"
+      ]
+    },
+    "pcolor": {
+      "required": [
+        "matrix",
+        "grid"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "edge_color",
+        "line_width",
+        "scalar_display"
+      ]
+    },
+    "pcolormesh": {
+      "required": [
+        "matrix",
+        "grid"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "edge_color",
+        "line_width",
+        "scalar_display"
+      ]
+    },
+    "spy": {
+      "required": [
+        "matrix",
+        "grid"
+      ],
+      "optional": [
+        "alpha",
+        "color",
+        "marker",
+        "marker_size"
+      ]
+    },
+    "triplot": {
+      "required": [
+        "x",
+        "y",
+        "triangulation"
+      ],
+      "optional": [
+        "color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "label"
+      ]
+    },
+    "tripcolor": {
+      "required": [
+        "x",
+        "y",
+        "triangulation"
+      ],
+      "optional": [
+        "c",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "edge_color",
+        "line_width"
+      ]
+    },
+    "tricontour": {
+      "required": [
+        "x",
+        "y",
+        "c",
+        "triangulation",
         "levels"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
+      ]
+    },
+    "tricontourf": {
+      "required": [
+        "x",
+        "y",
+        "c",
+        "triangulation",
+        "levels"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
+      ]
+    },
+    "trisurf": {
+      "required": [
+        "x",
+        "y",
+        "z",
+        "triangulation"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
       ]
     },
     "violin": {
@@ -598,6 +1550,13 @@
       ],
       "optional": [
         "y",
+        "violin",
+        "components",
+        "semantics",
+        "axis",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "orient",
         "order",
@@ -636,6 +1595,12 @@
       ],
       "optional": [
         "ecdf",
+        "semantics",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "marker",
+        "marker_size",
         "group",
         "hue_order",
         "orient",
@@ -643,7 +1608,33 @@
         "color",
         "line_width",
         "line_style",
-        "alpha"
+        "alpha",
+        "axis",
+        "transforms"
+      ]
+    },
+    "ecdf2d": {
+      "required": [
+        "x",
+        "y",
+        "ecdf2d"
+      ],
+      "optional": [
+        "group",
+        "hue_order",
+        "semantics",
+        "orient",
+        "axis",
+        "label",
+        "color",
+        "edge_color",
+        "line_width",
+        "line_style",
+        "alpha",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "transforms"
       ]
     },
     "kde": {
@@ -652,6 +1643,11 @@
       ],
       "optional": [
         "kde",
+        "semantics",
+        "stat_scale",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "hue_order",
         "orient",
@@ -660,7 +1656,9 @@
         "alpha",
         "line_width",
         "line_style",
-        "edge_color"
+        "edge_color",
+        "axis",
+        "transforms"
       ]
     },
     "kde2d": {
@@ -670,6 +1668,12 @@
       ],
       "optional": [
         "kde2d",
+        "semantics",
+        "orient",
+        "axis",
+        "cmap_kind",
+        "colorbar",
+        "clabel",
         "group",
         "hue_order",
         "label",
@@ -677,7 +1681,8 @@
         "alpha",
         "line_width",
         "line_style",
-        "edge_color"
+        "edge_color",
+        "transforms"
       ]
     },
     "rug": {
@@ -691,7 +1696,14 @@
         "color",
         "alpha",
         "line_width",
-        "line_style"
+        "line_style",
+        "orient",
+        "width",
+        "axis",
+        "semantics",
+        "cmap_kind",
+        "colorbar",
+        "clabel"
       ]
     },
     "pie": {
@@ -701,7 +1713,8 @@
       ],
       "optional": [
         "color",
-        "alpha"
+        "alpha",
+        "pie_geometry"
       ]
     },
     "scatter3d": {
@@ -747,7 +1760,8 @@
         "cmap_kind",
         "colorbar",
         "clabel",
-        "alpha"
+        "alpha",
+        "spatial"
       ]
     },
     "wireframe": {
@@ -756,9 +1770,180 @@
       ],
       "optional": [
         "color",
+        "alpha",
+        "spatial"
+      ]
+    },
+    "bar3d": {
+      "required": [
+        "x",
+        "y",
+        "z",
+        "spatial"
+      ],
+      "optional": [
+        "color",
+        "alpha"
+      ]
+    },
+    "contour3d": {
+      "required": [
+        "matrix",
+        "levels",
+        "spatial"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha",
+        "line_width"
+      ]
+    },
+    "contourf3d": {
+      "required": [
+        "matrix",
+        "levels",
+        "spatial"
+      ],
+      "optional": [
+        "cmap_kind",
+        "colorbar",
+        "clabel",
+        "alpha"
+      ]
+    },
+    "voxels": {
+      "required": [
+        "spatial"
+      ],
+      "optional": [
+        "color",
+        "edge_color",
+        "line_width",
         "alpha"
       ]
     }
+  },
+  "coordinate_pipeline": {
+    "roles": {
+      "line": [
+        "x",
+        "y"
+      ],
+      "lineplot": [
+        "x",
+        "y"
+      ],
+      "barplot": [
+        "x",
+        "y"
+      ],
+      "pointplot": [
+        "x",
+        "y"
+      ],
+      "countplot": [
+        "x"
+      ],
+      "stripplot": [
+        "x",
+        "y"
+      ],
+      "hist": [
+        "x"
+      ],
+      "hist2d": [
+        "x",
+        "y"
+      ],
+      "kde": [
+        "x"
+      ],
+      "kde2d": [
+        "x",
+        "y"
+      ],
+      "ecdf": [
+        "x"
+      ],
+      "ecdf2d": [
+        "x",
+        "y"
+      ]
+    },
+    "names": [
+      "identity",
+      "log",
+      "standardize"
+    ],
+    "per_role_chains": [
+      [
+        "identity"
+      ],
+      [
+        "log"
+      ],
+      [
+        "standardize"
+      ],
+      [
+        "log",
+        "standardize"
+      ]
+    ],
+    "max_stages": 4,
+    "order": [
+      "select original rows",
+      "transform coordinates",
+      "estimate",
+      "owning native move",
+      "display scale"
+    ],
+    "stat_authority": [
+      "stat",
+      "line",
+      "histogram",
+      "histogram2d",
+      "kde",
+      "kde2d",
+      "ecdf",
+      "ecdf2d"
+    ],
+    "move_authority": {
+      "stripplot": [
+        "strip.jitter_policy",
+        "strip.seed",
+        "jitter",
+        "dodge"
+      ],
+      "barplot": [
+        "bar_width",
+        "gap"
+      ],
+      "pointplot": [
+        "dodge"
+      ],
+      "countplot": [
+        "stack",
+        "baseline"
+      ],
+      "hist": [
+        "histogram.multiple"
+      ],
+      "kde": [
+        "kde.multiple",
+        "kde.common_grid"
+      ]
+    },
+    "display_authority": [
+      "PanelSpec.x",
+      "PanelSpec.y",
+      "PanelSpec.y2",
+      "SemanticSpec"
+    ],
+    "units": "log is base 10; standardize uses selected physical-row population moments; bins/clip/bounds/limits use projected units",
+    "constraints": "Nonidentity requires a numeric native role and the named hist/KDE configuration; no same-role clock, log display, or axis fit. Order/hue/weights/units retain source meanings. Null/omitted does not change legacy behavior."
   },
   "projections": [
     "2d",
@@ -772,7 +1957,57 @@
     "boxed",
     "publication"
   ],
+  "contexts": {
+    "action": "SetContext",
+    "font_factors": {
+      "paper": 1.0,
+      "notebook": 1.15,
+      "talk": 1.4,
+      "poster": 1.75
+    }
+  },
+  "custom_categorical_palette": {
+    "field": "PaletteSpec.colors",
+    "max_colors": 64
+  },
+  "legend_display": {
+    "ncols_max": 8,
+    "handlers": [
+      "line-pair",
+      "scatter-pair"
+    ]
+  },
   "facets": {
+    "builders": {
+      "relplot": {
+        "scatter": "scatter",
+        "line": "line",
+        "lineplot": "lineplot"
+      },
+      "displot": {
+        "hist": "hist",
+        "kde": "kde",
+        "ecdf": "ecdf",
+        "rug": "rug",
+        "hist2d": "hist2d",
+        "kde2d": "kde2d",
+        "ecdf2d": "ecdf2d"
+      },
+      "catplot": {
+        "strip": "stripplot",
+        "swarm": "swarmplot",
+        "box": "box",
+        "boxen": "boxenplot",
+        "violin": "violin",
+        "bar": "barplot",
+        "point": "pointplot",
+        "count": "countplot"
+      },
+      "lmplot": {
+        "regplot": "regplot",
+        "residplot": "residplot"
+      }
+    },
     "action": "SetFacets",
     "fields": [
       {
@@ -824,36 +2059,67 @@
       "annotate",
       "band",
       "bar",
+      "barbs",
       "barplot",
       "box",
       "boxenplot",
+      "broken_barh",
       "countplot",
       "ecdf",
+      "ecdf2d",
       "errorbar",
+      "eventplot",
       "hist",
+      "hist2d",
       "hline",
       "kde",
       "kde2d",
       "line",
       "lineplot",
       "pointplot",
+      "quiver",
       "regplot",
       "rug",
       "scatter",
+      "stairs",
+      "stem",
       "stripplot",
       "swarmplot",
       "text",
       "violin",
       "vline"
     ],
-    "template": "one completed unfiltered primary Cartesian2D panel",
+    "supported_y2_layers": [
+      "barbs",
+      "barplot",
+      "box",
+      "boxenplot",
+      "broken_barh",
+      "ecdf",
+      "ecdf2d",
+      "eventplot",
+      "hist2d",
+      "kde",
+      "kde2d",
+      "line",
+      "lineplot",
+      "pointplot",
+      "quiver",
+      "regplot",
+      "stairs",
+      "stem",
+      "swarmplot",
+      "violin"
+    ],
+    "scalar_display_y2": "scatter-c through named P01 scalar calibration; actual x/y2 clocks remain independent of raw c",
+    "template": "one completed unfiltered Cartesian2D panel; y2 is eligible only when every layer belongs to supported_y2_layers and its own coordinate/clock contract is satisfied",
     "ordering": "first-seen/explicit levels; row-major; col-only wrap",
     "statistics": "row selection before cell-local estimation/normalization",
     "semantics": "pooled original selected row IDs; named shared domains",
-    "layout": "explicit cells; later edits panel-scoped; size unchanged",
+    "layout": "materialized edits are panel-local; opt-in live recipes replace all fixed cells only through explicit SetFacetTemplate; compatible N13 placement preserves selectors and cell ownership",
     "data_updates": "selectors/orders persist; rebuild to add new levels",
     "raw_groups": "hue_order selects/reserves; raw rows/gaps/values kept",
-    "limits": "no matrices/3D/polar/y2/c colourbars; hist needs typed config and common explicit edges; kde needs KDESpec"
+    "limits": "no matrices/3D/polar; legacy scatter-c becomes a pooled P01 scalar display in facets; y2 uses supported_y2_layers, not a blanket prohibition; semantic/statistic colourbars follow the actual family contract; hist needs typed config and common explicit edges; kde needs KDESpec"
   },
   "joint_grid": {
     "action": "SetJointGrid",
@@ -887,6 +2153,30 @@
         "type": "KDESpec or None",
         "required": false,
         "default": null
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "complementary",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "group",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
       }
     ],
     "main": [
@@ -897,9 +2187,12 @@
     ],
     "marginals": "hist count/density/probability/percent, KDE density, or ECDF count/probability/percent",
     "layout": "main top-left, y right, x below; no fourth axes",
-    "selection": "dynamic complete x/y/group cases; source table intact",
-    "sharing": "x by column, y by row; density axes remain independent",
-    "limits": "one raw primary Cartesian2D template; no semantics/c/y2/weights; binned centers require no group/hue_order/colourbar"
+    "selection": "common dynamic complete x/y/raw roles (including scatter c); positive named weight",
+    "temporal": "explicit clocks follow their original observation into its marginal",
+    "sharing": "x to bottom; primary y or actual y2 to right value-y; statistic axes independent",
+    "binned": "typed grouped hist2d; weighted/grouped native hexbin on one pooled lattice",
+    "hexbin_mincnt": "positive physical occupancy, independent of weighted mass",
+    "limits": "one Cartesian 2D center plus annotations; hexbin linear or calendar coordinates; extended regression excludes residuals and train/query splits"
   },
   "pair_grid": {
     "action": "SetPairGrid",
@@ -945,13 +2238,44 @@
         "type": "KDESpec or None",
         "required": false,
         "default": null
+      },
+      {
+        "name": "temporal",
+        "type": "dict[str, TemporalSpec] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "corner",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "complementary",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "semantics",
+        "type": "SemanticSpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "max_variables": 8,
-    "cells": "raw scatter off diagonal; typed hist/KDE/ECDF diagonal",
-    "selection": "pairwise complete rows; diagonal variable-only rows",
-    "sharing": "named x columns/y off-diagonal rows; density y independent",
-    "limits": "2..8 numeric vars; categorical group; no corner/weights; ECDF needs non-density stat and unused default bins"
+    "cells": "raw scatter off diagonal; typed hist/KDE/ECDF diagonal; lower N13 corner optional",
+    "selection": "pairwise complete rows; diagonal variable-only rows; typed raw roles and optional positive weight",
+    "sharing": "named x columns/y off-diagonal rows; statistic axes independent; supported named semantic scope",
+    "temporal": "explicit per-variable clocks on value axes only; source spellings retained",
+    "limits": "2..8 variables; ECDF (including strict complement) needs non-density stat and unused default bins"
   },
   "named_axis_sharing": {
     "field": "AxisSpec.share_id",
@@ -960,7 +2284,649 @@
       "x",
       "y"
     ],
-    "limits": "primary Cartesian; figure mode none; same scales/limits"
+    "limits": "primary Cartesian; one grid-only y2 link to right value-y; figure mode none; same scale and limits"
+  },
+  "native_planar_geometry": {
+    "style": {
+      "line": [
+        "color",
+        "edge_color",
+        "face_color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
+        "marker_edge_width",
+        "alpha"
+      ],
+      "scatter": [
+        "color",
+        "edge_color",
+        "face_color",
+        "line_width",
+        "line_style",
+        "marker",
+        "marker_size",
+        "alpha"
+      ],
+      "objects": "ComponentStyleSpec; each mark admits only native traits"
+    },
+    "segments": "hlines/vlines use finite raw x/y endpoints, not reference fractions",
+    "error_magnitudes": "paired nonnegative asymmetric x/y columns with native endpoint checks",
+    "band": "native vertical/horizontal fill, Boolean where, pre/post/mid, interpolation",
+    "span": "raw data interval with cross-axis fractions",
+    "bars": "bar/barh explicit baseline and align; grouped dodge/layer or signed stack",
+    "pie": "literal labels/values, wedge/annotation settings and finite formatting",
+    "frames": [
+      "data",
+      "axes",
+      "figure"
+    ],
+    "patches": [
+      "rectangle",
+      "ellipse",
+      "polygon",
+      "path"
+    ],
+    "path_codes": [
+      "MOVETO",
+      "LINETO",
+      "CURVE3",
+      "CURVE4",
+      "CLOSEPOLY"
+    ],
+    "path_effects": [
+      "stroke",
+      "shadow"
+    ],
+    "tables": "rectangular literal cells and headers; bbox in axes fractions",
+    "drag": "Cartesian data text only; axes/figure anchors use stored coordinate edits"
+  },
+  "grid_field": {
+    "fields": [
+      {
+        "name": "x",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "y",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "position",
+        "type": "Literal['centers', 'edges'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "shading",
+        "type": "Literal['flat', 'nearest'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "extent",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "origin",
+        "type": "Literal['upper', 'lower'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "pixels",
+        "type": "list[list[list[float]]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "mask",
+        "type": "list[list[bool]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "threshold",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "corner_mask",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "extend",
+        "type": "Literal['neither', 'min', 'max', 'both'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_levels",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_format",
+        "type": "Literal['g', '.1f', '.2f', '.3f'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_inline",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "limits": "primary linear numeric Cartesian; 10000 cells/pixels, 512 explicit levels; figure reservations apply",
+    "mesh": "flat requires edges; nearest requires centers; pcolor omits masked cells, QuadMesh retains masked slots without visible edges",
+    "image": "named scalar matrix or inline unit RGB(A) pixels; direct pixels have per-pixel alpha and no scalar colourbar"
+  },
+  "triangulation": {
+    "fields": [
+      {
+        "name": "triangles",
+        "type": "list[list[int]]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "mask",
+        "type": "list[bool] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "scalar_role",
+        "type": "Literal['vertex', 'face'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "face_values",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "extend",
+        "type": "Literal['neither', 'min', 'max', 'both'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_levels",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_format",
+        "type": "Literal['g', '.1f', '.2f', '.3f'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "label_inline",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "topology": "explicit zero-based vertex IDs; True masks a triangle; no auto triangulation or row reindexing",
+    "limits": "10000 vertices, 10000 triangles, 50000 sweep pair visits; shared finite matrix path and contour budgets",
+    "scalar_roles": [
+      "vertex",
+      "face"
+    ],
+    "surface": "trisurf uses the same XY topology and vertex Z in Cartesian 3D"
+  },
+  "vector": {
+    "fields": [
+      {
+        "name": "mask_column",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "mode",
+        "type": "Literal['data', 'display'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "pivot",
+        "type": "Literal['tail', 'middle', 'tip'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "scale_units",
+        "type": "Literal['xy', 'inches', 'width', 'dots'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "width_units",
+        "type": "Literal['inches', 'width', 'dots'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "headwidth",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "headlength",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "headaxislength",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "length",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "half",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "full",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "flag",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "rounding",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "flip_barb",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "normalize",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "arrow_length_ratio",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "x_coords",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "y_coords",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "u_matrix",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "v_matrix",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "mask",
+        "type": "list[list[bool]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "start_points",
+        "type": "list[list[float]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "density",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "minlength",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "maxlength",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "integration_direction",
+        "type": "Literal['both', 'forward', 'backward'] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "arrowsize",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "limits": "10000 selected row vectors or grid cells; linear numeric axes",
+    "quiver": "None retains legacy; data uses xy scale=1; display is explicit",
+    "streamplot": "uniform grids, paired null/mask, at most 64 explicit seeds; bounded native stepping; length in axes coordinates",
+    "barbs": "staff length in points; increments in raw component units",
+    "quiver3d": "length scales raw components or sets normalized 3D length"
+  },
+  "spatial": {
+    "fields": [
+      {
+        "name": "x_coords",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "y_coords",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "z_coords",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "dx",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "dy",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "dz",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "occupancy",
+        "type": "list[list[list[bool]]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "direction",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "offset",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "axes": "primary linear numeric Cartesian 3D",
+    "surface": "named Z with explicit nonuniform x/y; full resolution",
+    "bar3d": "raw anchors, positive XY footprints and signed Z deltas",
+    "contours": "explicit levels in the native direction; optional projection offset",
+    "voxels": "boolean [z][y][x], optional all-three explicit edge vectors"
+  },
+  "camera3d": {
+    "action": "SetCamera3D",
+    "fields": [
+      {
+        "name": "elevation",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "azimuth",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "roll",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "vertical_axis",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "projection",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "focal_length",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "box_aspect",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "zoom",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "bounds": "native display-only camera; never sets data limits"
+  },
+  "scalar_display": {
+    "fields": [
+      {
+        "name": "cmap",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "colors",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "under",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "over",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "bad",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "norm",
+        "type": "Literal['linear', 'log', 'centered', 'two_slope', 'boundary']",
+        "required": false,
+        "default": "linear"
+      },
+      {
+        "name": "vmin",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "vmax",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "center",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "boundaries",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "scale_id",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "colorbar_options",
+        "type": "ColorbarOptionsSpec or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "layers": [
+      "heatmap",
+      "imshow",
+      "pcolor",
+      "pcolormesh",
+      "scatter"
+    ],
+    "colormaps": [
+      "viridis",
+      "plasma",
+      "inferno",
+      "magma",
+      "cividis",
+      "coolwarm",
+      "RdBu",
+      "Greys",
+      "mudplot-sequential",
+      "mudplot-diverging"
+    ],
+    "norms": [
+      "linear",
+      "log",
+      "centered",
+      "two_slope",
+      "boundary"
+    ],
+    "shared_ranges": "one named raw domain; identical calibration, local guides",
+    "colorbar_options": [
+      {
+        "name": "location",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "ticks",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "tick_format",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "fraction",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "pad",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "extend",
+        "type": "Literal['neither', 'min', 'max', 'both'] or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "extensions": [
+      "neither",
+      "min",
+      "max",
+      "both"
+    ],
+    "coordinates": "numeric Cartesian; no clock, direct RGB(A) or semantic roles"
   },
   "heatmap": {
     "fields": [
@@ -1029,6 +2995,48 @@
         "type": "bool",
         "required": false,
         "default": false
+      },
+      {
+        "name": "annot_data",
+        "type": "list[list[str]] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "xrotation",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "yrotation",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "linthresh",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "gamma",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "boundaries",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "colorbar_options",
+        "type": "ColorbarOptionsSpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1046,16 +3054,73 @@
     },
     "norms": [
       "linear",
-      "log"
+      "log",
+      "symlog",
+      "power",
+      "boundary"
     ],
+    "norm_options": {
+      "symlog": "positive linthresh; native base 10 and linscale 1",
+      "power": "positive gamma; clipped native mapping",
+      "boundary": "finite increasing edges; one swatch per half-open bin"
+    },
+    "colorbar_options": {
+      "fields": [
+        {
+          "name": "location",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "ticks",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "tick_format",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "fraction",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "pad",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "extend",
+          "type": "Literal['neither', 'min', 'max', 'both'] or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "locations": [
+        "left",
+        "right",
+        "top",
+        "bottom"
+      ],
+      "units": "explicit display-value ticks; fraction/pad relative to body"
+    },
     "center": "linear diverging TwoSlope; inferred bounds symmetric",
     "robust": "unmasked finite-value 2nd/98th percentiles",
     "mask": "same-shaped booleans; hidden values excluded from norm/text",
-    "annotations": "raw values/bounded formats; alpha-aware text contrast",
+    "annotations": "raw bounded-format values or same-shaped annot_data strings <=512; requires annot=True, masks hide text; alpha-aware contrast",
+    "tick_rotations": "optional finite xrotation/yrotation [-360,360] degrees",
+    "cluster_annotations": "reordered with original row/column identities",
     "max_annotations": 4096,
     "borders": "typed layer line_width/edge_color in points",
     "legacy": "heatmap=None retains old imshow display",
-    "limits": "finite rectangular matrix; no custom text/cluster/date axes"
+    "limits": "finite rectangular matrix; cell coordinates remain linear indices"
   },
   "clustermap": {
     "fields": [
@@ -1142,6 +3207,66 @@
         "type": "str",
         "required": false,
         "default": "#475569"
+      },
+      {
+        "name": "missing",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_distances",
+        "type": "CondensedDistanceSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_distances",
+        "type": "CondensedDistanceSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_cut",
+        "type": "ClusterCutSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_cut",
+        "type": "ClusterCutSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_tracks",
+        "type": "list[ClusterTrackSpec] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_tracks",
+        "type": "list[ClusterTrackSpec] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_dendrogram_ratio",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_dendrogram_ratio",
+        "type": "float or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "track_legend_side",
+        "type": "str or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1182,31 +3307,183 @@
     "mask": "display only; does not remove fit or standardization values",
     "layout": "own Cartesian panel; no axis sharing/cropped limits/overlays",
     "data": "source matrix unchanged; fit-time transformation/order only",
-    "limits": "one colour strip/axis; no missing data/continuous strip legend"
+    "missing": "complete_features; actual null, common observed original features per named fit",
+    "distances": {
+      "fields": [
+        {
+          "name": "label",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "values",
+          "type": "list[float]",
+          "required": true,
+          "default": null
+        }
+      ],
+      "order": "original condensed SciPy order; caller-owned across refresh"
+    },
+    "cuts": {
+      "fields": [
+        {
+          "name": "height",
+          "type": "float",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "anchor",
+          "type": "int or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "rule": "inclusive subtree-max height; optional original-index anchor"
+    },
+    "tracks": {
+      "fields": [
+        {
+          "name": "id",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "title",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "values",
+          "type": "list[str]",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "levels",
+          "type": "list[ClusterTrackLevelSpec]",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "ratio",
+          "type": "float or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "legend",
+          "type": "bool or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "levels": [
+        {
+          "name": "key",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "label",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "color",
+          "type": "str",
+          "required": true,
+          "default": null
+        }
+      ],
+      "limits": "ordered categorical tracks and legends; no continuous auto-binning"
+    }
+  },
+  "matrix_resources": {
+    "scope": "new matrix options only, per figure; reservations, not process RSS",
+    "work_credits": 838860800,
+    "managed_bytes": 100663296,
+    "serial_scipy_frame_bytes": 16777216
   },
   "stem": {
-    "orientation": "vertical numeric positions and heads; rows unchanged",
-    "baseline": "raw scalar, default zero; positive on log response axes",
+    "orientation": "x names locations, y names heads; h plots the locations on primary/twin y and heads on x; row order retained",
+    "baseline": "one raw scalar, default zero; positive on log value axes",
     "max_rows": 10000,
-    "limits": "primary/y2 Cartesian only; no group/semantics/facet/weights"
+    "limits": "Cartesian primary/y2; explicit temporal and numeric axes, typed groups, fixed facets and shared hue/size/style; no weights",
+    "size_unit": "stem stroke width in pt; not head diameter"
   },
   "stairs": {
-    "values": "x names the supplied height column; bins stores N+1 edges",
-    "geometry": "vertical outline, scalar baseline default zero; no rebinning",
+    "values": "x names supplied heights, bins stores the common source grid",
+    "geometry": "vertical supplied windows or explicit conservative rebin; closed/open/fill; raw baseline defaults to zero",
+    "fields": [
+      {
+        "name": "fill",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "open",
+        "type": "bool",
+        "required": false,
+        "default": false
+      },
+      {
+        "name": "bin_index",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "rebin",
+        "type": "StairsRebinSpec or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "defaults": {
+      "fill": false,
+      "open": false,
+      "bin_index": null,
+      "rebin": null
+    },
+    "rebin_fields": [
+      {
+        "name": "edges",
+        "type": "list[float or str]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "measure",
+        "type": "Literal['mass', 'density']",
+        "required": false,
+        "default": "mass"
+      }
+    ],
+    "rebin_measures": [
+      "mass",
+      "density"
+    ],
     "max_rows": 10000,
-    "limits": "linear primary/y2 only; no fill/open/group/facet/weights"
+    "limits": "Cartesian primary/y2; groups/fixed facets, date and log domains; no weights, mapped semantics or estimators"
   },
   "eventplot": {
-    "positions": "one numeric train, source and duplicate events retained",
-    "geometry": "vertical marks; baseline offset, width length in raw units",
+    "positions": "unconnected native vertical ticks, source rows and duplicates retained",
+    "geometry": "baseline is center and width is full length; typed group slot adds i * lane_step in raw units; None overlays",
     "max_rows": 10000,
-    "limits": "linear primary/y2; no group/facet/weights/log/date mappings"
+    "limits": "Cartesian primary/y2; fixed groups/facets, dates/log and row-aligned hue, stroke size in pt and dash; no weights or horizontal"
   },
   "broken_barh": {
     "intervals": "x=start, y=positive duration; rows/overlaps retained",
-    "band": "baseline=bottom, width=positive raw height; defaults 0/1",
+    "band": "baseline=bottom, width=positive raw height; group slot adds i * lane_step in raw units; None overlays; source paint order",
     "max_rows": 10000,
-    "limits": "linear primary/y2 single band; no date/group/facet mappings"
+    "limits": "Cartesian primary/y2; fixed groups/facets, dates/log; elapsed duration uses the X clock unit without origin; no weights or semantics"
   },
   "regression": {
     "fields": [
@@ -1233,6 +3510,36 @@
         "type": "int",
         "required": false,
         "default": 3
+      },
+      {
+        "name": "bootstrap",
+        "type": "RegressionBootstrapSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "partial",
+        "type": "RegressionPartialSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "sampling",
+        "type": "RegressionSamplingSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "diagnostics",
+        "type": "RegressionDiagnosticsSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "components",
+        "type": "RegressionComponentsSpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1248,16 +3555,183 @@
       "logistic",
       "lowess"
     ],
-    "residual": "residplot alias; observed y minus in-sample fitted response",
+    "declarations": {
+      "bootstrap": {
+        "fields": [
+          {
+            "name": "n_boot",
+            "type": "int",
+            "required": false,
+            "default": 1000
+          },
+          {
+            "name": "seed",
+            "type": "int",
+            "required": false,
+            "default": 0
+          }
+        ],
+        "defaults": {
+          "n_boot": 1000,
+          "seed": 0
+        },
+        "law": "uniform paired positive physical cases; original criterion masses"
+      },
+      "partial": {
+        "fields": [
+          {
+            "name": "columns",
+            "type": "list[str]",
+            "required": true,
+            "default": null
+          },
+          {
+            "name": "reference",
+            "type": "dict[str, float]",
+            "required": true,
+            "default": null
+          },
+          {
+            "name": "method",
+            "type": "str",
+            "required": false,
+            "default": "joint"
+          }
+        ],
+        "methods": [
+          "joint",
+          "two_stage"
+        ]
+      },
+      "sampling": {
+        "fields": [
+          {
+            "name": "train",
+            "type": "dict[str, Any]",
+            "required": true,
+            "default": null
+          },
+          {
+            "name": "query",
+            "type": "dict[str, Any]",
+            "required": true,
+            "default": null
+          }
+        ],
+        "selectors": "existing typed equality filters, explicit disjoint train/query"
+      },
+      "diagnostics": {
+        "fields": [
+          {
+            "name": "kind",
+            "type": "str",
+            "required": false,
+            "default": "raw"
+          },
+          {
+            "name": "trend",
+            "type": "RegressionTrendSpec or None",
+            "required": false,
+            "default": null
+          }
+        ],
+        "kinds": [
+          "raw",
+          "deviance"
+        ]
+      },
+      "trend": {
+        "fields": [
+          {
+            "name": "model",
+            "type": "str",
+            "required": false,
+            "default": "lowess"
+          },
+          {
+            "name": "degree",
+            "type": "int",
+            "required": false,
+            "default": 1
+          },
+          {
+            "name": "frac",
+            "type": "float",
+            "required": false,
+            "default": 0.6666666666666666
+          },
+          {
+            "name": "iterations",
+            "type": "int",
+            "required": false,
+            "default": 3
+          },
+          {
+            "name": "style",
+            "type": "ComponentStyleSpec or None",
+            "required": false,
+            "default": null
+          }
+        ],
+        "models": [
+          "poly",
+          "logx",
+          "robust",
+          "lowess"
+        ],
+        "inference": "FULL primary+nuisance+trend; root confidence/bootstrap only"
+      },
+      "components": {
+        "fields": [
+          {
+            "name": "fit",
+            "type": "ComponentStyleSpec or None",
+            "required": false,
+            "default": null
+          },
+          {
+            "name": "scatter",
+            "type": "ComponentStyleSpec or None",
+            "required": false,
+            "default": null
+          },
+          {
+            "name": "show_fit",
+            "type": "bool",
+            "required": false,
+            "default": true
+          },
+          {
+            "name": "show_scatter",
+            "type": "bool",
+            "required": false,
+            "default": true
+          }
+        ],
+        "style": "existing ComponentStyleSpec; actual fit/scatter ownership"
+      }
+    },
+    "residual": "existing residplot flag; actual in-sample or explicit query raw/deviance diagnostic; independently owned continuous trend",
+    "semantics": "observed/adjusted/query/diagnostic point face, diameter pt, and marker only; raw visible original row roles never change a fit cohort",
     "optional": "mudplot[regression], statsmodels>=0.14.1",
-    "confidence": "normal-approx poly/logx only; no bootstrap",
-    "grouping": "fit after panel/hue selection; source rows retained",
+    "confidence": "sole Layer.confidence; explicit uniform paired physical-case bootstrap for weighted/advanced/residual inference; nominal pointwise, not simultaneous or future-observation uncertainty",
+    "grouping": "typed original physical rows; explicit disjoint train/query; per-cell fits; all B retained and any required undefined replicate rejects",
     "max_rows": 10000,
     "max_lowess_rows": 5000,
-    "failures": "nonfinite/singular/separated/unconverged fits raise",
-    "legacy": "regression=None retains old polynomial effects",
-    "weights": "LayerSpec.weights; relative poly/logx point fits/raw residuals; zero rows excluded; scaling must remain representable",
-    "limits": "no weighted CI/robust/logistic/LOWESS; no bootstrap/deviance residuals/residual smooth trend"
+    "failures": "required missing/nonfinite/singular/separated/unconverged, erased positive mass or positive native span, and infinite finite-native diagnostics raise atomically; no retry/clipping/listwise omission",
+    "legacy": "omitted controls retain existing point arithmetic/admission and unweighted poly/logx approximate normal mean bands",
+    "weights": "relative criterion masses for all five models; original canonical CDF-left weighted MAD; weighted Huber/LOWESS operators are selected by weights, not by CI presence",
+    "partial": "full design/sole intercept and residual DF for poly/logx; joint conditional Huber/logit; explicit LOWESS two_stage with add-back",
+    "axes": "logical predictor/response on actual v/h primary/y2; raw/ln fitting is display independent; calendar ln uses canonical UTC-day origin",
+    "diagnostic_calibration": "mean-response type7 first, then raw/deviance map conditional on fixed observed y; full-pipeline trend is separate",
+    "new_admission": {
+      "logical_work_invocation_and_figure": 6000000000,
+      "complete_design_columns": 19,
+      "numerical_managed_provider_reserve_bytes": 268435456,
+      "scope": "conservative numerical admission estimate; not RSS, native artists or a universal opaque-provider allocation bound",
+      "seed": "nonnegative arbitrary integer; variable words/state and w*w conversion work charged before Generator construction"
+    },
+    "limits": "no precision/frequency/wild/BCa/simultaneous/prediction method, fixed-fit trend, result store/API/command or new duration clock; unsupported calendar-response residual/trend remains refused"
   },
   "statistics": {
     "estimators": [
@@ -1333,6 +3807,12 @@
         "type": "str",
         "required": false,
         "default": "count"
+      },
+      {
+        "name": "normalize_scope",
+        "type": "str or None",
+        "required": false,
+        "default": null
       }
     ],
     "layer_defaults": {
@@ -1377,9 +3857,9 @@
         "normalize": "count"
       }
     },
-    "axes": "Cartesian 2-D primary native/log; legacy linear ordinal y2 only",
+    "axes": "bar/point primary or declared y2,vertical/horizontal,native/date/log; line/count retain their separately declared predictor/target subsets",
     "unknown_stat_options": "rejected, never silently ignored",
-    "category_scale": "ordinal default; explicit numeric native/log",
+    "category_scale": "ordinal default; explicit numeric native/log or temporal elapsed",
     "stat_scale": "raw default; axis log mean/median/min/max + inverse",
     "log_intervals": "SD/SEM/PI/CI in declared space; no endpoint clipping",
     "axis_log_estimators": [
@@ -1390,7 +3870,7 @@
     ],
     "baseline": "bar/count raw endpoint base; log needs explicit positive base",
     "bar_endpoint": "estimate, not baseline+estimate; labels show estimate",
-    "log_stack": "no log values; native/log categories + linear stacks",
+    "log_stack": "countplot raw cumulative tops; positive explicit baseline below each first mass; no offset/multiplicative stacking",
     "native_sizes": "bar_width in (0,1], point dodge [0,1] times min spacing",
     "orientations": [
       "v",
@@ -1402,7 +3882,62 @@
     "missing_rows": "drop missing required rows; countplot needs no y",
     "singleton_intervals": "omitted with a render warning",
     "weights": true,
-    "weighted_methods": "mean with None or paired-row percentile bootstrap CI",
+    "weighted_methods": {
+      "mean": [
+        null,
+        "sd",
+        "se",
+        "pi",
+        "ci"
+      ],
+      "median": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "min": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "max": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "sum": [
+        null,
+        "ci"
+      ],
+      "count": [
+        null
+      ]
+    },
+    "unit_identity": "opaque strings including empty; missing None/NaN exclude paired rows; NEW bool/numeric identity is typed",
+    "weighted_total_dimension": "response value*weight-mass in the existing N13 opt-in sharing gate; unweighted sums remain value",
+    "weighted_quantiles": "LEFT observed values; canonical integer/dyadic mass,not replicated data",
+    "weighted_PI_percent": "exact Fraction(level):p=(100-level)/200,upper1-p; legacy unweighted type7 unchanged",
+    "weighted_spread": "reliability sample SD; mean SE=SD/sqrt(physical-row Kish effective size)",
+    "pointwise_CI": "uniform original-case pairs; percentile estimator distribution,not simultaneous inference",
+    "canonical_arithmetic": "canonical source values before binary64; finite dyadic sums/means and moments,strict native interval collapse rejects",
+    "new_only_bounds": {
+      "selected_rows": 10000,
+      "drawn_pointwise_cells": 256,
+      "actual_resampling_work": 2000000000,
+      "active_sample_elements": 1000000,
+      "work": "unit-choice+case instances; seed-dependent whole-effect rejection before row chunks/artists/commit; no prefix CI",
+      "predicate": "new weighted combination OR bar/point semantics OR newly admitted bar/point target; never old weights/units/dense plain or semantic line alone",
+      "storage": "O(rows+units+n_boot),bounded compact case counts; no SLA/RSS promise"
+    },
+    "roles": {
+      "barplot": "hue BODY fill,size BODY outline points,style BODY dash; real nondata patch guides",
+      "pointplot": "hue marker/connecting line,size actual marker diameter points,style actual glyph+dash",
+      "error_components": "error widths/caps and point connecting stroke remain independent of mapped main size",
+      "domains": "raw role tuples/typed identity,original-row domain dedup,mark-specific physical guides"
+    },
     "zero_weights": "excluded from estimation and resampling",
     "repeated_measures": true,
     "unit_resampling": "resample units, then rows within each selected unit",
@@ -1413,7 +3948,12 @@
       "proportion",
       "percent"
     ],
-    "count_denominator": "all usable selected rows across categories and hues",
+    "count_normalization_scopes": [
+      "all",
+      "category",
+      "group"
+    ],
+    "count_denominator": "usable selected row/weight mass, per panel: all (default), within category, or within group",
     "callable_estimators": false
   },
   "scatter_semantics": {
@@ -1551,15 +4091,21 @@
     "roles": "independent hue/size/style, not inferred redundant grouping",
     "scale_id": "named figure pool, identical settings except legend",
     "shared_rows": "unique member rows in original table order",
-    "shared_guides": "pooled scope guides, once per panel; dataset labels kept",
+    "shared_guides": "panel-owned by default; explicit FigureSpec.shared_guides consolidates matching scale_id guides; dataset labels stay local",
     "shared_palette": "one reserved colour block per name, legacy cannot shift",
-    "sharing_limits": "pool <=10000 rows/64levels/enough distinct markers",
+    "sharing_limits": "pool <=10000 original rows; categorical levels <=64; sufficient distinct markers/dashes only for the actual mapped native traits",
     "hue": "categorical LCH slots or explicit numeric linear mapping",
-    "size": "numeric/categorical diameters in points; native area=diameter**2",
-    "style": "categorical unique filled markers; no cycling/repeating",
+    "size": "mark-specific physical point units in family_units; never probability mass, bin width or observation data units",
+    "style": "categorical native glyphs and/or dashes as declared per family; no fabricated point glyphs for stroke-only or field mappings",
     "orders": "selected/reserved levels; missing rows drop listwise",
     "norms": "selected global bounds or explicit mapping-only clipped bounds",
     "constant": "numeric auto-constant maps midpoint, one numeric guide",
+    "colorbar": "optional numeric-hue guide, independent of legend; field statistic colourbars are separate real mappables, not raw-hue guides",
+    "colorbar_coordinates": "non-data normalized[0,1] guide with exact raw-value tick labels; same clipped mapping/cmap as marks, no observation-axis changes",
+    "colorbar_constant": "solid midpoint swatch, one exact observed-value tick",
+    "colorbar_label": "clabel string <=512 only with requested numeric-hue bar",
+    "colorbar_shared_labels": "requested members require identical effective labels",
+    "outline": "scatter edge_color and line_width[0,1000] physical points",
     "legend": "observed categories / numeric mapping guides, no plotted data",
     "max_levels": 64,
     "max_rows": 10000,
@@ -1577,24 +4123,98 @@
       "8",
       "*"
     ],
-    "limits": "primary2D numeric x/y; no group/c, colorbar, date/y2, outline",
-    "legacy": "semantics=None leaves existing group/c/marker calls unchanged"
+    "limits": "Cartesian2D; native/log/clock/orientation/y2 eligibility is family-specific, including supplied and estimated lines; no legacy c, and legacy group only in its declared compatible route",
+    "legacy": "semantics=None leaves existing group/c/marker calls unchanged",
+    "family_units": {
+      "scatter": "marker diameter in points; native area=diameter**2",
+      "stripplot": "marker diameter in points; category-only jitter/dodge",
+      "swarmplot": "nominal diameter points; native glyph/stroke bounds",
+      "line": "supplied-curve stroke points; markers remain independent",
+      "lineplot": "main stroke width in points",
+      "barplot": "BODY outline stroke width in points,not bar width/height/mass",
+      "countplot": "BODY outline stroke in points, not mass or bar width",
+      "hist": "BODY outline / main stroke in points, not bin width or density",
+      "pointplot": "actual marker diameter in points; connecting/error strokes independent",
+      "ecdf": "step-curve stroke width in points",
+      "rug": "individual stroke width in points; height=axes fraction",
+      "boxenplot": "BODY outline stroke points; flier size remains independent",
+      "box": "BODY outline stroke points; whisker/cap/median strokes and mean/flier diameters remain independent",
+      "violin": "BODY outline stroke points; inner strokes and actual point/box-median glyph diameters remain independent",
+      "kde": "main density/CDF stroke points, including a filled outline",
+      "hist2d": "actual cell outline stroke points, not area/count/mass",
+      "kde2d": "actual contour/cell outline stroke points, not field mass",
+      "ecdf2d": "actual joint-CDF cell outline stroke points, not mass"
+    },
+    "curve_partition": "raw line/lineplot/ECDF keep each distinct RAW role tuple separate; mapping-bound clipping never merges curves"
   },
   "lineplot": {
-    "coordinates": "numeric predictor x; horizontal swaps display only",
-    "default": "mean/seeded pointwise CI band; raw line primitive unchanged",
-    "interval_scope": "per-x cells, not simultaneous or whole-curve bootstrap",
-    "sort": "ascending default; False per-hue first observed x order",
-    "bands": "monotonic x; split at missing bounds, no fake singleton CI",
-    "weights_units": "shared mean/paired CI and within-x unit bootstrap",
-    "axes": "primary2D; raw/log predictors; explicit data/axis response fit",
-    "semantics": "independent raw hue/size/style tuples define curves",
-    "size": "sizes interpolate main stroke widths in points, not marker area",
-    "style": "unique filled markers; optional distinct named dashes",
-    "shared": "figure scale_id pools row domains; per-geometry guide blocks",
-    "numeric_curves": "clipping changes appearance, never merges raw curves",
-    "limits": "no categorical/date x, y2, dodge, callable/whole-curve CI",
-    "max_semantic_curves": 256
+    "coordinates": "native numeric/declared real-clock predictors; optional categorical LineSpec; actual primary/y2 targets, vertical/horizontal",
+    "default": "mean/seeded per-cell pointwise CI; native_scale=False stays numeric",
+    "line_defaults": {
+      "predictor": "native"
+    },
+    "calibrations": {
+      "percentile": "pointwise bootstrap percentile, not simultaneous",
+      "max_deviation": "exact ceil(Fraction(level)*B/100) upper empirical maximum score over finite curve/layer grid; explicit complete units required"
+    },
+    "units": "unit mode repeats complete original paired rows/masses, no within-unit draws/unit means; cell mode retains C07 unit-then-row schedule",
+    "identity": "explicit non-None inference controls use typed units: True!=1, False!=0, numeric1==1.0, opaque strings including empty; omitted/predictor-only identity remains inherited",
+    "undefined": "all B retained; undefined simultaneous target gives +Infinity; infinite selected rank rejects whole finite band; pointwise requires all defined",
+    "families": [
+      "curve",
+      "layer"
+    ],
+    "coverage": "nominal bootstrap only; no continuum, finite-sample or population guarantee",
+    "extrema": "NEW complete-unit min/max percentile AND max_deviation are empirical-only envelopes, with mandatory nonregular warning/caption; not endpoint confidence",
+    "topology": "native grids per raw curve before response omission plus reservations; categorical pooled ordinal slots; explicit/grouped missing cells split paths",
+    "geometry": "error_style band/bars independent of calibration; ribbons monotonic",
+    "semantics": "shared raw hue/size/style; line size is physical stroke points",
+    "max_semantic_curves": 256,
+    "new_whole_unit_limits": {
+      "selected_trajectory_rows": 10000,
+      "structural_slots": 4096,
+      "estimable_targets": 4096,
+      "logical_work": 2000000000,
+      "active_int64_choices": 1000000
+    },
+    "new_working_state_bytes": 268435456,
+    "new_figure_work": "sum actual whole-unit B(U+N+K) + explicit cell C07 unit/case work + cell bootstrap reductions; limit2000000000; physical repeats count",
+    "resource_scope": "persisted explicit inference only, on every render; raw mapping, predictor-only, omitted and non-CI views gain no new inference caps"
+  },
+  "raw_line": {
+    "meaning": "supplied observations/order/duplicates/gaps, never estimation",
+    "roles": "independent hue/stroke-size/marker-style, original shared domains",
+    "barriers": "missing coordinates or semantic keys remain continuity barriers"
+  },
+  "shared_guides": {
+    "field": "optional FigureSpec.shared_guides list; omitted None",
+    "request": {
+      "scale_id": "scope",
+      "location": "outside right",
+      "title": null,
+      "frame": false,
+      "bbox_to_anchor": null
+    },
+    "membership": "SemanticSpec.scale_id (default), LayerSpec.raw_guide_id (kind=raw), or ScalarDisplaySpec.scale_id (kind=scalar); persisted owners, no panel_ids or label inference",
+    "api": "Plot.shared_guides / authoritative SetSharedGuides list/None",
+    "locations": [
+      "outside right",
+      "outside top",
+      "outside bottom"
+    ],
+    "anchor": "trusted finite [x,y] figure fractions, not clamped",
+    "ownership": "only matching semantic guides/colourbars consolidated; dataset labels and unrelated scales retained; named actual mark-family effect contexts/units, merging only equivalent native traits",
+    "empty": "persisted owner required; empty selected scope valid without fake artists"
+  },
+  "rug": {
+    "coordinates": "x column is observations; v=shared x, h=target y/y2",
+    "height": "height stores width; None=0.04; non-bool [0,1] axes fraction",
+    "anchor": "vertical bottom inward; horizontal left / y2 right inward",
+    "semantics": "shared raw rows; size=stroke points, style=named dashes",
+    "dashes": "SemanticSpec.dashes or default -, --, -., :; no cycling",
+    "rows": "one collection; no pooling, estimation or curve-count cap",
+    "limits": "observation data limits only; perpendicular log/date allowed",
+    "temporal": "observation clock only; height never date/density/mass"
   },
   "render_budget": {
     "max_canvas_pixels": 40000000
@@ -1602,11 +4222,284 @@
   "figure_structure": {
     "max_panels": 256,
     "max_layout_cells": 256,
-    "max_layers": 1024
+    "max_layers": 1024,
+    "max_explicit_grid_nodes": 256,
+    "max_explicit_grid_cells": 1024,
+    "max_layout_depth": 16
+  },
+  "panel_layout": {
+    "fields": {
+      "GridCellSpec": [
+        {
+          "name": "grid",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "row",
+          "type": "int",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "col",
+          "type": "int",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "row_span",
+          "type": "int",
+          "required": false,
+          "default": 1
+        },
+        {
+          "name": "col_span",
+          "type": "int",
+          "required": false,
+          "default": 1
+        }
+      ],
+      "InsetSpec": [
+        {
+          "name": "parent",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "bounds",
+          "type": "list[float]",
+          "required": true,
+          "default": null
+        }
+      ],
+      "PanelPlacementSpec": [
+        {
+          "name": "cell",
+          "type": "GridCellSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "inset",
+          "type": "InsetSpec or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "LayoutGridSpec": [
+        {
+          "name": "grid_id",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "rows",
+          "type": "int",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "cols",
+          "type": "int",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "cell",
+          "type": "GridCellSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "width_ratios",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "height_ratios",
+          "type": "list[float] or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "PanelLayoutSpec": [
+        {
+          "name": "grids",
+          "type": "list[LayoutGridSpec]",
+          "required": true,
+          "default": null
+        }
+      ]
+    },
+    "field": "FigureSpec.panel_layout",
+    "native_layout_policy": "uniform native tight engine for explicit panel_layout, selected before axes/colourbars; legacy constrained/3D paths unchanged; unfittable decoration warnings retained; measured axis-label/eligible tick-decoration diagnostics, axis-side union broadphase, never all tick pairs",
+    "sharing_role_boundary": "new role checks require explicit panel_layout or stored panel IDs; all existing validation remains global, legacy sharing retained",
+    "identity": "PanelSpec.panel_id; deterministic allocation on opt-in only",
+    "placement": "PanelSpec.placement: exactly one grid cell/span or parent inset",
+    "grids": "one root; nested native GridSpec/subgridspec; ratios stored unchanged",
+    "mosaic": "rectangular repeated IDs; null empty positions; normalizes to placements",
+    "inset": "native child axes; contained nonoverlapping siblings; all 2d/polar/3d combinations",
+    "sharing": "one component resolver; row/col matches immediate grid and exact span; insets singleton unless all/named; known statistical/spectral dimensions kept separate",
+    "new_panels": "complete placements cover all existing final IDs; extra named keys add empty panels in lexicographic ID order, never object-key order",
+    "vector_identity": "identified native SVG axes use mudplot-panel-ID groups",
+    "edits": [
+      "SetPanelLayout",
+      "SetMosaic",
+      "NestLayout",
+      "SetPanelPlacement",
+      "AddInset",
+      "RenamePanel",
+      "ReorderPanels",
+      "RemovePanel"
+    ],
+    "legacy": "panel_layout omitted retains regular-grid geometry and index action semantics",
+    "limits": "bounded IDs <=64; no opaque artists/callbacks/kwargs; explicit expansion needs complete placements; unrepresentable extents reject"
   },
   "bivariate_density": {
+    "models": {
+      "BivariateBinsSpec": [
+        {
+          "name": "x",
+          "type": "int or str or list[float or str]",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "y",
+          "type": "int or str or list[float or str]",
+          "required": true,
+          "default": null
+        }
+      ],
+      "Histogram2DSpec": [
+        {
+          "name": "stat",
+          "type": "str",
+          "required": false,
+          "default": "count"
+        },
+        {
+          "name": "weights",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "common_norm",
+          "type": "bool",
+          "required": false,
+          "default": true
+        },
+        {
+          "name": "kde",
+          "type": "KDE2DSpec or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "ECDF2DSpec": [
+        {
+          "name": "bounds",
+          "type": "list[list[float or str]]",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "stat",
+          "type": "str",
+          "required": false,
+          "default": "proportion"
+        },
+        {
+          "name": "complementary",
+          "type": "bool",
+          "required": false,
+          "default": false
+        },
+        {
+          "name": "weights",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "query_x",
+          "type": "list[float or str] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "query_y",
+          "type": "list[float or str] or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "HDRSpec": [
+        {
+          "name": "scope",
+          "type": "str",
+          "required": false,
+          "default": "full"
+        },
+        {
+          "name": "tolerance",
+          "type": "float",
+          "required": false,
+          "default": 0.01
+        }
+      ]
+    },
     "max_bins_per_axis": 512,
-    "max_hexbin_gridsize": 512
+    "max_hexbin_gridsize": 512,
+    "histogram2d": {
+      "statistics": [
+        "count",
+        "frequency",
+        "probability",
+        "proportion",
+        "percent",
+        "density"
+      ],
+      "bins": "BivariateBinsSpec requires logical x/y counts, existing named rules or explicit numeric/clock edges; old flat lists keep their existing meaning",
+      "cohort": "positive complete paired rows BEFORE bin-range tally",
+      "denominator": "both coordinates in range; common_norm=True pooled, False effective-hue pool, never a separate size/style-tuple pool",
+      "geometry": "H(nx,ny) displayed H.T against true nonuniform edges",
+      "kde_overlay": "SAME pre-tally paired cohort, including out-of-bin rows; parent weights inherit/match, common_norm agrees; independent full-fit density/CDF levels, never count-height rescaling"
+    },
+    "joint_ecdf": {
+      "statistics": [
+        "proportion",
+        "percent",
+        "count"
+      ],
+      "definition": "paired P(X<=qx AND Y<=qy), ties before float",
+      "complement": "strict X>qx OR Y>qy, not AND survival",
+      "bounds": "required finite bounds; every interior source knot and query retained; bounds/queries do not remove denominator rows",
+      "max_edges_per_axis": 512,
+      "geometry": "right-continuous rectangular cells, no smoothing",
+      "prefix": "canonical exact integer Fenwick/prefix mass, bit-aware work"
+    },
+    "statistic_guides": "actual field collection ScalarMappable/raw values/norm; separate normalized non-data calibration with exact raw labels, never a semantic hue bar or a norm-changing tiny-range expansion",
+    "coordinates": "logical paired columns retain order/IDs; actual Cartesian2D primary/y2, v/h and declared per-coordinate clocks; explicit temporal bin/clip/bound/query numbers are canonical UTC days, not timestamp input units; ISO bounds use the declared zone",
+    "new_resources": {
+      "selected_positive_complete_physical_rows_per_layer": 10000,
+      "raw_tuple_fields_per_layer": 256,
+      "categorical_levels": 64,
+      "composite_units_per_NEW_figure": 2000000000,
+      "working_retained_geometry_artist_bytes": 268435456,
+      "all_live_numerical_pair_elements": 1000000,
+      "native_path_vertices_including_closure": 2000000,
+      "scope": "persisted bivariate-stat/bin-pair/SEM/joint-ECDF or named nonlegacy kernel/multiple/actual-log-fit/joint-CDF/full-HDR; geometry-only and identity Gaussian requests gain no new guard; existing D01/C07 ledgers remain separate",
+      "meaning": "one figure-wide actual composite cost proxy, including owned outward/special-function/scaled/native/limb-sensitive integer work; not FLOPs/RSS/SLA, no per-field/level reset",
+      "raster": "backend RGBA buffers stay outside this allowance under40M pixels",
+      "failure": "whole effect rejects prospectively; no truncated output"
+    }
   },
   "histogram": {
     "fields": [
@@ -1645,6 +4538,12 @@
         "type": "str",
         "required": false,
         "default": "bars"
+      },
+      {
+        "name": "fill",
+        "type": "bool or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1666,26 +4565,46 @@
     "multiple": [
       "layer",
       "stack",
-      "dodge"
+      "dodge",
+      "fill"
     ],
     "elements": [
       "bars",
-      "step"
+      "step",
+      "poly"
     ],
     "max_bins": 10000,
     "legacy": "histogram=None preserves old density/group/bin/alpha effects",
-    "bins": "pooled shared equal-width integer bins or explicit raw edges",
+    "bins": "shared integer count, explicit raw edges, or finite rule name",
+    "bin_rules": [
+      "auto",
+      "fd",
+      "doane",
+      "scott",
+      "stone",
+      "rice",
+      "sturges",
+      "sqrt",
+      "discrete"
+    ],
+    "bin_rule_definition": "fixed v2 classic NumPy1.23 equations; auto uses FD/Sturges, independent of installed NumPy version",
+    "bin_rule_weights": "usable observations once for edges; positive weight magnitudes affect heights/mass only",
+    "discrete": "bins=discrete or hist(discrete=True); integer-centered input-unit grid, temporal numeric declared unit or ISO clock-day",
+    "bin_allocation": "derived count checked before allocation; over-budget/nonfinite/collapsed/half-unit precision errors reject",
     "membership": "[left,right), final edge closed; outside mass excluded",
     "weights": "finite nonnegative paired rows; missing/zero weights dropped",
     "normalization": "in-bin mass: common_norm=True pooled, False per-curve",
     "width": "density/frequency divide raw data bin widths, not log widths",
-    "cumulative": "count/mass sums; density integrates mass; no frequency",
-    "axes": "primary2D v/h; positive raw observation log, linear heights",
-    "style": "bars/hatches or unfilled steps/dashes; exact alpha/edge/width",
-    "step": "native stairs; layer/stack only; edge_color overrides stroke",
+    "cumulative": "count/mass sums; density integrates mass; no frequency; multiple=fill is cumulative composition, not CDF",
+    "axes": "Cartesian2D v/h; vertical-only y2 mass axis; positive raw observation log, linear heights",
+    "fill": "None keeps filled bars/unfilled step/poly; explicit bool changes geometry only",
+    "style": "filled colors/hatches or outline strokes/dashes; exact alpha/width",
+    "step": "native stairs; layer/stack/dodge/fill; edge_color overrides stroke",
+    "poly": "native raw-bin/slot-center segments; >=2 representable centers; None is an unfilled line; bool fill controls native area",
+    "composition": "multiple=fill divides existing heights by their bin sum after stat/common_norm/cumulative; dimensionless, not raw-mass override",
     "geometry": "grouped stack/dodge keep heights; dodge splits raw bin width including reserved empty hues",
     "precision": "scaled mass/prefixes; nonfinite/collapsed geometry fails",
-    "limits": "no fill/poly/step dodge/discrete/auto estimator/2D/KDE/y2"
+    "limits": "this univariate HistogramSpec has no bivariate stat/KDE or horizontal y2; use Histogram2DSpec for paired statistics"
   },
   "kde": {
     "fields": [
@@ -1721,7 +4640,7 @@
       },
       {
         "name": "clip",
-        "type": "list[float or None] or None",
+        "type": "list[float or str or None] or None",
         "required": false,
         "default": null
       },
@@ -1754,6 +4673,24 @@
         "type": "bool",
         "required": false,
         "default": true
+      },
+      {
+        "name": "kernel",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "multiple",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "density_space",
+        "type": "str or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1778,16 +4715,25 @@
       "silverman",
       "positive covariance factor"
     ],
+    "kernels": [
+      "gaussian",
+      "epanechnikov_product"
+    ],
+    "multiple": [
+      "layer",
+      "stack",
+      "fill"
+    ],
     "rows": "paired missing/zero weights/hue deselection excluded",
-    "normalization": "all usable selected mass, including singular hues",
+    "normalization": "all selected physical mass, including singular skipped tuples; effective hue only unless common_norm=True pools globally",
     "clip": "evaluation only; never trims fit rows or renormalizes tails",
-    "common_grid": "pooled weighted support, per-curve bandwidths retained",
-    "cumulative": "analytic full Gaussian CDF from -infinity, not ECDF",
+    "common_grid": "persisted shared support with separate per-curve fits; required for stack/fill, no hidden interpolation",
+    "cumulative": "chosen kernel CDF from minus infinity; stacked contributions and fill composition are labelled as such, not population CDFs",
     "singular": "skip without fake bandwidth; warn_singular controls warning",
-    "axes": "primary2D v/h; positive raw/log observations + support",
-    "density_units": "raw data even on logs; linear density/CDF axis only",
-    "style": "line or fill; exact alpha/width; hue dash/hatch slots",
-    "limits": "no bivariate/stack/multiple/date/y2/kernel/callable/log fit",
+    "axes": "Cartesian2D v/h with observations on the actual x/y/y2 target; typed/new density/CDF ordinate linear, never a date clock; omitted legacy ordinate behavior retained",
+    "density_units": "default raw data/day units; explicit stat_scale=axis uses log10 only on the actual log observation axis, independent of display base; density_space=data includes Jacobian, fit is working units",
+    "style": "actual line/fill stroke points and dashes, no invented glyphs",
+    "limits": "finite named kernels/bandwidth only; explicit clocks for dates; no inferred symlog/asinh/logit statistical fit or callbacks",
     "precision": "scaled sums/covariance, bounded chunks; invalid derived fail"
   },
   "kde2d": {
@@ -1824,7 +4770,7 @@
       },
       {
         "name": "clip",
-        "type": "list[list[float or None]] or None",
+        "type": "list[list[float or str or None]] or None",
         "required": false,
         "default": null
       },
@@ -1861,6 +4807,42 @@
         "type": "bool",
         "required": false,
         "default": true
+      },
+      {
+        "name": "kernel",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "cumulative",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "level_kind",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "fit_scales",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "density_space",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hdr",
+        "type": "HDRSpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "defaults": {
@@ -1883,19 +4865,40 @@
     "max_points_per_axis": 256,
     "max_usable_rows": 10000,
     "max_levels": 16,
-    "weights": "relative paired x/y row mass, not sample replication",
-    "covariance": "unbiased weighted full covariance, effective n",
-    "bandwidth": "d=2 Scott=Silverman=n_eff**(-1/6); numeric factor",
-    "normalization": "all usable selected mass incl skipped singular hues",
-    "support": "cut/clip evaluation only; pooled grid, conditional fits",
-    "levels": "increasing enclosed HDR fractions conditional on grid mass",
-    "quadrature": "raw-coordinate trapezoidal nodes; ties all included",
-    "level_precision": "approximate grid HDR, not CI/full-space coverage",
-    "singular": "skip rank deficient, no jitter/regularization or fake fit",
-    "axes": "Cartesian2D raw x/y; positive observations + support on logs",
-    "style": "native contours/fill, exact alpha/outline, hue dash/hatch",
-    "limits": "no cumulative/orient/date/y2/colorbar/kernel/log fit/kwargs",
-    "precision": "scaled covariance/product, bounded point-row matrices"
+    "kernels": [
+      "gaussian",
+      "epanechnikov_product"
+    ],
+    "weights": "canonical paired relative mass; physical Kish before ties",
+    "covariance": "unbiased full covariance; gaussian or variance-one Cholesky epanechnikov_product, explicitly nonradial",
+    "bandwidth": "d=2 Scott=Silverman=n_eff**(-1/6); finite scalar factor",
+    "normalization": "selected full cohort, including skipped singular fields; effective-hue/global pool, not each size/style tuple",
+    "support": "cut/clip choose evaluation/view only, never trim or rebase fit",
+    "level_kinds": [
+      "mass",
+      "density",
+      "cdf"
+    ],
+    "conditional_default": "absent HDRSpec retains finite-grid trapezoidal mass ranking with all tied heights; conditional, not full-space coverage",
+    "cumulative": "true original-law joint lower-orthant CDF; no finite-grid subtraction/renormalization or Jacobian; common_norm amplitude remains an explicit contribution",
+    "joint_cdf_absolute_error": 1e-06,
+    "fit_scales": "logical per-input data/axis; actual log uses log10, never display base; density_space data/fit is explicit; no absolute-clock log fit",
+    "singular": "no jitter/regularization/fake bandwidth or observations",
+    "axes": "actual Cartesian2D primary/y2, v/h, declared input clocks",
+    "style": "real native contours/cells, physical outline points/dashes",
+    "full_hdr": {
+      "opt_in": "HDRSpec(scope=full,tolerance=0.01); absent stays conditional",
+      "conditional_tolerance": "0<tolerance<=0.05; absolute probability",
+      "method": "one fitted source-enclosed whitening chart/root; unknown strictly ordered cutoffs, adaptive rectangle mass bounds, disjoint earliest-band guaranteed-inside native cell unions",
+      "working_active_cells_per_current_level": 65536,
+      "max_lambda_updates": 48,
+      "initial_trial_in_addition": true,
+      "statement": "support/numeric/source-transform/classification/native/clip allocations remain separate; bounded conditional target and region symmetric-difference error under declared IEEE/computed-model assumptions, not an exact infinite-source law",
+      "visibility": "actual clipped probability is reported, not called p",
+      "failure": "unresolved order/precision/tolerance/resource rejects the whole effect; no level dropping/conditional fallback"
+    },
+    "limits": "no 2D stack/fill ordinate, CDF+mass-HDR or arbitrary callbacks",
+    "precision": "canonical source/mass before float; full-exponent scaled and outward primitives; unresolved derived coordinates stay errors"
   },
   "ecdf": {
     "fields": [
@@ -1935,9 +4938,11 @@
     "ties": "aggregate equal values into one full jump",
     "empty": "no curve/legend; explicit hue order reserves color/style",
     "support": "finite numeric; full jump at min; no tail extension",
-    "axes": "primary Cartesian2D; v/h; positive observation log, linear mass",
-    "precision": "scaled proportion sums; strict tails summed from the right",
-    "unknown": "reject ignored options; no fit/intervals/censoring/2-D ECDF"
+    "axes": "Cartesian2D v/h; observations use actual x or target y/y2 clock; positive observation log and linear non-calendar mass axis",
+    "precision": "canonical dyadic source/mass before ties; percent unit combined before final float, strict complement from exact right mass",
+    "semantics": "shared raw hue/size/style tuples; size=stroke points",
+    "markers": "filled named markers at actual right-continuous knots only; never the prepended boundary sentinel; explicit marker_size points",
+    "unknown": "reject ignored options; no fit/intervals/censoring; explicit paired empirical fields use ecdf2d, not an inferred univariate option"
   },
   "distribution_components": {
     "box": [
@@ -1953,17 +4958,104 @@
       "median",
       "flier"
     ],
+    "violin": {
+      "legacy": [
+        "body",
+        "mean",
+        "median",
+        "extrema"
+      ],
+      "box": [
+        "body",
+        "whisker",
+        "box",
+        "median"
+      ],
+      "quart": [
+        "body",
+        "quartile"
+      ],
+      "point": [
+        "body",
+        "point"
+      ],
+      "stick": [
+        "body",
+        "stick"
+      ],
+      "None": [
+        "body"
+      ]
+    },
     "defaults": "None inherits existing layer/native/hue/tier defaults",
     "precedence": "component overrides layer shorthand; body color keeps tiers",
     "colors": "hex RGB/RGBA, basic names, C0..C9 or none",
     "stroke": "named styles; finite sizes in [0,1000]",
     "alpha": "fraction [0,1], exact override including 0/1",
     "hatch": "body only; <=32 native symbols; empty disables redundant hatch",
-    "mean": "requires showmeans=True; style does not infer visibility",
+    "mean": "box requires showmeans=True; violin legacy component may enable None, explicit False rejects",
     "hidden": "reject styles for explicitly hidden median/fliers",
     "unknown": "reject unknown component/property keys; no arbitrary kwargs"
   },
+  "box_workflow": {
+    "api": "Plot.box / Plot.bxp; same box layer, optional LayerSpec.box",
+    "summary": "existing median/q1/q3/whislo/whishi columns; optional mean/CI/fliers",
+    "summary_order": "whislo <= q1 <= median <= q3 <= whishi; absolute observation units",
+    "summary_missing": "only required fields drop rows; optional missing marks keep box",
+    "availability": "requested showmeans/notch/showfliers need supplied marks; no reconstruction",
+    "fliers": "list-valued column; [] supplied none, None unavailable; strictly outside whiskers",
+    "median_ci": "raw median percentile bootstrap; level(0,100), n_boot1..100000, seed",
+    "seed": "existing nonbool nonnegative int; private same-seed cell schedule",
+    "singleton": "retain box, warn and omit requested bootstrap notch",
+    "cap_fraction": "finite nonbool[0,1] of FINAL dodge/gap body width in category working coordinates; 0 retains caps",
+    "native_defaults": "raw absent whis/visibility inherit actual rc; requested caps enable caps not body",
+    "per_hue": "typed raw-key entries, bool != number; known/reserved categorical hue only",
+    "hue_role": "BODY facefill only; component colors/edges independent",
+    "size_role": "BODY outline stroke pt only, not width/mass/marker diameter/other component strokes",
+    "style_role": "BODY dash AND real FLIER glyph via serialized markers, default cycle included",
+    "precedence": "native/theme -> layer -> owned mappings -> global components -> per-hue fields; mapped-property conflicts reject",
+    "guides": "actual native box/line styles; shared normalized raw-label huebar",
+    "geometry": "v/h/native/log/inversion/date category+observation/y2/facet/live",
+    "live": "same explicit recipe; effective category source owns slots, literal orders remain literal",
+    "max_drawn_cells": 256,
+    "max_selected_source_rows": 10000,
+    "max_total_declared_flier_values": 10000,
+    "bounds": "separate row AND flier bounds before native work; legacy no-new-request limits unchanged",
+    "unsupported": "bootstrap from quartiles, arbitrary kwargs/callbacks, unknown or numeric-per-value hue overrides"
+  },
   "violin": {
+    "fields": {
+      "ViolinSpec": [
+        {
+          "name": "split_policy",
+          "type": "str or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "hue_components",
+          "type": "list[ViolinHueComponentsSpec] or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "ViolinHueComponentsSpec": [
+        {
+          "name": "level",
+          "type": "Any",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "components",
+          "type": "DistributionComponentsSpec",
+          "required": true,
+          "default": null
+        }
+      ]
+    },
+    "max_selected_source_rows": 10000,
+    "max_drawn_profiles": 256,
     "inner": [
       "legacy",
       "box",
@@ -1987,9 +5079,15 @@
     "weighted_rows": "missing/zero rows dropped; no replication or sampling",
     "weighted_limit": 10000,
     "split": "two selected/reserved hues; shared center; no positive dodge",
+    "paired_split": "ViolinSpec split_policy=paired: frozen hue pairs in separate half-body lanes; odd final left half; H=1 valid",
+    "semantic_roles": "raw tuples partition fits; hue owns body fill, size=body outline stroke pt, style=body dashes and actual point/box-median glyphs",
+    "normalization_pool": "effective hue, not the size/style tuple; common_norm=True global",
+    "components": "native body/whisker/box/quartile/point/stick/mean/median/extrema traits; strict raw categorical per-hue overrides",
+    "advanced_limits": "10000 selected source rows and256 drawn profiles/layer; categorical levels64; numeric hue/size not capped at64",
+    "axes": "applicable primary/y2, v/h, native/log and category/measurement clocks; no inferred nonlinear statistics",
     "bw_adjust": "finite multiplier in (0,1000], default 1",
     "cut": "finite in [0,10] bandwidths, default 0",
-    "clip": "increasing finite/None raw-value bounds; KDE support only",
+    "clip": "raw absolute measurement support bounds, finite/None or calendar literals through the actual target clock; no row trim",
     "inner_rows": "point/stick <=10000 usable rows; no silent sampling",
     "singular": "finite degenerate body, never invent a KDE or sample",
     "log": "stat_scale controls fitted coordinates; clip stays raw units",
@@ -2025,6 +5123,73 @@
     "shared_axes": "reject native/ordinal mixtures or conflicting scales"
   },
   "letter_values": {
+    "fields": {
+      "BoxenSpec": [
+        {
+          "name": "band_components",
+          "type": "list[BoxenBandComponentsSpec] or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "hue_components",
+          "type": "list[BoxenHueComponentsSpec] or None",
+          "required": false,
+          "default": null
+        }
+      ],
+      "BoxenBandComponentsSpec": [
+        {
+          "name": "rank",
+          "type": "int",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "side",
+          "type": "str",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "body",
+          "type": "ComponentStyleSpec",
+          "required": true,
+          "default": null
+        }
+      ],
+      "BoxenHueComponentsSpec": [
+        {
+          "name": "level",
+          "type": "Any",
+          "required": true,
+          "default": null
+        },
+        {
+          "name": "components",
+          "type": "DistributionComponentsSpec or None",
+          "required": false,
+          "default": null
+        },
+        {
+          "name": "band_components",
+          "type": "list[BoxenBandComponentsSpec] or None",
+          "required": false,
+          "default": null
+        }
+      ]
+    },
+    "max_selected_positive_instances_per_advanced_layer": 10000,
+    "max_drawn_cells_per_advanced_layer": 256,
+    "max_actual_advanced_band_polygons_per_figure": 32768,
+    "max_requested_advanced_flier_instances_per_figure": 1000000,
+    "advanced_bounds": "effect-native-expansion admission, not SLA/RSS/marker-size promise; source validation does not fit summaries; render derives once, admits actual budgets before native allocation and reuses geometry; repeated physical uses count; hidden unrequested fliers excluded from drawing work, never from summary tails; legacy admission unchanged",
+    "weighted_quantiles": "LEFT inverse empirical CDF, exact canonical relative weights; endpoints min/max; no equality midpoint or replicated rows",
+    "weighted_depth": "physical-row Kish n_eff stopping, exact binary-exponent comparisons; non-CI heuristic; tie splitting can change depth",
+    "weighted_mass": "empirical [low,high), last closed; duplicate internal edges empty; band plus strict-tail mass exactly one",
+    "band_components": "central rank0, lower/upper ranks1..31; rank stable across named depth; layer/hue components then layer-band then hue-band fieldwise",
+    "semantic_roles": "actual body hue without mapped tail tint; size=BODY outline stroke pt; style=body dash and only actual observed flier glyph",
+    "shared_raw_domains": "matching scale_id/config pools selected original row IDs with scatter/line/other accepted marks; normalization is shared, physical stroke/diameter units and guides remain mark-specific",
     "depth_methods": [
       "tukey",
       "proportion",
@@ -2040,7 +5205,7 @@
       "area"
     ],
     "width_default": "exponential",
-    "quantiles": "linear interpolation of usable raw observations per cell",
+    "quantiles": "unweighted type7, correctly rounded finite interpolation",
     "area_widths": "probability mass / band height, normalized within cell",
     "zero_height_area": "zero width; all-constant cells use exponential",
     "outlier_prop": "(0,1), proportion rule only; default 0.007",
@@ -2050,6 +5215,7 @@
     "width": "total category span in (0,1]; default 0.8",
     "dodge": "total hue span <=width; None auto, 0 overlays hues",
     "flier_markers": [
+      "none",
       "o",
       "d",
       "D",
@@ -2059,41 +5225,97 @@
       "+",
       "x",
       ".",
+      "*",
+      "P",
+      "X",
+      "p",
+      "h",
+      "8"
+    ],
+    "flier_marker_context": "scalar LayerSpec.marker and actual flier components",
+    "semantic_style_markers": [
+      "o",
+      "s",
+      "D",
+      "^",
+      "v",
+      "P",
+      "X",
+      "d",
+      "p",
+      "h",
+      "8",
       "*"
     ],
+    "semantic_style_marker_context": "existing filled-only SemanticSpec cycle, distinct capacity; not the broader scalar/component flier glyph contract",
     "flier_defaults": "hollow diamond, 3pt; median/tails shown",
     "stroke_sizes": "line_width/marker_size finite in [0,1000] points",
-    "axes": "Cartesian 2-D; ordinal or native numeric/log categories",
+    "axes": "Cartesian2D v/h, native numeric/date/log, value clocks and y2",
     "stat_scale": "data default; axis opts into log10 quantiles/area heights",
     "missing_rows": "listwise drop; empty slots have no invented summaries",
     "intervals": "distribution quantiles, not confidence intervals",
     "unknown_options": "reject rather than ignore"
   },
+  "strip_categories": {
+    "opt_in": "StripSpec, semantics or explicit orient/order/dodge/native_scale",
+    "legacy": "omitted controls preserve raw-x jitter and old JSON",
+    "jitter_policies": [
+      "uniform",
+      "none"
+    ],
+    "seed": "local NumPy generator; integer in [0,2**32-1], default 0",
+    "jitter": "half-width fraction [0,0.5], default 0.15",
+    "jitter_units": "minimum category axis spacing; dodge*spacing/hue_slots when dodged",
+    "dodge": "total span fraction [0,1]; None/0 overlays hues",
+    "native": "minimum numeric/date spacing; log10 spacing on numeric log axes",
+    "orders": "select/reserve category and hue slots, including empty levels",
+    "orientation": "x remains category and y measurement for v/h",
+    "rows": "listwise category/value/hue missing exclusion; retain source observations",
+    "semantics": "independent hue/size/style with pooled original-row domains; category/hue order selection and reserved actual hue slots"
+  },
   "swarm": {
     "max_observations": 2000,
-    "packing": "stable display-space greedy circles; repack every draw",
+    "packing": "stable display-space native glyph bounds; repack from originals every draw",
     "markers": [
-      "o"
+      "o",
+      "s",
+      "D",
+      "^",
+      "v",
+      "P",
+      "X",
+      "d",
+      "p",
+      "h",
+      "8",
+      "*"
     ],
     "marker_size": "positive points <=1000; default 6, reject with mapped size",
-    "size_semantics": "numeric or categorical size; selected layer guides",
+    "size_semantics": "shared numeric/categorical diameter points; never weights",
     "size_order": "categorical row selection, reserved ranks, observed guides",
     "size_cohort": "drop missing size with category/value/hue; source retained",
-    "size_scale_id": "Swarm-only named original-row pool; sizes not colours",
+    "size_scale_id": "shared mixed-family original-row mapping domains",
     "size_pool": "deduplicated original rows <=10000; categorical levels <=64",
-    "size_scope": "no mixed-family pool, semantic hue/style/date/y2",
+    "size_scope": "hue/size/style; explicit observation clocks; v/h and y2",
     "facet_empty": "selected empty cells are frames without data or guides",
     "line_width": "points in [0,1000]; default 0.5",
-    "category_scale": "ordinal or native numeric/log; x remains category in h",
+    "category_scale": "ordinal or native numeric/log/date; x is category in h",
     "value_scales": [
       "linear",
-      "positive log"
+      "positive log",
+      "explicit linear temporal"
     ],
     "width": "total category span in (0,1]; default 0.8",
     "dodge": "total hue span <=width; None auto, 0 jointly packs hues",
     "overcrowding": "keep all rows at gutters; greedy packing is not optimal",
     "warn_thresh": "fraction in [0,1]; default 0.05; warn once per collection",
-    "unknown_options": "reject rather than ignore"
+    "unknown_options": "reject rather than ignore",
+    "pack_scope": "explicit panel-local compatible members only; None independent",
+    "max_scope_instances": 4000,
+    "scope_instances": "physical drawn instances, never deduplicated by row ID",
+    "scope_compatibility": "target axis/orientation/category/order/native/width/dodge/gap; dodged hue column/order match",
+    "scope_budget": "profiled operation bound, not SLA or raised per-layer limit",
+    "glyph_bounds": "exact old circle radius; conservative native path bbox circles plus round strokes for other glyphs"
   },
   "journals": [
     "nature",
@@ -2267,6 +5489,26 @@
     }
   },
   "actions": {
+    "AddInset": [
+      {
+        "name": "parent",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "bounds",
+        "type": "list[float]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel_id",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      }
+    ],
     "AddLayer": [
       {
         "name": "layer",
@@ -2282,10 +5524,116 @@
       }
     ],
     "AddPanel": [],
+    "NestLayout": [
+      {
+        "name": "rows",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "cols",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "row",
+        "type": "int",
+        "required": false,
+        "default": 0
+      },
+      {
+        "name": "col",
+        "type": "int",
+        "required": false,
+        "default": 0
+      },
+      {
+        "name": "row_span",
+        "type": "int",
+        "required": false,
+        "default": 1
+      },
+      {
+        "name": "col_span",
+        "type": "int",
+        "required": false,
+        "default": 1
+      },
+      {
+        "name": "grid_id",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "width_ratios",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "height_ratios",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      }
+    ],
     "RemoveLayer": [
       {
         "name": "layer_index",
         "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "RemovePanel": [
+      {
+        "name": "panel_id",
+        "type": "str",
+        "required": true,
+        "default": null
+      }
+    ],
+    "RenamePanel": [
+      {
+        "name": "panel_id",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "new_id",
+        "type": "str",
+        "required": true,
+        "default": null
+      }
+    ],
+    "ReorderPanels": [
+      {
+        "name": "panel_ids",
+        "type": "list[str]",
+        "required": true,
+        "default": null
+      }
+    ],
+    "ReplaceLayer": [
+      {
+        "name": "layer_index",
+        "type": "int",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "layer",
+        "type": "LayerSpec",
         "required": true,
         "default": null
       },
@@ -2332,6 +5680,32 @@
         "default": 0
       }
     ],
+    "SetAxisScale": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "scale",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "options",
+        "type": "ScaleOptionsSpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
     "SetAxisShare": [
       {
         "name": "axis",
@@ -2342,6 +5716,46 @@
       {
         "name": "share_id",
         "type": "str or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetAxisTicks": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "which",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "ticks",
+        "type": "TickSpec or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
+      }
+    ],
+    "SetCamera3D": [
+      {
+        "name": "camera",
+        "type": "Camera3DSpec or None",
         "required": true,
         "default": null
       },
@@ -2378,12 +5792,40 @@
         "default": 0
       }
     ],
+    "SetContext": [
+      {
+        "name": "name",
+        "type": "str or None",
+        "required": true,
+        "default": null
+      }
+    ],
     "SetData": [
       {
         "name": "columns",
         "type": "dict",
         "required": true,
         "default": null
+      }
+    ],
+    "SetDerivedAxis": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "secondary",
+        "type": "SecondaryAxisSpec or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
       }
     ],
     "SetDpi": [
@@ -2400,6 +5842,20 @@
         "type": "dict",
         "required": false,
         "default": {}
+      }
+    ],
+    "SetFacetTemplate": [
+      {
+        "name": "template",
+        "type": "PanelSpec",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "reset_orders",
+        "type": "bool",
+        "required": false,
+        "default": false
       }
     ],
     "SetFacets": [
@@ -2490,6 +5946,30 @@
       {
         "name": "kde",
         "type": "KDESpec or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "complementary",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "group",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "hue_order",
+        "type": "list[str or bool or int or float] or None",
         "required": false,
         "default": null
       }
@@ -2584,6 +6064,18 @@
         "type": "list[float] or None",
         "required": false,
         "default": null
+      },
+      {
+        "name": "ncols",
+        "type": "int or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "handler",
+        "type": "str or None",
+        "required": false,
+        "default": null
       }
     ],
     "SetLimits": [
@@ -2612,6 +6104,50 @@
         "default": 0
       }
     ],
+    "SetLiveFacets": [
+      {
+        "name": "row",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "row_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_order",
+        "type": "list[str or bool or int or float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "col_wrap",
+        "type": "int or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "share_x",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      },
+      {
+        "name": "share_y",
+        "type": "str",
+        "required": false,
+        "default": "all"
+      }
+    ],
     "SetMatrix": [
       {
         "name": "name",
@@ -2621,8 +6157,28 @@
       },
       {
         "name": "values",
-        "type": "list",
+        "type": "list[list[float or None]]",
         "required": true,
+        "default": null
+      }
+    ],
+    "SetMosaic": [
+      {
+        "name": "rows",
+        "type": "list[list[str or None]]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "width_ratios",
+        "type": "list[float] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "height_ratios",
+        "type": "list[float] or None",
+        "required": false,
         "default": null
       }
     ],
@@ -2668,6 +6224,36 @@
         "type": "KDESpec or None",
         "required": false,
         "default": null
+      },
+      {
+        "name": "temporal",
+        "type": "dict[str, TemporalSpec] or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "corner",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "weights",
+        "type": "str or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "complementary",
+        "type": "bool or None",
+        "required": false,
+        "default": null
+      },
+      {
+        "name": "semantics",
+        "type": "SemanticSpec or None",
+        "required": false,
+        "default": null
       }
     ],
     "SetPalette": [
@@ -2696,6 +6282,40 @@
         "type": "int",
         "required": false,
         "default": 0
+      }
+    ],
+    "SetPanelLayout": [
+      {
+        "name": "layout",
+        "type": "PanelLayoutSpec",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "placements",
+        "type": "dict[str, PanelPlacementSpec]",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel_ids",
+        "type": "list[str] or None",
+        "required": false,
+        "default": null
+      }
+    ],
+    "SetPanelPlacement": [
+      {
+        "name": "panel_id",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "placement",
+        "type": "PanelPlacementSpec",
+        "required": true,
+        "default": null
       }
     ],
     "SetProjection": [
@@ -2780,6 +6400,14 @@
         "default": null
       }
     ],
+    "SetSharedGuides": [
+      {
+        "name": "guides",
+        "type": "list[SharedGuideSpec] or None",
+        "required": true,
+        "default": null
+      }
+    ],
     "SetSize": [
       {
         "name": "width",
@@ -2800,6 +6428,26 @@
         "type": "str",
         "required": true,
         "default": null
+      }
+    ],
+    "SetTemporalAxis": [
+      {
+        "name": "axis",
+        "type": "str",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "temporal",
+        "type": "TemporalSpec or None",
+        "required": true,
+        "default": null
+      },
+      {
+        "name": "panel",
+        "type": "int",
+        "required": false,
+        "default": 0
       }
     ],
     "SetTheme": [

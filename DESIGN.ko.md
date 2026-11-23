@@ -81,6 +81,15 @@ CIELCh (L, C, H)
 - 저장 포맷 `.mplot.json` (+선택적 데이터 인라인/참조). Rust는 이 스키마만
   알면 되고, 1단계 reduction/rendering은 Python CLI subprocess에 위임.
 
+N13은 하나의 선택적 flat typed 배치 graph로 grid cell/span·중첩 grid·부모 axes
+inset을 안정적 패널/grid ID에 연결합니다. Mosaic/nest는 같은 공개 action의
+편의 API이지 두 번째 recipe/renderer가 아닙니다. 순수 `_layout`이 유한 geometry와
+공통 sharing component를 소유하고 검증/native linking/N12 눈금 상속이 함께
+사용합니다. `_layout_render`는 native GridSpec/subgridspec/inset으로 확장하고
+실제 child axes를 순회합니다. Editor는 fig.axes 순서로 패널을 추정하지 않습니다.
+완전 교체는 최종 ID를 쓰고 기존 패널을 모두 유지하며 명시적 새 패널은 ID 사전식
+순서로 추가합니다. [배치·ID·공유·업그레이드 계약](docs/PANEL_LAYOUTS.ko.md) 참고.
+
 ## 4b. 상태 관리: 순수 reducer + effect 분리 (functional core / imperative shell)
 
 Spec을 단순히 변이(mutate)하지 않고, **reducer가 각 상태 전이를 순수
@@ -115,11 +124,14 @@ effect가 그린다.
 여기서 “순수”는 관찰 가능한 reducer 동작을 뜻하며 immutable/zero-copy
 표현을 뜻하지 않습니다. `FigureSpec`은 mutable dataclass/list 그래프입니다.
 Python reducer는 action마다 현재 spec 전체를 deep copy하고, `Store`는 방어적
-snapshot을 반환하며, undo/redo는 history를 재생해 상태를 다시 만듭니다.
-이 방식은 aliasing·실패 의미론을 단순하게 하지만 비용이 inline data 크기와
-history 길이에 비례합니다. 내부 fluent/batch 경로는 쓰이지 않는 반환 snapshot
-복사를 생략하지만, structural sharing이나 replay checkpoint는 실제 논문
-workload profiling에서 필요성이 확인될 때까지 보류합니다.
+snapshot을 반환합니다. 기본 pure reducer는 직전 transition의 내부 상태 하나를
+유지해 즉시 undo에 사용하며, redo는 다음 action 하나를 계산한 뒤 history를
+갱신합니다. 더 깊은 undo는 앞선 64-action checkpoint 하나에서 재생합니다.
+Custom reducer는 전체 재생과 호출 순서를 유지합니다. 내부 참조를 보관하므로
+dispatch 복사는 추가하지 않으며 공개 state·action·listener snapshot은 계속
+격리됩니다. Action 비용은 여전히 inline data 크기에 비례합니다. 내부
+fluent/batch 경로는 쓰이지 않는 반환 snapshot 복사를 생략합니다. 추가 sharing
+변경은 가정한 지연 목표가 아닌 측정한 workload에 따라 결정합니다.
 
 ### 대시보드 ↔ 엔진 분리 (기계 친화 vs 사람 친화)
 

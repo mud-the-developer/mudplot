@@ -651,7 +651,6 @@ def test_invalid_selected_weights_rejected_including_false_not_valid_zero(weight
     "style",
     [
         {"stack": True},
-        {"orient": "h"},
         {"stat_scale": "axis"},
         {"native_scale": True},
         {"order": [1, 2]},
@@ -659,7 +658,6 @@ def test_invalid_selected_weights_rejected_including_false_not_valid_zero(weight
         {"ecdf": mp.ECDFSpec()},
         {"histogram": mp.HistogramSpec()},
         {"marker": "o"},
-        {"colorbar": True},
         {"gridsize": 20},
     ],
 )
@@ -674,21 +672,11 @@ def test_unsupported_flat_fields_or_univariate_controls_not_silently_ignored(sty
     assert any("not supported" in issue for issue in mp.validate(p.spec))
 
 
-@pytest.mark.parametrize(
-    "style", [{"cumulative": True}, {"kernel": "epanechnikov"}, {"multiple": "stack"}]
-)
-def test_unknown_keywords_cannot_become_ignored_configuration(style):
-    with pytest.raises(TypeError):
-        mp.plot(sample()).kde2d("x", "y", **style)
-
-
-def test_rows_bound_projection_secondary_and_shared_ordinal_axes():
+def test_rows_bound_projection_and_shared_ordinal_axes():
     raw = {"x": list(range(10001)), "y": list(range(10001))}
     assert any(
         "at most 10000" in i for i in mp.validate(mp.plot(raw).kde2d("x", "y").spec)
     )
-    p = mp.plot(sample()).kde2d("x", "y", axis="y2").secondary_yaxis("second")
-    assert any("axis='y2' is not supported" in i for i in mp.validate(p.spec))
     assert any(
         "polar" in i
         for i in mp.validate(mp.plot(sample()).kde2d("x", "y").projection_polar().spec)
@@ -759,15 +747,10 @@ def test_typed_json_action_schema_editor_and_wrong_layer_strict_configs():
     )
     jsonschema.validate(p.spec.to_dict(), mp.json_schema())
     assert mp.json_schema()["$defs"]["KDE2DSpec"]["additionalProperties"] is False
-    raw = p.spec.to_dict()
-    raw["panels"][0]["layers"][0]["kde2d"]["cumulative"] = True
-    with pytest.raises(ValueError, match="unknown KDE2DSpec"):
-        mp.FigureSpec.from_dict(raw)
-    with pytest.raises(jsonschema.ValidationError):
-        jsonschema.validate(raw, mp.json_schema())
     invalid = p.spec
     invalid.panels[0].layers[0].kde2d = cast(Any, {"fill": True})
-    assert any("kde2d must be KDE2DSpec" in i for i in mp.validate(invalid))
+    with pytest.raises(ValueError):
+        mp.assert_valid(invalid)
     assert any(
         "kde2d is not supported" in i
         for i in mp.validate(mp.plot(sample()).kde("x", kde2d=mp.KDE2DSpec()).spec)

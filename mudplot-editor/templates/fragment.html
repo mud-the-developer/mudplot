@@ -3,18 +3,118 @@
   <p class="error" role="alert">{{ error }}</p>
   {% endif %}
   <section class="canvas" aria-label="Figure preview">
-    <img src="/fig.png?v={{ revision }}" alt="Current mudplot figure preview">
+    <div class="preview-wrap" data-layout="{{ current.layout }}" data-revision="{{ revision }}" data-target="#app">
+      <img src="/fig.png?revision={{ revision }}" alt="Current mudplot figure preview">
+    </div>
+    <p class="preview-status" role="status" aria-live="polite">Loading preview…</p>
+    <p class="hint">Drag a handle or focus it and use arrow keys (Shift: larger step). Titles use Cartesian/polar axes fractions; legends use figure fractions. Text/annotation dragging supports Cartesian 2-D panels. 3-D title/data dragging is unavailable.</p>
     <nav class="exports" aria-label="Figure exports">
       <a href="/fig.pdf">Download PDF</a>
+      <a href="/fig.png" download="figure.png">Download PNG</a>
       <a href="/fig.svg">Download SVG</a>
       <a href="/spec.json" download="figure.mplot.json">Download FigureSpec</a>
     </nav>
   </section>
-  <section class="controls" aria-label="Editor controls">
+  <section class="controls inspector" aria-label="Editor controls">
     <h2>Visual controls</h2>
+    <form class="control-form" hx-post="/control/panel" hx-target="#app" hx-swap="outerHTML">
+      <label>Active panel (zero-based)
+        <select name="panel">
+          {% for panel in 0..current.panel_count %}
+          <option value="{{ panel }}"{% if panel == current.active %} selected{% endif %}>{{ current.panel_names[panel] }}</option>
+          {% endfor %}
+        </select>
+      </label>
+      <button type="submit">Select panel</button>
+    </form>
+    <details class="layout-controls">
+      <summary>Layout · mosaic, nested, inset</summary>
+      <p>Edit typed JSON actions below. Mosaic rows use stable panel IDs or null empty positions; repeated IDs must form rectangles. Cell spans are zero-based; inset bounds are parent-axes fractions. Mosaic/nest assigns IDs to anonymous panels. Preserve all existing IDs unless explicitly renamed/removed. Nesting, reordering and placement preserve live facet ownership; removing a live cell leaves saved materialized views.</p>
+      {% for action in current.layout_actions %}
+      <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+        <label>{{ action.0 }} <textarea name="json" rows="7">{{ action.1 }}</textarea></label>
+        <button type="submit">{{ action.0 }}</button>
+      </form>
+      {% endfor %}
+    </details>
+    <details data-key="shared-guides">
+      <summary>Figure-wide shared semantic guides</summary>
+      <p>One authoritative request list. Membership is the stored SemanticSpec.scale_id, across every compatible member and empty facet template. Use guides: [{"scale_id": "your-scope"}]; null clears all requests. Each strict request also accepts location (outside right/top/bottom), title, frame and a finite [x,y] figure-fraction bbox_to_anchor. Dataset labels and unrelated scales remain panel-owned.</p>
+      <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+        <label>SetSharedGuides · populated authoritative action <textarea name="json" rows="9">{{ current.shared_guides_action }}</textarea></label>
+        <button type="submit">Set shared guides</button>
+      </form>
+    </details>
+    {% if let Some(action) = current.facet_template_action %}
+    <details data-key="live-facet-template">
+      <summary>Whole live facet template</summary>
+      <p>Saved panels are authoritative local views. This explicit whole-template action replaces every frozen cell and supersedes local overrides, preserving selectors, N13 IDs/placements and shared-guide membership. SetData and reopening never apply it automatically. Omitted same-channel orders retain reservations; reset_orders recaptures them.</p>
+      <p>Change a layer's <code>transforms</code> here to update all fixed cells. Use the layer editor below for one cell only.</p>
+      <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+        <label>SetFacetTemplate · populated authoritative action <textarea name="json" rows="14">{{ action }}</textarea></label>
+        <button type="submit">Replace whole facet template</button>
+      </form>
+    </details>
+    {% endif %}
+    <h3>Axes · panel {{ current.active }}</h3>
+    <p>Leave both limits blank for automatic limits. Temporal limits and text anchors use renderer UTC-day coordinates; editing labels, scales or limits preserves the declared clock and sharing.</p>
+    {% for axis in current.axes %}
+    <fieldset aria-label="{{ axis.name }} axis">
+      <legend>{{ axis.name }} axis</legend>
+      <form hx-post="/control/axis" hx-target="#app" hx-swap="outerHTML">
+        <input type="hidden" name="panel" value="{{ current.active }}">
+        <input type="hidden" name="axis" value="{{ axis.name }}">
+        <input type="hidden" name="operation" value="label">
+        <label>{{ axis.name }} label <input name="text" value="{{ axis.label }}"></label>
+        <button type="submit">Set {{ axis.name }} label</button>
+      </form>
+      <form hx-post="/control/axis" hx-target="#app" hx-swap="outerHTML">
+        <input type="hidden" name="panel" value="{{ current.active }}">
+        <input type="hidden" name="axis" value="{{ axis.name }}">
+        <input type="hidden" name="operation" value="scale">
+        <label>{{ axis.name }} scale <select name="scale">
+          <option value="linear"{% if axis.scale == "linear" %} selected{% endif %}>linear</option>
+          <option value="log"{% if axis.scale == "log" %} selected{% endif %}>log</option>
+          {% if axis.allow_new_scales %}
+          <option value="symlog"{% if axis.scale == "symlog" %} selected{% endif %}>symlog</option>
+          <option value="asinh"{% if axis.scale == "asinh" %} selected{% endif %}>asinh</option>
+          <option value="logit"{% if axis.scale == "logit" %} selected{% endif %}>logit</option>
+          {% endif %}
+        </select></label>
+        <button type="submit">Set {{ axis.name }} scale</button>
+      </form>
+      <form hx-post="/control/axis" hx-target="#app" hx-swap="outerHTML">
+        <input type="hidden" name="panel" value="{{ current.active }}">
+        <input type="hidden" name="axis" value="{{ axis.name }}">
+        <input type="hidden" name="operation" value="limits">
+        <label>{{ axis.name }} lower limit <input name="lo" type="number" step="any" value="{{ axis.lo }}"></label>
+        <label>{{ axis.name }} upper limit <input name="hi" type="number" step="any" value="{{ axis.hi }}"></label>
+        <button type="submit">Set {{ axis.name }} limits</button>
+      </form>
+    </fieldset>
+    {% endfor %}
+    {% if current.projection == "2d" %}
+    <form hx-post="/control/secondary" hx-target="#app" hx-swap="outerHTML">
+      <input type="hidden" name="panel" value="{{ current.active }}">
+      {% if current.has_y2 %}
+      <input type="hidden" name="operation" value="remove">
+      <button type="submit">Remove secondary y axis</button>
+      {% else %}
+      <input type="hidden" name="operation" value="enable">
+      <button type="submit">Enable secondary y axis</button>
+      {% endif %}
+    </form>
+    {% endif %}
+    {% if current.projection == "3d" && !current.has_z %}
+    <form hx-post="/control/z" hx-target="#app" hx-swap="outerHTML">
+      <input type="hidden" name="panel" value="{{ current.active }}">
+      <input type="hidden" name="operation" value="enable">
+      <button type="submit">Set up z axis</button>
+    </form>
+    {% endif %}
     <form class="control-form" hx-post="/control/title" hx-target="#app" hx-swap="outerHTML">
       <label>Panel title <input name="text" type="text" value="{{ current.title }}"></label>
-      <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+      <input name="panel" type="hidden" value="{{ current.active }}">
       <button type="submit">Set title</button>
     </form>
     <form class="control-form" hx-post="/control/theme" hx-target="#app" hx-swap="outerHTML">
@@ -37,10 +137,10 @@
           {% endfor %}
         </select>
       </label>
-      <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+      <input name="panel" type="hidden" value="{{ current.active }}">
       <button type="submit">Set projection</button>
     </form>
-    <form class="control-form" hx-post="/control/size" hx-target="#app" hx-swap="outerHTML">
+    <form class="control-form size-form" hx-post="/control/size" hx-target="#app" hx-swap="outerHTML">
       <label>Width (in) <input name="width" type="number" min="0.01" step="any" value="{{ current.width }}"></label>
       <label>Height (in) <input name="height" type="number" min="0.01" step="any" value="{{ current.height }}"></label>
       <button type="submit">Set size</button>
@@ -57,9 +157,22 @@
         <label>LayerSpec fields (JSON object, without <code>type</code>)
           <textarea name="fields" rows="4" spellcheck="false">{"x":"x","y":"y"}</textarea>
         </label>
-        <label>Panel <input name="panel" type="number" min="0" value="0"></label>
+        <label>Panel <input name="panel" type="number" min="0" value="{{ current.active }}"></label>
         <button type="submit">Add layer</button>
       </form>
+      <details data-key="coordinate-pipeline">
+        <summary>Coordinate pipeline</summary>
+        <p>Include <code>"transforms":[{"role":"x","name":"log"}]</code> in LayerSpec fields.
+          Available stages: {{ controls.coordinate_names }}. On each role use identity, log,
+          standardize, or log then standardize. Omit the field or use null to clear.</p>
+        <p>Transforms run before the statistic. Positions, bins and bounds use transformed units;
+          the layer's move and the panel's display scale stay separate.</p>
+        <ul>
+          {% for item in controls.coordinate_roles %}
+          <li><code>{{ item.0 }}</code>: {{ item.1 }}</li>
+          {% endfor %}
+        </ul>
+      </details>
       <details class="registry">
         <summary>Required/optional fields for all {{ controls.layers.len() }} layers</summary>
         <ul>
@@ -69,6 +182,61 @@
         </ul>
       </details>
     </details>
+
+    {% for action in current.layer_actions %}
+    <details data-key="replace-layer-{{ current.active }}-{{ action.0 }}">
+      <summary>Edit panel {{ current.active }}, layer {{ action.0 }}</summary>
+      <form hx-post="/action/raw" hx-target="#app" hx-swap="outerHTML">
+        <label>Replace layer {{ action.0 }} · full typed action JSON
+          <textarea name="json" rows="8" spellcheck="false">{{ action.1 }}</textarea>
+        </label>
+        <p class="hint">Coordinate pipeline: edit the ordered <code>transforms</code> list in this layer,
+          or set it to null to clear. This does not edit the whole facet template.</p>
+        <p class="hint">Authoritative existing-layer replacement; indices and order stay fixed.
+          Regression keeps one confidence and optional regression.bootstrap {n_boot, seed},
+          partial {columns, reference, method}, sampling {train, query},
+          diagnostics {kind, trend}, components {fit, scatter, show_fit, show_scatter}.
+          Line predictor/resampling/calibration/family, units, semantics and
+          boxen.band_components/hue_components stay independent.</p>
+        <button type="submit">Replace layer</button>
+      </form>
+    </details>
+    {% endfor %}
+
+    {% if !current.cluster_cuts.is_empty() %}
+    <section aria-label="Cluster cuts">
+      <h2>Cluster cuts</h2>
+      {% for cut in current.cluster_cuts %}
+      <form hx-post="/control/cluster-cut" hx-target="#app" hx-swap="outerHTML">
+        <input type="hidden" name="revision" value="{{ revision }}">
+        <input type="hidden" name="panel" value="{{ current.active }}">
+        <input type="hidden" name="axis" value="{{ cut.axis }}">
+        <label>{{ cut.label }} cut height
+          <input type="number" name="height" min="0" step="any" value="{{ cut.height }}" required>
+        </label>
+        <label>{{ cut.label }} original index
+          <select name="anchor">
+            <option value="">No selected group</option>
+            {% for item in cut.items %}
+            <option value="{{ item.index }}"{% if item.chosen %} selected{% endif %}>{{ item.label }} [{{ item.index }}]</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button type="submit">Apply {{ cut.label }} cut</button>
+      </form>
+      {% if cut.partitioned %}
+      <p class="hint" role="status">{{ cut.label }} selected original indices: {{ cut.selected }}</p>
+      <form hx-post="/control/cluster-cut" hx-target="#app" hx-swap="outerHTML">
+        <input type="hidden" name="revision" value="{{ revision }}">
+        <input type="hidden" name="panel" value="{{ current.active }}">
+        <input type="hidden" name="axis" value="{{ cut.axis }}">
+        <input type="hidden" name="clear" value="true">
+        <button type="submit">Clear {{ cut.label }} cut</button>
+      </form>
+      {% endif %}
+      {% endfor %}
+    </section>
+    {% endif %}
 
     <div class="history" aria-label="History controls">
       <button type="button" hx-post="/undo" hx-target="#app" hx-swap="outerHTML">Undo</button>

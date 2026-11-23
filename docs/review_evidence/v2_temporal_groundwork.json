@@ -1,0 +1,74 @@
+{
+  "catalogue_id": "F02",
+  "status": "in progress: private pure parser groundwork only; temporal-axis product not implemented",
+  "created_utc": "2026-10-30T17:14:49.736195+00:00",
+  "git_head": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "owner_choices": {
+    "timezones": "UTC and fixed offsets only; explicit timezone for naive inputs",
+    "coordinates": "canonical UTC days since1970; numeric input unit+ISO origin explicit; no magnitude inference",
+    "precision": "microseconds, clear errors for unsupported finer nonzero precision or float-day loss"
+  },
+  "implemented": [
+    "strict ISO calendar date/datetime parser without fromisoformat precision loss",
+    "manual fractional offsets including the zero-offset CPython hazard",
+    "exact numeric-unit arithmetic before floating plotting coordinates; float microsecond representatives must roundtrip numeric value",
+    "calendar/coordinate bounds, missing-row/order/source preservation",
+    "non-string timezone rejected before UTC equality comparison"
+  ],
+  "source_sha256": {
+    "mudplot/_temporal.py": "4a0da42f61bf156be4195e1ca77611be9eb725ec3eb904b02390259b0fdb404e",
+    "tests/test_temporal_coordinates.py": "39323d5c24a31dc6430d1b55023b6bb361c35bfbc20f21738260c232b3e5acdb",
+    "scripts/check_minimum_versions.py": "f57add1f75e71ef4adf3cb196703f479439c34bf0c30bb574062fb28beda9a2c",
+    "scripts/check_wheel.py": "3263776ef4dc279bdc1915fad99ea7a06a35a7f992b170cd70f598d6f071de85",
+    "docs/V2_SCOPE.md": "2e1796b379b158a442b864445ffc2ade0024a04559a73a576c9ff8d62d35c838",
+    "docs/V2_SCOPE.ko.md": "50c0cabfbe12c0fd8ee48055b0efb458689b1e09056ef76faf45f79699d3e7e7"
+  },
+  "tests": {
+    "new": 69,
+    "current_python": "3.13.12",
+    "current_related": {
+      "tests": 149,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum_python": "3.11.14",
+    "minimum_related": {
+      "tests": 149,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contract_guards": {
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "core": "child Python-S with host TZ=Pacific/Honolulu; no NumPy or Matplotlib imported"
+  },
+  "static": {
+    "ruff": "passed",
+    "format": "passed",
+    "pyright": "0errors/warnings",
+    "active_lsp": "2paths probed, no language-server type errors;5heuristic numeric conversions after regex/finite-number guards marked false positives"
+  },
+  "review": {
+    "run": "fd1416ab-4ef4-4f3f-a47c-80aa3f9387ac",
+    "finding": "P2 non-string UTCish equality bypass",
+    "resolution": "parent reproduced [0.0], moved type guard before equality and added rejection regression; final69new tests pass",
+    "not_claimed": "independent post-fix approval or integration review"
+  },
+  "registered_guards": "new test in minimum runner and module/test in sdist required-file guard; no new distribution/installed qualification performed for this partial batch",
+  "not_implemented": [
+    "typed temporal axis metadata/public API/action",
+    "axis/schema/capability temporal feature advertisement",
+    "derived-coordinate mapping for rendering/statistics/regression/distributions",
+    "timezone-aware locator/formatter and nondefault global Matplotlib epoch handling",
+    "y2/facet/shared-axis date integration",
+    "Rust/browser/CLI/export/installed temporal scenarios",
+    "F02 acceptance completion or overallv2 qualification"
+  ],
+  "handoff": "artifacts/v2_temporal_20261030/integration-handoff.md",
+  "preservation": "old recommendation/ingestion paths and string defaults unchanged; previous reports retained; no commit/push/tag/publication"
+}

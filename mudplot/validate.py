@@ -8,32 +8,49 @@ uses this to fail fast with a helpful message instead of a raw ``KeyError``.
 from __future__ import annotations
 
 import math
-from dataclasses import fields
+from dataclasses import fields, replace
 from itertools import pairwise
 from numbers import Real
+from typing import cast
 from urllib.parse import urlsplit
 
+from ._axis_options import (
+    NEW_SCALES,
+    SCALES,
+    effective_panels,
+)
+from ._axis_options import (
+    axis_issues as axis_option_issues,
+)
+from ._axis_options import (
+    panel_issues as axis_panel_issues,
+)
+from ._boxen import advanced_boxen, boxen_issues
 from ._categorical import (
-    CATEGORY_TYPES,
     DISTRIBUTION_TYPES,
     MAX_SWARM_POINTS,
     MAX_VIOLIN_POINTS,
+    category_axis_mode,
     distribution_columns,
     distribution_rows,
     native_category_geometry,
-    swarm_size_issues,
+    swarm_semantic_issues,
 )
 from ._cluster import cluster_issues
 from ._components import _color, component_issues
+from ._density import DENSITY_TYPES, density_adapter, density_issues
 from ._ecdf import ECDF_STATS, ecdf_config, ecdf_groups, ecdf_rows, finite_mass
 from ._facet import (
     RAW_HUE_TYPES,
     ordered_group_columns,
     panel_columns,
     panel_filter_issues,
+    panel_rows,
 )
+from ._grid_field import prepare_grid, uses_grid
 from ._heatmap import heatmap_issues
 from ._histogram import (
+    HISTOGRAM_BIN_RULES,
     HISTOGRAM_ELEMENTS,
     HISTOGRAM_MULTIPLES,
     HISTOGRAM_STATS,
@@ -46,42 +63,74 @@ from ._kde import kde_rows
 from ._kde import option_issues as kde_option_issues
 from ._kde2d import MAX_KDE2D_ROWS, kde2d_config, kde2d_rows
 from ._kde2d import option_issues as kde2d_option_issues
+from ._lanes import LANE_TYPES, advanced_lanes, plan_lanes
 from ._letter_value import option_issues as letter_value_option_issues
+from ._line import (
+    MAX_LINE_WORK,
+    categorical_predictor,
+    known_line_work,
+    line_data_issues,
+    line_option_issues,
+)
+from ._matrix_budget import MatrixAdmission
+from ._native_geometry import NATIVE_Y2_TYPES
 from ._regression import MAX_REGRESSION_ROWS
 from ._regression import group_issues as regression_group_issues
 from ._regression import option_issues as regression_option_issues
 from ._regression import weighted_option_issues as regression_weight_issues
-from ._semantics import MAX_ROWS, category_key, shared_scale_issues
+from ._semantics import (
+    MARKERS,
+    MAX_ROWS,
+    ROLE_LAYER_TYPES,
+    category_key,
+    semantic_rows,
+    shared_scale_issues,
+)
+from ._semantics import axis_issues as semantic_axis_issues
 from ._semantics import data_issues as semantic_data_issues
+from ._shared_guides import requested_scope_ids, shared_guide_issues
+from ._spatial import SPATIAL_TYPES, admit_spatial, uses_spatial, validate_camera
+from ._stairs import advanced_stairs, plan_stairs
 from ._stat import (
+    COUNT_SCOPES,
     COUNT_STATS,
     ESTIMATORS,
     INTERVAL_METHODS,
     LABEL_FORMATS,
+    MAX_ADVANCED_STAT_CELLS,
+    MAX_ADVANCED_STAT_ROWS,
     MAX_BOOTSTRAPS,
     STAT_LAYER_TYPES,
+    explicit_line_inference,
     is_missing,
+    new_stat_request,
     stat_config,
+    stat_key,
     usable_rows,
 )
-from ._violin_options import MAX_INNER_OBSERVATIONS
+from ._strip import categorical_strip, strip_option_issues
+from ._tri_field import TRI_TYPES, admit_triangles
+from ._vector import admit_vector, uses_vector
+from ._violin_options import MAX_INNER_OBSERVATIONS, advanced_violin, violin_issues
 from ._violin_options import option_issues as violin_option_issues
 from .capabilities import LAYER_TYPES, PALETTE_PRESETS, PROJECTIONS
 from .spec import (
     MAX_FIGURE_LAYERS,
     MAX_FIGURE_PANELS,
+    BivariateBinsSpec,
     ECDFSpec,
     FigureSpec,
     HistogramSpec,
     KDE2DSpec,
     KDESpec,
     LayerSpec,
+    SemanticSpec,
     StatSpec,
 )
 
 __all__ = ["assert_valid", "validate"]
 
-_AXIS_SCALES = {"linear", "log"}
+_AXIS_SCALES = set(SCALES)
 _LEGEND_LOCS = {
     "best",
     "upper right",
@@ -103,9 +152,20 @@ _CMAP_KINDS = {"sequential", "diverging"}
 _LAYER_AXES = {"y", "y2"}
 _DRAWSTYLES = {"default", "steps", "steps-pre", "steps-mid", "steps-post"}
 # layer types whose renderer actually honours ``layer.axis`` (routes to the
-# secondary y-axis); hist/box/heatmap always draw on the primary axes only.
+# secondary y-axis); unsupported categorical/matrix families stay primary-only.
 _AXIS_ROUTABLE_TYPES = {
+    "hist",
+    "kde",
+    "ecdf",
+    "kde2d",
+    "ecdf2d",
+    "rug",
+    "swarmplot",
+    "box",
+    "violin",
+    "boxenplot",
     "line",
+    "lineplot",
     "stem",
     "stairs",
     "eventplot",
@@ -117,6 +177,7 @@ _AXIS_ROUTABLE_TYPES = {
     "hist2d",
     "hexbin",
     "quiver",
+    "barbs",
     "bar",
     "barplot",
     "pointplot",
@@ -127,7 +188,7 @@ _AXIS_ROUTABLE_TYPES = {
     "vline",
     "text",
     "annotate",
-}
+} | NATIVE_Y2_TYPES
 _COLUMN_FIELDS = (
     "x",
     "y",
@@ -142,6 +203,7 @@ _COLUMN_FIELDS = (
     "u",
     "v",
     "z",
+    "w",
 )
 _VALID_SPINE_CHARS = set("LRTB")
 _POINT_TYPES = {"text", "annotate"}  # layers whose ``at``/``to`` is [x, y]
@@ -160,12 +222,22 @@ _CMAP_LAYER_TYPES = {
     "contourf",
     "surface",
     "hist2d",
+    "kde",
+    "kde2d",
+    "ecdf2d",
     "hexbin",
 }
 _BIVARIATE_DENSITY_TYPES = {"hist2d", "hexbin"}
 _POLAR_TYPES = {"line", "scatter", "bar"}
 # layer types that only make sense on a projection="3d" panel
-_3D_ONLY_TYPES = {"scatter3d", "line3d", "surface", "wireframe"}
+_3D_ONLY_TYPES = SPATIAL_TYPES | {
+    "scatter3d",
+    "line3d",
+    "surface",
+    "wireframe",
+    "trisurf",
+    "quiver3d",
+}
 
 
 def _check_column(cols: dict, name: str | None, where: str, issues: list[str]):
@@ -177,7 +249,7 @@ def _check_column(cols: dict, name: str | None, where: str, issues: list[str]):
         )
 
 
-def _check_data_integrity(spec: FigureSpec, issues: list[str]) -> None:
+def _check_data_integrity(spec: FigureSpec, issues: list[str]) -> set[str]:
     """All columns (and each matrix's rows) must be row-aligned in length.
 
     A mudplot figure treats ``data.columns`` as one implicit table; silently
@@ -191,6 +263,7 @@ def _check_data_integrity(spec: FigureSpec, issues: list[str]) -> None:
         if len(distinct) > 1:
             issues.append(f"data.columns have mismatched lengths: {lengths}")
 
+    nullable = set()
     for name, matrix in spec.data.matrices.items():
         row_lengths = {len(row) for row in matrix}
         if len(row_lengths) > 1:
@@ -198,6 +271,17 @@ def _check_data_integrity(spec: FigureSpec, issues: list[str]) -> None:
                 f"data.matrices[{name!r}] has jagged rows (lengths: "
                 f"{sorted(row_lengths)})"
             )
+        if any(value is None for row in matrix for value in row):
+            nullable.add(name)
+            if any(
+                value is not None and not _finite(value)
+                for row in matrix
+                for value in row
+            ):
+                issues.append(
+                    f"data.matrices[{name!r}] needs finite numbers or actual null"
+                )
+    return nullable
 
 
 def _check_point(layer, field_name: str, where: str, issues: list[str]) -> None:
@@ -221,14 +305,20 @@ def _finite(value) -> bool:
         return False
 
 
-def _check_uncertainty(cols, layer, where: str, issues: list[str]) -> None:
+def _check_uncertainty(
+    cols, layer, where: str, issues: list[str], *, selection=None
+) -> None:
     """Validate supplied errors without inferring their statistical meaning."""
     for field_name in ("yerr", "xerr"):
         name = getattr(layer, field_name)
         if (
             isinstance(name, str)
             and name in cols
-            and any(not _finite(v) or v < 0 for v in cols[name])
+            and any(
+                not _finite(v) or v < 0
+                for i, v in enumerate(cols[name])
+                if selection is None or (i < len(selection) and selection[i])
+            )
         ):
             issues.append(
                 f"{where}: {field_name} values must be finite, nonnegative "
@@ -249,7 +339,9 @@ def _check_uncertainty(cols, layer, where: str, issues: list[str]) -> None:
     ):
         values = [cols[name] for name in names]
         if len({len(column) for column in values}) == 1:
-            for center, lower, upper in zip(*values, strict=True):
+            for i, (center, lower, upper) in enumerate(zip(*values, strict=True)):
+                if selection is not None and (i >= len(selection) or not selection[i]):
+                    continue
                 if not all(_finite(v) for v in (center, lower, upper)):
                     issues.append(
                         f"{where}: y/y_lower/y_upper values must be finite numbers"
@@ -278,7 +370,7 @@ def _check_uncertainty(cols, layer, where: str, issues: list[str]) -> None:
             issues.append(f"{where}: {field_name} must be a non-empty color string")
 
 
-def _check_category_order(levels, name, where, issues) -> None:
+def _check_category_order(levels, name, where, issues, *, typed=False) -> None:
     if levels is None:
         return
     if not isinstance(levels, (list, tuple)) or not levels:
@@ -289,17 +381,27 @@ def _check_category_order(levels, name, where, issues) -> None:
         if not isinstance(value, (str, bool)) and not _finite(value):
             issues.append(f"{where}: {name} levels must be strings or finite scalars")
             return
-        if value in seen or str(value) in labels:
+        identity = stat_key(value) if typed else value
+        if identity in seen or str(value) in labels:
             issues.append(
                 f"{where}: {name} levels must be unique without label collisions"
             )
             return
-        seen.add(value)
+        seen.add(identity)
         labels.add(str(value))
 
 
 def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
     config = layer.histogram
+    if layer.semantics is None and (
+        layer.colorbar
+        or layer.clabel is not None
+        or layer.cmap_kind != "sequential"
+        or layer.line_style is not None
+    ):
+        issues.append(
+            f"{where}: histogram semantic colour and dash options require SemanticSpec"
+        )
     if config is None:
         if any(
             getattr(layer, name) != getattr(LayerSpec(), name)
@@ -321,17 +423,21 @@ def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
         issues.append(
             f"{where}: invalid histogram multiple; expected {HISTOGRAM_MULTIPLES}"
         )
-    if config.multiple in ("stack", "dodge") and layer.group is None:
+    if (
+        config.multiple in ("stack", "dodge", "fill")
+        and layer.group is None
+        and getattr(layer.semantics, "hue", None) is None
+    ):
         issues.append(f"{where}: histogram multiple={config.multiple!r} requires group")
     if config.element not in HISTOGRAM_ELEMENTS:
         issues.append(
             f"{where}: invalid histogram element; expected {HISTOGRAM_ELEMENTS}"
         )
-    if config.element == "step" and config.multiple == "dodge":
-        issues.append(f"{where}: histogram step supports layer/stack, not dodge")
     for name in ("common_norm", "cumulative"):
         if type(getattr(config, name)) is not bool:
             issues.append(f"{where}: histogram {name} must be boolean")
+    if config.fill is not None and type(config.fill) is not bool:
+        issues.append(f"{where}: histogram fill must be boolean or None")
     if config.stat not in NORMALIZED_STATS and config.common_norm is False:
         issues.append(f"{where}: common_norm=False only applies to normalized stats")
     if config.stat == "frequency" and config.cumulative:
@@ -347,6 +453,8 @@ def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
             _check_column(cols, config.weights, where, issues)
     bins = layer.bins
     valid_bins = type(bins) is int and 1 <= bins <= MAX_HISTOGRAM_BINS
+    if isinstance(bins, str):
+        valid_bins = bins in (*HISTOGRAM_BIN_RULES, "discrete")
     if isinstance(bins, (list, tuple)):
         valid_bins = (
             2 <= len(bins) <= MAX_HISTOGRAM_BINS + 1
@@ -356,11 +464,13 @@ def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
     if not valid_bins:
         issues.append(
             f"{where}: histogram bins require 1..{MAX_HISTOGRAM_BINS} integer "
-            "or finite increasing edges"
+            "or finite increasing edges or a supported named/discrete rule"
         )
     if layer.orient not in ("v", "h"):
         issues.append(f"{where}: histogram orient must be v or h")
-    _check_category_order(layer.hue_order, "hue_order", where, issues)
+    _check_category_order(
+        layer.hue_order, "hue_order", where, issues, typed=layer.semantics is not None
+    )
     if layer.hue_order is not None and layer.group is None:
         issues.append(f"{where}: histogram hue_order requires group")
     allowed = set(LAYER_TYPES["hist"]["optional"]) | {
@@ -395,6 +505,11 @@ def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
         and bins[0] <= 0
     ):
         issues.append(f"{where}: log histogram bin edges must be positive")
+    if config.element == "poly" and (
+        (type(bins) is int and bins < 2)
+        or (isinstance(bins, (list, tuple)) and len(bins) < 3)
+    ):
+        issues.append(f"{where}: histogram poly requires at least two bins")
     rows = histogram_rows(cols, layer)
     if any(not _finite(cols[layer.x][i]) for i in rows):
         issues.append(
@@ -402,6 +517,15 @@ def _check_histogram_layer(cols, layer, panel, where, issues) -> None:
         )
     elif value_axis.scale == "log" and any(cols[layer.x][i] <= 0 for i in rows):
         issues.append(f"{where}: log histogram observations must be positive")
+    if isinstance(bins, str) and bins == "discrete":
+        from ._histogram_bins import discrete_bounds
+
+        try:
+            bounds = discrete_bounds([cols[layer.x][i] for i in rows])
+            if config.element == "poly" and bounds is not None and bounds[2] < 2:
+                issues.append(f"{where}: histogram poly requires at least two bins")
+        except ValueError as error:
+            issues.append(f"{where}: {error}")
     if config.weights is not None and any(
         not _finite(cols[config.weights][i]) or cols[config.weights][i] < 0
         for i in rows
@@ -479,7 +603,10 @@ def _check_kde_layer(cols, layer, panel, where, issues) -> None:
         and (
             isinstance(config.clip, (list, tuple))
             and len(config.clip) == 2
-            and any(v is not None and _finite(v) and v <= 0 for v in config.clip)
+            and any(
+                isinstance(v, (int, float)) and _finite(v) and v <= 0
+                for v in config.clip
+            )
         )
     ):
         issues.append(f"{where}: KDE log clip bounds must be positive")
@@ -562,7 +689,9 @@ def _check_kde2d_layer(cols, layer, panel, where, issues) -> None:
                 axis.scale == "log"
                 and isinstance(bound, (list, tuple))
                 and len(bound) == 2
-                and any(v is not None and _finite(v) and v <= 0 for v in bound)
+                and any(
+                    v is not None and _finite(v) and cast(float, v) <= 0 for v in bound
+                )
             ):
                 issues.append(f"{where}: KDE2D log clip bounds must be positive")
     if config.weights is not None and any(
@@ -620,6 +749,12 @@ def _check_ecdf_layer(cols, layer, panel, where, issues) -> None:
         issues.append(f"{where}: ECDF line_style must be -, --, : or -.")
     if layer.color is not None and not _color(layer.color):
         issues.append(f"{where}: ECDF color must be a bounded name or hex color")
+    if layer.marker is not None and layer.marker not in MARKERS:
+        issues.append(f"{where}: ECDF marker must be a named filled marker")
+    if layer.marker_size is not None and (
+        not _finite(layer.marker_size) or not 0 <= layer.marker_size <= 1000
+    ):
+        issues.append(f"{where}: ECDF marker_size must be in [0,1000] points")
     value_axis, mass_axis = (
         (panel.x, panel.y) if layer.orient == "v" else (panel.y, panel.x)
     )
@@ -675,6 +810,15 @@ def _check_distribution_layer(
     cols, layer, where: str, issues: list[str], *, allow_empty: bool = False
 ) -> None:
     category, value, hue = distribution_columns(layer)
+    from ._box import advanced_box
+
+    selected_box = advanced_box(layer)
+    selected_violin = advanced_violin(layer)
+    selected_boxen = advanced_boxen(layer)
+    if selected_violin or selected_boxen:
+        from ._categorical import distribution_channels
+
+        category, value, hue = distribution_channels(layer)
     if layer.orient not in ("v", "h"):
         issues.append(f"{where}: orient must be 'v' or 'h'")
     for name in ("width", "dodge", "gap", "line_width", "marker_size"):
@@ -752,7 +896,10 @@ def _check_distribution_layer(
         seen = {}
         values = (
             [cols[name][i] for i in distribution_rows(cols, layer)]
-            if layer.type == "violin" and layer.weights is not None
+            if selected_box
+            or selected_violin
+            or selected_boxen
+            or (layer.type == "violin" and layer.weights is not None)
             else cols[name]
         )
         for v in values:
@@ -776,7 +923,10 @@ def _check_distribution_layer(
         not is_missing(v) and not _finite(v)
         for v in (
             [cols[value][i] for i in distribution_rows(cols, layer)]
-            if layer.type == "violin" and layer.weights is not None
+            if selected_box
+            or selected_violin
+            or selected_boxen
+            or (layer.type == "violin" and layer.weights is not None)
             else cols[value]
         )
     ):
@@ -787,6 +937,25 @@ def _check_distribution_layer(
 
 
 def _check_violin_layer(cols, layer, panel, where, issues):
+    if advanced_violin(layer):
+        issues.extend(
+            f"{where}: {issue}"
+            for issue in violin_issues(
+                cols, layer, panel, allow_empty=bool(panel.filters or panel.dropna)
+            )
+        )
+        value_axis = panel.x if layer.orient == "h" else panel.y
+        if (
+            value_axis.scale == "log"
+            and isinstance(layer.clip, (list, tuple))
+            and any(
+                _finite(value) and value <= 0
+                for value in layer.clip
+                if value is not None
+            )
+        ):
+            issues.append(f"{where}: log-value clip bounds must be positive raw values")
+        return
     issues.extend(f"{where}: {issue}" for issue in violin_option_issues(layer))
     rows = distribution_rows(cols, layer)
     if layer.weights is not None:
@@ -872,12 +1041,24 @@ def _check_distribution_scales(cols, layer, panel, where, issues):
         if layer.order is not None and not isinstance(layer.order, (list, tuple)):
             return
         levels = layer.order if layer.order is not None else list(dict.fromkeys(values))
-        if levels or layer.type != "swarmplot" or not (panel.filters or panel.dropna):
+        if levels or not (
+            advanced_boxen(layer)
+            or (
+                layer.type in {"swarmplot", "stripplot", "box", "violin"}
+                and (panel.filters or panel.dropna)
+            )
+        ):
             try:
                 native_category_geometry(levels, cat_axis.scale)
             except ValueError as exc:
                 issues.append(f"{where}: {exc}")
-        width = 0.8 if layer.width is None else layer.width
+        width = (
+            1.0
+            if layer.type == "stripplot"
+            else 0.8
+            if layer.width is None
+            else layer.width
+        )
         if not _finite(width) or not 0 < width <= 1:
             issues.append(f"{where}: native width must be in (0,1]")
         if layer.dodge is not None and (
@@ -892,30 +1073,22 @@ def _check_shared_category_scales(spec, colsn, issues):
     """Shared axes cannot silently mix incompatible coordinate declarations."""
     if type(colsn) is not int or colsn < 1:
         return  # Malformed layouts are already reported by validate().
+    from ._layout import twin_value_issues
+
+    issues.extend(twin_value_issues(spec))
     for axis_name in ("x", "y"):
         share = getattr(spec, f"share_{axis_name}")
-        groups = {}
-        for pi, panel in enumerate(spec.panels):
-            if panel.projection != "2d":
-                continue
-            key = (
-                "all"
-                if share == "all"
-                else pi // colsn
-                if share == "row"
-                else pi % colsn
-                if share == "col"
-                else pi
+        from ._layout import shared_groups
+
+        if share != "none" and any(
+            getattr(panel, axis_name).share_id is not None for panel in spec.panels
+        ):
+            issues.append(
+                f"named shared {axis_name} axes cannot mix figure sharing modes"
             )
-            name = getattr(panel, axis_name).share_id
-            if name is not None and share != "none":
-                issues.append(
-                    f"named shared {axis_name} axes cannot mix figure sharing modes"
-                )
-            key = ("named", name) if isinstance(name, str) and name else ("mode", key)
-            groups.setdefault(key, []).append(panel)
-        for key, panels in groups.items():
-            if key[0] == "named":
+        for members in shared_groups(spec, axis_name):
+            panels = [spec.panels[i] for i in members]
+            if getattr(panels[0], axis_name).share_id is not None:
                 bounds = [getattr(p, axis_name).limits for p in panels]
                 valid = [
                     tuple(v)
@@ -932,43 +1105,62 @@ def _check_shared_category_scales(spec, colsn, issues):
                 issues.append(
                     f"shared {axis_name} axes have conflicting scale declarations"
                 )
-            modes = set()
+            from ._temporal import temporal_timezone
+            from ._temporal_data import temporal_options
+
+            clocks = []
             for panel in panels:
-                for layer in panel.layers:
-                    if layer.type == "scatter" and layer.semantics is not None:
-                        modes.add("native")
-                    if layer.type in CATEGORY_TYPES | STAT_LAYER_TYPES and (
-                        axis_name == ("y" if layer.orient == "h" else "x")
-                    ):
-                        modes.add(
-                            "native"
-                            if layer.type == "lineplot"
-                            or (type(layer.native_scale) is bool and layer.native_scale)
-                            else "ordinal"
-                        )
+                config = getattr(panel, axis_name).temporal
+                if config is None:
+                    clocks.append(None)
+                    continue
+                try:
+                    zone = temporal_timezone(temporal_options(config)["timezone"])
+                    clocks.append(
+                        0 if zone is None else zone.utcoffset(None).total_seconds()
+                    )
+                except ValueError:
+                    pass  # The axis configuration error is already reported.
+            if clocks and any(clock is not None for clock in clocks):
+                if len(set(clocks)) > 1:
+                    issues.append(
+                        f"shared {axis_name} axes have conflicting "
+                        "temporal declarations"
+                    )
+                continue  # Canonical day coordinates are numeric, never ordinal.
+            axis_layers = [
+                layer
+                for panel in panels
+                for layer in panel.layers
+                if axis_name == "x" or layer.axis == "y"
+            ]
+            modes = set()
+            for layer in axis_layers:
+                if layer.type == "scatter" and layer.semantics is not None:
+                    modes.add("native")
+                role = category_axis_mode(layer)
+                if role is not None and axis_name == role[0]:
+                    modes.add(role[1])
             if len(modes) > 1:
                 issues.append(
                     f"shared {axis_name} category axis mixes native and ordinal modes"
                 )
             if "ordinal" in modes and any(
                 layer.type == "hist" and layer.histogram is not None
-                for panel in panels
-                for layer in panel.layers
+                for layer in axis_layers
             ):
                 issues.append(
                     f"typed histogram numeric {axis_name} axis cannot mix "
                     "ordinal categories"
                 )
             if "ordinal" in modes and any(
-                layer.type == "kde" and layer.kde is not None
-                for panel in panels
-                for layer in panel.layers
+                layer.type == "kde" and layer.kde is not None for layer in axis_layers
             ):
                 issues.append(
                     f"typed KDE numeric {axis_name} axis cannot mix ordinal categories"
                 )
             if "ordinal" in modes and any(
-                layer.type == "kde2d" for panel in panels for layer in panel.layers
+                layer.type == "kde2d" for layer in axis_layers
             ):
                 issues.append(
                     f"KDE2D numeric {axis_name} axis cannot mix ordinal categories"
@@ -1007,23 +1199,46 @@ def _check_shared_category_scales(spec, colsn, issues):
                             )
 
 
-def _check_statistical_scales(cols, layer, panel, where, issues):
+def _check_statistical_scales(cols, layer, panel, where, issues, *, allow_empty=False):
     """Pure positivity/native geometry contracts; derived bounds checked by effect."""
-    cat_axis = panel.y if layer.orient == "h" else panel.x
+    cat_axis = (
+        (panel.y2 if layer.axis == "y2" else panel.y)
+        if layer.orient == "h"
+        else panel.x
+    )
+    if cat_axis is None:
+        return
     val_axis = (
         panel.x if layer.orient == "h" else panel.y2 if layer.axis == "y2" else panel.y
     )
     value_scale = "linear" if val_axis is None else val_axis.scale
-    native = layer.type == "lineplot" or layer.native_scale
+    native = (
+        layer.type == "lineplot" and not categorical_predictor(layer)
+    ) or layer.native_scale
     if type(layer.native_scale) is not bool:
         issues.append(f"{where}: native_scale must be boolean")
     if layer.stat_scale not in ("data", "axis"):
         issues.append(f"{where}: stat_scale must be 'data' or 'axis'")
-    if layer.axis == "y2" and (
-        native
-        or layer.stat_scale == "axis"
-        or cat_axis.scale == "log"
-        or value_scale == "log"
+    temporal_secondary = (
+        layer.orient == "v"
+        and (
+            cat_axis.temporal is not None
+            or (val_axis is not None and val_axis.temporal is not None)
+        )
+        and layer.stat_scale == "data"
+        and cat_axis.scale == "linear"
+        and value_scale == "linear"
+    )
+    if (
+        layer.axis == "y2"
+        and (
+            native
+            or layer.stat_scale == "axis"
+            or cat_axis.scale == "log"
+            or value_scale == "log"
+        )
+        and not temporal_secondary
+        and layer.type not in {"barplot", "pointplot", "lineplot"}
     ):
         issues.append(
             f"{where}: statistical native/log subset supports primary axes only"
@@ -1033,17 +1248,20 @@ def _check_statistical_scales(cols, layer, panel, where, issues):
     if layer.baseline is not None:
         if not _finite(layer.baseline):
             issues.append(f"{where}: baseline must be a finite raw-value number")
-        if layer.stack:
+        if layer.stack and value_scale != "log":
             issues.append(
-                f"{where}: explicit baseline is not supported for stacked counts"
+                f"{where}: explicit baseline is not supported for linear stacked counts"
             )
-    if value_scale == "log" and layer.type in {"barplot", "countplot"}:
-        if layer.baseline is None or not _finite(layer.baseline) or layer.baseline <= 0:
-            issues.append(
-                f"{where}: log statistical bars require a positive explicit baseline"
-            )
-        if layer.stack:
-            issues.append(f"{where}: stacked counts require a linear value axis")
+    if (
+        value_scale == "log"
+        and layer.type in {"barplot", "countplot"}
+        and (
+            layer.baseline is None or not _finite(layer.baseline) or layer.baseline <= 0
+        )
+    ):
+        issues.append(
+            f"{where}: log statistical bars require a positive explicit baseline"
+        )
     if layer.stat is not None and not isinstance(layer.stat, StatSpec):
         return
     config = stat_config(layer)
@@ -1058,7 +1276,21 @@ def _check_statistical_scales(cols, layer, panel, where, issues):
         issues.append(
             f"{where}: axis log estimation supports mean/median/min/max, not sum/count"
         )
-    rows = usable_rows(cols, layer)
+    advanced = new_stat_request(layer, panel)
+    rows = usable_rows(cols, layer, advanced=advanced)
+    if value_scale not in ("linear", "log") or cat_axis.scale not in ("linear", "log"):
+        issues.append(
+            f"{where}: statistical working coordinates support linear/log axes only"
+        )
+    if val_axis is not None and val_axis.temporal is not None:
+        if config.estimator in {"sum", "count"}:
+            issues.append(
+                f"{where}: calendar-valued sum/count statistics are undefined"
+            )
+        if advanced and layer.type == "barplot" and layer.baseline is None:
+            issues.append(
+                f"{where}: NEW calendar response bars require an explicit baseline"
+            )
     if (
         value_scale == "log"
         and config.estimator != "count"
@@ -1081,10 +1313,19 @@ def _check_statistical_scales(cols, layer, panel, where, issues):
         categories = (
             layer.order if layer.order is not None else list(dict.fromkeys(values))
         )
-        try:
-            native_category_geometry(categories, cat_axis.scale)
-        except ValueError as exc:
-            issues.append(f"{where}: {exc}")
+        empty_selected_panel = not categories and (
+            layer.type == "lineplot"
+            or allow_empty
+            or (
+                bool(panel.filters or panel.dropna)
+                and all(len(values) == 0 for values in cols.values())
+            )
+        )
+        if not empty_selected_panel:
+            try:
+                native_category_geometry(categories, cat_axis.scale)
+            except ValueError as exc:
+                issues.append(f"{where}: {exc}")
         if layer.type in {"barplot", "countplot"}:
             width = 0.8 if layer.bar_width is None else layer.bar_width
             if not _finite(width) or not 0 < width <= 1:
@@ -1136,11 +1377,16 @@ def _check_lineplot_layer(cols, layer, where, issues):
         issues.append(f"{where}: line_width must be finite in [0,1000]")
 
 
-def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None:
+def _check_statistical_layer(
+    cols, layer, where: str, issues: list[str], *, allow_empty: bool = False, panel=None
+) -> None:
     if layer.stat is not None and not isinstance(layer.stat, StatSpec):
         issues.append(f"{where}: stat must be a StatSpec or None")
         return
     config = stat_config(layer)
+    advanced = new_stat_request(layer, panel)
+    declared = explicit_line_inference(layer)
+    selected_rows = usable_rows(cols, layer, advanced=advanced)
     if not isinstance(config.estimator, str) or config.estimator not in ESTIMATORS:
         issues.append(
             f"{where}: unknown estimator {config.estimator!r}; use {ESTIMATORS}"
@@ -1159,16 +1405,50 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
         issues.append(f"{where}: SE is sample-mean SEM; use estimator='mean' or CI")
     if config.estimator == "count" and config.errorbar is not None:
         issues.append(f"{where}: count estimator requires errorbar=None")
-    if config.weights is not None and (
-        config.estimator != "mean" or config.errorbar not in (None, "ci")
-    ):
-        issues.append(f"{where}: weights support mean with no interval or bootstrap CI")
+    if config.weights is not None and isinstance(config.estimator, str):
+        allowed_intervals = (
+            (None, "ci")
+            if config.estimator == "sum"
+            else (None,)
+            if config.estimator == "count"
+            else (None, "sd", "se", "pi", "ci")
+            if config.estimator == "mean"
+            else (None, "sd", "pi", "ci")
+        )
+        if config.errorbar not in allowed_intervals:
+            issues.append(
+                f"{where}: weighted estimator/interval combination is unsupported"
+            )
     if config.units is not None and config.errorbar != "ci":
         issues.append(f"{where}: units require bootstrap CI")
     if not isinstance(config.normalize, str) or config.normalize not in COUNT_STATS:
         issues.append(f"{where}: unknown count normalization {config.normalize!r}")
     elif layer.type != "countplot" and config.normalize != "count":
         issues.append(f"{where}: count normalization is only supported for countplot")
+    if (
+        layer.type == "countplot"
+        and layer.semantics is None
+        and (layer.colorbar or layer.clabel is not None or layer.line_style is not None)
+    ):
+        issues.append(
+            f"{where}: count semantic colour and dash options require SemanticSpec"
+        )
+    scope = config.normalize_scope
+    if scope is not None and (not isinstance(scope, str) or scope not in COUNT_SCOPES):
+        issues.append(f"{where}: unknown count normalization scope {scope!r}")
+    elif scope is not None:
+        if layer.type != "countplot":
+            issues.append(
+                f"{where}: normalization scope is only supported for countplot"
+            )
+        if scope != "all" and config.normalize == "count":
+            issues.append(f"{where}: category/group scope requires normalized counts")
+        if (
+            scope == "group"
+            and layer.group is None
+            and getattr(layer.semantics, "hue", None) is None
+        ):
+            issues.append(f"{where}: group normalization scope requires group")
     for field_name in ("weights", "units"):
         name = getattr(config, field_name)
         if name is None:
@@ -1176,7 +1456,15 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
         if not isinstance(name, str) or not name or name not in cols:
             issues.append(f"{where}: stat.{field_name} must name an existing column")
             continue
-        values = [v for v in cols[name] if not is_missing(v)]
+        values = (
+            [
+                cols[name][index]
+                for index in selected_rows
+                if not is_missing(cols[name][index])
+            ]
+            if advanced or declared
+            else [v for v in cols[name] if not is_missing(v)]
+        )
         if field_name == "weights":
             if any(not _finite(v) or v < 0 for v in values):
                 issues.append(f"{where}: weights must be finite nonnegative numbers")
@@ -1209,7 +1497,11 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
         issues.append(f"{where}: marker_size must be finite and nonnegative")
     if layer.orient not in ("v", "h"):
         issues.append(f"{where}: orient must be 'v' or 'h'")
-    if layer.orient == "h" and layer.axis == "y2":
+    if (
+        layer.orient == "h"
+        and layer.axis == "y2"
+        and layer.type not in {"barplot", "pointplot", "lineplot"}
+    ):
         issues.append(f"{where}: horizontal statistical plots do not route to y2")
     if layer.gap is not None and (not _finite(layer.gap) or not 0 <= layer.gap < 1):
         issues.append(f"{where}: gap must be finite in [0, 1)")
@@ -1221,8 +1513,11 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
         or layer.label_format not in LABEL_FORMATS
     ):
         issues.append(f"{where}: label_format must be one of {LABEL_FORMATS}")
-    _check_category_order(layer.order, "order", where, issues)
-    _check_category_order(layer.hue_order, "hue_order", where, issues)
+    typed_order = advanced or declared or categorical_predictor(layer)
+    _check_category_order(layer.order, "order", where, issues, typed=typed_order)
+    _check_category_order(
+        layer.hue_order, "hue_order", where, issues, typed=typed_order
+    )
     if layer.hue_order is not None and layer.group is None:
         issues.append(f"{where}: hue_order requires group")
 
@@ -1240,7 +1535,40 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
                     f"{where}: {field.name} is not supported for {layer.type}"
                 )
 
-    selected = usable_rows(cols, layer) if layer.semantics is not None else None
+    selected = (
+        selected_rows
+        if advanced
+        or declared
+        or categorical_predictor(layer)
+        or layer.semantics is not None
+        else None
+    )
+    if advanced:
+        if len(selected_rows) > MAX_ADVANCED_STAT_ROWS:
+            issues.append(f"{where}: NEW selected statistical rows exceed10000")
+        if not layer.native_scale and layer.type != "lineplot":
+            categories = {stat_key(cols[layer.x][index]) for index in selected_rows}
+            if len(categories) > 64:
+                issues.append(f"{where}: NEW categorical category levels exceed64")
+        if layer.group is not None:
+            groups = {stat_key(cols[layer.group][index]) for index in selected_rows}
+            if len(groups) > 64:
+                issues.append(f"{where}: NEW categorical legacy hue levels exceed64")
+        cells = {
+            (
+                stat_key(cols[layer.x][index]),
+                stat_key(cols[layer.group][index]) if layer.group else None,
+                tuple(
+                    stat_key(cols[getattr(layer.semantics, role)][index])
+                    for role in ("hue", "size", "style")
+                    if layer.semantics is not None
+                    and getattr(layer.semantics, role) is not None
+                ),
+            )
+            for index in selected_rows
+        }
+        if len(cells) > MAX_ADVANCED_STAT_CELLS:
+            issues.append(f"{where}: NEW drawn pointwise cells exceed256")
     for name in (layer.x, layer.group):
         if not isinstance(name, str) or name not in cols:
             continue
@@ -1274,9 +1602,11 @@ def _check_statistical_layer(cols, layer, where: str, issues: list[str]) -> None
     ):
         issues.append(f"{where}: observations must be finite numbers or missing")
     required = [layer.x] + ([layer.y] if layer.type != "countplot" else [])
-    if all(
-        isinstance(name, str) and name in cols for name in required
-    ) and not usable_rows(cols, layer):
+    if (
+        all(isinstance(name, str) and name in cols for name in required)
+        and not allow_empty
+        and not selected_rows
+    ):
         issues.append(f"{where}: no usable observations after dropping missing rows")
 
 
@@ -1314,6 +1644,8 @@ def _check_discrete_options(layer, where, issues):
         | set(LAYER_TYPES[layer.type]["required"])
         | set(LAYER_TYPES[layer.type]["optional"])
     )
+    if layer.type == "swarmplot":
+        allowed.add("references")
     defaults = LayerSpec()
     for field in fields(layer):
         if field.name not in allowed and getattr(layer, field.name) != getattr(
@@ -1337,26 +1669,79 @@ def _check_discrete_options(layer, where, issues):
     return baseline
 
 
-def _check_stem_data(cols, layer, panel, where, issues):
-    baseline = _check_discrete_options(layer, where, issues)
-    if baseline is None:
+def _check_rug_layer(cols, layer, panel, where, issues):
+    _check_discrete_options(layer, where, issues)
+    if panel.projection != "2d":
+        issues.append(f"{where}: rug requires Cartesian 2-D axes")
+    if layer.orient not in ("v", "h"):
+        issues.append(f"{where}: rug orient must be v or h")
+    if layer.width is not None and (
+        not _finite(layer.width) or not 0 <= layer.width <= 1
+    ):
+        issues.append(
+            f"{where}: rug height/width must be finite in [0,1] axes fraction"
+        )
+    if layer.line_style is not None and layer.line_style not in ("-", "--", "-.", ":"):
+        issues.append(f"{where}: rug line_style must be a named dash pattern")
+    if layer.semantics is None and (
+        layer.colorbar or layer.clabel is not None or layer.cmap_kind != "sequential"
+    ):
+        issues.append(f"{where}: rug colour mapping requires semantic numeric hue")
+    if layer.x not in cols or layer.semantics is not None:
         return
-    if not all(isinstance(name, str) and name in cols for name in (layer.x, layer.y)):
+    axis = (
+        (panel.y2 if layer.axis == "y2" else panel.y)
+        if layer.orient == "h"
+        else panel.x
+    )
+    values = [v for v in cols[layer.x] if not is_missing(v)]
+    if any(not _finite(v) for v in values):
+        issues.append(f"{where}: rug observations must be finite numeric, not bool")
+    elif axis is not None and axis.scale == "log" and any(v <= 0 for v in values):
+        issues.append(f"{where}: log rug observations must be positive")
+
+
+def _check_stem_data(cols, layer, panel, where, issues, *, allow_empty=False):
+    from ._stem import stem_axes, stem_group_levels, stem_has_fixed_order, stem_rows
+
+    baseline = _check_discrete_options(layer, where, issues)
+    if layer.orient not in ("v", "h"):
+        issues.append(f"{where}: stem orient must be v or h")
+    if layer.semantics is None and (
+        layer.colorbar or layer.clabel is not None or layer.cmap_kind != "sequential"
+    ):
+        issues.append(f"{where}: stem colour mapping requires semantic numeric hue")
+    if baseline is None or not all(
+        isinstance(name, str) and name in cols for name in (layer.x, layer.y)
+    ):
+        return
+    try:
+        rows = stem_rows(cols, layer)
+        stem_group_levels(cols, layer, rows)
+    except ValueError as error:
+        issues.append(f"{where}: {error}")
+        return
+    if not rows:
+        if not (
+            allow_empty or panel.filters or panel.dropna or stem_has_fixed_order(layer)
+        ):
+            issues.append(f"{where}: stem requires 1..{MAX_ROWS} selected rows")
         return
     x, y = cols[layer.x], cols[layer.y]
-    if not 1 <= len(x) <= MAX_ROWS:
-        issues.append(f"{where}: stem requires 1..{MAX_ROWS} rows")
-        return
-    if any(not _finite(value) for value in [*x, *y]):
+    if any(not _finite(x[i]) or not _finite(y[i]) for i in rows):
         issues.append(f"{where}: stem x/y must be finite numeric, not bool")
         return
-    if panel.x.scale == "log" and any(value <= 0 for value in x):
+    position_axis, value_axis = stem_axes(layer, panel)
+    if (
+        position_axis is not None
+        and position_axis.scale == "log"
+        and any(x[i] <= 0 for i in rows)
+    ):
         issues.append(f"{where}: log stem positions must be positive")
-    value_axis = panel.y2 if layer.axis == "y2" else panel.y
     if (
         value_axis is not None
         and value_axis.scale == "log"
-        and (baseline <= 0 or any(value <= 0 for value in y))
+        and (baseline <= 0 or any(y[i] <= 0 for i in rows))
     ):
         issues.append(f"{where}: log stem heads and baseline must be positive")
 
@@ -1394,10 +1779,13 @@ def _check_interval_data(cols, layer, panel, where, issues):
     if not _finite(upper) or upper <= lower:
         issues.append(f"{where}: band endpoints must be finite and distinct")
     value_axis = panel.y2 if layer.axis == "y2" else panel.y
-    if panel.x.scale != "linear" or (
-        value_axis is not None and value_axis.scale != "linear"
+    if panel.x.scale not in ("linear", *NEW_SCALES) or (
+        value_axis is not None and value_axis.scale not in ("linear", *NEW_SCALES)
     ):
-        issues.append(f"{where}: broken_barh currently requires linear axes")
+        issues.append(
+            f"{where}: broken_barh currently requires linear axes "
+            "or N12 symlog/asinh/logit"
+        )
 
 
 def _check_eventplot_data(cols, layer, panel, where, issues):
@@ -1418,10 +1806,13 @@ def _check_eventplot_data(cols, layer, panel, where, issues):
     if not _finite(lower) or not _finite(upper) or lower >= upper:
         issues.append(f"{where}: event endpoints must be finite and distinct")
     value_axis = panel.y2 if layer.axis == "y2" else panel.y
-    if panel.x.scale != "linear" or (
-        value_axis is not None and value_axis.scale != "linear"
+    if panel.x.scale not in ("linear", *NEW_SCALES) or (
+        value_axis is not None and value_axis.scale not in ("linear", *NEW_SCALES)
     ):
-        issues.append(f"{where}: eventplot currently requires linear axes")
+        issues.append(
+            f"{where}: eventplot currently requires linear axes "
+            "or N12 symlog/asinh/logit"
+        )
 
 
 def _check_stairs_data(cols, layer, panel, where, issues):
@@ -1449,16 +1840,35 @@ def _check_stairs_data(cols, layer, panel, where, issues):
             "with representable widths"
         )
     value_axis = panel.y2 if layer.axis == "y2" else panel.y
-    if panel.x.scale != "linear" or (
-        value_axis is not None and value_axis.scale != "linear"
+    if panel.x.scale not in ("linear", *NEW_SCALES) or (
+        value_axis is not None and value_axis.scale not in ("linear", *NEW_SCALES)
     ):
-        issues.append(f"{where}: stairs currently requires linear axes")
+        issues.append(
+            f"{where}: stairs currently requires linear axes or N12 symlog/asinh/logit"
+        )
 
 
 def _check_regression_data(
-    cols, layer, where: str, issues: list[str], *, allow_empty: bool = False, panel=None
+    cols,
+    layer,
+    where: str,
+    issues: list[str],
+    *,
+    allow_empty: bool = False,
+    panel=None,
+    source_ids=None,
 ) -> None:
     """Check each fitted group before NumPy reaches its linear-algebra path."""
+    from ._regression import configured_regression, regression_data_issues
+
+    if configured_regression(layer):
+        issues.extend(
+            f"{where}: {problem}"
+            for problem in regression_data_issues(
+                cols, layer, panel, source_ids=source_ids
+            )
+        )
+        return
     x_values = cols[layer.x]
     y_values = cols[layer.y]
     if len(x_values) != len(y_values):
@@ -1506,13 +1916,27 @@ def _check_regression_data(
         issues.append(f"{where}: regression requires observations")
         return
 
+    response_axis = (
+        None if panel is None else panel.y2 if layer.axis == "y2" else panel.y
+    )
+    temporal = panel is not None and (
+        panel.x.temporal is not None
+        or (response_axis is not None and response_axis.temporal is not None)
+    )
     for key, indices in groups:
         suffix = f" group {key!r}" if layer.group is not None else ""
         pairs = [(x_values[i], y_values[i]) for i in indices]
+        if temporal and weights is not None:
+            if any(not _finite(weights[i]) or weights[i] < 0 for i in indices):
+                issues.append(
+                    f"{where}{suffix}: regression weights must be finite nonnegative"
+                )
+                continue
+            pairs = [(x_values[i], y_values[i]) for i in indices if weights[i] > 0]
         if any(not _finite(value) for pair in pairs for value in pair):
             issues.append(f"{where}{suffix}: regression values must be finite numbers")
             continue
-        if weights is not None:
+        if weights is not None and not temporal:
             if any(not _finite(weights[i]) or weights[i] < 0 for i in indices):
                 issues.append(
                     f"{where}{suffix}: regression weights must be finite nonnegative"
@@ -1667,6 +2091,17 @@ def _check_reference(
 def _check_axis(axis, where: str, issues: list[str]) -> None:
     if axis is None:
         return
+    issues.extend(f"{where}: {problem}" for problem in axis_option_issues(axis))
+    if axis.temporal is not None:
+        from ._temporal import temporal_coordinates
+        from ._temporal_data import temporal_options
+
+        try:
+            temporal_coordinates([], **temporal_options(axis.temporal))
+        except ValueError as error:
+            issues.append(f"{where}: {error}")
+        if axis.scale != "linear":
+            issues.append(f"{where}: temporal axes require a linear scale")
     if axis.share_id is not None and (
         not isinstance(axis.share_id, str)
         or not axis.share_id.strip()
@@ -1691,11 +2126,23 @@ def _check_axis(axis, where: str, issues: list[str]) -> None:
 
 def validate(spec: FigureSpec) -> list[str]:
     """Return a list of problems found in ``spec`` (empty = valid)."""
+    from ._transforms import (
+        axis_signatures,
+        projects,
+    )
+    from ._transforms import (
+        sharing_issues as transform_sharing_issues,
+    )
     from .spec import SPEC_VERSION
 
     issues: list[str] = []
     cols = spec.data.columns
     source_columns = cols
+    coordinate_views = (
+        [{} for _ in spec.panels]
+        if any(projects(layer) for panel in spec.panels for layer in panel.layers)
+        else None
+    )
 
     if spec.version != SPEC_VERSION:
         issues.append(
@@ -1756,6 +2203,13 @@ def validate(spec: FigureSpec) -> list[str]:
             f"invalid share_y {spec.share_y!r}; valid: {sorted(_SHARE_MODES)}"
         )
 
+    from ._native_geometry import extended_geometry
+    from ._native_geometry import prepare as prepare_geometry
+    from ._native_geometry import reserve as reserve_geometry
+    from ._native_geometry import value_axes as geometry_value_axes
+
+    geometry_budget = MatrixAdmission()
+
     bad_spine_chars = set(spec.theme.axes.spines) - _VALID_SPINE_CHARS
     if bad_spine_chars:
         issues.append(
@@ -1763,7 +2217,16 @@ def validate(spec: FigureSpec) -> list[str]:
             f"character(s) {sorted(bad_spine_chars)}; valid: L, R, T, B"
         )
 
-    _check_data_integrity(spec, issues)
+    nullable_matrices = _check_data_integrity(spec, issues)
+    from ._scalar_display import palette_issues, scalar_plans
+    from .theme import CONTEXT_SCALES
+
+    issues.extend(palette_issues(spec.theme.palette))
+    context = spec.theme.context
+    if context is not None and (
+        not isinstance(context, str) or context not in CONTEXT_SCALES
+    ):
+        issues.append("theme context must be paper, notebook, talk or poster")
 
     n_panels = len(spec.panels)
     if n_panels > MAX_FIGURE_PANELS:
@@ -1772,24 +2235,14 @@ def validate(spec: FigureSpec) -> list[str]:
     if sum(len(panel.layers) for panel in spec.panels) > MAX_FIGURE_LAYERS:
         issues.append(f"figure supports at most {MAX_FIGURE_LAYERS} total layers")
         return issues
-    rows, colsn = 1, n_panels
-    if spec.layout is not None:
-        if (
-            not isinstance(spec.layout, (list, tuple))
-            or len(spec.layout) != 2
-            or any(type(v) is not int or v <= 0 for v in spec.layout)
-        ):
-            issues.append("layout must contain two positive integers")
-        else:
-            rows, colsn = spec.layout
-            if rows * colsn > MAX_FIGURE_PANELS:
-                issues.append(f"layout supports at most {MAX_FIGURE_PANELS} cells")
-                return issues
-            if rows * colsn < n_panels:
-                issues.append(
-                    f"layout {rows}x{colsn} has {rows * colsn} slots but there are "
-                    f"{n_panels} panels"
-                )
+    from ._layout import implicit_grid, layout_issues
+
+    geometry_issues = layout_issues(spec)
+    if geometry_issues:
+        return issues + geometry_issues
+    if not n_panels:
+        return [*issues, "figure needs at least one panel"]
+    rows, colsn = implicit_grid(spec)
     for name, expected in (("width_ratios", colsn), ("height_ratios", rows)):
         ratios = getattr(spec, name)
         if ratios is not None and (
@@ -1799,6 +2252,14 @@ def validate(spec: FigureSpec) -> list[str]:
         ):
             issues.append(f"{name} must contain {expected} positive finite entries")
 
+    panels, axis_problems = effective_panels(spec)
+    issues.extend(axis_problems)
+    spec = replace(spec, panels=panels)
+    issues.extend(shared_guide_issues(spec))
+    known_new_line_work = 0
+    guide_scopes = requested_scope_ids(spec)
+    grid_budget = MatrixAdmission()
+
     for pi, panel in enumerate(spec.panels):
         where_axis = f"panel {pi}"
         filter_problems = panel_filter_issues(source_columns, panel)
@@ -1807,6 +2268,9 @@ def validate(spec: FigureSpec) -> list[str]:
             source_columns if filter_problems else panel_columns(source_columns, panel)
         )
         panel_data = cols
+        issues.extend(
+            f"{where_axis}: {problem}" for problem in axis_panel_issues(cols, panel)
+        )
         _check_reference(
             panel.title_citation, panel.title_href, f"{where_axis} title", issues
         )
@@ -1827,8 +2291,20 @@ def validate(spec: FigureSpec) -> list[str]:
             _check_axis(axis, f"{where_axis} {name}", issues)
             if (
                 axis is not None
+                and axis.temporal is not None
+                and (name == "z" or panel.projection != "2d")
+            ):
+                issues.append(f"{where_axis}: temporal axes require Cartesian x/y/y2")
+            if (
+                axis is not None
                 and axis.share_id is not None
-                and (name not in ("x", "y") or panel.projection != "2d")
+                and (
+                    (
+                        name not in ("x", "y")
+                        and not (name == "y2" and panel.grid_cohort is True)
+                    )
+                    or panel.projection != "2d"
+                )
             ):
                 issues.append(
                     f"{where_axis}: named sharing supports primary Cartesian x/y only"
@@ -1839,6 +2315,11 @@ def validate(spec: FigureSpec) -> list[str]:
             issues.append(
                 f"{where_axis}: unknown legend location {panel.legend.location!r}"
             )
+        from ._legend_style import legend_style_issues
+
+        issues.extend(
+            f"{where_axis}: {issue}" for issue in legend_style_issues(panel.legend)
+        )
         bta = panel.legend.bbox_to_anchor
         if bta is not None and (len(bta) != 2 or not all(_finite(v) for v in bta)):
             issues.append(
@@ -1861,14 +2342,30 @@ def validate(spec: FigureSpec) -> list[str]:
                 f"{where_axis}: z-axis is configured but projection is "
                 f'{panel.projection!r} (z only applies to "3d" panels)'
             )
+        if panel.camera3d is not None:
+            try:
+                validate_camera(panel)
+            except ValueError as error:
+                issues.append(f"{where_axis}: {error}")
 
         for li, layer in enumerate(panel.layers):
             cols = panel_data
             order_valid = True
             where = f"panel {pi} layer {li} ({layer.type})"
+            if layer.raw_guide_id is not None:
+                from ._shared_guides import raw_guide_issues
+
+                issues.extend(
+                    f"{where}: {message}" for message in raw_guide_issues(layer)
+                )
             if layer.type in RAW_HUE_TYPES and layer.hue_order is not None:
                 try:
-                    cols = ordered_group_columns(cols, layer)
+                    from ._regression import configured_regression
+
+                    selected_columns = ordered_group_columns(cols, layer)
+                    if not (layer.type == "regplot" and configured_regression(layer)):
+                        cols = selected_columns
+                    del selected_columns
                 except ValueError as error:
                     issues.append(f"{where}: {error}")
                     order_valid = False
@@ -1877,6 +2374,131 @@ def validate(spec: FigureSpec) -> list[str]:
                     f"{where}: unknown layer type; valid: {sorted(LAYER_TYPES)}"
                 )
                 continue
+            owned_empty_scope = (
+                isinstance(layer.semantics, SemanticSpec)
+                and isinstance(layer.semantics.scale_id, str)
+                and layer.semantics.scale_id in guide_scopes
+            )
+            declaration_issues = line_option_issues(layer, panel)
+            if declaration_issues:
+                issues.extend(f"{where}: {problem}" for problem in declaration_issues)
+                continue
+            scoped_native = extended_geometry(layer)
+            try:
+                if scoped_native or layer.path_effects is not None:
+                    reserve_geometry(geometry_budget, cols, layer)
+                prepare_geometry(cols, layer, panel)
+            except (ValueError, TypeError, KeyError, OverflowError) as error:
+                issues.append(f"{where}: {error}")
+                continue
+            if layer.type == "spectrum":
+                from ._spectrum import spectrum_issues
+
+                for field_name in ("label", "clabel"):
+                    _check_ref_field(
+                        field_name,
+                        getattr(layer, field_name),
+                        set(),
+                        "it labels a spectral artist",
+                        where,
+                        issues,
+                    )
+                if layer.color is not None and not _color(layer.color):
+                    issues.append(
+                        f"{where}: color must be a supported named/hex colour"
+                    )
+                if layer.clabel is not None and not layer.colorbar:
+                    issues.append(f"{where}: clabel requires a spectrogram colourbar")
+                if (
+                    layer.citation is not None or layer.href is not None
+                ) and not layer.label:
+                    issues.append(f"{where}: spectral references require a line label")
+
+                issues.extend(
+                    f"{where}: {problem}"
+                    for problem in spectrum_issues(source_columns, layer, panel)
+                )
+                continue
+            if isinstance(layer.bins, str) and not (
+                layer.type == "hist" and isinstance(layer.histogram, HistogramSpec)
+            ):
+                issues.append(f"{where}: named bins require a typed histogram")
+                continue
+            if isinstance(layer.bins, BivariateBinsSpec) and layer.type != "hist2d":
+                issues.append(f"{where}: bivariate bins belong only to hist2d")
+                continue
+            field_adapter = layer.type in DENSITY_TYPES and density_adapter(
+                layer, panel
+            )
+            if layer.type == "regplot":
+                if layer.semantics is not None:
+                    from ._regression_semantics import glyph_support
+
+                    problems, _ = glyph_support(source_columns, layer, panel)
+                    issues.extend(f"{where}: {issue}" for issue in problems)
+                elif (
+                    layer.edge_color is not None
+                    or layer.colorbar
+                    or layer.clabel is not None
+                    or layer.cmap_kind != "sequential"
+                ):
+                    issues.append(
+                        f"{where}: regression point outline/colour mapping "
+                        "requires SemanticSpec"
+                    )
+            if (
+                layer.type in ROLE_LAYER_TYPES
+                and layer.type != "regplot"
+                and layer.semantics is not None
+            ) or field_adapter:
+                target_issues = semantic_axis_issues(layer, panel)
+                if target_issues:
+                    issues.extend(f"{where}: {issue}" for issue in target_issues)
+                    continue
+            from ._temporal_data import prepare_temporal_layer
+
+            scoped_stairs = advanced_stairs(layer, panel)
+            scoped_lanes = advanced_lanes(layer, panel)
+            scoped_grid = uses_grid(layer)
+            scoped_tri = layer.type in TRI_TYPES
+            scoped_vector = uses_vector(layer)
+            scoped_spatial = uses_spatial(layer)
+            temporal_selection = None
+            if not (
+                scoped_stairs
+                or scoped_lanes
+                or scoped_grid
+                or scoped_tri
+                or scoped_vector
+                or scoped_spatial
+                or scoped_native
+            ):
+                try:
+                    cols, layer, temporal_selection = prepare_temporal_layer(
+                        cols, layer, panel
+                    )
+                except ValueError as error:
+                    issues.append(f"{where}: {error}")
+                    continue
+                if coordinate_views is not None:
+                    for axis, signature in axis_signatures(cols, layer, panel):
+                        coordinate_views[pi].setdefault(axis, set()).add(signature)
+            if (
+                scoped_grid
+                or scoped_tri
+                or scoped_vector
+                or scoped_spatial
+                or scoped_native
+            ) and coordinate_views is not None:
+                axes = (
+                    geometry_value_axes(layer)
+                    if scoped_native
+                    else ("x", layer.axis)
+                    if scoped_vector
+                    else ("x", "y")
+                )
+                for axis in axes:
+                    coordinate_views[pi].setdefault(axis, set()).add(())
             required = LAYER_TYPES[layer.type]["required"]
             for field_name in required:
                 val = getattr(layer, field_name, None)
@@ -1908,10 +2530,24 @@ def validate(spec: FigureSpec) -> list[str]:
             # fields each layer actually interprets. Reject ignored fields and
             # malformed optional names before they become renderer KeyErrors.
             supported_fields = set(required) | set(LAYER_TYPES[layer.type]["optional"])
+            if panel.grid_cohort is True:
+                if layer.type == "scatter":
+                    supported_fields.add("weights")
+                elif layer.type == "hexbin":
+                    supported_fields.update(
+                        ("weights", "group", "hue_order", "line_width", "edge_color")
+                    )
             layer_defaults = LayerSpec()
             for style_field in (
                 "bar_width",
                 "baseline",
+                "stairs",
+                "lane_step",
+                "grid",
+                "triangulation",
+                "scalar_display",
+                "vector",
+                "spatial",
                 "edge_color",
                 "error_color",
                 "error_line_width",
@@ -1922,7 +2558,13 @@ def validate(spec: FigureSpec) -> list[str]:
                 "error_style",
                 "error_alpha",
                 "ecdf",
+                "strip",
+                "line",
+                "pack_scope",
+                "spectrum",
                 "histogram",
+                "histogram2d",
+                "ecdf2d",
                 "heatmap",
                 "cluster",
                 "regression",
@@ -1946,6 +2588,7 @@ def validate(spec: FigureSpec) -> list[str]:
                 "trust_alpha",
                 "whis",
                 "components",
+                "boxen",
                 "notch",
                 "showmeans",
                 "showfliers",
@@ -1994,21 +2637,110 @@ def validate(spec: FigureSpec) -> list[str]:
                     _check_column(cols, val, where, issues)
 
             if layer.type == "stem":
-                _check_stem_data(cols, layer, panel, where, issues)
+                _check_stem_data(
+                    cols, layer, panel, where, issues, allow_empty=owned_empty_scope
+                )
             elif layer.type == "stairs":
-                _check_stairs_data(cols, layer, panel, where, issues)
-            elif layer.type == "eventplot":
-                _check_eventplot_data(cols, layer, panel, where, issues)
-            elif layer.type == "broken_barh":
-                _check_interval_data(cols, layer, panel, where, issues)
+                if scoped_stairs:
+                    _check_discrete_options(layer, where, issues)
+                    try:
+                        ids = (
+                            panel_rows(source_columns, panel)
+                            if not filter_problems and (panel.filters or panel.dropna)
+                            else range(len(next(iter(cols.values()), ())))
+                        )
+                        _, _, groups = plan_stairs(cols, layer, panel, ids)
+                    except ValueError as error:
+                        issues.append(f"{where}: {error}")
+                    else:
+                        if coordinate_views is not None and any(
+                            windows for _, windows in groups
+                        ):
+                            for axis in ("x", layer.axis):
+                                coordinate_views[pi].setdefault(axis, set()).add(())
+                else:
+                    _check_stairs_data(cols, layer, panel, where, issues)
+            elif layer.type in LANE_TYPES:
+                if (
+                    layer.type == "eventplot"
+                    and layer.semantics is None
+                    and (
+                        layer.colorbar
+                        or layer.clabel is not None
+                        or layer.cmap_kind != "sequential"
+                    )
+                ):
+                    issues.append(
+                        f"{where}: eventplot colour mapping requires semantic "
+                        "numeric hue"
+                    )
+                if scoped_lanes:
+                    _check_discrete_options(layer, where, issues)
+                    try:
+                        plan = plan_lanes(cols, layer, panel)
+                    except ValueError as error:
+                        issues.append(f"{where}: {error}")
+                    else:
+                        if coordinate_views is not None and plan.members:
+                            for axis in ("x", layer.axis):
+                                coordinate_views[pi].setdefault(axis, set()).add(())
+                elif layer.type == "eventplot":
+                    _check_eventplot_data(cols, layer, panel, where, issues)
+                else:
+                    _check_interval_data(cols, layer, panel, where, issues)
+            elif layer.type == "rug":
+                _check_rug_layer(cols, layer, panel, where, issues)
 
+            if scoped_grid:
+                _check_discrete_options(layer, where, issues)
+                try:
+                    grid_budget.admit_grid(
+                        prepare_grid(spec.data.matrices, layer, panel)
+                    )
+                except ValueError as error:
+                    issues.append(f"{where}: {error}")
+            if scoped_tri:
+                _check_discrete_options(layer, where, issues)
+                try:
+                    admit_triangles(grid_budget, cols, layer, panel)
+                except ValueError as error:
+                    issues.append(f"{where}: {error}")
+            if scoped_vector:
+                _check_discrete_options(layer, where, issues)
+                try:
+                    ids = (
+                        panel_rows(source_columns, panel)
+                        if not filter_problems and (panel.filters or panel.dropna)
+                        else None
+                    )
+                    admit_vector(grid_budget, spec, layer, panel, source_columns, ids)
+                except ValueError as error:
+                    issues.append(f"{where}: {error}")
+            if scoped_spatial:
+                _check_discrete_options(layer, where, issues)
+                try:
+                    admit_spatial(grid_budget, spec, panel, layer)
+                except ValueError as error:
+                    issues.append(f"{where}: {error}")
             if (
-                layer.type in _MATRIX_LAYER_TYPES
+                not scoped_grid
+                and layer.type in _MATRIX_LAYER_TYPES
                 and layer.matrix not in spec.data.matrices
             ):
                 issues.append(
                     f"{where}: matrix {layer.matrix!r} not found in data "
                     f"(available: {sorted(spec.data.matrices)})"
+                )
+            if (
+                layer.type in _MATRIX_LAYER_TYPES
+                and not scoped_grid
+                and layer.type != "clustermap"
+                and layer.scalar_display is None
+                and layer.matrix in nullable_matrices
+            ):
+                issues.append(
+                    f"{where}: null matrix cells require "
+                    "a clustermap with complete_features"
                 )
 
             if layer.type == "clustermap":
@@ -2032,45 +2764,140 @@ def validate(spec: FigureSpec) -> list[str]:
                         else None,
                         layer,
                         panel,
+                        nullable=layer.scalar_display is not None,
                     )
                 )
-            if layer.type in ("scatter", "lineplot") and layer.semantics is not None:
+            if (
+                layer.type in ROLE_LAYER_TYPES
+                and layer.type != "regplot"
+                and layer.semantics is not None
+            ):
                 issues.extend(
                     f"{where}: {issue}"
-                    for issue in semantic_data_issues(cols, layer, panel)
+                    for issue in semantic_data_issues(
+                        cols, layer, panel, allow_empty=owned_empty_scope
+                    )
                 )
+            if layer.type in {"scatter", "stripplot"} and layer.semantics is None:
+                if layer.edge_color is not None and not _color(layer.edge_color):
+                    issues.append(
+                        f"{where}: scatter edge_color must be a bounded color"
+                    )
+                if layer.line_width is not None and (
+                    not _finite(layer.line_width) or not 0 <= layer.line_width <= 1000
+                ):
+                    issues.append(
+                        f"{where}: scatter outline line_width must be in [0,1000]"
+                    )
+            if (
+                layer.type in {"line", "lineplot", "stripplot", "ecdf"}
+                and layer.semantics is None
+                and (layer.colorbar or layer.clabel is not None)
+            ):
+                issues.append(f"{where}: colorbar requires semantic numeric hue")
 
-            if layer.type in {"bar", "errorbar"} | STAT_LAYER_TYPES:
-                _check_uncertainty(cols, layer, where, issues)
+            scale_panel = (
+                replace(panel, y=panel.y2)
+                if layer.axis == "y2" and panel.y2 is not None
+                else panel
+            )
+            if (
+                not scoped_native
+                and layer.type in {"bar", "errorbar"} | STAT_LAYER_TYPES
+            ):
+                _check_uncertainty(
+                    cols, layer, where, issues, selection=temporal_selection
+                )
             if layer.type in STAT_LAYER_TYPES:
-                _check_statistical_layer(cols, layer, where, issues)
-                _check_statistical_scales(cols, layer, panel, where, issues)
+                _check_statistical_layer(
+                    cols,
+                    layer,
+                    where,
+                    issues,
+                    panel=panel,
+                    allow_empty=(
+                        bool(panel.filters or panel.dropna)
+                        and (
+                            new_stat_request(layer, panel)
+                            or all(len(values) == 0 for values in cols.values())
+                        )
+                    )
+                    or layer.line is not None
+                    or owned_empty_scope,
+                )
+                _check_statistical_scales(
+                    cols, layer, panel, where, issues, allow_empty=owned_empty_scope
+                )
                 if layer.type == "lineplot":
                     _check_lineplot_layer(cols, layer, where, issues)
+            if layer.type in {"line", "lineplot"}:
+                issues.extend(
+                    f"{where}: {problem}"
+                    for problem in line_data_issues(cols, layer, panel)
+                )
+                if explicit_line_inference(layer):
+                    try:
+                        known_new_line_work += known_line_work(cols, layer)
+                        if known_new_line_work > MAX_LINE_WORK:
+                            issues.append(
+                                "known NEW line figure work exceeds2000000000 "
+                                "before RNG/native"
+                            )
+                    except (ValueError, TypeError, KeyError) as error:
+                        issues.append(f"{where}: {error}")
 
             if layer.type == "hist":
-                _check_histogram_layer(cols, layer, panel, where, issues)
+                _check_histogram_layer(cols, layer, scale_panel, where, issues)
 
-            if layer.type == "kde":
-                _check_kde_layer(cols, layer, panel, where, issues)
+            if field_adapter:
+                issues.extend(
+                    f"{where}: {problem}"
+                    for problem in density_issues(cols, layer, panel)
+                )
+            if layer.type == "kde" and not field_adapter:
+                _check_kde_layer(cols, layer, scale_panel, where, issues)
 
-            if layer.type == "kde2d":
+            if layer.type == "kde2d" and not field_adapter:
                 _check_kde2d_layer(cols, layer, panel, where, issues)
 
             if layer.type == "ecdf":
-                _check_ecdf_layer(cols, layer, panel, where, issues)
+                ecdf_columns = cols
+                if layer.semantics is not None:
+                    selected = semantic_rows(cols, layer)
+                    ecdf_columns = {
+                        name: [values[i] for i in selected]
+                        for name, values in cols.items()
+                    }
+                _check_ecdf_layer(ecdf_columns, layer, scale_panel, where, issues)
 
             if layer.type == "swarmplot":
+                _check_discrete_options(layer, where, issues)
+                if layer.semantics is None and (
+                    layer.colorbar
+                    or layer.clabel is not None
+                    or layer.cmap_kind != "sequential"
+                ):
+                    issues.append(
+                        f"{where}: swarm colour mapping requires semantic numeric hue"
+                    )
                 _check_distribution_layer(
                     cols,
                     layer,
                     where,
                     issues,
-                    allow_empty=bool(panel.filters or panel.dropna),
+                    allow_empty=bool(
+                        panel.filters
+                        or panel.dropna
+                        or (
+                            isinstance(layer.x, str)
+                            and layer.x in cols
+                            and not cols[layer.x]
+                        )
+                    ),
                 )
                 issues.extend(
                     f"{where}: {issue}"
-                    for issue in swarm_size_issues(cols, layer, panel)
+                    for issue in swarm_semantic_issues(cols, layer, panel)
                 )
                 width = 0.8 if layer.width is None else layer.width
                 if not _finite(width) or not 0 < width <= 1:
@@ -2085,9 +2912,11 @@ def validate(spec: FigureSpec) -> list[str]:
                     not _finite(layer.warn_thresh) or not 0 <= layer.warn_thresh <= 1
                 ):
                     issues.append(f"{where}: warn_thresh must be a fraction in [0, 1]")
-                if layer.marker not in (None, "o"):
+                if layer.marker is not None and (
+                    not isinstance(layer.marker, str) or layer.marker not in MARKERS
+                ):
                     issues.append(
-                        f"{where}: swarm currently supports circular marker='o' only"
+                        f"{where}: swarm marker must be a named filled marker"
                     )
                 for name in ("marker_size", "line_width"):
                     number = getattr(layer, name)
@@ -2100,7 +2929,7 @@ def validate(spec: FigureSpec) -> list[str]:
                             f"{where}: {name} must be a finite size <=1000 "
                             "(marker_size must be positive)"
                         )
-                _check_distribution_scales(cols, layer, panel, where, issues)
+                _check_distribution_scales(cols, layer, scale_panel, where, issues)
                 rows = distribution_rows(cols, layer)
                 if len(rows) > MAX_SWARM_POINTS:
                     issues.append(
@@ -2109,14 +2938,49 @@ def validate(spec: FigureSpec) -> list[str]:
                     )
 
             if layer.type in DISTRIBUTION_TYPES:
-                _check_distribution_layer(cols, layer, where, issues)
-                _check_distribution_scales(cols, layer, panel, where, issues)
+                from ._box import advanced_box, box_issues
+
+                extended = advanced_box(layer)
+                if (
+                    layer.type in {"box", "violin", "boxenplot"}
+                    and layer.semantics is None
+                    and (
+                        layer.colorbar
+                        or layer.clabel is not None
+                        or layer.cmap_kind != "sequential"
+                    )
+                ):
+                    issues.append(
+                        f"{where}: box colour mapping requires semantic numeric hue"
+                    )
+                _check_distribution_layer(
+                    cols,
+                    layer,
+                    where,
+                    issues,
+                    allow_empty=advanced_boxen(layer)
+                    or (
+                        (layer.type == "box" or advanced_violin(layer))
+                        and bool(panel.filters or panel.dropna)
+                    ),
+                )
+                _check_distribution_scales(cols, layer, scale_panel, where, issues)
+                if extended:
+                    issues.extend(
+                        f"{where}: {issue}"
+                        for issue in box_issues(
+                            cols,
+                            layer,
+                            panel,
+                            allow_empty=bool(panel.filters or panel.dropna),
+                        )
+                    )
                 if layer.type in {"box", "boxenplot"}:
                     issues.extend(
                         f"{where}: {issue}" for issue in component_issues(layer)
                     )
                 if layer.type == "violin":
-                    _check_violin_layer(cols, layer, panel, where, issues)
+                    _check_violin_layer(cols, layer, scale_panel, where, issues)
                 if layer.type == "boxenplot":
                     issues.extend(
                         f"{where}: {issue}"
@@ -2127,7 +2991,17 @@ def validate(spec: FigureSpec) -> list[str]:
                             layer.trust_alpha,
                         )
                     )
-                    if layer.marker not in (
+                    if advanced_boxen(layer):
+                        issues.extend(
+                            f"{where}: {issue}"
+                            for issue in boxen_issues(
+                                cols,
+                                layer,
+                                scale_panel,
+                                allow_empty=bool(panel.filters or panel.dropna),
+                            )
+                        )
+                    if not advanced_boxen(layer) and layer.marker not in (
                         None,
                         "o",
                         "d",
@@ -2157,7 +3031,9 @@ def validate(spec: FigureSpec) -> list[str]:
                         ):
                             issues.append(f"{where}: {name} must be in [0,1000]")
 
-            if layer.type == "quiver":
+            if layer.type == "quiver" and not scoped_vector:
+                if layer.group is not None or layer.hue_order is not None:
+                    issues.append(f"{where}: quiver grouping requires VectorSpec")
                 u_name, v_name = layer.u, layer.v
                 if (
                     layer.x in cols
@@ -2190,10 +3066,10 @@ def validate(spec: FigureSpec) -> list[str]:
                 if layer.colorbar and layer.c is None:
                     issues.append(f"{where}: colorbar requires a c column")
 
-            if layer.type in _BIVARIATE_DENSITY_TYPES:
+            if layer.type in _BIVARIATE_DENSITY_TYPES and not field_adapter:
                 if layer.x in cols and layer.y in cols:
                     values = [*cols[layer.x], *cols[layer.y]]
-                    if not values:
+                    if not values and panel.grid_cohort is not True:
                         issues.append(f"{where}: density plot requires observations")
                     elif any(not _finite(value) for value in values):
                         issues.append(f"{where}: x/y values must be finite numbers")
@@ -2212,7 +3088,10 @@ def validate(spec: FigureSpec) -> list[str]:
                             valid_bins = (
                                 3 <= len(bins) <= MAX_BIVARIATE_BINS + 1
                                 and all(_finite(value) for value in bins)
-                                and all(a < b for a, b in pairwise(bins))
+                                and all(
+                                    cast(float, a) < cast(float, b)
+                                    for a, b in pairwise(bins)
+                                )
                             )
                     if not valid_bins:
                         issues.append(
@@ -2236,6 +3115,13 @@ def validate(spec: FigureSpec) -> list[str]:
                         issues.append(
                             f"{where}: mincnt must be a nonnegative integer or None"
                         )
+                    if layer.type == "hexbin" and panel.grid_cohort is True:
+                        from ._hex_field import hex_issues
+
+                        issues.extend(
+                            f"{where}: {problem}"
+                            for problem in hex_issues(layer, panel)
+                        )
 
             if (
                 layer.type == "stackplot"
@@ -2250,6 +3136,31 @@ def validate(spec: FigureSpec) -> list[str]:
                 jitter = 0.15 if layer.jitter is None else layer.jitter
                 if not _finite(jitter) or not (0 <= jitter <= 0.5):
                     issues.append(f"{where}: jitter must be between 0 and 0.5")
+                issues.extend(
+                    f"{where}: {issue}" for issue in strip_option_issues(layer)
+                )
+                if categorical_strip(layer):
+                    strip_columns = cols
+                    if layer.semantics is not None:
+                        selected = semantic_rows(cols, layer)
+                        strip_columns = {
+                            name: [values[i] for i in selected]
+                            for name, values in cols.items()
+                        }
+                    _check_distribution_layer(
+                        strip_columns,
+                        layer,
+                        where,
+                        issues,
+                        allow_empty=bool(panel.filters or panel.dropna),
+                    )
+                    _check_distribution_scales(
+                        strip_columns, layer, scale_panel, where, issues
+                    )
+                    if layer.dodge is not None and (
+                        not _finite(layer.dodge) or not 0 <= layer.dodge <= 1
+                    ):
+                        issues.append(f"{where}: strip dodge must be in [0,1]")
             elif layer.jitter is not None:
                 issues.append(f"{where}: jitter only applies to stripplot layers")
 
@@ -2261,7 +3172,20 @@ def validate(spec: FigureSpec) -> list[str]:
                     )
                 )
                 config = layer.regression
-                value_axis = panel.y2 if layer.axis == "y2" else panel.y
+                if layer.orient not in ("v", "h"):
+                    issues.append(f"{where}: regression orient must be v or h")
+                if config is None and layer.orient == "h":
+                    issues.append(
+                        f"{where}: horizontal regression requires "
+                        "explicit RegressionSpec"
+                    )
+                value_axis = (
+                    panel.x
+                    if layer.orient == "h"
+                    else panel.y2
+                    if layer.axis == "y2"
+                    else panel.y
+                )
                 if (
                     config is not None
                     and getattr(config, "residual", False)
@@ -2290,6 +3214,11 @@ def validate(spec: FigureSpec) -> list[str]:
                         where,
                         issues,
                         panel=panel,
+                        source_ids=(
+                            None
+                            if filter_problems
+                            else panel_rows(source_columns, panel)
+                        ),
                         allow_empty=bool(
                             panel.filters or panel.dropna or layer.hue_order is not None
                         ),
@@ -2312,14 +3241,25 @@ def validate(spec: FigureSpec) -> list[str]:
                         f"layers (only {sorted(_AXIS_ROUTABLE_TYPES)} route to "
                         "the secondary axis)"
                     )
+                elif layer.type == "hist" and layer.orient != "v":
+                    issues.append(
+                        f"{where}: horizontal distributions do not route to y2; "
+                        "their mass axis would share primary x"
+                    )
                 elif panel.y2 is None:
                     issues.append(
                         f"{where}: routes to y2 but panel {pi} has no secondary "
                         "axis (use .secondary_yaxis(...))"
                     )
 
-            uses_cmap = layer.type in _CMAP_LAYER_TYPES or (
-                layer.type in {"scatter", "scatter3d", "quiver"} and layer.c is not None
+            uses_cmap = (
+                scoped_grid
+                or scoped_tri
+                or layer.type in {"contour3d", "contourf3d"} | _CMAP_LAYER_TYPES
+                or (
+                    layer.type in {"scatter", "scatter3d", "quiver"}
+                    and layer.c is not None
+                )
             )
             if uses_cmap and layer.cmap_kind not in _CMAP_KINDS:
                 issues.append(f"{where}: invalid cmap_kind {layer.cmap_kind!r}")
@@ -2331,8 +3271,39 @@ def validate(spec: FigureSpec) -> list[str]:
             if not _finite(layer.alpha) or not (0.0 <= layer.alpha <= 1.0):
                 issues.append(f"{where}: alpha {layer.alpha!r} must be in [0, 1]")
 
+    try:
+        scalar_plans(spec, grid_budget)
+    except ValueError as error:
+        issues.append(str(error))
+
     _check_shared_category_scales(spec, colsn, issues)
+    if coordinate_views is not None:
+        issues.extend(transform_sharing_issues(spec, coordinate_views))
     issues.extend(shared_scale_issues(spec))
+    if any(
+        layer.pack_scope is not None for panel in spec.panels for layer in panel.layers
+    ):
+        from ._semantics import shared_scale_domains
+        from ._swarm_scope import scope_plans
+
+        domains = shared_scale_domains(spec)
+        for pi, panel in enumerate(spec.panels):
+            if not panel_filter_issues(source_columns, panel):
+                _, problems = scope_plans(
+                    panel_columns(source_columns, panel), panel, domains=domains
+                )
+                issues.extend(f"panel {pi}: {problem}" for problem in problems)
+    if spec.facet_template is not None:
+        from ._facet import facet_template_issues
+
+        issues.extend(facet_template_issues(spec))
+    if not issues and (
+        spec.panel_layout is not None
+        or any(panel.panel_id is not None for panel in spec.panels)
+    ):
+        from ._layout import sharing_role_issues
+
+        issues.extend(sharing_role_issues(spec))
     return issues
 
 

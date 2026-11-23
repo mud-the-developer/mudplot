@@ -1,0 +1,72 @@
+{
+  "catalogue_id": "C06",
+  "status": "WHOLE C06 existing feature acceptance plus final-source lineage PARENT ACCEPTED/CLOSED; no new science/runtime/wheel, not REL01/v2",
+  "parent_acceptance": "Parent reviewed original owner contract/feature evidence and both new matched71-aa624/de3 native hand-denominator/log1-to2-to5/CLI/output-retention/active-denial-S profiles; exactly missing latest-source lineage accepted. Original cohorts and all immutable C07 sources/ledger preserved.",
+  "original_receipt": {
+    "path": "$CHECKOUT/docs/review_evidence/v2_count_scopes.json",
+    "sha256": "d8022c576a21bf7a33448edeb2f2a9e291a22ccd598efbed574acbea35f88a36",
+    "unchanged": true,
+    "prior_development_wheel": {
+      "artifacts/v2_count_scopes_20261030/development-dist/mudplot-1.1.0-py3-none-any.whl": "f70daea42410cb962e931f6118411816fbe6e7c7d469addf5c08b66e37a4c141",
+      "artifacts/v2_count_scopes_20261030/development-dist/mudplot-1.1.0.tar.gz": "aa1d1a14f85d7824462b80e71fdee4a3e750bdf2535262b323c18be1d28052e6"
+    },
+    "prior_counts": "459related/329minimum/75contracts/135compatibility are original separate cohorts,not latest reruns or summed."
+  },
+  "exact_missing_before": "Original receipt explicitly ended at unchanged1.1 development packaging before receipt/status addition, with old shared source hashes and no binding to current71-module corrected final source; no new feature or scientific omission is asserted.",
+  "latest_binding": {
+    "wheel_sha256": "de3fe109473895d770f2254794765ab4f7d3f54ca1739b64143c8e1e70b6bfb4",
+    "runtime_sha256": "aa6243b8fceafc2e064dcfea8ef638cdbc422fed4e9300bc2d168a1f22798ff6",
+    "modules": 71,
+    "original_immutable906_source": "$LOCAL_EVIDENCE/location-24",
+    "corrected_final908_source": "$LOCAL_EVIDENCE/location-44",
+    "corrected_final_SDIST_sha256": "b8faa78f370d80b925aa435c555da2949aac2eab699f9736e64ab55fc4e48eff",
+    "source_doc_binding": "artifacts/v2_c07/final_source_doc_binding.json",
+    "no_new_runtime_or_wheel": true,
+    "same_new_profiles": {
+      "current": {
+        "driver": "$LOCAL_EVIDENCE/location-45",
+        "origin": "$LOCAL_EVIDENCE/location-28",
+        "versions": {
+          "numpy": "2.5.2",
+          "matplotlib": "3.11.1",
+          "Pillow": "13.0.0",
+          "pytest": "9.1.1"
+        },
+        "installed71_binding": "$LOCAL_EVIDENCE/location-27/binding-short-tmp.json"
+      },
+      "minimum": {
+        "driver": "$LOCAL_EVIDENCE/location-46",
+        "origin": "$LOCAL_EVIDENCE/location-31",
+        "versions": {
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "Pillow": "13.0.0",
+          "pytest": "9.0.3"
+        },
+        "installed71_binding": "$LOCAL_EVIDENCE/location-30/binding-short-tmp.json"
+      }
+    }
+  },
+  "actual_new_gap_only_proof": {
+    "commands": "artifacts/v2_count_scopes_final_source/commands.json",
+    "core_commands": "artifacts/v2_count_scopes_final_source/pure-commands.json",
+    "profiles": {
+      "current": {
+        "native_API_CLI": "$LOCAL_EVIDENCE/location-47/receipt.json",
+        "pure_S": "$LOCAL_EVIDENCE/location-47/pure-active-denial.json"
+      },
+      "minimum": {
+        "native_API_CLI": "$LOCAL_EVIDENCE/location-48/receipt.json",
+        "pure_S": "$LOCAL_EVIDENCE/location-48/pure-active-denial.json"
+      }
+    },
+    "independent_hand_denominators": "all10/category5/group6and4 for masses2,4,3,1; actual heights and raw stack bottoms verified from native bars",
+    "log_stack": "Actual native cumulative tops2,5 at baseline1\u2014not baseline-offset3,6 or products.",
+    "selected_views": "Real panel-local totals, selected left/right and reserved-empty cell, local normalized-scope ReplaceLayer/undo/reopen/whole-template supersession preserve sourceIDs",
+    "actual_installed_CLI": "PNG3600x1200/SVG/PDF rc0; negative weight error leaves complete priorPNG unchanged both profiles",
+    "core": "Python-S actively refuses numpy/matplotlib/scipy; all/category/group builders/validation/actions/JSON execute without render or fit"
+  },
+  "retained_old_named_gates": "Owner scientific scopes, extreme finite/overflow mass regressions,actual Rust human edits/history/download/reopen/invalid-state/raster and bilingual runnable docs remain original accepted evidence. They were NOT rerun to confirm.",
+  "additional_reused_current_consumers": "artifacts/v2_c07/established_consumers_corrected_{current,minimum}_command.json/actual native recent review includes weighted category/log count forms and installed raw-tops proof,not isolated pass relabelling.",
+  "limitations": "No final version bump/publication/metadata-resolved provider installation matrix or global QA/security/REL01 claim. Broader count semantic/date/y2 paths not added beyond owner finite C06 contract."
+}

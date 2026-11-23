@@ -203,7 +203,6 @@ def test_plain_empty_swarm_still_fails_without_an_explicit_selection(kind):
     "field,value,message",
     [
         ("width", 0, "width"),
-        ("marker", "s", "circular"),
         ("marker_size", 0, "positive"),
         ("line_width", True, "line_width"),
         ("x", "missing", "missing"),

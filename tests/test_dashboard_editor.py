@@ -15,6 +15,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
+from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlencode, urlparse
 
@@ -216,90 +217,56 @@ def test_render_page_no_legend_handle_without_explicit_position():
     assert 'class="drag-handle legend"' not in html
 
 
-def test_render_page_shows_legend_handle_at_explicit_position():
-    spec = FigureSpec()
-    spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.25, 0.75])
-    html = render_page(spec, [])
-    assert 'type="button" class="drag-handle legend"' in html
-    assert 'aria-label="Move legend; drag or use arrow keys"' in html
-    assert 'data-imgx="0.25"' in html
-    assert 'data-imgy="0.75"' in html
-    assert "left:25%" in html
-    assert "top:25%" in html  # CSS top is flipped: (1 - 0.75) * 100
-
-
-def test_render_page_legend_handle_needs_no_layout_info():
-    # unlike title/text-layer handles, the legend is figure-fraction and
-    # doesn't depend on the panel-0 axes bbox being known.
-    spec = FigureSpec()
-    spec.panels[0].legend = LegendSpec(bbox_to_anchor=[0.1, 0.1])
-    html = render_page(spec, [], layout={})
-    assert 'class="drag-handle legend"' in html
-
-
-def test_render_page_title_handle_needs_panel_bbox_from_layout():
-    from mudplot.spec import PanelSpec
+def test_render_page_handles_are_measured_from_rendered_artists():
+    from mudplot._editor import render_preview
+    from mudplot.spec import AxisSpec, LayerSpec, PanelSpec
 
     spec = FigureSpec()
-    spec.panels[0] = PanelSpec(title="Hi", title_position=[0.5, 0.9])
-    assert 'class="drag-handle title"' not in render_page(spec, [], layout={})
-    html = render_page(
-        spec, [], layout={"panel_bbox": [0.1, 0.1, 0.9, 0.9], "is_3d": False}
-    )
-    assert 'class="drag-handle title"' in html
-    assert 'aria-label="Move panel title; drag or use arrow keys"' in html
-    # axes-fraction 0.5 -> figure-fraction 0.1 + 0.5*(0.9-0.1) = 0.5
-    assert 'data-imgx="0.5"' in html
-
-
-def test_render_page_no_title_handle_without_title_text():
-    from mudplot.spec import PanelSpec
-
-    spec = FigureSpec()
-    spec.panels[0] = PanelSpec(title="", title_position=[0.5, 0.9])
-    html = render_page(
-        spec, [], layout={"panel_bbox": [0.1, 0.1, 0.9, 0.9], "is_3d": False}
-    )
-    assert 'class="drag-handle title"' not in html
-
-
-def test_render_page_layer_at_handle_uses_data_coordinate_mapping():
-    from mudplot.spec import LayerSpec as LS
-    from mudplot.spec import PanelSpec
-
-    spec = FigureSpec()
-    spec.data.columns = {"x": [0, 1], "y": [0, 1]}
-    spec.panels[0] = PanelSpec(layers=[LS(type="text", text="n", at=[5.0, 0.0])])
-    layout = {
-        "is_3d": False,
-        "panel_bbox": [0.0, 0.0, 1.0, 1.0],
-        "xlim": [0.0, 10.0],
-        "ylim": [-1.0, 1.0],
-        "xscale": "linear",
-        "yscale": "linear",
-        "text_layers": [{"index": 0, "type": "text", "at": [5.0, 0.0]}],
-    }
-    html = render_page(spec, [], layout)
-    assert 'class="drag-handle layer-at"' in html
-    assert 'aria-label="Move text layer 1; drag or use arrow keys"' in html
-    assert 'data-imgx="0.5"' in html  # (5-0)/(10-0)
-    assert 'data-imgy="0.5"' in html  # (0-(-1))/(1-(-1))
-    assert 'data-field2="layer_index=0"' in html
-
-
-def test_render_page_no_handles_for_3d_layout():
-    from mudplot.spec import LegendSpec as LG
-    from mudplot.spec import PanelSpec
-
-    spec = FigureSpec()
+    spec.data.columns = {"x": [1, 10, 100], "y": [1, 10, 100]}
     spec.panels[0] = PanelSpec(
-        title="Hi", title_position=[0.5, 0.9], legend=LG(bbox_to_anchor=[0.1, 0.1])
+        title="Hi",
+        title_position=[0.5, 0.9],
+        x=AxisSpec(scale="log", limits=[100, 1]),
+        y=AxisSpec(scale="log", limits=[1, 100]),
+        legend=LegendSpec(bbox_to_anchor=[0.25, 0.75]),
+        layers=[
+            LayerSpec(type="line", x="x", y="y", label="series"),
+            LayerSpec(type="text", text="n", at=[10, 10]),
+        ],
     )
-    html = render_page(spec, [], layout={"is_3d": True})
-    # legend still draggable (figure-fraction, independent of the axes)...
-    assert 'class="drag-handle legend"' in html
-    # ...but title needs the (unavailable, for 3-D) axes bbox
-    assert 'class="drag-handle title"' not in html
+    _, layouts = render_preview(spec)
+    layout = layouts[0]
+    page = render_page(spec, [], layout=layout)
+    for entry in layout["handles"]:
+        assert f'class="drag-handle {entry["kind"]}"' in page
+        assert f'data-imgx="{entry["imgx"]:.17g}"' in page
+        assert f'data-imgy="{entry["imgy"]:.17g}"' in page
+    assert 'aria-label="Move legend; drag or use arrow keys"' in page
+    assert 'aria-label="Move panel title; drag or use arrow keys"' in page
+    assert 'aria-label="Move text layer 2; drag or use arrow keys"' in page
+    # Without the paired render metadata the view must not guess any positions.
+    assert 'class="drag-handle' not in render_page(spec, [], layout={})
+
+
+def test_render_page_non_cartesian_data_drag_is_truthfully_unavailable():
+    from mudplot._editor import render_preview
+    from mudplot.spec import LayerSpec, PanelSpec
+
+    spec = FigureSpec()
+    spec.data.columns = {"x": [1, 2], "y": [3, 4]}
+    spec.panels[0] = PanelSpec(
+        projection="polar",
+        title="Polar",
+        title_position=[0.5, 0.9],
+        layers=[LayerSpec(type="line", x="x", y="y", label="series")],
+        legend=LegendSpec(bbox_to_anchor=[0.1, 0.1]),
+    )
+    _, layouts = render_preview(spec)
+    page = render_page(spec, [], layout=layouts[0])
+    assert layouts[0]["data_drag_disabled"]
+    assert 'class="drag-handle legend"' in page
+    assert 'class="drag-handle title"' in page
+    assert 'class="drag-handle layer-at"' not in page
 
 
 def test_sample_import_keeps_optional_dependencies_lazy():
@@ -439,39 +406,6 @@ def test_build_action_reset_legend_position_clears_bbox_only():
 # --------------------------------------------------------------------------
 
 
-_REQUIRED_LAYER_VALUE = {
-    "x": "x",
-    "y": "y",
-    "y2": "y2",
-    "z": "z",
-    "u": "u",
-    "v": "v",
-    "group": "group",
-    "value": 0.0,
-    "text": "note",
-    "at": [0.0, 0.0],
-    "matrix": "matrix",
-    "bins": [0.0, 1.0, 2.0],
-}
-
-
-@pytest.mark.parametrize("layer_type", sorted(LAYER_TYPES))
-def test_build_action_accepts_every_registered_layer_type_as_json(layer_type):
-    values = {
-        name: _REQUIRED_LAYER_VALUE[name]
-        for name in LAYER_TYPES[layer_type]["required"]
-    }
-    action = _build_action(
-        "add_layer_json",
-        {"layer_type": layer_type, "layer_json": json.dumps(values)},
-        FigureSpec(),
-    )
-    assert isinstance(action, A.AddLayer)
-    assert action.layer.type == layer_type
-    for name, value in values.items():
-        assert getattr(action.layer, name) == value
-
-
 def test_build_action_rejects_unknown_json_layer_field():
     with pytest.raises(ValueError, match="unknown LayerSpec field"):
         _build_action(
@@ -579,7 +513,8 @@ def test_session_layout_empty_for_3d_panel():
     session.store = Store(FigureSpec(panels=[PanelSpec(projection="3d")]))
     session.dispatch_safe(A.SetData({"x": [1], "y": [1], "z": [1]}))
     session.dispatch_safe(A.AddLayer(LayerSpec(type="line3d", x="x", y="y", z="z")))
-    assert session.layout == {"is_3d": True, "panel": 0}
+    assert session.layout["is_3d"] and session.layout["panel"] == 0
+    assert session.layout["data_drag_disabled"] and session.layout["handles"] == []
 
 
 # --------------------------------------------------------------------------
@@ -1111,6 +1046,76 @@ def test_complete_example_opens_through_existing_validated_import_and_stays_edit
     assert edited["data"] == spec.data.to_dict()
     with urllib.request.urlopen(running_server + "/fig.svg") as response:
         assert b"<svg" in response.read()
+
+
+def test_preview_generations_reject_old_images_and_keep_current_native_aspect(
+    running_server,
+):
+    class PreviewImage(HTMLParser):
+        src = ""
+
+        def handle_starttag(self, tag, attributes):
+            fields = dict(attributes)
+            if tag == "img" and fields.get("alt") == "figure preview":
+                self.src = fields["src"]
+
+    def image_url(body):
+        parser = PreviewImage()
+        parser.feed(body.decode())
+        assert parser.src
+        return running_server + parser.src
+
+    with urllib.request.urlopen(running_server + "/") as response:
+        original = image_url(response.read())
+    plot = mp.plot({"x": [-1, 0, 1], "y": [0.2, 0.5, 0.8]}).layout(1, 3).size(12, 3)
+    for panel in range(3):
+        plot.line("x", "y", panel=panel).axis_scale(
+            "x", "asinh", options={"linear_width": panel + 1}, panel=panel
+        )
+    fragment = _hx_post(running_server + "/open", {"json": plot.to_json()})
+    current = image_url(fragment)
+    with urllib.request.urlopen(current) as response:
+        png = response.read()
+        generation = int(response.headers["X-Mudplot-View-Generation"])
+        assert response.headers["Cache-Control"] == "no-store"
+    width, height = struct.unpack(">II", png[16:24])
+    assert abs(width / height - 4) < 0.01
+    with urllib.request.urlopen(running_server + "/fig.png") as response:
+        assert (
+            response.read() == png
+        )  # Legacy download remains the cached native image.
+    with pytest.raises(urllib.error.HTTPError) as stale:
+        urllib.request.urlopen(original)
+    assert stale.value.code == 409
+    for query in (
+        "view_generation=bad",
+        "view_generation=-1",
+        "view_generation=",
+        "view_generation=1&view_generation=2",
+    ):
+        with pytest.raises(urllib.error.HTTPError) as invalid:
+            urllib.request.urlopen(running_server + "/fig.png?" + query)
+        assert invalid.value.code == 400
+    edited = _hx_post(
+        running_server + "/action/raw",
+        {
+            "json": json.dumps(
+                {
+                    "type": "SetAxisScale",
+                    "axis": "x",
+                    "scale": "asinh",
+                    "options": {"linear_width": 4},
+                    "panel": 0,
+                }
+            )
+        },
+    )
+    with urllib.request.urlopen(image_url(edited)) as response:
+        assert int(response.headers["X-Mudplot-View-Generation"]) > generation
+        assert struct.unpack(">II", response.read()[16:24]) == (width, height)
+    with pytest.raises(urllib.error.HTTPError) as old:
+        urllib.request.urlopen(current)
+    assert old.value.code == 409
 
 
 def test_open_spec_replaces_the_figure(running_server):

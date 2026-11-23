@@ -240,8 +240,6 @@ def test_band_alpha_is_exact_and_reference_palette_slots_are_reserved(opacity):
         {"capsize": 2},
         {"error_line_width": 1},
         {"dodge": 0.2},
-        {"order": [1, 2]},
-        {"native_scale": True},
         {"axis": "y2"},
         {"stat_scale": "bogus"},
         {"line_width": False},

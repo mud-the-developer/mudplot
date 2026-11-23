@@ -1,0 +1,156 @@
+{
+  "catalogue_row": "C04",
+  "status": "whole C04 workflow formally functionally accepted by parent; immutable local-qualification source/SDIST retain their earlier pending status",
+  "scope": "Violin whole frozen row, not whole F01/F02/G01/E01/Q01/DOC01/REL01/v2",
+  "artifacts": {
+    "package_version": "1.1.0",
+    "schema_version": "0.1",
+    "wheel": {
+      "path": "$LOCAL_EVIDENCE/location-61/mudplot-1.1.0-py3-none-any.whl",
+      "sha256": "94de3f91fa4ca13f29313b22e8075b55d256306c6f23939f20691f15f8f33584"
+    },
+    "runtime_manifest_sha256": "4eb190f051a98fd5ac3d689135fec42c706b70283d8cfc1e0d084e520ed976cd",
+    "engine_modules": 69,
+    "runtime_binding": "artifacts/v2_c04_n13_qualification/source_binding.json",
+    "original_frozen_source": "$LOCAL_EVIDENCE/location-62/source",
+    "original_source_archive": {
+      "path": "$LOCAL_EVIDENCE/location-63/frozen_source.tar.gz",
+      "sha256": "0b44d3bab585c9af06d2920a87cd6a2ca159ed7dd6dd7f35d4fc3cb6acc856d7",
+      "classification": "immutable original source; contains superseded failing test bytes, NOT latest corrected distributable source"
+    },
+    "original_sdist": {
+      "path": "$LOCAL_EVIDENCE/location-61/mudplot-1.1.0.tar.gz",
+      "sha256": "f47f4613bb044be0c5579ba385b8d7e6706b065e551540583cbc969f31177e4c",
+      "classification": "immutable pre-test-correction artifact, NOT latest corrected source distribution"
+    },
+    "corrected_final_source_binding": "artifacts/v2_c04_n13_qualification/final_source_binding.json",
+    "corrected_test_sha256": "18ec0d76937265cf15a56f8f6bfa6928aee548990a3ab6decbdf6aa990c52778",
+    "editor_binary": {
+      "path": "$LOCAL_EVIDENCE/location-64/mudplot-editor",
+      "sha256": "71fa4bec9e933386d700b222467d5edac51844b4f82280b5dce2a867e9e32b35"
+    },
+    "no_runtime_wheel_rebuild_for_test_only_correction": true
+  },
+  "contract": {
+    "policy": "explicit paired-half lanes; H1 legitimate left-only; H2 equivalence; odd final left-only; reserved slots; no extra dodge or fabricated counterpart",
+    "scientific": "existing Gaussian/bandwidth/weights/clip/stat-coordinate definitions reused; density peak/mass references once per effective-hue/global pool, NOT full raw tuple",
+    "roles": "HUE body fill; SIZE body outline stroke pt only; STYLE body dash plus actual point/box-median glyph via persisted marker cycle; unused marker capacity not demanded for segment-only modes",
+    "native_components": "mode-specific finite traits; scalar/global/typed per-hue ownership resolved before artists; Box/boxen reject unavailable new roles",
+    "raw_native_inheritance": "unextended legacy-inner component edits batch already-fitted same-role category profiles through public Axes.violin; no refit or erasure of requested weighted/area/count/common_norm/split/named definitions",
+    "coordinates": "v/h, actual primary/y2, numeric/date category and measurement, native category, data/log10-stat working units with base2 display, declared slots/unrelated limits, facets/live/N13 placements",
+    "source": "original measurements, typed True versus1, row identities/order/weights retained; domain dedup distinct from physical observations"
+  },
+  "bounds": {
+    "advanced_selected_rows_per_layer": 10000,
+    "drawn_profiles_per_layer": 256,
+    "categorical_levels_or_override_entries": 64,
+    "continuous_numeric_distinct_values_not_limited_to64": true,
+    "support_points": [
+      2,
+      1000
+    ],
+    "kernel_term_bound_per_layer": 10000000,
+    "actual_max_native_path_shape": [
+      2003,
+      2
+    ],
+    "actual_max_paths": 256,
+    "actual_max_native_vertices": 512768,
+    "native_closure_formula": "K*(2G+3), not a strict2K(G+1) bound",
+    "unchanged_other_limits": "facet64,figure256panels/1024layers,pixel bounds; no SLA/RSS/performance guarantee"
+  },
+  "cohorts": {
+    "source_current_original": {
+      "result": "2662 passed,1 obsolete-contract failure,6 skipped,31 warnings",
+      "seconds": 1001.91,
+      "returncode": 1,
+      "command_record": "artifacts/v2_c04_n13_qualification/frozen_source_current_command.json",
+      "failure": "stale test demanded rejection of newly supported Violin SEM; not an engine regression"
+    },
+    "source_current_corrected_case": {
+      "result": "1 passed",
+      "seconds": 0.3,
+      "log": "artifacts/v2_violin/frozen_source_current_corrected_scatter_case.log",
+      "separate_not_summed": true
+    },
+    "source_minimum_with_explicit_test_overlay": {
+      "result": "2663 passed,6 skipped,9361 warnings",
+      "seconds": 1254.08,
+      "returncode": 0,
+      "command_record": "artifacts/v2_c04_n13_qualification/frozen_source_minimum_command.json",
+      "overlay_sha256": "18ec0d76937265cf15a56f8f6bfa6928aee548990a3ab6decbdf6aa990c52778"
+    },
+    "installed_current": {
+      "result": "1718 passed,3 skipped,16 warnings",
+      "seconds": 1274.81,
+      "command_record": "artifacts/v2_c04_n13_qualification/installed_current_command.json",
+      "required_browser": true,
+      "matching_reference_bridge": true,
+      "source_unset": true,
+      "per_test_owned_figure_isolation": true
+    },
+    "installed_minimum": {
+      "result": "1718 passed,3 skipped,6712 warnings",
+      "seconds": 1209.77,
+      "command_record": "artifacts/v2_c04_n13_qualification/installed_minimum_command.json",
+      "required_browser": true,
+      "matching_reference_bridge": true,
+      "source_unset": true,
+      "per_test_owned_figure_isolation": true
+    },
+    "skip_accounting": "SOURCE6=3hostPGF+3unavailableCJK; installed3=hostPGF only; no CJK pass claim. Separate actual rootfs native PGF tests4passed/279deselected/profile; never summed.",
+    "rust_static_generated": "artifacts/v2_c04_n13_qualification/static_and_rust_gate_ledger.json",
+    "no_count_summing_or_failed_cohort_relabel": true
+  },
+  "current_minimum_native_work": "artifacts/v2_c04_n13_qualification/final_native_work_limits.json",
+  "full_observed_glyphs": "artifacts/v2_c04_n13_qualification/actual10000_point_commands.json",
+  "inner_boundary": "Both profiles:10002stored rows,10000selected/10000actual diamond markers and10000visible SVG DATA uses excluding defs/axes/legend;256profiles; zero BODY/point strokes retain filled bodies and independent6pt/.75pt glyphs. Separate10000stick segments/256collections retained. Stress, not publication/RAM/SLA.",
+  "real_ui": {
+    "current_rust": "artifacts/v2_violin/installed-ui/current-final/rust/receipt.json",
+    "current_python": "artifacts/v2_violin/installed-ui/current-final/python/receipt.json",
+    "minimum_rust": "artifacts/v2_violin/installed-ui/minimum-final/rust/receipt.json",
+    "minimum_python": "artifacts/v2_violin/installed-ui/minimum-final/python/receipt.json",
+    "checkpoints_per_flow": 12,
+    "actual": "human generic layer form, RAW frozen-live/template roles/pairing edits, native refs, rejected mapped override exact SpecPNG/history, undo/redo,4downloads,reopen,post-reopen edit; displayed DOM decoded RGBA equals current cached PNG at each checkpoint",
+    "classification": "functional stress separate from readable actual human scene; no C05 ReplaceLayer in this runtime"
+  },
+  "publication": {
+    "executable": "examples/violin_workflow.py",
+    "installed_examples": "artifacts/v2_violin/installed-examples/{current,minimum}",
+    "native_readability": "each installed example_native_readability.json: five hue guides ONCE per panel, all10profiles retained; actual shared legend/data bboxes nonintersecting",
+    "parent_review": "parent accepted corrected compiled paired/shared/live examples and actual readable currentRust/minPython surfaces; original duplicate/overlap images retained as failure lineage",
+    "preview": "actual readable-edited.png is capped2000x1166, NOT full requested DPI",
+    "exact_api_cli": "artifacts/v2_c04_n13_qualification/readable_exact_png_{current,minimum}.json: same actual downloaded JSON→3600x2100 API/CLI identical RGBA; points1001 invalid CLI retains previous complete PNG"
+  },
+  "tex": {
+    "proof": "artifacts/v2_c04_n13_qualification/pgf-proof",
+    "same_wheel_fresh_installs": true,
+    "engine_modules_verified": 69,
+    "native_pgfs_per_profile": 13,
+    "document_pages_per_profile": 14,
+    "classification": "13plotted figures plus bibliography; actual26x15in document wrapper retains native sizes, not14plotted figures",
+    "commands": "LuaLaTeX→BibTeX→LuaLaTeX×2; Ghostscript raster/text; actualµm/Σ/²/distant2100 clock labels,citations/PDF URI,no final missing characters",
+    "selected_regressions": "4passed/279deselected/profile,0skips; separate from host skips",
+    "profiles": "TeXcurrent3.11.15/NP2.4.6/MPL3.11.1 versus desktopcurrent3.13.12/NP2.5.2; TeXminimum3.11.15/NP1.23.5/MPL3.8/Pillow13"
+  },
+  "legacy": {
+    "proof": "artifacts/v2_c04_n13_qualification/legacy-qualified/{current,minimum}/comparison.json",
+    "actual": "immutable accepted5fd646…engine66 versus new94de…engine69, matching renderer/interpreter/profile;24comparable cases each exact JSON/actions/RGBA/size/limits/labels",
+    "unsupported_control_lineage": "original old-engine new-component requests correctly rejected; removed2noncomparable requests, preserved failed attempt; NOT an old behavior regression"
+  },
+  "pure_and_license": {
+    "pure": "artifacts/v2_c04_n13_qualification/pure_{current,minimum}.json: actual installed Python-S, numpy/matplotlib/scipy actively denied,all69hashes/origin checked",
+    "license": "artifacts/v2_c04_n13_qualification/wheel_license_metadata.json: MIT AND LicenseRef-Matplotlib,full notices,ownMIT/dependency floors unchanged"
+  },
+  "failure_lineage": {
+    "old_scalar_zero_quart": "prerequisite inference DISPROVEN on both accepted5fd profiles; no scalar bug/fix claim",
+    "raw_component_inheritance": "artifacts/v2_violin/raw_native_orthogonality_before.log and native-orthogonality-before; actual new-route defect fixed, not unasked default rewrite",
+    "minimum_collection_setter": "minimum_source_native_inheritance_short.log303pass/3fail: lowercase none setter invalid on MPL3.8; fixed supported native None representation preserving arrays/fill/glyphs; distinct earlier617pass/1hostPGF and82pass snapshots retained",
+    "source_test_correction": "artifacts/v2_c04_n13_qualification/post_freeze_test_quality.json; no original full-pass relabel/summing",
+    "private_harness": "out-of-root verification script guard preserved by relocating helper; readable bare-date temporal_coordinates rejection fixed with explicit Z inputs; original logs retained; no runtime fix",
+    "publication": "old duplicate hue guides and overlap screenshots/properties retained, actual source guide ownership and example-only layout corrections qualified",
+    "other_attempts": "complete original command/log ledgers in artifacts/v2_violin/commands.json and artifacts/v2_panel_layout_integrated/commands.json, not relabeled"
+  },
+  "required_gates_unexercised": [],
+  "out_of_scope": "C07 public SUM cancellation proof separate; MEAN remains inference. No C07 runtime edits or overall product closure."
+}

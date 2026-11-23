@@ -64,10 +64,58 @@ def _review_recent_layer_contracts(base: str) -> None:
 
     original = capture()
     source = {"x": [2, 1, 2], "y": [3, -1, 4], "w": [1, 1, 2]}
+    temporal_source = {
+        "t": ["2026-01-01", "2026-01-02", "2026-01-04", "2026-01-11"],
+        "v": [1, 3, 2, 4],
+    }
     examples = [
+        mp.plot(source).hist("x", bins="auto", weights="w").size(6, 3),
+        mp.plot(source).hist("x", bins="discrete").size(6, 3),
+        mp.plot({"t": [0, 1, 2]})
+        .hist("t", discrete=True)
+        .date_axis("x", unit="ms", origin="2026-01-01", timezone="UTC")
+        .size(6, 3),
         mp.plot(source).stem("x", "y", baseline=0.5).size(4, 3),
         mp.plot(source).regplot("x", "y", weights="w").size(4, 3),
+        mp.plot(source)
+        .countplot(
+            "x",
+            weights="w",
+            stat="percent",
+            normalize_scope="category",
+            stack=True,
+            baseline=0.1,
+        )
+        .yscale("log")
+        .size(4, 3),
         mp.plot(source).stairs("y", [0, 1, 3, 4], baseline=0.5).size(4, 3),
+        mp.plot(source)
+        .stairs("w", ["2026-01-01", "2026-01-02", "2026-01-04", "2026-01-11"])
+        .date_axis("x", timezone="UTC")
+        .size(6, 3),
+        mp.plot({"start": [0, 86400], "duration": [3600, 7200]})
+        .broken_barh("start", "duration", bottom=1, height=0.5)
+        .date_axis("x", unit="s", origin="2026-01-01T00:00:00Z")
+        .size(6, 3),
+        mp.plot(temporal_source)
+        .scatter("t", "v")
+        .date_axis("x", timezone="UTC")
+        .joint(bins=3)
+        .size(7, 6),
+        mp.plot(temporal_source)
+        .pair(["t", "v"], temporal={"t": {"timezone": "UTC"}}, bins=3)
+        .size(8, 7),
+        mp.plot(temporal_source)
+        .line("t", "v")
+        .secondary_yaxis("Density")
+        .hist(
+            "t",
+            axis="y2",
+            bins=["2026-01-01", "2026-01-05", "2026-01-12"],
+            stat="density",
+        )
+        .date_axis("x", timezone="UTC")
+        .size(6, 3),
         mp.plot(source).eventplot("x", offset=1, length=0.4).size(4, 3),
         mp.plot(source).broken_barh("x", "w", bottom=1, height=0.5).size(4, 3),
         mp.plot(source).swarmplot("x", "y", semantics={"size": "w"}).size(4, 3),
@@ -90,7 +138,87 @@ def _review_recent_layer_contracts(base: str) -> None:
         .swarmplot("x", "y", semantics={"size": "w"})
         .facet(col="w", col_order=[0, 1, 2], col_wrap=2)
         .size(6, 4),
+        mp.plot(source)
+        .secondary_yaxis("Observations")
+        .rug(
+            "x",
+            orient="h",
+            axis="y2",
+            height=0.2,
+            semantics={"size": "w", "sizes": [0, 4]},
+        )
+        .size(6, 4),
+        mp.plot({"c": ["A"] * 4, "v": [1, 1.01, 2, 2.01], "d": ["a", "b"] * 2})
+        .swarmplot(
+            "c",
+            "v",
+            pack_scope="members",
+            semantics={"style": "d", "markers": ["s", "^"]},
+        )
+        .swarmplot("c", "v", pack_scope="members", marker="D")
+        .size(6, 4),
+        mp.plot({"c": ["A", "B"], "v": [1, 2], "cell": ["left", "right"]})
+        .swarmplot("c", "v", pack_scope="members", marker="s")
+        .facet(col="cell", col_order=["left", "empty", "right"], live=True)
+        .size(9, 4),
+        mp.plot({"c": ["A"] * 6, "v": [1, 2, 3, 4, 5, 30]})
+        .box(
+            "c",
+            "v",
+            median_ci={"level": 90, "n_boot": 31, "seed": 7},
+            cap_fraction=0.8,
+            showmeans=True,
+        )
+        .size(6, 4),
+        mp.plot({"v": [0, 10, 20], "w": [1, 2, 1]})
+        .boxenplot(
+            "v",
+            weights="w",
+            k_depth="full",
+            width_method="area",
+            band_components=[
+                {"rank": 0, "side": "central", "body": {"color": "#aa0000"}}
+            ],
+        )
+        .size(6, 4),
+        mp.plot({"temperature": [0, 50, 100], "length": [1, 2, 3]})
+        .line("temperature", "length")
+        .ticks(
+            "x",
+            {
+                "locator": {"kind": "multiple", "step": 25},
+                "formatter": {"kind": "number", "notation": "fixed", "precision": 0},
+            },
+        )
+        .secondary_xaxis({"kind": "celsius_fahrenheit"})
+        .size(6, 4),
+        mp.plot({"signed": [-10, -1, 0, 1, 10], "value": [1, 2, 3, 2, 1]})
+        .line("signed", "value")
+        .axis_scale("x", "asinh", options={"base": 10, "linear_width": 2})
+        .ticks("x", {"locator": {"kind": "asinh", "count": 9}})
+        .size(6, 4),
     ]
+    for kind in (
+        "spectrogram",
+        "psd",
+        "csd",
+        "coherence",
+        "magnitude",
+        "angle",
+        "phase",
+    ):
+        examples.append(
+            mp.plot({"signal": [0, 1, 0, -1] * 4, "paired": [1, 0, -1, 0] * 4})
+            .spectrum(
+                "signal",
+                "paired" if kind in ("csd", "coherence") else None,
+                fs=4,
+                kind=kind,
+                nfft=None if kind in ("magnitude", "angle", "phase") else 4,
+                window="boxcar",
+            )
+            .size(4, 3)
+        )
     for plot in examples:
         expected = json.loads(plot.to_json())
         html = _submit(base, "/open", {"json": plot.to_json()})
@@ -111,10 +239,487 @@ def _review_recent_layer_contracts(base: str) -> None:
         with _request(f"{base}/redo", b"") as response:
             assert response.status == 200
         assert capture() == after
+    rug = mp.plot(source).size(6, 4).secondary_yaxis("Observations")
+    _submit(base, "/open", {"json": rug.to_json()})
+    before = capture()
+    fields = {
+        "x": "x",
+        "orient": "h",
+        "axis": "y2",
+        "width": 0.2,
+        "semantics": {"size": "w", "sizes": [0, 4]},
+    }
+    _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "rug",
+            "fields": json.dumps(fields),
+            "panel": "0",
+        },
+    )
+    after = capture()
+    rug.rug(
+        "x", orient="h", axis="y2", height=0.2, semantics={"size": "w", "sizes": [0, 4]}
+    )
+    assert after[0] == json.loads(rug.to_json())
+    assert after[0]["data"]["columns"] == source
+    for invalid in ({**fields, "width": 2}, {**fields, "line_width": 1}):
+        html = _submit(
+            base,
+            "/layers",
+            {
+                "layer_type": "rug",
+                "fields": json.dumps(invalid),
+                "panel": "0",
+            },
+        )
+        assert b'class="error"' in html and capture() == after
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    assert capture() == before
+    with _request(f"{base}/redo", b"") as response:
+        assert response.status == 200
+    assert capture() == after
+    _submit(base, "/open", {"json": json.dumps(after[0])})
+    assert capture() == after
+    for extension, prefix in (("png", b"\x89PNG"), ("svg", b"<?xml"), ("pdf", b"%PDF")):
+        with _request(f"{base}/fig.{extension}") as response:
+            assert response.read().startswith(prefix)
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    placed = (
+        mp.plot(source)
+        .line("x", "y")
+        .mosaic([["main", "reserved"]])
+        .nest(1, 2, width_ratios=[3, 1])
+        .inset("main", [0.15, 0.2, 0.3, 0.4], panel_id="zoom")
+        .line("x", "y", panel=2)
+        .size(8, 4)
+    )
+    _submit(base, "/open", {"json": placed.to_json()})
+    layout_before = capture()
+    _submit(
+        base,
+        "/action/raw",
+        {
+            "json": json.dumps(
+                {
+                    "type": "SetPanelPlacement",
+                    "panel_id": "zoom",
+                    "placement": {
+                        "inset": {"parent": "main", "bounds": [0.2, 0.1, 0.35, 0.4]}
+                    },
+                }
+            )
+        },
+    )
+    layout_after = capture()
+    assert layout_after != layout_before
+    reopened = mp.Plot.from_json(json.dumps(layout_after[0]))
+    figure = reopened.render()
+    try:
+        parent = next(
+            a for a in figure.axes if getattr(a, "_mudplot_panel_id", None) == "main"
+        )
+        child = next(
+            a
+            for a in parent.child_axes
+            if getattr(a, "_mudplot_panel_id", None) == "zoom"
+        )
+        assert np.allclose(
+            child.bbox.extents,
+            parent.transAxes.transform([[0.2, 0.1], [0.55, 0.5]]).ravel(),
+        )
+        assert np.array_equal(child.lines[0].get_ydata(), source["y"])
+    finally:
+        plt.close(figure)
+    _submit(base, "/undo", {})
+    assert capture() == layout_before
+    _submit(base, "/redo", {})
+    assert capture() == layout_after
+    with _request(f"{base}/fig.svg") as response:
+        assert b"mudplot-panel-zoom" in response.read()
+    lettered = (
+        mp.plot({"v": [0, 10, 20], "w": [1, 2, 1]})
+        .boxenplot("v", weights="w", k_depth="full", width_method="area")
+        .size(6, 4)
+    )
+    _submit(base, "/open", {"json": lettered.to_json()})
+    letter_before = capture()
+    replacement = lettered.spec.panels[0].layers[0]
+    replacement.k_depth = 1
+    action = mp.actions.ReplaceLayer(0, replacement)
+    _submit(base, "/action/raw", {"json": json.dumps(mp.action_to_dict(action))})
+    letter_after = capture()
+    assert letter_after[1] != letter_before[1]
+    restored = mp.Plot.from_json(json.dumps(letter_after[0]))
+    figure = restored.render()
+    try:
+        assert np.array_equal(figure.axes[0].lines[0].get_ydata(), [10, 10])
+        assert np.array_equal(figure.axes[0].lines[1].get_ydata(), [20])
+    finally:
+        plt.close(figure)
+    invalid = mp.action_to_dict(action)
+    invalid["layer_index"] = True
+    html = _submit(base, "/action/raw", {"json": json.dumps(invalid)})
+    assert b'class="error"' in html and capture() == letter_after
+    _submit(base, "/undo", {})
+    assert capture() == letter_before
+    _submit(base, "/redo", {})
+    assert capture() == letter_after
+    _review_box_contracts(base)
+    _review_violin_contracts(base)
+    _review_statistical_contracts(base)
     _submit(base, "/open", {"json": json.dumps(original[0])})
     assert capture() == original
     print(
-        "Native layer boundary OK: stem/WLS/stairs/event/interval/numeric+class swarm"
+        "Native layer boundary OK: stem/WLS/weighted-count/stairs/event/interval/"
+        "temporal joint/pair/y2/numeric+class swarm/rug form+height+roles+history"
+    )
+
+
+def _review_statistical_contracts(base: str) -> None:
+    import copy
+    from fractions import Fraction
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from matplotlib.collections import LineCollection
+
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            source = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            raster = response.read()
+        return source, raster
+
+    table = {
+        "date": ["2026-01-01"] * 6,
+        "v": [0, 10, 20, 0, 20, 40],
+        "w": [1, 38, 1] * 2,
+        "w_alt": [1, 1, 38] * 2,
+        "h": [True] * 3 + [1] * 3,
+        "size": [1] * 3 + [3] * 3,
+        "method": ["First"] * 3 + ["Second"] * 3,
+        "id": ["a", "b", "c", "d", "e", "f"],
+    }
+    plot = (
+        mp.plot(table)
+        .size(12, 7)
+        .secondary_yaxis("Observed response")
+        .date_axis("x", timezone="UTC")
+        .pointplot(
+            "date",
+            "v",
+            weights="w",
+            estimator="median",
+            errorbar=("pi", 95),
+            axis="y2",
+            semantics={
+                "hue": "h",
+                "hue_order": [True, 1],
+                "size": "size",
+                "size_norm": [1, 3],
+                "sizes": [2, 4],
+                "style": "method",
+                "markers": ["D", "^"],
+            },
+        )
+    )
+    _submit(base, "/open", {"json": plot.to_json()})
+    before = capture()
+
+    def native(raw, expected, *, intervals):
+        figure = mp.Plot.from_json(json.dumps(raw)).render()
+        try:
+            axis = next(
+                ax for ax in figure.axes if ax.get_ylabel() == "Observed response"
+            )
+            marks = [
+                line
+                for line in axis.lines
+                if len(np.asarray(line.get_ydata())) and line.get_marker() in ["D", "^"]
+            ]
+            np.testing.assert_allclose(
+                [np.asarray(line.get_ydata())[0] for line in marks],
+                expected,
+                rtol=2e-15,
+                atol=0,
+            )
+            assert [line.get_markersize() for line in marks] == [2, 4]
+            assert [line.get_marker() for line in marks] == ["D", "^"]
+            actual = [
+                segment[:, 1]
+                for item in axis.collections
+                if isinstance(item, LineCollection)
+                for segment in item.get_segments()
+            ]
+            if intervals is not None:
+                np.testing.assert_array_equal(actual, intervals)
+            assert raw["data"]["columns"] == table
+        finally:
+            plt.close(figure)
+
+    native(before[0], [10, 20], intervals=[[0, 10], [0, 20]])
+    layer = copy.deepcopy(plot.spec.panels[0].layers[0])
+    assert layer.stat is not None
+    layer.stat.weights = "w_alt"
+    layer.stat.estimator = "mean"
+    layer.stat.errorbar = "ci"
+    layer.stat.level = 80
+    layer.stat.n_boot = 31
+    layer.stat.seed = 7
+    action = mp.actions.ReplaceLayer(0, layer)
+    _submit(base, "/action/raw", {"json": json.dumps(mp.action_to_dict(action))})
+    after = capture()
+    expected = [
+        float(
+            sum(
+                Fraction(v) * w
+                for v, w in zip(table["v"][start : start + 3], [1, 1, 38], strict=True)
+            )
+            / 40
+        )
+        for start in (0, 3)
+    ]
+    native(after[0], expected, intervals=None)
+    assert after[1] != before[1]
+    invalid = mp.action_to_dict(action)
+    invalid["layer"]["stat"]["estimator"] = "median"
+    invalid["layer"]["stat"]["errorbar"] = "se"
+    _submit(base, "/action/raw", {"json": json.dumps(invalid)})
+    assert capture() == after
+    _submit(base, "/undo", {})
+    assert capture() == before
+    _submit(base, "/redo", {})
+    assert capture() == after
+    _submit(base, "/open", {"json": json.dumps(after[0])})
+    assert capture() == after
+
+
+def _review_violin_contracts(base: str) -> None:
+    import copy
+
+    import matplotlib.pyplot as plt
+    import numpy as np
+    from matplotlib.collections import PolyCollection
+
+    data = {
+        "date": ["2026-01-01"] * 6,
+        "value": [1, 4, 9] * 2,
+        "hue": [True] * 3 + [1] * 3,
+        "precision": [1] * 3 + [3] * 3,
+        "method": ["A"] * 3 + ["B"] * 3,
+        "weight": [1, 3, 2] * 2,
+        "id": ["a", "b", "c", "d", "e", "f"],
+    }
+    plot = mp.plot(data).secondary_yaxis("Weighted response (mm)").size(9, 5)
+    plot.date_axis("x", timezone="UTC")
+    _submit(base, "/open", {"json": plot.to_json()})
+    fields = {
+        "x": "date",
+        "y": "value",
+        "axis": "y2",
+        "weights": "weight",
+        "inner": "box",
+        "split": True,
+        "violin": {
+            "split_policy": "paired",
+            "hue_components": [
+                {"level": True, "components": {"whisker": {"color": "red"}}},
+                {"level": 1, "components": {"whisker": {"color": "blue"}}},
+            ],
+        },
+        "semantics": {
+            "scale_id": "native-violin",
+            "hue": "hue",
+            "size": "precision",
+            "size_norm": [1, 3],
+            "sizes": [1, 2],
+            "style": "method",
+            "markers": ["D", "^"],
+        },
+        "marker_size": 5,
+    }
+    _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "violin",
+            "fields": json.dumps(fields),
+            "panel": "0",
+        },
+    )
+
+    def capture():
+        with _request(f"{base}/spec.json") as response:
+            state = json.load(response)
+        with _request(f"{base}/fig.png") as response:
+            png = response.read()
+        return state, png
+
+    before = capture()
+    saved = mp.Plot.from_json(json.dumps(before[0]))
+    figure = saved.render()
+    try:
+        target = next(
+            a for a in figure.axes if a.get_ylabel() == "Weighted response (mm)"
+        )
+        native = [a for a in target.collections if isinstance(a, PolyCollection)]
+        assert len(native) == 2
+        np.testing.assert_allclose(
+            [np.asarray(a.get_linewidth())[0] for a in native], [1, 2]
+        )
+        np.testing.assert_array_equal(
+            [np.asarray(a.get_ydata())[0] for a in target.lines], [4, 4]
+        )
+        assert [a.get_marker() for a in target.lines] == ["D", "^"]
+        assert all(a.get_markersize() == 5 for a in target.lines)
+        day = 20454.0
+        np.testing.assert_allclose(
+            [float(np.asarray(a.get_xdata())[0]) for a in target.lines],
+            [day - 0.2, day + 0.2],
+            rtol=0,
+            atol=1e-9,
+        )
+    finally:
+        plt.close(figure)
+    assert saved.spec.data.columns == data
+    changed = copy.deepcopy(fields)
+    changed["marker_size"] = 6
+    _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "violin",
+            "fields": json.dumps(changed),
+            "panel": "0",
+        },
+    )
+    edited = capture()
+    invalid = copy.deepcopy(changed)
+    invalid["components"] = {"body": {"line_width": 3}}
+    _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "violin",
+            "fields": json.dumps(invalid),
+            "panel": "0",
+        },
+    )
+    assert capture() == edited
+    _submit(base, "/undo", {})
+    assert capture() == before
+    _submit(base, "/redo", {})
+    assert capture() == edited
+    _submit(base, "/open", {"json": json.dumps(edited[0])})
+    assert capture() == edited
+    print(
+        "Native violin boundary OK: weighted date/y2 paired profiles, BODY pt, "
+        "real glyphs/median coordinates, source/rejection/history/reopen"
+    )
+
+
+def _review_box_contracts(base: str) -> None:
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    data = {
+        "c": ["2026-01-01", "2026-07-01"],
+        "med": [2, 4],
+        "q1": [1, 3],
+        "q3": [3, 5],
+        "lo": [0.5, 2],
+        "hi": [4, 6],
+        "out": [[5], [7]],
+        "h": [True, 1],
+        "id": ["source-b", "source-a"],
+    }
+    plot = mp.plot(data).secondary_yaxis("Response (mm)").size(8, 5)
+    plot.date_axis("x", timezone="UTC")
+    _submit(base, "/open", {"json": plot.to_json()})
+    fields = {
+        "x": "c",
+        "y": "med",
+        "axis": "y2",
+        "group": "h",
+        "box": {
+            "summary": {
+                "q1": "q1",
+                "q3": "q3",
+                "whislo": "lo",
+                "whishi": "hi",
+                "fliers": "out",
+            },
+            "cap_fraction": 0.3,
+            "hue_components": [
+                {"level": True, "components": {"cap": {"color": "red"}}},
+                {"level": 1, "components": {"cap": {"color": "blue"}}},
+            ],
+        },
+    }
+    html = _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "box",
+            "fields": json.dumps(fields),
+            "panel": "0",
+        },
+    )
+    assert b'class="error"' not in html
+    with _request(f"{base}/spec.json") as response:
+        accepted = json.load(response)
+    with _request(f"{base}/fig.png") as response:
+        png = response.read()
+    restored = mp.Plot.from_json(json.dumps(accepted))
+    figure = restored.render()
+    try:
+        axes = next(a for a in figure.axes if a.get_ylabel() == "Response (mm)")
+        real = [p for p in axes.patches if np.asarray(p.get_path().vertices).size]
+        assert len(real) == 2
+        np.testing.assert_allclose(
+            np.ptp(np.asarray(axes.lines[2].get_xdata())), 181 * 0.8 / 2 * 0.3
+        )
+        assert axes.lines[2].get_color() == "red"
+        assert axes.lines[8].get_color() == "blue"
+        assert np.asarray(axes.lines[5].get_ydata()).tolist() == [5]
+        assert np.asarray(axes.lines[11].get_ydata()).tolist() == [7]
+        assert restored.spec.data.columns == data
+    finally:
+        plt.close(figure)
+    invalid = json.loads(json.dumps(fields))
+    invalid["box"]["summary"]["q1"] = "hi"
+    html = _submit(
+        base,
+        "/layers",
+        {
+            "layer_type": "box",
+            "fields": json.dumps(invalid),
+            "panel": "0",
+        },
+    )
+    assert b'class="error"' in html
+    with _request(f"{base}/spec.json") as response:
+        assert json.load(response) == accepted
+    with _request(f"{base}/fig.png") as response:
+        assert response.read() == png
+    with _request(f"{base}/undo", b"") as response:
+        assert response.status == 200
+    with _request(f"{base}/spec.json") as response:
+        assert json.load(response) == json.loads(plot.to_json())
+    with _request(f"{base}/redo", b"") as response:
+        assert response.status == 200
+    with _request(f"{base}/spec.json") as response:
+        assert json.load(response) == accepted
+    with _request(f"{base}/fig.png") as response:
+        assert response.read() == png
+    print(
+        "Native box boundary OK: supplied columns/date-y2/cap geometry/typed "
+        "per-hue/source/invalid-state+PNG/history"
     )
 
 
@@ -553,17 +1158,21 @@ def _submit(base: str, path: str, fields: dict[str, str]) -> bytes:
         return response.read()
 
 
-def _browser_check(base: str) -> None:
+def _browser_check(base: str, executable: Path | None = None) -> None:
     try:
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import expect, sync_playwright
     except ImportError as error:
         raise RuntimeError("--browser requires the browser extra") from error
 
     with sync_playwright() as playwright:
-        try:
-            browser = playwright.chromium.launch()
-        except Exception:
-            browser = playwright.chromium.launch(channel="chrome")
+        if executable is not None:
+            browser = playwright.chromium.launch(executable_path=executable)
+            print(f"Rust editor browser: {executable} ({browser.version})")
+        else:
+            try:
+                browser = playwright.chromium.launch()
+            except Exception:
+                browser = playwright.chromium.launch(channel="chrome")
         page = browser.new_page()
         errors: list[str] = []
 
@@ -577,24 +1186,35 @@ def _browser_check(base: str) -> None:
         assert page.evaluate("typeof window.htmx") == "object"
         assert page.locator(".canvas img").evaluate("image => image.naturalWidth") > 0
 
+        def submit_post(path: str, selector: str) -> None:
+            with page.expect_response(
+                lambda response: (
+                    response.url == f"{base}{path}"
+                    and response.request.method == "POST"
+                )
+            ) as pending:
+                page.locator(selector).click()
+            response = pending.value
+            assert response.status == 200, (path, response.status)
+            response.body()
+
         title = page.locator('form[hx-post="/control/title"] input[name="text"]')
         title.fill("Browser verified")
-        page.locator('form[hx-post="/control/title"] button').click()
-        page.wait_for_function(
-            "document.querySelector('input[name=text]').value === 'Browser verified'"
-        )
+        submit_post("/control/title", 'form[hx-post="/control/title"] button')
+        expect(title).to_have_value("Browser verified")
+        with _request(f"{base}/spec.json") as response:
+            assert json.load(response)["panels"][0]["title"] == "Browser verified"
         assert page.url.rstrip("/") == base
         assert page.locator("header").is_visible()
 
         theme = page.locator('form[hx-post="/control/theme"] select')
         theme.select_option("paper")
-        page.locator('form[hx-post="/control/theme"] button').click()
-        page.wait_for_function(
-            "document.querySelector('select[name=name]').value === 'paper'"
-        )
-        page.wait_for_load_state("networkidle")
+        submit_post("/control/theme", 'form[hx-post="/control/theme"] button')
+        expect(theme).to_have_value("paper")
         with _request(f"{base}/spec.json") as response:
             edited = mp.FigureSpec.from_dict(json.load(response))
+        assert edited.panels[0].title == "Browser verified"
+        assert edited.theme.name == "paper"
         default = mp.Plot.from_json(
             (REPO_ROOT / "mudplot-editor/default_spec.json").read_text(encoding="utf-8")
         ).spec
@@ -603,15 +1223,14 @@ def _browser_check(base: str) -> None:
             ("undo", edited),
             ("redo", default),
         ):
-            page.locator(f'button[hx-post="/{operation}"]').click()
-            page.wait_for_load_state("networkidle")
+            submit_post(f"/{operation}", f'button[hx-post="/{operation}"]')
             with _request(f"{base}/spec.json") as response:
                 assert mp.FigureSpec.from_dict(json.load(response)) == expected
         assert not errors, errors
         browser.close()
 
 
-def main(*, browser: bool = False) -> int:
+def main(*, browser: bool = False, browser_executable: Path | None = None) -> int:
     with socket.socket() as sock:
         sock.bind(("127.0.0.1", 0))
         port = sock.getsockname()[1]
@@ -974,11 +1593,19 @@ def main(*, browser: bool = False) -> int:
             and mapped_line["semantics"]["scale_id"] == "study"
         )
 
-        for element, multiple in (
-            ("bars", "stack"),
-            ("bars", "dodge"),
-            ("step", "layer"),
-            ("step", "stack"),
+        for element, multiple, fill in (
+            ("bars", "stack", None),
+            ("bars", "dodge", None),
+            ("step", "layer", None),
+            ("step", "stack", None),
+            ("step", "dodge", None),
+            ("step", "stack", True),
+            ("step", "dodge", True),
+            ("bars", "dodge", False),
+            ("bars", "fill", True),
+            ("step", "fill", False),
+            ("poly", "layer", None),
+            ("poly", "fill", True),
         ):
             _submit(
                 base,
@@ -997,6 +1624,7 @@ def main(*, browser: bool = False) -> int:
                                 "weights": "sample_weight",
                                 "multiple": multiple,
                                 "element": element,
+                                "fill": fill,
                             },
                         }
                     ),
@@ -1007,6 +1635,7 @@ def main(*, browser: bool = False) -> int:
             assert histogram["type"] == "hist"
             assert histogram["histogram"]["multiple"] == multiple
             assert histogram["histogram"]["element"] == element
+            assert histogram["histogram"].get("fill") is fill
             with _request(f"{base}/fig.png") as response:
                 assert response.read(8) == b"\x89PNG\r\n\x1a\n"
             with _request(f"{base}/undo", b"") as response:
@@ -1236,7 +1865,7 @@ def main(*, browser: bool = False) -> int:
         _review_http_boundaries(base)
         _review_json_boundaries(base)
         if browser:
-            _browser_check(base)
+            _browser_check(base, browser_executable)
     finally:
         if os.name == "nt" and process.poll() is None:
             # Terminate this owned cargo/server tree, not just its cargo parent.
@@ -1260,4 +1889,20 @@ def main(*, browser: bool = False) -> int:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--browser", action="store_true")
-    raise SystemExit(main(browser=parser.parse_args().browser))
+    parser.add_argument(
+        "--browser-executable",
+        type=Path,
+        help="explicit local Chromium executable (requires --browser)",
+    )
+    args = parser.parse_args()
+    if args.browser_executable is not None:
+        if not args.browser:
+            parser.error("--browser-executable requires --browser")
+        args.browser_executable = args.browser_executable.resolve()
+        if not args.browser_executable.is_file() or not os.access(
+            args.browser_executable, os.X_OK
+        ):
+            parser.error("--browser-executable must name an executable file")
+    raise SystemExit(
+        main(browser=args.browser, browser_executable=args.browser_executable)
+    )

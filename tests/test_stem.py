@@ -131,9 +131,9 @@ def test_invalid_baseline_fails_without_overwriting_output(tmp_path, baseline):
 @pytest.mark.parametrize(
     "style",
     [
-        {"group": "x"},
-        {"orient": "h"},
-        {"semantics": {"hue": "x"}},
+        {"group": "missing"},
+        {"orient": "diagonal"},
+        {"semantics": {"hue": "missing"}},
         {"weights": "x"},
         {"density": True},
         {"colorbar": True},
@@ -147,7 +147,7 @@ def test_invalid_baseline_fails_without_overwriting_output(tmp_path, baseline):
         {"line_width": 1001},
     ],
 )
-def test_unsupported_mappings_and_horizontal_geometry_are_not_ignored(style):
+def test_invalid_or_unsupported_stem_options_are_not_ignored(style):
     p = mp.plot(data()).stem("x", "y", **style)
     with pytest.raises(ValueError):
         p.render()
@@ -207,15 +207,15 @@ def test_log_axis_does_not_clip_nonpositive_observations(axis, source):
         p.render()
 
 
-def test_stem_does_not_enable_unsupported_facet_or_dropna_selection():
+def test_stem_facet_rejects_invalid_selector_and_admits_explicit_dropna():
     p = mp.plot({"x": [1, 2], "y": [2, 3], "g": ["A", "B"]}).stem("x", "y")
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history
     spec = p.spec
     spec.panels[0].dropna = ["x"]
-    assert any("does not support panel filters" in issue for issue in mp.validate(spec))
+    assert not mp.validate(spec)
 
 
 def test_stem_row_budget_and_capability_are_explicit():

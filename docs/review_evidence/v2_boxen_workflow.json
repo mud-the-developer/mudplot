@@ -1,0 +1,78 @@
+{
+  "status": "WHOLE MAIN C05 PARENT FINAL FUNCTIONAL ACCEPTANCE CLOSED; isolated R4 full evidence and distinct new combined de3/aa624 public/native/CLI/core proof accepted",
+  "parent_acceptance": {
+    "decision": "Parent reviewed the complete isolated R4 named ledger and both new combined installed native/API/CLI/Python-S profiles, full source/ID/geometry/history/output lineage; every specified local C05 acceptance gate is satisfied.",
+    "source_and_raster_proof": "Actual typed20-ID LEFT bands/tails, .5/2pt BODY/P-X glyphs, date-y2-log left/empty/right fixed views, local/whole-template undo/reopen/replay and exact CLI4500x2400 output/atomic rejection accepted.",
+    "preserved": "R1/R2/R3/R4 source/wheels/failures and frozen C07 design snapshot remain immutable. No old failed cohort or isolated pass relabelling; no count summing.",
+    "not_closed": "C07 or broader F01/F02/G01/E01/Q01/DOC01/REL01/v2"
+  },
+  "isolated_accepted": {
+    "parent_decision": "whole isolated correctedR4 accepted; not silently relabelled as Main combined proof",
+    "original_binding": "$LOCAL_EVIDENCE/location-21/FINAL_BINDING.json",
+    "binding_sha256": "389a22c3118382f5106fdf9b5adf263a2052da5dd71da7f065914a4831e3b62f",
+    "receipt_sha256": "bb5bc066881d16a57b4fdc4ece0beffb3877231f8b5d1df6a563b7f95fafa3ae",
+    "stable_evidence_copy": "$LOCAL_EVIDENCE/location-22",
+    "original_wheel_sha256": "6c9c0ba1a5d372d306b719479457358ae8eb37d8f4b427f923c7828ad9cca706",
+    "original_runtime_sha256": "68947c0e2c74de10bb1fe8b3f4b0f4a110737f630fe9879f874faeb59454a31d",
+    "all_old_failed_R1_R2_R3_immutable": true
+  },
+  "combined_new_artifact": {
+    "wheel": "$LOCAL_EVIDENCE/location-23/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "de3fe109473895d770f2254794765ab4f7d3f54ca1739b64143c8e1e70b6bfb4",
+    "runtime_sha256": "aa6243b8fceafc2e064dcfea8ef638cdbc422fed4e9300bc2d168a1f22798ff6",
+    "engine_files": 71,
+    "source_root": "$LOCAL_EVIDENCE/location-24",
+    "final_binding": "$LOCAL_EVIDENCE/location-25/BINDING.json",
+    "final_binding_sha256": "3231271c9bc0b6905da86012c5a1caa761430a8e945aec1de760c487083ba8d1",
+    "not_identical_to_isolated_R4": "C07 clean canonical boundary extraction and actual source/common adapter changes are new; no R4 pass reuse"
+  },
+  "actual_main_combined": {
+    "profiles": {
+      "current": {
+        "native_receipt": "$LOCAL_EVIDENCE/location-26/receipt.json",
+        "native_receipt_sha256": "55de98256f978906b6dad1ba3ec921bcb503f6a7e8624a7626fb7a0c716bfc88",
+        "core_S_receipt": "$LOCAL_EVIDENCE/location-26/pure-active-denial.json",
+        "core_S_receipt_sha256": "10c0631b81c58b31f6d168ed60bb1a3317110ea8ae6e73e9e1b9689b72610a87",
+        "driver_bridge_python": "$LOCAL_EVIDENCE/location-27/python",
+        "actual_engine_origin": "$LOCAL_EVIDENCE/location-28",
+        "base_versions": {
+          "numpy": "2.5.2",
+          "matplotlib": "3.11.1",
+          "Pillow": "13.0.0",
+          "pytest": "9.1.1"
+        },
+        "source_profile_unset": true,
+        "full71_verified_binding": "$LOCAL_EVIDENCE/location-26/binding.json",
+        "provenance": "$LOCAL_EVIDENCE/location-26/provenance.json"
+      },
+      "minimum": {
+        "native_receipt": "$LOCAL_EVIDENCE/location-29/receipt.json",
+        "native_receipt_sha256": "38109fd6be2c1c245a6db4dd2fa7783773041d3049b0b61aa5cf25379f87196a",
+        "core_S_receipt": "$LOCAL_EVIDENCE/location-29/pure-active-denial.json",
+        "core_S_receipt_sha256": "692d9f07178f72aa1ace782260929513a557cea1b32eb41b6138e9c6b297ca2e",
+        "driver_bridge_python": "$LOCAL_EVIDENCE/location-30/python",
+        "actual_engine_origin": "$LOCAL_EVIDENCE/location-31",
+        "base_versions": {
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "Pillow": "13.0.0",
+          "pytest": "9.0.3"
+        },
+        "source_profile_unset": true,
+        "full71_verified_binding": "$LOCAL_EVIDENCE/location-29/binding.json",
+        "provenance": "$LOCAL_EVIDENCE/location-29/provenance.json"
+      }
+    },
+    "API_native": "20 retained source rows/typed bool True versus numeric1/LEFT quantiles at1/8,1/4,3/4,7/8 and1/2 from independent Fraction-weighted empirical CDF; actual12 native band polygons across selected cells, real observed P/X fliers and .5/2pt BODY strokes",
+    "formerly_rejected_boundary": "Actual declared y2 log-base2/date category clocks with fixed left/empty/right selector cells and partial wrapped2x2 grid; empty native target has no data artists. Source IDs/order and stable panel IDs retained.",
+    "lifecycle": "Real ReplaceLayer local weights alters native lower/upper tails in left only; undo/redo, JSON reopen, explicit whole-template supersedes local override and native bounds restore; pure action replay equals saved graph.",
+    "installed_CLI": "Actual wheel-installed bin/mudplot exports full4500x2400 PNG plus SVG/PDF; invalid mapped-BODY scalar override returns error and complete priorPNG remains byte-identical.",
+    "pure_core": "Actual Python-S, numpy/matplotlib/scipy actively denied, shipped public C05 weighted/typed/secondary/live/ReplaceLayer/action/JSON scenario executes without render."
+  },
+  "commands": {
+    "native_API_CLI": "artifacts/v2_c07/combined_c05_commands.json",
+    "active_denial": "artifacts/v2_c07/pure_active_denial_commands.json"
+  },
+  "cohort_integrity": "No old R4 gate reruns or borrowing; old changed_native_commands251/1/16 and owned248/2 are failed original cohorts, separate corrections are not summed into them.",
+  "limits": "No source/default/dependency/schema/version/resource cap changes for this subgate. C07 whole qualification remains active; no broader F01/F02/G01/E01/Q01/DOC01/REL01/v2 claim."
+}

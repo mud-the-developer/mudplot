@@ -94,19 +94,8 @@ needing a separate `dashboard build` process.
   screen-preview PNG, or exact-size PDF/SVG. Preview rendering retains the
   configured DPI until either axis would exceed 2000 pixels; the spec and
   final exports remain unchanged.
-- **Drag directly on the preview**: the Position panel's "Enable" buttons
-  add a coloured handle over the figure for the **legend** (blue ✥) and
-  **panel title** (purple T); any `text`/`annotate` layer gets a handle
-  (green •) automatically. Drag with the mouse, or click a handle and use
-  the arrow keys (Shift for a bigger step). These dispatch
-  `SetLegend(bbox_to_anchor=...)`, `SetTitlePosition(...)`, and
-  `SetLayerAt(...)` respectively — the same actions
-  `.legend(bbox_to_anchor=...)`/`.title_position(...)`/`.set_layer_at(...)`
-  use from the fluent API. "Reset" restores the named `location`/default.
-  Legend anchors are figure fractions and manual titles are axes fractions;
-  text/annotation anchors remain data values on their selected primary/y2 axis,
-  including its actual log/inverted limits. Size/DPI changes do not change those
-  meanings. This does not add unsupported non-Cartesian annotation modes.
+- **Drag directly on the preview**: enable title/legend positioning in the Position panel; text/annotation layers receive handles automatically. Use the pointer or arrow keys, with Shift for a larger step. Titles use Cartesian/polar axes fractions; legends use figure fractions. Text/annotation anchors use their selected Cartesian primary/y2 data coordinates, including inverted, logarithmic, and temporal axes. Unsupported polar data-anchor and 3-D title/data paths remain unavailable.
+- Both editors share external interaction JavaScript and installed native preview metadata. One saved figure provides PNG pixels and measured artist anchors. Frames use actual raster dimensions, including fractional size × DPI truncation, rather than guessed panel rectangles or browser DPR. Axis property edits retain declared temporal clocks, units, origins, and sharing. The [CND01 receipt](../docs/review_evidence/v2_rust_specialized_controls.json) records the concrete comparison and local Rust lifecycle proof; it is not full-v2 qualification.
 - **Keep newer fragments visible**: committed HTMX replies carry an internal
   view generation, so a delayed older reply cannot replace a newer displayed
   inspector. This is UI response ordering, not spec revision/authentication or

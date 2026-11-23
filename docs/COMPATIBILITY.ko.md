@@ -2,6 +2,16 @@
 
 *[English docs: COMPATIBILITY.md](COMPATIBILITY.md)*
 
+## v1.1 보안 지원 예외 (Unreleased)
+
+보안 수정된 Pillow 13.0.0이 Python 3.11을 요구하므로 사용자가 최소 실행 환경을
+**Python >=3.11**로 올리는 예외를 승인했습니다. 렌더는 Pillow >=13.0.0,
+색상·렌더는 NumPy >=1.23.5를 요구합니다. Python 3.10 지원은 종료하지만,
+Python API·FigureSpec/JSON·원본 측정값·Matplotlib 기본 동작은 유지합니다.
+아래 보안 수정 예외에 해당하는 명시적 변경이며 3.10 호환을 몰래 약속하지 않습니다.
+새 `lint` 명령·과학 그림 품질 옵션은 추가 기능입니다. 과거 1.0·최소 환경 검증은
+이력으로 보존하고 새 lock 통과 기록으로 취급하지 않습니다.
+
 ## 안정된 공개 표면
 
 1.x 호환성 보장은 다음의 유효한 사용에 적용됩니다.
@@ -234,6 +244,14 @@ Figure는panel전체합계1024layers까지지원하며panel당1024라는뜻은�
 Reduce는 없는 column/matrix 참조를 일시적으로 만들 수 있지만 부수효과 없이 유지하며
 명시 validation·render validation이 그리기 전에 거부합니다.
 
+N13 명시 배치는 schema0.1의 opt-in입니다. 뒤에 추가한 panel_id/placement/
+panel_layout은 None이면 생략하므로 regular-grid RGBA·기존 파일 load를 유지합니다.
+Grid node256·전체 cell1024·깊이16은 별도 한도이며 실제 panel/layer/render pixel
+상한은 그대로입니다. 명시 모드의 범위 밖 index 확장은 거부합니다. 완전한
+SetPanelLayout은 기존 최종 ID 전부를 유지하고 명시적 새 빈 패널을 ID 사전식
+순서로 추가하며 모든 incoming 참조는 최종 ID입니다. SetLayout은 명시적으로
+regular geometry로 복귀합니다. [배치 업그레이드/공유 규칙](PANEL_LAYOUTS.ko.md) 참고.
+
 각action은전체spec을복사하고undo/redo는보존한history를replay합니다. Defaultpure reducer만
 이전64-action경계의내부state한개를보관해near-tail재생을줄이고이전cursor는initial로fallback합니다.
 새branch가cacheprefix아래면폐기하며customreducer는기존fullreplay/호출의미를유지합니다.
@@ -263,6 +281,45 @@ Legacy raw group mask는 NumPy 문자열 dtype 추론 없이 원래 Python 값�
 Raw line은 행 순서/중복 x를 유지하고 lineplot은 x별 집계와 명시 sort 정책을 적용합니다.
 빈 raw line/scatter는 유효할 수 있으나 통계 layer는 usable 관측 부재를 거부하고 singleton의
 정의되지 않는 interval은 만들지 않습니다.
+
+## C05 가중치/rank 구성 요소와 기존 layer 편집
+
+버전1.1.0/schema0.1·의존성 최소 버전은 그대로입니다. 뒤에 추가한
+LayerSpec.boxen과 strict BoxenSpec/BoxenBandComponentsSpec/
+BoxenHueComponentsSpec 필드는 None이면 생략합니다. 기존 positional 생성자와
+일반 components는 유지하며 새 layer당 양수 선택행10000/cell256 한도로
+기존 no-C05 admission을 바꾸지 않습니다. BoxenSpec/weights/semantics/y2 또는
+이전 미지원 glyph의 명시 요청이 opt-in입니다. 비가중 보간은 특정 입력 예외
+없이 한 번만 올바르게 반올림하도록 고치며 subnormal 중앙값 같은 수학적
+교정의 이전 픽셀까지 같다고 주장하지 않습니다.
+Canonical 정수/binary-float endpoint를 미리 반올림하지 않습니다. 비가중 꼬리는
+최종 numeric 경계, 가중 LEFT는 정확한 관측 canonical 경계를 사용합니다.
+정확한 span 정보는 native 정밀도 검사이며 새 꼬리/area 추정기가 아닙니다.
+요청 순서가 변환에서 사라지면 거부하지만 숨긴 꼬리로 비상수성을 만들지 않고
+표현 가능한 큰 정수와 진짜 원자 band도 지원합니다.
+공유 RAW 정규화는 기존 C04 mixed-mark 규칙을 유지하며 Boxen-only 금지를
+추가하지 않습니다. BODY 윤곽/점 지름/곡선 stroke guide는 계열별로 유지합니다.
+Scalar/component flier의 기존+/x/. 및 추가 등록 glyph는 같은 계약을 사용하고
+filled semantic cycle은 별도로 유지합니다.
+
+
+
+상대 가중치는 LEFT 역 ECDF이며 type7/행 복제/경계 중간값이 아닙니다.
+이름 깊이는 물리 행 Kish를 비-CI heuristic으로 사용하고 가중 경험
+half-open/마지막 closed 띠 질량+엄격한 꼬리는 정확히1입니다. 깊이32·원본
+ID/순서/명시 clock은 유지합니다. Figure EFFECT 상한은 실제 띠32768/요청
+flier1000000이며 반복 사용을 세고 native 생성 전에 검사합니다. 순수 source
+검증은 전체 summary를 fit하지 않으므로 유효 파일도 effect 예산을 넘을 수
+있습니다. 투명/none 스타일로 작업을 할인하지 않고 미요청 hidden flier
+artist만 생략할 수 있습니다. 표본 추출/총 source행 한도/SLA/RAM 약속은 없습니다.
+
+추가 ReplaceLayer는 기존 nonbool 정수 panel/layer 인덱스의 전체 typed
+LayerSpec 교체입니다. 생성/수/순서/data/recipe detach를 암시하지 않습니다.
+기존 reducer 입력 격리와 editor apply→validate/preview→commit/history를 따르고
+양쪽 inspector가 접힌 전체 actionJSON을 채웁니다. 실패한 preview는 이전
+source/PNG/history를 유지하며 명시 전체 live-template 교체가 local 편집을
+덮어씁니다. 기존 AddLayer/RemoveLayer도 유지합니다.
+[전체 source/effect/색 소유권](REFERENCE.md#letter-value-distributions)을 참고하세요.
 
 ## 선택적출력provenance
 

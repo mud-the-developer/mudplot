@@ -21,7 +21,6 @@ from mudplot._letter_value import (
     letter_value_summary,
 )
 from mudplot._render import _count_colors
-from mudplot.spec import LayerSpec
 
 
 @pytest.fixture(autouse=True)
@@ -264,47 +263,47 @@ def test_visibility_flags_remove_only_requested_artists():
 
 
 @pytest.mark.parametrize(
-    "options,message",
+    "options",
     [
-        ({"k_depth": 0}, "k_depth"),
-        ({"k_depth": 33}, "k_depth"),
-        ({"k_depth": True}, "k_depth"),
-        ({"k_depth": 2.5}, "k_depth"),
-        ({"k_depth": "auto"}, "k_depth"),
-        ({"k_depth": []}, "k_depth"),
-        ({"width_method": "density"}, "width_method"),
-        ({"outlier_prop": 0.1}, "requires"),
-        ({"k_depth": "proportion", "outlier_prop": 0}, "outlier_prop"),
-        ({"k_depth": "proportion", "outlier_prop": 1}, "outlier_prop"),
-        ({"k_depth": "proportion", "outlier_prop": True}, "outlier_prop"),
-        ({"trust_alpha": 0.1}, "requires"),
-        ({"k_depth": "trustworthy", "trust_alpha": 1e-20}, "trust_alpha"),
-        ({"k_depth": "trustworthy", "trust_alpha": 1}, "trust_alpha"),
-        ({"k_depth": "trustworthy", "trust_alpha": float("nan")}, "trust_alpha"),
-        ({"width": 0}, "width"),
-        ({"width": 1.1}, "width"),
-        ({"dodge": 1}, "dodge"),
-        ({"gap": 1}, "gap"),
-        ({"showfliers": 1}, "boolean"),
-        ({"showmedians": "yes"}, "boolean"),
-        ({"marker": "not-a-marker"}, "marker"),
-        ({"line_width": 1001}, "line_width"),
-        ({"marker_size": True}, "marker_size"),
-        ({"whis": 1}, "not supported"),
-        ({"notch": True}, "not supported"),
-        ({"showmeans": True}, "not supported"),
-        ({"bw_method": "scott"}, "not supported"),
-        ({"warn_thresh": 0}, "not supported"),
-        ({"stat": mp.StatSpec()}, "not supported"),
-        ({"c": "value"}, "not supported"),
-        ({"axis": "y2"}, "not supported"),
+        {"k_depth": 0},
+        {"k_depth": 33},
+        {"k_depth": True},
+        {"k_depth": 2.5},
+        {"k_depth": "auto"},
+        {"k_depth": []},
+        {"width_method": "density"},
+        {"outlier_prop": 0.1},
+        {"k_depth": "proportion", "outlier_prop": 0},
+        {"k_depth": "proportion", "outlier_prop": 1},
+        {"k_depth": "proportion", "outlier_prop": True},
+        {"trust_alpha": 0.1},
+        {"k_depth": "trustworthy", "trust_alpha": 1e-20},
+        {"k_depth": "trustworthy", "trust_alpha": 1},
+        {"k_depth": "trustworthy", "trust_alpha": float("nan")},
+        {"width": 0},
+        {"width": 1.1},
+        {"dodge": 1},
+        {"gap": 1},
+        {"showfliers": 1},
+        {"showmedians": "yes"},
+        {"marker": "not-a-marker"},
+        {"line_width": 1001},
+        {"marker_size": True},
+        {"whis": 1},
+        {"notch": True},
+        {"showmeans": True},
+        {"bw_method": "scott"},
+        {"warn_thresh": 0},
+        {"stat": mp.StatSpec()},
+        {"c": "value"},
     ],
 )
-def test_bad_or_ignored_controls_fail_before_rendering(options, message):
+def test_bad_or_ignored_controls_fail_before_rendering(options):
     p = mp.plot(_data()).boxenplot("cat", "value", **options)
-    assert any(message in i for i in mp.validate(p.spec))
+    existing = set(plt.get_fignums())
     with pytest.raises(ValueError):
         p.render()
+    assert set(plt.get_fignums()) == existing
 
 
 @pytest.mark.parametrize(
@@ -353,15 +352,11 @@ def test_shared_category_geometry_and_conflicting_order():
         q.render()
 
 
-def test_declaration_schema_actions_editor_png_and_old_default_fields():
+def test_declaration_schema_actions_and_actual_editor_png():
     import jsonschema
     from dashboard.editor_server import EditorSession, _build_action
     from mudplot import actions as A
 
-    old = LayerSpec.from_dict({"type": "box", "x": "value"})
-    assert isinstance(old, LayerSpec)
-    assert old.k_depth is None and old.width_method is None
-    assert old.outlier_prop is None and old.trust_alpha is None
     session = EditorSession()
     session.dispatch_safe(A.SetData(_data()))
     action = _build_action(

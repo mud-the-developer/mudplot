@@ -369,8 +369,6 @@ def test_bad_named_options_have_specific_diagnostics_without_validation_crashes(
     [
         {"bins": 8},
         {"density": True},
-        {"marker": "o"},
-        {"marker_size": 3},
         {"stat_scale": "axis"},
         {"native_scale": True},
         {"order": [1, 2]},
@@ -392,13 +390,11 @@ def test_ecdf_rejects_ignored_layer_fields_instead_of_changing_its_meaning(style
 
 
 @pytest.mark.parametrize("projection", ["polar", "3d"])
-def test_ecdf_rejects_projection_and_y2_routing(projection):
+def test_ecdf_rejects_non_cartesian_projection(projection):
     p = mp.plot({"v": [1, 2]}).ecdf("v")
     spec = p.spec
     spec.panels[0].projection = projection
     assert any(projection in issue for issue in mp.validate(spec))
-    q = mp.plot({"v": [1, 2]}).ecdf("v", axis="y2").secondary_yaxis(label="second")
-    assert any("axis='y2' is not supported" in issue for issue in mp.validate(q.spec))
 
 
 def test_typed_defaults_json_actions_schema_legacy_specs_and_strict_nested_config():
@@ -532,10 +528,25 @@ def test_repeated_json_exports_are_byte_identical_without_global_rng_changes(
     np.testing.assert_array_equal(before[1], after[1])
 
 
-def test_capabilities_reference_and_schema_describe_ecdf_without_fake_stat_inference():
-    caps = mp.capabilities()
-    assert "ecdf" in caps["layers"] and "ecdf" in caps["layers"]["ecdf"]["optional"]
-    assert caps["ecdf"]["statistics"] == ["proportion", "percent", "count"]
-    assert caps["ecdf"]["defaults"] == ECDFSpec().to_dict()
-    assert "axis" not in caps["layers"]["ecdf"]["optional"]
-    assert "strict X>t" in mp.reference_markdown()
+@pytest.mark.parametrize("orient", ["v", "h"])
+@pytest.mark.parametrize("complementary", [False, True])
+def test_percent_retains_representable_subnormal_jump_and_strict_tail(
+    orient, complementary
+):
+    tiny = math.ulp(0.0)
+    weights = [100, tiny] if complementary else [tiny, 100]
+    source = {"v": [0, 1], "w": weights, "id": ["first", "last"]}
+    plot = mp.plot(source).ecdf(
+        "v",
+        weights="w",
+        stat="percent",
+        complementary=complementary,
+        orient=orient,
+    )
+    line = plot.render().axes[0].lines[0]
+    mass = line.get_ydata() if orient == "v" else line.get_xdata()
+    # 100*tiny/(100+tiny) correctly rounds to tiny. Rounding the
+    # proportion before the percent conversion would silently erase it.
+    assert float(mass[1]).hex() == tiny.hex()
+    assert [mass[0], mass[-1]] == ([100, 0] if complementary else [0, 100])
+    assert plot.spec.data.columns == source

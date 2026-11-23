@@ -65,6 +65,32 @@ impl PythonBridge {
         self.render_format(spec, "png")
     }
 
+    /// Render the preview and native handle metadata from the same figure draw.
+    pub fn preview(&self, spec: &FigureSpec) -> Result<(Vec<u8>, serde_json::Value), BridgeError> {
+        let dir = tempfile::tempdir().map_err(error("create temporary directory"))?;
+        let spec_path = dir.path().join("spec.json");
+        let output_path = dir.path().join("figure.png");
+        let metadata_path = dir.path().join("layout.json");
+        write_json(&spec_path, spec)?;
+        self.run([
+            "-m",
+            "mudplot",
+            "render",
+            path(&spec_path)?,
+            path(&output_path)?,
+            "--preview",
+            "--editor-metadata",
+            path(&metadata_path)?,
+        ])?;
+        let png = fs::read(output_path).map_err(error("read rendered preview"))?;
+        if png.is_empty() {
+            return Err(BridgeError("empty rendered preview".into()));
+        }
+        let metadata = fs::read(metadata_path).map_err(error("read preview metadata"))?;
+        let layouts = serde_json::from_slice(&metadata)
+            .map_err(|e| BridgeError(format!("decode preview metadata: {e}")))?;
+        Ok((png, layouts))
+    }
     pub fn render_format(&self, spec: &FigureSpec, format: &str) -> Result<Vec<u8>, BridgeError> {
         if !matches!(format, "png" | "pdf" | "svg") {
             return Err(BridgeError(format!("unsupported render format {format:?}")));

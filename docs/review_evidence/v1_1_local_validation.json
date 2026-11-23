@@ -1,0 +1,351 @@
+{
+  "observed_at_utc": "2026-10-29T07:05:16.224989+00:00",
+  "status": "local_validation_recorded_not_release_approval",
+  "workflow": {
+    "mode": "local_only_by_latest_user_instruction",
+    "branch": "main",
+    "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+    "uncommitted_changes_preserved": true,
+    "commit_push_pr_remote_ci_merge_tag_publication_performed": false,
+    "version_metadata_held": "1.0.0",
+    "spec_version_unchanged": "0.1"
+  },
+  "support": {
+    "python": ">=3.11",
+    "colour_render_numpy": ">=1.23.5",
+    "render_matplotlib": ">=3.8",
+    "render_pillow": ">=13.0.0",
+    "owner_approved_python_310_security_exception": true
+  },
+  "full_runs_before_last_fixes": [
+    {
+      "report": "full-locked-py311.xml",
+      "tests": 4454,
+      "passed": 4408,
+      "failed": 1,
+      "skipped": 45,
+      "failures": [
+        {
+          "module": "tests.test_required_test_paths",
+          "name": "test_workflow_result_gates_are_wired_to_distinct_reports"
+        }
+      ],
+      "overall_required_path_gate_ok": false,
+      "required_components_all_passed": true,
+      "required_component_outcomes": [
+        {
+          "module": "test_editor_browser",
+          "name": "test_dragging_the_legend_moves_it_and_persists",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_pgf_export_emits_figcite_and_href_macros",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+          "outcomes": [
+            "passed"
+          ]
+        }
+      ]
+    },
+    {
+      "report": "full-locked-py312.xml",
+      "tests": 4454,
+      "passed": 4408,
+      "failed": 1,
+      "skipped": 45,
+      "failures": [
+        {
+          "module": "tests.test_required_test_paths",
+          "name": "test_workflow_result_gates_are_wired_to_distinct_reports"
+        }
+      ],
+      "overall_required_path_gate_ok": false,
+      "required_components_all_passed": true,
+      "required_component_outcomes": [
+        {
+          "module": "test_editor_browser",
+          "name": "test_dragging_the_legend_moves_it_and_persists",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_pgf_export_emits_figcite_and_href_macros",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+          "outcomes": [
+            "passed"
+          ]
+        }
+      ]
+    },
+    {
+      "report": "full-minimum.xml",
+      "tests": 3633,
+      "passed": 3596,
+      "failed": 1,
+      "skipped": 36,
+      "failures": [
+        {
+          "module": "tests.test_required_test_paths",
+          "name": "test_workflow_result_gates_are_wired_to_distinct_reports"
+        }
+      ],
+      "overall_required_path_gate_ok": false,
+      "required_components_all_passed": true,
+      "required_component_outcomes": [
+        {
+          "module": "test_references",
+          "name": "test_pgf_export_emits_figcite_and_href_macros",
+          "outcomes": [
+            "passed"
+          ]
+        },
+        {
+          "module": "test_references",
+          "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+          "outcomes": [
+            "passed"
+          ]
+        }
+      ]
+    }
+  ],
+  "postfix_targeted_runs": {
+    "focused-smart-current.xml": {
+      "tests": 41,
+      "passed": 41,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    "focused-smart-minimum.xml": {
+      "tests": 41,
+      "passed": 41,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    "postfix-locked-py311.xml": {
+      "tests": 22,
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    "postfix-locked-py312.xml": {
+      "tests": 22,
+      "passed": 22,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    "postfix-local-policy.xml": {
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    },
+    "optional-tables.xml": {
+      "tests": 243,
+      "passed": 243,
+      "failed": 0,
+      "skipped": 0,
+      "failures": []
+    }
+  },
+  "clean_full_current_source_rerun_after_final_fixes": false,
+  "qualification_limit": "Do not relabel the archived failed full runs as green. All three full runs failed only the old minimum-python-3.10 cache-name assertion; it was corrected to 3.11 and separately retested. Later direct-label contrast and distribution-privacy fixes also have targeted evidence, not a new full run.",
+  "fixed_after_full_collection": [
+    "Stale CI cache-name assertion (3.10 to 3.11)",
+    "Two direct-label contrast regressions: transparency composition and linear relative luminance",
+    "Distribution privacy: exclude .pi and local artifacts; preserve private state without deleting or uploading it"
+  ],
+  "other_checks": {
+    "three_dependency_lock_audits": "passed without waivers",
+    "ruff_pyright": "passed",
+    "active_lsp": "9 changed/import-related Python files: zero error diagnostics",
+    "generated_contracts": "in sync",
+    "dashboard_build": "passed",
+    "rust": "fmt/clippy/normal tests/MSRV 1.88 all-targets/HTTP/browser/bridge/body-boundary checks passed; 20 library tests and 1 binary test passed, 5 intentional child helper entrypoints ignored",
+    "publication_figures": "4 synthetic 300-DPI before/after cases; >=8 pt, unchanged measurements/size, zero after legend collisions/text overlaps/clipping",
+    "distribution": "private .pi/artifacts absent, new quality modules included, two rebuilds byte-identical",
+    "distribution_version_note": "Qualification archives hold 1.0.0 metadata; they are not v1.1.0 release uploads"
+  },
+  "not_performed": [
+    "Clean full current-source rerun after final fixes",
+    "Windows runtime CI",
+    "Remote current-commit CI",
+    "Owner publication sign-off",
+    "1.1.0 version bump",
+    "Git commit/push/PR/merge",
+    "Signed tag or publication"
+  ],
+  "raw_evidence": {
+    "bundle": "artifacts/v1_1_local_20261029_2QHhpt/reports.zip",
+    "local_only_not_shipped": true,
+    "sha256": "18110b1e91ac42075848aafc78c2602449e7ccd8732cf3fb996606916e02f006",
+    "entries": [
+      {
+        "member": "full-locked-py311.xml",
+        "bytes": 680560,
+        "sha256": "88ed9d837244d1de738c707e59816fff6e2296e4fbb3da77b7b048604e1a6d46"
+      },
+      {
+        "member": "full-locked-py312.xml",
+        "bytes": 680568,
+        "sha256": "0aa00dc7547d771d79c22c30cd4a5510ba960494e9914297d4e1f7e9c1064e5c"
+      },
+      {
+        "member": "full-minimum.xml",
+        "bytes": 548995,
+        "sha256": "af4dc1da7c92a782fb8e30c224c000c709f6546f25799b9bff8cee991b9a1e0c"
+      },
+      {
+        "member": "focused-smart-current.xml",
+        "bytes": 5748,
+        "sha256": "92f10d4a8ba3c1f4d99da7dbe2e03234c7bbe548e75acbbeeb47ec66cb5cfc95"
+      },
+      {
+        "member": "focused-smart-minimum.xml",
+        "bytes": 5748,
+        "sha256": "f0e786af9a20d45f5c2fd6fe0c89b739eaf6a77202a01a8f55edce19b45eab98"
+      },
+      {
+        "member": "postfix-locked-py311.xml",
+        "bytes": 3738,
+        "sha256": "173616864c080542c004d40fa81a2ea97bb8186050c5a5f8374b6d9f509a528a"
+      },
+      {
+        "member": "postfix-locked-py312.xml",
+        "bytes": 3738,
+        "sha256": "c2a9f326f76ac387d625183362f985ac60d40d63b3b3c6d56a583cfab4ecae17"
+      },
+      {
+        "member": "postfix-local-policy.xml",
+        "bytes": 5180,
+        "sha256": "480cd72cfbad48cc0ca88f818df1d7d228f3573a1f5f5eeaad06f85a7bdc3524"
+      },
+      {
+        "member": "optional-tables.xml",
+        "bytes": 38802,
+        "sha256": "afe667392dfc1e45a31fde6c8f67bb1272115908338ebfb50e83c7d0620ee602"
+      },
+      {
+        "member": "final-static-and-packaging.log",
+        "bytes": 1460,
+        "sha256": "8ddc30ae077bfcaa23f4b187b6130be4aa4bc72de03c9363e3dd0e600596a38a"
+      },
+      {
+        "member": "rust-msrv-browser-and-boundaries.log",
+        "bytes": 40775,
+        "sha256": "47e484a5b255f2ff4d2e23221bfffc9c1a71e095ebb14d349ea9041d90ce9b2d"
+      },
+      {
+        "member": "optional-tables.log",
+        "bytes": 1627,
+        "sha256": "7c5d63a42aac962612f5c64f615e028d9c029c67dce04ab56c3eba2a0ff9fc6a"
+      },
+      {
+        "member": "minimum-smart-postfix.log",
+        "bytes": 3232,
+        "sha256": "d2825fd5490ca5e19aa58af46da6e0afede37087fc20c5ed1edeae3a6d57aea8"
+      },
+      {
+        "member": "minimum-workflow-postfix.log",
+        "bytes": 679,
+        "sha256": "eec356e67159845ac9ce97768cb88b09bc902211d624bdb18b766abbebc86387"
+      },
+      {
+        "member": "dependency-audits-fixed.log",
+        "bytes": 270,
+        "sha256": "bc53edadc823ab169456dca1b4e4fd8b18ca4fc967a8260cf7d1598595dc1ae9"
+      }
+    ]
+  },
+  "implementation_and_lock_sha256": {
+    "pyproject.toml": "9ee74c7f6a32a6870a67b273ee155b1b751970899085a0b40b066550035aa0b0",
+    "uv.lock": "ec29353f551afd65bdb7a5d18f298e667a80bafdbbee56a038d61d6e219a77a7",
+    "scripts/check_minimum_versions.py": "5e6164fe27c88e61f437d73e7970ff87839321ccb4b1790f329b344dda9a18ef",
+    "scripts/check_minimum_versions.py.lock": "1da37f5de3b50665ef71e0172cd4bed4e9cd6abc3dc328d8c38a9c7f2dc4a98d",
+    "scripts/audit_dependencies.py": "65ef1c5b88c3ed33517e3d6ec18a1a6b7178a148370aa785b272155d8e2f89b2",
+    "scripts/audit_dependencies.py.lock": "7af77c75b334e39d15ecdfd2cd585b3376617989d8d5e56820bbac7a94413a5e",
+    "scripts/check_wheel.py": "ebc30a4f4825080aaabe6a8d892733e5f28637748706ab08466b9e7e0535ee5e",
+    "mudplot/_quality.py": "eb3c94150d30a7d94d20f9e8d2fa7e59db3e4544765cc1c534e08d6165b6b1f0",
+    "mudplot/_recommend.py": "2cfcfef52f983ffe6952e107b9a4f12de833474d2e4bc3225e4a2285ffe56ab2",
+    "mudplot/_lint.py": "e51e8fffb27bce755ea4b324f5b0477b9f37f838be535fb00f48c9da50178a29",
+    "mudplot/_render.py": "f0aa2756307c35c359cae9768a153c2accd1832fe796556422c91c28fcbde39e",
+    "mudplot/api.py": "e3b83f0fd0753814edd18c8e8a51eeea9c0f544e53a4b5be583067368ab8bd42",
+    "mudplot/__init__.py": "2455e876edc03e4f1c312f2dccace02334a0676e0565bb81f43252bd7ed48a9a",
+    "mudplot/__main__.py": "13e8c29884453379b7095b98df4f961c02d4c97749c016ab29e3833dad3b49d0",
+    "mudplot/color/convert.py": "1bffa2ae65444c7440165a8d3b8f16cc1b515e022862a47c8032fce13ab37a6c",
+    "tests/test_smart_quality.py": "f144a65104bb1675785d3b4aa0c84278cf6c793eca07a6b0e465d476a6040767",
+    "tests/test_required_test_paths.py": "052e5fbe8c5a8c33b6891ed8e3ad885034545b54576c81d0d65af1a7956ad597",
+    "tests/test_review_ci_effects.py": "bb7be1c34c7e5fe859252b87499825e2995c646d8e8611b0e8cc208235122b3b",
+    "tests/test_supply_chain_policy.py": "57400ee920a27f216bc0af81e74fb520bf6cd0dc17a30a277afd4e91b19fb948",
+    "tests/test_data.py": "bcdaae87dea03165b51cbae16eb30e31d1f51cccce39e392a7965d5d97186ef5",
+    "tests/test_review_table_formats.py": "dbf441a25b409132e69689d2259ae3a07d327a8e99b0d1ab3dea92ba574edeb6",
+    "examples/scientific_quality.py": "18eee399304f2407733717ca74bdfc898167d2ea4aeb55abd6ddadce0259f834",
+    "examples/publication_showcase.py": "a9b9014949001a107828f9033b3c9d1528fa2e693515d06347102af57918fb92",
+    ".github/workflows/ci.yml": "2e8a3409d36ff1d2c72f0fdf9c66d480e43cb15cb3b6d115affc77f1b2c8fa03",
+    ".github/workflows/release.yml": "ed2dcd3d039af890aee2cfcaff97746fc55556a535290e53664825021eb6df3a"
+  }
+}

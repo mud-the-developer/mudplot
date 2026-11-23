@@ -23,7 +23,7 @@ def test_unowned_staging_collision_is_never_removed_or_overwritten(
     destination.write_bytes(b"previous complete output")
     external = tmp_path / "external.txt"
     external.write_bytes(b"not owned by this export")
-    collision = tmp_path / f".{destination.name}.collision.tmp"
+    collision = tmp_path / ".mudplot-write-collision.tmp"
     if existing == "directory":
         collision.mkdir()
         (collision / "keep.txt").write_bytes(b"directory data")

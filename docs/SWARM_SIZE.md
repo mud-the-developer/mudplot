@@ -27,7 +27,7 @@ reject. An unselected invalid size does not affect a plot, but strict JSON still
 rejects nonfinite numbers anywhere in the source table.
 
 By default, one layer's selected cohort defines its numeric domain.
-[Swarm-only named scales](SWARM_SHARED_SIZE.md) can opt into pooled size domains.
+[Named shared scales](SWARM_SHARED_SIZE.md) can opt into pooled size domains.
 Explicit
 size_norm clips the mapping, never filters observations. Stable normalization
 handles narrow high-magnitude and wide finite ranges; a constant domain maps to
@@ -38,14 +38,13 @@ not acquire group references/URLs. A group legend uses the midpoint diameter.
 
 Circle packing uses actual per-point radii, strokes and gutters at final
 DPI/layout/scales, including existing orientation/dodge/native-category modes.
-Positive diameters whose areas underflow reject before artists. No arbitrary
-shape, semantic hue/style or cross-family shared scale,
-date role or y2 support is implied. [Categorical size/order](SWARM_CATEGORICAL_SIZE.md)
-is a separate opt-in subset. [Facets and selected empty frames](SWARM_FACETS.md)
-use shared original-row size domains. Scalar marker_size plus mapped size rejects.
-The legacy semantics=None path remains unchanged. No new model/action/spec fields
-or dependencies are required; raw semantic JSON is preserved by both editors.
-Dedicated size controls are not claimed. Successful Figures remain caller-owned.
+Positive diameters whose areas underflow reject before artists. This size-only
+example retains its existing circle/group behavior; the complete
+[C02 contract](SWARM_FACETS.md) also supports native named glyphs, hue/style,
+mixed-family domains, dates/y2 and explicit packing/live-template transactions.
+Scalar marker_size plus mapped size still rejects. Size is never weight/mass.
+No dependency/version change is required; omitted legacy controls/JSON remain.
+Successful Figures are caller-owned.
 
-Synthetic data is not an independent human readability/AT certification or a
-total CPU/RAM/sandbox guarantee. Broader style/date/facet semantics remain open.
+Synthetic data is not independent human readability/AT certification or a total
+CPU/RAM/sandbox guarantee. Broader F01/G01 catalogue gates remain separate.

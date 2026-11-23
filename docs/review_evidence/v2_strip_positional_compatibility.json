@@ -1,0 +1,16 @@
+{
+  "status": "supplementary introduced positional regression corrected",
+  "original_closure_unchanged": "docs/review_evidence/v2_strip_categories_closure.json",
+  "behavior": "17th positional LayerSpec argument remains visible alpha=0.25; optional strip field appended after prior z tail",
+  "source_sha256": {
+    "mudplot/spec.py": "b1feacba324a920b48e325cc35e87f8b08ef986bd2877f4768839e0866b6a712",
+    "tests/test_strip_categories.py": "3942ddd3c2b5cad67010ec2ef01467b1d43ea4f5d7ed10453d9cf992534cb047"
+  },
+  "baseline_engine": "$LOCAL_EVIDENCE/location-143",
+  "logs": [
+    "artifacts/v2_rug/positional_baseline.log",
+    "artifacts/v2_rug/positional_current.log"
+  ],
+  "regression": "tests/test_strip_categories.py::test_legacy_positional_model_alpha_still_controls_visible_scatter; included in both separate 726-case current/minimum cohorts",
+  "failure_lineage": "Previous implementation worker reproduced pre-fix alpha=1.0, strip=0.25 after parent source-review inference, and compared the actual archived baseline; unchanged original closure receipt is historical, not proof of correction"
+}

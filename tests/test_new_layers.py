@@ -454,7 +454,10 @@ def test_quiver_rejects_bad_data_scaling_group_and_orphan_colorbar():
     scaling_issues = mp.validate(bad_scale.spec)
     assert any("quiver_scale" in issue for issue in scaling_issues)
     assert any("quiver_width" in issue for issue in scaling_issues)
-    assert any("group is not supported" in issue for issue in mp.validate(grouped.spec))
+    assert any(
+        "group" in issue and "VectorSpec" in issue
+        for issue in mp.validate(grouped.spec)
+    )
     assert any("colorbar requires" in issue for issue in mp.validate(orphan.spec))
     assert any("finite numbers" in issue for issue in mp.validate(nonnumeric.spec))
 

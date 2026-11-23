@@ -1,0 +1,287 @@
+{
+  "catalogue_row": "D07",
+  "status": "D07 final functional acceptance granted by parent after source/raster/proof review. Not whole F01/F02/E01/Q01/DOC01/REL01 or v2 closure.",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "CND01_integrated": false,
+  "prerequisites": {
+    "guard": "Semantic axis eligibility runs before temporal conversion; initial formatting/Ruff and focused 218 passed, then separate current/minimum 726-case cohorts passed. Earlier pre-fix 705-pass/1-failure is not passing evidence.",
+    "four_family_subset_receipt": "docs/review_evidence/v2_semantic_families.json",
+    "positional_compatibility_receipt": "docs/review_evidence/v2_strip_positional_compatibility.json",
+    "original_C01_closure_untouched": "docs/review_evidence/v2_strip_categories_closure.json"
+  },
+  "approved_contract": {
+    "builder": "rug(x, orient='v'|'h', height: float|None=None, semantics: SemanticSpec|dict|None=None, axis='y'|'y2')",
+    "serialized_height": "Existing LayerSpec.width, finite non-bool [0,1] axes fraction; None remains 0.04. No new model field/default JSON shape.",
+    "native_geometry": "v: shared x, bottom inward. h: target primary y left inward, y2 right inward. Live blended transform, only observation dataLim; native both-view autoscale preserves old standalone framing.",
+    "clock": "Only observation-axis clock applies; perpendicular log/date axis is not rug height.",
+    "roles": "Raw-row hue; size is physical stroke points, never marker area/height/mass; style is named dashes or four default named patterns; enough distinct slots, no cycling or filled-point proxies.",
+    "rows": "One vectorized collection per semantic rug, retained duplicate/source order, no aggregation or semantic curve-count cap. Existing 10000 semantic-row/resource bounds remain.",
+    "zero_geometry": "Zero height retains zero-length segments; zero stroke retains segments and uses native solid zero-width geometry to avoid Matplotlib 3.8 all-zero dash errors.",
+    "guides": "Existing raw-row scale pools and normalization; logical-panel shared colourbar intent deduplicates primary/y2.",
+    "unsupported": "Independent roles reject legacy group/c and mapped scalar overrides. No weights/inference/bootstrap/arbitrary kwargs added."
+  },
+  "source_lineage": {
+    "snapshot_root": "$LOCAL_EVIDENCE/location-66/source",
+    "archive": "artifacts/v2_rug/frozen_source.tar.gz",
+    "archive_sha256": "0812b7a40ad6b53750656ea1a9bed1b37447e22fdf6297ad4975704a6b2f3830",
+    "manifest": "artifacts/v2_rug/frozen_source_manifest.json",
+    "manifest_sha256": "4e3ea80f50c4ff395f9f195d13fe93ef950e1a951904f56e783b789c503737da",
+    "runtime_sources_unchanged_after_freeze": true,
+    "engine_sha256": {
+      "mudplot/__init__.py": "845bed314ed119570cd5c927499b1b8fa66d2dc11491df64ed4f0baa22fa4e00",
+      "mudplot/__main__.py": "32df67c68a88a91a65c945b3393241bdb074095970324e54e1232b748c9dddf4",
+      "mudplot/_categorical.py": "c327fbf08ffcae12a903072c937a220f8b7c22a43e9aecd18fd96e9d4101c674",
+      "mudplot/_cluster.py": "8dfc8ba10e40ab12ef2ccef67e12c3a4c2eb41e8e52249153fcb38991b153f64",
+      "mudplot/_cluster_render.py": "69a26d23d5b372f1968d77cea67f669ff8b395f6fa36cafe2f62d66237808573",
+      "mudplot/_components.py": "977ed6fe9a348c48c980f13989c8e8c863e2b6a1d53124c5355d5515aff4985d",
+      "mudplot/_ecdf.py": "c877e8565c20128dba3af5fc09bbb5cd7eb310514cda64fa2dd5ba9523447d4a",
+      "mudplot/_estimate.py": "95c55242f07f0f5dc315a56762439f68951dec5489c66b287f86144730b252fd",
+      "mudplot/_facet.py": "a9f90ef9101a33a1dd3288d7ac0e72f82fb8deab0b1220492f0b09d6703cf993",
+      "mudplot/_heatmap.py": "01c9875a3478abafac75e80e344884904980f56655d7ccd683df6f0ab8b7f2ad",
+      "mudplot/_heatmap_render.py": "79017c2b507948751a965d88c0469694a011b09e3f44da3ff5b558f63270bd6c",
+      "mudplot/_histogram.py": "fd0261721f9ad139fbe843411915f4dbae22dad3e6ba7276a87629c83554d5eb",
+      "mudplot/_histogram_bins.py": "ee3e25bb1b1d3fa4ce9ff61c1e27cbf403c10d940c5add44f818328a273e79c0",
+      "mudplot/_joint.py": "3fbe775df2afb9b5c7adf74d1fa3fc61a23a50b4b14bed68e183b2cc5a9d88dd",
+      "mudplot/_kde.py": "b7e41f86d18b5070f995bc319657c28c7484407c45952951d6ecc04eee6494f8",
+      "mudplot/_kde2d.py": "140e9446f4cfd6d3ef04f1b6dc916e9dd44f20af94eb90554daca5cb516a0ef9",
+      "mudplot/_letter_value.py": "bf28883c4c8fc467105dcfc527b998e3282e58e45f6d358e03118a94f2cba8ed",
+      "mudplot/_line_semantics.py": "d73bb5bbe9c0f6323d7e03833f6199e6dc8cf06f7bf411474c42fc7c6d70c625",
+      "mudplot/_lineplot.py": "f9dbc013b6d11cc92368cff4620528bc2e05cbb330065cdaea40d26859d33ffd",
+      "mudplot/_lint.py": "c1cefbf10801c15eb7f8a07ba1c06df3ddbcf96113213604d28960ac415a19d0",
+      "mudplot/_mpl_context.py": "212111a65fb93b0ac36b6b49d91965b2ff271e720b944831fbd3bf7eea1b1a2a",
+      "mudplot/_pair.py": "26dee74983cea92be86c6393182b857a998e199eb6e5573dd951db8e0e70706f",
+      "mudplot/_quality.py": "96fd494328e9ab72d312de8b4fdbaa478470c6661f6d760c93b574bef77f8146",
+      "mudplot/_recommend.py": "228532d1638509bfd623eab2041907f909054eb50de3e697a8028a58cfc59e4a",
+      "mudplot/_regression.py": "842cd2f3c30cf23fda763d7ea7771fad92863069679644f43a5133ed15026c30",
+      "mudplot/_regression_render.py": "0796c95fa31e0a5c9f470a17cd19a04b0146f22da60c750aab6d0a101e393e12",
+      "mudplot/_render.py": "2f3522644522b33639602432e5feecdf209f4a081e98af21b17fd72b8c61063e",
+      "mudplot/_rug.py": "8e3ce326bc23aa7bd7e3be72b5da6ee0dd0a1459539b171b80fa41df0a6b5899",
+      "mudplot/_scatter_semantics.py": "c0143a92934ad40f05c4a696cd6eabd4edcb80f38c72dd0b8902824c8cf95305",
+      "mudplot/_semantics.py": "cc680449e5440806cc207597987c6520d8b20b7c2ae12e6bc2500ff3bc05e157",
+      "mudplot/_stat.py": "bd8add1334dc1187e2028bbb920ea3b12ad49240a891c5032bce4d7a40598480",
+      "mudplot/_strip.py": "d8d827bf78a93b774a392625b7616df10d1a2cb22d83d33150cc3d109ae88c15",
+      "mudplot/_swarm.py": "13c11eb1b6b8ddd0ba5590b1cb6f76d8cef9bb6441460f58e0b399409abf90d2",
+      "mudplot/_temporal.py": "95e6bd0f438775a5f82266275f967fb1e01babb9e9afff0254952eda518c66f4",
+      "mudplot/_temporal_data.py": "5bcbdc29d2ab2b0f308c3c5eadc5cf6878c80467d6723f59efeb3f6a0cc6604a",
+      "mudplot/_temporal_render.py": "c05181e46e5b73bdf7c6539a70d44844996c75cc68a85b109d0594e7b56694d5",
+      "mudplot/_violin.py": "839e9f3864232545f33149e0e521be9ffb636fd320788aea72e5c79f25b3d18a",
+      "mudplot/_violin_options.py": "1eb66f2486f3c3e20af53e11ecf1ee2901c9d3350f9c72951772b58a7f1b4e0c",
+      "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+      "mudplot/api.py": "18c52a75c5128ce6b3dc16b5b8932514adce4b3c22c9bc540c4f3c7fda6e91ed",
+      "mudplot/bib.py": "830f54f3fede09a827b64d4ae645cf1d32429374834596c9b9414f89d2b85b56",
+      "mudplot/capabilities.py": "e575f8d95e62c088970aedf8ddbae90528ad753a1b66f4712b29cf43706e1599",
+      "mudplot/data.py": "42b1dd83b5a0991707ff183b3f67d03b0b08d8c08e0ff69e92990fbd38e2d3e9",
+      "mudplot/docs.py": "d241627aefe2ff92046b65203f40013f2cef04962e62b1c29f935d943dcc4051",
+      "mudplot/io.py": "56d379bb24cd193259052ee85a24c24087ea8bec98794138dd56686de32f7bea",
+      "mudplot/reducer.py": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49",
+      "mudplot/schema.py": "13838d8abbb2d23331d162143fd945486c54c7980fe5b08e5871850f01fb93f1",
+      "mudplot/spec.py": "b1feacba324a920b48e325cc35e87f8b08ef986bd2877f4768839e0866b6a712",
+      "mudplot/store.py": "f0d62bd945e287c6783097c2d3e771c57def1f152841a645b6922323ec79a033",
+      "mudplot/tex.py": "2e2dd8671d4d680371dabc9280926dd12032072e3bc4ea46f180f3526e4e081c",
+      "mudplot/theme.py": "9e166acd8b2a132550dec18f438c29994f21dd46a5117f418dc998936dbc8316",
+      "mudplot/validate.py": "20d80a54d2d3a87a23b0af4e0578aa828e89059c1af0c66246912c9411a2a2cc"
+    },
+    "wheel": "artifacts/v2_rug/dist/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "11c32ae4482460d7884bf50a13423fe54b4a12e08d7ac292d73161addd697f78",
+    "sdist": "artifacts/v2_rug/dist/mudplot-1.1.0.tar.gz",
+    "sdist_sha256": "b5de9d676ebecc373ce51da21a4bacbd77a76be3e063bbf089a2f86d2801b86e",
+    "build_count": 1,
+    "postfreeze_test_only_review": {
+      "tests/test_rug.py": {
+        "frozen_sha256": "6a72c71b9c2d9760040083de9f2d3b2a7f03f7d6dbd43139765fb85e52b3126f",
+        "reviewed_sha256": "660ce0994cb51eff67c84878743bcceadb1f72daccb5a5efbc4b14ef7d387f72"
+      },
+      "tests/test_no_deps.py": {
+        "frozen_sha256": "c00c749fd15c4adea0a6cf3298011caea1fdede07ce5c1b5a9109e5bd25ffca5",
+        "reviewed_sha256": "ae28bda507ccc261fa91d4995e3c10b08226790b72591a19a2adca77a4b94eeb"
+      }
+    },
+    "test_review_changes": "Removed no-oracle save loops/copy-only invalid-edit claim; honestly named API rejection test. Added semantic rug/no-effects scenario to existing no-deps guard. Engine/package bytes unchanged, no duplicate rebuild.",
+    "unchanged_full_field_fixture_sha256": "a113e35fbb81a8d0f08651e189a54313d52510541c394b1baecb94afb963c68a",
+    "fixture_reason": "No new serialized field; existing all-field/schema coverage passes.",
+    "permanent_smokes": [
+      "scripts/check_minimum_versions.py",
+      "scripts/check_wheel.py",
+      "scripts/rust_editor_smoke_test.py"
+    ],
+    "generated": [
+      "schemas/figure_spec.schema.json",
+      "schemas/capabilities.json",
+      "docs/REFERENCE.md",
+      "docs/PLOT_GALLERY.md"
+    ],
+    "support_docs": [
+      "docs/FEATURE_COVERAGE.md",
+      "docs/FEATURE_COVERAGE.ko.md",
+      "CHANGELOG.md",
+      "examples/rug_workflow.py"
+    ]
+  },
+  "verification": [
+    {
+      "cohort": "pre-review-cleanup broad current",
+      "result": "987 passed, 1 existing ECDF overflow warning, zero skips",
+      "log": "artifacts/v2_rug/rug_broad_current_corrected.log"
+    },
+    {
+      "cohort": "pre-review-cleanup broad minimum",
+      "result": "987 passed, 1558 dependency/overflow warnings, zero skips",
+      "log": "artifacts/v2_rug/rug_broad_minimum.log"
+    },
+    {
+      "cohort": "reviewed tests against installed current frozen wheel",
+      "result": "127 passed, zero skips",
+      "tests": [
+        "test_rug.py",
+        "test_semantic_families.py",
+        "test_semantic_colourbars.py"
+      ],
+      "log": "artifacts/v2_rug/frozen_current_installed_reviewed_tests.log"
+    },
+    {
+      "cohort": "reviewed tests against installed minimum frozen wheel",
+      "result": "127 passed, 1141 dependency warnings, zero skips",
+      "tests": [
+        "test_rug.py",
+        "test_semantic_families.py",
+        "test_semantic_colourbars.py"
+      ],
+      "log": "artifacts/v2_rug/frozen_minimum_installed_reviewed_tests.log"
+    },
+    {
+      "cohort": "explicit current and minimum Python -S zipped installed wheel, no render",
+      "result": "Both PASS; third-party packages actively denied by finder; new v/h/y2 rug clock/roles/validate/action/JSON scenarios actually executed",
+      "logs": [
+        "artifacts/v2_rug/frozen_current_pythonS_pure.log",
+        "artifacts/v2_rug/frozen_minimum_pythonS_pure.log"
+      ],
+      "reproduction_source": "artifacts/v2_rug/pure_installed_smoke.py"
+    },
+    {
+      "cohort": "updated existing no-deps test against installed wheel",
+      "result": "Separate 1 passed current and 1 passed minimum",
+      "logs": [
+        "artifacts/v2_rug/frozen_current_installed_no_deps_test.log",
+        "artifacts/v2_rug/frozen_minimum_installed_no_deps_test.log"
+      ]
+    },
+    {
+      "cohort": "one build from sdist, permanent installed render/CLI smoke",
+      "result": "PASS",
+      "log": "artifacts/v2_rug/frozen_wheel_build_install_smoke.log"
+    },
+    {
+      "cohort": "real Rust native feature smoke helper including new rug form/rejected-edit/history/reopen/export",
+      "result": "PASS",
+      "log": "artifacts/v2_rug/rug_native_smoke.log"
+    },
+    {
+      "cohort": "static",
+      "result": "Ruff check clean, 14 touched files already formatted; rug Pyright 0 errors/warnings; all four generated artifacts in sync. Added no-deps file separately Ruff/format clean.",
+      "logs": [
+        "artifacts/v2_rug/final_ruff.log",
+        "artifacts/v2_rug/final_format.log",
+        "artifacts/v2_rug/final_rug_typecheck.log",
+        "artifacts/v2_rug/final_generated_sync.log",
+        "artifacts/v2_rug/reviewed_no_deps_ruff.log",
+        "artifacts/v2_rug/reviewed_no_deps_format.log"
+      ]
+    }
+  ],
+  "installed_consumers": {
+    "current_report": "artifacts/v2_rug/installed_current/report.json",
+    "minimum_report": "artifacts/v2_rug/installed_minimum/report.json",
+    "script": "artifacts/v2_rug/installed_consumer.py",
+    "behavior": "Actual outside-checkout prefixes from same wheel. Builder edit/undo/redo, native segment/width and unrelated dataLim oracles, source IDs, temporal-y2 day reference, JSON save/reopen; four-family/rug/facet/Rust-edited JSON PNG/SVG/PDF and actual CLI validate/render. Invalid CLI preserves prior output.",
+    "minimum_versions": {
+      "python": "3.11.14",
+      "numpy": "1.23.5",
+      "matplotlib": "3.8.0",
+      "pillow": "13.0.0"
+    },
+    "current_versions": {
+      "python": "3.13.12",
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.1",
+      "pillow": "13.0.0"
+    }
+  },
+  "real_Rust_browser": {
+    "server": "http://127.0.0.1:33193",
+    "command": "env MUDPLOT_PYTHON=$PROVIDER/environment-03/bin/python mudplot-editor/target/debug/mudplot-editor --bind 127.0.0.1:33193",
+    "binary_sha256": "26e88f3716c8e6205b22e044ac7a33324d705c8ddbdc296aa8f2e428ed553cd0",
+    "browser": "Own Playwright persistent Chromium, executable_path=/usr/bin/chromium; separate profile/port, no CND01 processes reused",
+    "profile": "$LOCAL_EVIDENCE/location-67",
+    "workflow": [
+      "Import source via human FigureSpec form",
+      "Use human registered-layer form to add rug with orient=h, width=.22, axis=y2 and raw-row semantics",
+      "Reject height=1.2 and mapped line_width override; exact accepted spec+PNG retained",
+      "Undo/Redo layer addition",
+      "Actual FigureSpec/SVG/PDF link downloads; reopen downloaded JSON; exact PNG retained",
+      "Human raw SetLegend action moves calibration to clear upper-left; Undo/Redo; actual downloads/reopen again"
+    ],
+    "accepted_source": "artifacts/v2_rug/rust_readable_saved.mplot.json",
+    "submitted_fields": "artifacts/v2_rug/rust_submitted_fields.json",
+    "legend_action": "artifacts/v2_rug/rust_legend_action.json",
+    "rejection_receipts": [
+      "artifacts/v2_rug/rust_rejected_height.json",
+      "artifacts/v2_rug/rust_rejected_mapped_override.json"
+    ],
+    "surface": "artifacts/v2_rug/rust_readable_surface.png",
+    "exports": [
+      "artifacts/v2_rug/rust_readable_export.png",
+      "artifacts/v2_rug/rust_readable_export.svg",
+      "artifacts/v2_rug/rust_readable_export.pdf"
+    ]
+  },
+  "legacy_parity": {
+    "fresh_final_baseline": "artifacts/v2_rug/final_parity/baseline/report.json",
+    "fresh_final_frozen_current": "artifacts/v2_rug/final_parity/current/report.json",
+    "comparison": "artifacts/v2_rug/final_parity/comparison.json",
+    "result": "Actual archived baseline and frozen engine freshly executed; all four plain/grouped/density/empty cases match exact JSON spec, JSON-ready actions, raw RGBA, dimensions and limits. Module origins/all engine source hashes and per-case raw RGBA retained.",
+    "initial_failure_preserved": [
+      "artifacts/v2_rug/legacy_current_report.json",
+      "artifacts/v2_rug/legacy_baseline_report.json"
+    ],
+    "cause": "Observation-only view request changed standalone empty perpendicular framing; native both-view request corrected it without adding perpendicular dataLim. Density and empty parity already held in initial failure. No permanent default PNG pin."
+  },
+  "visual_review": {
+    "worker_reviewed": [
+      "artifacts/v2_rug/rug_workflow.png",
+      "artifacts/v2_rug/rug_facets.png",
+      "artifacts/v2_rug/rust_readable_surface.png",
+      "artifacts/v2_rug/rust_readable_export.png"
+    ],
+    "example_layout": "Explicit center-right calibration in panel1 leaves highest horizontal rug unobscured; source/style units unchanged. Rust explicit upper-left legend leaves y2 marks unobscured.",
+    "example_exports": [
+      "artifacts/v2_rug/rug_workflow.mplot.json",
+      "artifacts/v2_rug/rug_workflow.png",
+      "artifacts/v2_rug/rug_workflow.svg",
+      "artifacts/v2_rug/rug_workflow.pdf"
+    ],
+    "CLI": "artifacts/v2_rug/rug_workflow_cli.png",
+    "parent_feedback": "FINAL FUNCTIONAL ACCEPTANCE D07: parent reviewed the full receipt/limits/commands; core/API/clock/zero/native-guide source and affected smokes; distinct current/minimum 987 and reviewed installed 127/1 logs; Python-S actively denied dependencies; fresh frozen four-case legacy parity; actual source/Rust-readable PNG and facet output. D07 is accepted complete. Other catalogue/product rows remain required; CND01 integration is not authorized. Frozen archive/wheel and failed evidence remain immutable."
+  },
+  "stroke_probe": "artifacts/v2_rug/stroke_probe.json",
+  "failure_lineage": {
+    "rug_initial.log": "Four failures from wrong private native autoscale keyword; corrected to native contract.",
+    "rug_geometry_second.log": "75 pass/1 failure: test wrongly expected TypeError for existing weights field; switched to actual invalid-combination validation.",
+    "rug_current.log": "185 pass/2 failures: probe supplied naive perpendicular origin without timezone; explicit UTC origin fixes test input.",
+    "rug_broad_current.log": "976 pass/5 failures: generated gallery capability metadata not regenerated; regenerated gallery, not repinned expectations.",
+    "prerequisite_cli.log": "Unsupported -o harness option; corrected to positional output argument.",
+    "legacy_current_report.json": "Retained pre-autoscale-fix standalone parity mismatch; not passing proof."
+  },
+  "artifact_integrity": {
+    "manifest": "artifacts/v2_rug/artifact_hashes.json",
+    "sha256": "9a5c76e7eb71c973acefa7bfc8b7096f162e617853f13d5cac5bbd91ee047a55",
+    "artifact_count": 189,
+    "scope": "All retained proof files, including source archive, wheel/sdist, commands, failed/final logs, raw RGBA, screenshots and copied installed outputs; manifest excludes itself."
+  },
+  "postfreeze_lineage_notes": [
+    "Only tests/test_rug.py and tests/test_no_deps.py changed after engine qualification; final scope/evidence documentation was appended afterward. Frozen engine and distributable bytes remain unchanged.",
+    "At each 127-case reviewed installed run, the external tests directory contained only test_rug.py, test_semantic_families.py and test_semantic_colourbars.py. test_no_deps.py was copied afterward and run separately as one test per environment.",
+    "Own Rust service and dedicated Playwright/Chromium context were explicitly stopped after proof capture. No CND01 service/profile was reused or stopped."
+  ],
+  "evidence_discipline": "Counts are distinct cohorts, never summed. Frozen 987 cohorts predate test-only cleanup; later 127/1 installed cohorts identify reviewed tests. No F01/F02/full-v2/REL01 closure, publication or git mutation; .pi untouched."
+}

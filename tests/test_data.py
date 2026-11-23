@@ -1,5 +1,5 @@
 import sqlite3
-from datetime import date, datetime, time, timezone
+from datetime import UTC, date, datetime, time
 
 import mudplot as mp
 import pytest
@@ -130,7 +130,7 @@ def test_duplicate_column_names_are_rejected_before_data_is_lost():
 
 def test_common_missing_and_temporal_values_are_json_safe():
     data = {
-        "x": [date(2026, 1, 1), datetime(2026, 1, 2, 3, tzinfo=timezone.utc)],
+        "x": [date(2026, 1, 1), datetime(2026, 1, 2, 3, tzinfo=UTC)],
         "y": [1.0, float("nan")],
         "at": [time(9, 30), time(10, 45)],
     }

@@ -75,22 +75,57 @@ def _cmd_validate(args: argparse.Namespace) -> int:
 def _cmd_render(args: argparse.Namespace) -> int:
     from pathlib import Path
 
-    from ._render import _preview_dpi, save
+    from ._render import _preview_dpi, _save_destination, save
     from .io import load_spec
     from .validate import assert_valid
 
     spec = load_spec(args.spec)
+    if args.editor_metadata:
+        if Path(args.out).suffix.lower() != ".png" or args.layout_policy:
+            raise ValueError(
+                "--editor-metadata requires a PNG preview without layout policy"
+            )
+        if not args.preview:
+            raise ValueError("--editor-metadata requires --preview")
+        from ._editor import render_preview
+        from .io import _atomic_destination, _atomic_write_text
+
+        destinations = [
+            Path(name).resolve() for name in (args.spec, args.out, args.editor_metadata)
+        ]
+        if len(set(destinations)) != len(destinations):
+            raise ValueError("spec, PNG and editor metadata paths must be distinct")
+        png, layouts = render_preview(spec)
+        metadata = json.dumps(layouts, allow_nan=False)
+        with _atomic_destination(args.out) as temporary:
+            temporary.write_bytes(png)
+        _atomic_write_text(args.editor_metadata, metadata)
+        return 0
     if args.preview:
         if Path(args.out).suffix.lower() != ".png":
             raise ValueError("--preview requires a .png output path")
         assert_valid(spec)
         cast(Any, spec).dpi = _preview_dpi(spec)
-    figure = save(spec, args.out)
+    figure = save(spec, args.out, layout_policy=args.layout_policy)
     import matplotlib.pyplot as plt
 
     plt.close(figure)
-    print(f"wrote {args.out}", file=sys.stderr)
+    print(f"wrote {_save_destination(args.out)}", file=sys.stderr)
     return 0
+
+
+def _cmd_lint(args: argparse.Namespace) -> int:
+    from ._lint import lint_figure
+    from .io import load_spec
+
+    report = lint_figure(
+        load_spec(args.spec),
+        journal=args.journal,
+        visual=args.visual or args.layout_policy is not None,
+        layout_policy=args.layout_policy,
+    )
+    print(json.dumps(report.to_dict(), ensure_ascii=False) if args.json else report)
+    return 0 if report.ok else 1
 
 
 def _cmd_apply(args: argparse.Namespace) -> int:
@@ -155,7 +190,21 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="bound PNG output to 2000 pixels per axis",
     )
+    sp.add_argument("--layout-policy", choices=("smart", "smart-print"))
+    sp.add_argument(
+        "--editor-metadata",
+        metavar="FILE",
+        help="write renderer-bound panel/handle JSON alongside a PNG preview",
+    )
     sp.set_defaults(func=_cmd_render)
+
+    sp = sub.add_parser("lint", help="publication and optional rendered visual QA")
+    sp.add_argument("spec", help="path to a .mplot.json spec")
+    sp.add_argument("--journal")
+    sp.add_argument("--visual", action="store_true")
+    sp.add_argument("--layout-policy", choices=("smart", "smart-print"))
+    sp.add_argument("--json", action="store_true")
+    sp.set_defaults(func=_cmd_lint)
 
     sp = sub.add_parser("apply", help="apply one JSON action to a saved spec")
     sp.add_argument("spec", help="input .mplot.json spec")
@@ -174,7 +223,7 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 # Exceptions expected from ordinary user mistakes (bad path, malformed JSON,
-# invalid spec/action content) get a clean one-line stderr message + exit
+# invalid spec/action content) get a clean stderr message + exit
 # code 1 instead of a raw Python traceback -- much friendlier for shell
 # scripts and agents parsing the output. Anything else still raises normally
 # (through --debug or when not caught), since that indicates a real bug
@@ -197,6 +246,8 @@ def main(argv: list[str] | None = None) -> int:
         return args.func(args)
     except _USER_ERRORS as e:
         print(f"error: {e}", file=sys.stderr)
+        for note in getattr(e, "__notes__", ()):
+            print(f"note: {note}", file=sys.stderr)
         return 1
 
 

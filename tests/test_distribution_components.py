@@ -301,10 +301,11 @@ def test_unknown_keys_and_wrong_json_shapes_rejected_without_dropping_settings(p
         LayerSpec.from_dict({"type": "box", "x": "v", "components": payload})
 
 
-@pytest.mark.parametrize("kind", ["violin", "swarmplot", "barplot", "scatter"])
+@pytest.mark.parametrize("kind", ["swarmplot", "barplot", "scatter"])
 def test_other_types_reject_component_field(kind):
     p = getattr(mp.plot(_data()), kind)("c", "v", components=Components())
-    assert any("components is not supported" in i for i in mp.validate(p.spec))
+    with pytest.raises(ValueError):
+        p.render()
 
 
 def test_json_schema_rejects_unknown_component_fields():

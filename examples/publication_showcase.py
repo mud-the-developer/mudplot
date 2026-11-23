@@ -17,9 +17,9 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import mudplot as mp
 import numpy as np
-from matplotlib.text import Text
 from matplotlib.transforms import Bbox
 from mudplot import actions as A
+from mudplot._quality import drawn_texts as _drawn_texts
 from mudplot.color import convert as cv
 from mudplot.color import cvd
 
@@ -125,25 +125,6 @@ def build_plot(kind: str = "response", *, width_px: int = 700) -> mp.Plot:
         upper = float(np.ceil(max(endpoints) * 10) / 10 + 0.1)
         p.xlim(lower, upper).ylim(-0.5, 2.5)
     return p
-
-
-def _drawn_texts(figure) -> list[Text]:
-    """Off-view ticks can be visible objects without being drawn into the PNG."""
-    excluded = set()
-    for axes in figure.axes:
-        for axis in (axes.xaxis, axes.yaxis):
-            lower, upper = sorted(axis.get_view_interval())
-            for tick in [*axis.get_major_ticks(), *axis.get_minor_ticks()]:
-                if not lower <= tick.get_loc() <= upper:
-                    excluded.update((tick.label1, tick.label2))
-    return [
-        text
-        for text in figure.findobj(Text)
-        if text not in excluded
-        and text.get_visible()
-        and text.get_alpha() != 0
-        and text.get_text().strip()
-    ]
 
 
 def save_and_assess(plot: mp.Plot, path: Path, *, display_width_px: int) -> dict:

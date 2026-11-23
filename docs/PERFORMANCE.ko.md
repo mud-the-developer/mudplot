@@ -44,21 +44,45 @@ coldstart숫자로섞지않습니다.
 
 ## 작은최적화와정확성
 
-DefaultpureStore는이전64action경계의내부state한개를보관합니다. 관찰한1k행/1000actionundo는
-약405→17ms,10k행/256action의cached/fullreplaycontrol은약219/860ms였고추가tracedPython
-retention은약280KB였습니다. 모든history/분리된publicsnapshot을유지하고customreducer는fullreplay,
-이전cursor는initialfallback입니다. 추가fullSpec한개의memorytradeoff이지전체RSS/모든경로속도보장은아닙니다.
+이전checkpoint-only실험은64action경계의내부state한개를보관했습니다.
+그때1k행/1000actionundo는약405→17ms,10k행/256action의cached/fullreplaycontrol은
+약219/860ms였고추가tracedPythonretention은약280KB였습니다. 아래v2구현으로이옛
+측정을갱신하지않습니다. 모든history와격리된publicsnapshot은유지합니다.
 
 Mousegesture는이미release1요청이고keyboardburst도기존UI에서모읍니다. Coreevent/noop/listener를
 없애지않습니다. 싼rawvalidation측정때문에trustboundary검증을삭제할이유가없고Rustchild시작/
 JSON/render는서로다른병목입니다. 현재논문workload에immutable/zero-copyrewrite가필수라는측정은없습니다.
 
+### v2 즉시 history 증분 (CND02)
+
+완료한 100k행 × 1000 title-action에서 near-tail pure reducer의 불필요한 prefix
+재생을 확인해 structural sharing 대신 좁은 변경을 선택했습니다. 기본 reducer는
+직전 transition 내부 state 하나를 보관해 일치하는 즉시 undo에 씁니다. Redo는
+다음 action 하나를 계산한 뒤 history를 갱신합니다. 깊은 undo의 64-action
+checkpoint/fallback과 custom reducer의 전체 재생·호출 순서는 유지합니다.
+공개 state/action/history/listener는 계속 방어적 복사이며 dispatch 복사나 history
+절단을 추가하지 않습니다. 이전 전체 graph 하나가 더 살아 있을 수 있는 메모리
+tradeoff이지 zero-copy가 아니며 기존 data/request/algorithm 상한은 불변입니다.
+
+같은 isolated workload에서 undo 1524.9 → 27.4 ms, redo 1305.9 → 53.9 ms를
+관찰했습니다. 공유 host 측정이지 SLA/통제한 dispatch 개선이 아니며 optimized
+run의 dispatch는 더 느렸습니다. 단일 dispatch tracemalloc은 추적 시작 전에
+존재한 이전 graph 보관 비용을 측정하지 않습니다.
+[v2 근거](review_evidence/v2_history_immediate.json)는 정확한 source/workload와
+별도 통합 main 검사를 구분합니다. Python Store만 바뀌며 Rust의 독립 snapshot
+history는 불변입니다.
+
+기본 redo 후보 계산만 commit 전에 수행합니다. 깊은 fallback undo는 이전처럼
+history를 먼저 바꾼 뒤 재생하므로 실패 시 비원자적일 수 있으며 일반 undo-failure
+원자성을 보장하지 않습니다.
+
 ## 실제데이터사용안내
 
 - 반응성이중요하면1k행/10–100action정도의논문이력부터시작하세요.10krawline도완료됐지만
   20msUI약속은아닙니다.
-- 별도100k행corematrix는짧은10action을완료했으나큰targethistory는dispatchbudget에서
-  미완료였습니다. 미측정undo/redo는 **null** 이지0이아니며100k×1000세션으로외삽하지않습니다.
+- 이전100k행matrix의짧은10action은완료했으나큰이력은관찰budget에서중단됐습니다.
+  그undo/redo미측정값은**null**이지0이아닙니다. 위의후속100k×1000완료workload는
+  별도근거이며미완료기록의외삽·대체가아닙니다.
 - Typed통계/semantic은자기row/group/algorithm상한이있고여러경로는10kusable행입니다.
   Rawline측정이그제한을면제하지않습니다.
 - Inline data는state와함께복사/직렬화됩니다.16MiBrequest/2000pxpreview/256panel·cell/

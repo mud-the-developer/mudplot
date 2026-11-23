@@ -11,6 +11,7 @@ import re
 from dataclasses import fields
 from numbers import Real
 
+from ._semantics import MARKERS as SEMANTIC_MARKERS
 from .spec import ComponentStyleSpec, DistributionComponentsSpec
 
 BOX_COMPONENTS = ("body", "whisker", "cap", "median", "mean", "flier")
@@ -25,6 +26,11 @@ MARK_FIELDS = LINE_FIELDS | {
     "marker_edge_width",
 }
 MARKERS = ("none", "o", "d", "D", "s", "^", "v", "+", "x", ".", "*")
+VIOLIN_COMPONENT_MARKERS = (*MARKERS, "P", "X")
+BOXEN_FLIER_MARKERS = (
+    *MARKERS,
+    *(marker for marker in SEMANTIC_MARKERS if marker not in MARKERS),
+)
 NAMED_COLORS = {
     "none",
     "black",
@@ -67,6 +73,15 @@ def _finite(value):
         return False
 
 
+def component_markers(layer_type):
+    """Registered native component glyphs; not the filled semantic-cycle contract."""
+    if layer_type == "boxenplot":
+        return BOXEN_FLIER_MARKERS
+    if layer_type == "violin":
+        return VIOLIN_COMPONENT_MARKERS
+    return MARKERS
+
+
 def make_components(
     value: DistributionComponentsSpec | dict | None,
 ) -> DistributionComponentsSpec | None:
@@ -78,6 +93,69 @@ def make_components(
     return value
 
 
+def merge_components(base, override):
+    """Fieldwise native traits; omission inherits without mutating either spec."""
+    if base is None:
+        return override
+    if override is None:
+        return base
+    from dataclasses import replace
+
+    merged = {}
+    for component in fields(DistributionComponentsSpec):
+        current = getattr(base, component.name)
+        changed = getattr(override, component.name)
+        merged[component.name] = (
+            current
+            if changed is None
+            else changed
+            if current is None
+            else replace(
+                current,
+                **{
+                    prop.name: getattr(changed, prop.name)
+                    for prop in fields(ComponentStyleSpec)
+                    if getattr(changed, prop.name) is not None
+                },
+            )
+        )
+    return DistributionComponentsSpec(**merged)
+
+
+def component_traits(layer):
+    """Native traits of components that actually exist in this family/mode."""
+    if layer.type == "violin":
+        modes = {
+            "legacy": {
+                "mean": LINE_FIELDS,
+                "median": LINE_FIELDS,
+                "extrema": LINE_FIELDS,
+            },
+            "box": {"whisker": LINE_FIELDS, "box": LINE_FIELDS, "median": MARK_FIELDS},
+            "quart": {"quartile": LINE_FIELDS},
+            "point": {"point": MARK_FIELDS},
+            "stick": {"stick": LINE_FIELDS},
+            None: {},
+        }
+        mode = (
+            layer.inner
+            if layer.inner is None or isinstance(layer.inner, str)
+            else False
+        )
+        return {"body": BODY_FIELDS, **modes.get(mode, {})}
+    roles = (
+        BOX_COMPONENTS
+        if layer.type == "box"
+        else (BOXEN_COMPONENTS if layer.type == "boxenplot" else ())
+    )
+    return {
+        role: BODY_FIELDS
+        if role == "body"
+        else (MARK_FIELDS if role in ("mean", "flier") else LINE_FIELDS)
+        for role in roles
+    }
+
+
 def component_issues(layer):
     components = layer.components
     if components is None:
@@ -86,65 +164,19 @@ def component_issues(layer):
         return [
             "components must be a DistributionComponentsSpec (builder accepts dict)"
         ]
-    supported = BOX_COMPONENTS if layer.type == "box" else BOXEN_COMPONENTS
+    traits = component_traits(layer)
     issues = []
-    for role in BOX_COMPONENTS:
+    for component_field in fields(DistributionComponentsSpec):
+        role = component_field.name
         style = getattr(components, role)
         if style is None:
             continue
-        if role not in supported:
+        if role not in traits:
             issues.append(f"components.{role} is not supported for {layer.type}")
             continue
-        if not isinstance(style, ComponentStyleSpec):
-            issues.append(f"components.{role} must be a ComponentStyleSpec")
-            continue
-        allowed = (
-            BODY_FIELDS
-            if role == "body"
-            else MARK_FIELDS
-            if role in ("mean", "flier")
-            else LINE_FIELDS
+        issues.extend(
+            style_issues(style, traits[role], f"components.{role}", layer.type)
         )
-        for field in fields(ComponentStyleSpec):
-            value = getattr(style, field.name)
-            if value is None:
-                continue
-            path = f"components.{role}.{field.name}"
-            if field.name not in allowed:
-                issues.append(f"{path} is not supported for {role}")
-            elif field.name in ("color", "edge_color", "face_color"):
-                if not _color(value):
-                    issues.append(f"{path} requires hex/basic/cycle color")
-            elif field.name in ("line_width", "marker_size", "marker_edge_width"):
-                if (
-                    not _finite(value)
-                    or not 0 <= value <= 1000
-                    or (field.name == "marker_size" and value == 0)
-                ):
-                    issues.append(
-                        f"{path} must be finite in [0,1000] (marker_size positive)"
-                    )
-            elif field.name == "alpha":
-                if not _finite(value) or not 0 <= value <= 1:
-                    issues.append(f"{path} must be a finite fraction in [0,1]")
-            elif field.name == "line_style":
-                if not isinstance(value, str) or value not in (
-                    "-",
-                    "--",
-                    ":",
-                    "-.",
-                    "none",
-                ):
-                    issues.append(f"{path} requires a named line style")
-            elif field.name == "marker":
-                if not isinstance(value, str) or value not in MARKERS:
-                    issues.append(f"{path} requires a named marker")
-            elif field.name == "hatch" and (
-                not isinstance(value, str)
-                or len(value) > 32
-                or any(char not in "/\\|+-xXoO.*" for char in value)
-            ):
-                issues.append(f"{path} must be a bounded native hatch (empty disables)")
     if (
         components.mean is not None
         and layer.type == "box"
@@ -162,7 +194,81 @@ def component_issues(layer):
         and not layer.showmedians
     ):
         issues.append("components.median requires visible medians")
+    if layer.type == "violin" and layer.inner == "legacy":
+        for role, flag in (
+            ("mean", "showmeans"),
+            ("median", "showmedians"),
+            ("extrema", "showextrema"),
+        ):
+            if getattr(components, role) is not None and getattr(layer, flag) is False:
+                issues.append(f"components.{role} conflicts with {flag}=False")
     return issues
+
+
+def style_issues(style, allowed, prefix, layer_type):
+    """Validate the one persisted native-style vocabulary for an actual mark."""
+    if not isinstance(style, ComponentStyleSpec):
+        return [f"{prefix} must be a ComponentStyleSpec"]
+    issues = []
+    for item in fields(ComponentStyleSpec):
+        value = getattr(style, item.name)
+        if value is None:
+            continue
+        path = f"{prefix}.{item.name}"
+        if item.name not in allowed:
+            issues.append(f"{path} is not supported for this mark")
+        elif item.name in ("color", "edge_color", "face_color"):
+            if not _color(value):
+                issues.append(f"{path} requires hex/basic/cycle color")
+        elif item.name in ("line_width", "marker_size", "marker_edge_width"):
+            if (
+                not _finite(value)
+                or not 0 <= value <= 1000
+                or (item.name == "marker_size" and value == 0)
+            ):
+                issues.append(
+                    f"{path} must be finite in [0,1000] (marker_size positive)"
+                )
+        elif item.name == "alpha":
+            if not _finite(value) or not 0 <= value <= 1:
+                issues.append(f"{path} must be a finite fraction in [0,1]")
+        elif item.name == "line_style":
+            if not isinstance(value, str) or value not in (
+                "-",
+                "--",
+                ":",
+                "-.",
+                "none",
+            ):
+                issues.append(f"{path} requires a named line style")
+        elif item.name == "marker":
+            if not isinstance(value, str) or value not in component_markers(layer_type):
+                issues.append(f"{path} requires a named marker")
+        elif item.name == "hatch" and (
+            not isinstance(value, str)
+            or len(value) > 32
+            or any(char not in "/\\|+-xXoO.*" for char in value)
+        ):
+            issues.append(f"{path} must be a bounded native hatch (empty disables)")
+    return issues
+
+
+def set_component_linestyle(artist, value):
+    """Canonical native no-stroke representation for lines and collections."""
+    absent = value == "none"
+    artist.set_linestyle("None" if absent else value)
+    if absent and hasattr(artist, "get_paths"):
+        # Collections have dash patterns but no Line2D no-line drawing switch.
+        # Keep all paths/segments and independent fill, with zero actual stroke.
+        artist.set_linewidth(0)
+
+
+def finalize_component_stroke(artist, *, body=False):
+    """Represent zero stroke natively without hiding independent marker/fill."""
+    widths = artist.get_linewidth()
+    zero = widths == 0 if isinstance(widths, Real) else all(v == 0 for v in widths)
+    if zero:
+        artist.set_linestyle("solid" if body else "None")
 
 
 def apply_component_style(artist, style, *, body=False, include_color=True):
@@ -177,7 +283,7 @@ def apply_component_style(artist, style, *, body=False, include_color=True):
     if style.line_width is not None:
         artist.set_linewidth(style.line_width)
     if style.line_style is not None:
-        artist.set_linestyle(style.line_style)
+        set_component_linestyle(artist, style.line_style)
     if style.marker is not None:
         artist.set_marker(style.marker)
     if style.marker_size is not None:
@@ -188,3 +294,4 @@ def apply_component_style(artist, style, *, body=False, include_color=True):
         artist.set_alpha(style.alpha)
     if style.hatch is not None:
         artist.set_hatch(style.hatch)
+    finalize_component_stroke(artist, body=body)

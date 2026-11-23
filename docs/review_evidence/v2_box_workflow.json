@@ -1,0 +1,171 @@
+{
+  "catalogue_row": "C03",
+  "status": "parent_final_functional_acceptance_closed",
+  "scope": "ENTIRE frozen C03 row: columnar supplied bxp input, raw median bootstrap CI, cap geometry and typed per-hue components, including approved BOX-specific F01/F02 and reusable live/G01 boundary increments. Not whole F01/F02/G01/E01/Q01/DOC01/REL01/v2.",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "dependency_floors_changed": false,
+  "git_or_publication_actions": false,
+  "N12_integrated": false,
+  "frozen_binding": {
+    "record": "artifacts/v2_box/source_binding.json",
+    "sha256": "7600815d1db7b47bac678dab4e7344ef2e3f56aeaf15d9f5d8f2a65aa649e584",
+    "source_root": "$LOCAL_EVIDENCE/location-19/source",
+    "wheel": "artifacts/v2_box/dist/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "989c7aa44c45fe4a2367dce7b883418e8f2393a01f71e036f4a8dd593ea33aeb",
+    "source_archive_sha256": "8e580d598720df2445e58b1c1ebbf8eb04d10f9f3d5b562110fe575d6fac4247",
+    "runtime_modules": 64,
+    "all_engine_bytes_match_live_frozen_wheel_and_current_minimum_prefixes": true,
+    "one_distribution_build": "artifacts/v2_box/one_frozen_distribution_build.log",
+    "source_archive_and_wheel_immutable": true
+  },
+  "approved_contract": "artifacts/v2_box/approved_contract.json",
+  "implementation": {
+    "typed_surface": "BoxSpec / BoxSummarySpec / BoxMedianCISpec / BoxHueComponentsSpec; optional omitNone LayerSpec.box APPENDED after spectrum, preserving all old positional fields. Public .bxp is SAME box layer, not alias/shim/new serialized layer kind.",
+    "summary": "References existing DataSpec columns, median uses existing value role; no second table/copy of summary values. One selected summary row/category/effective-hue/raw-role tuple; duplicates reject, not aggregate/dedup.",
+    "order_units": "Absolute observation coordinates, whislo<=q1<=median<=q3<=whishi; mean and CI unclipped. Explicit category+measurement clocks and numeric origins/unit views map correct primary/y2 axes once; source data/IDs/order/units stay original.",
+    "availability": "Only REQUIRED missing summary/category/hue/role values drop rows. Optional missing mean/CI/flier NEVER deletes valid box. Explicit requested unavailable marks reject; two missing CI values unavailable, one-sided pair malformed. [] provided no fliers versus None unavailable; each supplied flier finite and strictly outside closed whiskers. No raw observations/mean/CI/outliers fabricated from quartiles.",
+    "bootstrap": "Raw MEDIAN percentile bootstrap only; level(0,100), existing n_boot1..100000, same stored nonbool nonnegative seed policy (no secret upper cap), local default_rng fresh per logical cell/common index schedule, original listwise cohort, existing1m resampling chunk target, no new weights/units. Data/log working statistics inverse-map once; singleton retained with warning/no bootstrap notch/no Gaussian fallback; empty reserved cells no fake marks.",
+    "cap_fraction": "Finite nonbool[0,1] of FINAL body width AFTER dodge/gap in category working coordinates (ordinal/numeric/native-log/UTC days), not measurement/point/mass units.0 keeps collapsed cap artists; omission native half-body. Explicit cap request enables caps, not unrelated body.",
+    "native_precedence": "Raw absent whis/notch/mean/flier/body/cap controls resolve actual native/theme context at effects. Explicit layer/CI/mapped-body/component controls override only owned properties. Supplied-summary availability remains distinct. Actual absent body parts retain whiskers/median/mean/flier, no fake patch or dropped data.",
+    "per_hue": "Typed raw-key list, shared category_key bool!=number, equivalent numeric key duplicates reject; known/reserved categorical effective hues only. One-column legacy group is CATEGORY, not automatically independent hue. Continuous numeric per-value overrides/unknown keys reject. Global component fields then matching per-hue fields merge; omitted properties inherit.",
+    "mapped_ownership": {
+      "hue": "BODY facefill ONLY; body edges/other component colors independent",
+      "size": "BODY outline stroke pt ONLY, not width/mass/flier-mean diameter/other component strokes",
+      "style": "BODY named dash AND actual FLIER glyph via SERIALIZED SemanticSpec.markers DEFAULT cycle included; no caller-key presence state",
+      "override_rule": "Reject actual owned body fill/linewidth/dash and mapped flier.marker conflicts; harmless whisker/cap/median/mean styles and marker diameters/edges/faces remain independent",
+      "guides": "Native box/line component styles, empty nondata paths not fake point boxes/observations; logical-panel preplanned shared normalized raw-label huebars and constant midpoint swatch"
+    },
+    "raw_roles": "Original hue/size/style tuple partitions, no metadata averaging; shared domain pools dedup original IDs while actual independent statistical/point layers remain. One-column category group may combine semantic hue; two-column independent legacy hue/c with SEM rejects per declared convention.",
+    "resource_bounds": {
+      "NEW_advanced_drawn_box_cells_per_layer": 256,
+      "selected_source_rows": 10000,
+      "TOTAL_declared_flier_values": 10000,
+      "row_AND_flier_bounds_separate": true,
+      "existing_semantic_rows_levels_tuples": [
+        10000,
+        64,
+        256
+      ],
+      "existing_facet_panels_figure_panels_layers": [
+        64,
+        256,
+        1024
+      ],
+      "existing_bootstrap_resamples": 100000,
+      "pre_native_allocation": true,
+      "legacy_no_new_request_limits_unchanged": true,
+      "profile": "artifacts/v2_box/native_box_budget_profile.json",
+      "profile_256": "2048nativeartists /23.98MB traced peak /.378s median, not SLA or limit lift"
+    },
+    "zero_stroke_root": "Correct native no-line Line2D preserves independently requested mean/flier markers; zero-stroke Patch preserves fill/hatch. All six dashed component roles work at MPL3.8/current; no invisible-whole-artist workaround/warning suppression/row drop.",
+    "numeric_roots": "Shared median/min/max select original values without MaxAbs erasure; robust even midpoint uses safe sum before halving and halves only overflow-risk sums. Endpoint-preserving linear percentiles and exact binary shift only near-underflow interior avoid fractional loss. Fraction/native/enumerated oracles; mean/sum arithmetic unchanged, no arbitrary precision promise."
+  },
+  "live_boundary_increment": {
+    "reuse": "Same existing typed FacetTemplateSpec/SetLiveFacets/SetFacetTemplate/reducer/materializer; no second live mapper, layout hierarchy or rerender-on-load.",
+    "per_hue": "Resolve existing categorical shared hue reservations BEFORE materialized validation only when explicit new per-hue BOX needs them; matching named-scale members consistent. Strict known/reserved key policy unchanged, no blanket unknown override allowance or old default-facet JSON change.",
+    "category_identity": "distribution_columns/category role, not one-column measurement x; same actual category retains order even if measurement column changes, changed category with explicit order=None infers own levels. Literal old lists remain literal selections; no edit-provenance/equal-old-list heuristic.",
+    "empty": "New BOX filtered/reserved-empty admission is frame-only, no fake artists/domain/observed guides; still validates options/refs/resources. Ordinary unfiltered all-missing and other-family invalid policies unchanged.",
+    "causal_proof": "artifacts/v2_box/live_channel_probe_lineage.json",
+    "before": "Actual immutable accepted-C02 left/right supported creation; distinct group-change/order=None transaction rejects stale A/B. Not falsely described as empty render.",
+    "after": "Current X/Y native1/1 bodies/whiskers/median coordinates, IDs/source/undo/redo/reopen; new C03 reserved view separately1/0/1. Original explicitA/B0/0/0 is requested selection, NOT causal bug proof; failed reserved-empty setup attempts did not execute transaction.",
+    "wider_G01_open": true
+  },
+  "independent_qualification": {
+    "cohorts": "artifacts/v2_box/qualification_cohorts.json",
+    "counts_must_not_be_summed": true,
+    "final_source_current": "1674passed/2hostPGFskip/2nativewarnings",
+    "final_source_minimum": "1674passed/2hostPGFskip/5333dependency-nativewarnings",
+    "installed_current": "586passed/2hostPGFskip/1nativeextreme-tickerwarning",
+    "installed_minimum": "586passed/2hostPGFskip/2944dependency-nativewarnings",
+    "source_and_reference_scope": "Raw/supplied native bxp/cbook/order-statistic/seeded-enumerated/Fraction geometry, actual means/fliers/notches/caps, native/log/v-h/dateBOTHroles/origin/inversion/primary+y2/facet/live, strict optional availability/typed keys/zeroStroke/resources, source/IDs/RNG, accepted shared scatter/line/strip/ECDF/rug/swarm plus heatmap/statistical root consumers.",
+    "postfreeze_coverage": "Added explicit PRIMARY/Y2 parameter to native/log v-h/raw-stat-axis/supplied independent geometry oracle:16passed/79deselected EACH installed profile. Engine/wheel unchanged; full frozen1674/installed586 remain their earlier TEST hashes. Stable executed and final test hashes/AST-format identity in postfreeze_test_presentation.json; reviewed test Ruff/types separately0.",
+    "origins": "Actual source-unset installed drivers/native references/Rust bridges use matching profiles, private ports/browser processes and /usr/bin/chromium; all64packagefiles match wheel. Current3.13.12/NP2.5.2/MPL3.11.1/Pillow13/pytest9.1.1; minimum3.11.14/NP1.23.5/MPL3.8/Pillow13/pytest9.0.3.",
+    "provenance": "artifacts/v2_box/qualification-harness/{current,minimum}/invocation-provenance.jsonl plus exact launcher/bootstrap/binding/fixture/test copies; no peer-run claim.",
+    "pure_no_deps": [
+      "artifacts/v2_box/frozen_current_pythonS_pure.log",
+      "artifacts/v2_box/frozen_minimum_pythonS_pure.log"
+    ],
+    "pure_method": "Direct SAMEwheelZIP Python-S; numpy/matplotlib/scipy/PIL/pandas/statsmodels actively denied; rawmedianCI/bxp/date-y2/roles/perhue/live/validate/action/JSON run with NO render.",
+    "rust": "20library+1binary passed,5owned subprocess helper tests ignored; fresh build,format,clippy,MSRV1.88; updated native HTTP scientific/state/history/security smoke passed324.9s.",
+    "static": "Frozen production directories Ruff0;27changedPython files formatterclean; wholeproject Pyright0; generated schema/capabilities/reference/gallery and required-field fixture freshness pass. Reviewed test extension Ruff/types0.",
+    "static_scope_limitation": "No global dot-selector format-clean claim: dot included archived forensic scripts, and untouched inherited scatter helper formatting differed. Failure logs retained; no immutable proof rewrite or unrelated engine formatting.",
+    "commands": "artifacts/v2_box/commands.json"
+  },
+  "actual_archived_legacy_parity": {
+    "comparison": "artifacts/v2_box/legacy/comparison.json",
+    "baseline_report": "artifacts/v2_box/legacy/accepted_preC03/report.json",
+    "current_report": "artifacts/v2_box/legacy/current/report.json",
+    "baseline_engine": "$LOCAL_EVIDENCE/location-20/source",
+    "distinct_origins_and_hashes": true,
+    "cases": 12,
+    "all_exact": [
+      "spec JSON",
+      "action JSON",
+      "RGBA",
+      "limits",
+      "nativebodypaths",
+      "nativeLinegeometry"
+    ],
+    "cases_include": "onecol/group/reserved/nested/horizontal/native-log-data+axis/percentile-mean/scalaralpha/globalcomponents/facets/lettervalue",
+    "no_permanent_default_pixel_pin": true
+  },
+  "actual_human_and_visual_proof": {
+    "source_Rust": "artifacts/v2_box/source-editor/rust-specialized0/box-{1400,540}",
+    "installed_current": "artifacts/v2_box/installed-current",
+    "installed_minimum": "artifacts/v2_box/installed-minimum",
+    "forms": "Registered box JSON raw medianCI→columnar summary mode, typedTrue/1 styles, Source/PNG rejection preservation, undo/redo, download/reopen, post-reopen reserved live whole-template edit, native geometry and visible SVGcaps excluding defs/legend, PDFphysicalsize. Generic forms are real usable surfaces, not CLI-only scaffolding.",
+    "publication_examples": [
+      "artifacts/v2_box/box_summaries.png",
+      "artifacts/v2_box/box_shared_roles.png",
+      "artifacts/v2_box/box_live_dates.png"
+    ],
+    "vectors_and_saved_sources": "Same basenames.svg/.pdf/.mplot.json; executable examples/box_workflow.py; actual galleryBox source/JSON/PNG updated.",
+    "readable_Rust": "artifacts/v2_box/readable-rust/{surface.png,edited.png,edited.svg,edited.pdf,edited.mplot.json,record.json}",
+    "readable_contract": "Separate installed human cap.25→1 / per-hue / legend edit;24source rows/4summarycells, actual mean/flier/capgeometry, invalidSpec+PNG/history preservation, undo/reopen. Dense3-cell mobile/date-y2 screens are functional stress proof, NOT publication QA.",
+    "PNG": "Rust edited.png is existing capped cached2000x1166 preview. Same downloaded12x7inch/dpi300JSON through CURRENT AND MIN installed CLI yields exact requested3600x2100 PNGs; no export feature/runtime change.",
+    "vector_structure": "artifacts/v2_box/vector_structure.json",
+    "parent_visual_decision": "Parent viewed and accepted three actual example rasters, readable installed Rust surface/matching output, compiled minimum contact sheet. Honest short-sample CI outside IQR/native flipped shapes retained, never clipped for prettiness."
+  },
+  "actual_TeX": {
+    "current_record": "artifacts/v2_box/pgf-proof/current-lualatex/record.json",
+    "minimum_record": "artifacts/v2_box/pgf-proof/minimum-lualatex/record.json",
+    "same_wheel_sha256": "989c7aa44c45fe4a2367dce7b883418e8f2393a01f71e036f4a8dd593ea33aeb",
+    "native_exports_per_profile": 5,
+    "compiled_pages_per_profile": 6,
+    "cases": [
+      "raw-supplied",
+      "shared-roles",
+      "live-dates",
+      "cited-micrometre-units",
+      "zero-six-component-strokes-with-realmarkers"
+    ],
+    "process": "Real ensurepip/private pip --no-deps --no-index fresh prefixes; all64installed package hashes matchwheel; /work explicitly NEWfrozen example source, engine installed prefix, no historical fallback. LuaLaTeX1.14→BibTeX0.99d→Lua×2, Ghostscript raster/text.",
+    "current_versions": "Python3.11.15/NP2.4.6/MPL3.11.1/Pillow13",
+    "minimum_versions": "Python3.11.15/NP1.23.5/MPL3.8/Pillow13",
+    "oracles": [
+      "Native mu glyph index848 and extracted μm",
+      "Observed median[1] / Independent median reference resolved",
+      "Compiled PDF URI https://example.org/box (decoded object streams)",
+      "Final no missing characters; no native missing-glyph warning"
+    ],
+    "host_skipped_regressions": "Box+N11 actual native PGF cases2passed/164deselected/0skip EACH actualTeXprofile, distinct from source/installed counts.",
+    "parent_view": "Minimum6page contact sheet accepted; cited and zero-marker pages reviewed by worker.",
+    "unexercised_engine": "pdflatex NOT exercised; Lua qualification is actual. Full TeX/Linux/reproducibility matrix belongs to separate product/REL01 gates."
+  },
+  "supported_consumer_assets": [
+    "API/models/actions/codec/schema/capabilities/generatedreference",
+    "bilingual BOX_WORKFLOW/FEATURE_COVERAGE/README and changelog",
+    "examples/box_workflow.py and existing box gallery",
+    "tests/native/science/availability/boundaries/realRust/browser",
+    "scripts/check_wheel.py SDist+installedAPI/CLI/native invariants",
+    "scripts/check_minimum_versions.py and rust_editor_smoke_test.py"
+  ],
+  "remaining_local_C03_gate": "None. Parent FINAL FUNCTIONAL ACCEPTANCE granted for whole C03 after reviewing stable receipt/source binding, native/root/causal/default/RC/availability/semantic contracts, actual12case legacy comparison, readable installed Rust surface/record and compiled minimum cited μm/zero-stroke marker pages. Distinct source1674/installed586/postfreeze16/actualTeX2 cohorts remain separate. Immutable989c wheel/archive/failures unchanged. This closes only specified C03 local feature gates, not whole F01/F02/G01/E01/Q01/DOC01/REL01/v2.",
+  "remaining_out_of_scope": [
+    "Whole F01/F02/G01/E01/Q01/DOC01",
+    "Product-wide Linux/Python/TeX/security/reproducible REL01 qualification",
+    "N12 main integration (not authorized into this frozen wheel)",
+    "All other frozen catalogue rows; no2.0/version/git/publication"
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "catalogue_id": "C06",
+  "status": "implemented; local feature qualification passed; v2 product remains incomplete",
+  "created_utc": "2026-10-30T16:18:51.940621+00:00",
+  "git_head": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "platform": "Linux",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "owner_decisions": {
+    "normalize_scope": [
+      "all",
+      "category",
+      "group"
+    ],
+    "default": "None means all; per panel/facet, not figure-wide",
+    "log_stack": "raw cumulative tops; finite positive baseline below each first mass; masses2,3 baseline1 give tops2,5; no offset or multiplication"
+  },
+  "source_sha256": {
+    "mudplot/spec.py": "5440af87122f9f971a6af224a65c1980327b6f23e0a69afdd4bb0de674bf087c",
+    "mudplot/_stat.py": "bd8add1334dc1187e2028bbb920ea3b12ad49240a891c5032bce4d7a40598480",
+    "mudplot/api.py": "f0e04d99da34d6a9b7be10a5590b612244225c8c7e2bfbb2e51c5b28b31f6983",
+    "mudplot/_estimate.py": "95c55242f07f0f5dc315a56762439f68951dec5489c66b287f86144730b252fd",
+    "mudplot/_ecdf.py": "c877e8565c20128dba3af5fc09bbb5cd7eb310514cda64fa2dd5ba9523447d4a",
+    "mudplot/_render.py": "941e6b153b7a0ed1ba1d6fc877eff276db154cdbfc98e3138827634aacad9ab3",
+    "mudplot/validate.py": "9babbbdd9e7bd0dc4b907d2a646c0c7eef66d4bf160ba1d9d29897d418b4add9",
+    "mudplot/capabilities.py": "0a0e29eb4530f67a926faf349df2a2cabd17893d34eadbae73217fd222eed1b2",
+    "tests/test_count_scopes.py": "31dcab758a833a1fadc01838715359f0b08c89c00097796f0c719f8f499ace27",
+    "tests/test_weighted_counts.py": "e69a40661780632e7fa270596a85fd7768e31ebad4f6eb85f3a05797151d6b3c",
+    "tests/test_statistical_scales.py": "4df9f289abcae91c2088c94f79ee1cf5e0969b35a7354903214ff05c0cf035b9",
+    "examples/weighted_counts.py": "ab87dec1b1100481d011b6254b23405f3524db633a9b4b6a6349188605561df5",
+    "scripts/check_minimum_versions.py": "6e99283f24fa2335f11461ce1df3224e80f32f90991978d6057d9aad2f4e4989",
+    "scripts/check_wheel.py": "8c58349b6b42a5110163635eb067f47b724b87221fd9d637bd14d97d9c33034e",
+    "scripts/rust_editor_smoke_test.py": "0e28a598ce206d9e968e532d228ef889e907020f0124a2eb96bcb2505edb1576",
+    "schemas/figure_spec.schema.json": "8134b47e695c768d1e534fb7f7a93910320b7cd015df7065b35d1dea56f11af8",
+    "schemas/capabilities.json": "57a59a437a1cda4d9b9dbe5a17d5f5c146e741f22f04a9933d61be3f479a1156",
+    "docs/REFERENCE.md": "3b58f704f73597de53666cf2c2bf82523efdf655e8dbc23fb22f037f1177b4f3",
+    "docs/WEIGHTED_COUNTS.md": "321f870916bf6b7f8f7839074441195e7a17aa51e605e253a7ce08d22c8b300e",
+    "docs/WEIGHTED_COUNTS.ko.md": "a554e32211344f9a2eb6351cdeb0b30df10c74f0835db8dd426418278048118f",
+    "docs/V2_SCOPE.md": "4472b2e79d6d298b5f5dcc3477d6482c1856831fab6a4583f4e6adba5339bf87",
+    "docs/V2_SCOPE.ko.md": "2189d2716fee1a46a5bc45e7aa6073da74babf7ffc1e1ab51eb432714d8f81e4"
+  },
+  "current_environment": {
+    "python": "3.13.12",
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pillow": "13.0.0",
+    "pytest": "9.1.1",
+    "playwright": "1.63.0"
+  },
+  "minimum_environment": {
+    "python": "3.11.14",
+    "numpy": "1.23.5",
+    "matplotlib": "3.8.0",
+    "pillow": "13.0.0",
+    "pytest": "9.2.0",
+    "jsonschema": "4.26.0"
+  },
+  "tests": {
+    "frozen_related": {
+      "tests": 459,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "frozen_minimum": {
+      "tests": 329,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contracts_and_legacy_demos": {
+      "tests": 75,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum_after_compatibility_fix": {
+      "tests": 135,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "new_regressions": {
+      "weighted_count": 44,
+      "scopes_log_and_precision": 85
+    }
+  },
+  "actual_scenarios": {
+    "browser": "Chromium153.0.8010.12, agent file -> Rust JSON form changes weights and group-to-category scope -> undo/redo -> downloaded JSON reopen -> PNG/SVG/PDF; invalid negative-weight edit retains spec/preview",
+    "browser_log": "artifacts/v2_count_scopes_20261030/rust-browser-complete.log",
+    "browser_probe": "artifacts/v2_count_scopes_20261030/rust_browser_probe.py",
+    "example": "examples/weighted_counts.py; global linear and category log stacks; all three exports plus JSON reload, input/state equality",
+    "visual": {
+      "parent_viewed": "default and smart PNGs; smart legend is outside marks in inter-bar gap",
+      "report": "artifacts/v2_count_scopes_20261030/cli-visual-lint.json",
+      "ok": true,
+      "measurements": {
+        "size_inches": [
+          6.0,
+          3.0
+        ],
+        "dpi": 300,
+        "pixels": [
+          1800,
+          900
+        ],
+        "min_font_pt": 8.0,
+        "legend_data_collisions": 0,
+        "text_overlaps": 0,
+        "clipped_elements": 0,
+        "duplicate_legends": 0,
+        "repairs": []
+      }
+    },
+    "docs": "all four English/Korean Python fences executed in isolated temporary output directories",
+    "cli": "validate and smart SVG rendering passed; visual JSON lint passed",
+    "installed": "check_wheel.py --render asserts installed prefix outside checkout, creates weighted native/log category-scope PNG, verifies raw cumulative tops100/100, roundtrips JSON and invokes installed CLI for SVG",
+    "installed_log": "artifacts/v2_count_scopes_20261030/distribution.log"
+  },
+  "development_artifacts": {
+    "artifacts/v2_count_scopes_20261030/development-dist/mudplot-1.1.0-py3-none-any.whl": "f70daea42410cb962e931f6118411816fbe6e7c7d469addf5c08b66e37a4c141",
+    "artifacts/v2_count_scopes_20261030/development-dist/mudplot-1.1.0.tar.gz": "aa1d1a14f85d7824462b80e71fdee4a3e750bdf2535262b323c18be1d28052e6"
+  },
+  "development_artifact_limit": "Unchanged1.1.0 development packaging checkpoint, before this receipt/status-ledger addition; not final2.0.0 source/artifact/reproducibility/metadata-resolved installation-matrix qualification. Required implementation/docs/tests and privacy exclusions passed.",
+  "static": {
+    "log": "artifacts/v2_count_scopes_20261030/static-complete.log",
+    "ruff": "passed,13files formatted",
+    "pyright": "0errors/warnings",
+    "active_lsp": "13changed paths probed; language-server errors absent; numeric-conversion heuristics over validated numerical/Fraction values triaged as false positives, prior dispositions retained"
+  },
+  "reviews": [
+    {
+      "run": "4f7d87bd-1dc1-4126-88a9-b00d33b3be14",
+      "finding": "P1 all-selected-empty native facet rendering",
+      "resolution": "reproduced, guarded absent native categories, seven rendering regressions added"
+    },
+    {
+      "run": "769b95d3-cfe9-423f-bc41-ec929b0e6133",
+      "finding": "P2 rowwise overflow scaling erased representable tiny positive mass",
+      "resolution": "parent reproduced both overflow and finite-total cases, exact Fraction fallback at extreme ranges,24explicit nonzero/equality reference regressions"
+    }
+  ],
+  "preserved_failures": {
+    "old_log_stack_characterization_source": "artifacts/v2_count_scopes_20261030/statistical_scales-before-policy-update.py",
+    "compatibility_failure_log": "artifacts/v2_count_scopes_20261030/contracts-initial.log",
+    "compatibility_failure_xml": "artifacts/v2_count_scopes_20261030/contracts-initial.xml",
+    "resolution": "new unset normalize_scope omitted via opt-in dataclass field metadata; all old demo JSON exact roundtrips pass, no demo JSON rewritten",
+    "other_attempts": "pytest/tool failures and generated-capability refresh failure retained in session history; initial sub-batch reports remain at v2_counts_20261030"
+  },
+  "warnings": "Existing Matplotlib ECDF extreme tick overflow warning and minimum-Matplotlib/modern-pyparsing deprecations retained; no assertions failed/skipped in the listed successful suites.",
+  "still_required": [
+    "other42required catalogue units",
+    "all3conditional evaluations",
+    "frozen full Linux/supported Python/browser/Rust/TeX/security qualification",
+    "2.0.0 version coordination and independent reproducible final builds",
+    "full metadata-resolved installed matrix"
+  ],
+  "not_claimed": [
+    "whole statistics task or v2 goal completion",
+    "Windows/macOS verification",
+    "original experimental data or physical print certification"
+  ],
+  "git_publication_actions": "none; local-only"
+}

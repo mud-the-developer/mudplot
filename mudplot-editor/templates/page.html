@@ -7,6 +7,7 @@
         content='{"selfRequestsOnly":true,"allowScriptTags":false,"allowEval":false}'>
   <title>mudplot Rust editor</title>
   <script src="/static/htmx.min.js"></script>
+  <script src="/static/editor.js" defer></script>
   <style>
     :root { color-scheme: light; font-family: system-ui, sans-serif; }
     body { margin: 0; background: #f4f1e9; color: #1d2528; }
@@ -15,8 +16,20 @@
     #app { display: grid; grid-template-columns: minmax(0, 2fr) minmax(18rem, 1fr); gap: 1rem; padding: 1rem; }
     .canvas, .controls { background: white; border: 1px solid #c8c2b5; border-radius: .4rem; padding: 1rem; }
     .canvas img { display: block; width: 100%; height: auto; }
+    .preview-wrap { position: relative; }
+    .drag-handle { position: absolute; transform: translate(-50%, -50%); margin: 0; padding: 0; width: 1.6rem; height: 1.6rem; border: 1px solid white; border-radius: 50%; background: #0e7490; color: white; cursor: move; touch-action: none; }
+    .drag-handle:focus-visible { outline: 3px solid #164e63; outline-offset: 2px; }
+    .drag-handle:disabled { opacity: .4; cursor: wait; }
+    fieldset { min-width: 0; margin-bottom: .8rem; border: 1px solid #c8c2b5; }
+    .hint { font-size: .85rem; }
     .controls h2 { margin-top: 0; }
     .control-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; align-items: end; margin-bottom: .8rem; }
+    .size-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .size-form button { grid-column: 1 / -1; justify-self: start; }
+    #app { align-items: start; }
+    .canvas, .inspector { box-sizing: border-box; max-height: calc(100dvh - 6rem); overflow: auto; }
+    .canvas { position: sticky; top: 1rem; }
+    .inspector { scrollbar-gutter: stable; }
     label { display: block; margin-bottom: .4rem; font-weight: 600; }
     input, select, textarea { box-sizing: border-box; width: 100%; padding: .4rem; }
     textarea { font: .85rem ui-monospace, monospace; }
@@ -28,7 +41,11 @@
     .error { grid-column: 1 / -1; margin: 0; padding: .7rem; border-left: .3rem solid #a52a2a; background: #fff0f0; }
     pre { max-height: 24rem; overflow: auto; padding: .7rem; background: #f6f6f6; font-size: .75rem; }
     .api { font-size: .85rem; }
-    @media (max-width: 48rem) { #app { grid-template-columns: 1fr; } }
+    @media (max-width: 48rem) {
+      #app { grid-template-columns: 1fr; }
+      .canvas { position: static; }
+      .canvas, .inspector { max-height: none; overflow: visible; }
+    }
   </style>
 </head>
 <body>

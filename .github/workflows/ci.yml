@@ -14,10 +14,10 @@ concurrency:
 jobs:
   lint-and-test:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 150
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -35,17 +35,9 @@ jobs:
         run: uv sync --locked --extra dev --extra browser
       - name: Install Chromium for the browser tests
         run: uv run playwright install --with-deps chromium
-      - name: Install pdflatex + tectonic (TeX engines for the .pgf-export
-          reference tests; the fuller pdflatex/lualatex/biber matrix runs
-          nightly in tex-matrix.yml and before publishing in release.yml)
-        # pdflatex (texlive-latex-base/-recommended/-pictures) is matplotlib's
-        # pgf.texsystem for the base .pgf-export tests (tests/conftest.py
-        # picks it over the xelatex default, since xelatex's Ubuntu package
-        # drags in nearly a full texlive-latex-extra tree for no benefit
-        # here); tectonic is a pinned release tarball fetched directly from
-        # GitHub over HTTPS, not the project's own "curl | sh" one-liner
-        # installer, to avoid piping a remote script straight into a shell
-        # (at the cost of bumping TECTONIC_VERSION by hand occasionally).
+      - name: Install TeX engines and bibliography tools
+        # Matplotlib uses XeLaTeX for Unicode PGF measurement. The document
+        # tests still exercise pdfLaTeX, LuaLaTeX, and pinned Tectonic.
         env:
           TECTONIC_VERSION: "0.15.0"
           TECTONIC_SHA256: >-
@@ -54,7 +46,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             texlive-latex-base texlive-latex-recommended texlive-pictures \
-            ghostscript
+            texlive-xetex texlive-luatex texlive-bibtex-extra biber ghostscript
           curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
             "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
           echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
@@ -115,12 +107,26 @@ jobs:
       - name: Rust editor real-browser smoke test
         if: matrix.python-version == '3.12'
         run: uv run python scripts/rust_editor_smoke_test.py --browser
+      - name: Required specialized Rust browser consumers (source bridge)
+        if: matrix.python-version == '3.12'
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/mudplot-specialized-target
+          MUDPLOT_BRIDGE_SOURCE_ROOT: ${{ github.workspace }}
+          MUDPLOT_REQUIRE_BROWSER: "1"
+          MPLBACKEND: Agg
+        run: |
+          sudo apt-get install -y poppler-utils
+          cargo build --locked --manifest-path mudplot-editor/Cargo.toml
+          MUDPLOT_EDITOR_BIN="$CARGO_TARGET_DIR/debug/mudplot-editor" \
+          MUDPLOT_BRIDGE_PYTHON="$PWD/.venv/bin/python" \
+            uv run --no-sync pytest -q tests/test_rust_specialized_controls.py \
+              --junitxml=ci-specialized-browser.xml
       - name: Sdist/wheel rebuild and contents are complete
-        run: uv run python scripts/check_wheel.py
+        run: uv run python scripts/check_wheel.py --render
 
   minimum-render:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -128,8 +134,8 @@ jobs:
       - name: Install uv for the isolated dependency floor
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
-          python-version: "3.10"
-          cache-suffix: minimum-python-3.10
+          python-version: "3.11"
+          cache-suffix: minimum-python-3.11
           cache-dependency-glob: |
             uv.lock
             scripts/check_minimum_versions.py.lock
@@ -146,7 +152,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y \
             texlive-latex-base texlive-latex-recommended texlive-pictures \
-            ghostscript
+            texlive-xetex texlive-luatex texlive-bibtex-extra biber ghostscript
           curl --retry 3 --retry-all-errors -fsSL -o tectonic.tar.gz \
             "https://github.com/tectonic-typesetting/tectonic/releases/download/tectonic%40${TECTONIC_VERSION}/tectonic-${TECTONIC_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
           echo "${TECTONIC_SHA256}  tectonic.tar.gz" \
@@ -159,7 +165,7 @@ jobs:
         env:
           PYTEST_ADDOPTS: "--junitxml=minimum-results.xml"
         run: >-
-          uv run --python 3.10 --locked --script
+          uv run --python 3.11 --locked --script
           scripts/check_minimum_versions.py
       - name: Required minimum TeX paths executed
         if: always()

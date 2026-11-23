@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import date, datetime, time, timezone
+from datetime import UTC, date, datetime, time
 from decimal import Decimal
 
 import mudplot as mp
@@ -62,7 +62,7 @@ def test_table_dates_microseconds_and_utc_keep_iso_values_and_source(table_facto
             "date": [date(2026, 1, 2), None],
             "time": [time(9, 30, 1, 123456), None],
             "timestamp": [
-                datetime(2026, 1, 2, 9, 30, 1, 123456, tzinfo=timezone.utc),
+                datetime(2026, 1, 2, 9, 30, 1, 123456, tzinfo=UTC),
                 None,
             ],
         }

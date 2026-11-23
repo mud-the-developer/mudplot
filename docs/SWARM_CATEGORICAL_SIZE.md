@@ -35,14 +35,13 @@ URLs/citations. Colour groups stay observed-only and pack jointly when not dodge
 Legend=False removes size guides, not mapping. Existing clipping/midpoint behavior
 for numeric size is unchanged; numeric size_norm is invalid for categorical size.
 
-Primary Cartesian layers support [facets/selected empty frames](SWARM_FACETS.md).
-Semantic hue/style, dates, y2,
-cross-family shared scales and simultaneous scalar marker_size remain rejected.
-[Swarm-only named sizes](SWARM_SHARED_SIZE.md) can share pooled category ranks.
-The2,000-usable-row limit applies after explicit row selection. Nonrepresentable
-positive areas fail before artists; no epsilon or source coercion. No model/action/
-spec fields or dependencies are added. Successful Figures remain caller-owned.
-
-Raw JSON is preserved by both editors; dedicated controls and independent human
-readability/AT certification are not claimed. Resource bounds are not a total
-CPU/RAM/sandbox guarantee. Broader style/date/facet semantics remain open.
+[C02's complete workflow](SWARM_FACETS.md) supports categorical/numeric shared
+hue/size, named style glyphs, dates, v/h/y2 and explicit cross-layer packing/live
+template edits. [Named sizes](SWARM_SHARED_SIZE.md) can share ranks with other
+documented point/curve families, while keeping their mark-specific physical units.
+Simultaneous scalar marker_size with mapped size still rejects. The unchanged
+2,000-usable-row layer limit applies after selection; the new named operation
+limit is 4,000 physical instances, never deduplicated across drawn members.
+Nonrepresentable positive areas fail before artists; no epsilon/source coercion
+or dependency change. Successful Figures remain caller-owned. Synthetic previews
+and resource bounds are not human accessibility or total CPU/RAM guarantees.

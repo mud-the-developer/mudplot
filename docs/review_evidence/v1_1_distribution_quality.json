@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "verified_utc": "2026-10-30T07:06:05.509132+00:00",
+  "status": "local-1.1.0-distribution-hardening-not-published",
+  "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "commit_push_pr_tag_publication_performed": false,
+  "scope": "Packaging-only correctness and installed-workflow guards; existing Matplotlib, JSON and Rust behavior preserved.",
+  "finding": {
+    "description": "The previous sdist omitted all eight scientific-quality PNGs linked from its included documentation.",
+    "cause": "The generic *.png ignore rule had no exception for docs/images/scientific_quality/.",
+    "previous_sdist": "artifacts/v1_1_hardening_20261029/final-dist/mudplot-1.1.0.tar.gz",
+    "previous_sdist_sha256": "820cd742e164b0eb31e0485522e03d2dafd9cb7a6e6a63d4ae19d72b5087d37d",
+    "missing_images": 8,
+    "failure_log": "artifacts/v1_1_installed_20261030/missing-scientific-assets.log",
+    "fix": "Add the existing-style one-line PNG ignore exception; require all8 PNGs and scientific-quality docs/example/tests/report in SDIST_FILES.",
+    "images_modified": false
+  },
+  "runtime_integrity": {
+    "qualified_baseline_receipt": "docs/review_evidence/v1_1_quality_hardening.json",
+    "library_files_checked": 53,
+    "library_manifest_sha256": "291faf95bbf6dacabaf479a10a73f87168f02be354bb2d9fe39ae40df32fa45f",
+    "library_files_byte_identical_to_qualified_snapshot": true,
+    "package_metadata_and_all_three_locks_unchanged": true,
+    "full_numerical_suite_rerun": false,
+    "baseline_full_suites": {
+      "locked_py311": {
+        "passed": 4488,
+        "skipped": 45,
+        "failed": 0
+      },
+      "locked_py312": {
+        "passed": 4488,
+        "skipped": 45,
+        "failed": 0
+      },
+      "minimum": {
+        "passed": 3676,
+        "skipped": 36,
+        "failed": 0
+      }
+    },
+    "note": "The numerical baseline is reused because no library files changed. New packaging checks/tests, ignore policy, local CI configuration and documentation were validated separately."
+  },
+  "persistent_guards": {
+    "command": "uv run python scripts/check_wheel.py --render",
+    "default_core_only_zip_smoke_preserved": true,
+    "core_only_smoke_checks_recommendation": true,
+    "optional_render_mode": "Offline no-deps wheel installation into a temporary prefix, borrowing active locked render dependencies.",
+    "coverage": [
+      "installed-prefix import assertion prevents editable fallback",
+      "default/smart PNG at actual dimensions",
+      "smart-print SVG and JSON-safe quality metadata",
+      "installed capabilities/render/lint console commands",
+      "machine-readable visual lint",
+      "invalid policy preserves previous output",
+      "no leaked Matplotlib figures",
+      "PYTHONOPTIMIZE cleared so assertions remain active"
+    ],
+    "ci_and_both_release_rebuilds_require_render_mode": true,
+    "remote_ci_executed": false
+  },
+  "verification": {
+    "initial_six_clean_installations": [
+      {
+        "artifact": "wheel",
+        "extra": "core",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      },
+      {
+        "artifact": "wheel",
+        "extra": "color",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      },
+      {
+        "artifact": "wheel",
+        "extra": "render",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      },
+      {
+        "artifact": "sdist",
+        "extra": "core",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      },
+      {
+        "artifact": "sdist",
+        "extra": "color",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      },
+      {
+        "artifact": "sdist",
+        "extra": "render",
+        "python": "3.13.12",
+        "passed": true,
+        "module_origin_verified": true
+      }
+    ],
+    "initial_installation_log": "artifacts/v1_1_installed_20261030/installed-probe.log",
+    "initial_installation_scope": "Separate fresh environments with explicitly pinned runtime requirements. Final metadata-resolved installations are recorded in the external manifest.",
+    "policy_regression_cases_added": 5,
+    "policy_metadata_tests": {
+      "passed": 40,
+      "log": "artifacts/v1_1_installed_20261030/final-static-policy.log"
+    },
+    "state_contract_tests": {
+      "passed": 15,
+      "log": "artifacts/v1_1_installed_20261030/state-contracts.log"
+    },
+    "plot_apply_completed_prefix_contract_preserved": true,
+    "minimum_installed_guard": {
+      "python": "3.11.14",
+      "numpy": "1.23.5",
+      "matplotlib": "3.8.0",
+      "pillow": "13.0.0",
+      "passed": true,
+      "log": "artifacts/v1_1_installed_20261030/minimum-installed-guard.log"
+    },
+    "malformed_entrypoint_negative_control": {
+      "expected_rejection": true,
+      "log": "artifacts/v1_1_installed_20261030/negative-entrypoint.log"
+    },
+    "static_schema_version_checks": {
+      "passed": true,
+      "log": "artifacts/v1_1_installed_20261030/final-static-policy.log"
+    },
+    "dependency_audits": {
+      "all_three_locks_passed_without_waivers": true,
+      "log": "artifacts/v1_1_installed_20261030/security-audits.log"
+    },
+    "independent_source_review": "No issues found in the bounded installed-smoke/assets/policy diff; execution results verified by parent."
+  },
+  "initial_probe_correction": {
+    "library_defect": false,
+    "reason": "The first probe incorrectly expected static palette lint without NumPy. The existing documented color-extra requirement was retained, and core/color expectations were separated.",
+    "original_probe_preserved": "artifacts/v1_1_installed_20261030/installed_probe_initial.py",
+    "original_log_preserved": "artifacts/v1_1_installed_20261030/installed-probe-initial.log"
+  },
+  "final_artifacts": {
+    "directory": "artifacts/v1_1_installed_20261030/final-dist",
+    "external_manifest": "artifacts/v1_1_installed_20261030/final-artifact-manifest.json",
+    "verification_note": "Final rebuild hashes, exact PNG inclusion and final metadata-resolved core/color/render installations are recorded externally after these documentation updates, avoiding self-referential sdist hashes."
+  },
+  "historical_receipts_and_artifacts_unchanged": true,
+  "remaining_limits": [
+    "Current work is local/uncommitted; no remote CI, commit, push, PR, tag or publication authorized/performed.",
+    "Windows and physical-print review remain unperformed; original failure datasets were not supplied.",
+    "Visual QA remains a deterministic geometry proxy, not accessibility/statistical certification.",
+    "Installed --render guard borrows active dependencies; it is not a universal dependency-range or build reproducibility guarantee."
+  ]
+}

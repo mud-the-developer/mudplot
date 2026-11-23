@@ -8,7 +8,20 @@
 관례에 따라, 이 파일은 영어판의 요약본입니다 — 자세한 내용은 항상 영어
 `ROADMAP.md`를 확인하세요.)
 
-## 현재 목표: v1.1
+## 현재 목표: v2 (구현 중)
+
+확정한 유한 기능 목록과 인수조건은 [V2_SCOPE.md](docs/V2_SCOPE.md),
+[한국어 요약](docs/V2_SCOPE.ko.md)에 있습니다. 아래 미완료 기능은 그 범위의 입력이며
+실제 API·JSON·CLI·Rust 편집과 검증 전에는 완료로 표시하지 않습니다.
+Linux 검증을 필수로 하고 Windows/macOS·원격 CI·발행은 현재 로컬 목표에서 제외합니다.
+실사용·profiling 조건이 붙은 개선은 조건 평가 후 필요할 때 구현합니다.
+
+### 보존한 기준선: v1.1 로컬 후보
+
+사용자가 v1.1을 현재 구현·문서화된 범위와 agent용 과학 그림 품질 개선으로
+고정했습니다. 현재 판정은 [릴리스 체크리스트](docs/V1_1_RELEASE_CHECKLIST.ko.md)를
+따릅니다. 아래 미완료 B2b/B3/B4/B5/B6 확장은 후속 버전 백로그이며, 완료로
+바꿔 표시하지 않습니다. Rust smart 토글은 제외하고 기존 편집기 호환성은 검증합니다.
 
 순서별 배치·검증 체크포인트·릴리스 조건은
 [v1.1 개발 진행표](docs/V1_1_PLAN.ko.md)를 따른다. 아직 Unreleased 개발이며,
@@ -21,7 +34,7 @@
 전에는 backend 추상화를 추가하지 않는다. Plotly나 Cairo는 reducer·JSON
 계약을 바꾸지 않는 선택적 post-1.0 adapter로 추가할 수 있다.
 
-- **(완료)** 등록된 28개 전체 layer의 영문·한글 실행 문서와 CI registry
+- **(완료)** 등록된 41개 전체 layer의 영문·한글 실행 문서와 CI registry
   drift 검증
 - **(완료)** 공개 Python/CLI/schema 표면을 감사하고
   [1.x 호환성 및 deprecation 정책](docs/COMPATIBILITY.ko.md) 문서화
@@ -33,10 +46,11 @@
 
 ## 1. Matplotlib / Seaborn 기능 동등성
 
-현재 checkout은 Unreleased 원자료 통계/swarm/letter-value/ECDF/가중 2변량 KDE를 포함해 37종입니다:
-line, lineplot, regplot, scatter, stripplot, swarmplot, bar, barplot, pointplot, countplot,
+현재 checkout은 Unreleased 원자료 통계/swarm/letter-value/ECDF/가중 2변량 KDE와 native primitive를 포함해 41종입니다:
+line, stem, stairs, eventplot, broken_barh, lineplot, regplot, scatter, stripplot,
+swarmplot, bar, barplot, pointplot, countplot,
 errorbar, band, stackplot, hist, hist2d, hexbin, quiver, box, boxenplot, violin,
-kde, kde2d, ecdf, rug, heatmap, contour, contourf, pie, hline, vline, text, annotate,
+kde, kde2d, ecdf, rug, heatmap, clustermap, contour, contourf, pie, hline, vline, text, annotate,
 scatter3d, line3d, surface, wireframe.
 그래프 개수는 기능 동등성을 의미하지 않습니다.
 
@@ -166,7 +180,7 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   JSON을 갖춘 영문·한글 실행 갤러리 항목을 추가하고,
   `capabilities.LAYER_TYPES`와 정확히 일치하는지 CI에서 검증
 - **(완료)** `capabilities.LAYER_TYPES` 기반 범용 advanced 폼으로 등록된
-  레이어 28종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
+  레이어 41종 모두 노출. `LayerSpec` JSON 필드, 타입별 required/optional
   안내, 오타·필수 필드 검사를 제공하며 향후 registry 항목도 자동 반영
 - **(완료)** 멀티패널 격자, 활성 패널 선택, 패널별 add/remove/edit,
   Cartesian/polar/3-D projection 전환, 선택 패널 범례·제목·주석 드래그
@@ -194,17 +208,17 @@ api.py 빌더 → 테스트 → 스키마/문서 재생성 → 일치성 테스�
   `/action`, visual control, 전체 layer capability metadata, spec open,
   undo/redo/reset 제공
 - 새 dependency-free-core `mudplot apply`와 기존 `mudplot render` subprocess를 호출해
-  28개 layer의 reducer/validator/renderer 의미를 Rust에 복제하지 않음
+  41개 layer의 reducer/validator/renderer 의미를 Rust에 복제하지 않음
 - 인증 없는 로컬 단일 session이며 non-loopback bind/HTTP Host와
   cross-origin browser mutation을 거부
 
-로컬 실사용이 정당화한 뒤에만 Python editor의 특수 axis/drag control,
-원격 사용용 cookie session/auth를 추가. native Rust renderer와 전체 schema
-강타입화는 Rust가 reduction/rendering을 맡을 때만 검토.
+CND01 실제 Python/Rust 비교에서 특수 축 제어와 이동 핸들의 누락을 확인하여 조건이 발동했습니다. Rust에 활성 패널 x/y/y2/z 제어와 지원하는 native 제목·범례·text/annotate 이동을 구현했습니다. 설치 bridge·실제 browser·history·거부 복구·재개방·export·좌표 증거는 [로컬 기능 근거](docs/review_evidence/v2_rust_specialized_controls.json)에 있으며 전체 v2 완료를 뜻하지 않습니다.
+
+원격 사용용 cookie session/auth는 실제 요구가 있을 때 검토합니다. Native Rust renderer와 전체 schema 강타입화는 Rust가 reduction/rendering을 맡을 때만 검토합니다.
 
 ## 4. 품질/도구
 
-- **(완료)** pyright 정적 타입 검사 — Python 3.10 언어 수준으로
+- **(완료)** pyright 정적 타입 검사 — Python 3.11 언어 수준으로
   `mudplot/`, 대시보드, 유지관리 스크립트를 CI에서 검사하며 소비자용
   `py.typed`도 계속 배포
 - **(완료)** hypothesis 기반 속성 테스트 -- reduce()의 state/action 불변성,

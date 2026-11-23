@@ -13,29 +13,43 @@ p = (mp.plot({"height": [2, -1, 3]})
        .labels(x="Bin edges", y="Supplied height"))
 ```
 
-These are **already computed heights**, not observations to histogram again.
-No sorting, normalization, rebinning or interpolation is performed. N supplied
-heights require exactly N+1 finite strictly increasing edges, with finite positive
-representable widths. The source table remains row-aligned at N rows; edges live
-in the existing LayerSpec.bins list, and LayerSpec.x names the height column.
-Their units need explicit axis labels because edges are configuration, not a named
-data column. Original data, edges, JSON/actions and SetData are preserved. Changing
-the number of heights requires explicit matching new edges; no silent regeneration.
+The height column supplies **already computed values**, not observations to
+histogram again. A plain aligned call uses N heights and N+1 finite, strictly
+increasing edges with representable widths. It draws an unfilled vertical
+outline on the primary or enabled `axis="y2"` axis. Omitted or null `baseline`
+means raw zero. Signed ordinary heights and baselines remain valid on linear
+axes.
 
-The first subset is vertical unfilled outlines on linear Cartesian primary/y2 axes.
-There must be 1..10,000 finite numeric heights (not bool/missing/categories).
-Baseline is an existing finite raw scalar field, default zero; raw JSON None also
-selects zero, not an open path. Negative heights/baselines are valid. Colour, dash,
-alpha and finite line width in [0,1000] style the outline; explicit zero is retained.
-Returned successful Figures remain caller-owned and must be closed.
+Use `stairs=mp.StairsSpec(fill=True)` to fill to a raw baseline, or
+`stairs=mp.StairsSpec(open=True)` to omit the baseline and its end segments.
+Open stairs cannot be filled or use a nonzero baseline. On a log axis the
+drawn coordinates must be strictly positive, including the value baseline
+when present. Symlog, asinh and logit follow their native axis domains.
+Declare a date X axis to use ISO or literal canonical-day edges; do not mix
+the two within one vector. A date Y/Y2 axis may use supplied date heights.
+Its scalar baseline is a raw UTC-1970 day coordinate, not a clock offset.
 
-No horizontal/fill/open-baseline/log/polar/3-D/group/semantic/weight/facet/dropna
-mapping is exposed. Unsupported nondefault fields reject rather than disappearing.
-These bounds are not a total CPU/RAM/sandbox guarantee, and the synthetic gallery
-is not independent human readability/AT certification.
+`group` and typed `hue_order` select and reserve colours. On fixed or live
+facets, selected rows keep their original zero-based table index as bin ID.
+Use `bin_index="slot"` for separate heights on an interleaved common grid.
+A selected group cannot contain the same bin twice. Supplied gaps split the
+path; empty reserved groups or panels draw nothing. `SetData` preserves the
+fixed selectors, and no derived geometry replaces the saved source.
 
-The existing raw action route needs no new fields:
+`StairsRebinSpec(edges=[0, 1, 3, 5], measure="mass")` conservatively rebins
+source masses `[4, 9]` on `[0, 2, 5]` to `[2, 5, 6]`. Each mass is uniform
+within its source bin. Use `measure="density"` to conserve the integral and
+keep the output in density units, including per day on date X. The source and
+target must have exactly the same outer endpoints, with complete source
+support for each nonempty group. Rebin heights must be finite and nonnegative
+physical quantities, not dates. Arithmetic is exact before the final rounding;
+overflow and a positive result rounded to zero are errors. Source bins/selected
+heights and total derived heights are each bounded at 10,000, not per group.
+
+See the [runnable PNG/SVG/PDF example](../examples/stairs_workflow.py).
+No horizontal geometry, estimator, weights or semantic mappings. Successful
+figures remain caller-owned. The existing AddLayer action accepts the options:
 
 ```json
-{"type":"AddLayer","layer":{"type":"stairs","x":"height","bins":[0,1,3,4],"baseline":0}}
+{"type":"AddLayer","layer":{"type":"stairs","x":"height","bins":[0,2,5],"stairs":{"rebin":{"edges":[0,1,3,5],"measure":"mass"}}}}
 ```

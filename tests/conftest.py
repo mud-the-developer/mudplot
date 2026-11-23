@@ -1,6 +1,10 @@
 """Shared pytest fixtures."""
 
+import os
 import shutil
+import socket
+import subprocess
+import time
 
 import pytest
 
@@ -44,3 +48,49 @@ def _close_figures():
     except ImportError:
         return
     plt.close("all")
+
+
+@pytest.fixture(scope="module")
+def rust_editor_server(tmp_path_factory):
+    binary = os.getenv("MUDPLOT_EDITOR_BIN")
+    python = os.getenv("MUDPLOT_BRIDGE_PYTHON")
+    required = os.getenv("MUDPLOT_REQUIRE_BROWSER") == "1"
+    if not binary or not python:
+        if required:
+            pytest.fail("required Rust browser binary/interpreter setup is missing")
+        pytest.skip("explicit source or installed Rust browser profile not selected")
+    directory = tmp_path_factory.mktemp("rust-specialized")
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", 0))
+        port = probe.getsockname()[1]
+    env = os.environ.copy()
+    if os.getenv("MUDPLOT_BRIDGE_SOURCE_ROOT"):
+        env["PYTHONPATH"] = os.environ["MUDPLOT_BRIDGE_SOURCE_ROOT"]
+    else:
+        env.pop("PYTHONPATH", None)
+    env["MPLBACKEND"] = "Agg"
+    with (directory / "server.log").open("w+") as log:
+        process = subprocess.Popen(
+            [binary, "--bind", f"127.0.0.1:{port}", "--python", python],
+            cwd=directory,
+            env=env,
+            stdout=log,
+            stderr=log,
+        )
+        try:
+            deadline = time.monotonic() + 30
+            while True:
+                if process.poll() is not None:
+                    log.seek(0)
+                    pytest.fail(log.read())
+                try:
+                    with socket.create_connection(("127.0.0.1", port), timeout=0.1):
+                        break
+                except OSError:
+                    if time.monotonic() > deadline:
+                        raise
+                    time.sleep(0.05)
+            yield f"http://127.0.0.1:{port}", directory
+        finally:
+            process.terminate()
+            process.wait(timeout=10)

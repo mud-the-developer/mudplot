@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "catalogue_id": "C01",
+  "status": "verified-bounded-functional-acceptance",
+  "previous_functional_receipt": "v2_strip_categories.json (preserved as historical in-progress receipt)",
+  "parent_acceptance": "Parent reviewed feature source, main3000x2100 raster, realRust browser screenshot/edited2000x1400 raster, SVG720x504pt structure, installed-minimum nested_h raster and complete command/report lineage; accepted bounded C01 functional row on2026-11-03. No PDF visual/physical-print/other-OS review claimed.",
+  "snapshot": {
+    "archive": "artifacts/v2_integrated_qualification/source.tar",
+    "sha256": "8d0fa0d9d6d275c8b7a39c2b8d0c4896fccad79f40e89505c559515c8cc92c3c",
+    "wheel": "artifacts/v2_integrated_qualification/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "dc125140d8279eaf61db70c6261dad23ef75492f0593de2b714259b813311dce",
+    "version": "1.1.0",
+    "schema": "0.1",
+    "scope": "ONE frozen C01+M01 annotation/rotation subset+CND02 snapshot; later F01 source is not qualified by these results",
+    "privacy": "archive excludes .pi/.git/.venv/artifacts/generated caches/targets; .pi untouched"
+  },
+  "current_cohort": {
+    "cases": 407,
+    "seconds": 96.01,
+    "skipped": 0,
+    "commands": "../../artifacts/v2_integrated_qualification/current-commands.json",
+    "log": "../../artifacts/v2_integrated_qualification/current-cohort.log",
+    "environment": "Python3.13.12 NumPy2.5.2 Matplotlib3.11.1 Pillow13.0.0"
+  },
+  "minimum_cohort": {
+    "cases": 369,
+    "seconds": 75.52,
+    "warnings": 203,
+    "skipped": 0,
+    "commands": "../../artifacts/v2_integrated_qualification/installed-commands.json",
+    "log": "../../artifacts/v2_integrated_qualification/minimum-cohort.log",
+    "environment": "Python3.11.14 NumPy1.23.5 Matplotlib3.8.0 Pillow13.0.0 SciPy1.10.0 statsmodels0.14.1",
+    "import_scope": "pytest imports frozen source; installed package origin established separately"
+  },
+  "installed_api_cli": {
+    "origin": "$PROVIDER/environment-07",
+    "proof": "../../artifacts/v2_integrated_qualification/installed-report.json",
+    "cli": "../../artifacts/v2_integrated_qualification/installed-cli-results.json",
+    "core": "../../artifacts/v2_integrated_qualification/installed-core-report.json",
+    "assertions": "nestedv/h exact reserved offsets and observed point identities; original source/action/JSON equality; native log local seed references; explicit ten-day temporal spacing; Rust-exported JSON reopened; six cases PNG/SVG/PDF dimensions/signatures/structure and actualCLI validate/render; installed Python-S core no NumPy/Matplotlib/SciPy"
+  },
+  "installed_harness_lineage": {
+    "original_script_status": "Both installed_smoke invocations returned1, not PASS. First pixel expectation incorrectly rounded787.5 to788 instead of native truncation787. After correcting that, all consumer geometry/JSON/action/PNG/SVG/PDF/CLI assertions completed, then final metadata assertion incorrectly expected singular jitter_policy instead of capability jitter_policies.",
+    "corrected_observer": "Correct metadata checks and complete persisted output inspection returned0; an intermediate report serializer failed on NumPy int64 and was normalized. All three harness failure logs and successful observer log preserved in artifacts/v2_integrated_qualification.",
+    "no_product_failure_inference": "These harness corrections are not hidden, rerun test counts are not summed, and an original failing script is not labelled PASS."
+  },
+  "browser_rust": {
+    "server_command": "cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --bind127.0.0.1:8793 --python/home/mud/repo/mudplot/.venv/bin/python",
+    "runtime": "ActualRust debugbinary+freshPythonbridge children, Chromium150.0.7871.100 via isolatedheadless CDP9227; no installedRust binary qualification or all-row UI claim",
+    "create": "Visiblegeneric layer form created panel0 and three RawJSONAction AddLayers created panels1-3; fetched spec structurally equals saved four-panel API example.",
+    "edit": "VisibleFigureSpec form edited actual strip policy none/seed29/dodge1/jitter.3/order treated,empty,control; undo restored original and redo restored edit; source8 rows/timestamps unchanged.",
+    "rejection": "Invalid jitter_policy normal produced explicit bridgevalidation error and unchanged accepted spec plus PNGSHA256.",
+    "save_reopen": "Actualbrowser HTTP link responses savedJSON/PNG/SVG/PDF; saved JSON reopened via visible form with exact FormData length8987 and source/settings equality.",
+    "artifacts": "artifacts/v2_strip_categories/rust-editor.png,rust-edited.mplot.json,rust-edited.png,rust-edited.svg,rust-edited.pdf",
+    "preserved_attempts": [
+      "Directbrowser launch timedout; isolatedheadlessChromiumservice thenCDPattach succeeded.",
+      "HTMX-disabled textarea attempt: observed v3,disabled=[],layers[1,0,0,0],noalert; resumed only unfinished AddLayers with enabled-field and transaction barriers.",
+      "Disclosure reset after rejection caused off-viewport button failures; exact request32 body5bytes json= returnedEOF with unchangedaccepted spec. Inspected requests/formstate; subsequent visibleform value+FormData assertion/nativeclick reopened correctly.",
+      "Concurrent waitForDownload/tabcall rejected by browsertool; saved actualbrowserHTTP exportresponses instead. JSworker reset, existingtab recovered; no claim native download-event success."
+    ]
+  },
+  "static_and_generated": "Frozen20-file Ruff and schema/capabilities/reference/gallery synchronization passed; exact commands in current-commands.json.",
+  "cache_exception": {
+    "note": "Hypothesis generated a .hypothesis cache in frozen cwd during cohort; archive contains no .hypothesis members. Relocated only this generated directory to own outputs. No source/tests/docs were edited. No test rerun.",
+    "relocated_from": "$LOCAL_EVIDENCE/location-55",
+    "relocated_to": "$LOCAL_EVIDENCE/location-56"
+  },
+  "remaining": "FunctionalC01 accepted only. F01 wider independentroles and all other catalogue rows remain mandatory; final frozen-source Linux/REL01 gates and full2.0.0 qualification remain separate.",
+  "git_publication_actions": false
+}

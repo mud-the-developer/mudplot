@@ -1,4 +1,4 @@
-"""Draw-time, display-space circular-marker packing (render effect only).
+"""Draw-time native glyph packing, with exact legacy circles (render effect only).
 
 The category coordinate alone changes. Layout, limits, DPI and backend changes
 repack from original observations on every draw, without RNG or accumulated drift.
@@ -10,13 +10,18 @@ from __future__ import annotations
 import warnings
 
 import numpy as np
+from matplotlib.artist import Artist
 from matplotlib.collections import PathCollection
 from matplotlib.markers import MarkerStyle
 from matplotlib.transforms import IdentityTransform
 
 
 def pack_circles(
-    values, diameter: float | np.ndarray, half_width: float | np.ndarray
+    values,
+    diameter: float | np.ndarray,
+    half_width: float | np.ndarray,
+    *,
+    crowded_rows: np.ndarray | None = None,
 ) -> tuple[np.ndarray, int]:
     """Greedy nearest-center packing with merged forbidden x intervals.
 
@@ -90,6 +95,8 @@ def pack_circles(
                 left, right = start, end
             offsets[i] = candidate
         crowded += int(point_crowded)
+        if crowded_rows is not None:
+            crowded_rows[i] = point_crowded
         active.append(int(i))
     return offsets, crowded
 
@@ -98,34 +105,57 @@ class SwarmCollection(PathCollection):
     """A normal PathCollection that recomputes its offsets just before drawing."""
 
     def __init__(
-        self, offsets, cells, *, horizontal, size, line_width, warn_thresh, **kwargs
+        self,
+        offsets,
+        cells,
+        *,
+        horizontal,
+        size,
+        line_width,
+        warn_thresh,
+        marker="o",
+        markers=None,
+        coordinator=None,
+        cell_keys=None,
+        **kwargs,
     ):
-        marker = MarkerStyle("o")
+        named = [marker] if markers is None else markers
+        lookup = {}
+        for name in named:
+            if name not in lookup:
+                style = MarkerStyle(name)
+                lookup[name] = style.get_path().transformed(style.get_transform())
+        paths = (
+            list(lookup.values())
+            if len(lookup) == 1
+            else [lookup[name] for name in named]
+        )
         super().__init__(
-            [marker.get_path().transformed(marker.get_transform())],
+            paths,
             sizes=[size**2],
             offsets=offsets,
             linewidths=[line_width],
             **kwargs,
         )
+        self._circle_path = lookup.get("o")
+        if any(name != "o" for name in named):
+            self.set_joinstyle("round")
         self.set_transform(IdentityTransform())
         self._base_offsets = np.asarray(offsets, dtype=float).copy()
-        self._cells = cells  # (row indices, raw lower/upper category bounds)
+        self._cells = cells
         self._category_axis = int(horizontal)
         self._warn_thresh = warn_thresh
         self._warning_emitted = False
         self.crowded_count = 0
+        self._coordinator = coordinator
+        self._cell_keys = cell_keys
+        if coordinator is not None:
+            coordinator.add(self)
 
-    def draw(self, renderer):
-        if not self.get_visible() or self.axes is None:
-            return
-        ax = self.axes
-        category_axis = self._category_axis
-        value_axis = 1 - category_axis
-        transform = ax.transData
-        display = transform.transform(self._base_offsets)
-        packed = display.copy()
+    def _diameters(self, renderer):
+        """Native path extents plus stroke; retain the exact old circle radius."""
         n = len(self._base_offsets)
+        paths = self.get_paths()
         sizes = np.asarray(self.get_sizes(), dtype=float)
         widths = np.atleast_1d(np.asarray(self.get_linewidth(), dtype=float))
         for name, values in (("sizes", sizes), ("linewidths", widths)):
@@ -136,22 +166,58 @@ class SwarmCollection(PathCollection):
                 or np.any(values < 0)
             ):
                 raise ValueError(f"swarm {name} must be finite nonnegative row arrays")
-        diameters = (
-            np.sqrt(np.resize(sizes, n)) + np.resize(widths, n)
+        if (
+            any(path is not self._circle_path for path in paths)
+            and self.get_joinstyle() != "round"
+        ):
+            raise ValueError("noncircular swarm markers require round stroke joins")
+        # Cache only within this call: repeated named paths are shared objects,
+        # but native path edits must be measured again on the next draw.
+        by_identity = {}
+        radii = []
+        for path in paths:
+            identity = id(path)
+            if identity not in by_identity:
+                if path is self._circle_path:
+                    radius = 0.5
+                else:
+                    box = path.get_extents()
+                    radius = np.hypot(
+                        max(abs(box.x0), abs(box.x1)),
+                        max(abs(box.y0), abs(box.y1)),
+                    )
+                    if not np.isfinite(radius):
+                        raise ValueError("swarm marker extent must be finite")
+                by_identity[identity] = radius
+            radii.append(by_identity[identity])
+        return (
+            np.sqrt(np.resize(sizes, n)) * (2 * np.resize(radii, n))
+            + np.resize(widths, n)
         ) * renderer.points_to_pixels(1)
+
+    def _cell_half_widths(self, transform, display, indices, lower, upper, diameters):
+        axis = self._category_axis
+        edge_points = np.repeat(self._base_offsets[indices[:1]], 2, axis=0)
+        edge_points[:, axis] = [lower, upper]
+        edges = transform.transform(edge_points)[:, axis]
+        center = display[indices[0], axis]
+        available = 2 * min(abs(edges[0] - center), abs(edges[1] - center))
+        return available / 2 - diameters[indices] / 2
+
+    def _pack(self, renderer):
+        assert self.axes is not None
+        transform = self.axes.transData
+        category_axis = self._category_axis
+        value_axis = 1 - category_axis
+        display = transform.transform(self._base_offsets)
+        packed = display.copy()
+        diameters = self._diameters(renderer)
         crowded = 0
         for indices, lower, upper in self._cells:
-            edge_points = self._base_offsets[indices[:2]].copy()
-            if len(edge_points) == 1:
-                edge_points = np.repeat(edge_points, 2, axis=0)
-            edge_points[:, category_axis] = [lower, upper]
-            edges = transform.transform(edge_points)[:, category_axis]
-            center = display[indices[0], category_axis]
-            # Conservative on asymmetric transforms: never escape either gutter,
-            # including after a native category axis scale/inversion changes.
-            available = 2 * min(abs(edges[0] - center), abs(edges[1] - center))
+            half_widths = self._cell_half_widths(
+                transform, display, indices, lower, upper, diameters
+            )
             cell_diameters = diameters[indices]
-            half_widths = available / 2 - cell_diameters / 2
             offsets, count = pack_circles(
                 display[indices, value_axis], cell_diameters, half_widths
             )
@@ -163,14 +229,109 @@ class SwarmCollection(PathCollection):
             :, category_axis
         ]
         self.set_offsets(result)
+        self._report_crowding(crowded)
+
+    def _report_crowding(self, crowded):
         self.crowded_count = crowded
+        result = self._base_offsets
         if crowded / len(result) > self._warn_thresh and not self._warning_emitted:
+            conservative = self._coordinator is not None or any(
+                path is not self._circle_path for path in self.get_paths()
+            )
+            reason = (
+                "could not satisfy conservative glyph/stroke clearance or gutter bounds"
+                if conservative
+                else "could not be packed without overlap in the allocated width"
+            )
             warnings.warn(
-                f"swarmplot: {crowded}/{len(result)} observations could not be packed "
-                "without overlap in the allocated width; retained at gutters. "
+                f"swarmplot: {crowded}/{len(result)} observations {reason}; "
+                "retained at gutters. "
                 "Reduce marker_size, enlarge the figure or use stripplot.",
                 UserWarning,
                 stacklevel=2,
             )
             self._warning_emitted = True
+
+    def draw(self, renderer):
+        if not self.get_visible() or self.axes is None:
+            return
+        if self._coordinator is None or self._coordinator.axes is not self.axes:
+            self._pack(renderer)
         super().draw(renderer)
+
+
+class SwarmScope(Artist):
+    """One axes-owned pre-collection packing pass for explicitly named members."""
+
+    def __init__(self, ax):
+        super().__init__()
+        self.members = []
+        self.set_zorder(-1)
+        self.set_in_layout(False)
+        ax.add_artist(self)
+
+    def add(self, collection):
+        self.members.append(collection)
+
+    def draw(self, renderer):
+        if not self.get_visible() or self.axes is None:
+            return
+        drawn = {id(collection) for collection in self.axes.collections}
+        cells = {}
+        prepared = []
+        for collection in self.members:
+            if (
+                not collection.get_visible()
+                or collection.axes is not self.axes
+                or id(collection) not in drawn
+            ):
+                continue
+            transform = collection.axes.transData
+            display = transform.transform(collection._base_offsets)
+            diameters = collection._diameters(renderer)
+            item = {
+                "collection": collection,
+                "transform": transform,
+                "display": display,
+                "packed": display.copy(),
+                "crowded": 0,
+            }
+            prepared.append(item)
+            for key, (indices, lo, hi) in zip(
+                collection._cell_keys, collection._cells, strict=True
+            ):
+                bounds = collection._cell_half_widths(
+                    transform, display, indices, lo, hi, diameters
+                )
+                cells.setdefault(key, []).append(
+                    (item, indices, diameters[indices], bounds)
+                )
+        for entries in cells.values():
+            value_axis = 1 - entries[0][0]["collection"]._category_axis
+            values = np.concatenate(
+                [
+                    item["display"][indices, value_axis]
+                    for item, indices, _, _ in entries
+                ]
+            )
+            diameters = np.concatenate([diameters for _, _, diameters, _ in entries])
+            bounds = np.concatenate([bounds for _, _, _, bounds in entries])
+            crowded = np.zeros(len(values), dtype=bool)
+            offsets, _ = pack_circles(values, diameters, bounds, crowded_rows=crowded)
+            start = 0
+            for item, indices, _, _ in entries:
+                end = start + len(indices)
+                axis = item["collection"]._category_axis
+                item["packed"][indices, axis] += offsets[start:end]
+                item["crowded"] += int(np.count_nonzero(crowded[start:end]))
+                start = end
+        for item in prepared:
+            collection = item["collection"]
+            result = collection._base_offsets.copy()
+            axis = collection._category_axis
+            result[:, axis] = (
+                item["transform"].inverted().transform(item["packed"])[:, axis]
+            )
+            collection.set_offsets(result)
+            collection._report_crowding(item["crowded"])
+        self.stale = False

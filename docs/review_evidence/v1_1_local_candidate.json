@@ -1,0 +1,278 @@
+{
+  "observed_at_utc": "2026-10-29T12:08:20.184511+00:00",
+  "status": "v1.1.0_local_candidate_prepared_not_published",
+  "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "branch": "main",
+  "uncommitted_changes_preserved": true,
+  "remote_ci_required_for_current_development": false,
+  "windows": "deferred_by_owner_not_verified",
+  "commit_push_pr_merge_tag_publication_performed": false,
+  "versions": {
+    "python": "1.1.0",
+    "rust": "1.1.0",
+    "cargo_lock": "1.1.0",
+    "uv_lock": "1.1.0",
+    "figurespec_schema_unchanged": "0.1"
+  },
+  "runtime_support": {
+    "python": ">=3.11",
+    "numpy": ">=1.23.5",
+    "matplotlib": ">=3.8",
+    "render_pillow": ">=13.0.0",
+    "python_310_security_exception_owner_approved": true
+  },
+  "clean_implementation_checkpoint": {
+    "metadata_label_during_full_run": "1.0.0",
+    "seconds": 1690.95,
+    "source_unchanged_before_after": true,
+    "host_matched_snapshot_before_version_change": true,
+    "matrices": [
+      {
+        "environment": "locked-py311",
+        "executed": 4492,
+        "passed": 4447,
+        "failed_or_error": 0,
+        "skipped": 45,
+        "required_profile": "release",
+        "required_profile_ok": true,
+        "required_paths": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ]
+      },
+      {
+        "environment": "locked-py312",
+        "executed": 4492,
+        "passed": 4447,
+        "failed_or_error": 0,
+        "skipped": 45,
+        "required_profile": "release",
+        "required_profile_ok": true,
+        "required_paths": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ]
+      },
+      {
+        "environment": "minimum",
+        "executed": 3671,
+        "passed": 3635,
+        "failed_or_error": 0,
+        "skipped": 36,
+        "required_profile": "minimum",
+        "required_profile_ok": true,
+        "required_paths": [
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "metadata_followup": {
+    "candidate_version": "1.1.0",
+    "runtime_lock_delta_verified_as_version_only": [
+      "mudplot/__init__.py",
+      "pyproject.toml",
+      "uv.lock",
+      "mudplot-editor/Cargo.toml",
+      "mudplot-editor/Cargo.lock"
+    ],
+    "restoring_version_values_reproduced_qualified_checksums": true,
+    "full_numerical_suite_rerun_after_version_only_change": false,
+    "metadata_guard_tests": {
+      "executed": 43,
+      "passed": 43,
+      "failed_or_error": 0,
+      "skipped": 0
+    }
+  },
+  "post_version_checks": {
+    "release_version_preflight": "passed for v1.1.0",
+    "ruff_pyright": "passed",
+    "all_three_dependency_locks": "no known vulnerabilities, no waivers",
+    "generated_contracts": "in sync",
+    "dashboard_build": "passed",
+    "rust": "fmt/clippy/normal tests/MSRV 1.88 all-targets/HTTP/browser/bridge/body limits passed",
+    "distribution_first_pass": "1.1.0 metadata and privacy boundaries validated; independent wheel/sdist rebuilds byte-identical"
+  },
+  "code_compatibility": {
+    "matplotlib_renderer_preserved": true,
+    "python_api_and_figurespec_json_defaults_preserved": true,
+    "measurements_units_order_not_silently_changed": true,
+    "new_mandatory_core_dependencies": false
+  },
+  "historical_evidence_note": "Older failed/skipped receipts remain unchanged. These clean implementation reports supersede them for their bounded source snapshot; they are not rewritten as green.",
+  "remaining": [
+    "Owner review of figures/known scope and publication decision",
+    "Windows deferred",
+    "No tag or release published"
+  ],
+  "raw_local_bundle": {
+    "path": "artifacts/v1_1_candidate_20261029/qualification-reports.zip",
+    "ignored_and_not_shipped": true,
+    "sha256": "889ca409ecde92d13cb82dd96e812c80f8851e60744478aaa324fc44a0ac62ec",
+    "entries": [
+      {
+        "member": "locked-py311.xml",
+        "bytes": 684790,
+        "sha256": "78bf10ab869c66d0bdff6855207fbfbe8d1c1d6de92c945e9a4585591674827b"
+      },
+      {
+        "member": "locked-py312.xml",
+        "bytes": 684874,
+        "sha256": "50dc7f738c2ce81f3fda9467321b6253860a0a6ac010b527e84a01eb92459ca8"
+      },
+      {
+        "member": "minimum.xml",
+        "bytes": 553224,
+        "sha256": "76d2ea775b087756afa622420c926cb33e4c4968f698dfb8d3a65dea303f6f14"
+      },
+      {
+        "member": "metadata-guards.xml",
+        "bytes": 6732,
+        "sha256": "23813366f603fee6aa6cf4f853dca9b522927d2ea66b3178986dee529086627e"
+      },
+      {
+        "member": "qualified-source.sha256",
+        "bytes": 75805,
+        "sha256": "8cfd668534cf4fb90327a9a7e900d7f4cdda16e8c451e6adff47d1627aeada2b"
+      },
+      {
+        "member": "qualified-locks.sha256",
+        "bytes": 280,
+        "sha256": "c8e62bfe042fca68950b563e0990f0a804e4952370e254cf42fa8b2134086aff"
+      },
+      {
+        "member": "source-unchanged.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "member": "post-version-rust.log",
+        "bytes": 39318,
+        "sha256": "4e73c1d1477efd402421e0c1b977ac1878af69e56b42de816d19f14c7a6766ae"
+      },
+      {
+        "member": "post-version-audits.log",
+        "bytes": 208,
+        "sha256": "b9db128161b142b93ee96146de06057e79ff6d362b8fcfdb9e2970b8c46c8303"
+      },
+      {
+        "member": "candidate-artifacts-first-pass.log",
+        "bytes": 1475,
+        "sha256": "f208cc8ce3340cddbe186b84185cc7323604983e3fb3ba1d4d2f55dfb7aaee07"
+      }
+    ]
+  },
+  "final_artifact_manifest": "artifacts/v1_1_candidate_20261029/final-artifact-manifest.json (local-only, not embedded in source archives)",
+  "artifact_snapshot_note": "The first-pass distribution check preceded this result-only documentation. Final artifact hashes are stored externally to avoid a self-referential source archive hash.",
+  "implementation_sha256": {
+    "pyproject.toml": "6369ebd65c62bef04f0fbbb6b66fd57ecea2c1f36836da7252c4d807279248be",
+    "uv.lock": "b17c66194a9b6c9db16709aecae18f6c11fabb69c7043f107b9561652857dd17",
+    "mudplot/__init__.py": "b107dc5bcd033ba22af0fe0a4df235f946b05e587ebc9c0810fa342a2ea77e48",
+    "mudplot/_recommend.py": "043b33c9d9f2dd5e8703ef2f980fceae760485153488998ee84236e7d426bca2",
+    "mudplot/_quality.py": "eb3c94150d30a7d94d20f9e8d2fa7e59db3e4544765cc1c534e08d6165b6b1f0",
+    "mudplot/_lint.py": "e51e8fffb27bce755ea4b324f5b0477b9f37f838be535fb00f48c9da50178a29",
+    "mudplot/_render.py": "f0aa2756307c35c359cae9768a153c2accd1832fe796556422c91c28fcbde39e",
+    "scripts/check_minimum_versions.py": "9648455aac699da3b237a758930d376c2a560806f4c6f7b00c25fc4d57e41dc1",
+    "scripts/check_minimum_versions.py.lock": "1da37f5de3b50665ef71e0172cd4bed4e9cd6abc3dc328d8c38a9c7f2dc4a98d",
+    "scripts/audit_dependencies.py": "65ef1c5b88c3ed33517e3d6ec18a1a6b7178a148370aa785b272155d8e2f89b2",
+    "scripts/audit_dependencies.py.lock": "7af77c75b334e39d15ecdfd2cd585b3376617989d8d5e56820bbac7a94413a5e",
+    "scripts/check_wheel.py": "ebc30a4f4825080aaabe6a8d892733e5f28637748706ab08466b9e7e0535ee5e",
+    "mudplot-editor/Cargo.toml": "51e6f16b6a8b13a12c4b4b65f070d52e644fa8f017b42ffd63b9dfbc2460ed23",
+    "mudplot-editor/Cargo.lock": "6d4e3bfd90bcb569ca5ef05642ec2ea9405a9c51b2d9ade44d6b59b126ef94a9",
+    "tests/test_recommend_precision.py": "c2395cc744152b269ff10dc7c06e16b9d3d26b2ab06f03fa0c72623e7fbd4cb5"
+  }
+}

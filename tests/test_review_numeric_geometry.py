@@ -131,7 +131,8 @@ def test_secondary_log_axis_keeps_its_artists_labels_limits_and_annotations():
         secondary.get_ylim() == (1, 10000) and secondary.get_ylabel() == "right units"
     )
     np.testing.assert_array_equal(secondary.lines[0].get_ydata(), data["right"])
-    legend = primary.get_legend()
+    legend = secondary.get_legend()
+    assert primary.get_legend() is None
     assert legend is not None and [text.get_text() for text in legend.get_texts()] == [
         "left",
         "right",

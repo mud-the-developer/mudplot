@@ -1,0 +1,174 @@
+{
+  "catalogue_id": "F02",
+  "status": "core Cartesian implementation/lifecycle verified; F02 remains IN PROGRESS",
+  "created_utc": "2026-10-30T18:53:18.392260+00:00",
+  "git_head": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "source_sha256": {
+    "mudplot/_temporal.py": "4a0da42f61bf156be4195e1ca77611be9eb725ec3eb904b02390259b0fdb404e",
+    "mudplot/_temporal_data.py": "62cebb97c637447217e16aa9292c5ac2012e9c7bc781f2b19ff663209469639e",
+    "mudplot/_temporal_render.py": "c05181e46e5b73bdf7c6539a70d44844996c75cc68a85b109d0594e7b56694d5",
+    "mudplot/spec.py": "8a17d68a95ffbf8704f173827a459303419da5d774a71379f34ec3559b7a9ec2",
+    "mudplot/actions.py": "9fa017262e585ea0adba94d6d87a779931ef29eb980ef557df41bea744b55aec",
+    "mudplot/reducer.py": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49",
+    "mudplot/api.py": "d74ede7260cb67fa2421a4ffad6385c4585f899aecd018842c6c603a569dd08e",
+    "mudplot/validate.py": "5f99ab27ec579145d3d5c024e7dd642e8e7fa3a486719e51eab46b72ab85a8ef",
+    "mudplot/_render.py": "446313071c6baf87ef1281d1febd32f6e8bcad926a6d046166bd6ac83358a74c",
+    "mudplot/_semantics.py": "80ba42018a3ef606608afd117b87852c3b3c3d66d3f1d5f2db728e2ba7b6e455",
+    "mudplot/_kde.py": "b7e41f86d18b5070f995bc319657c28c7484407c45952951d6ecc04eee6494f8",
+    "mudplot/__init__.py": "a057463c20e545d9773c9d3ca30fe2a4d8a47a89c086e0e886b7c4be197d9860",
+    "mudplot/capabilities.py": "b6a90a0814252d0666466bc2a02258ebf16fff976accf4d2edd6290d8ec1a4e2",
+    "tests/test_temporal_coordinates.py": "39323d5c24a31dc6430d1b55023b6bb361c35bfbc20f21738260c232b3e5acdb",
+    "tests/test_temporal_axes.py": "75c6a78853955f79857a8b3afb89e634d1ae8b0cd9edc7308fa0a001faa9c129",
+    "tests/test_temporal_statistics.py": "85bb9681be78f3125020517f45f881bee515914afd1e830872a39e5717627ee7",
+    "tests/test_temporal_distributions.py": "e432d81109bfd76872ea26d4d8f563e997dc9ce6477903fd963b0e98c60c2614",
+    "tests/test_temporal_bivariate.py": "caff75e7c362a77e4664b9013c81f2e42faa2928b6fd7d3825a09b8e7ffe2a95",
+    "examples/temporal_axes.py": "c14ddc7c79671670c7eb26a78548075c1f99bbdca154082f1c9a2285c80006c9",
+    "scripts/check_wheel.py": "af9428f5a404fe89024c4999ee5d827308dc44ac70c128ad08ea27c86bd3d50d",
+    "scripts/check_minimum_versions.py": "8d88cfb38de158c39d3fbb6050303460f8f19d1162f43b37bb2e4d3aaf1a7b31",
+    "schemas/figure_spec.schema.json": "4a4e7e675a6266f09147e3a806446ac1b4107600beb024a65475dfe093eca9d3",
+    "schemas/capabilities.json": "29167b41088f9fd801b58178c1e73750929e413517c7e60a59aabd47b93e9fe6",
+    "docs/REFERENCE.md": "a7fa5c141fbcb9747266909043c7461bb8d484165df07351ad19e9d9edba95de",
+    "docs/PLOT_GALLERY.md": "ffbd90e094a0748a6577cf513b286b9ee6a6f50487d368f750bbb6626a1f1f56",
+    "docs/TEMPORAL_AXES.md": "5ca26f5baeeafd3e93307084e92a8af0d3e094b22a30c4dd8dcc1d93c47ab4d8",
+    "docs/TEMPORAL_AXES.ko.md": "be6d1b19562abecb971534c1753c3671ec70294df0ae71a1c510ca99b16e67a7",
+    "docs/V2_SCOPE.md": "7891ec8b1f75b47f18128d6160e4f75eb7be833afe5fe1a13fdafee018abae4b",
+    "docs/V2_SCOPE.ko.md": "0654ed2c1cf8adbe7e2a5d1df2db155f3f9649b53e1e3699212d2f4116123182"
+  },
+  "contracts": {
+    "timezones": "UTC/fixed offsets, explicit timezone for naive values; local-midnight ticks",
+    "numeric": "explicit s/ms/us/ns/day input unit and ISO origin; canonical UTCday1970 for statistical coordinates/bounds",
+    "preservation": "raw values/offset strings/order/semantic columns/original selected IDs; optional unset temporal field omitted in legacy JSON",
+    "reject": "unsupported precision/calendar ranges, date mass/count/probability axes, sum/count date estimators, residual/logistic calendar responses"
+  },
+  "environment": {
+    "python": "3.13.12",
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pillow": "13.0.0",
+    "pytest": "9.1.1",
+    "playwright": "1.63.0"
+  },
+  "tests": {
+    "temporal_current": {
+      "tests": 169,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "temporal_plus_schema_minimum": {
+      "tests": 175,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "series_stat_neighbors": {
+      "tests": 438,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "regression_schema_neighbors": {
+      "tests": 87,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "hist_ecdf_contracts": {
+      "tests": 342,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "note": "separate overlapping targeted suites; not a sum or finalfullqualification"
+  },
+  "minimum": "Python3.11.14 NumPy1.23.5 Matplotlib3.8.0 Pillow13.0.0;175pass0skip",
+  "lifecycle": {
+    "browser": "Chromium153.0.8010.12: agent ISO save -> Rust numeric column/unit/origin/timezone edit -> SetTemporalAxis -> undo/redo -> download/reopen -> PNG/SVG/PDF; invalid unit preserves source/spec/preview",
+    "browser_log": "artifacts/v2_temporal_20261030/rust-browser-temporal-complete.log",
+    "browser_probe_sha256": "469d71de433cb0d49fb88c56d5945a9bd063c8fce084e90933ea99cd33d07c0a",
+    "human_json_sha256": "31b9dea71d5daeffc4a22a15ebb8bdfb842f87a47bd53cc710dc5e6908a9acda",
+    "installed": "installed prefix asserted outside checkout; temporal create/action/JSON/PNG and installed CLI SVG, plus existingdefault/smart/weighted checks",
+    "distribution_log": "artifacts/v2_temporal_20261030/distribution.log",
+    "development_artifacts": {
+      "artifacts/v2_temporal_20261030/development-dist/mudplot-1.1.0-py3-none-any.whl": "eb1d733a0d15adb968e4e0ff8735826b805d9c0d3b38289263ade0f6bf133819",
+      "artifacts/v2_temporal_20261030/development-dist/mudplot-1.1.0.tar.gz": "697b4789ed81c2b58ac273f115e2ad042dd93f5d7b069c9e7e6198e5f92fb0fd"
+    },
+    "artifact_limit": "1.1.0 developmentbuild, before latest receipt/docs ledger addition; not final2.0 candidate, independent rebuild or metadata-resolved matrix"
+  },
+  "visual": {
+    "signal": {
+      "size_inches": [
+        6.5,
+        3.0
+      ],
+      "dpi": 300,
+      "pixels": [
+        1950,
+        900
+      ],
+      "min_font_pt": 8.0,
+      "legend_data_collisions": 0,
+      "text_overlaps": 0,
+      "clipped_elements": 0,
+      "duplicate_legends": 0,
+      "repairs": []
+    },
+    "density": {
+      "size_inches": [
+        6.5,
+        3.0
+      ],
+      "dpi": 300,
+      "pixels": [
+        1950,
+        900
+      ],
+      "min_font_pt": 8.0,
+      "legend_data_collisions": 0,
+      "text_overlaps": 0,
+      "clipped_elements": 0,
+      "duplicate_legends": 0,
+      "repairs": []
+    }
+  },
+  "docs": "both examples per language executed independently; examples/temporal_axes.py saves/reopens two synthetic figures in PNG/SVG/PDF; parent viewed both, no measured clipping/overlap",
+  "static": "Ruff/format/Pyright passed; final active LSP probe recorded in session; no source error suppressed",
+  "reviews": [
+    {
+      "run": "8eaff7cd-5531-4d50-ad5f-398162b53918",
+      "resolved": "semantic/raw typed order selection before date parse; malformed group KeyError; row alignment preserved with tagged selector"
+    },
+    {
+      "run": "3916a822-b839-449d-ab2d-7c0fdf954546",
+      "resolved": "legacy hist/KDE kept observations/default None configs; residual/logistic date responses reject; malformed StatSpec reports issue; WLS zero-weight/date selection aligned",
+      "scope": "raw/native/grid/secondary paths still required, not blessed complete"
+    }
+  ],
+  "additional_lifecycle_fix": "browser caught timezone ticks stuck at UTC midnight; AutoDateLocator bounds now localized before tick generation; numerical reference regressions coverUTC/+05:30/-04:00",
+  "preserved_attempts": {
+    "timeout": "artifacts/v2_temporal_20261030/expanded-neighbors.log",
+    "timeout_detail": "240s, progressonly, noXML/passclaim; process terminated; smaller targeted suites used thereafter",
+    "browser_initial": "artifacts/v2_temporal_20261030/rust-browser-temporal-initial.log",
+    "browser_diagnostic": "artifacts/v2_temporal_20261030/rust-browser-temporal-diagnostic.log",
+    "naive_test_log": "artifacts/v2_temporal_20261030/lifecycle-fixed-current-naive-test.log",
+    "naive_test_resolution": "test expectedUTC positions for naive input underexplicitnonUTCzone; correctedtest toawareISO while retaining naive semantics tests",
+    "review_repros": "artifacts/v2_temporal_20261030/review-repros-initial.log",
+    "other_initial_reports": "allinitialtyped/statistical/bivariate outputs and groundwork receipts retained"
+  },
+  "unfinished_required_ownership": {
+    "F02+N01+N02+D07": "raw bar/errorbar/band/stackplot/rug/hexbin date paths",
+    "F02+N03+N05+N06": "native date stem/event/start-duration interval paths",
+    "F02+G02+G03": "ISO joint/pair composition; numeric unit/origin does not establishISO support",
+    "F02+F01+D06": "broader semantic/distribution secondary-axis paths"
+  },
+  "not_claimed": [
+    "F02 completion",
+    "whole statistics/agent/editor/native/doc task completion",
+    "finalLinux/Python/Rust/TeX/security/matrix/reproducibility qualification",
+    "Windows/macOS, original experimental data, physical print certification",
+    "independent post-fix review approval"
+  ],
+  "git_publication_actions": "none"
+}

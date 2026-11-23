@@ -7,28 +7,62 @@ both x and y opts into category-by-hue nesting, with x always categorical.
 from __future__ import annotations
 
 import math
-from dataclasses import fields
+from collections.abc import Callable
 from itertools import pairwise
 from numbers import Real
+from typing import TypedDict
 
 from ._ecdf import finite_number
 from ._semantics import (
-    MAX_LEVELS,
     categorical,
     categorical_fractions,
     category_key,
+    levels,
     numeric_guides,
     numeric_mapping,
-    option_issues,
     semantic_levels,
 )
 from ._stat import is_missing
+from ._transforms import COLUMN_ARRAYS
 from .spec import LayerSpec, SemanticSpec
 
 DISTRIBUTION_TYPES = frozenset({"box", "violin", "boxenplot"})
 MAX_VIOLIN_POINTS = 1000
 MAX_SWARM_POINTS = 2000  # bounded display-space packing per layer
 CATEGORY_TYPES = DISTRIBUTION_TYPES | {"swarmplot"}
+
+
+def category_axis_mode(layer):
+    """Existing statistical/distribution category-role convention, shared by QA."""
+    from ._line import categorical_predictor
+    from ._stat import STAT_LAYER_TYPES
+    from ._strip import categorical_strip
+
+    if layer.type in {"line", "lineplot"} and categorical_predictor(layer):
+        return ("y" if layer.orient == "h" else "x"), "ordinal"
+    if layer.type in CATEGORY_TYPES | STAT_LAYER_TYPES or categorical_strip(layer):
+        name = "y" if layer.orient == "h" else "x"
+        mode = (
+            "native"
+            if layer.type == "lineplot"
+            or (type(layer.native_scale) is bool and layer.native_scale)
+            else "ordinal"
+        )
+        return name, mode
+    return None
+
+
+def raw_x_is_categorical(values):
+    """Match the scalar-column float conversion preceding _x_values fallback."""
+    try:
+        for value in values:
+            if value is not None:
+                float(value)
+    except (ValueError, TypeError):
+        return True
+    except OverflowError:
+        return False  # A numeric range error, never a category conversion.
+    return False
 
 
 def native_category_geometry(categories, scale="linear"):
@@ -68,28 +102,257 @@ def distribution_columns(layer: LayerSpec) -> tuple[str | None, str, str | None]
     return layer.group, layer.x, None
 
 
-def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
-    """Listwise-drop missing rows and apply explicit category/hue selection."""
-    category, value, hue = distribution_columns(layer)
-    weight = layer.weights if layer.type == "violin" else None
-    size = (
-        layer.semantics.size
-        if layer.type == "swarmplot" and isinstance(layer.semantics, SemanticSpec)
-        else None
+class ClockCategoryArgs(TypedDict, total=False):
+    category_key_for: Callable[[object], object]
+
+
+def _sample_key(value):
+    return None if value is None else category_key(value)
+
+
+def distribution_plan(
+    columns,
+    layer,
+    *,
+    rows=None,
+    domain=None,
+    max_cells=256,
+    category_key_for=_sample_key,
+):
+    """Bounded raw-tuple samplecells, retaining every selected source instance."""
+    rows = distribution_rows(columns, layer) if rows is None else rows
+    category, _value, hue = distribution_channels(layer)
+    config = layer.semantics
+    categories = (
+        [None]
+        if category is None
+        else list(layer.order)
+        if layer.order is not None
+        else levels(columns[category][row] for row in rows)
     )
-    selected_sizes = None
+    role_names = [
+        (role, getattr(config, role))
+        for role in ("hue", "size", "style")
+        if isinstance(config, SemanticSpec) and getattr(config, role) is not None
+    ]
+    groups, group_keys, cells = [], {}, {}
+    pool = () if domain is None else domain.get(layer.type + "_rows", ())
+    if pool and domain is not None:
+        original = domain["columns"]
+        for row in sorted(pool):
+            values = {role: original[name][row] for role, name in role_names}
+            raw_hue = None if hue is None else original[hue][row]
+            key = (
+                _sample_key(raw_hue),
+                tuple((role, _sample_key(value)) for role, value in values.items()),
+            )
+            if key not in group_keys:
+                group_keys[key] = len(groups)
+                groups.append({"key": key, "hue": raw_hue, "roles": values})
+    for row in rows:
+        values = {role: columns[name][row] for role, name in role_names}
+        raw_hue = None if hue is None else columns[hue][row]
+        key = (
+            _sample_key(raw_hue),
+            tuple((role, _sample_key(value)) for role, value in values.items()),
+        )
+        if key not in group_keys:
+            group_keys[key] = len(groups)
+            groups.append({"key": key, "hue": raw_hue, "roles": values})
+        raw_category = None if category is None else columns[category][row]
+        cell_key = (category_key_for(raw_category), key)
+        if cell_key not in cells:
+            cells[cell_key] = {
+                "category": raw_category,
+                "group": key,
+                "hue": raw_hue,
+                "roles": values,
+                "rows": [],
+            }
+            if len(cells) > max_cells:
+                return categories, groups, list(cells.values())
+        cells[cell_key]["rows"].append(row)
+    hue_order = layer.hue_order
     if (
-        size is not None
-        and isinstance(layer.semantics, SemanticSpec)
-        and layer.semantics.size_order is not None
+        isinstance(config, SemanticSpec)
+        and config.hue is not None
+        and config.hue_kind == "categorical"
     ):
-        order = layer.semantics.size_order
-        if not isinstance(order, (list, tuple)) or not all(
-            categorical(v) for v in order
+        hue_order = semantic_levels(columns, config, "hue", rows)
+    if hue_order is not None:
+        indices = {_sample_key(v): i for i, v in enumerate(hue_order)}
+        for value in hue_order:
+            if not any(
+                _sample_key(group["hue"]) == _sample_key(value) for group in groups
+            ):
+                groups.append(
+                    {"key": ("reserved", _sample_key(value)), "hue": value, "roles": {}}
+                )
+        groups.sort(
+            key=lambda group: indices.get(_sample_key(group["hue"]), len(indices))
+        )
+    category_indices = {
+        category_key_for(value): index for index, value in enumerate(categories)
+    }
+    group_indices = {group["key"]: index for index, group in enumerate(groups)}
+    ordered = sorted(
+        cells.values(),
+        key=lambda cell: (
+            group_indices[cell["group"]],
+            category_indices[category_key_for(cell["category"])],
+        ),
+    )
+    return categories, groups, ordered
+
+
+def distribution_channels(layer):
+    category, value, legacy_hue = distribution_columns(layer)
+    config = layer.semantics
+    hue = (
+        config.hue
+        if isinstance(config, SemanticSpec) and config.hue is not None
+        else legacy_hue
+    )
+    return category, value, hue
+
+
+def sample_rows(
+    columns,
+    layer,
+    *,
+    required=(),
+    limit: int | None = 10000,
+    weight_column=None,
+    category_matches=None,
+):
+    """Paired original-row cohort with typed orders and bounded physical work."""
+    category, value, hue = distribution_channels(layer)
+    config = layer.semantics
+    roles = {
+        role: getattr(config, role)
+        for role in ("hue", "size", "style")
+        if isinstance(config, SemanticSpec) and getattr(config, role) is not None
+    }
+    weight = (
+        weight_column
+        if weight_column is not None
+        else (layer.weights if layer.type in {"violin", "boxenplot"} else None)
+    )
+    names = [
+        name
+        for name in (category, value, hue, weight, *roles.values(), *required)
+        if name is not None
+    ]
+    if not names or any(
+        not isinstance(name, str)
+        or name not in columns
+        or not isinstance(columns[name], COLUMN_ARRAYS)
+        for name in names
+    ):
+        return []
+    count = len(columns[names[0]])
+    if any(len(columns[name]) != count for name in names):
+        return []
+    selections = [
+        (category, None if category_matches else layer.order),
+        (hue, layer.hue_order),
+    ]
+    selections.extend(
+        (name, getattr(config, role + "_order")) for role, name in roles.items()
+    )
+    selected = []
+    for name, order in selections:
+        if order is None:
+            continue
+        if (
+            name is None
+            or not isinstance(order, (list, tuple))
+            or not all(categorical(item) for item in order)
         ):
             return []
-        selected_sizes = {category_key(v) for v in order}
-    names = [name for name in (category, value, hue, weight, size) if name is not None]
+        selected.append((name, {category_key(item) for item in order}))
+    rows = []
+    for row in range(count):
+        if any(is_missing(columns[name][row]) for name in names):
+            continue
+        if any(
+            not categorical(columns[name][row])
+            or category_key(columns[name][row]) not in order
+            for name, order in selected
+        ):
+            continue
+        if (
+            weight is not None
+            and finite_number(columns[weight][row])
+            and (columns[weight][row] == 0)
+        ):
+            continue
+        if category_matches is not None and not category_matches(
+            columns[category][row]
+        ):
+            continue
+        rows.append(row)
+        if limit is not None and len(rows) > limit:
+            break
+    return rows
+
+
+def typed_swarm(layer):
+    config = layer.semantics
+    return layer.type == "swarmplot" and (
+        layer.pack_scope is not None
+        or (
+            isinstance(config, SemanticSpec)
+            and (config.hue is not None or config.style is not None)
+        )
+    )
+
+
+def distribution_rows(
+    columns: dict, layer: LayerSpec, *, category_matches=None
+) -> list[int]:
+    """Listwise-drop missing rows and apply explicit category/hue selection."""
+    if layer.type == "box":
+        from ._box import advanced_box, box_rows
+
+        if advanced_box(layer):
+            return box_rows(columns, layer, category_matches=category_matches)
+    if layer.type == "violin":
+        from ._violin_options import advanced_violin
+
+        if advanced_violin(layer):
+            return sample_rows(columns, layer, category_matches=category_matches)
+    if layer.type == "boxenplot":
+        from ._boxen import advanced_boxen
+
+        if advanced_boxen(layer):
+            return sample_rows(columns, layer, category_matches=category_matches)
+    category, value, hue = distribution_columns(layer)
+    weight = layer.weights if layer.type == "violin" else None
+    config = (
+        layer.semantics
+        if (layer.type == "swarmplot" and isinstance(layer.semantics, SemanticSpec))
+        else None
+    )
+    roles = [
+        getattr(config, role)
+        for role in ("hue", "size", "style")
+        if config is not None and getattr(config, role) is not None
+    ]
+    selections = []
+    for role in ("hue", "size", "style"):
+        order = getattr(config, f"{role}_order", None)
+        if order is not None:
+            if not isinstance(order, (list, tuple)) or not all(
+                categorical(v) for v in order
+            ):
+                return []
+            if not isinstance(getattr(config, role), str):
+                return []
+            selections.append((getattr(config, role), {category_key(v) for v in order}))
+    names = [
+        name for name in (category, value, hue, weight, *roles) if name is not None
+    ]
     if not all(isinstance(name, str) and name in columns for name in names):
         return []
     if any(
@@ -101,6 +364,23 @@ def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
         layer.hue_order is not None and hue is None
     ):
         return []
+    typed = typed_swarm(layer)
+    category_order = None if category_matches else layer.order
+    selected_categories = selected_hues = None
+    if typed:
+        for order in (category_order, layer.hue_order):
+            if order is not None and not all(categorical(v) for v in order):
+                return []
+        selected_categories = (
+            None
+            if category_order is None
+            else {category_key(v) for v in category_order}
+        )
+        selected_hues = (
+            None
+            if layer.hue_order is None
+            else {category_key(v) for v in layer.hue_order}
+        )
     arrays = [columns[name] for name in names]
     if len({len(array) for array in arrays}) != 1:
         return []
@@ -108,18 +388,39 @@ def distribution_rows(columns: dict, layer: LayerSpec) -> list[int]:
         i
         for i, row in enumerate(zip(*arrays, strict=True))
         if not any(is_missing(v) for v in row)
-        and (layer.order is None or columns[category][i] in layer.order)
-        and (layer.hue_order is None or columns[hue][i] in layer.hue_order)
         and (
-            selected_sizes is None
-            or not categorical(columns[size][i])
-            or category_key(columns[size][i]) in selected_sizes
+            category_order is None
+            or (
+                categorical(columns[category][i])
+                and selected_categories is not None
+                and category_key(columns[category][i]) in selected_categories
+            )
+            if typed
+            else category_order is None or columns[category][i] in category_order
+        )
+        and (
+            layer.hue_order is None
+            or (
+                categorical(columns[hue][i])
+                and selected_hues is not None
+                and category_key(columns[hue][i]) in selected_hues
+            )
+            if typed
+            else layer.hue_order is None or columns[hue][i] in layer.hue_order
+        )
+        and (
+            all(
+                not categorical(columns[name][i])
+                or category_key(columns[name][i]) in selected
+                for name, selected in selections
+            )
         )
         and (
             weight is None
             or not finite_number(columns[weight][i])
             or columns[weight][i] != 0
         )
+        and (category_matches is None or category_matches(columns[category][i]))
     ]
 
 
@@ -159,61 +460,31 @@ def swarm_size_mapping(columns, config, rows, *, domain=None):
     return diameters, mapped_guides
 
 
-def swarm_size_issues(columns, layer, panel):
+def swarm_semantic_issues(columns, layer, panel):
+    """Full shared roles, preserving legacy group + independent size/style."""
+    from ._semantics import data_issues
+
     config = layer.semantics
     if config is None:
         return []
-    issues = option_issues(config)
-    if issues or not isinstance(config, SemanticSpec):
+    issues = data_issues(columns, layer, panel)
+    if not isinstance(config, SemanticSpec) or issues:
         return issues
-    defaults = SemanticSpec()
-    allowed = {
-        "size",
-        "size_kind",
-        "size_order",
-        "size_norm",
-        "sizes",
-        "legend",
-        "scale_id",
-    }
-    for field in fields(config):
-        if field.name not in allowed and getattr(config, field.name) != getattr(
-            defaults, field.name
-        ):
-            issues.append(f"swarm semantic {field.name} is not supported")
-    if config.size is None:
-        issues.append("swarm semantics requires one size column")
-    if layer.marker_size is not None:
-        issues.append("scalar marker_size is not supported with mapped swarm size")
-    if any(d > 0 and d * d == 0 for d in config.sizes):
+    if (
+        config.hue is not None
+        and config.hue_kind == "numeric"
+        and layer.dodge not in (None, 0)
+    ):
+        issues.append("numeric hue has no discrete dodge slots; use None or 0")
+    if any(finite_number(d) and d > 0 and d * d == 0 for d in config.sizes):
         issues.append("positive semantic marker area is not representable")
-    if issues:
-        return issues
-    if config.size not in columns:
-        return ["swarm size column is missing"]
-    rows = distribution_rows(columns, layer)
-    if not rows:
-        return (
-            []
-            if panel.filters or panel.dropna
-            else ["swarm size mapping has no usable observations"]
-        )
-    values = [columns[config.size][row] for row in rows]
-    if config.size_kind == "numeric":
-        if any(not finite_number(value) for value in values):
-            return ["swarm sizes must be finite numeric, not bool, after selection"]
-    else:
-        if not all(categorical(value) for value in values):
-            return ["swarm size categories must be nonempty strings or finite scalars"]
-        selected = semantic_levels(columns, config, "size", rows)
-        if len(selected) > MAX_LEVELS or len({str(value) for value in selected}) != len(
-            selected
-        ):
-            return [f"swarm size levels exceed {MAX_LEVELS}/have ambiguous labels"]
-    try:
-        swarm_size_mapping(columns, config, rows)
-    except (ValueError, OverflowError) as exc:
-        issues.append(str(exc))
+    if config.size is not None and not issues:
+        rows = distribution_rows(columns, layer)
+        if rows:
+            try:
+                swarm_size_mapping(columns, config, rows)
+            except (ValueError, OverflowError) as error:
+                issues.append(str(error))
     return issues
 
 
@@ -234,4 +505,23 @@ def distribution_levels(columns: dict, layer: LayerSpec, rows: list[int]):
         if layer.hue_order is not None
         else list(dict.fromkeys(columns[hue][i] for i in rows))
     )
+    return categories, groups
+
+
+def swarm_levels(columns, layer, rows):
+    categories, groups = distribution_levels(columns, layer, rows)
+    config = layer.semantics
+    if typed_swarm(layer):
+        from ._semantics import levels
+
+        if layer.order is None:
+            categories = levels(columns[layer.x][i] for i in rows)
+        if layer.group is not None and layer.hue_order is None:
+            groups = levels(columns[layer.group][i] for i in rows)
+    if isinstance(config, SemanticSpec) and config.hue is not None:
+        groups = (
+            semantic_levels(columns, config, "hue", rows)
+            if config.hue_kind == "categorical"
+            else [None]
+        )
     return categories, groups

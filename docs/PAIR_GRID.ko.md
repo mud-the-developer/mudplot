@@ -14,6 +14,13 @@ PairGrid/pairplot 동작과 동등한 구현은 아닙니다.
 80개 값은 독립 합성 관측입니다. 목표 검토 폭은 데스크톱 900px이며 임의의
 모바일 축소판이나 접근성 인증이 아닙니다.
 
+## 명시적 시간 변수
+
+기본은 숫자다. `pair(columns, temporal={"time": {"timezone": "UTC"}})`로
+날짜 변수를 선언한다. 각 값은 `TemporalSpec`이나 엄격한 dict다.
+[시간 계약](TEMPORAL_AXES.ko.md)에 numeric unit/origin·cell별 결측·day당
+hist/KDE 밀도도 설명했다. 밀도 축은 숫자이며 미선언 문자열은 계속 거부한다.
+
 ## 데이터에서 만든 뒤 셀별 편집
 
 ```python
@@ -48,7 +55,7 @@ p = (mp.plot(raw).pair(["Dose", "Response"], group="condition",
 [소스](../examples/kde_grids.py). 변수별 단변량 관측을 그대로 사용하며 전체 열의
 listwise 삭제로 바꾸지 않습니다. KDESpec의 bandwidth/grid/cut/clip/common_norm/
 common_grid/fill을 검증하고 독립 복사합니다. KDE는 diag_stat='density', 사용하지
-않는 기본 bins=20만 허용하고 weights/CDF는 거부합니다. 단일값/특이 그룹은 기존
+않는 기본 bins=20을 사용합니다. 이름 있는 weights는 사용할 수 있지만 KDE CDF는 거부합니다. 단일값/특이 그룹은 기존
 경고/skip 규칙을 따르며 가짜 밀도를 만들지 않습니다. 유한 support·누락 질량으로
 보이는 면적이 1이 아닐 수 있습니다. 같은 clip 설정이 모든 변수에 적용되므로 각
 단위에 맞아야 합니다. Histogram 기본 동작은 바꾸지 않았습니다.
@@ -63,7 +70,7 @@ p = (mp.plot(raw).pair(["Dose", "Response"], group="condition",
 Count/probability(proportion)/percent를명시하고density는거절합니다. 미사용bins=20/KDEconfig생략을
 유지하세요. 대각선은자기변수/group행만사용하며전체변수완전행으로줄이지않고곡선별정규화합니다.
 반복값전체jump/최소값중복·질량0시작을보존하며가짜무한tail은없습니다. 누적질량y는측정값y와
-공유하지않고weighted/complementarygrid옵션은미지원입니다. Hist기본은유지합니다.
+공유하지 않습니다. `weights=`와 `complementary=True`를 쓰면 관측값보다 엄격히 큰 값의 가중 질량을 표시합니다.
 
 ## 전체 열 listwise 삭제가 아닌 쌍별 관측
 
@@ -78,6 +85,15 @@ Count/probability(proportion)/percent를명시하고density는거절합니다. �
 
 `SetData` 후 쌍 선택과 자동 표시 범위는 갱신합니다. 변수/group 종류는
 materialized snapshot이므로 새 변수를 포함하려면 빈 템플릿에서 다시 구성합니다.
+
+`corner=True`는 대각선을 포함한 아래쪽 `n(n+1)/2`개의 N13 셀만 만듭니다.
+위쪽에는 숨은 축이 없고 관측이 없는 실제 셀은 편집할 수 있습니다.
+[가중 예제](../examples/weighted_grids.py)에서 `semantics=mp.SemanticSpec(hue="Arm")`과
+`weights="Weight"`를 함께 사용합니다. 의미 역할은 원자료 범위를 공유하지만
+행이나 통계축은 공유하지 않습니다. 점의 크기는 지름, 대각선의 크기는 획 너비입니다.
+말단 역할의 순서와 결측을 검사한 뒤 좌표/시간을 변환합니다. 결측/0 가중치는
+제외하고 선택된 음수·비유한 값·불리언 가중치는 거부합니다.
+새 셀에는 과학 레이어 하나와 주석만 저장되며 숨은 필터링 열이나 행 배열은 없습니다.
 
 ## Density와 측정값 축을 섞지 않기
 
@@ -105,9 +121,8 @@ p.share_axis("y", "response", panel=2)
 
 구성·검증·action 재생에는 optional numeric/render dependency가 필요 없습니다.
 기존 에디터로 spec을 열고 셀 선택/label control과 SVG/PDF 내보내기를 사용할 수
-있습니다. Corner/삼각 grid·continuous/semantic hue·weights·complementaryCDF·callable·
-중첩 grid는 이번 범위 밖입니다. 새 workflow이지 layer 종류나 spec version을
-추가한 것은 아닙니다.
+있습니다. N13의 `pair(...).nest(...)`·완전 outer 배치에서 안정적 ID를 유지합니다.
+[배치 계약](PANEL_LAYOUTS.ko.md) 참고. 새 콜백·레이어 종류·spec 버전은 추가하지 않습니다.
 
 ```bash
 uv run python -m examples.pair_observations

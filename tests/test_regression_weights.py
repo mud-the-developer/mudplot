@@ -117,9 +117,9 @@ def test_invalid_or_insufficient_positive_weights_fail_before_artists(weights):
     "options",
     [
         {"confidence": 95},
-        {"regression": {"model": "robust"}},
-        {"regression": {"model": "logistic"}},
-        {"regression": {"model": "lowess"}},
+        {"regression": {"model": "robust"}, "confidence": 95},
+        {"regression": {"model": "logistic"}, "confidence": 95},
+        {"regression": {"model": "lowess"}, "confidence": 95},
     ],
 )
 def test_unsupported_weighted_inference_is_rejected_without_history_change(options):
@@ -176,12 +176,38 @@ def test_relative_weight_underflow_fails_without_overwriting_output(tmp_path):
     assert path.read_bytes() == b"previous" and plt.get_fignums() == before
 
 
-def test_joint_does_not_make_unweighted_marginals_for_weighted_regression():
-    p = mp.plot(data()).regplot("x", "y", weights="w")
-    before, history = p.spec, p.action_log
+def test_joint_weighted_regression_and_marginals_share_positive_pairs():
+    raw = data(outlier=True)
+    raw["x"].append(None)
+    raw["y"].append(20.0)
+    raw["w"].append(7.0)
+    raw["other"] = [1] * len(raw["x"])
+    p = mp.plot(raw).size(9, 7).regplot("x", "y", weights="w")
+    before, history = p.to_json(), p.action_log
     with pytest.raises(ValueError, match="weight"):
-        p.joint()
-    assert p.spec == before and p.action_log == history
+        p.joint(weights="other")
+    assert p.to_json() == before and p.action_log == history
+    p.joint(marginal_stat="count", bins=3)
+    fig = p.render()
+    try:
+        main, right, bottom = fig.axes
+        expected = sum(
+            w
+            for x, y, w in zip(raw["x"], raw["y"], raw["w"], strict=True)
+            if x is not None and y is not None and w > 0
+        )
+        assert sum(bar.get_width() for bar in right.patches) == expected == 4
+        assert sum(bar.get_height() for bar in bottom.patches) == expected
+        np.testing.assert_array_equal(
+            main.collections[0].get_offsets(), [[0, 0], [1, 1], [2, 4]]
+        )
+        line = main.lines[0]
+        np.testing.assert_allclose(
+            line.get_ydata(), -4 / 11 + 23 / 11 * line.get_xdata()
+        )
+        assert p.spec.data.columns == raw
+    finally:
+        plt.close(fig)
 
 
 @pytest.mark.parametrize("name", ["x", "y"])

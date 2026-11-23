@@ -24,6 +24,13 @@ pub struct Capabilities {
     pub layers: BTreeMap<String, LayerCapability>,
     pub themes: Vec<String>,
     pub projections: Vec<String>,
+    pub coordinate_pipeline: CoordinatePipeline,
+}
+
+#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+pub struct CoordinatePipeline {
+    pub roles: BTreeMap<String, Vec<String>>,
+    pub names: Vec<String>,
 }
 
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]

@@ -1,0 +1,157 @@
+{
+  "row": "N12",
+  "status": "PARENT_FINAL_FUNCTIONAL_ACCEPTANCE_CLOSED",
+  "scope": "Whole approved finite N12 coordinated main integration, preserving accepted C03/C02/N11/D07/CND01. Not all v2, broader F01/F02/G01/E01/Q01/DOC01/REL01, N13 integration, or publication.",
+  "approved_isolated_lineage": {
+    "receipt": "docs/review_evidence/v2_axis_controls.json",
+    "patch": "$LOCAL_EVIDENCE/location-16/n12-review.patch",
+    "patch_sha256": "c812e2b71d9c09f6848ab6d97451b6edab9eb7176f1e6bc8d0afd0dcbb24b40e",
+    "inventory": "$LOCAL_EVIDENCE/location-16/n12-review-inventory.json",
+    "paths": 48,
+    "stable_copy": "artifacts/v2_axis_controls_integrated/isolated",
+    "policy": "Isolated passes, archives, wheels, final frontend-fixed SDIST, earlier invalid frontend/placeholder receipts and failed wrappers remain separate historical evidence, never relabeled as integrated runs."
+  },
+  "integration": {
+    "method": "Exact baseline→reviewed-source hunks mapped into latest C03 main; existing shared files never replaced with an older tree. Current schemas/capabilities/reference/gallery/full-field fixture regenerated, not copied. Generic MISSING fixture construction retained; forwarding-only registered-layer test removed.",
+    "applied_hunks": "artifacts/v2_axis_controls_integrated/applied_reviewed_hunks.patch",
+    "preserved": "LayerSpec z/strip/pack_scope/spectrum/box positions; BoxSpec/summary/semantic ownership; shared selector/percentile and zero-stroke roots; actual category channel and captured hue domains; original row IDs/clock geometry; CND title/text tags and semantic guide plans.",
+    "unchanged_roots": {
+      "_box.py": true,
+      "_box_render.py": true,
+      "_estimate.py": true,
+      "_components.py": true,
+      "_facet.py": true,
+      "_swarm.py": true,
+      "_spectrum.py": true,
+      "_rug.py": true,
+      "_semantics.py": true,
+      "_line_semantics.py": true,
+      "_scatter_semantics.py": true,
+      "_temporal_data.py": true
+    }
+  },
+  "source_binding": {
+    "path": "artifacts/v2_axis_controls_integrated/source_binding.json",
+    "sha256": "464508bac6b8de9d792d57e9e7f4ee1db93b68650e27dee1fde48f53ea831357",
+    "engine_modules": 66,
+    "frozen_root": "$LOCAL_EVIDENCE/location-17/source",
+    "archive_sha256": "f4a18b5be532aca4cf0a6246f513dd06579c3a8d0b194cb59ff60e4d75ac6de4",
+    "wheel_sha256": "5fd6467dcdca724eee51db8446f5db8ccf07a2e5aafe25e2598316c4bd748abe",
+    "sdist_sha256": "a1875c17910b433d9163b4d21fb68f5abd1bb1df4ddb79fac37e6851e66cac09",
+    "runtime_manifest_sha256": "1109dce8ccbdbfe2f1d0ef57ade96d7ad93244381ee44c155e875f1f35a06bc9",
+    "rust_binary": "$LOCAL_EVIDENCE/location-18/mudplot-editor",
+    "rust_binary_sha256": "9a448ef3471cb7b9a235ed51785707bcb7e2caaf69830a4c64f5ab5a827ae584",
+    "same_source": "All66 Python source files agree across current main, frozen root, wheel and current/minimum installed prefixes. Offline fresh prefixes independently verify the same wheel and all66 hashes. Python frontend server/view/shared-JS are frozen-source harness assets, not an editable-source engine fallback.",
+    "postfreeze_changes": "Only private qualification harness/proof files and final evidence/scope prose changed; no engine/package rebuild or runtime change."
+  },
+  "finite_contract": {
+    "reference": "docs/review_evidence/v2_axis_controls.json#contract",
+    "typed": "Optional omit-none AxisSpec scale_options/major_ticks/minor_ticks and PanelSpec secondary_x/secondary_y; finite registered models/actions/builders; no callbacks, arbitrary kwargs, dependencies or floor changes.",
+    "locators": {
+      "auto": "scale/clock-aware native default; linear minor uses explicitly 4 subdivisions unless overridden",
+      "none": "NullLocator",
+      "fixed": "strictly increasing finite nonbool coordinates, at most512, distinct and ordered AFTER float conversion (large-int collapse rejects), no data rewriting. Dates use canonical UTC1970 days, not input timestamp units",
+      "multiple": "positive finite step, finite offset(default0), linear numeric only; native MultipleLocator offset is supported at3.8",
+      "max_n": "nbins1..128(default8), integer bool(defaultfalse), prune none/lower/upper/both; native standard step policy, no arbitrary step callback",
+      "linear": "count2..128(default5), evenly spaced native LinearLocator",
+      "auto_minor": "linear numeric, subdivisions2..32(default4), uniformly spaced major ticks required",
+      "log": "positive numeric log coordinates; base inherited from axis, optional ordered positive subs below base, at most32. ScaleOptions.subs is MINOR policy for log/symlog/asinh; AUTO major retains native base powers/locations, minor inherits scale subs; explicit LocatorSpec.subs can override either rank",
+      "symlog": "native SymmetricalLogLocator using axis base/linthresh and finite optional subs",
+      "asinh": "native AsinhLocator using axis linear_width/base; count2..128(default11), optional finite subs",
+      "logit": "native LogitLocator major/minor in open(0,1)",
+      "calendar": "TemporalSpec required; unit auto/year/month/week/day/hour/minute/second/microsecond, nonbool interval1..1000000(default1), weekday0..6 only for week(defaultMonday), auto target count2..128(default8 major/32 minor). Declared UTC/fixed-offset clock, calendar boundaries and existing epoch-shift adapter; no host timezone or global epoch mutation",
+      "compatibility": "Independent major/minor configuration. Date locators/formatters reject on non-temporal axes; numeric density/count axes are not calendarized. Ordinal axes preserve old defaults and accept only auto/none or explicit fixed positions/labels, not misleading numeric locator families."
+    },
+    "formatters": {
+      "auto": "native scale/clock-aware formatter",
+      "none": "NullFormatter",
+      "fixed": "literal label list paired with explicit fixed locator, identical lengths; each label<=128characters",
+      "scalar": "native ScalarFormatter: scientific bool(defaulttrue), use_offset bool(defaulttrue), powerlimits two ordered ints within[-12,12](default[-5,6]), mathtext bool(defaultfalse), locale disabled",
+      "number": "notation fixed/scientific/general(defaultgeneral), precision0..12(default3; general requires1..12 significant digits), optional literal prefix/suffix<=32characters each; no caller-supplied format string or width",
+      "percent": "positive finite xmax(default1), decimals0..12(default1), native percent symbol",
+      "engineering": "native EngFormatter unit literal<=32characters, places0..12 orNone(defaultNone), separator one of empty/space/thin-space/narrow-no-break-space; no version3.10-only EngFormatter offset option",
+      "log": "style plain/exponent/mathtext/scientific, axis base inherited, label_only_base bool(defaultfalse)",
+      "logit": "native probability formatter, half token fraction/decimal and use_overline bool(defaultfalse); no arbitrary TeX template",
+      "date": "Finite ISO date/date-time/time/month/year/subsecond patterns use canonical EPOCH+timedelta+declared zone. Subsecond includes date and6digits. AUTO rebinds NEW calendar provider; fixed AUTO is full ISO date+6digits+offset, not stale-year or native distant-epoch20us rounding.",
+      "concise_date": "Approved canonical datetime-vector adapter preserves Matplotlib3.8 finite level/zero/offset/trailingzero policy on calendar OR fixed temporal positions, TemporalSpec mandatory; no arbitrary format arrays. Copyright/license/change summary bundled in mudplot/_matplotlib_notice.txt; distribution expression MIT AND LicenseRef-Matplotlib, own LICENSE remains MIT.",
+      "limits": "Finite format options only; formatter output<=512characters per tick. Existing trusted literal-text/TeX boundary is not redefined."
+    },
+    "scales": {
+      "linear": "no scale parameters",
+      "log": "base finite>1(default10), optional ordered finite subs below base; explicit base/subs work EVERYWHERE the existing log family is valid, including applicable statistical/native categorical/swarm paths. Existing positivity/missing/native-log10 geometry policies remain; no newly undefined request merely because parameters were supplied",
+      "symlog": "all finite real coordinates; base>1(default10), linthresh>0(default2), linscale>0(default1), optional finite subs; thresholds in coordinate units",
+      "asinh": "all finite real coordinates; linear_width>0(default1), integer tick-rounding base2..1024(default10), optional finite subs; width in coordinate units; native minimum3.8 API used",
+      "logit": "Strict finite open(0,1), native base10 transform. Approved native-scale/locator singular policy installed BEFORE first autoscale: constant p uses tail=min(p,1-p), open bounds0.1tail and1-0.1tail (native widening factor, complement symmetric, data contained); nonconstant native policy retained/containment checked. Unrepresentable native inverse/open view raises precision error, no epsilon/clipping. Explicit valid limits preserved; x/y/y2 covered.",
+      "domain": "Existing missing/native-gap policies remain: pure domain view inspects paired x/y (band x/y/y2) only, without filtering source/native paths or hiding native type parse errors. Finite actual geometry must meet domain. Scale installs before artists; final scale application precedes N12 locator installation and retains checked logit policy. Finite forward/inverse collapse/overflow rejects, no epsilon.",
+      "finite_new_family_context": "Only NEW symlog/asinh/logit families are restricted to Cartesian2D raw numeric line/scatter/bar/stem/stairs/errorbar/band/event/interval/reference/text/rug geometry, including applicable independent y2. Explicit log base/subs are NOT raw-only; existing log10 native-category spacing/inverse remains multiplicatively equivalent. New nonlinear categorical geometry rejects rather than falling through to linear spacing. Unsupported projection/family combinations reject.",
+      "minimum_native_limits": "Observed MPL3.8 collection get_datalim transforms raw bounds. Approved snapshot/restore of prior native DataLim/minpos/ignore then union ACTUAL new raw Rectangle bbox/Line2Dxy/segments/polygon vertices for bar/errorbar/stem/broken_barh ONLY when actual target has NEW scale. Native artists/source/gap/order/provider values unchanged; no fake collection offset origin, view/scale juggling or old log/linear change. Event exception ONLY actual Y-lane logit: native full-length autoscale hint can exceed domain despite valid half-length segments, so union actual segments. Other event paths unchanged; legacy unsupported log/group boundaries retained. Primitive guards connect EXACT linear+NEW_SCALES, no full N05 closure."
+    },
+    "secondary_transforms": {
+      "affine": "forward a*x+b, inverse(y-b)/a; required finite nonzero a, finite b(default0), explicit nonempty source_unit/target_unit; all-real monotonic, including negative slope",
+      "celsius_fahrenheit": "9*x/5+32 and5*(y-32)/9; declared degC todegF; all-real mathematical conversion, no inferred physical measurement validity",
+      "radians_degrees": "180*x/pi andpi*y/180; rad todegree, all-real increasing",
+      "seconds_milliseconds": "1000*x andy/1000; s toms, all-real increasing",
+      "hertz_period": "1/x both directions, Hz tos, strictly positive visible domains; decreasing, no fabricated epsilon atzero",
+      "reciprocal": "factor/x both directions, required positive finite factor and explicit source/target units; positive visible domains, decreasing",
+      "unix_seconds": "86400*canonical_day andseconds/86400; only explicitly temporal parent, UTC1970day toUnixseconds. Not the input column's unit/origin and independent of Matplotlib epoch",
+      "domain_and_visibility": "Transform only derived VIEW coordinates, never raw-data domains; validate actual parent visible bounds, analytic invertibility/monotonicity and finite/precision-safe endpoints/ticks. Out-of-view zero observations remain valid for reciprocal with explicit positive view. No clamping, epsilon, arbitrary functions or inferred units. One explicit reverse flag may exchange analytic direction/declared units where meaningful, not an alias family explosion.",
+      "native_minimum_boundary": "Use native secondary_xaxis/secondary_yaxis functions created only inside effects from this registry. Minimum3.8 SecondaryAxis special-cases only parent log versus function; support linear/log parents and the explicit linear temporal unix_seconds case. Reject symlog/asinh/logit-parent derived axes rather than misrepresent spacing. Log parents also require positive derived domain. Derived y cannot coexist with independent y2 on the same right spine."
+    },
+    "resources": {
+      "approved_implemented_constants": {
+        "MAX_TICKS_PER_LEVEL": 512,
+        "MAX_FIGURE_CONFIGURED_TICKS": 16384,
+        "MAX_FORMATTED_TICK_CHARACTERS": 512
+      },
+      "basis": "Native3.8 Locator.MAXTICKS=1000 warns only after allocation; new512/16384/512 bounds are active-location/format-operation bounds, not an SLA, RAM sandbox, native cached-artist-memory ceiling or existing limit increase.",
+      "before_allocation": "Fixed/count fields checked in pure core. Actual-view count preflight precedes native arange/linspace/rrule and requested Tick expansion. Count PHYSICAL axis/rank instances including every inherited shared panel and derived axis, never deduplicate canonical positions. Repeated provider calls replace that operation's count, not accumulate. Cached native Tick lists may retain a previous maximum; no false allocation/RAM guarantee. No modifying global MAXTICKS, epoch or rc defaults. Legacy axes with no N12 opt-in unchanged."
+    },
+    "scientific_crosschecks": "Independent transform/tick/native endpoint oracles; constant .99 logit and complementary framing; selected event lane raw extents; missing-pair native gaps; explicit base2/subs for raw/supplied Box v/h/primary/y2 category and value scales; canonical 2100 20/21 microsecond auto/date/concise labels. New nonlinear boxed statistics remain outside the approved finite contract."
+  },
+  "qualification": {
+    "cohorts": "artifacts/v2_axis_controls_integrated/qualification_cohorts.json",
+    "commands": "artifacts/v2_axis_controls_integrated/commands.json",
+    "source": "Frozen current2019 pass/2 host-PGF skips; frozen minimum2019 pass/2 host-PGF skips, separate cohorts.",
+    "installed_original": "Each original installed current/minimum cohort:1156 pass/1 private-harness child-import failure/2 host-PGF skips. These remain failed original cohorts, never described as full-pass.",
+    "installed_correction": "Only affected private copied test PYTHONPATH corrected to the installed function module prefix; affected case once/profile:1 pass, -S=1, exact installed origin, all66 hashes and same wheel. Do not sum with the original1156.",
+    "native_browser": "Original installed cohorts actually execute required Rust specialized/Box/swarm browser consumers with own Chromium and source-unset matching native-reference/bridge interpreters. Separate N12 human workflows below exercise both frontends.",
+    "rust": "Fresh build,21 tests pass/5 deliberately ignored process-helper entries, MSRV1.88 check, cargo fmt and all-target clippy -D warnings pass.",
+    "static": "Changed26 Python files pass Ruff/format; project pyright0errors; generated schema/capabilities/reference/gallery and generic full-field generator agree.",
+    "pure_core": "Both installed Python-S consumers actively deny NumPy/Matplotlib/SciPy and execute typed N12+Box+live builder/validation/action/JSON behavior from bound installed origins.",
+    "native_smoke": "Both affected installed scripts/rust_editor_smoke_test.py native consumers pass, including Box scientific/source/history and N12/raw layer boundaries."
+  },
+  "actual_human_frontends": {
+    "profiles": "Current Python3.13.12/NumPy2.5.2/Matplotlib3.11.1/Pillow13; minimum Python3.11.14/NumPy1.23.5/Matplotlib3.8.0/Pillow13. Same wheel/66 modules, source-unset bridges and matching native refs.",
+    "paths": "artifacts/v2_axis_controls_integrated/human/{current-qualified,minimum-qualified}/{rust,python}/receipt.json",
+    "executed": "Actual Open/RAW typed major/minor/scale-parameter/derived-unit forms plus native scale, registered-layer and granular label controls; unsupported primary/y2 data handles absent with reason while unaffected primary base2 pointer remains; physical frame-aware pointer oracle; title/legend moves; rejected pure/native requests retain exact Spec/PNG/history; undo/redo,4downloads and JSON reopen.",
+    "display_oracle": "Real DOM img decoded to RGBA via canvas equals current accepted cached PNG bytes at every checkpoint, including after edits and reopen; actual image-resource revisions/generations retained, not URL-only/API-only placeholder proof.",
+    "visual_classification": "Three-panel desktop/mobile surfaces are functional stress proof, not publication readability QA. Parent reviewed all4 receipts and actual current-Python/minimum-Rust surfaces and accepted UI evidence. The separate six-panel5100x3000 example was visually accepted as readable.",
+    "png": "UI download is existing capped cached2000x533 preview. The exact same actual downloaded JSON renders4500x1200 at15x4in/300dpi through each installed CLI; six-panel CLI outputs5100x3000.",
+    "exact_png_record": "artifacts/v2_axis_controls_integrated/human_exact_png.json"
+  },
+  "offline_pgf": {
+    "paths": "artifacts/v2_axis_controls_integrated/pgf-proof/{current,minimum}-lualatex/record.json",
+    "same_wheel_fresh_install": "No-network read-only retained rootfs, explicit NEW frozen /work, private tmp/results, real ensurepip/pip --no-deps --no-index into fresh prefixes. All66 module hashes verified.",
+    "profiles": "Both actual Python3.11.15; current NumPy2.4.6/Matplotlib3.11.1/Pillow13 and minimum NumPy1.23.5/Matplotlib3.8.0/Pillow13. This current TeX profile is distinct from desktop Python3.13/NumPy2.5.2.",
+    "result": "8native PGFs/profile compile to10document pages/profile using LuaLaTeX→BibTeX→LuaLaTeX×2:8plotted pages, blank wrapper-pagination page07, and bibliography page10. Ten pages do not mean ten plotted figures. Ghostscript extracts/rasterizes μm/Σ/²/canonical2100 000020/000021 and resolved citations; compiled PDF Box URI present, no final missing characters. No pdflatex claim.",
+    "selected_regressions": "Each actual rootfs profile separately:3pass/187deselected/0skip for selected Box/N11 native PGF consumers; not added to host source/installed totals.",
+    "wrapper_lineage": "Combined C03 wrapper initially omitted Native PGF mathdefault/everymath/underscore header needed by N12 mathtext. Original failed wrappers/records/logs retained. Corrected ONLY document wrapper and resumed compilation; all8native PGF hashes unchanged, no product/wheel/native export rerun."
+  },
+  "legacy_and_outputs": {
+    "actual_control": "Same-profile immutable accepted-C03989c... installed engine versus new5fd646... engine; different real module origins/renderer hashes.",
+    "paths": "artifacts/v2_axis_controls_integrated/legacy/{current,minimum}/comparison.json",
+    "result": "10cases/profile exact JSON/actions/RGBA/native limits/tick labels, including7prior default families plus default raw Box, explicit cap/bootstrap Box and supplied Box. No permanent default pixel/source pins.",
+    "cli": "artifacts/v2_axis_controls_integrated/cli_outputs.json; actual invalid scale options reject with existing exact PNG unchanged.",
+    "license": "artifacts/v2_axis_controls_integrated/license_artifacts.json; wheel+SDIST both declare MIT AND LicenseRef-Matplotlib with full matching notice and unchanged own MIT LICENSE; no dependency/floor/version change."
+  },
+  "failure_lineage": [
+    "First direct .xscale(base=2) probe used unsupported public kwargs; corrected options={base:2,subs:[1]} actual native bases2/2 passed. Not a product defect.",
+    "An overbroad Ruff . invocation included immutable historical proof scripts and pre-existing untouched scatter formatting; retained failed log. Changed26-file Ruff/format qualification passes; no archive/user source restyling.",
+    "Original current/minimum installed child-import harness failures preserved separately from one-case corrected results.",
+    "Private human harness corrections: bbox protocol x1 was initially mistaken for width; debounced keyboard POST initially was not awaited; viewport API initially called BrowserContext instead of Page. Failed logs/output roots retained, final full actual workflows pass.",
+    "Current successful human driver logs retain nonfatal Playwright1.63 Response.finished close-task diagnostics: its internal on_finished task remains pending after successful completion and raises when target closes. Minimum uses equivalent completed response.body await and is clean. No product exception/warning suppression.",
+    "Offline initial wrapper failure retained; only required document header corrected, native PGFs immutable.",
+    "Provider deprecation/extreme-value warnings remain visible in source/minimum logs; no warning suppression or fabricated no-warning claims."
+  ],
+  "parent_review_and_remaining": "Parent reviewed the full stable integrated receipt, source/native/pure/installed/both-frontend/PGF/legacy/output/license evidence and truthful bilingual scope, and granted FINAL FUNCTIONAL ACCEPTANCE for the ENTIRE approved N12 integrated workflow. Every specified local N12 acceptance gate is satisfied. Immutable source/wheels, all failure lineage, original failed cohorts plus separate corrections, blank07 wrapper classification and distinct desktop/TeX profiles remain unchanged. No overall F01/F02/G01/E01/Q01/DOC01/REL01/v2 or N13 closure, version/floor change or publication is claimed."
+}

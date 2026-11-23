@@ -13,7 +13,7 @@ p.swarmplot("category", "right", panel=1,
             semantics={"size": "mass", "scale_id": "shared_mass"})
 ```
 
-A named domain shares **only the size mapping**, not observations, colours,
+The size-only configuration above shares **only size mapping**, not observations,
 positions, references or a cross-layer collision guarantee. Each member keeps its
 own category/value/group/size missing cohort and explicit row selections. Their
 original source row IDs are unioned, deduplicated and ordered by the source table.
@@ -28,20 +28,20 @@ legend=False on an earlier member does not hide a later enabled guide. Group
 colour guides stay local/observed and do not become shared semantic hue mappings.
 
 Members require identical semantic settings except scale_id/legend. Conflicting
-settings fail. Swarm-only named domains cannot mix with scatter/line members.
-Existing scatter/line scale behavior and unnamed Swarm local behavior remain.
+settings fail. C02 permits compatible mixed-family domains with scatter, lineplot,
+strip, ECDF and rug; physical point values retain their documented mark-specific
+diameter versus stroke meaning. Unnamed local behavior remains.
 Per-layer2,000 usable rows, independent pooled10,000 unique rows and64 unambiguous
 categorical levels are validated before artists. Pooled area underflow is checked
 by pure validation, preserving an existing output on failure.
 
-Primary Cartesian Swarm supports explicit facet/filter/dropna selection.
-[Selected empty cells](SWARM_FACETS.md) are frames without observations/guides;
-unfiltered plain empty layers still reject. Manual panels and different local
-cohorts are valid. y2, semantic hue/style/date, mixed-family domains and scalar
-marker_size overrides remain rejected.
-No new model/action/spec fields, dependencies or versions are needed. Raw semantic
-JSON survives both editors; dedicated UI controls are not claimed.
+[C02's full contract](SWARM_FACETS.md) adds hue/style/named glyphs, dates/y2,
+explicit pack_scope and explicit live-template edits. Sharing a mapping ID alone
+does not join packing. Selected empty cells are frames without observations or
+guides; literal empty input is supported, while nonempty all-missing unselected
+input rejects. Scalar marker_size still conflicts with mapped size.
 
-Successful Figures remain caller-owned. Synthetic examples are not independent
-human readability/AT certification, and row bounds are not a total CPU/RAM/sandbox
-guarantee. Other shared/facet contracts remain separate work.
+Source JSON and old omitted defaults remain readable. New optional scope/live
+fields do not add dependencies or change versions. Both editors retain generic
+JSON forms; no independent human readability/AT certification or total CPU/RAM/
+sandbox guarantee is claimed. Wider F01/G01/REL01 remain separate.

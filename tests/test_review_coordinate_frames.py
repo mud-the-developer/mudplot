@@ -88,7 +88,9 @@ def test_layout_handle_frames_match_selected_primary_secondary_axes_and_figure(
     assert float(title["data-imgx"]) == pytest.approx(x0 + 0.25 * (x1 - x0), abs=1e-5)
     assert float(title["data-imgy"]) == pytest.approx(y0 + 0.9 * (y1 - y0), abs=1e-5)
     legend = handles[f"legend::{active}"]
-    assert float(legend["data-imgx"]) == 0.8 and float(legend["data-imgy"]) == 0.7
+    assert [float(legend["data-imgx"]), float(legend["data-imgy"])] == pytest.approx(
+        [0.8, 0.7], abs=1e-12
+    )
     assert legend["data-space"] == "figure" and title["data-space"] == "axes"
     assert mp.to_json(session.store.state) == before
     assert mp.from_json(mp.to_json(spec)) == spec
@@ -118,7 +120,7 @@ def test_renderer_artist_positions_match_data_axes_and_figure_transforms():
             title.get_transform().transform(title.get_position()),
             ax.transAxes.transform([0.25, 0.9]),
         )
-        legend = ax.get_legend()
+        legend = secondary.get_legend()
         assert legend is not None
         np.testing.assert_allclose(
             legend.get_bbox_to_anchor().bounds[:2],

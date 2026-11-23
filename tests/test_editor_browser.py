@@ -12,6 +12,7 @@ rest of the suite regardless.
 
 import contextlib
 import json
+import shutil
 import threading
 import time
 import urllib.request
@@ -29,10 +30,10 @@ from playwright.sync_api import expect, sync_playwright
 def browser():
     with sync_playwright() as p:
         try:
-            # Playwright's own chromium if it was downloaded (CI), otherwise
-            # an already-installed Chrome (typical dev machine, no download).
+            # Prefer installed Chromium; otherwise use Playwright's cache,
+            # then an installed Chrome. No download is required at test time.
             try:
-                b = p.chromium.launch()
+                b = p.chromium.launch(executable_path=shutil.which("chromium"))
             except Exception:
                 b = p.chromium.launch(channel="chrome")
         except Exception as e:  # pragma: no cover - environment dependent
@@ -177,6 +178,7 @@ def test_dragging_the_legend_moves_it_and_persists(editor):
     page.mouse.down()
     page.mouse.move(before["x"] + 160, before["y"] + 90, steps=10)
     page.mouse.up()
+    _settle(page)
 
     page.wait_for_function(
         "() => document.querySelectorAll('.drag-handle.legend').length === 1"
@@ -300,9 +302,7 @@ def test_editing_targets_the_selected_panel(editor):
     _settle(page)
 
     # panel 1 (the second) is empty until selected and given a layer
-    page.get_by_role("group", name="Active panel").get_by_role(
-        "button", name="2"
-    ).click()
+    page.get_by_role("group", name="Active panel").get_by_role("button").nth(1).click()
     # wait for the swap to actually land: the forms rendered for the previous
     # selection still carry the old panel number, so typing too early edits it
     page.get_by_text("Editing panel 2").wait_for()
@@ -320,6 +320,7 @@ def test_editing_targets_the_selected_panel(editor):
     # panel field, so this exercises the server-side default
     page.get_by_label("x column").fill("x")
     page.get_by_label("y column").fill("y")
+    page.get_by_label("Legend label (optional)", exact=True).fill("Second series")
     page.get_by_role("button", name="Add layer").click()
     panels = _wait_until(
         lambda: _spec(url)["panels"],
@@ -525,7 +526,7 @@ def test_joint_grid_import_has_three_editable_panels_and_preserves_source(
     assert _spec(url) == expected
     panels = page.get_by_role("group", name="Active panel")
     expect(panels.get_by_role("button")).to_have_count(3)
-    panels.get_by_role("button", name="3", exact=True).click()
+    panels.get_by_role("button").nth(2).click()
     page.get_by_text("Editing panel 3").wait_for()
     page.get_by_label("Panel title", exact=True).fill("X marginal edited")
     page.get_by_label("Panel title", exact=True).press("Enter")
@@ -567,8 +568,10 @@ def test_pair_grid_file_opens_nine_named_axis_cells_and_exports(editor, tmp_path
     assert _spec(url) == plot.spec.to_dict()
     panels = page.get_by_role("group", name="Active panel")
     expect(panels.get_by_role("button")).to_have_count(9)
-    panels.get_by_role("button", name="9", exact=True).click()
-    page.get_by_text("Editing panel 9").wait_for()
+    panels.get_by_role("button").nth(8).click()
+    expect(panels.get_by_role("button").nth(8)).to_have_attribute(
+        "aria-pressed", "true"
+    )
     page.get_by_label("Panel title", exact=True).fill("Edited diagonal")
     page.get_by_label("Panel title", exact=True).press("Enter")
     current = _wait_until(

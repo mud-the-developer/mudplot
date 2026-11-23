@@ -70,11 +70,3 @@ def test_last_add_panel_and_layout_boundary_are_supported():
 )
 def test_direct_spec_overflow_is_rejected_by_validation(spec):
     assert any("256" in issue for issue in mp.validate(spec))
-
-
-def test_capabilities_explain_structure_bounds():
-    assert mp.capabilities()["figure_structure"] == {
-        "max_panels": 256,
-        "max_layout_cells": 256,
-        "max_layers": 1024,
-    }

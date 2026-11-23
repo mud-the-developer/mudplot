@@ -1,0 +1,142 @@
+{
+  "row": "D01",
+  "status": "BOUNDED MAIN SOURCE INTEGRATION SUBGATE; NOT whole-row/installed/DOM acceptance",
+  "authority": {
+    "source_binding": {
+      "path": "$LOCAL_EVIDENCE/location-57/BINDING.json",
+      "sha256": "411c8ce7d0862f480aa11126f0286fd8444ed0c16035ae3b80aba731cd046558",
+      "bytes": 5240
+    },
+    "approved_source_forward": {
+      "path": "$LOCAL_EVIDENCE/location-57/corrected908-to-final.forward.patch",
+      "sha256": "7400eb0e0b741667b0b7fc066aa25253dc1706dac053edc6ca263078ac31632e",
+      "bytes": 327298
+    },
+    "approved_final_test_only_cutover": {
+      "path": "$LOCAL_EVIDENCE/location-58/test-only-forward.patch",
+      "sha256": "e74b678e37a4f4fba00f3110f1ab8707a3a79fd37a63f19610393fa68b0d7983",
+      "bytes": 1977
+    }
+  },
+  "pre_integration": {
+    "purpose": "Fresh complete current Main capture BEFORE authorized D01 R4b forward hunks; contains ongoing D03-D06 product work,not qualified feature snapshot",
+    "source": "$CHECKOUT",
+    "files": 924,
+    "tree_sha256": "d6c91fae54f2f88c9f52a6a023d1b72014ebbc6b6c419a1aa0a84809ac93ed3e",
+    "manifest": "$LOCAL_EVIDENCE/location-59/pre-integration-files.json",
+    "archive": "$LOCAL_EVIDENCE/location-59/current-main-before-d01.tar.gz",
+    "archive_sha256": "6a2bebc40f649423a9c6a61d27831c7c85c641c20723f3f2a492663d982ff06b",
+    "source_unchanged_during_capture": true,
+    "excluded_directories": [
+      ".git",
+      ".hypothesis",
+      ".pi",
+      ".pytest_cache",
+      ".ruff_cache",
+      ".venv",
+      "__pycache__",
+      "artifacts",
+      "mudplot-editor/target"
+    ],
+    "no_git_or_pi_content_read": true,
+    "no_mutable_hardlinks": true,
+    "parent_d01_binding_sha256": "411c8ce7d0862f480aa11126f0286fd8444ed0c16035ae3b80aba731cd046558",
+    "parent_d01_patch_sha256": "7400eb0e0b741667b0b7fc066aa25253dc1706dac053edc6ca263078ac31632e"
+  },
+  "current_capture": {
+    "runtime_modules": 82,
+    "runtime_logical_sha256": "541226049c400604b2fe869e61810f90bd58feb438bf1e196503ca89d59394e8",
+    "runtime_manifest": {
+      "path": "$LOCAL_EVIDENCE/location-60/current-runtime-manifest.json",
+      "sha256": "de676d3250c932268cbcad7cb33d7d0af79cca143530cc694756b66fd493997d",
+      "bytes": 8222
+    },
+    "frontend_manifest": {
+      "path": "$LOCAL_EVIDENCE/location-60/current-frontends.json",
+      "sha256": "5d5327b0949ffeb37818a4d149e6d07ae957ccb40d9878119eeb8fa357a5fbbd",
+      "bytes": 412
+    },
+    "source_forward_delta": {
+      "path": "$LOCAL_EVIDENCE/location-60/preintegration-to-current-scoped.patch",
+      "sha256": "ff4a44610927847daddbbc86e9c6ef1096fe178ab0d665fad532d80eb8a2c404",
+      "bytes": 419976
+    },
+    "source_hunk_inventory": {
+      "path": "$LOCAL_EVIDENCE/location-60/source-hunk-inventory.json",
+      "sha256": "7d31897cca196b3b720d14f3b7f5f68142b6f8b45a728099670876c0b3ded378",
+      "bytes": 29549
+    },
+    "changed_scoped_paths": 55,
+    "not_frozen": true,
+    "not_a_wheel_identity": true
+  },
+  "integration_method": {
+    "automatic": "Only reviewed changed-line segments with exactly one complete current preimage were applied through freshly read hashline anchors. Stage1-3 exact hunk logs retained.",
+    "manual_conflicts": "Combined spec/API/estimate/stat/facet/temporal/semantics/native dispatch/capabilities/validation meanings explicitly; no old tree/file replacement. Appended Layer.line AFTER current ecdf2d tail, and Figure.shared_guides after current tail. Original layer indices, rug, Box/Violin/Boxen, new field routes and source clocks retained.",
+    "generated": "Current schema/capabilities/reference/gallery regenerated in a fresh process plus generic MISSING-aware full-field fixture; no older D01 generated universes copied.",
+    "test_cutover": "Retained ALL3 genuinely invalid clock scenarios and actual rejection/source/history/figure preservation; removed generated wording/legend golden and only obsolete live detach-None assertion."
+  },
+  "preservation": {
+    "path": "$LOCAL_EVIDENCE/location-60/preserved-current-boundaries.json",
+    "sha256": "5df350d06654da624a47d85cc9b2313f353c30df01fc7cd445e138879cf44c1f",
+    "bytes": 3206
+  },
+  "canonical_capability_correction": {
+    "authority": "_facet.FILTERED_Y2_LAYER_TYPES is the one pure eligibility set used by panel_filter_issues and exported facets.supported_y2_layers. D01 line/lineplot union preserves current declared field and six statistical families.",
+    "descriptions": "Removed blanket primary-only/y2/c-colourbar prohibition; each family retains real axes/clock/projection/c constraints and local-vs-explicit-live-template semantics. No runtime widening was inferred from descriptions.",
+    "units": "Added actual box/violin BODY-outline point units, explicitly separate from whisker/cap/median and mean/flier/inner glyph size. New field outline versus statistic mappable/hue guides remain distinct.",
+    "remaining": "Final coherent installed capability\u2192native/facet correspondence remains required; D03\u2013D06 product source is still under implementation."
+  },
+  "guide_root_corrections": {
+    "owner": "Actual native Axes(fig,bounds)+Figure.add_artist: figure-owned guide cannot raise an arbitrary data panel title. Existing native_axes traversal includes all real figure-owned and child axes once, without creating panel membership.",
+    "spacing": "Existing explicit-N13 Tight lifecycle now measures whole native decoration unions per canonical original cell, including twins/data-owned mappables, and solves inherited native wspace for adjacent nested columns. Literal source/canvas/positions/ticks stay unchanged; no all-tick pair solver or new API.",
+    "bounded_exhaustion": "At most3 updates, followed by FINAL actual-state remeasurement; unresolved/exhausted measured gaps emit the owned warning. Latest native regression exercises current code.",
+    "native_after": {
+      "path": "$LOCAL_EVIDENCE/location-60/same-spec-native-after-bindings.json",
+      "sha256": "53cbf28b7eec4daaa3c30234cb4e4ffae2136f6e2ca32517115437e3ad90b088",
+      "bytes": 28467
+    },
+    "scope": "Source same-spec PNG/SVG/PDF, not DOM or installed acceptance."
+  },
+  "source_cohorts": {
+    "path": "$LOCAL_EVIDENCE/location-60/source-cohorts.json",
+    "sha256": "019e92e34e1b13ab761f4cc443c38ee9a17a91e933470dfc5cddf0472fa06aff",
+    "bytes": 12514
+  },
+  "static": {
+    "initial_ruff_failure": {
+      "path": "$LOCAL_EVIDENCE/location-59/source-ruff-first-current.log",
+      "sha256": "9ed1f297c18d39766c0d6ccd610b075aaf0a09a1bbb8d845a13cf1e246903319",
+      "bytes": 7152
+    },
+    "import_correction": {
+      "path": "$LOCAL_EVIDENCE/location-59/source-ruff-import-correction-command.json",
+      "sha256": "42f8797f4270982f0a6499d4faa66a0ed51e7c120f74be52d91d898e62943172",
+      "bytes": 1242
+    },
+    "focused_final": {
+      "path": "$LOCAL_EVIDENCE/location-59/root-layout-consumer-static-v2.json",
+      "sha256": "1e8b06687da61175d6f2984122003ca8c2925b95755f4e41b0b9bce9ec74dea6",
+      "bytes": 647
+    }
+  },
+  "failure_lineage": {
+    "isolated_original": "Parent-reported SAME90949a original broad2failed/776passed/15warnings and full9failed/6222passed/68skipped/66warnings remain failed, not Main or green combined cohorts.",
+    "title_only_source": "d01-figure-owned-after current/min: title-owner invariant passed, residual neighboring tick/label overlap VISUALLY FAILED even when warnings empty. Original receipts/images immutable.",
+    "first_spacing_attempt": "d01-nested-spacing-same-spec-after current/min failed because a figure-only ScalarMappable has no .axes; corrected ownership lookup excludes non-data mappables, not a fake fallback. Logs immutable.",
+    "standalone_zero_probe": "Fresh ECDF zero-stroke+requested-diamond inference DISPROVEN: actual artist visible with independent native glyph; no speculative runtime repair or minimum bad-version rerun."
+  },
+  "known_new_validation_hold": {
+    "status": "OPEN, authoritative parent full-suite witness received after this capture; no unchanged confirmation rerun",
+    "case": "Malformed implicit FigureSpec.layout=[2] leaks IndexError through effective_panels\u2192shared_groups. General pure geometry admission/root repair plus -S/action/CLI/editor retention evidence is next; isolated W1 runtime/wheel untouched."
+  },
+  "remaining_gates": [
+    "Correct and qualify new malformed implicit-layout validation hold with existing pure geometry authority.",
+    "Additional plausible span/empty-position/data-vs-figure-mappable and resize/DPI source smoke for measured nested spacing.",
+    "Actual combined D01 public core-S/editor atomic output-history smoke; previous same-spec exports and source regressions are not a substitute.",
+    "One parent-source-reviewed coherent final four-row artifact; no intermediate/duplicate wheel.",
+    "Both current/min installed native capability/guide/layout/core/action/CLI consumers and real Rust/Python desktop/mobile DOM-current-PNG/history/download/reopen proof.",
+    "All D03\u2013D06 named science, resource, axes/live, publication, PGF, legacy/static/generated qualification remains active and separate."
+  ],
+  "scope_limits": "No whole D01/F01/F02/G01/E01/Q01/DOC01/REL01/v2 closure. 1.1.0/schema0.1/floors unchanged; no Git/publication/private-state mutation."
+}

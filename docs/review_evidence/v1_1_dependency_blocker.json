@@ -1,0 +1,58 @@
+{
+  "observed_date_utc": "2026-10-28",
+  "status_at_observation": "blocked_pending_owner_runtime_support_decision",
+  "current_project_requires_python": ">=3.10",
+  "audit": {
+    "command": "uv run --locked --script scripts/audit_dependencies.py",
+    "exit_code": 1,
+    "package": "pillow",
+    "locked_version": "12.3.0",
+    "reported_advisory_records": 39,
+    "record_count_is_not_a_claim_of_independent_vulnerabilities": true,
+    "suggested_fixed_version": "13.0.0"
+  },
+  "official_metadata_checks": [
+    {
+      "url": "https://pypi.org/pypi/pillow/13.0.0/json",
+      "requires_python": ">=3.11",
+      "reported_vulnerability_records_at_lookup": 0
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/12.3.1/json",
+      "http_status": 404
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/12.2.0/json",
+      "requires_python": ">=3.10",
+      "reported_vulnerability_records_at_lookup": 80
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/12.1.1/json",
+      "requires_python": ">=3.10",
+      "reported_vulnerability_records_at_lookup": 90
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/12.1.0/json",
+      "requires_python": ">=3.10",
+      "reported_vulnerability_records_at_lookup": 92
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/12.0.0/json",
+      "requires_python": ">=3.10",
+      "reported_vulnerability_records_at_lookup": 92
+    },
+    {
+      "url": "https://pypi.org/pypi/pillow/11.3.0/json",
+      "requires_python": ">=3.9",
+      "reported_vulnerability_records_at_lookup": 88
+    }
+  ],
+  "changes_applied_at_observation": {
+    "dependency_locks": false,
+    "minimum_python_policy": false,
+    "audit_waivers": false,
+    "version_bump": false,
+    "tag_or_publication": false
+  },
+  "qualification_note": "Running tests using the old Pillow lock are baseline evidence only and cannot qualify subsequently updated release locks."
+}

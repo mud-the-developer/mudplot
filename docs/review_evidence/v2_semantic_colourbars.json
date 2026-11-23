@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "catalogue_id": "F01",
+  "status": "in-progress-existing-scatter-lineplot-guide-increment",
+  "contract": {
+    "options": "Existing bool colorbar defaultFalse; clabel<=512 characters only with requested numeric semantic hue. Negative input/domain values remain valid. No new serialized fields/defaults/version.",
+    "normalization": "Marks and non-data normalized[0,1] colourbar geometry use the same existing stable numeric_mapping/cmap. Labels retain exact raw float representations; constant domains show one solid midpoint swatch and one exact raw tick. Observation coordinates/data/limits unchanged.",
+    "outlines": "Existing scatter edge_color finite bounded colour and line_width[0,1000] physical points; mapped marker diameters still square once to areas. Omitted fields keep native defaults.",
+    "guide_plan": "Resolve requested colourbar intent before any member draws. One named-scope guide per logical panel across earlier/later and primary/y2 members; replaces numeric-hue calibration only, retaining dataset/size/style guides. Requested labels for shared members must match. legend=False does not hide a requested bar; empty local views create none."
+  },
+  "observed_checks": [
+    {
+      "command": "uv run pytest -q tests/test_semantic_colourbars.py tests/test_scatter_semantics.py tests/test_line_semantics.py tests/test_shared_semantics.py",
+      "outcome": "Final corrected increment197 passed in68.13s. Independent Decimal fraction references cover signed/extreme/subnormal/neighbouring bounds, markRGBA versus guideRGBA, exact raw labels and unchanged explicit axes limits/data; consumer guide-intent, primary/y2 and shared-label rejection regressions included."
+    },
+    {
+      "command": "$PROVIDER/environment-04/bin/python -m pytest -q tests/test_semantic_colourbars.py",
+      "outcome": "30 passed,13 upstream warnings in14.33s on Python3.11/minimum render dependencies. Source-import current increment using existing isolated minimum environment, NOT new installed-wheel qualification."
+    },
+    {
+      "command": "uv run ruff check mudplot/_semantics.py mudplot/_scatter_semantics.py mudplot/_line_semantics.py mudplot/_render.py mudplot/validate.py mudplot/capabilities.py mudplot/docs.py tests/test_semantic_colourbars.py tests/test_scatter_semantics.py examples/semantic_colourbars.py scripts/check_minimum_versions.py",
+      "outcome": "All checks passed."
+    },
+    {
+      "command": "uv run python scripts/check_schema_sync.py",
+      "outcome": "Schema/capabilities/reference/gallery all synchronized. Existing FigureSpec schema/default fields unchanged."
+    },
+    {
+      "command": "uv run python examples/semantic_colourbars.py artifacts/v2_semantic_colourbars",
+      "outcome": "PASS shared hue/size, explicit outline, signed extremes, constant swatch. ActualJSON/PNG/SVG/PDF saved, source/JSON/action equality checked. Final4200x2400 PNG read; explicit diverging example palette keeps both line endpoints visible. No separate PDF visual review claimed."
+    }
+  ],
+  "preserved_failures_and_reproductions": {
+    "initial_190": "184 passed/6 failed. Two product failures: native raw-boundary Colorbar mesh overflow for valid[-1e308,1e308] despite stable norm inverse. Four harness failures: scalar-versus-per-row marker-area array assumption and cosmetic facet-title assumption. Systematic normalized non-data guide replaced raw mesh; consumer tests assert visible fractions/RGBA/raw labels/limits instead. Full log artifacts/v2_semantic_colourbars/initial-190-failure.log.",
+    "guide_plan_before_fix": "Actual throwaway runtime: later-request kept hue legend -1/0/1 beside bar; primary+y2 same scope produced4axes instead of3; conflicting requested labels had no validation issues. Reproduced before fixing, not inferred-only.",
+    "guide_plan_after_fix": "Same runtime now has no hue calibration labels, retains dataset/size/style guides; primary+y2 produces3axes with raw source equal; conflicting labels explicitly report requested shared colorbars require identical labels.",
+    "intermediate_197": "196 passed/1 harness failure: style mapping correctly split observations into multiple collections while assertion inspected only first. Corrected assertion concatenates actual point offsets, without repinning style collection layout. Log artifacts/v2_semantic_colourbars/guide-intent-197-harness-failure.log.",
+    "counts": "190,197,27 and minimum/current runs are separate snapshots/cohorts and are not summed."
+  },
+  "source_sha256": {
+    "mudplot/_semantics.py": "8c3b43157431e4c0b9228fb1311a96a9440d90e8fb88cc249c8e5a51df1a63df",
+    "mudplot/_scatter_semantics.py": "c6c096738fea4ef80abb8c45b33a27dad7ea62a1d97cde5efc9920b1f02e110e",
+    "mudplot/_line_semantics.py": "204bb0279f8f9c28e297f710623c680870bd654f9fd8bdb852af5586f85a8f80",
+    "mudplot/_render.py": "80a9ec10862079ea447a476794d7bae9bbb196b8a4128adcf0d41cfc5061aaaa",
+    "mudplot/validate.py": "ff9d116e777baee620ebd14d3c0f67cf9aa6fa8a53d831c246a5b722f069c233",
+    "mudplot/capabilities.py": "5291755190ccf7798cf2f31f8fb65ddbfdd4898656f527d2893d2552bc41a324",
+    "tests/test_semantic_colourbars.py": "28c2f7c09be408425db5071a18a72607f869bd459bc6b267c4eb2cc797614c23",
+    "examples/semantic_colourbars.py": "35ffb5bbe18dff6d757fe79a6dcc4acbf701e5d1f1856400cec4e796fc08e4e2"
+  },
+  "later_drawn_twin_geometry_regression": {
+    "scenario": "Two supported semantic scatter layers, primary/y2 with explicit x clock, NOT an unimplemented semantic-lineplot y2 path. After fig.canvas.draw(), native data Axes position bounds are equal within1e-14 and corresponding transData xcoordinates within1e-9. One guide, measurements/source/settings retained.",
+    "command": "uv run pytest -q tests/test_semantic_colourbars.py::test_primary_secondary_shared_scope_has_one_logical_panel_colourbar",
+    "current": "1 passed in0.87s",
+    "minimum_command": "$PROVIDER/environment-04/bin/python -m pytest -q tests/test_semantic_colourbars.py::test_primary_secondary_shared_scope_has_one_logical_panel_colourbar",
+    "minimum": "1 passed in0.92s,13 upstream warnings",
+    "updated_test_sha256": "fbe9a1d3363bfd798bc418a12deabf0959c7afdbc38da92ed80ee108a3532ed8",
+    "lineage": "Runtime source unchanged from prior197/30 cohorts. This strengthens the test afterward; one-case results are separate and not added to those counts."
+  },
+  "remaining_F01": [
+    "categorical strip and ECDF adapters to exercise the declared four-family shared-domain scenario",
+    "ALL other named applicable families from the parent-approved applicability inventory, including categorical/distribution/native/regression adapters",
+    "filled bar/count/box/violin/boxen size uses approved physical outline/stroke points, never slot fractions/weights/statistic mass/vector magnitude",
+    "actual browser/Rust human editing/history/reopen/export and installed qualification for this new increment",
+    "final full-catalogue frozen Linux/REL01 qualification"
+  ],
+  "scope_boundary": "This is not F01 closure. C01/CND02 qualification uses the earlier separate frozen archive8d0fa0..., not this later source. M01 wider norms/colourbar/layout and CND01 UI work remain required. Version1.1.0/schema0.1 and .pi remain unchanged; no git/publication action."
+}

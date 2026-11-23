@@ -82,29 +82,67 @@ def test_binned_joint_recomputes_pairs_after_setdata(kind):
 @pytest.mark.parametrize(
     "style", [{"group": "g"}, {"hue_order": ["A"]}, {"weights": "w"}]
 )
-def test_binned_joint_rejects_unimplemented_mapping_without_state_change(kind, style):
+def test_binned_joint_rejects_missing_source_roles_atomically(kind, style):
     p = plot(kind, **style)
     before, history = p.to_json(), p.action_log
-    with pytest.raises(ValueError, match="ungrouped, unweighted"):
+    with pytest.raises(ValueError, match=r"column|group|hue_order|weight"):
         p.joint()
     assert p.to_json() == before and p.action_log == history
 
 
 @pytest.mark.parametrize("kind", ["hist2d", "hexbin"])
 def test_binned_joint_does_not_silently_disable_colorbar(kind):
-    p = mp.plot(data())
+    p = mp.plot(data()).size(10, 7)
     getattr(p, kind)("x", "y")
-    before = p.to_json()
-    with pytest.raises(ValueError):
-        p.joint()
-    assert p.to_json() == before
+    p.joint(marginal_stat="count")
+    assert p.spec.panels[0].layers[0].colorbar is True
+    fig = p.render()
+    try:
+        center = fig.axes[0]
+        bars = [ax._colorbar for ax in fig.axes if hasattr(ax, "_colorbar")]
+        assert len(bars) == 1
+        assert bars[0].mappable in center.collections
+        assert "count" in bars[0].ax.get_ylabel().lower()
+        assert np.ma.sum(bars[0].mappable.get_array()) == 3
+    finally:
+        plt.close(fig)
 
 
-@pytest.mark.parametrize("kind", ["hist2d", "hexbin"])
-def test_binned_dropna_does_not_enable_general_panel_filters(kind):
-    spec = plot(kind).joint().spec
+def test_binned_dropna_does_not_enable_general_hexbin_filters():
+    spec = plot("hexbin").joint().spec
     spec.panels[0].filters = {"x": 0.2}
     assert any("does not support panel filters" in issue for issue in mp.validate(spec))
+
+
+def test_typed_hist2d_filter_keeps_only_selected_paired_mass():
+    p = (
+        mp.plot(data())
+        .size(9, 7)
+        .hist2d(
+            "x",
+            "y",
+            bins=[0, 0.5, 1],
+            stat="count",
+            colorbar=False,
+        )
+        .joint(marginal_stat="count")
+    )
+    spec = p.spec
+    spec.panels[0].filters = {"x": 0.2}
+    accepted = mp.Plot.from_json(mp.to_json(spec))
+    assert mp.validate(accepted.spec) == []
+    fig = accepted.render()
+    try:
+        center, right, bottom = fig.axes
+        mark = center.collections[0]
+        assert mark._mudplot_field["source_row_indices"] == (0,)
+        assert np.ma.sum(mark.get_array()) == 1
+        assert center.get_shared_y_axes().joined(center, right)
+        assert center.get_shared_x_axes().joined(center, bottom)
+        assert not center.get_shared_y_axes().joined(center, bottom)
+        assert accepted.spec.data.columns == data()
+    finally:
+        plt.close(fig)
 
 
 def test_binned_joint_capability_is_explicit():

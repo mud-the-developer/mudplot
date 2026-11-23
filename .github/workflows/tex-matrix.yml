@@ -1,14 +1,9 @@
 name: TeX engine matrix
 
-# The heavier half of P1-5's matrix (see mudplot_v0.3_improvement_and_
-# reference_repos.md): every push/PR already runs the fast, self-contained
-# Tectonic combination as part of ci.yml. Installing a full TeX Live (real
-# pdflatex/lualatex + classic BibTeX + biblatex/biber) is too slow to
-# justify on every commit, so it runs nightly or on request. release.yml runs
-# the same full toolchain as a publish gate. A citation-numbering regression in
-# one engine's text measurement, or in how mudplot escapes something for a
-# particular bibliography backend, would not necessarily appear under
-# Tectonic alone.
+# The push/PR suite and release workflow install XeLaTeX for Matplotlib PGF
+# measurement and the other engines for document tests. This separate nightly
+# and on-demand job explicitly checks the pdfLaTeX/LuaLaTeX document matrix
+# with classic BibTeX and biblatex/biber.
 
 on:
   schedule:
@@ -45,6 +40,7 @@ jobs:
           sudo apt-get install -y \
             texlive-latex-base \
             texlive-latex-recommended \
+            texlive-xetex \
             texlive-luatex \
             texlive-pictures \
             texlive-bibtex-extra \

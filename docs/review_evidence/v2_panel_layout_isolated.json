@@ -1,0 +1,29 @@
+{
+  "row": "N13",
+  "status": "PARENT_FINAL_ISOLATED_ACCEPTANCE_AND_SURGICAL_MAIN_ROUTING_GRANTED; combined main qualification pending",
+  "original_receipt": {
+    "path": "$LOCAL_EVIDENCE/location-65/FINAL_RECEIPT.json",
+    "sha256": "98e2a1e8a70dcce3f121057eea061c7ca5250e7344dbf73ba19ce6ed0174f224"
+  },
+  "original_binding": {
+    "path": "$LOCAL_EVIDENCE/location-65/FINAL_BINDING.json",
+    "sha256": "a6fe99a1854ce1059d77ecf4e0703a08fde903ac56e880f1f52ecba060131d7b"
+  },
+  "stable_copy": "artifacts/v2_panel_layout_integrated/isolated",
+  "runtime_forward_patch_sha256": "a3b51f818ee196d987b43a39984e6ee17541841fbbf2539e03832ef7a6600468",
+  "complete_patch_sha256": "f8a484299611102b8cb64b71ade245bb29a287430b320271bf4734b630aa650e",
+  "isolated_wheel_sha256": "ca0692c332d0f1e64c0bfe687f4896c6d2d2d9334ffc5acdfab1c50f0f0ad987",
+  "policy": "Originals and prior failures remain immutable; private environments/caches excluded from stable copy. Isolated70/profile, source91/profile and sparse2/profile are not combined main proof. Main runtime integrated only exact reviewed forward hunks over current C04; generated outputs regenerated, not copied.",
+  "earlier_lineage": [
+    "Initial8 failures/40passes: test mistakenly mutated defensive Plot.spec snapshots; captured-spec fixture corrected, no product defect claim. Logs retained.",
+    "Next2 failures/62passes: fixtures omitted established explicit histogram bins/timezone; corrected inputs, no weakened contracts.",
+    "Initial7 typing errors corrected with normal typed casts and validated optional placement narrowing; final typecheck clean.",
+    "Full thin constrained native graph exceeded300s; bg_3 instrumented repeat stack retained then owned job cancelled. Same-bound balanced constrained also exceeded180s. Exact JSON inputs/stacks retained under final-r1. Uniform native tight policy was parent-approved; r4 full thin and balanced graphs pass at unchanged bounds, warnings truthful.",
+    "Actual sparse Rust legacy open lacked layout forms; corrected effective renderer metadata use without default spec rewrite. Before-browser failure and corrected fourUI/sparse proofs retained. Initial hidden-form harness error also retained distinctly.",
+    "Initial minimum prefix install skipped same-version wheel and fell through to older provider mudplot; origin assertions failed. All final profiles explicitly ignore-installed into fresh prefixes; no final fallback.",
+    "R2 native publication C title collided with upper in-view ticks1..4; actual before bbox evidence and xlabel_noncollision result retained. Scoped real-label/tick-decoration diagnostic and public title placement approved; final [.1,.8] containment/readability verified, no hidden reposition.",
+    "R3 rejected ordinary no-N13 shared raw/count scene accepted by frozen66; before dual-control retained. R4 gates only new role classifier on actual opt-in; native old-scene behavior restored exactly, N13 geometry/ID opt-in remains atomically strict.",
+    "Minimum permanent browser test lacked declared optional Playwright tooling; initial2 setup errors retained. Matching declared tool wheels installed only in private dev environment; final2 tests pass, runtime unchanged.",
+    "Owned /tmp tmpfs filled during r4 optional tooling install; failed pip/log state retained. Only owned regenerable Cargo caches and closed anonymous browser profiles evicted; source archives/wheels/executables/proofs preserved."
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-catalogue-acceptance-closure",
+  "catalogue": [
+    "D02"
+  ],
+  "status": "bounded functional acceptance satisfied; final release qualification pending",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "scope": "Frozen D02: univariate step+dodge, filled steps/outline bars, fill composition/poly, discrete and eight fixed automatic-bin rules, explicit raw-width/log/date/y2 contracts. No other catalogue row or overall statistical/v2 task is closed.",
+  "evidence": [
+    "docs/review_evidence/v2_histogram_step_dodge.r2.json",
+    "docs/review_evidence/v2_histogram_fill.json",
+    "docs/review_evidence/v2_histogram_modes.json",
+    "docs/review_evidence/v2_histogram_bins.json"
+  ],
+  "independent_review": {
+    "path": "artifacts/v2_histogram_bins/closure-review.md",
+    "sha256": "22a9d93a7e31f16f95711cb72dbc7e3f498b7843c8946633486751371ed3ccf9",
+    "verdict": "Bounded D02 acceptance satisfied, final qualification pending; no issues found",
+    "source_only": true,
+    "independent_commands_executed": false
+  },
+  "parent_verification": {
+    "unchanged_defaults": {
+      "path": "artifacts/v2_histogram_bins/defaults-current.json",
+      "baseline": "artifacts/v2_histogram_fill/previous-defaults.json",
+      "result": "All seven spec/action/RGBA records exactly match; installation module paths intentionally differ."
+    },
+    "installed_library": "All 56 mudplot Python files in wheel-interface-final match current checkout bytes exactly. Outside-checkout core/render/CLI proof remains the retained installed-smoke log, not a new test run.",
+    "inspected_visuals": [
+      "artifacts/v2_histogram_bins/example/histogram_binning.png",
+      "artifacts/v2_histogram_bins/rust_histogram_bins_downloads/temporal-unit-human.png"
+    ],
+    "visual_findings": "Legible labels and units; fixed auto43, visible empty integer states and declared seconds/milliseconds/day examples. Native one-second cells retain measured offsets and weighted mass. No physical-print verification claimed.",
+    "browser": "Read final harness and retained browser-downloads.log: actual JSON form edits, exact state/PNG undo-redo, FigureSpec download/reopen, real SVG/PDF links; PNG is the preview endpoint. Invalid rule/grid/fractional edits retain state and preview. Reused Rust binary, not a fresh build.",
+    "tests": "Current/minimum related cohorts each563 passed/0skip before interface-only additions. Later changed interface module41 passed current; added interface cases2 passed minimum separately. Counts are not combined into a fictional final-tree run.",
+    "static": "Parent executed Ruff check/format16 changed paths, four generated-artifact sync targets and git diff --check: passed. Active core LSP11 and configured interface LSP4 passed at their recorded stages."
+  },
+  "lineage": {
+    "baseline_manifest": "artifacts/v2_histogram_bins/artifactsmanifest.json",
+    "baseline_manifest_sha256": "be37bf0a4ccfe78b87d94ef9d4f054f5ec71ba3482e36e5ae86455ee32192136",
+    "baseline_receipt": "docs/review_evidence/v2_histogram_bins.json",
+    "baseline_receipt_sha256": "f64ab1ca7b1c580e64a67f8c017ce9a1f7af70aee3a204d8ddef9477164c8276",
+    "baseline_artifact_count": 83,
+    "baseline_artifacts_reverified_unchanged": true,
+    "baseline_snapshot_source_deltas": {
+      "docs/V2_SCOPE.ko.md": {
+        "previous_sha256": "183fdb6e21d68f76dbc5a05176a0638232629c42bb101d8886a67bd31aaff0b2",
+        "current_sha256": "12e1f014715421c3e2210893c3d6dca9809f2eeff981e14f537ca961d00f7466"
+      },
+      "docs/V2_SCOPE.md": {
+        "previous_sha256": "22e8ddb35156947d35b6c10349050f6a10cc58f39a4d984e439a25fac5884ce4",
+        "current_sha256": "b5bec35ff0eadc73e81dbb032212183f7ee029d3d59733c3bd5167f69ffa4f95"
+      }
+    },
+    "delta_reason": "Only two append-only SCOPE progress paragraphs changed after the immutable baseline snapshot. This companion records their current digests; no baseline manifest/receipt or runtime source was rewritten.",
+    "current_source_sha256": {
+      "docs/REFERENCE.md": "7ef8909b10c05d6ed27f43380cf7865dc0593cd094f27bd4ba6bd031b0236b8c",
+      "docs/V2_SCOPE.ko.md": "12e1f014715421c3e2210893c3d6dca9809f2eeff981e14f537ca961d00f7466",
+      "docs/V2_SCOPE.md": "b5bec35ff0eadc73e81dbb032212183f7ee029d3d59733c3bd5167f69ffa4f95",
+      "docs/review_evidence/v2_histogram_bins.json": "f64ab1ca7b1c580e64a67f8c017ce9a1f7af70aee3a204d8ddef9477164c8276",
+      "examples/histogram_binning.py": "d0c3dfbbba6cce1c049d885703faf8414aea649cb0efb3104aa97c880218a57c",
+      "mudplot/__init__.py": "a057463c20e545d9773c9d3ca30fe2a4d8a47a89c086e0e886b7c4be197d9860",
+      "mudplot/__main__.py": "32df67c68a88a91a65c945b3393241bdb074095970324e54e1232b748c9dddf4",
+      "mudplot/_categorical.py": "c327fbf08ffcae12a903072c937a220f8b7c22a43e9aecd18fd96e9d4101c674",
+      "mudplot/_cluster.py": "8dfc8ba10e40ab12ef2ccef67e12c3a4c2eb41e8e52249153fcb38991b153f64",
+      "mudplot/_cluster_render.py": "152e32ba069eb8ea354747f1f49922bb9d193a6670a876f2e9417ea0042757df",
+      "mudplot/_components.py": "977ed6fe9a348c48c980f13989c8e8c863e2b6a1d53124c5355d5515aff4985d",
+      "mudplot/_ecdf.py": "c877e8565c20128dba3af5fc09bbb5cd7eb310514cda64fa2dd5ba9523447d4a",
+      "mudplot/_estimate.py": "95c55242f07f0f5dc315a56762439f68951dec5489c66b287f86144730b252fd",
+      "mudplot/_facet.py": "03447bba046e9d0a1f5e45b1427d352b8e345026adffe28f9b14a675a0a412b5",
+      "mudplot/_heatmap.py": "8608ca654892b4e15dfc2e5d1040095a9a4226ce4bea6df76d97e78d46a5f572",
+      "mudplot/_heatmap_render.py": "dc837fe55c2d30f2cd731e3fad3124490ca4169fdefbd41a1c1949398402c17a",
+      "mudplot/_histogram.py": "fd0261721f9ad139fbe843411915f4dbae22dad3e6ba7276a87629c83554d5eb",
+      "mudplot/_histogram_bins.py": "ee3e25bb1b1d3fa4ce9ff61c1e27cbf403c10d940c5add44f818328a273e79c0",
+      "mudplot/_joint.py": "3fbe775df2afb9b5c7adf74d1fa3fc61a23a50b4b14bed68e183b2cc5a9d88dd",
+      "mudplot/_kde.py": "b7e41f86d18b5070f995bc319657c28c7484407c45952951d6ecc04eee6494f8",
+      "mudplot/_kde2d.py": "140e9446f4cfd6d3ef04f1b6dc916e9dd44f20af94eb90554daca5cb516a0ef9",
+      "mudplot/_letter_value.py": "bf28883c4c8fc467105dcfc527b998e3282e58e45f6d358e03118a94f2cba8ed",
+      "mudplot/_line_semantics.py": "e4ac14e7a788e58be5577032edb4444314c47c7098fcbb65934d1a3501739cb5",
+      "mudplot/_lineplot.py": "f9dbc013b6d11cc92368cff4620528bc2e05cbb330065cdaea40d26859d33ffd",
+      "mudplot/_lint.py": "c1cefbf10801c15eb7f8a07ba1c06df3ddbcf96113213604d28960ac415a19d0",
+      "mudplot/_mpl_context.py": "212111a65fb93b0ac36b6b49d91965b2ff271e720b944831fbd3bf7eea1b1a2a",
+      "mudplot/_pair.py": "26dee74983cea92be86c6393182b857a998e199eb6e5573dd951db8e0e70706f",
+      "mudplot/_quality.py": "96fd494328e9ab72d312de8b4fdbaa478470c6661f6d760c93b574bef77f8146",
+      "mudplot/_recommend.py": "228532d1638509bfd623eab2041907f909054eb50de3e697a8028a58cfc59e4a",
+      "mudplot/_regression.py": "842cd2f3c30cf23fda763d7ea7771fad92863069679644f43a5133ed15026c30",
+      "mudplot/_regression_render.py": "0796c95fa31e0a5c9f470a17cd19a04b0146f22da60c750aab6d0a101e393e12",
+      "mudplot/_render.py": "69c564c682c9122a233b110b395d79361b87ddb76368ee8337fd779d4b9a18af",
+      "mudplot/_scatter_semantics.py": "a64f0882985b1168b95f05689dca736d8fb6d172c3ceb59178a656a80783e7e3",
+      "mudplot/_semantics.py": "b0971ce59817fa8f6f1c0e33e1a6fbca094feeb446e99ef275677681c0979780",
+      "mudplot/_stat.py": "bd8add1334dc1187e2028bbb920ea3b12ad49240a891c5032bce4d7a40598480",
+      "mudplot/_swarm.py": "13c11eb1b6b8ddd0ba5590b1cb6f76d8cef9bb6441460f58e0b399409abf90d2",
+      "mudplot/_temporal.py": "95e6bd0f438775a5f82266275f967fb1e01babb9e9afff0254952eda518c66f4",
+      "mudplot/_temporal_data.py": "1ddc5fc35d5083af3c8be16c5a6ff82ea1e420defc54e53891cf8c68c73cb0d5",
+      "mudplot/_temporal_render.py": "c05181e46e5b73bdf7c6539a70d44844996c75cc68a85b109d0594e7b56694d5",
+      "mudplot/_violin.py": "839e9f3864232545f33149e0e521be9ffb636fd320788aea72e5c79f25b3d18a",
+      "mudplot/_violin_options.py": "1eb66f2486f3c3e20af53e11ecf1ee2901c9d3350f9c72951772b58a7f1b4e0c",
+      "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+      "mudplot/api.py": "18b2e17523f1100ca326ccdf7572c8b167ee4ef48238e7008c3cc5d159e9b837",
+      "mudplot/bib.py": "830f54f3fede09a827b64d4ae645cf1d32429374834596c9b9414f89d2b85b56",
+      "mudplot/capabilities.py": "8dc8ebebe52d733314bc81e234ef3638705f75ec9380ce16a297c31b5c62f4b7",
+      "mudplot/color/__init__.py": "0799531499502f5c4c7f183d21fb02c031b70e6a271b77cd15abc51ee77187a6",
+      "mudplot/color/convert.py": "1bffa2ae65444c7440165a8d3b8f16cc1b515e022862a47c8032fce13ab37a6c",
+      "mudplot/color/cvd.py": "f29645b6373818057bc2df2f99bddea942408833cda8e5a2b2caf4e2d41bb165",
+      "mudplot/color/distance.py": "9d760c6ceccfadce9263aa47633c58ec60243f2d84583f2a35deffde90f92b10",
+      "mudplot/color/palette.py": "38215edc38e1b04c3a02d73285094a206e996866638ed16f6ce7e91a4b89c39a",
+      "mudplot/color/preview.py": "3903bd13b2cba524b2a07192f66fe0ec5ce2ecfca62c7c101bf3395574276c49",
+      "mudplot/data.py": "42b1dd83b5a0991707ff183b3f67d03b0b08d8c08e0ff69e92990fbd38e2d3e9",
+      "mudplot/docs.py": "82f6bceca5c0e735348e165e238551e630b02a47d3856e594cb0f819a82f7ac9",
+      "mudplot/io.py": "56d379bb24cd193259052ee85a24c24087ea8bec98794138dd56686de32f7bea",
+      "mudplot/reducer.py": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49",
+      "mudplot/schema.py": "13838d8abbb2d23331d162143fd945486c54c7980fe5b08e5871850f01fb93f1",
+      "mudplot/spec.py": "21b13c73ce6bbdd31231e5e5cc1fbf5770b662e31e6b23cd77127dbba0034548",
+      "mudplot/store.py": "f9bdea12f317f2075e5a1d6fc8e1cc0366a38791d46db6aee61567d65fc7a5df",
+      "mudplot/tex.py": "2e2dd8671d4d680371dabc9280926dd12032072e3bc4ea46f180f3526e4e081c",
+      "mudplot/theme.py": "9e166acd8b2a132550dec18f438c29994f21dd46a5117f418dc998936dbc8316",
+      "mudplot/validate.py": "df33f8737fb8f5856170b8e18197d12bc712a89ba5593c4af9162550f99e0cae",
+      "schemas/capabilities.json": "85f5212fd0de9c01c375e4eab4f5c27973837eb4fdd06e3d91bdcd3058d7720f",
+      "schemas/figure_spec.schema.json": "f8a25b12ede34ac86cb526df125833b220d9c8482ef857516aaad06133921128",
+      "scripts/check_schema_sync.py": "bce00b1739a77eeac662c7f9ff1ba31c9c71716c48377ce6ae4dea80d4c643e6",
+      "tests/fixtures/review_full_spec_fields.json": "59cba4057e451fe7b9538a6ea1d6b92f91c37cfb0662a11bbc62d93cd7d83622",
+      "tests/test_histogram_bin_rules.py": "f4b194ffcac7d9e2b857b0ae4ca43b342011f4715b1e3862b9ae5ccf7b2aa458",
+      "tests/test_histogram_binning.py": "392aff4ada9a1414928cd2817793021756589da73427a838dc45f7d64cf4d455",
+      "tests/test_histogram_fill.py": "fb0254e2822b669b10a2992fb2345a753b7d2e48b21df2bf6613551ad6921c8d",
+      "tests/test_histogram_modes.py": "a06eba4b69becacc5d113e28181a9c14280a27dbceb8c70faf7dc6d5a13683ff",
+      "tests/test_histogram_statistics.py": "20887bdbbcefe361f5a186e3d95a5030e7b1e830ffc909b6d56c71a81ec3d25b",
+      "tests/test_json_schema_compat.py": "215a02901d97039214199931ebe0e21cbf1219d6c3cba2623ec5414b9416899f",
+      "tests/test_review_full_spec_fields.py": "487a9dcf1340002e2069028fca5eea5f834a0c5364f489f9123a45dc32a65f76",
+      "tests/test_schema_export.py": "63acf17e1cd2cc39c74740578cce0c7c5cc969d501d93c14abf51b56f2171a66"
+    }
+  },
+  "limitations": [
+    "Functional acceptance only; other catalogue rows/statistical task remain incomplete.",
+    "Final frozen-source Linux/Python/minimum/optional/browser/fresh Rust/TeX/PGF/static/security matrix, 2.0.0 synchronization and independent reproducible builds remain mandatory.",
+    "Windows/macOS and physical print remain unverified. Required skips are not passes. No commit, push, tag or publication."
+  ],
+  "delivery": {
+    "local_only": true,
+    "full_goal_complete": false,
+    "final_release_qualification": false,
+    "published": false
+  }
+}

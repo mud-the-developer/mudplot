@@ -2,6 +2,17 @@
 
 *[한국어 문서 / Korean docs: COMPATIBILITY.ko.md](COMPATIBILITY.ko.md)*
 
+## v1.1 security support exception (Unreleased)
+
+The owner approved a minimum-runtime change to **Python >=3.11** because the
+security-fixed Pillow 13.0.0 line requires it. Rendering explicitly requires
+Pillow >=13.0.0; colour/render NumPy starts at 1.23.5. Python 3.10 support ends,
+but the Python API, FigureSpec/JSON, source measurements and Matplotlib defaults
+remain unchanged. This is the documented security-fix exception below, not an
+unannounced promise of Python 3.10 compatibility. The new `lint` command and
+scientific-quality options are additive. Historical 1.0/minimum-run receipts
+remain historical and do not qualify the new dependency locks.
+
 ## Stable surface
 
 The 1.x compatibility promise covers valid use of:
@@ -279,6 +290,15 @@ require an existing layer. Palette candidate counts are not this resource limit.
 Reduction may build missing column/matrix references without effects; explicit
 validation and render validation reject them before drawing.
 
+N13 explicit panel layouts are opt-in under schema0.1: appended panel_id/placement
+and panel_layout fields are omitted when absent, retaining regular-grid RGBA and
+old document loading. Explicit geometry has separate bounds of256grid nodes,
+1024aggregate cells and depth16, while actual panels/layers/render pixels retain
+their old caps. Out-of-range index expansion in explicit mode rejects; complete
+SetPanelLayout retains all old final IDs and appends explicitly new empty panels
+in lexicographic ID order. All incoming refs use final IDs. SetLayout explicitly
+returns to regular geometry. See [layout migration/sharing rules](PANEL_LAYOUTS.md).
+
 Each action copies the full spec; undo/redo replay the retained history. For the
 default pure reducer, Store keeps at most one preceding64-action-boundary internal
 state to shorten near-tail replay. Earlier cursors fall back to the initial state;
@@ -313,6 +333,49 @@ distinct types may have identical captions; normalize ambiguous IDs before plott
 Raw line paths retain row order and duplicate x; lineplot aggregates per x and
 applies its explicit sort policy. Empty raw line/scatter can be valid, whereas
 statistical layers reject no usable observations and singletons omit undefined intervals.
+
+## C05 opt-in weights, rank components and existing-layer edits
+
+Version1.1.0/schema0.1 and all dependency floors stay unchanged. Appended
+LayerSpec.boxen and strict BoxenSpec/BoxenBandComponentsSpec/
+BoxenHueComponentsSpec fields omit None; old positional constructors/ordinary
+components remain valid. Existing no-C05 admission is not replaced by the new
+10000 selected-positive-row/256-cell per-layer envelope. A newly requested
+BoxenSpec, weights, semantics, y2 or unsupported-before flier glyph opts in.
+Unweighted interpolation is corrected generally to one final rounding,
+including the observed subnormal median; no special input exception or pixel
+identity claim for mathematically corrected edge cases.
+Canonical integer/binary-float endpoints are not pre-rounded. Unweighted tails
+still use FINAL correctly-rounded numeric bounds; weighted LEFT uses exact
+observed canonical bounds. Exact span metadata is only a native precision
+certificate, not a replacement tail/area estimator. Requested strict ordering
+that cannot survive conversion rejects; hidden tails do not invent nonconstancy.
+Representable large-int scenes and true atomic views remain supported.
+Shared RAW normalization follows the accepted C04 mixed-mark contract, not a
+Boxen-only unit ban: one raw size domain can drive distinct body-stroke,
+point-diameter and curve-stroke guides. Scalar/component flier choices retain
+legacy+/x/. and the registered richer glyphs; semantic filled cycles stay separate.
+
+
+
+Explicit relative weights use LEFT inverse ECDF, not type7/replication or a
+boundary midpoint. Named depth uses physical-row Kish as a non-CI heuristic;
+weighted half-open/last-closed band masses plus strict-tail mass conserve1.
+Depth32 and original row IDs/order/declared clocks remain. New figure EFFECT
+bounds admit actual32768band paths/1000000requested flier instances, repeated
+uses included, before native allocation. Pure validation remains source-only
+and does not fit full summaries; valid saved sources may exceed an effect budget.
+Transparent/none styles do not discount work; hidden unrequested flier artists
+need not be allocated. No sampling, global source-row cap or SLA/RAM promise.
+
+ReplaceLayer is additive: authoritative typed LayerSpec at existing nonbool
+integer panel/layer indices, no implicit creation, count/order/data change or
+live-recipe detach. It follows existing reducer input isolation and editor
+apply→validate/preview→commit/history. Both inspectors populate collapsed full
+action JSON; failed preview retains source/PNG/history. Later explicit whole
+live-template replacement supersedes cell-local edits. Existing AddLayer/
+RemoveLayer remain supported. Source/effect/colour ownership is detailed in
+[the reference](REFERENCE.md#letter-value-distributions).
 
 ## Optional output provenance
 

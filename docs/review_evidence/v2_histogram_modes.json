@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-feature-checkpoint",
+  "catalogue": [
+    "D02"
+  ],
+  "status": "Post-height fill composition and raw-center poly locally verified; full D02/v2 incomplete",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "owner_decisions": {
+    "record": "artifacts/v2_histogram_modes/owner-contract.md",
+    "normalization": "Existing stat/common_norm/cumulative heights FIRST, then per-bin group-height sum; not raw-mass override. Cumulative result is composition, may decrease, is not a CDF.",
+    "poly_default": "Native raw-bin/slot-center straight segments, unfilled when fill=None; explicit True fills. No fitting or extra measurements."
+  },
+  "implemented": [
+    "Added semantic modes multiple=fill and element=poly without new fields/defaults/schema format changes. Existing bars/step/legacy/default JSON preserved.",
+    "Post-height normalization keeps empty bins zero and reserved empty curves empty; stable fsum and exact Fraction fallback handle overflowing sums/subnormal ratios. Positive shares lost to zero reject clearly.",
+    "Fill stacks composition with existing finite/lost-increment guards. Native poly uses Line2D or fill_between[x], at least two representable centers, raw observation bounds and zero response baseline. No fitting/jitter/fake observations.",
+    "All-out-of-range poly curves do not change other-layer framing; native PolyCollections now participate in existing hatch quality checks, including y2.",
+    "API/core/actions/JSON/capability/reference/CLI/Python+Rust editing and min/sdist registrations are connected. Histogram schema remains a string contract with semantic validation, not an enum schema."
+  ],
+  "checks": {
+    "related_current": {
+      "path": "artifacts/v2_histogram_modes/modes-current.xml",
+      "cases": 432,
+      "passed": 432,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "related_minimum": {
+      "path": "artifacts/v2_histogram_modes/modes-minimum.xml",
+      "cases": 432,
+      "passed": 432,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "supplementary_current": [
+      {
+        "path": "artifacts/v2_histogram_modes/modes-editor-recheck.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_modes/modes-log.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_modes/modes-core-compat.xml",
+        "cases": 220,
+        "passed": 220,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    ],
+    "supplementary_minimum": [
+      {
+        "path": "artifacts/v2_histogram_modes/modes-min-editor.xml",
+        "cases": 5,
+        "passed": 5,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_modes/modes-min-log.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    ],
+    "scope": "The 432-case current/minimum cohorts cover new geometry/math plus old hist/fill/smart-quality behavior. Later editor/CLI and log cases are recorded separately; no new whole-suite total is inferred.",
+    "numerical": "Independent post-height count/frequency/probability/percent/density and cumulative references, common/per-curve normalization, nonmonotonic cumulative composition, overflow/subnormal ratios/underflow rejection, empty hues/bins, native poly/area paths, raw slots, v/h/log/inversion/date/y2, invisible alpha/stroke, empty-layer limits and collection hatch diagnostics.",
+    "core_compatibility": "220 dependency-free core/full-field codec/schema cases passed; minimum new-mode editor/CLI plus core passed. No new dependency or security-floor change.",
+    "schemas": "All four check_schema_sync.py targets passed. Histogram multiple/element remain string-typed in FigureSpec schema; shared semantic mode constants drive validation and capability lists.",
+    "defaults": {
+      "cases": 7,
+      "proof": "Exact old-wheel spec JSON/action JSON/RGBA hashes unchanged",
+      "report": "artifacts/v2_histogram_modes/legacy-defaults.json",
+      "baseline": "artifacts/v2_histogram_fill/previous-defaults.json"
+    },
+    "native": {
+      "script": "artifacts/v2_histogram_modes/rust_histogram_modes.py",
+      "log": "artifacts/v2_histogram_modes/rust-histogram-modes.log",
+      "chromium": "153.0.8010.12",
+      "scenes": [
+        "post-height-fill",
+        "poly-line",
+        "cumulative-poly"
+      ],
+      "workflow": "Real human JSON mode/clock/title edits, exact spec+PNG undo/redo, download/reopen, PNG/SVG/PDF, rejected unknown mode/one-bin poly preserve state+preview, raw columns exact.",
+      "binary_sha256": "26e88f3716c8e6205b22e044ac7a33324d705c8ddbdc296aa8f2e428ed553cd0",
+      "fresh_rust_build": false,
+      "full_standard_smoke_rerun": false
+    },
+    "installed_wheel": {
+      "status": "passed",
+      "log": "artifacts/v2_histogram_modes/modes-wheel.log",
+      "directory": "artifacts/v2_histogram_modes/wheel",
+      "assertions": "sdist->wheel required/forbidden files and outside-checkout core/API/action/JSON/PNG/CLI. Poly default line and filled post-height composition match manual 11/31,11/21 references. Prior temporal/y2/fill/zero-opacity tests retained.",
+      "current_library_match": "All 55 wheel library Python files compared byte-for-byte with current source after the later example-only polish."
+    },
+    "final_content_build": {
+      "log": "artifacts/v2_histogram_modes/modes-dist-final.log",
+      "directory": "artifacts/v2_histogram_modes/dist-final",
+      "status": "passed",
+      "render_rerun": false,
+      "reason": "Fresh package-content/core check after example-only linear-panel polish; library source unchanged and matched installed-smoke wheel. Not final release/repro qualification."
+    },
+    "visual": {
+      "inspected": [
+        "artifacts/v2_histogram_modes/example-final/histogram_modes.png",
+        "artifacts/v2_histogram_modes/rust_histogram_modes/cumulative-poly-human.png"
+      ],
+      "notes": "Readable composition labels explicitly distinguish non-CDF cumulative output. Old small log panel overlapped ticks and smart mode still reported four overlaps; raw images retained. Only the example was explicitly changed to linear, not library geometry. Separate wide log PNG/SVG/PDF has smart-quality ok=true and no issues; raw-center/inversion tests passed current/minimum.",
+      "wide_log": "artifacts/v2_histogram_modes/log-example/poly_log.mplot.json",
+      "physical_print_verified": false
+    },
+    "static": "Ruff check/format 15 changed Python paths passed; active LSP10 paths confirmed clean after an initial one-path inconclusive probe. git diff --check passed. Full frozen static qualification still pending.",
+    "environment": {
+      "python": "3.13.12",
+      "dependencies": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pillow": "13.0.0",
+        "pytest": "9.1.1"
+      }
+    },
+    "minimum_runtime": "Python3.11.14 / NumPy1.23.5 / Matplotlib3.8.0 / Pillow13.0.0; bounded profile, not full scripted qualification.",
+    "review": "Read-only independent review accepted algorithms/precision/routing; P2 collection hatch diagnostic omission fixed and tested. Empty-framing guard source-reviewed and tested. Child execution unavailable; no independent executed-suite claim."
+  },
+  "preserved_attempts": {
+    "original_pins": "artifacts/v2_histogram_modes/original-pins.md",
+    "reports": {
+      "modes-core-compat.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-core-compat.xml",
+        "cases": 220,
+        "passed": 220,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-core.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-core.xml",
+        "cases": 43,
+        "passed": 43,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-current.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-current.xml",
+        "cases": 432,
+        "passed": 432,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-editor-recheck.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-editor-recheck.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-editor.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-editor.xml",
+        "cases": 4,
+        "passed": 0,
+        "failure": 4,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-log.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-log.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-min-editor.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-min-editor.xml",
+        "cases": 5,
+        "passed": 5,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-min-log.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-min-log.xml",
+        "cases": 4,
+        "passed": 4,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-minimum.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-minimum.xml",
+        "cases": 432,
+        "passed": 432,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "modes-routes.xml": {
+        "path": "artifacts/v2_histogram_modes/modes-routes.xml",
+        "cases": 57,
+        "passed": 57,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    },
+    "notes": [
+      "Invalid stat/common_norm/cumulative combinations assert validation errors, not silent passes or skips.",
+      "The four modes-editor.xml failures were a test byte-prefix escape error; session error was None and real PNG bytes present. Corrected signature comparison passed all four; failed log/XML retained.",
+      "Initial capped LSP probe was not called clean; final ten-path probe confirmed all ten.",
+      "Original log-overlap example and failed smart visual result remain separate from the readable final linear example and wide log verification.",
+      "No failed/partial/previous receipt was overwritten as success."
+    ]
+  },
+  "remaining_required": [
+    "D02 discrete/named automatic-bin rules and full width-coordinate contract/qualification. Still mandatory, not excluded or moved to another version.",
+    "Remaining frozen statistical and other catalogue rows; D02/statistical task/REL01 are not complete.",
+    "Final-source full Linux/Python/minimum/optional-adapter/browser/fresh Rust/TeX/PGF/static/security matrix, 2.0.0 synchronization and independent final rebuilds. Required skips are not passes; Windows/macOS remain unverified."
+  ],
+  "delivery": {
+    "local_only": true,
+    "performed_commit": false,
+    "published": false,
+    "final_release_qualification": false
+  },
+  "source_sha256": {
+    "mudplot/_histogram.py": "b2487c7936763eb81779ea90c903b15ac9defa87f0ec74262c51ed0483cea569",
+    "mudplot/_render.py": "69c564c682c9122a233b110b395d79361b87ddb76368ee8337fd779d4b9a18af",
+    "mudplot/_quality.py": "96fd494328e9ab72d312de8b4fdbaa478470c6661f6d760c93b574bef77f8146",
+    "mudplot/validate.py": "26a9eaa044c02b24ee0bf5b969f77571995e7c847363801293cc5312d81f4836",
+    "mudplot/spec.py": "751717c996c8a4f9387293971f1b3314ebdb961474253b4d7ccf1b94c4331bfb",
+    "mudplot/api.py": "851ed2db4ed18b8e1cc332ec2102d0299486cf3c6a0c87956c190b9e705b2f7d",
+    "mudplot/capabilities.py": "96822a794c6ff322ed904c76793a01c114ed0b3a0950d09344661130b3bed3a1",
+    "mudplot/docs.py": "32c5baa2c2c81766c1d64114161eb67e097258159ec863a7b96c52621f5185b1",
+    "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "tests/test_histogram_modes.py": "a06eba4b69becacc5d113e28181a9c14280a27dbceb8c70faf7dc6d5a13683ff",
+    "tests/test_histogram_statistics.py": "45440000cd287beca387857205217549fc75183aa92dd7be6ddfb9d11d4e6064",
+    "tests/test_histogram_fill.py": "fb0254e2822b669b10a2992fb2345a753b7d2e48b21df2bf6613551ad6921c8d",
+    "tests/test_no_deps.py": "dfe3883fa75573324dc3fd3f1e5c004f055c6b49fe59b4c88582af02803f312b",
+    "tests/test_review_full_spec_fields.py": "487a9dcf1340002e2069028fca5eea5f834a0c5364f489f9123a45dc32a65f76",
+    "tests/fixtures/review_full_spec_fields.json": "e7fdbdb4fe4dafce13fb688e2d5db930d5861e1c5ab1d0b2aad76caffb00062d",
+    "scripts/check_wheel.py": "a2ca70bc1e253805c5b0aea5310b5515eae94df371da0e9cf8f0dc03bad6433f",
+    "scripts/check_minimum_versions.py": "1a312661e858feade1eb662ed500e74f852650a346bc44dc2edd1d7d6e8d1cb3",
+    "scripts/rust_editor_smoke_test.py": "06b57721663e7a8cbd6d3034313a872bda73ecdb74bf9f5856e9fe01b8ddf8bc",
+    "examples/histogram_modes.py": "06e7a783a6cf0cd3066364294009a4cd44c427b6fd8b10a87881e33526e5564b",
+    "schemas/figure_spec.schema.json": "0e3ba5adc7873f2b4c89e493849441d47237d84da7a00ec0826fcbe75a1600d6",
+    "schemas/capabilities.json": "e968eeea4f49a1da12d26059dbc091bb85bfc7e16ed4ef0105bc70d1c00d5e50",
+    "docs/REFERENCE.md": "30eb71bc97398a3677d2fa3307ea089f47a41a95f0e048d75db825eb3d09c184",
+    "docs/FEATURE_COVERAGE.md": "39e4198d7af9528588081b66712b13eb74c8b06efdef4814ad36c829abca16dd",
+    "docs/FEATURE_COVERAGE.ko.md": "8ea7080ca89745bf957d7f5c7bb9e3a6312c6040764c10dd068fa58073b400ff",
+    "docs/V2_SCOPE.md": "69cd7891df72a5989b17b195dac32ec648af12390131f544a476f59192dd0229",
+    "docs/V2_SCOPE.ko.md": "4e98a6539f5751cdeb8646f8fdfce9c4adb9490c14888602ddea76193a6b8b63"
+  },
+  "artifacts_manifest": {
+    "path": "artifacts/v2_histogram_modes/artifacts.sha256.json",
+    "sha256": "223c76257a952b25643d7849321b0fa552fa542ae0b6170e4343aa78b7eaa9f9",
+    "files": 64
+  }
+}

@@ -314,16 +314,15 @@ def test_legacy_order_selects_groups_and_nested_routes_scales_are_not_ignored(ki
         "empty",
         "u",
     ]
-    for options in ({"axis": "y2"}, {"value_labels": True}):
-        q = getattr(mp.plot(_data()), kind)("cat", "value", **options)
-        assert any(
-            "not supported" in i or "axis routing" in i for i in mp.validate(q.spec)
-        )
+    q = getattr(mp.plot(_data()), kind)("cat", "value", value_labels=True)
+    with pytest.raises(ValueError):
+        q.render()
     q = getattr(mp.plot(_data()), kind)("cat", "value").yscale("log")
     assert mp.validate(q.spec) == []
     assert q.render().axes[0].get_yscale() == "log"
     q = getattr(mp.plot(_data()), kind)("cat", "value").xscale("log")
-    assert any("requires native_scale" in i for i in mp.validate(q.spec))
+    with pytest.raises(ValueError):
+        q.render()
 
 
 @pytest.mark.parametrize("kind", ["box", "violin"])

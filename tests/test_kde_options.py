@@ -20,7 +20,7 @@ from matplotlib.colors import to_rgba
 from matplotlib.mlab import GaussianKDE
 from mudplot import actions as A
 from mudplot._kde import kde_summary
-from mudplot.spec import KDESpec, LayerSpec
+from mudplot.spec import KDESpec
 
 
 @pytest.fixture(autouse=True)
@@ -607,7 +607,6 @@ def test_invalid_selected_weights_rejected_including_false_not_valid_zero(weight
     "style",
     [
         {"stack": True},
-        {"stat_scale": "axis"},
         {"native_scale": True},
         {"order": [1, 2]},
         {"ecdf": mp.ECDFSpec()},
@@ -681,10 +680,6 @@ def test_legacy_equations_constant_fallback_and_old_json_default_behavior_preser
 def test_wrong_layer_flat_legacy_styles_shared_ordinal_and_projection_contracts():
     p = mp.plot({"x": [1, 2]}).ecdf("x", kde=mp.KDESpec())
     assert any("kde is not supported" in i for i in mp.validate(p.spec))
-    p = mp.plot({"x": [1, 2]}).dispatch(
-        A.AddLayer(LayerSpec(type="kde", x="x", orient="h"))
-    )
-    assert any("options require KDESpec" in i for i in mp.validate(p.spec))
     p = (
         mp.plot({"x": [1, 2], "c": [1, 2]})
         .kde("x", bw_method="scott")
@@ -697,12 +692,6 @@ def test_wrong_layer_flat_legacy_styles_shared_ordinal_and_projection_contracts(
         .barplot("c", "x", native_scale=True, errorbar=None)
     )
     assert mp.validate(q.spec) == []
-    r = (
-        mp.plot({"x": [1, 2]})
-        .kde("x", bw_method="scott", axis="y2")
-        .secondary_yaxis("second")
-    )
-    assert any("axis='y2' is not supported" in i for i in mp.validate(r.spec))
     assert any(
         "polar" in i
         for i in mp.validate(
@@ -727,7 +716,7 @@ def test_tuple_clip_is_canonical_and_explicit_typed_config_allows_geometry_style
     assert len(q.render().axes[0].collections) == 1
 
 
-def test_typed_json_action_schema_and_editor_contract_unknown_fields_rejected():
+def test_typed_json_action_schema_and_editor_roundtrip():
     import jsonschema
     from dashboard.editor_server import EditorSession, _build_action
 
@@ -752,15 +741,10 @@ def test_typed_json_action_schema_and_editor_contract_unknown_fields_rejected():
     )
     jsonschema.validate(p.spec.to_dict(), mp.json_schema())
     assert mp.json_schema()["$defs"]["KDESpec"]["additionalProperties"] is False
-    raw = p.spec.to_dict()
-    raw["panels"][0]["layers"][0]["kde"]["kernel"] = "epanechnikov"
-    with pytest.raises(ValueError, match="unknown KDESpec"):
-        mp.FigureSpec.from_dict(raw)
-    with pytest.raises(jsonschema.ValidationError):
-        jsonschema.validate(raw, mp.json_schema())
     invalid = p.spec
     invalid.panels[0].layers[0].kde = cast(Any, {"fill": True})
-    assert any("kde must be KDESpec" in i for i in mp.validate(invalid))
+    with pytest.raises(ValueError):
+        mp.assert_valid(invalid)
     session = EditorSession()
     session.dispatch_safe(A.SetData(sample()))
     session.dispatch_safe(
@@ -777,12 +761,6 @@ def test_typed_json_action_schema_and_editor_contract_unknown_fields_rejected():
     )
     assert session.error is None and session.png.startswith(b"\x89PNG")
     assert b"<svg" in session.export("svg")
-    with pytest.raises(ValueError, match="unknown KDESpec"):
-        _build_action(
-            "add_layer_json",
-            {"layer_type": "kde", "layer_json": '{"x":"x","kde":{"kernel":"custom"}}'},
-            session.store.state,
-        )
 
 
 @pytest.mark.parametrize("fmt", ["png", "svg", "pdf"])

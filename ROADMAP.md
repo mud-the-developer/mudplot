@@ -7,7 +7,22 @@ within each section. For what's already shipped, see
 [`CHANGELOG.md`](CHANGELOG.md); for architecture and historical milestones
 (M0–M12), see [`DESIGN.md`](DESIGN.md).
 
-## Active target: v1.1
+## Active target: v2 (in progress)
+
+The confirmed v2 scope and acceptance catalogue is [V2_SCOPE.md](docs/V2_SCOPE.md)
+([한국어](docs/V2_SCOPE.ko.md)). All documented remaining product feature units
+stay pending until their end-to-end gates pass; unchecked batches below are now
+inputs to that finite scope, not an unlimited upstream-kwargs promise.
+Linux validation is required. Windows/macOS, remote CI and publication remain
+outside the current local goal. Usage/profile-triggered refactors stay conditional.
+
+### Preserved baseline: v1.1 local candidate
+
+The owner has frozen v1.1 to the implemented, documented subsets plus the
+agent-facing scientific quality improvements. Use the current
+[release checklist](docs/V1_1_RELEASE_CHECKLIST.md) for qualification. Unchecked
+B2b/B3/B4/B5/B6 expansions below are post-v1.1 backlog, not silently completed.
+A Rust smart toggle is not required; existing editor compatibility still is.
 
 Follow the [v1.1 development tracker](docs/V1_1_PLAN.md) for ordered batches,
 verified checkpoints and release gates. Work remains Unreleased; do not mark
@@ -20,7 +35,7 @@ Matplotlib remains mudplot's canonical renderer through 1.x. Keep the current
 a real second renderer exists. Plotly or Cairo can be optional post-1.0
 adapters without changing the reducer or JSON contract.
 
-- **(done)** Executable bilingual documentation for all 28 registered layers,
+- **(done)** Executable bilingual documentation for all 41 registered layers,
   guarded against registry drift in CI.
 - **(done)** Audited the public Python/CLI/schema surface and documented the
   [1.x compatibility and deprecation policy](docs/COMPATIBILITY.md).
@@ -32,11 +47,11 @@ adapters without changing the reducer or JSON contract.
 
 ## 1. Matplotlib / Seaborn feature parity
 
-The current checkout has 37 layer types, including Unreleased raw-data
-statistics, swarm, letter values and ECDF: `line`, `lineplot`, `regplot`, `scatter`, `stripplot`,
+The current checkout has 41 layer types, including Unreleased raw-data
+statistics, swarm, letter values and ECDF: `line`, `stem`, `stairs`, `eventplot`, `broken_barh`, `lineplot`, `regplot`, `scatter`, `stripplot`,
 `swarmplot`, `bar`, `barplot`, `pointplot`, `countplot`, `errorbar`, `band`,
 `stackplot`, `hist`, `hist2d`, `hexbin`, `quiver`, `box`, `boxenplot`, `violin`,
-`kde`, `kde2d`, `ecdf`, `rug`, `heatmap`, `contour`, `contourf`, `pie`, `hline`, `vline`, `text`,
+`kde`, `kde2d`, `ecdf`, `rug`, `heatmap`, `clustermap`, `contour`, `contourf`, `pie`, `hline`, `vline`, `text`,
 `annotate`, `scatter3d`, `line3d`, `surface`, `wireframe`.
 Layer count is not a claim of feature parity.
 
@@ -194,7 +209,7 @@ Each addition should follow the same checklist the last two batches did:
 
 ## 2. Dashboard / editor completeness
 
-The Python editor (`python -m dashboard serve`) now covers the 28-layer
+The Python editor (`python -m dashboard serve`) now covers the 41-layer
 engine, multi-panel controls, direct manipulation, and shared reference docs.
 Completed work:
 
@@ -203,7 +218,7 @@ Completed work:
   requiring exact coverage of `capabilities.LAYER_TYPES`.
 - **(done)** Exposed every registered layer type through a generic advanced
   form driven directly by `capabilities.LAYER_TYPES`. It accepts checked
-  `LayerSpec` JSON fields, shows required/optional fields for all 28 types,
+  `LayerSpec` JSON fields, shows required/optional fields for all 41 types,
   rejects typos/missing required fields, and automatically picks up future
   registry entries without another hand-maintained dropdown.
 - **(done)** Multi-panel layout controls: grid size, active-panel selection
@@ -235,20 +250,18 @@ Completed work:
   spec open, undo/redo, and reset mutate one local session atomically.
 - New dependency-free-core `mudplot apply` and existing `mudplot render` subprocesses
   keep reduction, validation, and rendering semantics in Python instead of
-  duplicating 28-layer behavior in Rust.
+  duplicating 41-layer behavior in Rust.
 - The crate is intentionally local/single-user and rejects non-loopback binds/
   HTTP Hosts plus cross-origin browser mutations; it has no authentication.
 
-Next only after local usage justifies it: specialized axis/drag controls from
-the mature Python editor, then cookie-keyed sessions/authentication if remote
-use is actually wanted. A native Rust renderer remains optional; strongly
-typing all schema fields only pays off if Rust takes over reduction or
-rendering.
+CND01's actual Python/Rust comparison found missing specialized axis controls and drag handles. The Rust editor now has active-panel x/y/y2/z controls and native-coordinate title/legend/text/annotation movement where supported. [The local feature receipt](docs/review_evidence/v2_rust_specialized_controls.json) records installed-bridge, browser, history, rejection, reopen, export, and coordinate evidence without claiming full-v2 completion.
+
+Cookie-keyed sessions/authentication remain conditional on real remote-use requirements. A native Rust renderer remains optional; strongly typing every schema field still depends on Rust owning reduction or rendering.
 
 ## 4. Quality / tooling
 
 - **(done)** Static type checking: `pyright` runs over `mudplot/`, the
-  dashboard, and maintenance scripts in CI against the Python 3.10 language
+  dashboard, and maintenance scripts in CI against the Python 3.11 language
   level. `py.typed` remains packaged so consumers can check their own use of
   mudplot too.
 - **(done)** Property-based testing (`hypothesis`) for `reduce()`

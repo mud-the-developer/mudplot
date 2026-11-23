@@ -10,7 +10,7 @@ import mudplot as mp
 import numpy as np
 import pytest
 from mudplot._estimate import summarize
-from mudplot._semantics import line_semantic_input, semantic_rows
+from mudplot._semantics import semantic_curve_input, semantic_rows
 from mudplot.spec import LayerSpec, SemanticSpec
 
 
@@ -192,7 +192,7 @@ def test_seeded_pointwise_bootstrap_matches_independent_existing_cell_reference(
         error_style="bars",
     )
     layer = p.spec.panels[0].layers[0]
-    cols, temp, curves = line_semantic_input(p.spec.data.columns, layer)
+    cols, temp, curves, _ = semantic_curve_input(p.spec.data.columns, layer)
     actual = summarize(cols, temp)
     # Explicit integer IDs expose exactly the independent cell/curve contract.
     reference = mp.plot({**raw, "g": [0] * 4 + [1] * 4 + [2] * 4 + [3] * 4}).lineplot(
@@ -221,7 +221,9 @@ def test_private_curve_column_collision_preserves_user_input_and_stat_names():
         "t", "y", hue="h", weights="__mudplot_semantic_curve", errorbar=None
     )
     before = p.to_json()
-    cols, temp, _ = line_semantic_input(p.spec.data.columns, p.spec.panels[0].layers[0])
+    cols, temp, _, _ = semantic_curve_input(
+        p.spec.data.columns, p.spec.panels[0].layers[0]
+    )
     assert temp.group == "__mudplot_semantic_curve_"
     assert cols["__mudplot_semantic_curve"] == [1] * 16
     p.render()

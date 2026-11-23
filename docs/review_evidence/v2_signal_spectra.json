@@ -1,0 +1,2746 @@
+{
+  "feature": "N11",
+  "status": "isolated_consolidated_qualified_awaiting_parent_review_authorized_integration_and_offline_TeX_gate",
+  "not_claimed": [
+    "main integration",
+    "parent acceptance",
+    "other frozen rows",
+    "entire v2",
+    "REL01/product-wide qualification"
+  ],
+  "isolated_source": "$LOCAL_EVIDENCE/location-03/source",
+  "copied_baseline": "$LOCAL_EVIDENCE/location-90",
+  "main_write_policy": "read only; no main/.pi/git mutation; no helper agents",
+  "contract": {
+    "api": "Plot.spectrum(x, y=None, *, fs REQUIRED, kind=psd, nfft=None, pad_to=None, overlap=0, window=hann, detrend=none, sides=onesided, scaling=density, scale=linear, panel=0, **finite LayerSpec styles)",
+    "typed": "SpectrumSpec.fs required; optional LayerSpec.spectrum appended after strip; omitted None preserves old schema 0.1 JSON",
+    "kinds": [
+      "spectrogram",
+      "psd",
+      "csd",
+      "coherence",
+      "magnitude",
+      "angle",
+      "phase"
+    ],
+    "raw": "real finite nonbool plain JSON; no missing-value deletion/resampling/order/ID mutation; equal paired lengths CSD/coherence",
+    "units": "fs samples/s; frequency Hz; spectrogram elapsed s; density signal²/Hz or cross x*y/Hz; spectrum signal² or x*y; magnitude abs(FFT)/abs(sum(window)); coherence dimensionless; angle/phase radians; explicit user labels preserved",
+    "options": "boxcar/hann/hamming/blackman symmetric NumPy windows; none/mean/linear detrend before weighting; onesided/twosided; density/spectrum normalization; explicit linear/dB",
+    "segmentation": "segmented default nfft 256; >=one full window; overlap nonbool integer [0,nfft); trailing partial retained but unused; no short-signal padding; whole magnitude/angle/phase length=len(signal), nfft None overlap 0; pad_to>=window",
+    "coherence": ">=2 computed full windows; positive consumed-prefix channel scaling before detrend/FFT, then independently positive per-frequency segment-vector scaling before averaged cross/powers; factors cancel analytically; zero-power bins undefined, all undefined rejects; no significance claim or epsilon/clipping; private coherence cross not physical CSD",
+    "parity": "actual padded FFT M defines Nyquist; DC not doubled, Nyquist not doubled iff M even, other positive bins doubled",
+    "phase": "exact-zero coefficients undefined gaps; unwrap each defined contiguous run in ascending plotted frequency",
+    "csd": "normalized complex mean(conj(X)*Y) retained in effect result, magnitude displayed; never serialized raw or fabricated zero phase",
+    "zeros": "linear power zero valid; dB power 10log10/magnitude20log10 re1 declared unit, zero gaps without floors; all undefined rejects",
+    "unsupported": "non-Cartesian/projection, non-linear or temporal derived axes, y2, group/semantics/weights/row filters, incompatible derived-unit/raw overlays, unused controls; scaling unused kinds retain density; coherence/phase/angle require linear",
+    "resource_caps": {
+      "MAX_SPECTRAL_SAMPLES": 1000000,
+      "MAX_SPECTRAL_FFT": 65536,
+      "MAX_SPECTRAL_COMPLEX_CELLS": 1048576,
+      "units": "per-channel rows, effective window and padded FFT, segments*pad_to; before window/FFT allocation; 16MiB per complex128 grid plus other bounded buffers; not SLA/RAM sandbox or old-limit changes"
+    },
+    "metadata": "line label and clabel nonempty strings via shared helper; scalar color uses shared finite named/hex policy; clabel requires spectrogram colourbar; citation/href require line label, shared safe-reference validation and native SVG links/PGF decoration",
+    "precision": "if channel normalization cannot retain a nonzero used sample, explicit float64 precision error before FFT; trailing partial retained/validated but excluded from scaling",
+    "zero_stroke": "line_width0 displays no signal stroke via native no-line geometry, exact derived artist data preserved; default/nonzero controls unchanged"
+  },
+  "compatibility": {
+    "python_floor": "3.11",
+    "numpy_floor": "1.23.5",
+    "matplotlib_floor": "3.8",
+    "pillow_floor": "13.0.0",
+    "core_dependencies": [],
+    "schema": "0.1",
+    "package": "1.1.0",
+    "new_renderer": false,
+    "new_dependency": false
+  },
+  "proofs": {
+    "source_targeted": {
+      "passed": 96,
+      "skipped": 1,
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-source-cohort.log",
+      "qualification": "reviewed test-only cleanup cohort on final source"
+    },
+    "current_installed": {
+      "passed": 78,
+      "python": "3.13.12",
+      "numpy": "2.5.2",
+      "matplotlib": "3.11.1",
+      "pillow": "13.0.0",
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-current-cohort.log",
+      "skipped": 1
+    },
+    "minimum_installed": {
+      "passed": 78,
+      "python": "3.11.14",
+      "numpy": "1.23.5",
+      "matplotlib": "3.8.0",
+      "pillow": "13.0.0",
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-minimum-cohort.log",
+      "warnings": "13 upstream Matplotlib/pyparsing deprecation warnings",
+      "skipped": 1
+    },
+    "cohorts": "each final cohort is separate, not summed. Round4 pre-cleanup cohorts and revisions1/2/3 remain historical; identical final wheel reused after test-only pin cleanup",
+    "reference": "independent scalar manual DFT/window/linear detrend/cross-spectrum; Parseval odd/even padded lengths; analytic impulse magnitude/phase; exact zero disjoint phase runs; coherence averaged cross-spectrum, zero-bin/error/native cell boundaries; actual coherence unit-invariance at amplitudes 1, 1e-100, 1e100 and independently 1e-300/1e300, mask [true,false,true] and 1 Hz coherence1; mixed strong/weak frequency all-defined analytic bins, consumed-prefix/tail invariance, truthful precision error, actual zero-stroke pixel/vector absence with analytic data retained",
+    "executable": "final round4 wheel, seven spectral examples (two reserved empty panels), history/reopen/PNG/SVG/PDF in both installed profiles; round4-*-example.log",
+    "cli": "final installed round4 real validate/render repeated current/minimum; round4-*-cli-*.log",
+    "pure": "final round4 frozen wheel imports with Python -S current/minimum; round4-*-pure.log; no NumPy/Matplotlib/PIL loaded",
+    "browser": {
+      "checks": [
+        "registered human layer creation",
+        "JSON form FFT/window/padding/overlap/detrend/sides/scaling/dB edit",
+        "invalid edit preserves exact accepted Spec and PNG",
+        "undo redo exact Spec and PNG",
+        "actual browser-click FigureSpec PNG SVG PDF downloads and reopen",
+        "human JSON forms and clicked PNG/SVG for weak nonzero bins, unused trailing partial and zero-width dashed spectrum; exact source retained",
+        "precision-error JSON form preserves exact accepted Spec and PNG"
+      ],
+      "url": "http://127.0.0.1:47521",
+      "browser": "150.0.7871.100",
+      "executable": "/usr/bin/chromium",
+      "profile": "$LOCAL_EVIDENCE/location-92",
+      "hashes": {
+        "zero-stroke-surface.png": "05f37b5c9c26c492b7bdf3b286ea4f0ae0473a6d8dae3c285d342de96f37aa2d",
+        "zero-stroke.mplot.json": "4aee4d56d0f1fd70ea49ccbde9e6d6eb44849bde0fa6c2489f8b221033b328d6",
+        "zero-stroke.svg": "10d407a9c7ef83b1c43f5daf3cca74a96457fe80d45b67fa942dc0a78397997a",
+        "zero-stroke.png": "ac20dff77366d4b357f3dda6d0b4bd06e61c121c048a365df46eff2ab9240c25",
+        "unused-tail-surface.png": "0210a4b3c933e493e23db28ad20a5f85fcd8fcd64141a8707ebd5f94c2a45d20",
+        "unused-tail.mplot.json": "e8a2826ca208ccbdfb993604563a5d287678fe890e06e9a217d553f067931b0f",
+        "unused-tail.svg": "77638eed71c8dd395c0ea16084866b87c2a7cf55c1fbd48f0297088d976101cd",
+        "unused-tail.png": "f413757d6e6e9ee1db9d9d8d87f95078fe8ca95805c81c1ad32cc0f03a6ee65b",
+        "weak-bins-surface.png": "a89df3da4692e2b598d49d799340001cf45ee42c40871effe39526b31045a705",
+        "weak-bins.mplot.json": "0729a53018b4a2d36192d8d70bcd9fcb9b6162bdad1a75d5ddbc1307745dac13",
+        "weak-bins.svg": "4f66f9d773f1e675484470d1f6ef9b0d67947984e291c982b9b1711ff474fb57",
+        "weak-bins.png": "2b8861c107a0b7403050a26e3aa90e9b9ac9ce7a228a1538307a348b3d87e739",
+        "native-editor.png": "2a0e7fe4927824e866aef88c16db986ecf86d30b5822c15145e8e8fa0d3877cb",
+        "edited.pdf": "c4e01c873b12847ff123da829e5bdf5a9fb3e9691fbfa5a2274c01428ebaca4c",
+        "edited.svg": "ed73a5d87ce0d578667dfaa157f72490f547e56d3582b2cf1cc94327eef2f1ea",
+        "edited.png": "27d2a440cb0f2eafccd1f40ca6cd8f0bae39773387e8674b987a07f3d5ac3b38",
+        "downloaded.mplot.json": "d5503311559b5796d1cd6d59420f45164c215121d30fd1952155fe1c90ed345e"
+      }
+    },
+    "native_consumer": "$LOCAL_EVIDENCE/location-91/round4-native-consumer.log",
+    "resource_profiles": {
+      "current": {
+        "samples_per_channel": 65536,
+        "nfft": 1024,
+        "pad_to": 2048,
+        "overlap": 512,
+        "segments": 127,
+        "complex_cells": 260096,
+        "seconds": 0.7562714228406549,
+        "rss_before_KiB": 73816,
+        "peak_rss_KiB": 230540,
+        "units": "Hz",
+        "source_sha256": "4b3ba5729da0509f975177e3ada79a6299707e7a6f7c209c07bc82267690a84d",
+        "raw_rows_and_ids": 65536,
+        "rng_unchanged": true,
+        "sample_cap_rejected": 1000001
+      },
+      "minimum": {
+        "samples_per_channel": 65536,
+        "nfft": 1024,
+        "pad_to": 2048,
+        "overlap": 512,
+        "segments": 127,
+        "complex_cells": 260096,
+        "seconds": 0.8952114931307733,
+        "rss_before_KiB": 70308,
+        "peak_rss_KiB": 229492,
+        "units": "Hz",
+        "source_sha256": "4b3ba5729da0509f975177e3ada79a6299707e7a6f7c209c07bc82267690a84d",
+        "raw_rows_and_ids": 65536,
+        "rng_unchanged": true,
+        "sample_cap_rejected": 1000001
+      }
+    },
+    "visual_review": [
+      "final downloaded weak-bin coherence line at1 across all3bins",
+      "final downloaded zero-stroke PNG and SVG absence",
+      "final current SVG rasterization",
+      "final minimum PDF rasterization",
+      "actual browser corrected-boundary surfaces",
+      "actual current/minimum measured label-clearance crops"
+    ],
+    "vector_structure": {
+      "paths": 609,
+      "images": 1,
+      "note": "native spectral mesh/lines are vector paths; standard Matplotlib colourbar gradient is embedded image"
+    },
+    "lint": "new spectral implementation/tests/examples ruff clean; no claim of whole-repo lint",
+    "frozen_wheel": {
+      "path": "$LOCAL_EVIDENCE/location-93/mudplot-1.1.0-py3-none-any.whl",
+      "sha256": "f38a03c26ea500caff30a952c0d7acc5385d0cc13295599353eef68cbe14b9ef",
+      "same_wheel_both_profiles": true,
+      "all_package_py_source_hashes_match_final_source": true,
+      "hash_manifest": "$LOCAL_EVIDENCE/location-94/frozen-package-hashes.json",
+      "no_product_change_after_freeze": "only reviewed tests/docs/evidence cleanup; package sources byte-identical"
+    },
+    "skip_reason": "full PGF-file export requires unavailable native TeX engine; actual PGF-mode native legend/reference resolution passed",
+    "native_reference_proof": "$LOCAL_EVIDENCE/location-91/round4-reference-native.log",
+    "PGF_integration_gate": "Host-only full-file PGF skip remains exactly1 each cohort. Actual native PGF-mode legend/reference resolution passed. Parent has available offline TeX rootfs and must exercise full PGF at authorized integration before final acceptance; not claimed exercised here.",
+    "label_clearance": {
+      "label-gap-revision3-current": {
+        "input_spec": "$LOCAL_EVIDENCE/location-95/signal_spectra.mplot.json",
+        "input_png_sha256": "82cb93f65286d75d2541b6f8a099b25a1231523c5f0f38f4f662eaf60eabe6aa",
+        "canvas_pixels": [
+          7500,
+          5100
+        ],
+        "dpi": 300,
+        "native_text_bboxes_bottom_left_pixels": {
+          "spectrogram_colorbar_ylabel": [
+            2645.929976742675,
+            4022.4992519531243,
+            39.583333333333485,
+            523.59375
+          ],
+          "psd_ylabel": [
+            2737.3256716558158,
+            4022.4992519531243,
+            39.583333333333485,
+            523.59375
+          ]
+        },
+        "horizontal_gap_pixels": 51.8123615798072,
+        "horizontal_gap_points": 12.43496677915373,
+        "gap_at_1500px_preview": 10.36247231596144,
+        "overlap_area_pixels_squared": 0.0,
+        "text": {
+          "spectrogram_colorbar_ylabel": "Power density (signal²/Hz)",
+          "psd_ylabel": "Power density (signal²/Hz)"
+        },
+        "crop_pixels_top_left": [
+          2615,
+          523,
+          2806,
+          1107
+        ],
+        "crop": "$LOCAL_EVIDENCE/location-96/native-label-gap-crop.png",
+        "reserved_empty_panels": 2,
+        "example_count": 7
+      },
+      "label-gap-final-current": {
+        "input_spec": "$LOCAL_EVIDENCE/location-97/signal_spectra.mplot.json",
+        "input_png_sha256": "82cb93f65286d75d2541b6f8a099b25a1231523c5f0f38f4f662eaf60eabe6aa",
+        "canvas_pixels": [
+          7500,
+          5100
+        ],
+        "dpi": 300,
+        "native_text_bboxes_bottom_left_pixels": {
+          "spectrogram_colorbar_ylabel": [
+            2645.929976742675,
+            4022.4992519531243,
+            39.583333333333485,
+            523.59375
+          ],
+          "psd_ylabel": [
+            2737.3256716558158,
+            4022.4992519531243,
+            39.583333333333485,
+            523.59375
+          ]
+        },
+        "horizontal_gap_pixels": 51.8123615798072,
+        "horizontal_gap_points": 12.43496677915373,
+        "gap_at_1500px_preview": 10.36247231596144,
+        "overlap_area_pixels_squared": 0.0,
+        "text": {
+          "spectrogram_colorbar_ylabel": "Power density (signal²/Hz)",
+          "psd_ylabel": "Power density (signal²/Hz)"
+        },
+        "crop_pixels_top_left": [
+          2615,
+          523,
+          2806,
+          1107
+        ],
+        "crop": "$LOCAL_EVIDENCE/location-98/native-label-gap-crop.png",
+        "reserved_empty_panels": 2,
+        "example_count": 7
+      },
+      "label-gap-final-minimum": {
+        "input_spec": "$LOCAL_EVIDENCE/location-99/signal_spectra.mplot.json",
+        "input_png_sha256": "79295e2ccf6765b244a9303f789b1c13e0e6a20f05b36b6b37ea70d5ab8179f8",
+        "canvas_pixels": [
+          7500,
+          5100
+        ],
+        "dpi": 300,
+        "native_text_bboxes_bottom_left_pixels": {
+          "spectrogram_colorbar_ylabel": [
+            2645.6722446666654,
+            4024.957666666667,
+            40.0,
+            518.0
+          ],
+          "psd_ylabel": [
+            2737.4822799999993,
+            4024.957666666667,
+            40.0,
+            518.0
+          ]
+        },
+        "horizontal_gap_pixels": 51.81003533333387,
+        "horizontal_gap_points": 12.43440848000013,
+        "gap_at_1500px_preview": 10.362007066666774,
+        "overlap_area_pixels_squared": 0.0,
+        "text": {
+          "spectrogram_colorbar_ylabel": "Power density (signal²/Hz)",
+          "psd_ylabel": "Power density (signal²/Hz)"
+        },
+        "crop_pixels_top_left": [
+          2615,
+          527,
+          2807,
+          1105
+        ],
+        "crop": "$LOCAL_EVIDENCE/location-100/native-label-gap-crop.png",
+        "reserved_empty_panels": 2,
+        "example_count": 7
+      }
+    },
+    "label_clearance_decision": "no overlap; current51.812px/12.435pt, minimum51.810px/12.434pt at300DPI; native crops visually reviewed. No layout/example change. Seven examples, two reserved empty panels, not nine examples."
+  },
+  "commands": [
+    {
+      "name": "current-tests",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 3.4586384878493845,
+      "log": "$LOCAL_EVIDENCE/location-91/current-tests.log"
+    },
+    {
+      "name": "example",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "examples/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-101"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 5.755641068331897,
+      "log": "$LOCAL_EVIDENCE/location-91/example.log"
+    },
+    {
+      "name": "generate-schema",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "schema",
+        "--out",
+        "schemas/figure_spec.schema.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.05951688811182976,
+      "log": "$LOCAL_EVIDENCE/location-91/generate-schema.log"
+    },
+    {
+      "name": "generate-capabilities",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "capabilities"
+      ],
+      "returncode": 0
+    },
+    {
+      "name": "generate-reference",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "docs",
+        "--out",
+        "docs/REFERENCE.md"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06298792501911521,
+      "log": "$LOCAL_EVIDENCE/location-91/generate-reference.log"
+    },
+    {
+      "name": "generate-gallery",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from dashboard.plot_gallery import gallery_markdown; from pathlib import Path; Path('docs/PLOT_GALLERY.md').write_text(gallery_markdown())"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.059332885313779116,
+      "log": "$LOCAL_EVIDENCE/location-91/generate-gallery.log"
+    },
+    {
+      "name": "cli-validate",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-101/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.07043720968067646,
+      "log": "$LOCAL_EVIDENCE/location-91/cli-validate.log"
+    },
+    {
+      "name": "cli-render",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-101/signal_spectra.mplot.json",
+        "--out",
+        "$LOCAL_EVIDENCE/location-91/cli.png"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 2,
+      "seconds": 0.06407017121091485,
+      "log": "$LOCAL_EVIDENCE/location-91/cli-render.log"
+    },
+    {
+      "name": "cli-render-corrected",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-101/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-91/cli.png"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 2.3613173430785537,
+      "log": "$LOCAL_EVIDENCE/location-91/cli-render-corrected.log"
+    },
+    {
+      "name": "current-consistency",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 2.851895904634148,
+      "log": "$LOCAL_EVIDENCE/location-91/current-consistency.log"
+    },
+    {
+      "name": "tool-availability",
+      "argv": [
+        "sh",
+        "-c",
+        "command -v uv; command -v python3.11; command -v pdftoppm; command -v rsvg-convert; command -v cargo; command -v chromium"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.010156524367630482,
+      "log": "$LOCAL_EVIDENCE/location-91/tool-availability.log"
+    },
+    {
+      "name": "format-new-files",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py",
+        "examples/plots/spectrum.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.05971967289224267,
+      "log": "$LOCAL_EVIDENCE/location-91/format-new-files.log"
+    },
+    {
+      "name": "format-api",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/api.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.034977493807673454,
+      "log": "$LOCAL_EVIDENCE/location-91/format-api.log"
+    },
+    {
+      "name": "ruff-new-files",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "--fix",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py",
+        "examples/plots/spectrum.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 0.04144710721448064,
+      "log": "$LOCAL_EVIDENCE/location-91/ruff-new-files.log"
+    },
+    {
+      "name": "gallery-render",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import runpy,mudplot as mp; import matplotlib.pyplot as plt; p=runpy.run_path('examples/plots/spectrum.py')['plot']; mp.save_spec(p.spec,'docs/images/plots/spectrum.mplot.json'); plt.close(p.save('docs/images/plots/spectrum.png'))"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.8375996919348836,
+      "log": "$LOCAL_EVIDENCE/location-91/gallery-render.log"
+    },
+    {
+      "name": "wheel-build",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-102"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.17082270001992583,
+      "log": "$LOCAL_EVIDENCE/location-91/wheel-build.log"
+    },
+    {
+      "name": "final-format",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.02844947762787342,
+      "log": "$LOCAL_EVIDENCE/location-91/final-format.log"
+    },
+    {
+      "name": "final-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py",
+        "examples/plots/spectrum.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 0.02847414230927825,
+      "log": "$LOCAL_EVIDENCE/location-91/final-lint.log"
+    },
+    {
+      "name": "current-final-tests",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 4.553207243792713,
+      "log": "$LOCAL_EVIDENCE/location-91/current-final-tests.log"
+    },
+    {
+      "name": "current-env-create",
+      "argv": [
+        "uv",
+        "venv",
+        "$LOCAL_EVIDENCE/location-103",
+        "--python",
+        "$PROVIDER/environment-03/bin/python"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.025417298078536987,
+      "log": "$LOCAL_EVIDENCE/location-91/current-env-create.log"
+    },
+    {
+      "name": "minimum-env-create",
+      "argv": [
+        "uv",
+        "venv",
+        "$LOCAL_EVIDENCE/location-104",
+        "--python",
+        "python3.11"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.02451126044616103,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-env-create.log"
+    },
+    {
+      "name": "regenerate-gallery-final",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from dashboard.plot_gallery import gallery_markdown; from pathlib import Path; Path('docs/PLOT_GALLERY.md').write_text(gallery_markdown())"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06433631898835301,
+      "log": "$LOCAL_EVIDENCE/location-91/regenerate-gallery-final.log"
+    },
+    {
+      "name": "native-final-tests",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 6.026268680114299,
+      "log": "$LOCAL_EVIDENCE/location-91/native-final-tests.log"
+    },
+    {
+      "name": "spectral-final-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py",
+        "examples/plots/spectrum.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 0.027480512857437134,
+      "log": "$LOCAL_EVIDENCE/location-91/spectral-final-lint.log"
+    },
+    {
+      "name": "freeze-feature-wheel",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-105"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.17434023087844253,
+      "log": "$LOCAL_EVIDENCE/location-91/freeze-feature-wheel.log"
+    },
+    {
+      "name": "install-current",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-105/mudplot-1.1.0-py3-none-any.whl",
+        "numpy==2.5.2",
+        "matplotlib==3.11.1",
+        "pillow==13.0.0",
+        "pytest==9.0.3",
+        "jsonschema>=4"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.9344785311259329,
+      "log": "$LOCAL_EVIDENCE/location-91/install-current.log"
+    },
+    {
+      "name": "install-minimum",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--python",
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-105/mudplot-1.1.0-py3-none-any.whl",
+        "numpy==1.23.5",
+        "matplotlib==3.8.0",
+        "pillow==13.0.0",
+        "pytest==9.0.3",
+        "jsonschema>=4"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.24349232716485858,
+      "log": "$LOCAL_EVIDENCE/location-91/install-minimum.log"
+    },
+    {
+      "name": "current-installed-versions",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-c",
+        "import mudplot,sys,importlib.metadata as m; print(mudplot.__file__); print(sys.version); print({n:m.version(n) for n in ['numpy','matplotlib','pillow','mudplot']})"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.13709672912955284,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-versions.log"
+    },
+    {
+      "name": "current-installed-independent-tests",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 3.725021510850638,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-independent-tests.log"
+    },
+    {
+      "name": "current-installed-example",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-107"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 5.984381136950105,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-example.log"
+    },
+    {
+      "name": "current-installed-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-107/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06588065717369318,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-cli-validate.log"
+    },
+    {
+      "name": "current-installed-cli-render",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-107/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-91/current-installed-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.9947411897592247,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-cli-render.log"
+    },
+    {
+      "name": "minimum-installed-versions",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-c",
+        "import mudplot,sys,importlib.metadata as m; print(mudplot.__file__); print(sys.version); print({n:m.version(n) for n in ['numpy','matplotlib','pillow','mudplot']})"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.09898540424183011,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-versions.log"
+    },
+    {
+      "name": "minimum-installed-independent-tests",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 4.096214075107127,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-independent-tests.log"
+    },
+    {
+      "name": "minimum-installed-example",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-108"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.790382676757872,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-example.log"
+    },
+    {
+      "name": "minimum-installed-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-108/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06319539388641715,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-cli-validate.log"
+    },
+    {
+      "name": "minimum-installed-cli-render",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-108/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-91/minimum-installed-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.254658085759729,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-cli-render.log"
+    },
+    {
+      "name": "rust-build",
+      "argv": [
+        "cargo",
+        "build",
+        "--locked",
+        "--manifest-path",
+        "mudplot-editor/Cargo.toml"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 6.294097843114287,
+      "log": "$LOCAL_EVIDENCE/location-91/rust-build.log"
+    },
+    {
+      "name": "current-bounded-probe",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 1,
+      "seconds": 1.082406708970666,
+      "log": "$LOCAL_EVIDENCE/location-91/current-bounded-probe.log"
+    },
+    {
+      "name": "minimum-bounded-probe",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 1,
+      "seconds": 1.6398941548541188,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-bounded-probe.log"
+    },
+    {
+      "name": "explicit-python-S-pure",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06102655595168471,
+      "log": "$LOCAL_EVIDENCE/location-91/explicit-python-S-pure.log"
+    },
+    {
+      "name": "svg-native-structure",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from pathlib import Path; import xml.etree.ElementTree as E; p=Path('$LOCAL_EVIDENCE/location-107/signal_spectra.svg'); r=E.parse(p).getroot(); ns={'s':'http://www.w3.org/2000/svg'}; print({'paths':len(r.findall('.//s:path',ns)),'images':len(r.findall('.//s:image',ns)),'svg_bytes':p.stat().st_size})"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.01629972830414772,
+      "log": "$LOCAL_EVIDENCE/location-91/svg-native-structure.log"
+    },
+    {
+      "name": "svg-rasterize",
+      "argv": [
+        "rsvg-convert",
+        "-w",
+        "1500",
+        "-o",
+        "$LOCAL_EVIDENCE/location-91/vector-reviewed.png",
+        "$LOCAL_EVIDENCE/location-107/signal_spectra.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.04900485463440418,
+      "log": "$LOCAL_EVIDENCE/location-91/svg-rasterize.log"
+    },
+    {
+      "name": "pdf-rasterize",
+      "argv": [
+        "pdftoppm",
+        "-scale-to",
+        "1500",
+        "-singlefile",
+        "-png",
+        "$LOCAL_EVIDENCE/location-108/signal_spectra.pdf",
+        "$LOCAL_EVIDENCE/location-109"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.09991910541430116,
+      "log": "$LOCAL_EVIDENCE/location-91/pdf-rasterize.log"
+    },
+    {
+      "name": "test-format-final",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.029060030821710825,
+      "log": "$LOCAL_EVIDENCE/location-91/test-format-final.log"
+    },
+    {
+      "name": "lint-clean",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py",
+        "examples/signal_spectra.py",
+        "examples/plots/spectrum.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.029065995942801237,
+      "log": "$LOCAL_EVIDENCE/location-91/lint-clean.log"
+    },
+    {
+      "name": "actual-rust-browser",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "$LOCAL_EVIDENCE/location-91/native_browser.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 9.123606007080525,
+      "log": "$LOCAL_EVIDENCE/location-91/actual-rust-browser.log"
+    },
+    {
+      "name": "current-bounded-probe-corrected",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.2703018649481237,
+      "log": "$LOCAL_EVIDENCE/location-91/current-bounded-probe-corrected.log"
+    },
+    {
+      "name": "minimum-bounded-probe-corrected",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.6223292932845652,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-bounded-probe-corrected.log"
+    },
+    {
+      "name": "current-installed-python-S-pure",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-105/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.21678473614156246,
+      "log": "$LOCAL_EVIDENCE/location-91/current-installed-python-S-pure.log"
+    },
+    {
+      "name": "minimum-installed-python-S-pure",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-105/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.13760300166904926,
+      "log": "$LOCAL_EVIDENCE/location-91/minimum-installed-python-S-pure.log"
+    },
+    {
+      "name": "native-consumer-recent-contracts",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from scripts.rust_editor_smoke_test import _review_recent_layer_contracts; _review_recent_layer_contracts('http://127.0.0.1:47521'); print('PASS native recent contracts including all seven N11 kinds')"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 105.87547058239579,
+      "log": "$LOCAL_EVIDENCE/location-91/native-consumer-recent-contracts.log"
+    },
+    {
+      "name": "parent-inference-reproduction-before-fix",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import json,mudplot as mp\nfrom mudplot._spectrum import compute_spectrum\nfor a in (1,1e-100,1e100):\n p=mp.plot({'x':[a,0,-a,0]*2}).spectrum('x','x',fs=4,kind='coherence',nfft=4,window='boxcar')\n try:\n  r=compute_spectrum(p.spec.data.columns,p.spec.panels[0].layers[0]);print('amplitude',a,'mask',r.values.mask.tolist(),'coherence',r.values.filled(None).tolist())\n except Exception as e:print('amplitude',a,type(e).__name__,str(e))\nfor style in ({'href':'javascript:alert(1)','label':'signal'},{'citation':'bad{key}','label':'signal'},{'color':'not-a-color'},{'color':True},{'label':42},{'clabel':42,'colorbar':True}):\n p=mp.plot({'x':[0,1,0,-1]*2}).spectrum('x',fs=4,nfft=4,window='boxcar',kind='spectrogram' if 'clabel' in style else 'psd',**style)\n print('style',style,'validation',mp.validate(p.spec))\np=mp.plot({'x':[0,1,0,-1]*2}).spectrum('x',fs=4,nfft=4,window='boxcar',label='Measured',citation='known2026',href='https://example.org/signal')\np.save('$LOCAL_EVIDENCE/location-91/reference-before.svg')\nimport mudplot._render as render\nrender._FMT.set('pgf'); f=p.render();print('pgf legend label before',f.axes[0].lines[0].get_label())\n"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 1.249135040678084,
+      "log": "$LOCAL_EVIDENCE/location-91/parent-inference-reproduction-before-fix.log"
+    },
+    {
+      "name": "correction-format",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.03599278489127755,
+      "log": "$LOCAL_EVIDENCE/location-91/correction-format.log"
+    },
+    {
+      "name": "parent-corrections-after-fix",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import json,mudplot as mp\nfrom mudplot._spectrum import compute_spectrum\nfor a in (1,1e-100,1e100):\n p=mp.plot({'x':[a,0,-a,0]*2}).spectrum('x','x',fs=4,kind='coherence',nfft=4,window='boxcar')\n try:\n  r=compute_spectrum(p.spec.data.columns,p.spec.panels[0].layers[0]);print('amplitude',a,'mask',r.values.mask.tolist(),'coherence',r.values.filled(None).tolist())\n except Exception as e:print('amplitude',a,type(e).__name__,str(e))\nfor style in ({'href':'javascript:alert(1)','label':'signal'},{'citation':'bad{key}','label':'signal'},{'color':'not-a-color'},{'color':True},{'label':42},{'clabel':42,'colorbar':True}):\n p=mp.plot({'x':[0,1,0,-1]*2}).spectrum('x',fs=4,nfft=4,window='boxcar',kind='spectrogram' if 'clabel' in style else 'psd',**style)\n print('style',style,'validation',mp.validate(p.spec))\np=mp.plot({'x':[0,1,0,-1]*2}).spectrum('x',fs=4,nfft=4,window='boxcar',label='Measured',citation='known2026',href='https://example.org/signal')\np.save('$LOCAL_EVIDENCE/location-91/reference-before.svg')\nimport mudplot._render as render\nrender._FMT.set('pgf'); f=p.render();print('pgf legend label before',f.axes[0].lines[0].get_label())\n"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 1.254788575693965,
+      "log": "$LOCAL_EVIDENCE/location-91/parent-corrections-after-fix.log"
+    },
+    {
+      "name": "correction-current-targeted",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 7.205563129391521,
+      "log": "$LOCAL_EVIDENCE/location-91/correction-current-targeted.log"
+    },
+    {
+      "name": "correction-regenerate",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import json;from pathlib import Path;import mudplot as m;from dashboard.plot_gallery import gallery_markdown;Path('schemas/capabilities.json').write_text(json.dumps(m.capabilities(),ensure_ascii=False,indent=2)+'\\n');Path('docs/REFERENCE.md').write_text(m.reference_markdown());Path('docs/PLOT_GALLERY.md').write_text(gallery_markdown())"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06104278611019254,
+      "log": "$LOCAL_EVIDENCE/location-91/correction-regenerate.log"
+    },
+    {
+      "name": "correction-frozen-wheel",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-110"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.17326395399868488,
+      "log": "$LOCAL_EVIDENCE/location-91/correction-frozen-wheel.log"
+    },
+    {
+      "name": "corrected-current-generated-tests",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 8.73644756199792,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-generated-tests.log"
+    },
+    {
+      "name": "corrected-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.03017938183620572,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-lint.log"
+    },
+    {
+      "name": "corrected-install-current",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-110/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.047137408051639795,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-install-current.log"
+    },
+    {
+      "name": "corrected-install-minimum",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-110/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.04903757805004716,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-install-minimum.log"
+    },
+    {
+      "name": "corrected-test-format",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.03957489598542452,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-test-format.log"
+    },
+    {
+      "name": "corrected-source-final",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 9.182992111891508,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-source-final.log"
+    },
+    {
+      "name": "corrected-current-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 1,
+      "seconds": 6.355860054027289,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-installed-tests.log"
+    },
+    {
+      "name": "corrected-current-example",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-111"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 5.727563090622425,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-example.log"
+    },
+    {
+      "name": "corrected-current-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-111/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06997390510514379,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-cli-validate.log"
+    },
+    {
+      "name": "corrected-current-cli-render",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-111/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-112/current-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.002069916110486,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-cli-render.log"
+    },
+    {
+      "name": "corrected-current-pure",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-110/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.16252204403281212,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-pure.log"
+    },
+    {
+      "name": "corrected-current-bounded",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.0507991733029485,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-bounded.log"
+    },
+    {
+      "name": "corrected-minimum-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 1,
+      "seconds": 7.4262416320852935,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-installed-tests.log"
+    },
+    {
+      "name": "corrected-minimum-example",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-113"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.630599762313068,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-example.log"
+    },
+    {
+      "name": "corrected-minimum-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-113/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06372322514653206,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-cli-validate.log"
+    },
+    {
+      "name": "corrected-minimum-cli-render",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-113/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-112/minimum-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.2121381512843072,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-cli-render.log"
+    },
+    {
+      "name": "corrected-minimum-pure",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-110/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.16963559295982122,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-pure.log"
+    },
+    {
+      "name": "corrected-minimum-bounded",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.2037997809238732,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-bounded.log"
+    },
+    {
+      "name": "corrected-source-passing-final",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 9.121877190191299,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-source-passing-final.log"
+    },
+    {
+      "name": "corrected-current-passing-final",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.223120613023639,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-current-passing-final.log"
+    },
+    {
+      "name": "corrected-minimum-passing-final",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 7.388687742408365,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-minimum-passing-final.log"
+    },
+    {
+      "name": "corrected-rust-browser",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "$LOCAL_EVIDENCE/location-91/native_browser.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 8.521493487991393,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-rust-browser.log"
+    },
+    {
+      "name": "corrected-native-consumer",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from scripts.rust_editor_smoke_test import _review_recent_layer_contracts; _review_recent_layer_contracts('http://127.0.0.1:47521');print('PASS corrected installed native seven-kind controls')"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 96.1072142040357,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-native-consumer.log"
+    },
+    {
+      "name": "corrected-reference-native-proof",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-c",
+        "import mudplot as m;import matplotlib.pyplot as plt;from mudplot._render import _substitute_pgf_references; p=m.plot({'s':[0,1,0,-1]*2}).spectrum('s',fs=4,nfft=4,window='boxcar',label='Measured',citation='known2026',href='https://example.org/signal'); f=m.render(p.spec,fmt='pgf'); label=f.axes[0].get_legend().get_texts()[0].get_text();print('native_PGF_legend',repr(label),'reference_table',f._mudplot_refs,'resolved',_substitute_pgf_references(label,f._mudplot_refs));plt.close(f);plt.close(p.save('$LOCAL_EVIDENCE/location-112/referenced.svg'));plt.close(p.save('$LOCAL_EVIDENCE/location-112/referenced.png'))"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.7744071818888187,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-reference-native-proof.log"
+    },
+    {
+      "name": "corrected-svg-rasterize",
+      "argv": [
+        "rsvg-convert",
+        "-w",
+        "1500",
+        "-o",
+        "$LOCAL_EVIDENCE/location-112/vector-reviewed.png",
+        "$LOCAL_EVIDENCE/location-111/signal_spectra.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.04068788420408964,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-svg-rasterize.log"
+    },
+    {
+      "name": "corrected-pdf-rasterize",
+      "argv": [
+        "pdftoppm",
+        "-scale-to",
+        "1500",
+        "-singlefile",
+        "-png",
+        "$LOCAL_EVIDENCE/location-113/signal_spectra.pdf",
+        "$LOCAL_EVIDENCE/location-114"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.08280900306999683,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-pdf-rasterize.log"
+    },
+    {
+      "name": "corrected-final-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.049219919834285975,
+      "log": "$LOCAL_EVIDENCE/location-91/corrected-final-lint.log"
+    },
+    {
+      "name": "round3-current-before",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.2829214199446142,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-before.log"
+    },
+    {
+      "name": "round3-minimum-before",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.388091057073325,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-before.log"
+    },
+    {
+      "name": "round3-format",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.030134042724967003,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-format.log"
+    },
+    {
+      "name": "round3-regenerate",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import json;from pathlib import Path;import mudplot as m;from dashboard.plot_gallery import gallery_markdown;Path('schemas/capabilities.json').write_text(json.dumps(m.capabilities(),ensure_ascii=False,indent=2)+'\\n');Path('docs/REFERENCE.md').write_text(m.reference_markdown());Path('docs/PLOT_GALLERY.md').write_text(gallery_markdown())"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06286085303872824,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-regenerate.log"
+    },
+    {
+      "name": "round3-current-source",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 11.18999806093052,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-source.log"
+    },
+    {
+      "name": "round3-minimum-source-before-freeze",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 9.998700641095638,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-source-before-freeze.log"
+    },
+    {
+      "name": "round3-current-after-source",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 1.5019324580207467,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-after-source.log"
+    },
+    {
+      "name": "round3-minimum-after-source",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 1.4602623623795807,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-after-source.log"
+    },
+    {
+      "name": "round3-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.025417380034923553,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-lint.log"
+    },
+    {
+      "name": "round3-frozen-wheel",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-116"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.18820461491122842,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-frozen-wheel.log"
+    },
+    {
+      "name": "round3-install-current",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-116/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06802352564409375,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-install-current.log"
+    },
+    {
+      "name": "round3-install-minimum",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-116/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.05516287079080939,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-install-minimum.log"
+    },
+    {
+      "name": "round3-current-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 8.200638141017407,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-installed-tests.log"
+    },
+    {
+      "name": "round3-current-example",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-95"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.000656644348055,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-example.log"
+    },
+    {
+      "name": "round3-current-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-95/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.07523136399686337,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-cli-validate.log"
+    },
+    {
+      "name": "round3-current-cli-render",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-95/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-115/current-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.00186776695773,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-cli-render.log"
+    },
+    {
+      "name": "round3-current-pure",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-116/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.17775161191821098,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-pure.log"
+    },
+    {
+      "name": "round3-current-bounded",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.0678835310973227,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-bounded.log"
+    },
+    {
+      "name": "round3-current-after-installed",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.276513836812228,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-current-after-installed.log"
+    },
+    {
+      "name": "round3-minimum-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 9.671145680826157,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-installed-tests.log"
+    },
+    {
+      "name": "round3-minimum-example",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-117"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.666426929179579,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-example.log"
+    },
+    {
+      "name": "round3-minimum-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-117/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.0646048802882433,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-cli-validate.log"
+    },
+    {
+      "name": "round3-minimum-cli-render",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-117/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-115/minimum-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.199722579680383,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-cli-render.log"
+    },
+    {
+      "name": "round3-minimum-pure",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-116/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.13948711706325412,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-pure.log"
+    },
+    {
+      "name": "round3-minimum-bounded",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.2364633809775114,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-bounded.log"
+    },
+    {
+      "name": "round3-minimum-after-installed",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.4402550379745662,
+      "log": "$LOCAL_EVIDENCE/location-91/round3-minimum-after-installed.log"
+    },
+    {
+      "name": "round4-current-before",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.12364847864955664,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-before.log"
+    },
+    {
+      "name": "round4-minimum-before",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.0977350939065218,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-before.log"
+    },
+    {
+      "name": "round4-format",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "format",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.028588042128831148,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-format.log"
+    },
+    {
+      "name": "round4-regenerate",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "import json;from pathlib import Path;import mudplot as m;from dashboard.plot_gallery import gallery_markdown;Path('schemas/capabilities.json').write_text(json.dumps(m.capabilities(),ensure_ascii=False,indent=2)+'\\n');Path('docs/REFERENCE.md').write_text(m.reference_markdown());Path('docs/PLOT_GALLERY.md').write_text(gallery_markdown())"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.0669267880730331,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-regenerate.log"
+    },
+    {
+      "name": "round4-source-final",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 11.916895079892129,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-source-final.log"
+    },
+    {
+      "name": "round4-minimum-source-before-freeze",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 10.930833850987256,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-source-before-freeze.log"
+    },
+    {
+      "name": "round4-current-after-source",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.12611009692773223,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-after-source.log"
+    },
+    {
+      "name": "round4-minimum-after-source",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.09717043908312917,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-after-source.log"
+    },
+    {
+      "name": "round4-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 1,
+      "seconds": 0.028046387247741222,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-lint.log"
+    },
+    {
+      "name": "round4-frozen-wheel",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-118"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.1684557623229921,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-frozen-wheel.log"
+    },
+    {
+      "name": "round4-final-lint",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "ruff",
+        "check",
+        "mudplot/_spectrum.py",
+        "tests/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.03202145406976342,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-final-lint.log"
+    },
+    {
+      "name": "round4-final-frozen-wheel",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "build",
+        "--wheel",
+        "--no-isolation",
+        "--outdir",
+        "$LOCAL_EVIDENCE/location-93"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.17346378229558468,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-final-frozen-wheel.log"
+    },
+    {
+      "name": "round4-install-current",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-93/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.05450884299352765,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-install-current.log"
+    },
+    {
+      "name": "round4-install-minimum",
+      "argv": [
+        "uv",
+        "pip",
+        "install",
+        "--reinstall-package",
+        "mudplot",
+        "--python",
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-93/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 0.06416205270215869,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-install-minimum.log"
+    },
+    {
+      "name": "round4-current-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 9.123897986020893,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-installed-tests.log"
+    },
+    {
+      "name": "round4-current-example",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-97"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.031632167752832,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-example.log"
+    },
+    {
+      "name": "round4-current-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-97/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.08246497716754675,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-cli-validate.log"
+    },
+    {
+      "name": "round4-current-cli-render",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-97/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-94/current-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.107168162241578,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-cli-render.log"
+    },
+    {
+      "name": "round4-current-pure",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-93/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.17002868838608265,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-pure.log"
+    },
+    {
+      "name": "round4-current-bounded",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.1168334861285985,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-bounded.log"
+    },
+    {
+      "name": "round4-current-after-installed",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.10362551501020789,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-after-installed.log"
+    },
+    {
+      "name": "round4-current-local-and-stroke-installed",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.311056934762746,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-current-local-and-stroke-installed.log"
+    },
+    {
+      "name": "round4-minimum-installed-tests",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 10.781426374800503,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-installed-tests.log"
+    },
+    {
+      "name": "round4-minimum-example",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/signal_spectra.py",
+        "$LOCAL_EVIDENCE/location-99"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 6.732033445965499,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-example.log"
+    },
+    {
+      "name": "round4-minimum-cli-validate",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "validate",
+        "$LOCAL_EVIDENCE/location-99/signal_spectra.mplot.json"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06603798596188426,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-cli-validate.log"
+    },
+    {
+      "name": "round4-minimum-cli-render",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "mudplot",
+        "render",
+        "$LOCAL_EVIDENCE/location-99/signal_spectra.mplot.json",
+        "$LOCAL_EVIDENCE/location-94/minimum-cli.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.2765853870660067,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-cli-render.log"
+    },
+    {
+      "name": "round4-minimum-pure",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-S",
+        "$LOCAL_EVIDENCE/location-106/probe.py",
+        "--pure"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-93/mudplot-1.1.0-py3-none-any.whl",
+      "returncode": 0,
+      "seconds": 0.1474186689592898,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-pure.log"
+    },
+    {
+      "name": "round4-minimum-bounded",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-106/probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.19099913071841,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-bounded.log"
+    },
+    {
+      "name": "round4-minimum-after-installed",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-94/segmentation-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.08917111717164516,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-after-installed.log"
+    },
+    {
+      "name": "round4-minimum-local-and-stroke-installed",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-115/before-probe.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.436546113807708,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-minimum-local-and-stroke-installed.log"
+    },
+    {
+      "name": "round4-rust-browser",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "$LOCAL_EVIDENCE/location-91/native_browser.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 15.059470964130014,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-rust-browser.log"
+    },
+    {
+      "name": "round4-native-consumer",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-c",
+        "from scripts.rust_editor_smoke_test import _review_recent_layer_contracts;_review_recent_layer_contracts('http://127.0.0.1:47521');print('PASS final installed native seven-kind controls')"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 96.57336642313749,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-native-consumer.log"
+    },
+    {
+      "name": "round4-svg-rasterize",
+      "argv": [
+        "rsvg-convert",
+        "-w",
+        "1500",
+        "-o",
+        "$LOCAL_EVIDENCE/location-94/vector-reviewed.png",
+        "$LOCAL_EVIDENCE/location-97/signal_spectra.svg"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.06936769280582666,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-svg-rasterize.log"
+    },
+    {
+      "name": "round4-pdf-rasterize",
+      "argv": [
+        "pdftoppm",
+        "-scale-to",
+        "1500",
+        "-singlefile",
+        "-png",
+        "$LOCAL_EVIDENCE/location-99/signal_spectra.pdf",
+        "$LOCAL_EVIDENCE/location-119"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 0.08410811191424727,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-pdf-rasterize.log"
+    },
+    {
+      "name": "round4-reference-native",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-c",
+        "import mudplot as m;import matplotlib.pyplot as plt;from mudplot._render import _substitute_pgf_references;p=m.plot({'s':[0,1,0,-1]*2}).spectrum('s',fs=4,nfft=4,window='boxcar',label='Measured',citation='known2026',href='https://example.org/signal');f=m.render(p.spec,fmt='pgf');t=f.axes[0].get_legend().get_texts()[0].get_text();print('actual native PGF legend',repr(t),'resolved',_substitute_pgf_references(t,f._mudplot_refs));plt.close(f);plt.close(p.save('$LOCAL_EVIDENCE/location-94/referenced.svg'))"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 1.2189062307588756,
+      "log": "$LOCAL_EVIDENCE/location-91/round4-reference-native.log"
+    },
+    {
+      "name": "label-gap-label-gap-revision3-current",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-91/measure_spectral_labels.py",
+        "$LOCAL_EVIDENCE/location-95",
+        "$LOCAL_EVIDENCE/location-96"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.091920668259263,
+      "log": "$LOCAL_EVIDENCE/location-91/label-gap-label-gap-revision3-current.log"
+    },
+    {
+      "name": "label-gap-label-gap-final-current",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "$LOCAL_EVIDENCE/location-91/measure_spectral_labels.py",
+        "$LOCAL_EVIDENCE/location-97",
+        "$LOCAL_EVIDENCE/location-98"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.0657840091735125,
+      "log": "$LOCAL_EVIDENCE/location-91/label-gap-label-gap-final-current.log"
+    },
+    {
+      "name": "label-gap-label-gap-final-minimum",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "$LOCAL_EVIDENCE/location-91/measure_spectral_labels.py",
+        "$LOCAL_EVIDENCE/location-99",
+        "$LOCAL_EVIDENCE/location-100"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 2.2759195589460433,
+      "log": "$LOCAL_EVIDENCE/location-91/label-gap-label-gap-final-minimum.log"
+    },
+    {
+      "name": "reviewed-final-source-cohort",
+      "argv": [
+        "$PROVIDER/environment-03/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "tests/test_signal_spectra.py",
+        "tests/test_no_deps.py",
+        "tests/test_capabilities_consistency.py",
+        "tests/test_schema_export.py",
+        "tests/test_review_generated_drift.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-03/source",
+      "PYTHONPATH": "$LOCAL_EVIDENCE/location-03/source",
+      "returncode": 0,
+      "seconds": 12.453736362978816,
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-source-cohort.log"
+    },
+    {
+      "name": "reviewed-final-current-cohort",
+      "argv": [
+        "$PROVIDER/environment-05/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 9.011946348939091,
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-current-cohort.log"
+    },
+    {
+      "name": "reviewed-final-minimum-cohort",
+      "argv": [
+        "$PROVIDER/environment-06/bin/python",
+        "-m",
+        "pytest",
+        "-q",
+        "$LOCAL_EVIDENCE/location-106/test_signal_spectra.py"
+      ],
+      "cwd": "$LOCAL_EVIDENCE/location-106",
+      "PYTHONPATH": null,
+      "returncode": 0,
+      "seconds": 10.878699800930917,
+      "log": "$LOCAL_EVIDENCE/location-91/reviewed-final-minimum-cohort.log"
+    }
+  ],
+  "failed_attempts": {
+    "shell_initial_snapshot": {
+      "command": "rsync -a --exclude=.git --exclude=.pi --exclude=.venv --exclude=artifacts --exclude=target --exclude=targets --exclude=__pycache__ --exclude=.pytest_cache --exclude=.ruff_cache --exclude=.hypothesis $CHECKOUT $LOCAL_EVIDENCE/location-03/source/ && rsync -a $LOCAL_EVIDENCE/location-03/source/ $LOCAL_EVIDENCE/location-90/",
+      "error": "Receiver mkdir $LOCAL_EVIDENCE/location-03/source failed: No such file or directory (2); exit 11",
+      "correction": "mkdir -p isolated source/baseline before rsync"
+    },
+    "tool_browser_attempts": [
+      {
+        "label": "Inspecting isolated Rust browser forms",
+        "invocation": "browser.open({name:n11-native,url:http://127.0.0.1:47521/,app:{path:/usr/bin/chromium,args:[--user-data-dir=$LOCAL_EVIDENCE/location-120,--no-sandbox]},viewport:{width:1450,height:1100}})",
+        "error": "Browser open timed out after 30000ms; pgrep found no owned profile process; explicit headless launch succeeded"
+      },
+      {
+        "label": "Executing real Rust spectral editing and failure safety",
+        "error": "Browser code execution timed out after 30000ms; state inspection established only initial /open had taken effect; no claim for remaining operations"
+      },
+      {
+        "label": "Editing native FFT window and spectral options",
+        "error": "tab.waitFor selector requires string, not function; edit already accepted before helper failure"
+      },
+      {
+        "label": "Downloading real native spectrum exports",
+        "error": "Tab busy: waitForDownload locks tab while concurrent click attempted; no download proof claimed"
+      },
+      {
+        "label": "Downloading native FigureSpec through surface link",
+        "error": "JS kernel restarted; n11tab definition unavailable; recovered own browser tab, but helper downloads empty; superseded by explicit Playwright run"
+      }
+    ],
+    "retained_failed_command_names": [
+      "cli-render",
+      "current-consistency",
+      "ruff-new-files",
+      "final-lint",
+      "current-final-tests",
+      "spectral-final-lint",
+      "current-bounded-probe",
+      "minimum-bounded-probe",
+      "correction-current-targeted",
+      "corrected-source-final",
+      "corrected-current-installed-tests",
+      "corrected-minimum-installed-tests",
+      "round4-lint"
+    ],
+    "diagnosis": "Two bounded-probe failures mutated Plot.spec defensive copies rather than a retained spec, so rejection assertions inspected unchanged state; corrected probe retains selected=p.spec. Scientific implementation unchanged. Initial generated-gallery mismatch followed formatting new example; regenerated. Initial renderer drift guard required explicit new spectrum dispatch in its known-types set. Initial CLI render used unsupported --out; corrected positional output. Lint attempts and all logs retained.",
+    "transcript": "history://v2-spectra",
+    "parent_correction_lineage": {
+      "before": "$LOCAL_EVIDENCE/location-91/parent-inference-reproduction-before-fix.log",
+      "after": "$LOCAL_EVIDENCE/location-91/parent-corrections-after-fix.log",
+      "security_inference": "disproven; no bypass fixed",
+      "additional_failures": [
+        "first correction cohort ran before generated capabilities/reference refresh; six drift failures retained",
+        "actual PGF-native legend expectation omitted existing common nonbreaking ~ separator; one regression failed on source/current/minimum, expectation corrected without product change",
+        "full PGF-export test skipped because supported TeX engine unavailable; not claimed exercised"
+      ]
+    },
+    "round3_and_round4": {
+      "frequency_local_before": [
+        "$LOCAL_EVIDENCE/location-91/round3-current-before.log",
+        "$LOCAL_EVIDENCE/location-91/round3-minimum-before.log"
+      ],
+      "segmentation_precision_before": [
+        "$LOCAL_EVIDENCE/location-91/round4-current-before.log",
+        "$LOCAL_EVIDENCE/location-91/round4-minimum-before.log"
+      ],
+      "actual_render_failure": "minimum3.8 dashed linewidth0 PNG/SVG failed; current3.11 succeeded. Same-boundary fix, not new feature.",
+      "style_cleanup": "round4 draft build preceded E501 string wrapping/RUF043 raw-regex lint cleanup; draft retained unqualified, final-wheel built after cleanup; no installed proofs use draft."
+    }
+  },
+  "viewable_artifacts": [
+    "$LOCAL_EVIDENCE/location-121/weak-bins.png",
+    "$LOCAL_EVIDENCE/location-121/weak-bins-surface.png",
+    "$LOCAL_EVIDENCE/location-121/zero-stroke.png",
+    "$LOCAL_EVIDENCE/location-121/zero-stroke-surface.png",
+    "$LOCAL_EVIDENCE/location-121/unused-tail.png",
+    "$LOCAL_EVIDENCE/location-121/native-editor.png",
+    "$LOCAL_EVIDENCE/location-94/vector-reviewed.png",
+    "$LOCAL_EVIDENCE/location-94/minimum-pdf-reviewed.png",
+    "$LOCAL_EVIDENCE/location-98/native-label-gap-crop.png",
+    "$LOCAL_EVIDENCE/location-100/native-label-gap-crop.png",
+    "$LOCAL_EVIDENCE/location-94/referenced.svg"
+  ],
+  "review_patch": "$LOCAL_EVIDENCE/location-91/n11-review.patch",
+  "hunk_inventory": "$LOCAL_EVIDENCE/location-91/n11-touched-paths.json",
+  "revision": 4,
+  "prior_qualification": {
+    "status": "superseded by confirmed parent-review corrections; historical proof only",
+    "evidence": "$LOCAL_EVIDENCE/location-91/evidence-before-parent-corrections.json",
+    "patch": "$LOCAL_EVIDENCE/location-91/n11-review-before-parent-corrections.patch",
+    "wheel": "$LOCAL_EVIDENCE/location-105/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "5c04254635463d886f37897bb0c76e49f3481dd5dc8eeb6969b37789e16e8745",
+    "browser": "$LOCAL_EVIDENCE/location-122",
+    "original_cohorts": {
+      "source_targeted": 77,
+      "current_installed": 59,
+      "minimum_installed": 59
+    }
+  },
+  "parent_review": {
+    "before_log": "$LOCAL_EVIDENCE/location-91/parent-inference-reproduction-before-fix.log",
+    "exact_probe_source": "$LOCAL_EVIDENCE/location-91/parent-inference-reproduction-source.py",
+    "after_log": "$LOCAL_EVIDENCE/location-91/parent-corrections-after-fix.log",
+    "confirmed_before": [
+      "a=1 has coherence1 with zero/DC masks, a=1e-100 erroneously all undefined, a=1e100 overflows",
+      "malformed colour/bool colour/numeric label/numeric colourbar label accepted by validation",
+      "PGF-mode spectral metadata not decorated"
+    ],
+    "disproven_inference": "javascript: href and unsafe citation already rejected by the common outer _check_reference before the early spectrum continue. No security bypass was reproduced or claimed fixed.",
+    "fix": "coherence-only per-channel positive max-abs scaling before detrending/FFT; exactly zero channels remain zero; no source rewrite/clipping/epsilon; physical CSD untouched. Existing _color/_check_ref_field validation and _decorate/_set_url native reference conventions reused.",
+    "permanent_regressions": "actual rendered coherence amplitude-unit invariance/defined bins including independent extreme channel scales; malformed and unused metadata pre-artist rejection; real linked SVG; actual PGF-mode native legend/reference-table resolution; full native PGF export conditional on real supported TeX engine",
+    "PGF_note": "No xelatex, pdflatex or lualatex on PATH; full PGF-export regression skipped separately in each cohort. Actual PGF native-artist/legend resolution passed, resolving to \\href{https://example.org/signal}{Measured}~\\figcite{known2026}. Tectonic present but no adapter/fake fallback/new boundary added."
+  },
+  "intermediate_revisions": [
+    {
+      "revision": 2,
+      "evidence": "$LOCAL_EVIDENCE/location-112/evidence.json",
+      "patch": "$LOCAL_EVIDENCE/location-112/n11-review.patch",
+      "inventory": "$LOCAL_EVIDENCE/location-112/touched-paths.json",
+      "wheel": "$LOCAL_EVIDENCE/location-110/mudplot-1.1.0-py3-none-any.whl",
+      "wheel_sha256": "7272f4582d7fbf8711ee47dd9e407183568558f603af0bd66496c889c19b14d2",
+      "qualification": "historical; later same-boundary numerical probes failed"
+    },
+    {
+      "revision": 3,
+      "wheel": "$LOCAL_EVIDENCE/location-116/mudplot-1.1.0-py3-none-any.whl",
+      "package_hashes": "$LOCAL_EVIDENCE/location-115/frozen-package-hashes.json",
+      "qualification": "historical; consumed-prefix probe exposed residual normalization loss"
+    },
+    {
+      "revision": 4,
+      "draft_wheel": "$LOCAL_EVIDENCE/location-118/mudplot-1.1.0-py3-none-any.whl",
+      "qualification": "unqualified draft built before string/regex lint cleanup; not used for final installed cohorts"
+    }
+  ],
+  "final_same_boundary_corrections": {
+    "frequency_local": {
+      "before_logs": [
+        "$LOCAL_EVIDENCE/location-91/round3-current-before.log",
+        "$LOCAL_EVIDENCE/location-91/round3-minimum-before.log"
+      ],
+      "analytic_signal": "[1,a,-1,a]*2; boxcar nfft4/fs4; DFT [2a,2,-2a]; a=1e-100 and1e-300",
+      "before": "both profiles falsely masked DC/Nyquist",
+      "after_logs": [
+        "$LOCAL_EVIDENCE/location-91/round4-current-local-and-stroke-installed.log",
+        "$LOCAL_EVIDENCE/location-91/round4-minimum-local-and-stroke-installed.log"
+      ],
+      "after": "all three bins defined, coherence [1,1,1]",
+      "algorithm": "coherence-only positive max-abs normalization independently per frequency over its vector of segment coefficients, after consumed-prefix channel normalization and FFT but before cross/power products; in-place real/imag divide where positive; no epsilon/clipping; true zero bins stay zero; mean power defined bin >=1/segments",
+      "physical_cross": "SpectrumResult.cross is populated only for CSD, retaining original physical units; normalized coherence cross stays private"
+    },
+    "consumed_prefix": {
+      "before_logs": [
+        "$LOCAL_EVIDENCE/location-91/round4-current-before.log",
+        "$LOCAL_EVIDENCE/location-91/round4-minimum-before.log"
+      ],
+      "after_logs": [
+        "$LOCAL_EVIDENCE/location-91/round4-current-after-installed.log",
+        "$LOCAL_EVIDENCE/location-91/round4-minimum-after-installed.log"
+      ],
+      "signal": "[1e-100,0,-1e-100,0]*2+[1e300]; final row unused by full-window policy",
+      "before": "all bins falsely undefined",
+      "after": "only bin1 defined at1, genuine DC/Nyquist zeros masked; all source samples retained and validated",
+      "algorithm": "channel scale considers prefix ending (count-1)*(nfft-overlap)+nfft, never ignored partial tail"
+    },
+    "precision_boundary": {
+      "signal": "[1e300,1e-300,-1e300,1e-300]*2",
+      "before": "normalization erased nonzero used samples and falsely masked DC/Nyquist",
+      "after": "explicit floating-point precision error before FFT when channel scaling would erase any nonzero used sample; not mathematical undefinedness; no arbitrary precision fallback"
+    },
+    "zero_stroke": {
+      "before_current": "PNG/SVG succeeded current3.11.1",
+      "before_minimum": "PNG/SVG failed3.8.0: At least one value in the dash list must be positive",
+      "after": "native no-line for linewidth0 on both; exact analytic artist coordinates [0,0],[1,.5],[2,0] and Hz retained; rendered PNG requested-red-ink absence and SVG stroke absence asserted",
+      "incidental_pins_removed": [
+        "native get_linestyle value",
+        "private cross-cache None assertion"
+      ]
+    }
+  }
+}

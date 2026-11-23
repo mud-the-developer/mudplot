@@ -39,7 +39,7 @@ def test_scaled_preview_drag_keyboard_undo_redo_keep_data_frame(
         cdp.send("Emulation.setPageScaleFactor", {"pageScaleFactor": page_scale})
         assert page.evaluate("window.devicePixelRatio") == dpr
         assert page.evaluate("window.visualViewport.scale") == pytest.approx(page_scale)
-        page.evaluate("""() => document.addEventListener('mouseup', ev => {
+        page.evaluate("""() => document.addEventListener('pointerup', ev => {
           window.lastPointer = {x:ev.clientX,y:ev.clientY};
         })""")
         handle = page.locator(f'[data-handle-id="layer-at:3:{active}"]')

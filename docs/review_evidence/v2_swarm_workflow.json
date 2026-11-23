@@ -1,0 +1,226 @@
+{
+  "catalogue_row": "C02",
+  "status": "parent_final_functional_acceptance_closed",
+  "scope": "Entire frozen C02 row, plus one reusable explicitly transactional G01 live-template foundation; not whole G01/F01/E01/QA/docs/REL01/v2",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "dependency_floors_changed": false,
+  "git_or_publication_actions": false,
+  "source_binding": "artifacts/v2_swarm/source_binding.json",
+  "frozen_wheel_sha256": "75c080327f83620f87eef1af464c0f0e9700efaaa55ad252ce4f1255e5e344d7",
+  "frozen_source_archive_sha256": "7978e91420457b1d4be138fcdf398760a1700e211300e4d275676ca3ea050dda",
+  "source_manifest": "artifacts/v2_swarm/frozen_source_manifest.json",
+  "exact_final_and_replay_commands": "artifacts/v2_swarm/commands.json",
+  "distinct_cohorts_and_failure_lineage": "artifacts/v2_swarm/qualification_cohorts.json",
+  "counts_must_not_be_summed": true,
+  "finite_contract": {
+    "markers": [
+      "o",
+      "s",
+      "D",
+      "^",
+      "v",
+      "P",
+      "X",
+      "d",
+      "p",
+      "h",
+      "8",
+      "*"
+    ],
+    "roles": "Shared raw original-row hue/size/style domains and logical-panel guides with scatter/lineplot/strip/ECDF/rug. No aggregate or row rewriting; size is nominal native marker diameter pt, not mass/weight.",
+    "membership": "pack_scope=None remains independent. Explicit nonempty names are panel/actual-axis local; compatible geometry members union before drawing, one axes-owned coordinator once/draw. Same original source row drawn in two layers is two physical instances; domains still dedup source IDs.",
+    "compatibility": "Actual target axis/orientation/category/order/native clock/width/dodge/gap must agree; dodged hue identity/order must agree. Incompatible declared requests reject, never silently split.",
+    "bounds": {
+      "usable_rows_per_layer_unchanged": 2000,
+      "new_physical_instances_per_panel_scope": 4000,
+      "facet_cells_unchanged": 64,
+      "no_limit_lift": true,
+      "pre_native_allocation_validation": true,
+      "profile": "artifacts/v2_swarm/packing_prerequisite_profile.json",
+      "meaning": "Evidence-backed operation bound, not SLA; CND02 Store optimization does not authorize packing expansion"
+    },
+    "extent": "Exact legacy circle radius0.5 retained. New actual named Paths use fresh unique-path conservative bbox circumballs plus physical stroke and explicit round joins; no miter underestimation or generic circle inflation.",
+    "redraw": "Immutable original measurements; display-space deterministic repack for DPI/limits/layout/backend/facets. No RNG use, drift, deletion, or row dedup. Native set_sizes/linewidth cycling preserved; removed/hidden/moved collections handled by actual axes ownership.",
+    "group_compatibility": "Legacy group/hue_order with size-only and new size/style remains supported. Independent mapped hue conflicts with legacy group/hue_order; c unsupported. Other families keep their own stricter combinations.",
+    "typed_selection": "Advanced scope/hue/style routes use existing typed category keys consistently for orders, selected physical counts and drawing; legacy default/size-only equality/parity unchanged.",
+    "crowding": "Oversized/gutter crowding retains all instances and reports bounded crowded_count; truthful UserWarning occurs once per Collection lifetime. Redraw updates counts; native changes do not reset the warning flag. No hidden downsample.",
+    "geometry": "Vertical/horizontal, numeric/native/log/inverted/date, applicable primary/y2, stroke-zero/size-zero/missing/reserved facets and live-grid native oracles exercised.",
+    "temporal_root_correction": "Declared temporal category slot bounds contribute only category dataLim before native autoscale, including single-date no-jitter strip. Measurement framing/unrelated data remain independent; raw single-date line framing not changed."
+  },
+  "live_template_foundation": {
+    "surface": "FacetTemplateSpec + omitNone FigureSpec.facet_template appended tail; SetLiveFacets / SetFacetTemplate / .facet(live=True) / .facet_template(template,reset_orders=False) use existing reducer/materializer.",
+    "transaction": "Resolved typed selectors/orders are frozen at creation, including reserved empty cells. Stored template is an explicit transaction recipe, not automatic rerender binding on load. Saved materialized views/local overrides remain authoritative.",
+    "whole_vs_local": "Per-cell edits stay local; later explicit whole-template replacement replaces all intended cells and supersedes those local layer/axis overrides. Post-reopen edits, undo/redo and exported native per-cell paths/diameters/slots/guides proved in real Rust RAW ACTION forms.",
+    "orders": "Ordinary same-channel edits retain category/hue slots. Changed group/hue column or hue kind infers its own role unless explicit new order; reset_orders=True is an intentional replacement request, not stale-channel fallback.",
+    "resources": "Future recipe validation generates only fixed selected cell views, not an unfiltered phantom layer. 3000global/1500percell and invalid excluded-facet rows remain valid when all rendered views valid; every generated view/options validated before commit.",
+    "layout": "Compatible ratio-only2x2 edits preserve exactly3 wrapped cells/selectors/recipe/ratios. Structural layout/facet/joint/pair replacement or real implicit/explicit panel expansion detaches binding, preserving materialized cells. Invalid selector/recipe JSON rejects atomically.",
+    "reviewer_panel_expansion_inference": {
+      "disposition": "DISPROVEN; not a new fix",
+      "proof": "artifacts/v2_swarm/frozen_panel_expansion_actual.log",
+      "detail": "_ensure_panel detach rule already in frozen source25-33. Actual AddPanel/AddLayer/SetAxisLabel at panel3 valid/native preserved, undo/redo/reopen; same frozen wheel retained."
+    },
+    "not_closed": [
+      "G01 complete rel/dis/cat/lm families/consolidated combinations",
+      "N13 richer placement/IDs"
+    ]
+  },
+  "legacy_actual_archived_control": {
+    "comparison": "artifacts/v2_swarm/legacy/comparison.json",
+    "baseline": "$LOCAL_EVIDENCE/location-33/source",
+    "baseline_report": "artifacts/v2_swarm/legacy/accepted_preC02/report.json",
+    "current_report": "artifacts/v2_swarm/legacy/current/report.json",
+    "cases": [
+      "plain",
+      "grouped",
+      "horizontal",
+      "native_log",
+      "size",
+      "named_size",
+      "facets",
+      "native_mutation"
+    ],
+    "all_exact": [
+      "spec JSON",
+      "action JSON",
+      "RGBA",
+      "limits",
+      "offsets"
+    ],
+    "no_permanent_default_pixel_pin": true
+  },
+  "qualification": {
+    "cohorts": [
+      {
+        "name": "source_current_final_pre_test_quality_cleanup",
+        "passed": 1035,
+        "failed": 0,
+        "skipped": 1,
+        "warnings": 1,
+        "log": "artifacts/v2_swarm/broad_current_final.log",
+        "note": "Existing native invalid linewidth diagnostic; host lacks declared TeX engine"
+      },
+      {
+        "name": "source_minimum_final_pre_test_quality_cleanup",
+        "passed": 1035,
+        "failed": 0,
+        "skipped": 1,
+        "warnings": 2790,
+        "log": "artifacts/v2_swarm/broad_minimum_final.log",
+        "note": "Dependency deprecations + same native diagnostic; host TeX skip"
+      },
+      {
+        "name": "installed_current_final_reviewed_tests_isolated_figures",
+        "passed": 302,
+        "failed": 0,
+        "skipped": 1,
+        "warnings": 0,
+        "log": "artifacts/v2_swarm/combined_installed_current_fixture_corrected.log"
+      },
+      {
+        "name": "installed_minimum_final_reviewed_tests_short_tmp_isolated_figures",
+        "passed": 302,
+        "failed": 0,
+        "skipped": 1,
+        "warnings": 1973,
+        "log": "artifacts/v2_swarm/combined_installed_minimum_harness_corrected.log",
+        "note": "Dependency deprecations only; all required browser scenarios executed"
+      },
+      {
+        "name": "integrated_actual_TeX_current_native_regression",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "deselected": 78,
+        "log": "artifacts/v2_swarm/integrated_pgf_regression_current.log"
+      },
+      {
+        "name": "integrated_actual_TeX_minimum_native_regression",
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "deselected": 78,
+        "warnings": 1,
+        "log": "artifacts/v2_swarm/integrated_pgf_regression_minimum.log"
+      },
+      {
+        "name": "rust_library",
+        "passed": 20,
+        "ignored": 5,
+        "log": "artifacts/v2_swarm/rust_final_tests.log",
+        "note": "Ignored helpers are subprocess fixtures, not unexecuted feature tests"
+      },
+      {
+        "name": "rust_binary",
+        "passed": 1,
+        "log": "artifacts/v2_swarm/rust_final_tests.log"
+      }
+    ],
+    "active_dependency_denial": [
+      "artifacts/v2_swarm/frozen_combined_current_pythonS_pure.log",
+      "artifacts/v2_swarm/frozen_combined_minimum_pythonS_pure.log"
+    ],
+    "pure_case": "Python-S direct same wheel ZIP origin, numpy/matplotlib/scipy/PIL/pandas/statsmodels actively denied. Complete new swarm date-y2/roles/scopes/live action/JSON/replay and spectra pure scenarios, no render.",
+    "static_and_native_logs": [
+      "types_all_source_final.log",
+      "ruff_all_source_final.log",
+      "generated_final.log",
+      "full_fields_final_check.log",
+      "rust_final_build.log",
+      "rust_final_tests.log",
+      "rust_final_format.log",
+      "rust_final_clippy.log",
+      "rust_msrv_188_integrated.log",
+      "updated_native_rust_smoke.log"
+    ],
+    "installed_current": "Python3.13.12 NumPy2.5.2 Matplotlib3.11.1 Pillow13; matching installed driver/native refs/bridge and OS Chromium.",
+    "installed_minimum": "Python3.11.14 NumPy1.23.5 Matplotlib3.8.0 Pillow13; matching isolated installed driver/native refs/bridge; required browser flag, no source fallback.",
+    "harness_provenance": [
+      "artifacts/v2_swarm/combined_current_versions.log",
+      "artifacts/v2_swarm/combined_minimum_origin.log",
+      "artifacts/v2_swarm/minimum_nested_child_origin.log"
+    ],
+    "postfreeze_tests": "Reviewed test-only origin-invariance/crowding oracles qualified in both final302 profiles; frozen original1035 logs retain their own test snapshot, no new summed count or identical rebuild."
+  },
+  "actual_visual_and_lifecycle_proof": {
+    "example_source": "examples/swarm_workflow.py",
+    "publication_examples": [
+      "artifacts/v2_swarm/swarm_shared_families.png",
+      "artifacts/v2_swarm/swarm_live_grid.png"
+    ],
+    "vectors_and_saved_json": "Same basenames.svg/.pdf/.mplot.json; original unreadable versions preserved under readability_first/",
+    "parent_visual_decision": "Parent viewed revised4800x3000 shared-family and6000x3000 live-grid PNGs: real multipoint line strokes/ECDF steps, all hues/shapes, sparse date labels and honest y2/unused-primary units accepted.",
+    "functional_stress_screens": "source-editor/ and installed-*-corrected/rust-specialized0/swarm-{1400,540}; actual forms/live-history functionality, explicitly NOT readable publication QA.",
+    "separate_readable_rust_report": "artifacts/v2_swarm/readable-rust/report.json",
+    "readable_surface": "artifacts/v2_swarm/readable-rust/surface.png",
+    "readable_preview_download": "artifacts/v2_swarm/readable-rust/edited.png (2000x1166 existing capped cached preview, NOT requested DPI)",
+    "real_vector_downloads": [
+      "artifacts/v2_swarm/readable-rust/edited.svg",
+      "artifacts/v2_swarm/readable-rust/edited.pdf"
+    ],
+    "downloaded_source": "artifacts/v2_swarm/readable-rust/edited.mplot.json",
+    "exact_requested_png": [
+      "artifacts/v2_swarm/readable-rust/requested-300dpi-current.png",
+      "artifacts/v2_swarm/readable-rust/requested-300dpi-minimum.png"
+    ],
+    "exact_png_oracle": "Same unmodified downloaded12x7inch/dpi300 JSON through each installed CLI, exactly3600x2100 pixels. No UI/runtime export change.",
+    "parent_readable_visual_decision": "Parent viewed actual Rust surface and matching cached preview: marks/legend/dates/units clear; visual proof accepted.",
+    "history_and_atomicity": "Actual human AddLayer/RAW template/legend forms, invalid acceptedSpec+PNG retention, undo/redo, downloads/reopen/post-reopen whole template edit and native per-cell geometry, not copied JSON alone."
+  },
+  "affected_consumer_support": [
+    "API/actions/model/schema/capabilities/reference",
+    "bilingual SWARM size/categorical/shared/facets docs and FEATURE_COVERAGE",
+    "CHANGELOG and executable shared/live gallery example",
+    "generic Rust raw-action/layer forms; schema/model codec boundary",
+    "minimum tests, wheel/sdist assets and installed native/CLI smoke",
+    "native Rust HTTP/history/security smoke"
+  ],
+  "preserved_archives": [
+    "D07",
+    "CND01",
+    "C01",
+    "N11 isolated reviewed patch/wheel/PGF companion",
+    "all retained failed setup/numeric/visual evidence"
+  ],
+  "closure_boundary": "Parent final functional acceptance granted for the ENTIRE frozen C02 row after reviewing final receipts, 62-module source binding, source/installed/minimum logs, actual eight-case archived-engine parity origins, final scoped/live code and all new native/live tests, revised examples, and actual readable Rust preview/vector export plus minimum PGF. This closes C02 local feature acceptance only, not whole F01/F02/G01/E01/Q01/DOC01/REL01/v2. Immutable wheel/archive/failure evidence remains unchanged."
+}

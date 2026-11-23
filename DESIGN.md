@@ -93,6 +93,17 @@ decision:
   only needs this schema; phase 1 delegates reduction and rendering to the
   Python CLI subprocess.
 
+N13 stores one optional flat typed layout graph: grid cells/spans, nested grids
+and parent-axes inset placements reference stable panel/grid identities. Mosaic
+and nest are public action conveniences, not another stored recipe or renderer.
+The pure `_layout` resolver owns bounded geometry and the sharing components
+used by validation, native linking and N12 tick inheritance. `_layout_render`
+only expands validated nodes into native GridSpec/subgridspec/inset axes and
+traverses real child axes; editor metadata never infers panel identity from
+`figure.axes` order. Complete replacement uses final IDs, retains all existing
+panels and appends explicitly new ones in lexicographic ID order. See the
+[layout/identity/sharing/upgrade contract](docs/PANEL_LAYOUTS.md).
+
 ## 4b. State management: pure reducer + effects at the edges (functional core / imperative shell)
 
 Rather than simply mutating the spec, the reducer models each state transition
@@ -127,12 +138,14 @@ state, and effects do the drawing.
 “Pure” here describes observable reducer behaviour, not an immutable or
 zero-copy representation. `FigureSpec` is a mutable dataclass/list graph. The
 Python reducer deep-copies the full current spec before applying each action,
-and `Store` returns defensive snapshots; undo/redo rebuilds state by replaying
-history. That makes aliasing and failure semantics straightforward, but action
-cost scales with inline data size and replay length. Internal fluent/batch paths
-skip redundant return snapshots, while structural sharing or replay checkpoints
-remain deferred until profiling a real publication workload justifies their
-extra complexity.
+and `Store` returns defensive snapshots. The default pure reducer retains one
+previous internal transition state for immediate undo; redo reduces only its
+next action before committing history. Deeper undo replays retained actions from
+one preceding 64-action checkpoint. Custom reducers retain full replay and call
+order. These private references add no dispatch copy; public state, action and
+listener snapshots remain isolated. Action cost still scales with inline data
+size. Internal fluent/batch paths skip unused return snapshots. Further sharing
+changes remain conditional on measured workloads, not an assumed latency target.
 
 ### Dashboard ↔ engine separation (machine-friendly vs human-friendly)
 

@@ -97,7 +97,7 @@ def test_bootstrap_chunking_does_not_change_rng_or_estimated_quantiles(monkeypat
 
     values = [1, 2, 4, 7, 10]
     first = _summary(values, errorbar="ci", n_boot=107, seed=2026)
-    monkeypatch.setattr(_estimate, "_BOOTSTRAP_CHUNK_ELEMENTS", 15)
+    monkeypatch.setattr(_estimate, "MAX_ACTIVE_SAMPLE_ELEMENTS", 15)
     second = _summary(values, errorbar="ci", n_boot=107, seed=2026)
     assert second == first
 

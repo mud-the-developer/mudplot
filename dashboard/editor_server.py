@@ -28,7 +28,7 @@ from mudplot import actions as A
 from mudplot._mpl_context import matplotlib_context
 from mudplot.capabilities import LAYER_TYPES
 from mudplot.io import _loads_json
-from mudplot.spec import FigureSpec, LayerSpec
+from mudplot.spec import ClusterCutSpec, ClusterSpec, FigureSpec, LayerSpec
 from mudplot.store import Store
 from mudplot.validate import assert_valid
 
@@ -122,6 +122,19 @@ class EditorSession:
     def _commit_store(self, candidate: Store, active_panel: int) -> None:
         spec = candidate.state
         assert_valid(spec)
+        previous = self.store.state.panels
+        selected_id = (
+            previous[active_panel].panel_id if active_panel < len(previous) else None
+        )
+        if selected_id is not None:
+            active_panel = next(
+                (
+                    i
+                    for i, panel in enumerate(spec.panels)
+                    if panel.panel_id == selected_id
+                ),
+                active_panel,
+            )
         active_panel = min(active_panel, max(len(spec.panels) - 1, 0))
         png, layout = self._render_preview(spec, active_panel)
         self.store = candidate
@@ -165,26 +178,13 @@ class EditorSession:
         except Exception as e:
             raise ValueError(f"invalid figure spec: {e}") from e
 
-    @matplotlib_context()
     def _render_preview(
         self, spec: FigureSpec, active_panel: int
     ) -> tuple[bytes, dict]:
-        import matplotlib
+        from mudplot._editor import render_preview
 
-        matplotlib.use("Agg")
-        import matplotlib.pyplot as plt
-        from mudplot._render import _preview_dpi, _save_figure, render
-
-        assert_valid(spec)
-        preview_spec = replace(spec, dpi=_preview_dpi(spec))
-        fig = render(preview_spec)
-        try:
-            layout = self._extract_layout(spec, fig, active_panel)
-            buf = io.BytesIO()
-            _save_figure(fig, preview_spec, buf, "png")
-            return buf.getvalue(), layout
-        finally:
-            plt.close(fig)
+        png, layouts = render_preview(spec)
+        return png, layouts[active_panel] if layouts else {}
 
     @matplotlib_context()
     def refresh(self) -> None:
@@ -231,43 +231,6 @@ class EditorSession:
         finally:
             plt.close(fig)
         return buf.getvalue()
-
-    def _extract_layout(self, spec, fig, index: int) -> dict:
-        if not spec.panels or not fig.axes:
-            return {}
-        index = min(index, len(spec.panels) - 1)
-        # Not fig.axes[index]: twin (y2) and colorbar axes land in that list
-        # too, so it stops matching panel order after the first one.
-        ax = next(
-            (a for a in fig.axes if getattr(a, "_mudplot_panel", None) == index), None
-        )
-        if ax is None:
-            return {}
-        panel = spec.panels[index]
-        if panel.projection == "3d":
-            return {"is_3d": True, "panel": index}
-        bbox = ax.get_position()
-        secondary = getattr(ax, "_mudplot_secondary_axis", None)
-        text_layers = []
-        for i, layer in enumerate(panel.layers):
-            if layer.type not in ("text", "annotate") or not layer.at:
-                continue
-            entry = {"index": i, "type": layer.type, "at": list(layer.at)}
-            if layer.axis == "y2" and secondary is not None:
-                entry.update(
-                    ylim=list(secondary.get_ylim()), yscale=secondary.get_yscale()
-                )
-            text_layers.append(entry)
-        return {
-            "is_3d": False,
-            "panel": index,
-            "panel_bbox": [bbox.x0, bbox.y0, bbox.x1, bbox.y1],
-            "xlim": list(ax.get_xlim()),
-            "ylim": list(ax.get_ylim()),
-            "xscale": ax.get_xscale(),
-            "yscale": ax.get_yscale(),
-            "text_layers": text_layers,
-        }
 
     @staticmethod
     def _error_figure(message: str):
@@ -352,6 +315,27 @@ def _layer_from_json(fields: dict) -> LayerSpec:
 
 
 def _build_action(action_type: str, fields: dict, spec: FigureSpec) -> A.Action:
+    if action_type == "set_cluster_cut":
+        panel = _int_field(fields, "panel", 0)
+        axis = fields.get("axis")
+        if axis not in ("row", "col") or not 0 <= panel < len(spec.panels):
+            raise ValueError("cut requires an existing row or column tree")
+        layers = spec.panels[panel].layers
+        if len(layers) != 1 or layers[0].type != "clustermap":
+            raise ValueError("cut requires an existing clustermap")
+        layer = layers[0]
+        cluster = layer.cluster or ClusterSpec()
+        cut = (
+            None
+            if fields.get("clear") == "1"
+            else ClusterCutSpec(
+                _float_field(fields, "height"),
+                _int_field(fields, "anchor") if fields.get("anchor") else None,
+            )
+        )
+        return A.ReplaceLayer(
+            0, replace(layer, cluster=replace(cluster, **{axis + "_cut": cut})), panel
+        )
     if action_type == "load_sample":
         return A.SetData(sample_columns(fields["name"]))
     if action_type == "set_theme":
@@ -539,10 +523,14 @@ class _Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(data)
 
-    def _send_bytes(self, data: bytes, content_type: str) -> None:
+    def _send_bytes(
+        self, data: bytes, content_type: str, *, view_generation: int | None = None
+    ) -> None:
         self.send_response(200)
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(data)))
+        if view_generation is not None:
+            self.send_header("X-Mudplot-View-Generation", str(view_generation))
         self.end_headers()
         self.wfile.write(data)
 
@@ -585,6 +573,7 @@ class _Handler(BaseHTTPRequestHandler):
                 session.layout,
                 error=session.error,
                 active_panel=session._clamp_panel(),
+                view_generation=session._view_generation,
                 draft_json=draft_json,
             )
             self._send_html(fragment, view_generation=session._view_generation)
@@ -596,6 +585,7 @@ class _Handler(BaseHTTPRequestHandler):
                     session.layout,
                     error=session.error,
                     active_panel=session._clamp_panel(),
+                    view_generation=session._view_generation,
                     draft_json=draft_json,
                 )
             )
@@ -631,6 +621,7 @@ class _Handler(BaseHTTPRequestHandler):
                     session.layout,
                     error=session.error,
                     active_panel=session._clamp_panel(),
+                    view_generation=session._view_generation,
                     draft_json=draft,
                 )
             self._send_html(page)
@@ -641,9 +632,39 @@ class _Handler(BaseHTTPRequestHandler):
         elif path == "/static/editor.js":
             self._send_bytes(_DRAG_JS.encode("utf-8"), "application/javascript")
         elif path == "/fig.png":
-            with session.lock:
-                png = session.png
-            self._send_bytes(png, "image/png")
+            try:
+                with session.lock:
+                    query = parse_qs(
+                        parsed.query,
+                        keep_blank_values=True,
+                        max_num_fields=8,
+                        encoding="utf-8",
+                        errors="strict",
+                    )
+                    requested = query.get("view_generation", [])
+                    if len(requested) > 1:
+                        raise ValueError("ambiguous preview generation")
+                    expected = (
+                        _int_field({"view_generation": requested[0]}, "view_generation")
+                        if requested
+                        else None
+                    )
+                    if expected is not None and expected < 0:
+                        raise ValueError("view_generation must be nonnegative")
+                    generation = session._view_generation
+                    stale = expected is not None and expected != generation
+                    png = session.png
+            except ValueError as error:
+                self.send_error(400, str(error))
+                return
+            if stale:
+                self.send_error(
+                    409, "stale preview generation; reload the current view"
+                )
+                return
+            # Immutable PNG and generation were captured together. Never hold the
+            # session lock during a potentially slow client body write.
+            self._send_bytes(png, "image/png", view_generation=generation)
         elif path in ("/fig.pdf", "/fig.svg"):
             fmt = path.rsplit(".", 1)[1]
             with session.lock:
@@ -675,6 +696,14 @@ class _Handler(BaseHTTPRequestHandler):
             action_type = fields.pop("type", "")
             with session.lock:
                 try:
+                    if (
+                        "view_generation" in fields
+                        and _int_field(fields, "view_generation")
+                        != session._view_generation
+                    ):
+                        raise ValueError(
+                            "preview changed; use the current loaded handle"
+                        )
                     # Panel-scoped actions default to the selected panel, so
                     # every control doesn't have to carry it explicitly.
                     fields.setdefault("panel", str(session.active_panel))

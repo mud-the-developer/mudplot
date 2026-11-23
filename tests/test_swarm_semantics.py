@@ -191,8 +191,6 @@ def test_invalid_or_all_missing_selected_sizes_fail_before_artists(value):
 @pytest.mark.parametrize(
     "option",
     [
-        {"hue": "g"},
-        {"style": "g"},
         {"scale_id": ""},
         {"size_kind": "categorical", "size_norm": [0, 1]},
         {"dashes": ["--"]},

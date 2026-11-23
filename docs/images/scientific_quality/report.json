@@ -1,0 +1,332 @@
+{
+  "synthetic": true,
+  "dpi": 300,
+  "cases": {
+    "legend_collision": {
+      "author_decision": "Layout only: direct method labels; no hatches.",
+      "data_changed": false,
+      "before": {
+        "file": "legend_collision_before.png",
+        "ok": false,
+        "issues": [
+          {
+            "level": "error",
+            "message": "1 legend(s) overlap visible data artists.",
+            "code": "legend-data",
+            "suggestion": "Render with layout_policy=\"smart\" or place the legend outside.",
+            "panel": null
+          },
+          {
+            "level": "warning",
+            "message": "Repeated or dense hatches can obscure the measurements.",
+            "code": "hatch-noise",
+            "suggestion": "Prefer direct labels; keep sparse hatches for print/accessibility.",
+            "panel": 0
+          }
+        ],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 1,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        }
+      },
+      "after": {
+        "file": "legend_collision_after.png",
+        "ok": true,
+        "issues": [],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        },
+        "repairs": [
+          "Replaced a two-method bar legend with direct labels."
+        ]
+      }
+    },
+    "shared_legend": {
+      "author_decision": "Layout only: deduplicate shared encodings.",
+      "data_changed": false,
+      "before": {
+        "file": "shared_legend_before.png",
+        "ok": true,
+        "issues": [
+          {
+            "level": "warning",
+            "message": "1 legend(s) repeat identical encodings.",
+            "code": "duplicate-legend",
+            "suggestion": "Use layout_policy=\"smart\" for one shared legend.",
+            "panel": null
+          }
+        ],
+        "measurements": {
+          "size_inches": [
+            7.0,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            2100,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 1
+        }
+      },
+      "after": {
+        "file": "shared_legend_after.png",
+        "ok": true,
+        "issues": [],
+        "measurements": {
+          "size_inches": [
+            7.0,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            2100,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        },
+        "repairs": [
+          "Moved colliding/repeated legends to one outside legend."
+        ]
+      }
+    },
+    "temporal_scatter": {
+      "author_decision": "Author accepts a time-trend recommendation; no aggregation.",
+      "data_changed": false,
+      "before": {
+        "file": "temporal_scatter_before.png",
+        "ok": true,
+        "issues": [
+          {
+            "level": "warning",
+            "message": "79% of markers share display cells.",
+            "code": "overcrowded-data",
+            "suggestion": "Use mp.recommend(): inspect trends, distributions or events; do not silently aggregate or remove observations.",
+            "panel": 0
+          },
+          {
+            "level": "warning",
+            "message": "81% of markers share display cells.",
+            "code": "overcrowded-data",
+            "suggestion": "Use mp.recommend(): inspect trends, distributions or events; do not silently aggregate or remove observations.",
+            "panel": 0
+          }
+        ],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        }
+      },
+      "after": {
+        "file": "temporal_scatter_after.png",
+        "ok": true,
+        "issues": [],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        },
+        "repairs": []
+      },
+      "recommendation": {
+        "profiles": {
+          "elapsed": {
+            "type": "numeric",
+            "count": 480,
+            "missing": 0,
+            "cardinality": 240,
+            "finite": 480,
+            "nonfinite": 0,
+            "zeros": 2,
+            "min": 0.0,
+            "max": 59.75,
+            "median": 29.875,
+            "iqr_tail_count": 0
+          },
+          "response": {
+            "type": "numeric",
+            "count": 480,
+            "missing": 0,
+            "cardinality": 480,
+            "finite": 480,
+            "nonfinite": 0,
+            "zeros": 0,
+            "min": 0.4,
+            "max": 0.8566571208760024,
+            "median": 0.6280343348577897,
+            "iqr_tail_count": 0
+          },
+          "method": {
+            "type": "categorical",
+            "count": 480,
+            "missing": 0,
+            "cardinality": 2
+          }
+        },
+        "recommendations": [
+          {
+            "kind": "trend",
+            "layers": [
+              "line"
+            ],
+            "reason": "An explicitly temporal coordinate is ordered within groups.",
+            "require": "Retain gaps and measurements; justify smoothing or aggregation."
+          },
+          {
+            "kind": "distribution",
+            "layers": [
+              "ecdf",
+              "hist"
+            ],
+            "reason": "Distributions expose repeats and tails without overlapping markers.",
+            "require": "Choose bins explicitly; disclose temporal aggregation."
+          }
+        ],
+        "warnings": [],
+        "data_changed": false,
+        "units_inferred": false,
+        "statistical_inference": false
+      }
+    },
+    "metric_semantics": {
+      "author_decision": "Author supplies synthetic metric descriptions; zeros retained.",
+      "data_changed": false,
+      "before": {
+        "file": "metric_semantics_before.png",
+        "ok": true,
+        "issues": [
+          {
+            "level": "warning",
+            "message": "x-axis lacks a scientific description.",
+            "code": "axis-description",
+            "suggestion": "Supply a meaningful description and known units using .labels().",
+            "panel": 0
+          },
+          {
+            "level": "warning",
+            "message": "y-axis lacks a scientific description.",
+            "code": "axis-description",
+            "suggestion": "Supply a meaningful description and known units using .labels().",
+            "panel": 0
+          },
+          {
+            "level": "warning",
+            "message": "Panel title is a generic placeholder.",
+            "code": "generic-title",
+            "suggestion": "Name the scientific comparison or remove the redundant title.",
+            "panel": 0
+          },
+          {
+            "level": "warning",
+            "message": "raw_metric: Small numerical magnitudes do not establish scientific negligibility.",
+            "code": "small-scale",
+            "suggestion": "Use scientific notation and known units; retain original values.",
+            "panel": 0
+          }
+        ],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        }
+      },
+      "after": {
+        "file": "metric_semantics_after.png",
+        "ok": true,
+        "issues": [
+          {
+            "level": "warning",
+            "message": "raw_metric: Small numerical magnitudes do not establish scientific negligibility.",
+            "code": "small-scale",
+            "suggestion": "Use scientific notation and known units; retain original values.",
+            "panel": 0
+          }
+        ],
+        "measurements": {
+          "size_inches": [
+            3.5,
+            2.6
+          ],
+          "dpi": 300,
+          "pixels": [
+            1050,
+            780
+          ],
+          "min_font_pt": 8.0,
+          "legend_data_collisions": 0,
+          "text_overlaps": 0,
+          "clipped_elements": 0,
+          "duplicate_legends": 0
+        },
+        "repairs": []
+      }
+    }
+  }
+}

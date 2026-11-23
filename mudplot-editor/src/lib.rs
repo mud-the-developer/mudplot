@@ -1,12 +1,13 @@
 mod model;
 mod python;
+mod specialized;
 
 use std::net::{IpAddr, SocketAddr};
 use std::sync::{Arc, Mutex, MutexGuard};
 
 use askama::Template;
 use axum::body::{Body, Bytes};
-use axum::extract::{DefaultBodyLimit, Form, FromRequest, Request, State};
+use axum::extract::{DefaultBodyLimit, Form, FromRequest, Query, Request, State};
 use axum::http::{HeaderMap, HeaderValue, Method, StatusCode, header, uri::Authority};
 use axum::middleware::{self, Next};
 use axum::response::{Html, IntoResponse, Response};
@@ -19,6 +20,7 @@ pub use model::{Action, Capabilities, FigureSpec};
 pub use python::PythonBridge;
 
 const HTMX: &[u8] = include_bytes!("../../dashboard/static/htmx.min.js");
+const EDITOR_JS: &[u8] = include_bytes!("../../dashboard/static/editor.js");
 // ponytail: bounded inline data keeps a local mistake from exhausting memory;
 // raise this ceiling only when real embedded datasets need more than 16 MiB.
 const MAX_BODY_BYTES: usize = 16 * 1024 * 1024;
@@ -36,6 +38,8 @@ struct Controls {
     layers: Vec<LayerChoice>,
     themes: Vec<String>,
     projections: Vec<String>,
+    coordinate_roles: Vec<(String, String)>,
+    coordinate_names: String,
 }
 
 struct LayerChoice {
@@ -50,18 +54,167 @@ struct CurrentControls {
     projection: String,
     width: String,
     height: String,
+    active: usize,
+    panel_count: usize,
+    panel_names: Vec<String>,
+    layout_actions: Vec<(String, String)>,
+    shared_guides_action: String,
+    facet_template_action: Option<String>,
+    layer_actions: Vec<(usize, String)>,
+    cluster_cuts: Vec<ClusterCutControl>,
+    axes: Vec<specialized::AxisControls>,
+    has_y2: bool,
+    has_z: bool,
+    layout: String,
+}
+
+struct ClusterCutControl {
+    axis: &'static str,
+    label: &'static str,
+    height: String,
+    items: Vec<ClusterCutItem>,
+    partitioned: bool,
+    selected: String,
+}
+
+struct ClusterCutItem {
+    index: u64,
+    label: String,
+    chosen: bool,
+}
+
+fn cluster_cuts(layout: &Value) -> Vec<ClusterCutControl> {
+    [("row", "Row"), ("col", "Column")]
+        .into_iter()
+        .filter_map(|(axis, label)| {
+            let entry = layout.get("matrix_cuts")?.get(axis)?;
+            let anchor = entry["anchor"].as_u64();
+            let items = entry["items"]
+                .as_array()?
+                .iter()
+                .filter_map(|item| {
+                    let index = item["index"].as_u64()?;
+                    Some(ClusterCutItem {
+                        index,
+                        label: item["label"].as_str()?.into(),
+                        chosen: anchor == Some(index),
+                    })
+                })
+                .collect();
+            let partitioned = entry["partition"].is_object();
+            let selected = entry["partition"]["selected"]
+                .as_array()
+                .map(|ids| {
+                    ids.iter()
+                        .map(Value::to_string)
+                        .collect::<Vec<_>>()
+                        .join(", ")
+                })
+                .filter(|text| !text.is_empty())
+                .unwrap_or_else(|| "None".into());
+            Some(ClusterCutControl {
+                axis,
+                label,
+                height: if entry["height"].is_number() {
+                    entry["height"].to_string()
+                } else {
+                    String::new()
+                },
+                items,
+                partitioned,
+                selected,
+            })
+        })
+        .collect()
 }
 
 impl CurrentControls {
-    fn from_spec(spec: &FigureSpec) -> Self {
+    fn from_spec(spec: &FigureSpec, active: usize, layouts: &Value) -> Self {
         let panel = spec
             .fields
             .get("panels")
             .and_then(Value::as_array)
-            .and_then(|panels| panels.first())
+            .and_then(|panels| panels.get(active))
             .and_then(Value::as_object);
         let size = spec.fields.get("size").and_then(Value::as_array);
         Self {
+            active,
+            panel_count: layouts.as_array().map_or(0, Vec::len),
+            panel_names: layouts.as_array().map_or_else(Vec::new, |items| {
+                items
+                    .iter()
+                    .enumerate()
+                    .map(|(i, layout)| {
+                        format!(
+                            "{}: {}",
+                            i,
+                            layout
+                                .get("panel_id")
+                                .and_then(Value::as_str)
+                                .unwrap_or("(anonymous)")
+                        )
+                    })
+                    .collect()
+            }),
+            layout_actions: layout_actions(spec, active, layouts),
+            shared_guides_action: {
+                let mut bytes = b"{\"type\":\"SetSharedGuides\",\"guides\":".to_vec();
+                serde_json::to_writer_pretty(
+                    &mut bytes,
+                    spec.fields.get("shared_guides").unwrap_or(&Value::Null),
+                )
+                .expect("a stored JSON value is serializable");
+                bytes.push(b'}');
+                String::from_utf8(bytes).expect("JSON serialization emits valid UTF-8")
+            },
+            facet_template_action: spec.fields
+                .get("facet_template")
+                .and_then(|recipe| recipe.get("template"))
+                .map(|template| {
+                    let mut bytes = b"{\"type\":\"SetFacetTemplate\",\"template\":".to_vec();
+                    serde_json::to_writer_pretty(&mut bytes, template)
+                        .expect("a stored JSON value is serializable");
+                    bytes.extend_from_slice(b",\"reset_orders\":false}");
+                    String::from_utf8(bytes).expect("JSON serialization emits valid UTF-8")
+                }),
+            layer_actions: panel
+                .and_then(|panel| panel.get("layers"))
+                .and_then(Value::as_array)
+                .map_or_else(Vec::new, |layers| {
+                    layers
+                        .iter()
+                        .enumerate()
+                        .map(|(index, layer)| {
+                            use std::io::Write;
+
+                            // Serialize the actual stored layer by reference:
+                            // no Rust FigureSpec defaults or shadow field map.
+                            let mut bytes = Vec::new();
+                            write!(
+                                bytes,
+                                "{{\"type\":\"ReplaceLayer\",\"panel\":{active},\"layer_index\":{index},\"layer\":"
+                            )
+                            .expect("an in-memory JSON prefix is writable");
+                            serde_json::to_writer_pretty(&mut bytes, layer)
+                                .expect("a stored JSON value is serializable");
+                            bytes.push(b'}');
+                            (
+                                index,
+                                String::from_utf8(bytes)
+                                    .expect("JSON serialization emits valid UTF-8"),
+                            )
+                        })
+                        .collect()
+                }),
+            cluster_cuts: layouts.get(active).map(cluster_cuts).unwrap_or_default(),
+            axes: if layouts.get(active).is_some() {
+                specialized::AxisControls::from_panel(panel)
+            } else {
+                Vec::new()
+            },
+            has_y2: panel.is_some_and(|panel| panel.get("y2").is_some_and(Value::is_object)),
+            has_z: panel.is_some_and(|panel| panel.get("z").is_some_and(Value::is_object)),
+            layout: layouts.get(active).unwrap_or(&Value::Null).to_string(),
             title: panel
                 .and_then(|panel| panel.get("title"))
                 .and_then(Value::as_str)
@@ -82,10 +235,10 @@ impl CurrentControls {
                 .to_owned(),
             width: size
                 .and_then(|size| size.first())
-                .map_or_else(|| "5".to_owned(), Value::to_string),
+                .map_or_else(|| "3.5".to_owned(), Value::to_string),
             height: size
                 .and_then(|size| size.get(1))
-                .map_or_else(|| "3.5".to_owned(), Value::to_string),
+                .map_or_else(|| "2.625".to_owned(), Value::to_string),
         }
     }
 }
@@ -108,6 +261,13 @@ impl From<Capabilities> for Controls {
             layers,
             themes: capabilities.themes,
             projections: capabilities.projections,
+            coordinate_roles: capabilities
+                .coordinate_pipeline
+                .roles
+                .into_iter()
+                .map(|(kind, roles)| (kind, roles.join(", ")))
+                .collect(),
+            coordinate_names: capabilities.coordinate_pipeline.names.join(", "),
         }
     }
 }
@@ -117,23 +277,27 @@ struct Session {
     spec: FigureSpec,
     history: Vec<FigureSpec>,
     future: Vec<FigureSpec>,
-    png: Vec<u8>,
+    png: Bytes,
     error: Option<String>,
     revision: u64,
+    active_panel: usize,
+    layouts: Value,
 }
 
 impl Session {
     fn new(bridge: &PythonBridge) -> Result<Self, Box<dyn std::error::Error>> {
         let spec = serde_json::from_str(model::DEFAULT_SPEC)?;
-        let png = bridge.render(&spec)?;
+        let (png, layouts) = bridge.preview(&spec)?;
         Ok(Self {
             initial: spec.clone(),
             spec,
             history: Vec::new(),
             future: Vec::new(),
-            png,
+            png: png.into(),
             error: None,
             revision: 1,
+            active_panel: 0,
+            layouts,
         })
     }
 
@@ -141,64 +305,171 @@ impl Session {
         let next = bridge
             .apply(&self.spec, action)
             .map_err(|e| e.to_string())?;
-        let png = bridge.render(&next).map_err(|e| e.to_string())?;
-        self.history.push(self.spec.clone());
-        self.spec = next;
+        let (png, layouts) = bridge.preview(&next).map_err(|e| e.to_string())?;
+        self.history.push(std::mem::replace(&mut self.spec, next));
         self.future.clear();
-        self.png = png;
+        self.png = png.into();
+        self.set_layouts(layouts);
         self.error = None;
         self.revision += 1;
         Ok(())
     }
 
     fn open(&mut self, bridge: &PythonBridge, spec: FigureSpec) -> Result<(), String> {
-        let png = bridge.render(&spec).map_err(|e| e.to_string())?;
-        self.history.push(self.spec.clone());
-        self.spec = spec;
+        let (png, layouts) = bridge.preview(&spec).map_err(|e| e.to_string())?;
+        self.history.push(std::mem::replace(&mut self.spec, spec));
         self.future.clear();
-        self.png = png;
+        self.png = png.into();
+        self.set_layouts(layouts);
         self.error = None;
         self.revision += 1;
         Ok(())
     }
 
     fn undo(&mut self, bridge: &PythonBridge) -> Result<(), String> {
-        let Some(previous) = self.history.last().cloned() else {
+        let Some(previous) = self.history.last() else {
             return Ok(());
         };
-        let png = bridge.render(&previous).map_err(|e| e.to_string())?;
-        self.history.pop();
+        let (png, layouts) = bridge.preview(previous).map_err(|e| e.to_string())?;
+        let previous = self.history.pop().expect("history was checked");
         self.future
             .push(std::mem::replace(&mut self.spec, previous));
-        self.png = png;
+        self.png = png.into();
+        self.set_layouts(layouts);
         self.error = None;
         self.revision += 1;
         Ok(())
     }
 
     fn redo(&mut self, bridge: &PythonBridge) -> Result<(), String> {
-        let Some(next) = self.future.last().cloned() else {
+        let Some(next) = self.future.last() else {
             return Ok(());
         };
-        let png = bridge.render(&next).map_err(|e| e.to_string())?;
-        self.future.pop();
+        let (png, layouts) = bridge.preview(next).map_err(|e| e.to_string())?;
+        let next = self.future.pop().expect("future was checked");
         self.history.push(std::mem::replace(&mut self.spec, next));
-        self.png = png;
+        self.png = png.into();
+        self.set_layouts(layouts);
         self.error = None;
         self.revision += 1;
         Ok(())
     }
 
     fn reset(&mut self, bridge: &PythonBridge) -> Result<(), String> {
-        let png = bridge.render(&self.initial).map_err(|e| e.to_string())?;
-        self.history.push(self.spec.clone());
-        self.spec = self.initial.clone();
+        let (png, layouts) = bridge.preview(&self.initial).map_err(|e| e.to_string())?;
+        self.history
+            .push(std::mem::replace(&mut self.spec, self.initial.clone()));
         self.future.clear();
-        self.png = png;
+        self.png = png.into();
+        self.set_layouts(layouts);
         self.error = None;
         self.revision += 1;
         Ok(())
     }
+
+    fn set_layouts(&mut self, layouts: Value) {
+        if let Some(id) = self
+            .layouts
+            .get(self.active_panel)
+            .and_then(|item| item.get("panel_id"))
+            .and_then(Value::as_str)
+            && let Some(index) = layouts.as_array().and_then(|items| {
+                items
+                    .iter()
+                    .position(|item| item.get("panel_id").and_then(Value::as_str) == Some(id))
+            })
+        {
+            self.active_panel = index;
+        }
+        self.active_panel = self.active_panel.min(
+            layouts
+                .as_array()
+                .map_or(0, |items| items.len().saturating_sub(1)),
+        );
+        self.layouts = layouts;
+    }
+}
+
+fn layout_actions(spec: &FigureSpec, active: usize, layouts: &Value) -> Vec<(String, String)> {
+    let panels = spec
+        .fields
+        .get("panels")
+        .and_then(Value::as_array)
+        .map(Vec::as_slice)
+        .unwrap_or(&[]);
+    let effective = layouts.as_array().map(Vec::as_slice).unwrap_or(&[]);
+    let ids: Vec<Value> = effective
+        .iter()
+        .map(|p| p.get("panel_id").cloned().unwrap_or(Value::Null))
+        .collect();
+    let mut actions = Vec::new();
+    if let Some(layout) = spec.fields.get("panel_layout").filter(|v| !v.is_null()) {
+        let placements: Map<String, Value> = panels
+            .iter()
+            .filter_map(|p| {
+                Some((
+                    p.get("panel_id")?.as_str()?.to_owned(),
+                    p.get("placement")?.clone(),
+                ))
+            })
+            .collect();
+        actions.push((
+            "Apply complete panel layout",
+            json!({"type":"SetPanelLayout","layout":layout,"placements":placements}),
+        ));
+        if let Some(panel) = panels.get(active) {
+            actions.push(("Move active panel", json!({"type":"SetPanelPlacement","panel_id":panel.get("panel_id"),"placement":panel.get("placement")})));
+        }
+    }
+    let mosaic_ids: Vec<String> = effective
+        .iter()
+        .map(|panel| {
+            panel
+                .get("suggested_panel_id")
+                .and_then(Value::as_str)
+                .unwrap_or("")
+                .to_owned()
+        })
+        .collect();
+    actions.push((
+        "Apply mosaic",
+        json!({"type":"SetMosaic","rows":[mosaic_ids],"width_ratios":vec![1;effective.len()]}),
+    ));
+    actions.push((
+        "Nest current grid",
+        json!({"type":"NestLayout","rows":1,"cols":2,"width_ratios":[3,1]}),
+    ));
+    if let Some(id) = effective
+        .get(active)
+        .and_then(|p| p.get("panel_id"))
+        .and_then(Value::as_str)
+    {
+        actions.push((
+            "Add inset panel",
+            json!({"type":"AddInset","parent":id,"bounds":[0.1,0.1,0.3,0.3]}),
+        ));
+        actions.push((
+            "Rename active panel",
+            json!({"type":"RenamePanel","panel_id":id,"new_id":id}),
+        ));
+        actions.push((
+            "Reorder panels",
+            json!({"type":"ReorderPanels","panel_ids":ids}),
+        ));
+        actions.push((
+            "Remove active leaf panel",
+            json!({"type":"RemovePanel","panel_id":id}),
+        ));
+    }
+    actions
+        .into_iter()
+        .map(|(label, value)| {
+            (
+                label.to_owned(),
+                serde_json::to_string_pretty(&value).expect("layout action is JSON"),
+            )
+        })
+        .collect()
 }
 
 #[derive(Template)]
@@ -227,6 +498,19 @@ struct FragmentTemplate<'a> {
 #[derive(Deserialize)]
 struct RawActionForm {
     json: String,
+}
+
+#[derive(Deserialize)]
+struct ClusterCutForm {
+    revision: u64,
+    panel: usize,
+    axis: String,
+    #[serde(default)]
+    height: String,
+    #[serde(default)]
+    anchor: String,
+    #[serde(default)]
+    clear: bool,
 }
 
 #[derive(Deserialize)]
@@ -284,6 +568,13 @@ pub fn app(python: impl Into<std::ffi::OsString>) -> Result<Router, Box<dyn std:
         .route("/fig.svg", get(figure_svg))
         .route("/spec.json", get(spec_json))
         .route("/static/htmx.min.js", get(htmx))
+        .route("/static/editor.js", get(editor_js))
+        .route("/control/panel", post(specialized::select_panel))
+        .route("/control/axis", post(specialized::set_axis))
+        .route("/control/secondary", post(specialized::secondary_axis))
+        .route("/control/z", post(specialized::setup_z))
+        .route("/control/move", post(specialized::move_handle))
+        .route("/control/cluster-cut", post(set_cluster_cut))
         .route("/action", post(action_json))
         .route("/action/raw", post(action_raw))
         .route("/control/title", post(set_title))
@@ -437,7 +728,7 @@ fn is_loopback_host(host: &str) -> bool {
 async fn index(State(state): State<AppState>) -> Result<Html<String>, WebError> {
     let session = lock(&state);
     let spec_json = pretty_spec(&session)?;
-    let current = CurrentControls::from_spec(&session.spec);
+    let current = CurrentControls::from_spec(&session.spec, session.active_panel, &session.layouts);
     PageTemplate {
         version: env!("CARGO_PKG_VERSION"),
         spec_json: &spec_json,
@@ -452,15 +743,31 @@ async fn index(State(state): State<AppState>) -> Result<Html<String>, WebError> 
     .map_err(internal)
 }
 
-async fn figure_png(State(state): State<AppState>) -> impl IntoResponse {
-    let png = lock(&state).png.clone();
+#[derive(Deserialize)]
+struct PreviewQuery {
+    revision: Option<u64>,
+}
+
+async fn figure_png(State(state): State<AppState>, Query(query): Query<PreviewQuery>) -> Response {
+    let session = lock(&state);
+    if query
+        .revision
+        .is_some_and(|revision| revision != session.revision)
+    {
+        return (
+            StatusCode::CONFLICT,
+            "preview changed; reload the current figure",
+        )
+            .into_response();
+    }
     (
         [
             (header::CONTENT_TYPE, "image/png"),
             (header::CACHE_CONTROL, "no-store"),
         ],
-        Bytes::from(png),
+        session.png.clone(),
     )
+        .into_response()
 }
 
 async fn figure_pdf(State(state): State<AppState>) -> Result<Response, WebError> {
@@ -510,6 +817,16 @@ async fn htmx() -> impl IntoResponse {
     )
 }
 
+async fn editor_js() -> impl IntoResponse {
+    (
+        [(
+            header::CONTENT_TYPE,
+            "application/javascript; charset=utf-8",
+        )],
+        EDITOR_JS,
+    )
+}
+
 async fn action_json(State(state): State<AppState>, headers: HeaderMap, body: Bytes) -> Response {
     let content_type = headers
         .get(header::CONTENT_TYPE)
@@ -552,7 +869,7 @@ async fn action_json(State(state): State<AppState>, headers: HeaderMap, body: By
 async fn action_raw(
     State(state): State<AppState>,
     Form(form): Form<RawActionForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     let mut session = lock(&state);
     let result = model::from_json_strict::<Action>(&form.json)
         .map_err(|e| format!("invalid action JSON: {e}"))
@@ -560,31 +877,53 @@ async fn action_raw(
     if let Err(message) = result {
         session.error = Some(message);
     }
-    fragment(&session, &state.controls).map(Html)
+    fragment(&session, &state.controls)
 }
 
 async fn set_title(
     State(state): State<AppState>,
     Form(form): Form<PanelTextForm>,
-) -> Result<Html<String>, WebError> {
-    apply_form(
-        &state,
-        parse_panel(&form.panel).map(|panel| {
-            action(
+) -> Result<Response, WebError> {
+    let mut session = lock(&state);
+    let result = (|| {
+        let panel = parse_panel(&form.panel)?;
+        let index = usize::try_from(panel).map_err(|_| "panel does not exist")?;
+        let current = session
+            .spec
+            .fields
+            .get("panels")
+            .and_then(|panels| panels.get(index));
+        let citation = current
+            .and_then(|p| p.get("title_citation"))
+            .cloned()
+            .unwrap_or(Value::Null);
+        let href = current
+            .and_then(|p| p.get("title_href"))
+            .cloned()
+            .unwrap_or(Value::Null);
+        session.apply(
+            &state.bridge,
+            &action(
                 "SetTitle",
                 [
                     ("text", Value::from(form.text)),
                     ("panel", Value::from(panel)),
+                    ("citation", citation),
+                    ("href", href),
                 ],
-            )
-        }),
-    )
+            ),
+        )
+    })();
+    if let Err(message) = result {
+        session.error = Some(message);
+    }
+    fragment(&session, &state.controls)
 }
 
 async fn set_theme(
     State(state): State<AppState>,
     Form(form): Form<NamedForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     apply_form(
         &state,
         Ok(action("SetTheme", [("name", Value::from(form.name))])),
@@ -594,7 +933,7 @@ async fn set_theme(
 async fn set_projection(
     State(state): State<AppState>,
     Form(form): Form<ProjectionForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     apply_form(
         &state,
         parse_panel(&form.panel).map(|panel| {
@@ -612,7 +951,7 @@ async fn set_projection(
 async fn set_size(
     State(state): State<AppState>,
     Form(form): Form<SizeForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     let result = parse_number(&form.width, "width").and_then(|width| {
         parse_number(&form.height, "height").map(|height| {
             action(
@@ -630,7 +969,7 @@ async fn set_size(
 async fn add_layer(
     State(state): State<AppState>,
     Form(form): Form<LayerForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     let result = (|| {
         if !state
             .controls
@@ -657,37 +996,94 @@ async fn add_layer(
     apply_form(&state, result)
 }
 
+async fn set_cluster_cut(
+    State(state): State<AppState>,
+    Form(form): Form<ClusterCutForm>,
+) -> Result<Response, WebError> {
+    mutate(&state, |session, bridge| {
+        if session.revision != form.revision || session.active_panel != form.panel {
+            return Err("preview changed; use the current cluster cut controls".into());
+        }
+        let key = match form.axis.as_str() {
+            "row" => "row_cut",
+            "col" => "col_cut",
+            _ => return Err("cut axis must be row or col".into()),
+        };
+        let mut layer = session
+            .spec
+            .fields
+            .get("panels")
+            .and_then(|panels| panels.get(form.panel))
+            .and_then(|panel| panel.get("layers"))
+            .and_then(Value::as_array)
+            .filter(|layers| layers.len() == 1 && layers[0]["type"] == "clustermap")
+            .and_then(|layers| layers[0].as_object())
+            .cloned()
+            .ok_or_else(|| "cut requires an existing clustermap".to_owned())?;
+        let cluster = layer.entry("cluster".to_owned()).or_insert(Value::Null);
+        if cluster.is_null() {
+            *cluster = json!({});
+        }
+        let config = cluster.as_object_mut().ok_or("cluster must be an object")?;
+        if form.clear {
+            config.remove(key);
+        } else {
+            let height = parse_number(&form.height, "cut height")?;
+            let mut cut = json!({"height": height});
+            if !form.anchor.is_empty() {
+                let anchor = form
+                    .anchor
+                    .parse::<u64>()
+                    .map_err(|_| "cut anchor must be an original item index")?;
+                cut["anchor"] = json!(anchor);
+            }
+            config.insert(key.into(), cut);
+        }
+        session.apply(
+            bridge,
+            &action(
+                "ReplaceLayer",
+                [
+                    ("panel", json!(form.panel)),
+                    ("layer_index", json!(0)),
+                    ("layer", Value::Object(layer)),
+                ],
+            ),
+        )
+    })
+}
+
 async fn open_spec(
     State(state): State<AppState>,
     Form(form): Form<OpenSpecForm>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     let result = model::from_json_strict::<FigureSpec>(&form.json)
         .map_err(|e| format!("invalid FigureSpec JSON: {e}"));
     let mut session = lock(&state);
     if let Err(message) = result.and_then(|spec| session.open(&state.bridge, spec)) {
         session.error = Some(message);
     }
-    fragment(&session, &state.controls).map(Html)
+    fragment(&session, &state.controls)
 }
 
-async fn undo(State(state): State<AppState>) -> Result<Html<String>, WebError> {
+async fn undo(State(state): State<AppState>) -> Result<Response, WebError> {
     mutate(&state, |session, bridge| session.undo(bridge))
 }
 
-async fn redo(State(state): State<AppState>) -> Result<Html<String>, WebError> {
+async fn redo(State(state): State<AppState>) -> Result<Response, WebError> {
     mutate(&state, |session, bridge| session.redo(bridge))
 }
 
-async fn reset(State(state): State<AppState>) -> Result<Html<String>, WebError> {
+async fn reset(State(state): State<AppState>) -> Result<Response, WebError> {
     mutate(&state, |session, bridge| session.reset(bridge))
 }
 
-fn apply_form(state: &AppState, result: Result<Action, String>) -> Result<Html<String>, WebError> {
+fn apply_form(state: &AppState, result: Result<Action, String>) -> Result<Response, WebError> {
     let mut session = lock(state);
     if let Err(message) = result.and_then(|action| session.apply(&state.bridge, &action)) {
         session.error = Some(message);
     }
-    fragment(&session, &state.controls).map(Html)
+    fragment(&session, &state.controls)
 }
 
 fn action<const N: usize>(kind: &str, fields: [(&str, Value); N]) -> Action {
@@ -720,18 +1116,18 @@ fn parse_number(value: &str, name: &str) -> Result<f64, String> {
 fn mutate(
     state: &AppState,
     operation: impl FnOnce(&mut Session, &PythonBridge) -> Result<(), String>,
-) -> Result<Html<String>, WebError> {
+) -> Result<Response, WebError> {
     let mut session = lock(state);
     if let Err(message) = operation(&mut session, &state.bridge) {
         session.error = Some(message);
     }
-    fragment(&session, &state.controls).map(Html)
+    fragment(&session, &state.controls)
 }
 
-fn fragment(session: &Session, controls: &Controls) -> Result<String, WebError> {
+fn fragment(session: &Session, controls: &Controls) -> Result<Response, WebError> {
     let spec_json = pretty_spec(session)?;
-    let current = CurrentControls::from_spec(&session.spec);
-    FragmentTemplate {
+    let current = CurrentControls::from_spec(&session.spec, session.active_panel, &session.layouts);
+    let html = FragmentTemplate {
         spec_json: &spec_json,
         error: session.error.as_deref().unwrap_or(""),
         has_error: session.error.is_some(),
@@ -740,7 +1136,13 @@ fn fragment(session: &Session, controls: &Controls) -> Result<String, WebError> 
         current: &current,
     }
     .render()
-    .map_err(internal)
+    .map_err(internal)?;
+    let mut response = Html(html).into_response();
+    response.headers_mut().insert(
+        "X-Mudplot-View-Generation",
+        HeaderValue::from_str(&session.revision.to_string()).map_err(internal)?,
+    );
+    Ok(response)
 }
 
 fn pretty_spec(session: &Session) -> Result<String, WebError> {
@@ -814,7 +1216,8 @@ mod tests {
         fn snapshot(session: &Session) -> Value {
             json!({"initial": session.initial, "spec": session.spec,
                 "history": session.history, "future": session.future,
-                "png": session.png, "error": session.error, "revision": session.revision})
+                "active_panel": session.active_panel, "layouts": session.layouts,
+                "png": session.png.as_ref(), "error": session.error, "revision": session.revision})
         }
         let directory = tempfile::tempdir().unwrap();
         let bridge = PythonBridge::new(directory.path().join("missing-python"));
@@ -828,9 +1231,11 @@ mod tests {
             spec: changed.clone(),
             history: vec![original.clone()],
             future: vec![changed.clone()],
-            png: vec![1, 2, 3],
+            png: vec![1, 2, 3].into(),
             error: Some("prior error".into()),
             revision: 17,
+            active_panel: 0,
+            layouts: json!([]),
         };
         let before = snapshot(&session);
         let action: Action = serde_json::from_str(r#"{"type":"SetTitle","text":"new"}"#).unwrap();

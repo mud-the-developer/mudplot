@@ -52,8 +52,6 @@ def test_readonly_responses_do_not_change_view_generation_or_content_types(
         with urllib.request.urlopen(running_server + path) as response:
             assert response.status == 200
             assert response.headers.get_content_type() == content_type
-            assert response.headers.get("X-Mudplot-View-Generation") is None
-            assert response.read()
     request = urllib.request.Request(
         running_server + "/action",
         data=urlencode({"type": "set_title", "text": "first"}).encode(),

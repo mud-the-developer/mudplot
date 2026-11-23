@@ -1,0 +1,38 @@
+{
+  "observed_date_utc": "2026-10-29",
+  "status": "owner_approved_support_exception_and_three_locks_audited",
+  "supersedes_blocker": "v1_1_dependency_blocker.json",
+  "owner_decision": "Raise the v1.1 minimum Python to >=3.11; end Python 3.10 support as a documented security exception while preserving Python API, FigureSpec/JSON and Matplotlib defaults.",
+  "declared_minimums": {
+    "python": ">=3.11",
+    "colour_and_render_numpy": ">=1.23.5",
+    "render_matplotlib": ">=3.8",
+    "render_pillow": ">=13.0.0"
+  },
+  "locked_security_updates": {
+    "pillow": "13.0.0",
+    "auditor_filelock": "4.2.4",
+    "auditor_msgpack": "1.2.4"
+  },
+  "audit": {
+    "command": "uv run --locked --script scripts/audit_dependencies.py",
+    "exit_code": 0,
+    "waivers_added": false,
+    "all_locks_reported_no_known_vulnerabilities": [
+      "uv.lock",
+      "scripts/check_minimum_versions.py.lock",
+      "scripts/audit_dependencies.py.lock"
+    ]
+  },
+  "smoke": {
+    "command": "PYTEST_ADDOPTS=\"-k 'smart_quality or ci_effects'\" uv run --locked --script scripts/check_minimum_versions.py",
+    "environment": "Python 3.11 / NumPy 1.23.5 / Matplotlib 3.8 / Pillow 13.0.0",
+    "scope": "Scientific-quality and CI guards only, not full qualification"
+  },
+  "pending": [
+    "Fresh full locked Python 3.11/3.12 suites and full minimum suite",
+    "Required browser/TeX paths in the complete isolated OS environment",
+    "Current-source Windows CI and owner release review"
+  ],
+  "version_bump_or_publication_authorized": false
+}

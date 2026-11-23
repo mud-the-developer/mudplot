@@ -104,7 +104,7 @@ def test_invalid_heights_reject_without_rebinning(values):
     "style",
     [
         {"orient": "h"},
-        {"group": "height"},
+        {"group": "missing"},
         {"colorbar": True},
         {"density": True},
         {"weights": "height"},
@@ -120,13 +120,14 @@ def test_unused_mappings_and_options_are_not_ignored(style):
 
 
 @pytest.mark.parametrize("axis", ["x", "y"])
-def test_first_stairs_subset_does_not_silently_support_log_axes(axis):
-    p = mp.plot({"height": [1, 2]}).stairs("height", [1, 2, 3], baseline=1)
+def test_stairs_log_checks_drawn_edges_and_closed_baseline(axis):
+    edges = [0, 2, 3] if axis == "x" else [1, 2, 3]
+    p = mp.plot({"height": [1, 2]}).stairs("height", edges, baseline=0)
     if axis == "x":
         p.xscale("log")
     else:
         p.yscale("log")
-    with pytest.raises(ValueError, match="linear"):
+    with pytest.raises(ValueError, match=r"log stairs .* must be positive"):
         p.render()
 
 
@@ -150,12 +151,12 @@ def test_setdata_updates_heights_but_never_invents_new_edges(tmp_path):
     assert target.read_bytes() == b"previous"
 
 
-def test_stairs_budget_capability_and_no_facet_dropna():
+def test_stairs_budget_capability_and_rejected_invalid_facet():
     p = mp.plot({"height": list(range(10001))}).stairs("height", list(range(10002)))
     assert any("10000" in issue for issue in mp.validate(p.spec))
     p = mp.plot({"height": [1, 2], "g": ["A", "B"]}).stairs("height", [0, 1, 2])
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="unknown")
     assert p.spec == before and p.action_log == history
     assert mp.capabilities()["layers"]["stairs"]["required"] == ["x", "bins"]

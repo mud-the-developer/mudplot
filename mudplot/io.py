@@ -11,6 +11,7 @@ import json
 import math
 import os
 import secrets
+import shutil
 import stat
 from collections.abc import Iterator
 from pathlib import Path
@@ -105,13 +106,15 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
     destination = Path(path)
     if destination.is_symlink():
         destination = destination.resolve()
-    temporary = destination.with_name(
-        f".{destination.name}.{secrets.token_hex(16)}.tmp"
-    )
+    temporary = destination.with_name(f".mudplot-write-{secrets.token_hex(16)}.tmp")
     mode = stat.S_IMODE(destination.stat().st_mode) if destination.exists() else None
     # Claim before cleanup scope: a collision must leave the other entry untouched.
     temporary.touch(exist_ok=False)
     try:
+        if os.name != "nt":
+            if mode is None:
+                mode = stat.S_IMODE(temporary.stat().st_mode)
+            temporary.chmod(0o600)
         yield temporary
         with temporary.open("rb+") as handle:
             # Windows read-only is a replacement barrier, not a POSIX mode to copy.
@@ -123,6 +126,56 @@ def _atomic_destination(path: str | Path) -> Iterator[Path]:
         with contextlib.suppress(OSError):
             temporary.unlink()
         raise
+
+
+def _publish_bundle(files: list[Path], directory: Path) -> None:
+    """Publish staged files in order, rolling back errors without renaming assets.
+
+    This is not a multi-file transaction for concurrent readers or process kills.
+    """
+    jobs = [(source, (directory / source.name).resolve()) for source in files]
+    if len({target for _, target in jobs}) != len(jobs):
+        raise ValueError("bundle destinations must resolve to distinct files")
+    backups: dict[Path, Path | None] = {}
+    attempted: list[Path] = []
+    retained: set[Path] = set()
+    try:
+        for _, target in jobs:
+            if target.exists():
+                backup = target.with_name(
+                    f".mudplot-backup-{secrets.token_hex(16)}.bak"
+                )
+                backup.touch(mode=0o600, exist_ok=False)
+                backups[target] = backup
+                shutil.copy2(target, backup)
+            else:
+                backups[target] = None
+        for source, target in jobs:
+            # Journal first: cancellation can arrive immediately after os.replace.
+            attempted.append(target)
+            with _atomic_destination(target) as temporary:
+                shutil.copyfile(source, temporary)
+    except BaseException as error:
+        for target in reversed(attempted):
+            backup = backups[target]
+            try:
+                if backup is None:
+                    target.unlink(missing_ok=True)
+                else:
+                    os.replace(backup, target)
+            except BaseException as rollback_error:
+                if backup is not None:
+                    retained.add(backup)
+                error.add_note(
+                    f"Could not restore {target}; recovery backup: {backup}. "
+                    f"Rollback error: {rollback_error}"
+                )
+        raise
+    finally:
+        for backup in backups.values():
+            if backup is not None and backup not in retained:
+                with contextlib.suppress(OSError):
+                    backup.unlink(missing_ok=True)
 
 
 def _atomic_write_text(path: str | Path, text: str) -> None:

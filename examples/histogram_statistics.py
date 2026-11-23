@@ -51,21 +51,31 @@ def build_plot() -> mp.Plot:
         **step_options,
         stat="density",
         common_norm=False,
+        multiple="dodge",
         element="step",
+        fill=True,
         panel=1,
     )
     p.labels(
         x="Observed value",
         y="Density per raw unit",
-        title="Step density / per-curve total",
+        title="Filled step density / per-curve total",
         panel=1,
     )
-    p.hist("value", **options, stat="percent", orient="h", multiple="dodge", panel=2)
+    p.hist(
+        "value",
+        **step_options,
+        stat="percent",
+        orient="h",
+        multiple="dodge",
+        fill=False,
+        panel=2,
+    )
     p.yscale("log", panel=2)
     p.labels(
         x="Percent of included weight",
         y="Observed value (log)",
-        title="Dodged percent / horizontal raw bins",
+        title="Outline bars / horizontal raw bins",
         panel=2,
     )
     p.hist(

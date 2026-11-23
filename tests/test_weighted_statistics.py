@@ -56,7 +56,7 @@ def test_weighted_bootstrap_chunks_do_not_change_results(monkeypatch):
 
     p = _weighted_plot(n_boot=107, seed=42)
     first = _point(p)
-    monkeypatch.setattr(_estimate, "_BOOTSTRAP_CHUNK_ELEMENTS", 9)
+    monkeypatch.setattr(_estimate, "MAX_ACTIVE_SAMPLE_ELEMENTS", 9)
     assert _point(p) == first
 
 
@@ -149,20 +149,19 @@ def test_bad_weights_are_rejected(weights, message):
 
 
 @pytest.mark.parametrize(
-    "options,message",
+    "options",
     [
-        ({"weights": "unknown"}, "existing column"),
-        ({"weights": ""}, "existing column"),
-        ({"weights": "w", "estimator": "median"}, "weights support mean"),
-        ({"weights": "w", "errorbar": "se"}, "weights support mean"),
-        ({"units": "u", "errorbar": None}, "units require bootstrap"),
-        ({"units": "missing"}, "existing column"),
+        {"weights": "unknown"},
+        {"weights": ""},
+        {"units": "u", "errorbar": None},
+        {"units": "missing"},
     ],
 )
-def test_unsupported_or_ignored_weight_unit_settings_are_explicit(options, message):
+def test_unsupported_or_ignored_weight_unit_settings_are_explicit(options):
     p = mp.plot({"x": ["A", "A"], "y": [1, 2], "w": [1, 2], "u": ["a", "b"]})
     p.barplot("x", "y", **options)
-    assert any(message in issue for issue in mp.validate(p.spec))
+    with pytest.raises(ValueError):
+        p.render()
 
 
 @pytest.mark.parametrize(

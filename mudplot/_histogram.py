@@ -4,9 +4,20 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, replace
+from fractions import Fraction
 from itertools import chain
 
 from ._ecdf import _cumulative, ecdf_groups, ecdf_rows
+from ._histogram_bins import (
+    HISTOGRAM_BIN_RULES as HISTOGRAM_BIN_RULES,
+)
+from ._histogram_bins import (
+    MAX_HISTOGRAM_BINS as MAX_HISTOGRAM_BINS,
+)
+from ._histogram_bins import (
+    discrete_bin_edges,
+    named_bin_edges,
+)
 from .spec import ECDFSpec, HistogramSpec, LayerSpec
 
 HISTOGRAM_STATS = (
@@ -17,10 +28,9 @@ HISTOGRAM_STATS = (
     "percent",
     "density",
 )
-HISTOGRAM_MULTIPLES = ("layer", "stack", "dodge")
-HISTOGRAM_ELEMENTS = ("bars", "step")
+HISTOGRAM_MULTIPLES = ("layer", "stack", "dodge", "fill")
+HISTOGRAM_ELEMENTS = ("bars", "step", "poly")
 NORMALIZED_STATS = ("probability", "proportion", "percent", "density")
-MAX_HISTOGRAM_BINS = 10_000
 # Native bivariate grids allocate quadratically rather than like 1-D histograms.
 MAX_BIVARIATE_BINS = 512
 
@@ -28,6 +38,10 @@ MAX_BIVARIATE_BINS = 512
 def histogram_rows(columns: dict, layer: LayerSpec) -> list[int]:
     if not isinstance(layer.histogram, HistogramSpec):
         return []
+    if layer.semantics is not None:
+        from ._body_semantics import body_rows
+
+        return body_rows(columns, layer)
     proxy = replace(layer, ecdf=ECDFSpec(weights=layer.histogram.weights))
     return ecdf_rows(columns, proxy)
 
@@ -58,7 +72,9 @@ def _mass(values) -> float:
     return total
 
 
-def histogram_summary(columns: dict, layer: LayerSpec) -> HistogramResult:
+def histogram_summary(
+    columns: dict, layer: LayerSpec, *, hue_pools=None
+) -> HistogramResult:
     """Compute before drawing, independently of Matplotlib hist normalization.
 
     Half-open [left,right) bins except the closed final edge. Weights stay
@@ -74,15 +90,22 @@ def histogram_summary(columns: dict, layer: LayerSpec) -> HistogramResult:
     groups = histogram_groups(columns, layer, rows)
     if not rows:
         return HistogramResult((), tuple(HistogramCurve(g, ()) for g in groups))
-    values = np.asarray([columns[layer.x][i] for i in rows], dtype=float)
+    raw_values = [columns[layer.x][i] for i in rows]
+    values = np.asarray(raw_values, dtype=float)
     try:
         with np.errstate(over="ignore", invalid="ignore"):
-            if type(layer.bins) is int:
+            if isinstance(layer.bins, str) and layer.bins == "discrete":
+                edges = discrete_bin_edges(raw_values)
+            elif isinstance(layer.bins, str):
+                edges = named_bin_edges(values, layer.bins)
+            elif type(layer.bins) is int:
                 edges = np.histogram_bin_edges(values, bins=layer.bins)
             else:
                 edges = np.asarray(layer.bins, dtype=float)
             widths = np.diff(edges)
     except (ValueError, OverflowError) as exc:
+        if isinstance(layer.bins, str):
+            raise
         raise ValueError(
             "cannot derive finite histogram bin edges; provide edges"
         ) from exc
@@ -101,6 +124,15 @@ def histogram_summary(columns: dict, layer: LayerSpec) -> HistogramResult:
         group = None if layer.group is None else columns[layer.group][row]
         weight = 1.0 if config.weights is None else float(columns[config.weights][row])
         grouped[group].append((int(index), weight))
+    hue_pairs = {}
+    if hue_pools is not None and not config.common_norm:
+        for group, pairs in grouped.items():
+            hue_pairs.setdefault(hue_pools[group], []).extend(pairs)
+    hue_totals = {}
+    for key, pairs in hue_pairs.items():
+        if pairs:
+            scale = max(weight for _, weight in pairs)
+            hue_totals[key] = scale, math.fsum(weight / scale for _, weight in pairs)
     normalized = config.stat in NORMALIZED_STATS
     pooled = list(chain.from_iterable(grouped.values()))
     common_scale = max((weight for _, weight in pooled), default=1.0)
@@ -112,12 +144,13 @@ def histogram_summary(columns: dict, layer: LayerSpec) -> HistogramResult:
             curves.append(HistogramCurve(group, ()))
             continue
         if normalized:
-            scale = common_scale if config.common_norm else max(w for _, w in pairs)
-            total = (
-                common_total
-                if config.common_norm
-                else math.fsum(w / scale for _, w in pairs)
-            )
+            if config.common_norm:
+                scale, total = common_scale, common_total
+            elif hue_pools is not None:
+                scale, total = hue_totals[hue_pools[group]]
+            else:
+                scale = max(w for _, w in pairs)
+                total = math.fsum(w / scale for _, w in pairs)
         else:
             scale = 1.0
             total = _mass(weight for _, weight in pairs)
@@ -148,4 +181,29 @@ def histogram_summary(columns: dict, layer: LayerSpec) -> HistogramResult:
         if np.any(~np.isfinite(heights)) or np.any(heights < 0):
             raise ValueError("derived histogram heights must be finite nonnegative")
         curves.append(HistogramCurve(group, tuple(heights.tolist())))
+    if config.multiple == "fill":
+        active = [(i, curve) for i, curve in enumerate(curves) if curve.heights]
+        compositions: list[list[float]] = [[] for _ in active]
+        for column in zip(*(curve.heights for _, curve in active), strict=True):
+            try:
+                total = math.fsum(column)
+            except OverflowError:
+                total = math.inf
+            shares = [height / total if total else 0.0 for height in column]
+            if not math.isfinite(total) or any(
+                height > 0 and share < np.finfo(float).tiny
+                for height, share in zip(column, shares, strict=True)
+            ):
+                # Round once when a finite ratio needs an overflowing/subnormal sum.
+                exact = sum((Fraction(height) for height in column), Fraction())
+                shares = [float(Fraction(height) / exact) for height in column]
+            if any(
+                height > 0 and share == 0
+                for height, share in zip(column, shares, strict=True)
+            ):
+                raise ValueError("histogram fill fractions lose positive heights")
+            for values, share in zip(compositions, shares, strict=True):
+                values.append(share)
+        for (index, curve), values in zip(active, compositions, strict=True):
+            curves[index] = replace(curve, heights=tuple(values))
     return HistogramResult(tuple(edges.tolist()), tuple(curves))

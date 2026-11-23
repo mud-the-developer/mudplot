@@ -1,0 +1,342 @@
+{
+  "schema_version": 1,
+  "qualified_utc": "2026-10-30T10:39:44.741495+00:00",
+  "status": "qualified-local-1.1.0-numeric-export-candidate-not-published",
+  "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "commit_push_pr_tag_publication_performed": false,
+  "owner_decision": {
+    "pgf_failure_protection_approved": true,
+    "choice": "PGF도 함께 수정 (권장)",
+    "preserve_successful_paths_and_names": true,
+    "concurrent_all_files_atomicity_and_process_kill_durability_not_promised": true
+  },
+  "scope": "Numerical advice precision, secondary-axis QA, safe output publication and accurate CLI paths; existing Matplotlib drawing, schema and Rust editing retained.",
+  "changes": [
+    "Exact rational interpolation prevents subnormal/mixed-integer floating medians and IQR fences from rounding prematurely; scalar types, signed zero, inputs and ordering remain intact.",
+    "Visual QA includes configured secondary-y descriptions and whitespace-only labels, using routed layer.y values rather than uncertainty endpoint layer.y2.",
+    "PGF text and generated sidecars stage under logical final basenames; snapshots precede publication, sidecars publish first, and ordinary failures restore old bytes/remove new files.",
+    "Failed restoration retains a recovery backup and annotates the original exception; CLI prints recovery notes.",
+    "Temporary writes are owner-private before data is written, successful POSIX modes are preserved, and reserved PGF/write/backup prefixes are excluded from source distributions.",
+    "Extensionless CLI output reports the actual Matplotlib-selected filename."
+  ],
+  "regressions_added": {
+    "total": 54,
+    "numeric": 29,
+    "secondary_axis": 7,
+    "output_atomicity": 18
+  },
+  "qualification": {
+    "locked_py311": {
+      "failed": 0,
+      "errors": 0,
+      "skipped": 45,
+      "passed": 4547,
+      "total": 4592,
+      "python": "3.11.15",
+      "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/complete/locked-py311.xml",
+      "sha256": "da1b640b083d1c61e75336e0db1b9eb49a2ba2b31fb90dbef215b8e09a617f24",
+      "required_profile": {
+        "counts": {
+          "passed": 4547,
+          "skipped": 45
+        },
+        "ok": true,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4592
+      }
+    },
+    "locked_py312": {
+      "failed": 0,
+      "errors": 0,
+      "skipped": 45,
+      "passed": 4547,
+      "total": 4592,
+      "python": "3.12.13",
+      "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/complete/locked-py312.xml",
+      "sha256": "1716ce4beee6f50e8221312e6195ed0909b1b25ee6ce35e31c25ba5286e14863",
+      "required_profile": {
+        "counts": {
+          "passed": 4547,
+          "skipped": 45
+        },
+        "ok": true,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4592
+      }
+    },
+    "minimum": {
+      "environment": {
+        "python": "3.11.15",
+        "versions": {
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "pillow": "13.0.0",
+          "statsmodels": "0.14.1",
+          "scipy": "1.10.0",
+          "pytest": "9.0.3"
+        }
+      },
+      "failed": 0,
+      "errors": 0,
+      "skipped": 36,
+      "total": 3771,
+      "passed": 3735,
+      "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/complete/minimum.xml",
+      "sha256": "55fea08b4e0c7389c5196ffd091ad1423ebb47f522a2a1a444f7a0d5c28adcaa",
+      "failed_names": [],
+      "required_profile": {
+        "counts": {
+          "passed": 3735,
+          "skipped": 36
+        },
+        "ok": true,
+        "profile": "minimum",
+        "required": [
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 3771
+      }
+    },
+    "all_full_suites_rerun": true,
+    "required_profiles_passed": true,
+    "implementation_manifest": "artifacts/v1_1_numeric_export_20261030/run/results/complete/source-implementation.sha256",
+    "implementation_manifest_sha256": "dffdcb4dc75dc9db612c4ec9aa6efcd75747eb57ddad015bf694c16f3b249bbf"
+  },
+  "historical_initial_attempt": {
+    "reason": "The sole failing characterization test required the former non-atomic PGF overwrite behavior, superseded by the owner's explicit safety decision.",
+    "failed_test": "test_pgf_postprocess_failure_closes_figure_but_is_not_atomic",
+    "results": {
+      "locked-py311": {
+        "failed": 1,
+        "errors": 0,
+        "skipped": 45,
+        "total": 4592,
+        "passed": 4546,
+        "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/locked-py311.xml",
+        "sha256": "7fddab380d05af95034a2e21da037315e7e843d00bd7e3008079b6140ab35872",
+        "failed_names": [
+          "test_pgf_postprocess_failure_closes_figure_but_is_not_atomic"
+        ]
+      },
+      "locked-py312": {
+        "failed": 1,
+        "errors": 0,
+        "skipped": 45,
+        "total": 4592,
+        "passed": 4546,
+        "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/locked-py312.xml",
+        "sha256": "568ef126d2b5096bc990355cbdcdd650a3bdea8042117b8ae518fab8fa2f8217",
+        "failed_names": [
+          "test_pgf_postprocess_failure_closes_figure_but_is_not_atomic"
+        ]
+      },
+      "minimum": {
+        "failed": 1,
+        "errors": 0,
+        "skipped": 36,
+        "total": 3771,
+        "passed": 3734,
+        "junit_xml": "artifacts/v1_1_numeric_export_20261030/run/results/minimum.xml",
+        "sha256": "2fb7f7e0cd8c9c2b264eec2be87a5262aa38a4436407fe9c1ac2248e01de91b8",
+        "failed_names": [
+          "test_pgf_postprocess_failure_closes_figure_but_is_not_atomic"
+        ]
+      }
+    },
+    "container_exit_code": 1,
+    "initial_container_log": "artifacts/v1_1_numeric_export_20261030/run/results/container-initial.log",
+    "initial_container_rc": "artifacts/v1_1_numeric_export_20261030/run/results/container-initial.rc",
+    "initial_recipe": "artifacts/v1_1_numeric_export_20261030/run/validate-first.sh",
+    "old_results_preserved": true,
+    "followup": "Updated only tests/test_review_pgf_bundle.py to assert old PGF/PNG preservation, passed real-TeX module preflights, then reran all three full suites.",
+    "runtime_bytes_identical_between_attempts": true
+  },
+  "source_integrity": {
+    "initial_manifest": "artifacts/v1_1_numeric_export_20261030/run/host-source-before.json",
+    "complete_manifest": "artifacts/v1_1_numeric_export_20261030/run/host-source-complete.json",
+    "frozen_source_files": 779,
+    "only_change_between_attempts": "tests/test_review_pgf_bundle.py",
+    "runtime_tests_config_and_locks_match_complete_snapshot": true,
+    "postqualification_documentation_updates": [
+      "docs/V1_1_RELEASE_CHECKLIST.md",
+      "docs/V1_1_RELEASE_CHECKLIST.ko.md",
+      "docs/images/scientific_quality/report.json",
+      "docs/review_evidence/v1_1_numeric_export_quality.json"
+    ],
+    "report_update": "Two advisory suggestion strings only; image/data/dimension/font measurements unchanged.",
+    "metadata_version": "1.1.0"
+  },
+  "supporting_checks": {
+    "baseline_reproduction": "artifacts/v1_1_numeric_export_20261030/baseline-reproduction.log",
+    "minimum_targeted": {
+      "passed": 56,
+      "note": "54 new cases plus two existing band-endpoint cases selected by -k",
+      "log": "artifacts/v1_1_numeric_export_20261030/minimum-targeted-final.log"
+    },
+    "real_pgf_raster": {
+      "passed": true,
+      "real_paper_compile": true,
+      "repeat_export_bytes_identical": true,
+      "logical_symlink_and_sidecar_names_preserved": true,
+      "log": "artifacts/v1_1_numeric_export_20261030/real-pgf-proof.log",
+      "artifacts": "artifacts/v1_1_numeric_export_20261030/run/results/pgf-raster-proof"
+    },
+    "private_output_exclusions": {
+      "passed": true,
+      "canaries": "root/nested PGF stages, write temporaries and backups",
+      "log": "artifacts/v1_1_numeric_export_20261030/private-output-packaging.log"
+    },
+    "figures": {
+      "pngs_unchanged": 8,
+      "data_and_after_measurements_unchanged": true,
+      "after_errors": 0,
+      "min_font_pt": 8,
+      "report_wording_changes": 2,
+      "evidence": "artifacts/v1_1_numeric_export_20261030/figures-verification.json",
+      "earlier_strict_byte_comparison_failure_preserved": "artifacts/v1_1_numeric_export_20261030/security-figures.log"
+    },
+    "rust_browser_bridge": {
+      "passed": true,
+      "msrv": "1.88.0",
+      "windows_verified": false,
+      "log": "artifacts/v1_1_numeric_export_20261030/rust-browser-bridge.log"
+    },
+    "security_audits": {
+      "all_three_locks_passed_without_waivers": true,
+      "log": "artifacts/v1_1_numeric_export_20261030/security-figures.log"
+    },
+    "packaging_preflight": {
+      "passed": true,
+      "core_only_precision_and_schema_smoke_passed": true,
+      "log": "artifacts/v1_1_numeric_export_20261030/preliminary-packaging.log"
+    },
+    "static_checks": {
+      "ruff_and_pyright_passed": true,
+      "lsp_type_errors": 0,
+      "new_auxiliary_false_positive_findings_reviewed": 10,
+      "note": "Six numeric casts and four TeX/Matplotlib spelling findings were inspected and marked false positive, not silently treated as clean."
+    },
+    "independent_review": "Fresh read-only reviewer reported no issues; parent executed all validation."
+  },
+  "artifacts": {
+    "directory": "artifacts/v1_1_numeric_export_20261030/final-dist",
+    "external_manifest": "artifacts/v1_1_numeric_export_20261030/final-artifact-manifest.json",
+    "qualification_reports": "artifacts/v1_1_numeric_export_20261030/qualification-reports.zip",
+    "note": "Final hashes, independent rebuild equality and installed metadata-resolved smoke results are recorded externally after documentation updates, avoiding self-referential sdist hashes."
+  },
+  "historical_receipts_preserved": [
+    "docs/review_evidence/v1_1_distribution_quality.json",
+    "docs/review_evidence/v1_1_quality_hardening.json",
+    "docs/review_evidence/v1_1_local_candidate.json"
+  ],
+  "remaining_limits": [
+    "Staging/rollback handles ordinary failures, not simultaneous multi-file visibility or process-kill durability.",
+    "Repeated filesystem failures can require manual restoration from the retained backup reported in exception/CLI notes.",
+    "Existing outputs must be readable for backup and destination directories writable for publication.",
+    "Windows, physical-print review and original experimental failure data remain unverified/unavailable; source-quality proxies are not statistical/accessibility certification.",
+    "No commit, push, PR, tag, publication or remote CI was performed or authorized."
+  ]
+}

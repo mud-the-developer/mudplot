@@ -435,10 +435,10 @@ def test_raw_log_mean_unchanged_and_invalid_bounds_never_clipped(
         ("barplot", {"baseline": float("inf")}, "linear", "linear", "finite raw-value"),
         (
             "countplot",
-            {"stack": True, "baseline": 0.1},
+            {"stack": True},
             "linear",
             "log",
-            "linear value axis",
+            "positive explicit baseline",
         ),
         (
             "countplot",
@@ -471,7 +471,7 @@ def test_native_log_rejects_non_numeric_or_non_positive_levels(categories):
 
 
 @pytest.mark.parametrize("kind", ["barplot", "pointplot", "countplot"])
-def test_shared_mixed_modes_string_primitives_and_native_secondary_rejected(
+def test_shared_mixed_modes_and_string_primitives_are_rejected(
     kind,
 ):
     data = {"c": [10, 10, 30, 30], "v": [1, 2, 3, 4], "s": ["a", "a", "b", "b"]}
@@ -481,13 +481,16 @@ def test_shared_mixed_modes_string_primitives_and_native_secondary_rejected(
     p = _plot(kind, data, native_scale=True)
     p.scatter("s", "v")
     assert any("mix string series" in i for i in mp.validate(p.spec))
-    p = _plot(kind, data, native_scale=True)
-    p.secondary_yaxis("Secondary")
-    layer = p.spec.panels[0].layers[0]
-    spec = p.spec
-    spec.panels[0].layers[0].axis = "y2"
-    assert any("primary axes only" in i for i in mp.validate(spec))
-    assert layer.native_scale
+
+
+def test_countplot_native_secondary_stays_outside_its_declared_subset():
+    plot = (
+        mp.plot({"c": [10, 10, 30, 30]})
+        .secondary_yaxis("Secondary")
+        .countplot("c", native_scale=True, axis="y2")
+    )
+    with pytest.raises(ValueError):
+        plot.render()
 
 
 def test_selected_rows_exclude_missing_zero_weights_and_nonpositive_unselected_values():

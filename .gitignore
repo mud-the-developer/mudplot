@@ -26,8 +26,12 @@ dist/
 !src/SciencePlots/examples/figures/*.jpg
 !docs/images/*.png
 !docs/images/plots/*.png
+!docs/images/scientific_quality/*.png
 !docs/images/*.pdf
 dashboard/site_build/
+.mudplot-pgf-*/
+.mudplot-write-*.tmp
+.mudplot-backup-*.bak
 
 # caches
 .hypothesis/
