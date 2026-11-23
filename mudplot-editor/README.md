@@ -1,4 +1,4 @@
-# mudplot Rust editor (v1.0)
+# mudplot Rust editor (v1.1.0 local candidate)
 
 A local axum + Askama + htmx editor for the same `FigureSpec` and JSON actions
 used by Python mudplot. It is intentionally in this repository and versioned
@@ -39,8 +39,9 @@ cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/
 with Unicode/spaces/`&` in executable and temporary data paths. It may download
 same-version render wheels into that disposable venv; project dependencies stay
 unchanged. Windows was executed locally; baselinee14 CI39111782233 also observed
-successful Linux/Windows jobs including this probe. Later changes still need their
-own CI result; the evidence is not a promise that every checkout was tested.
+successful Linux/Windows jobs including this probe. Later changes need their own
+verification. The v1.1.0 candidate is locally qualified on Linux; Windows is
+currently deferred by the owner. Earlier evidence does not qualify this checkout.
 
 This is a local single-user tool with no authentication. Non-loopback bind
 addresses, non-loopback HTTP Hosts, and cross-origin browser mutations are
@@ -78,6 +79,11 @@ without an Origin remain supported; this is not remote-user authentication.
 - Capabilities generate the all-layer selector/field reference plus theme and
   projection controls; title and exact figure-size controls use the same JSON
   actions as agents.
+- Select **Active panel (zero-based)** before editing panel-local controls. Edit x/y labels, linear/log scales, and finite or automatic limits. Enable secondary y, edit its properties separately, or remove it. Valid 3-D panels expose z-axis setup and property controls. Granular edits retain temporal clocks, units, origins, sharing, and other axis settings.
+- Move visible title, legend, text, and annotation handles with the pointer or arrow keys; Shift increases the keyboard step. Titles use Cartesian/polar axes fractions; legends use figure fractions. Text/annotation anchors use their selected Cartesian primary/y2 data coordinates, including inverted, logarithmic, and temporal axes. Unsupported 3-D title/data and polar data-anchor paths are not presented as draggable.
+- Metadata and PNG come from one saved native figure through installed `mudplot`; the bridge does not import `dashboard`. Geometry uses actual PNG canvas dimensions, including fractional size × DPI truncation. Revision-bound images and edits prevent stale handles from changing another state, and keyboard focus survives fragment replacement.
+- The CLI editor protocol is `mudplot render spec.json preview.png --preview --editor-metadata layout.json`. It requires distinct spec/PNG/metadata paths and no layout policy. Consumers commit only after the command and both artifacts succeed; this does not promise simultaneous two-file publication.
+- CI/release explicitly run the real specialized consumers against a source bridge; local installed-wheel proof is a separate profile. `MUDPLOT_REQUIRE_BROWSER=1` makes missing qualification setup fail instead of skip. Deterministic queued-key tests need the Playwright Clock test-tool capability, introduced in 1.45. The existing browser-extra floor remains 1.40; Playwright is not a product UI/render dependency.
 - Saved specs can be opened, and exact-size PDF/SVG plus JSON can be exported.
   Cached PNG previews retain the configured DPI until either axis would exceed
   2000 pixels, without changing the spec or final exports.
@@ -100,7 +106,7 @@ without an Origin remain supported; this is not remote-user authentication.
   guarantees; see the review ledger for observed scope.
 
 Routes: `GET /`, `/fig.{png,pdf,svg}`, `/spec.json`,
-`/static/htmx.min.js`; `POST /action` accepts an action JSON object. Visual
+`/static/htmx.min.js`, `/static/editor.js`; `POST /action` accepts an action JSON object. Visual
 controls use `/control/*` and `/layers`; `/open`, `/action/raw`, `/undo`,
 `/redo`, and `/reset` return the `#app` htmx fragment.
 
@@ -113,6 +119,4 @@ Exports are PNG/PDF/SVG media on success; a bridge vector-export failure is
 500text/plain. Check status and Content-Type before decoding—not every route or
 failure is JSON, and the UI form endpoints intentionally return HTML/redirects.
 
-Still deliberately out of scope: multi-user sessions/authentication, every
-specialized axis/drag control from the mature Python editor, and a native Rust
-renderer. Add them only when local usage warrants the extra state and code.
+Multi-user sessions/authentication and a native Rust renderer remain outside this local editor's scope. CND01's concrete missing-control comparison triggered the specialized controls above; [the feature receipt](../docs/review_evidence/v2_rust_specialized_controls.json) records actual installed-bridge/browser checks and their limits. This does not close the full v2 catalogue, E01 across every row, or final release qualification.

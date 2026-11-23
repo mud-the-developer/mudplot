@@ -671,7 +671,61 @@
           "v": null,
           "quiver_scale": null,
           "quiver_width": null,
-          "z": null
+          "z": null,
+          "box": {
+            "median_ci": {
+              "level": 90,
+              "n_boot": 1000,
+              "seed": 17
+            },
+            "cap_fraction": 0.8,
+            "hue_components": [
+              {
+                "level": "A",
+                "components": {
+                  "body": null,
+                  "whisker": null,
+                  "cap": {
+                    "color": "#007f87",
+                    "edge_color": null,
+                    "face_color": null,
+                    "line_width": 1.5,
+                    "line_style": null,
+                    "marker": null,
+                    "marker_size": null,
+                    "marker_edge_width": null,
+                    "alpha": null,
+                    "hatch": null
+                  },
+                  "median": null,
+                  "mean": null,
+                  "flier": null
+                }
+              },
+              {
+                "level": "B",
+                "components": {
+                  "body": null,
+                  "whisker": null,
+                  "cap": {
+                    "color": "#8b3f8f",
+                    "edge_color": null,
+                    "face_color": null,
+                    "line_width": 1.5,
+                    "line_style": null,
+                    "marker": null,
+                    "marker_size": null,
+                    "marker_edge_width": null,
+                    "alpha": null,
+                    "hatch": null
+                  },
+                  "median": null,
+                  "mean": null,
+                  "flier": null
+                }
+              }
+            ]
+          }
         }
       ],
       "x": {
@@ -689,7 +743,7 @@
       "y2": null,
       "z": null,
       "projection": "2d",
-      "title": "Nested boxes / 5-95% whiskers",
+      "title": "Median CI / explicit per-hue cap styles",
       "title_position": null,
       "title_citation": null,
       "title_href": null,

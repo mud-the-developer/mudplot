@@ -147,15 +147,6 @@ def test_conflicting_orders_on_a_shared_axis_fail_instead_of_ignoring_order():
         p.render()
 
 
-def test_horizontal_secondary_y_route_is_explicitly_unsupported():
-    p = (
-        mp.plot(_data())
-        .secondary_yaxis("Estimate")
-        .barplot("x", "y", orient="h", axis="y2")
-    )
-    assert any("do not route to y2" in issue for issue in mp.validate(p.spec))
-
-
 @pytest.mark.parametrize("orient", ["v", "h"])
 @pytest.mark.parametrize("sign", [1, -1])
 def test_labels_clear_real_intervals_without_misaligning_singleton_bars(orient, sign):
@@ -179,3 +170,95 @@ def test_labels_clear_real_intervals_without_misaligning_singleton_bars(orient, 
         assert text.get_position() == (
             (2 * sign, 0) if orient == "h" else (0, 2 * sign)
         )
+
+
+@pytest.mark.parametrize(
+    "estimator,values,expected",
+    [
+        ("median", [-1e300, 1e-300, 1e300], 1e-300),
+        ("min", [1e-300, 1e300], 1e-300),
+        ("max", [-1e300, -1e-300], -1e-300),
+    ],
+)
+def test_selector_estimates_retain_the_actual_tiny_selected_observation(
+    estimator, values, expected
+):
+    plot = mp.plot({"c": ["A"] * len(values), "v": values}).barplot(
+        "c", "v", estimator=estimator, errorbar=None
+    )
+    native = plot.render().axes[0]
+    assert _bars(native)[0].patches[0].get_height() == expected
+    assert plot.spec.data.columns["v"] == values
+
+
+@pytest.mark.parametrize(
+    "values",
+    [
+        [
+            float.fromhex("0x0.0000000000001p-1022"),
+            float.fromhex("0x0.0000000000002p-1022"),
+        ],
+        [1e308, 1.6e308],
+        [-1.6e308, 1.6e308],
+    ],
+)
+def test_even_median_midpoint_avoids_unnecessary_underflow_and_overflow(values):
+    from fractions import Fraction
+
+    expected = float((Fraction(values[0]) + Fraction(values[1])) / 2)
+    plot = mp.plot({"c": ["A", "A"], "v": values}).barplot(
+        "c", "v", estimator="median", errorbar=None
+    )
+    assert _bars(plot.render().axes[0])[0].patches[0].get_height() == expected
+
+
+def test_bootstrap_median_percentile_retains_a_positive_selected_endpoint():
+    plot = mp.plot({"c": ["A", "A"], "v": [1e-300, 1e300]}).pointplot(
+        "c", "v", estimator="median", errorbar=("ci", 95), n_boot=257, seed=6
+    )
+    intervals = [
+        container
+        for container in plot.render().axes[0].containers
+        if isinstance(container, ErrorbarContainer)
+    ]
+    segment = intervals[0].lines[2][0].get_segments()[0]
+    assert segment[0, 1] == 1e-300
+    assert segment[1, 1] == 1e300
+
+
+def test_subnormal_percentiles_reject_only_undrawable_native_span():
+    from fractions import Fraction
+
+    values = [
+        float.fromhex("0x0.0000000000001p-1022"),
+        float.fromhex("0x0.0000000000003p-1022"),
+    ]
+    exact = [
+        Fraction(values[0]) * (1 - t) + Fraction(values[1]) * t
+        for t in (Fraction(1, 4), Fraction(3, 4))
+    ]
+    assert exact[0] < exact[1] and float(exact[0]) == float(exact[1])
+    plot = mp.plot({"c": ["A", "A"], "v": values}).barplot(
+        "c", "v", estimator="min", errorbar=("pi", 50)
+    )
+    with pytest.raises(ValueError):
+        plot.render()
+    # A neighboring genuinely drawable subnormal span remains supported.
+    high = float.fromhex("0x0.0000000000004p-1022")
+    expected = [
+        float(Fraction(values[0]) * (1 - t) + Fraction(high) * t)
+        for t in (Fraction(1, 4), Fraction(3, 4))
+    ]
+    drawable = mp.plot({"c": ["A", "A"], "v": [values[0], high]}).barplot(
+        "c", "v", estimator="min", errorbar=("pi", 50)
+    )
+    interval = (
+        next(
+            item
+            for item in drawable.render().axes[0].containers
+            if isinstance(item, ErrorbarContainer)
+        )
+        .lines[2][0]
+        .get_segments()[0]
+    )
+    assert interval[:, 1].tolist() == expected and expected[0] < expected[1]

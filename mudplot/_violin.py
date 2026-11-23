@@ -185,7 +185,9 @@ def _count_ratio(cell, comparison):
     return ratio
 
 
-def prepare_violin(cells, layer, *, log_value=False, weights=None):
+def prepare_violin(
+    cells, layer, *, log_value=False, weights=None, normalization_hues=None
+):
     """Fit all cells before normalization; references are per hue or global."""
     clip = layer.clip
     if clip is not None:
@@ -205,15 +207,61 @@ def prepare_violin(cells, layer, *, log_value=False, weights=None):
             )
     references = {}
     for key, cell in profiles.items():
-        refkey = None if layer.common_norm else key[0]
+        refkey = (
+            None
+            if layer.common_norm
+            else (key[0] if normalization_hues is None else normalization_hues[key[0]])
+        )
         references.setdefault(refkey, []).append(cell)
+    peaks, ratios = {}, {}
+    if normalization_hues is not None:
+        # New tuple partitions compare by effective hue/global pool. Resolve
+        # each pool once; fitting and relative-mass arithmetic remain unchanged.
+        for refkey, comparison in references.items():
+            if layer.density_norm == "area":
+                peaks[refkey] = max(
+                    (c.density.max() for c in comparison if not c.singular),
+                    default=0,
+                )
+            elif layer.density_norm == "count":
+                if weights is None:
+                    maximum = max(len(c.observations) for c in comparison)
+                    for c in comparison:
+                        ratios[id(c)] = len(c.observations) / maximum
+                else:
+                    scale = max(float(np.max(c.weights)) for c in comparison)
+                    masses = [
+                        math.fsum((np.asarray(c.weights) / scale).tolist())
+                        for c in comparison
+                    ]
+                    maximum = max(masses)
+                    for c, mass in zip(comparison, masses, strict=True):
+                        ratio = mass / maximum
+                        if ratio <= 0:
+                            raise ValueError(
+                                "weighted violin count mass ratio is not representable"
+                            )
+                        ratios[id(c)] = ratio
     for key, cell in list(profiles.items()):
-        comparison = references[None if layer.common_norm else key[0]]
+        refkey = (
+            None
+            if layer.common_norm
+            else (key[0] if normalization_hues is None else normalization_hues[key[0]])
+        )
+        comparison = references[refkey]
         if layer.density_norm == "count":
-            ratio = _count_ratio(cell, comparison)
+            ratio = (
+                _count_ratio(cell, comparison)
+                if normalization_hues is None
+                else ratios[id(cell)]
+            )
             profile = cell.profile * ratio
         elif layer.density_norm == "area" and not cell.singular:
-            peak = max(c.density.max() for c in comparison if not c.singular)
+            peak = (
+                max(c.density.max() for c in comparison if not c.singular)
+                if normalization_hues is None
+                else peaks[refkey]
+            )
             profile = cell.density / peak
         else:
             # Point masses have no finite KDE height/area: a degenerate native body.
@@ -222,8 +270,86 @@ def prepare_violin(cells, layer, *, log_value=False, weights=None):
     return profiles
 
 
+def _native_legacy_violin(ax, contexts, positions, width, layer):
+    """Native unextended inner defaults from already fitted, observed profiles."""
+    import inspect
+
+    from ._components import (
+        apply_component_style,
+        finalize_component_stroke,
+        set_component_linestyle,
+    )
+
+    stats = [
+        {
+            "coords": cell.support,
+            "vals": cell.density,
+            "mean": float(np.mean(cell.observations)),
+            "median": float(np.median(cell.observations)),
+            "min": float(cell.observations.min()),
+            "max": float(cell.observations.max()),
+        }
+        for cell, _side in contexts
+    ]
+    components = layer.components
+    kwargs = {
+        "positions": positions,
+        "widths": width,
+        "showmedians": True if layer.showmedians is None else layer.showmedians,
+    }
+    # Match mudplot's existing native wrapper: forward only explicit flags;
+    # a new requested mean component enables that native mark when unspecified.
+    for name in ("showmeans", "showextrema"):
+        if getattr(layer, name) is not None:
+            kwargs[name] = getattr(layer, name)
+    if (
+        layer.showmeans is None
+        and components is not None
+        and components.mean is not None
+    ):
+        kwargs["showmeans"] = True
+    if "orientation" in inspect.signature(ax.violin).parameters:
+        kwargs["orientation"] = "horizontal" if layer.orient == "h" else "vertical"
+    else:
+        kwargs["vert"] = layer.orient != "h"
+    parts = ax.violin(stats, **kwargs)
+    by_role = {}
+    for name, role in (
+        ("cmeans", "mean"),
+        ("cmedians", "median"),
+        ("cmins", "extrema"),
+        ("cmaxes", "extrema"),
+        ("cbars", "extrema"),
+    ):
+        artist = parts.get(name)
+        if artist is None:
+            continue
+        if layer.edge_color is not None:
+            artist.set_color(layer.edge_color)
+        if layer.line_width is not None:
+            artist.set_linewidth(layer.line_width)
+        if layer.line_style is not None:
+            set_component_linestyle(artist, layer.line_style)
+        if components is not None:
+            style = getattr(components, role)
+            apply_component_style(artist, style)
+            if layer.line_style == "none" and (
+                style is None or style.line_style is None
+            ):
+                set_component_linestyle(artist, "none")
+        finalize_component_stroke(artist)
+        by_role.setdefault(role, []).append(artist)
+    for body in parts["bodies"]:
+        body._mudplot_violin_parts = by_role
+    return parts["bodies"]
+
+
 def violin_artists(ax, contexts, positions, width, layer):
     """Filled native collections, plus deterministic native inner lines/markers."""
+    from ._violin_options import extended_violin
+
+    if layer.inner == "legacy" and not extended_violin(layer):
+        return _native_legacy_violin(ax, contexts, positions, width, layer)
     horizontal = layer.orient == "h"
     width = 0.5 if width is None else width  # legacy one-column violin default
     color = layer.edge_color or "#4b5563"
@@ -231,23 +357,48 @@ def violin_artists(ax, contexts, positions, width, layer):
     linestyle = "-" if layer.line_style is None else layer.line_style
     marker = layer.marker or "o"
     markersize = 3 if layer.marker_size is None else layer.marker_size
+    components = layer.components
+    parts = {}
+
+    def styled(artist, role):
+        parts.setdefault(role, []).append(artist)
+        if components is not None:
+            from ._components import apply_component_style, set_component_linestyle
+
+            style = getattr(components, role)
+            if (
+                style is not None
+                and style.color is not None
+                and hasattr(artist, "set_markeredgecolor")
+            ):
+                # A glyph's component stroke is its edge; explicit edge_color
+                # below still wins, while its independently requested fill stays.
+                artist.set_markeredgecolor(style.color)
+            apply_component_style(artist, style)
+            if layer.line_style == "none" and (
+                style is None or style.line_style is None
+            ):
+                set_component_linestyle(artist, "none")
+        return artist
+
     bodies = []
 
-    def lines(segments, *, thick=1):
+    def lines(segments, *, thick=1, role):
         if horizontal:
             segments = [np.asarray(s)[:, ::-1] for s in segments]
         collection = LineCollection(
             segments,
             colors=color,
-            linewidths=linewidth * thick,
-            linestyles=linestyle,
+            linewidths=0 if linestyle == "none" else linewidth * thick,
+            linestyles="None" if linestyle == "none" else linestyle,
             label="_nolegend_",
         )
         ax.add_collection(collection)
+        styled(collection, role)
 
-    def points(categories, observations, *, white=False):
+    def points(categories, observations, *, white=False, role):
         x, y = (observations, categories) if horizontal else (categories, observations)
-        ax.plot(
+        (artist,) = ax.plot(
             x,
             y,
             linestyle="none",
@@ -258,13 +409,16 @@ def violin_artists(ax, contexts, positions, width, layer):
             markeredgewidth=linewidth,
             label="_nolegend_",
         )
+        styled(artist, role)
 
     for center, (cell, side) in zip(positions, contexts, strict=True):
+        parts = {}
         half = width / 2 * cell.profile
         lower = center - half if side <= 0 else np.full(len(half), center)
         upper = center + half if side >= 0 else np.full(len(half), center)
         draw = ax.fill_between if horizontal else ax.fill_betweenx
         bodies.append(draw(cell.support, lower, upper))
+        bodies[-1]._mudplot_violin_parts = parts
         data = cell.observations
         # Split box/points sit inside their own half, not on the shared seam.
         inner_center = center + side * width * cell.profile.max() / 4
@@ -281,31 +435,44 @@ def violin_artists(ax, contexts, positions, width, layer):
         if layer.inner is None:
             continue
         if layer.inner == "point":
-            points(np.repeat(inner_center, len(data)), data)
+            points(np.repeat(inner_center, len(data)), data, role="point")
         elif layer.inner == "stick":
-            lines(span(data))
+            lines(span(data), role="stick")
         elif layer.inner == "quart":
-            lines(span(_quartiles(cell)))
+            lines(span(_quartiles(cell)), role="quartile")
         elif layer.inner == "box":
             q1, median, q3 = _quartiles(cell)
             inside = data[
                 (data >= q1 - 1.5 * (q3 - q1)) & (data <= q3 + 1.5 * (q3 - q1))
             ]
             whislo, whishi = min(q1, inside.min()), max(q3, inside.max())
-            lines([((inner_center, whislo), (inner_center, whishi))])
-            lines([((inner_center, q1), (inner_center, q3))], thick=3)
-            points([inner_center], [median], white=True)
+            lines([((inner_center, whislo), (inner_center, whishi))], role="whisker")
+            lines([((inner_center, q1), (inner_center, q3))], thick=3, role="box")
+            points([inner_center], [median], white=True, role="median")
         else:  # legacy explicit mean/median/extrema on an extended density
-            if layer.showmeans:
-                lines(span([_mean(cell)]))
-            if layer.showextrema:
-                lines(span([data.min(), data.max()]))
-                lines([((inner_center, data.min()), (inner_center, data.max()))])
+            showmean = (
+                layer.showmeans
+                if layer.showmeans is not None
+                else (components is not None and components.mean is not None)
+            )
+            showextrema = (
+                layer.showextrema
+                if layer.showextrema is not None
+                else (components is not None and components.extrema is not None)
+            )
+            if showmean:
+                lines(span([_mean(cell)]), role="mean")
+            if showextrema:
+                lines(span([data.min(), data.max()]), role="extrema")
+                lines(
+                    [((inner_center, data.min()), (inner_center, data.max()))],
+                    role="extrema",
+                )
             if layer.showmedians is None or layer.showmedians:
                 median = (
                     float(np.median(data))
                     if cell.weights is None
                     else _quartiles(cell)[1]
                 )
-                lines(span([median]))
+                lines(span([median]), role="median")
     return bodies

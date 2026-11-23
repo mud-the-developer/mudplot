@@ -14,7 +14,8 @@ inside that one check only.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, field
+from typing import Any, cast
 
 from .spec import FigureSpec
 from .theme import JOURNAL_PROFILES, JournalProfile
@@ -28,6 +29,9 @@ _LEVEL_SYMBOL = {"ok": "\u2713", "warning": "\u26a0", "error": "\u2717"}
 class LintIssue:
     level: str  # "ok" | "warning" | "error"
     message: str
+    code: str = "style"
+    suggestion: str = ""
+    panel: int | None = None
 
     def __str__(self) -> str:
         return f"{_LEVEL_SYMBOL[self.level]} {self.message}"
@@ -36,6 +40,15 @@ class LintIssue:
 @dataclass(frozen=True)
 class LintReport:
     issues: tuple[LintIssue, ...]
+    measurements: dict[str, Any] = field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        """JSON-safe findings with repair suggestions and physical measurements."""
+        return {
+            "ok": self.ok,
+            "issues": [asdict(i) for i in self.issues],
+            "measurements": self.measurements,
+        }
 
     @property
     def ok(self) -> bool:
@@ -304,6 +317,8 @@ def lint_figure(
     journal: str | JournalProfile | None = None,
     min_font_pt: float | None = None,
     max_legend_entries: int | None = None,
+    visual: bool = False,
+    layout_policy: str | None = None,
 ) -> LintReport:
     """Run a publication-preflight pass over ``spec``.
 
@@ -321,6 +336,12 @@ def lint_figure(
     against; omit it to auto-detect from ``spec.journal`` (if set) or skip
     journal-specific checks.
     """
+    if layout_policy is not None and not visual:
+        raise ValueError("layout_policy requires visual=True")
+    if layout_policy is not None:
+        from ._quality import prepare
+
+        spec = prepare(spec, layout_policy)
     target = journal if journal is not None else spec.journal
     if isinstance(target, JournalProfile):
         profile: JournalProfile | None = target
@@ -352,4 +373,23 @@ def lint_figure(
     _check_marker_style_repetition(spec, issues)
     _check_legend_size(spec, effective_max_legend, issues)
     _check_references(spec, issues)
-    return LintReport(tuple(issues))
+    measurements = {}
+    if visual:
+        import matplotlib.pyplot as plt
+
+        from ._quality import assess
+        from ._render import render
+
+        figure = render(spec, layout_policy=layout_policy)
+        try:
+            visual_font = (
+                effective_min_font if min_font_pt is not None or profile else 8.0
+            )
+            result = assess(figure, spec, min_font_pt=visual_font)
+            issues.extend(result.issues)
+            measurements = result.measurements
+            if layout_policy is not None:
+                measurements["repairs"] = cast(Any, figure).mudplot_quality["repairs"]
+        finally:
+            plt.close(figure)
+    return LintReport(tuple(issues), measurements)

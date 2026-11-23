@@ -108,6 +108,42 @@
         }
       ],
       "default": null
+    },
+    "facet_template": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/FacetTemplateSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "panel_layout": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PanelLayoutSpec"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "shared_guides": {
+      "anyOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SharedGuideSpec"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     }
   },
   "$defs": {
@@ -154,6 +190,22 @@
           "items": {
             "type": "string"
           }
+        },
+        "context": {
+          "anyOf": [
+            {
+              "enum": [
+                "paper",
+                "notebook",
+                "talk",
+                "poster"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
     },
@@ -290,6 +342,22 @@
         "cvd_safe": {
           "type": "boolean",
           "default": true
+        },
+        "colors": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "maxItems": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
     },
@@ -300,7 +368,23 @@
           "type": "object"
         },
         "matrices": {
-          "type": "object"
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          }
         }
       }
     },
@@ -407,6 +491,74 @@
           "items": {
             "type": "string"
           }
+        },
+        "secondary_x": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SecondaryAxisSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "secondary_y": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SecondaryAxisSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "panel_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "placement": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PanelPlacementSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "camera3d": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Camera3DSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grid_cohort": {
+          "anyOf": [
+            {
+              "enum": [
+                true
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
     },
@@ -871,10 +1023,41 @@
               "type": "integer"
             },
             {
+              "type": "string"
+            },
+            {
               "type": "array",
               "items": {
                 "type": "number"
               }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "$ref": "#/$defs/BivariateBinsSpec"
             }
           ],
           "default": 20
@@ -1131,6 +1314,9 @@
                     "type": "number"
                   },
                   {
+                    "type": "string"
+                  },
+                  {
                     "type": "null"
                   }
                 ]
@@ -1343,6 +1529,346 @@
           "anyOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "strip": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StripSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pack_scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "spectrum": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpectrumSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "box": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoxSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "violin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ViolinSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "boxen": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoxenSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "histogram2d": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Histogram2DSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ecdf2d": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ECDF2DSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "line": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LineSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "transforms": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/TransformSpec"
+              },
+              "minItems": 1,
+              "maxItems": 4
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stairs": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StairsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "lane_step": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "grid": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GridFieldSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "triangulation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TriangulationSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vector": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/VectorSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "w": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "spatial": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpatialSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scalar_display": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScalarDisplaySpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "raw_guide_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "native_style": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "segments": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SegmentSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "error_magnitudes": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ErrorMagnitudesSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fill": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FillSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "span": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SpanSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bar_geometry": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BarGeometrySpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pie_geometry": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PieGeometrySpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "patch": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PatchSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "table": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LiteralTableSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "annotation": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AnnotationSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "path_effects": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/PathEffectSpec"
+              },
+              "minItems": 1,
+              "maxItems": 2
             },
             {
               "type": "null"
@@ -1566,6 +2092,17 @@
         "normalize": {
           "type": "string",
           "default": "count"
+        },
+        "normalize_scope": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
@@ -1594,6 +2131,62 @@
         }
       },
       "additionalProperties": false
+    },
+    "BivariateBinsSpec": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ]
     },
     "HistogramSpec": {
       "type": "object",
@@ -1628,6 +2221,17 @@
         "element": {
           "type": "string",
           "default": "bars"
+        },
+        "fill": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
@@ -1679,6 +2283,9 @@
                     "type": "number"
                   },
                   {
+                    "type": "string"
+                  },
+                  {
                     "type": "null"
                   }
                 ]
@@ -1709,6 +2316,39 @@
         "warn_singular": {
           "type": "boolean",
           "default": true
+        },
+        "kernel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "multiple": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "density_space": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
@@ -1762,6 +2402,9 @@
                       "type": "number"
                     },
                     {
+                      "type": "string"
+                    },
+                    {
                       "type": "null"
                     }
                   ]
@@ -1795,6 +2438,89 @@
         "warn_singular": {
           "type": "boolean",
           "default": true
+        },
+        "kernel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cumulative": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "level_kind": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fit_scales": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "density_space": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hdr": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/HDRSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "HDRSpec": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string",
+          "default": "full"
+        },
+        "tolerance": {
+          "type": "number",
+          "default": 0.01
         }
       },
       "additionalProperties": false
@@ -1817,69 +2543,159 @@
         "iterations": {
           "type": "integer",
           "default": 3
+        },
+        "bootstrap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionBootstrapSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "partial": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionPartialSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "sampling": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionSamplingSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "diagnostics": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionDiagnosticsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "components": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/RegressionComponentsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
     },
-    "DistributionComponentsSpec": {
+    "RegressionBootstrapSpec": {
       "type": "object",
       "properties": {
-        "body": {
+        "n_boot": {
+          "type": "integer",
+          "default": 1000
+        },
+        "seed": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "RegressionPartialSpec": {
+      "type": "object",
+      "properties": {
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "reference": {
+          "type": "object"
+        },
+        "method": {
+          "type": "string",
+          "default": "joint"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "columns",
+        "reference"
+      ]
+    },
+    "RegressionSamplingSpec": {
+      "type": "object",
+      "properties": {
+        "train": {
+          "type": "object"
+        },
+        "query": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "train",
+        "query"
+      ]
+    },
+    "RegressionDiagnosticsSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "raw"
+        },
+        "trend": {
           "anyOf": [
             {
-              "$ref": "#/$defs/ComponentStyleSpec"
+              "$ref": "#/$defs/RegressionTrendSpec"
             },
             {
               "type": "null"
             }
           ],
           "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "RegressionTrendSpec": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "default": "lowess"
         },
-        "whisker": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ComponentStyleSpec"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+        "degree": {
+          "type": "integer",
+          "default": 1
         },
-        "cap": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ComponentStyleSpec"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+        "frac": {
+          "type": "number",
+          "default": 0.6666666666666666
         },
-        "median": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ComponentStyleSpec"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
+        "iterations": {
+          "type": "integer",
+          "default": 3
         },
-        "mean": {
-          "anyOf": [
-            {
-              "$ref": "#/$defs/ComponentStyleSpec"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "default": null
-        },
-        "flier": {
+        "style": {
           "anyOf": [
             {
               "$ref": "#/$defs/ComponentStyleSpec"
@@ -2009,6 +2825,169 @@
       },
       "additionalProperties": false
     },
+    "RegressionComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "fit": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scatter": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "show_fit": {
+          "type": "boolean",
+          "default": true
+        },
+        "show_scatter": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "DistributionComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "whisker": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cap": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "median": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flier": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "box": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "quartile": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "point": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "stick": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extrema": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ComponentStyleSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
     "HeatmapSpec": {
       "type": "object",
       "properties": {
@@ -2109,6 +3088,172 @@
         "square": {
           "type": "boolean",
           "default": false
+        },
+        "annot_data": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "xrotation": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "yrotation": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "linthresh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "gamma": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "boundaries": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "colorbar_options": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ColorbarOptionsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ColorbarOptionsSpec": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ticks": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "tick_format": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pad": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extend": {
+          "anyOf": [
+            {
+              "enum": [
+                "neither",
+                "min",
+                "max",
+                "both"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
@@ -2231,9 +3376,2506 @@
         "tree_color": {
           "type": "string",
           "default": "#475569"
+        },
+        "missing": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_distances": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CondensedDistanceSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_distances": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CondensedDistanceSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_cut": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ClusterCutSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_cut": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ClusterCutSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_tracks": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ClusterTrackSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_tracks": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ClusterTrackSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_dendrogram_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col_dendrogram_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "track_legend_side": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       },
       "additionalProperties": false
+    },
+    "CondensedDistanceSpec": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "values"
+      ]
+    },
+    "ClusterCutSpec": {
+      "type": "object",
+      "properties": {
+        "height": {
+          "type": "number"
+        },
+        "anchor": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "height"
+      ]
+    },
+    "ClusterTrackSpec": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "levels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ClusterTrackLevelSpec"
+          }
+        },
+        "ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "legend": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "values",
+        "levels"
+      ]
+    },
+    "ClusterTrackLevelSpec": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "label",
+        "color"
+      ]
+    },
+    "StripSpec": {
+      "type": "object",
+      "properties": {
+        "jitter_policy": {
+          "type": "string",
+          "default": "uniform"
+        },
+        "seed": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "SpectrumSpec": {
+      "type": "object",
+      "properties": {
+        "fs": {
+          "type": "number"
+        },
+        "kind": {
+          "type": "string",
+          "default": "psd"
+        },
+        "nfft": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pad_to": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "overlap": {
+          "type": "integer",
+          "default": 0
+        },
+        "window": {
+          "type": "string",
+          "default": "hann"
+        },
+        "detrend": {
+          "type": "string",
+          "default": "none"
+        },
+        "sides": {
+          "type": "string",
+          "default": "onesided"
+        },
+        "scaling": {
+          "type": "string",
+          "default": "density"
+        },
+        "scale": {
+          "type": "string",
+          "default": "linear"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "fs"
+      ]
+    },
+    "BoxSpec": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoxSummarySpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "median_ci": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/BoxMedianCISpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cap_fraction": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_components": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/BoxHueComponentsSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "BoxSummarySpec": {
+      "type": "object",
+      "properties": {
+        "q1": {
+          "type": "string"
+        },
+        "q3": {
+          "type": "string"
+        },
+        "whislo": {
+          "type": "string"
+        },
+        "whishi": {
+          "type": "string"
+        },
+        "mean": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cilo": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cihi": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "fliers": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "q1",
+        "q3",
+        "whislo",
+        "whishi"
+      ]
+    },
+    "BoxMedianCISpec": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "number",
+          "default": 95.0
+        },
+        "n_boot": {
+          "type": "integer",
+          "default": 1000
+        },
+        "seed": {
+          "type": "integer",
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "BoxHueComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "level": {},
+        "components": {
+          "$ref": "#/$defs/DistributionComponentsSpec"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "components"
+      ]
+    },
+    "ViolinSpec": {
+      "type": "object",
+      "properties": {
+        "split_policy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_components": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/ViolinHueComponentsSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ViolinHueComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "level": {},
+        "components": {
+          "$ref": "#/$defs/DistributionComponentsSpec"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "level",
+        "components"
+      ]
+    },
+    "BoxenSpec": {
+      "type": "object",
+      "properties": {
+        "band_components": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/BoxenBandComponentsSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "hue_components": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/BoxenHueComponentsSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "BoxenBandComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "rank": {
+          "type": "integer"
+        },
+        "side": {
+          "type": "string"
+        },
+        "body": {
+          "$ref": "#/$defs/ComponentStyleSpec"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "rank",
+        "side",
+        "body"
+      ]
+    },
+    "BoxenHueComponentsSpec": {
+      "type": "object",
+      "properties": {
+        "level": {},
+        "components": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/DistributionComponentsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "band_components": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/BoxenBandComponentsSpec"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "level"
+      ]
+    },
+    "Histogram2DSpec": {
+      "type": "object",
+      "properties": {
+        "stat": {
+          "type": "string",
+          "default": "count"
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "common_norm": {
+          "type": "boolean",
+          "default": true
+        },
+        "kde": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/KDE2DSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ECDF2DSpec": {
+      "type": "object",
+      "properties": {
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "stat": {
+          "type": "string",
+          "default": "proportion"
+        },
+        "complementary": {
+          "type": "boolean",
+          "default": false
+        },
+        "weights": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "query_x": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "query_y": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "bounds"
+      ]
+    },
+    "LineSpec": {
+      "type": "object",
+      "properties": {
+        "predictor": {
+          "type": "string",
+          "default": "native"
+        },
+        "resampling": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "calibration": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "family": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "TransformSpec": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "enum": [
+            "x",
+            "y"
+          ]
+        },
+        "name": {
+          "enum": [
+            "identity",
+            "log",
+            "standardize"
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "role",
+        "name"
+      ]
+    },
+    "StairsSpec": {
+      "type": "object",
+      "properties": {
+        "fill": {
+          "type": "boolean",
+          "default": false
+        },
+        "open": {
+          "type": "boolean",
+          "default": false
+        },
+        "bin_index": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rebin": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/StairsRebinSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "StairsRebinSpec": {
+      "type": "object",
+      "properties": {
+        "edges": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "minItems": 2,
+          "maxItems": 10001
+        },
+        "measure": {
+          "enum": [
+            "mass",
+            "density"
+          ],
+          "default": "mass"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "edges"
+      ]
+    },
+    "GridFieldSpec": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "position": {
+          "anyOf": [
+            {
+              "enum": [
+                "centers",
+                "edges"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "shading": {
+          "anyOf": [
+            {
+              "enum": [
+                "flat",
+                "nearest"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extent": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "enum": [
+                "upper",
+                "lower"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pixels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mask": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "corner_mask": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extend": {
+          "anyOf": [
+            {
+              "enum": [
+                "neither",
+                "min",
+                "max",
+                "both"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_levels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "g",
+                ".1f",
+                ".2f",
+                ".3f"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_inline": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "TriangulationSpec": {
+      "type": "object",
+      "properties": {
+        "triangles": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        },
+        "mask": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "boolean"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scalar_role": {
+          "anyOf": [
+            {
+              "enum": [
+                "vertex",
+                "face"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "face_values": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "extend": {
+          "anyOf": [
+            {
+              "enum": [
+                "neither",
+                "min",
+                "max",
+                "both"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_levels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "g",
+                ".1f",
+                ".2f",
+                ".3f"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_inline": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "triangles"
+      ]
+    },
+    "VectorSpec": {
+      "type": "object",
+      "properties": {
+        "mask_column": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mode": {
+          "anyOf": [
+            {
+              "enum": [
+                "data",
+                "display"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pivot": {
+          "anyOf": [
+            {
+              "enum": [
+                "tail",
+                "middle",
+                "tip"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scale_units": {
+          "anyOf": [
+            {
+              "enum": [
+                "xy",
+                "inches",
+                "width",
+                "dots"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width_units": {
+          "anyOf": [
+            {
+              "enum": [
+                "inches",
+                "width",
+                "dots"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "headwidth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "headlength": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "headaxislength": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "length": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "half": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "full": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flag": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rounding": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "flip_barb": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "normalize": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "arrow_length_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "x_coords": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y_coords": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "u_matrix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "v_matrix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mask": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "start_points": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "density": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "minlength": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "maxlength": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "integration_direction": {
+          "anyOf": [
+            {
+              "enum": [
+                "both",
+                "forward",
+                "backward"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "arrowsize": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "SpatialSpec": {
+      "type": "object",
+      "properties": {
+        "x_coords": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y_coords": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "z_coords": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dx": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dy": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "dz": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "occupancy": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "direction": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ScalarDisplaySpec": {
+      "type": "object",
+      "properties": {
+        "cmap": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "colors": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 2,
+              "maxItems": 64
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "under": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "over": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "bad": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "norm": {
+          "enum": [
+            "linear",
+            "log",
+            "centered",
+            "two_slope",
+            "boundary"
+          ],
+          "default": "linear"
+        },
+        "vmin": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vmax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "center": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "boundaries": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 2,
+              "maxItems": 65
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scale_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "colorbar_options": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ColorbarOptionsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "SegmentSpec": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "start": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "end": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "at",
+        "start",
+        "end"
+      ]
+    },
+    "ErrorMagnitudesSpec": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "y": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "FillSpec": {
+      "type": "object",
+      "properties": {
+        "where": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "step": {
+          "anyOf": [
+            {
+              "enum": [
+                "pre",
+                "post",
+                "mid"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "interpolate": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "SpanSpec": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "end": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "fractions": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "start",
+        "end"
+      ]
+    },
+    "BarGeometrySpec": {
+      "type": "object",
+      "properties": {
+        "bottom": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            }
+          ],
+          "default": 0.0
+        },
+        "align": {
+          "enum": [
+            "center",
+            "edge"
+          ],
+          "default": "center"
+        },
+        "multiple": {
+          "enum": [
+            "dodge",
+            "stack",
+            "layer"
+          ],
+          "default": "dodge"
+        },
+        "styles": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ComponentStyleSpec"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value_format": {
+          "anyOf": [
+            {
+              "enum": [
+                "g",
+                ".0f",
+                ".1f",
+                ".2f"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_padding": {
+          "type": "number",
+          "default": 3.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "PieGeometrySpec": {
+      "type": "object",
+      "properties": {
+        "start_angle": {
+          "type": "number",
+          "default": 0.0
+        },
+        "counterclock": {
+          "type": "boolean",
+          "default": true
+        },
+        "normalize": {
+          "type": "boolean",
+          "default": true
+        },
+        "radius": {
+          "type": "number",
+          "default": 1.0
+        },
+        "center": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "explode": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "styles": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/ComponentStyleSpec"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "labels": {
+          "type": "boolean",
+          "default": true
+        },
+        "label_distance": {
+          "type": "number",
+          "default": 1.1
+        },
+        "rotate_labels": {
+          "type": "boolean",
+          "default": false
+        },
+        "text_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "text_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value": {
+          "anyOf": [
+            {
+              "enum": [
+                "raw",
+                "percent"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "value_format": {
+          "enum": [
+            "g",
+            ".0f",
+            ".1f",
+            ".2f"
+          ],
+          "default": ".1f"
+        },
+        "value_distance": {
+          "type": "number",
+          "default": 0.6
+        },
+        "annotations": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "PatchSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "rectangle",
+            "ellipse",
+            "polygon",
+            "path"
+          ]
+        },
+        "vertices": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            }
+          }
+        },
+        "codes": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "enum": [
+                  "MOVETO",
+                  "LINETO",
+                  "CURVE3",
+                  "CURVE4",
+                  "CLOSEPOLY"
+                ]
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "coordinates": {
+          "enum": [
+            "data",
+            "axes",
+            "figure"
+          ],
+          "default": "data"
+        },
+        "fill": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "vertices"
+      ]
+    },
+    "LiteralTableSpec": {
+      "type": "object",
+      "properties": {
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "bbox": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "row_labels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "column_labels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alignment": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "center"
+        },
+        "edges": {
+          "enum": [
+            "closed",
+            "open",
+            "horizontal",
+            "vertical"
+          ],
+          "default": "closed"
+        },
+        "font_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "cell_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "header_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "text_color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "cells",
+        "bbox"
+      ]
+    },
+    "AnnotationSpec": {
+      "type": "object",
+      "properties": {
+        "at_coordinates": {
+          "enum": [
+            "data",
+            "axes",
+            "figure"
+          ],
+          "default": "data"
+        },
+        "to_coordinates": {
+          "anyOf": [
+            {
+              "enum": [
+                "data",
+                "axes",
+                "figure"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "arrow": {
+          "anyOf": [
+            {
+              "enum": [
+                "none",
+                "line",
+                "open",
+                "filled"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "align": {
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "left"
+        },
+        "vertical_align": {
+          "enum": [
+            "baseline",
+            "bottom",
+            "center",
+            "top"
+          ],
+          "default": "baseline"
+        },
+        "font_size": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rotation": {
+          "type": "number",
+          "default": 0.0
+        }
+      },
+      "additionalProperties": false
+    },
+    "PathEffectSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "stroke",
+            "shadow"
+          ]
+        },
+        "color": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "alpha": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ]
     },
     "AxisSpec": {
       "type": "object",
@@ -2270,8 +5912,556 @@
             }
           ],
           "default": null
+        },
+        "temporal": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TemporalSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scale_options": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScaleOptionsSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "major_ticks": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TickSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "minor_ticks": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TickSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
+    },
+    "TemporalSpec": {
+      "type": "object",
+      "properties": {
+        "timezone": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "origin": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "ScaleOptionsSpec": {
+      "type": "object",
+      "properties": {
+        "base": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "subs": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "linthresh": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "linscale": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "linear_width": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "TickSpec": {
+      "type": "object",
+      "properties": {
+        "locator": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/LocatorSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "formatter": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/FormatterSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "rotation": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocatorSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "auto"
+        },
+        "values": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "step": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "nbins": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "integer": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prune": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "subdivisions": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "subs": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "interval": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "weekday": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "FormatterSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "default": "auto"
+        },
+        "labels": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "scientific": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "use_offset": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "powerlimits": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "mathtext": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "notation": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "precision": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "prefix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "suffix": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "xmax": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "decimals": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "separator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "style": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "label_only_base": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "half": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "use_overline": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "pattern": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
     },
     "LegendSpec": {
       "type": "object",
@@ -2312,8 +6502,528 @@
         "frame": {
           "type": "boolean",
           "default": false
+        },
+        "ncols": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "handler": {
+          "anyOf": [
+            {
+              "enum": [
+                "line-pair",
+                "scatter-pair"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
         }
       }
+    },
+    "SecondaryAxisSpec": {
+      "type": "object",
+      "properties": {
+        "transform": {
+          "$ref": "#/$defs/AxisTransformSpec"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "major_ticks": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TickSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "minor_ticks": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TickSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "transform"
+      ]
+    },
+    "AxisTransformSpec": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "factor": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "offset": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "source_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "target_unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "reverse": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ]
+    },
+    "PanelPlacementSpec": {
+      "type": "object",
+      "properties": {
+        "cell": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GridCellSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "inset": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/InsetSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "GridCellSpec": {
+      "type": "object",
+      "properties": {
+        "grid": {
+          "type": "string"
+        },
+        "row": {
+          "type": "integer"
+        },
+        "col": {
+          "type": "integer"
+        },
+        "row_span": {
+          "type": "integer",
+          "default": 1
+        },
+        "col_span": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "grid",
+        "row",
+        "col"
+      ]
+    },
+    "InsetSpec": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string"
+        },
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "parent",
+        "bounds"
+      ]
+    },
+    "Camera3DSpec": {
+      "type": "object",
+      "properties": {
+        "elevation": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "azimuth": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "roll": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "vertical_axis": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "projection": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "focal_length": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "box_aspect": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "zoom": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false
+    },
+    "FacetTemplateSpec": {
+      "type": "object",
+      "properties": {
+        "template": {
+          "$ref": "#/$defs/PanelSpec"
+        },
+        "selectors": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "row": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "col": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "row_order": {
+          "type": "array",
+          "items": {}
+        },
+        "col_order": {
+          "type": "array",
+          "items": {}
+        },
+        "col_wrap": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "template",
+        "selectors"
+      ]
+    },
+    "PanelLayoutSpec": {
+      "type": "object",
+      "properties": {
+        "grids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayoutGridSpec"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "grids"
+      ]
+    },
+    "LayoutGridSpec": {
+      "type": "object",
+      "properties": {
+        "grid_id": {
+          "type": "string"
+        },
+        "rows": {
+          "type": "integer"
+        },
+        "cols": {
+          "type": "integer"
+        },
+        "cell": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/GridCellSpec"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "width_ratios": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "height_ratios": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "grid_id",
+        "rows",
+        "cols"
+      ]
+    },
+    "SharedGuideSpec": {
+      "type": "object",
+      "properties": {
+        "scale_id": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string",
+          "default": "outside right"
+        },
+        "title": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "frame": {
+          "type": "boolean",
+          "default": false
+        },
+        "bbox_to_anchor": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "ncols": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "handler": {
+          "anyOf": [
+            {
+              "enum": [
+                "line-pair",
+                "scatter-pair"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "raw",
+                "scalar"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "scale_id"
+      ]
     }
   }
 }

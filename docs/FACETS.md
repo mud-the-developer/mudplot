@@ -1,4 +1,4 @@
-# Automatic facets: first supported subset
+# Automatic facets and finite figure builders
 
 *[한국어 / Korean](FACETS.ko.md)*
 
@@ -15,6 +15,53 @@ The example is designed for a 900px desktop display, not an arbitrary mobile
 thumbnail. All data are synthetic: each site contains six independent observations
 per method/timepoint. Bands are pointwise 95% percentile-bootstrap CIs for means,
 not SD, simultaneous bands or a pooled cross-site estimate.
+
+## Public builders
+
+`relplot`, `displot`, `catplot` and `lmplot` accept a table followed by logical
+`x` (and `y` for paired marks). The same names on `Plot` start from one empty
+configured panel; declare clocks, y2 and display scales before calling them.
+Each builder calls one existing mark and then `facet`; it stores the resulting
+ordinary actions, not a builder name or hidden data table.
+
+| Builder | Explicit `kind` values |
+|---|---|
+| `relplot` | `scatter`, `line`, `lineplot` (estimated) |
+| `displot` | `hist`, `kde`, `ecdf`, `rug`, `hist2d`, `kde2d`, `ecdf2d` |
+| `catplot` | `strip`, `swarm`, `box`, `boxen`, `violin`, `bar`, `point`, `count` |
+| `lmplot` | `regplot`, `residplot` |
+
+With `row=` or `col=`, builders default to `live=True`, accept the same
+orders/wrap/sharing controls as `facet`, and fit each cell independently. Without
+a facet dimension they build the single mark. The remaining keywords follow
+that mark's own typed options; unsupported combinations reject without
+changing the original plot or action history.
+
+```python
+p = mp.displot(rows, "dose", col="site", col_order=["A", "B", "Reserved"])
+q = (mp.plot(rows).secondary_yaxis("Response")
+     .date_axis("x", timezone="UTC")
+     .relplot("date", "response", axis="y2", c="temperature",
+              colorbar=True, col="site"))
+```
+
+Typed univariate histogram integer bins (default 20) resolve once from the
+selected usable values and save literal common edges. Supply explicit
+working-coordinate edges for transformed histograms, empty pools, or when
+scientific thresholds are fixed. KDE still fits within each cell.
+
+Semantic mappings can share one actual figure guide; eligible raw grouped
+line/scatter/bar builders also consolidate native handles in authored typed hue
+order, without turning reserved slots into entries or deleting other legends
+with the same text. Use `guide=False` to disable automatic role-legend
+consolidation. A legacy scatter `c` inside a facet becomes one named P01 scalar
+range using the legacy palette. Raw `c` is not converted by the x/y2 clock or
+treated as a group. `colorbar=True` requests one actual figure calibration;
+`colorbar=False` keeps the same mapping with no bar. Existing explicitly
+configured P01 local bars remain local unless a scalar figure guide is requested.
+An intentional `SharedGuideSpec(kind="scalar")` uses `ScalarDisplaySpec.scale_id`;
+`kind="raw"` uses `LayerSpec.raw_guide_id`. Omitted `kind` retains semantic
+`scale_id` membership. See [the runnable example](../examples/facet_builders.py).
 
 ## Build the template first
 
@@ -36,6 +83,10 @@ editable cells. Cell titles add facet keys. Figure size is **not** multiplied:
 set an appropriate total size explicitly. Use a suptitle for the overall question
 rather than a long template title repeated in every cell. Legends are copied;
 hide repeats explicitly, as above.
+
+For explicit semantic scale membership, `p.shared_guides([{"scale_id": "scope"}])`
+consolidates matching actual mapping guides once per figure while keeping dataset
+labels and unrelated scales. It does not infer membership from labels or panel IDs.
 
 ```python
 p.facet(row="batch", col="site", row_order=["B", "A"],
@@ -100,24 +151,46 @@ p = (mp.plot(raw).line("x", "y", group="method", hue_order=["B", "A"])
 # North still draws x=[2,1,1], y=[8,4,5]; it is not averaged to two points.
 ```
 
+## Supplied lines and complete-unit inference
+
+The [line workflow](LINE_WORKFLOW.md) supports numeric/real-clock native and
+declared categorical predictors, actual primary/y2 targets and v/h geometry.
+Raw hue/size/style keeps supplied order, duplicate predictors and missing barriers;
+it never calls lineplot averaging. A native estimate grid belongs to its raw curve,
+not the observed-x union of unrelated hues. Declared categorical slots remain pooled.
+Complete-unit inference selects the typed unit union inside each actual cell.
+Curve/layer simultaneous families never promise coverage across facet panels.
+
+`facet(live=True)` retains fixed selectors and an undrawn template. Local edits
+remain authoritative saved views; SetData and reopening never rematerialize them.
+Explicit whole-template replacement supersedes overrides while retaining N13
+IDs/nesting/placements, selected rows and scale_id guide membership. Reordering or
+renaming IDs needs no guide-panel-reference rewrite. Removing a live cell leaves
+saved materialized views. Both editors expose populated whole-template and
+figure-wide shared-guide actions; see the runnable `examples/line_workflow.py`.
+
+
 ## Limits are rejected, not silently converted
 
-- Primary Cartesian 2-D row-based layers only. No matrices, 3-D, polar, secondary
-  axes, pie/stackplot/vector/count-map faceting in this subset.
+- Cartesian 2-D row-based layers only. Line/lineplot, swarm, box, violin, boxen,
+  barplot and pointplot support their actual primary/y2 routes. Unrelated
+  secondary-axis guards remain; no matrices, 3-D, polar or pie/stackplot/vector/
+  count-map faceting is inferred.
 - Raw groups are **not** silently converted into estimated lineplots or
   barplots: duplicate-x trajectories and precomputed bar values retain their
   different meanings. Stackplot/vector/count-map faceting is still unsupported.
-- Legacy `c`/colourbars are unsupported; use explicit numeric SemanticSpec hue
-  for a shared mapping.
-- Histograms require `HistogramSpec` (for example `stat="density"`) and common
-  explicit bin edges. Legacy histogram behavior is not changed. KDE needs typed
-  KDESpec options; each cell fits its own bandwidth/density and may skip singular
-  cells under the existing rules.
-- Source layers must be valid before faceting. No arbitrary query strings,
-  callables, predicate evaluation or live template mapping.
+- Scalar `scatter(c=...)` is the native P01 exception described above; other
+  legacy `c` uses are not implicitly admitted. Numeric SemanticSpec hue remains
+  an independent alternative, not a conversion of scalar data.
+- Histograms need typed statistics and common edges; the integer-bin builder
+  resolves them once. KDE needs typed options and uses cell-local fits.
+- Source layers must be valid before faceting. There are no arbitrary query
+  strings, callables, runtime predicates or implicit live template callbacks.
   [Numeric pair matrices](PAIR_GRID.md) are a separate data-construction workflow.
-  [Joint histogram composition](JOINT_GRID.md) is a separate terminal workflow;
-  nested facet/joint grids remain unsupported.
+  [Joint histogram composition](JOINT_GRID.md) retains its separate constructor.
+  N13 can nest materialized grids and declare outer siblings through the public
+  [layout API](PANEL_LAYOUTS.md), preserving saved selectors and source rows.
+  Pair and joint workflows keep their own constructor and ownership rules.
 
 ## JSON, actions and editors
 

@@ -69,6 +69,7 @@ def theme_preset(name: str) -> ThemeSpec:
 
 
 AVAILABLE_THEMES = ("paper", "paper-grid", "minimal", "boxed", "publication")
+CONTEXT_SCALES = {"paper": 1.0, "notebook": 1.15, "talk": 1.40, "poster": 1.75}
 
 
 # --------------------------------------------------------------------------
@@ -278,6 +279,18 @@ def _ticks_rc(t: TicksSpec) -> dict:
 def _palette_rc(p: PaletteSpec, n: int = 10) -> dict:
     from cycler import cycler
 
+    if p.colors is not None:
+        from ._scalar_display import palette_issues
+
+        if problems := palette_issues(p):
+            raise ValueError("; ".join(problems))
+        count = max(n, len(p.colors))
+        return {
+            "axes.prop_cycle": cycler(
+                "color", [p.colors[i % len(p.colors)] for i in range(count)]
+            )
+        }
+
     from .color import palette as P
 
     if p.kind == "qualitative":
@@ -310,6 +323,17 @@ def spec_to_rcparams(
         "savefig.pad_inches": 0.05,
     }
     rc.update(_font_rc(theme.font))
+    if theme.context is not None:
+        factor = CONTEXT_SCALES[theme.context]
+        for key in (
+            "font.size",
+            "axes.titlesize",
+            "axes.labelsize",
+            "xtick.labelsize",
+            "ytick.labelsize",
+            "legend.fontsize",
+        ):
+            rc[key] *= factor
     rc.update(_axes_rc(theme.axes))
     rc.update(_grid_rc(theme.grid))
     rc.update(_ticks_rc(theme.ticks))

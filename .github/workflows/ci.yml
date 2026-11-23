@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 60
     strategy:
       matrix:
-        python-version: ["3.10", "3.12"]
+        python-version: ["3.11", "3.12"]
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
@@ -115,8 +115,22 @@ jobs:
       - name: Rust editor real-browser smoke test
         if: matrix.python-version == '3.12'
         run: uv run python scripts/rust_editor_smoke_test.py --browser
+      - name: Required specialized Rust browser consumers (source bridge)
+        if: matrix.python-version == '3.12'
+        env:
+          CARGO_TARGET_DIR: ${{ runner.temp }}/mudplot-specialized-target
+          MUDPLOT_BRIDGE_SOURCE_ROOT: ${{ github.workspace }}
+          MUDPLOT_REQUIRE_BROWSER: "1"
+          MPLBACKEND: Agg
+        run: |
+          sudo apt-get install -y poppler-utils
+          cargo build --locked --manifest-path mudplot-editor/Cargo.toml
+          MUDPLOT_EDITOR_BIN="$CARGO_TARGET_DIR/debug/mudplot-editor" \
+          MUDPLOT_BRIDGE_PYTHON="$PWD/.venv/bin/python" \
+            uv run --no-sync pytest -q tests/test_rust_specialized_controls.py \
+              --junitxml=ci-specialized-browser.xml
       - name: Sdist/wheel rebuild and contents are complete
-        run: uv run python scripts/check_wheel.py
+        run: uv run python scripts/check_wheel.py --render
 
   minimum-render:
     runs-on: ubuntu-latest
@@ -128,8 +142,8 @@ jobs:
       - name: Install uv for the isolated dependency floor
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4
         with:
-          python-version: "3.10"
-          cache-suffix: minimum-python-3.10
+          python-version: "3.11"
+          cache-suffix: minimum-python-3.11
           cache-dependency-glob: |
             uv.lock
             scripts/check_minimum_versions.py.lock
@@ -159,7 +173,7 @@ jobs:
         env:
           PYTEST_ADDOPTS: "--junitxml=minimum-results.xml"
         run: >-
-          uv run --python 3.10 --locked --script
+          uv run --python 3.11 --locked --script
           scripts/check_minimum_versions.py
       - name: Required minimum TeX paths executed
         if: always()

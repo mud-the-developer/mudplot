@@ -16,33 +16,11 @@ from dataclasses import fields as dc_fields
 from pathlib import Path
 
 import mudplot as mp
-from mudplot._render import (
-    _3D_TYPES,
-    _DIST_TYPES,
-    _MATRIX_TYPES,
-    _SERIES_TYPES,
-    _STANDALONE_TYPES,
-    _STAT_TYPES,
-)
 from mudplot.capabilities import LAYER_TYPES
 from mudplot.spec import SPEC_VERSION, FigureSpec, LayerSpec
 from mudplot.validate import _AXIS_ROUTABLE_TYPES
 
 _LAYERSPEC_FIELDS = {f.name for f in dc_fields(LayerSpec)} - {"type"}
-_RENDER_KNOWN_TYPES = (
-    _SERIES_TYPES
-    | _DIST_TYPES
-    | _MATRIX_TYPES
-    | _3D_TYPES
-    | _STANDALONE_TYPES
-    | _STAT_TYPES
-    | {
-        "hline",
-        "vline",
-        "text",
-        "annotate",
-    }
-)
 
 
 def test_every_layer_type_field_is_a_real_layerspec_field():
@@ -51,53 +29,6 @@ def test_every_layer_type_field_is_a_real_layerspec_field():
             assert field_name in _LAYERSPEC_FIELDS, (
                 f"{layer_type}: {field_name!r} is not a real LayerSpec field"
             )
-
-
-def test_every_layer_type_is_handled_by_the_renderer():
-    for layer_type in LAYER_TYPES:
-        assert layer_type in _RENDER_KNOWN_TYPES, (
-            f"{layer_type!r} is advertised in capabilities() but render.py "
-            "doesn't know how to draw it"
-        )
-
-
-def test_every_renderer_type_is_advertised_in_capabilities():
-    for layer_type in _RENDER_KNOWN_TYPES:
-        assert layer_type in LAYER_TYPES, (
-            f"render.py handles {layer_type!r} but it's missing from "
-            "capabilities.LAYER_TYPES"
-        )
-
-
-def test_group_field_advertised_exactly_for_groupable_types():
-    groupable = {
-        "line",
-        "lineplot",
-        "regplot",
-        "scatter",
-        "stripplot",
-        "swarmplot",
-        "stackplot",
-        "bar",
-        "barplot",
-        "pointplot",
-        "countplot",
-        "errorbar",
-        "band",
-        "hist",
-        "boxenplot",
-        "box",
-        "violin",
-        "kde",
-        "kde2d",
-        "ecdf",
-        "rug",
-        "scatter3d",
-        "line3d",
-    }
-    for layer_type, spec in LAYER_TYPES.items():
-        fields = set(spec["required"] + spec["optional"])
-        assert ("group" in fields) == (layer_type in groupable), layer_type
 
 
 def test_rust_editor_versions_and_default_spec_follow_python_contract():

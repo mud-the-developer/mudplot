@@ -64,10 +64,9 @@ failure는 state/history를 바꾸기 전에 거부됩니다. 폼 제출은 전�
 htmx 1.9.12(0BSD, `dashboard/static/htmx.min.js`로 vendoring, 새 Python
 의존성 없음)로 그 자리에서 갱신됩니다. 공식 배포 파일의 SHA-256은
 `scripts/check_wheel.py`에서 고정·검증합니다. 상단 **Editor**/**Docs** 탭의 `Docs`는
-`mp.reference_markdown()`을 라이브 렌더링합니다. 미리보기 위에서 범례(파란
-✥)·제목(보라 T)·`text`/`annotate` 레이어(초록 •) 핸들을 드래그하거나
-클릭 후 화살표 키로 직접 재배치할 수 있습니다. 자세한 설명은 영어
-README.md 참고.
+`mp.reference_markdown()`을 라이브 렌더링합니다. Position에서 제목·범례 위치를 활성화하고, text/annotate는 자동 생성 핸들을 마우스나 방향키로 이동합니다. Shift는 이동 폭을 늘립니다. 제목은 Cartesian/polar axes fraction, 범례는 figure fraction, text/annotate는 선택 패널 기본/y2의 데이터 좌표를 사용합니다. 반전·log·날짜 축의 의미를 보존하며 지원하지 않는 polar data-anchor 및 3-D 제목/data 이동은 제공하지 않습니다.
+
+두 editor는 외부 interaction JavaScript와 설치 가능한 native preview metadata를 공유합니다. 한 저장 figure의 실제 PNG canvas와 artist anchor를 사용하므로 소수 크기×DPI 절삭과 CSS zoom/HiDPI를 좌표 추정으로 대체하지 않습니다. 축 속성 편집은 기존 시간대·단위·원점·공유 설정을 유지합니다. 구체적인 비교와 Rust 수명주기 증거는 [CND01 근거](../docs/review_evidence/v2_rust_specialized_controls.json)에 있으며 전체 v2 자격 검증을 뜻하지 않습니다.
 
 - `site.py` — `mudplot.reference_markdown()` / `mudplot.capabilities()` 로
   엔진 레퍼런스를 만들고, 등록된 전체 layer 실행 예제와 디자인 원칙(팔레트

@@ -1,0 +1,906 @@
+{
+  "scope": [
+    "CND01 evaluation and triggered implementation",
+    "relevant E01 lifecycle only"
+  ],
+  "status": "implemented and locally qualified in isolated copy; parent review/integration not authorized by this receipt",
+  "condition": "TRIGGERED: actual Rust browser had no usable second-panel axis forms or movement handles; actual Python controls performed those edits",
+  "compatibility": "No BREAKING Python/schema/action/default/dependency/security change; additive --editor-metadata CLI option and local specialized-control routes. Package1.1.0/schema0.1 retained.",
+  "baseline": "$LOCAL_EVIDENCE/location-68",
+  "worktree": "$LOCAL_EVIDENCE/location-69",
+  "main_checkout": "read-only; no main edits/git mutation/publication/auth changes",
+  "design": {
+    "selection": "UI-only active panel; effective renderer panel count supports sparse legacy documents without unrequested panel/axis materialization",
+    "axes": "granular existing actions retain clocks/units/origins/sharing; y2 enable/remove and initial3D z setup remain explicit",
+    "preview": "one bounded saved native figure gives PNG plus all panel/artist metadata; shared installed mudplot helper has no dashboard import",
+    "coordinates": "actual PNG canvas dimensions and native axes/figure frames; secondary axes and original layer indices; one shared JS log inverse, no duplicate date converter",
+    "ownership": "successful previews move Vec into Axum Bytes once; cheap response clone; spec/history ownership moves after successful render",
+    "interaction": "revision-bound PNG/edits and generation-ordered fragments; trusted primary-pointer ID ownership; key intent survives immediate click/cancel; desktop independent bounded inspector and mobile normal flow",
+    "metadata_preservation": "referenced title text edit retains citation/href; existing SetLegend position update retains show/title/location/frame, with measured native bbox displacement from BEFORE bbox center"
+  },
+  "runtime": {
+    "python": "3.13.12",
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pillow": "13.0.0",
+    "rustc": "1.94.0 (4a4ef493e 2026-03-02)",
+    "chromium": "150.0.7871.100",
+    "module": "$LOCAL_EVIDENCE/location-70",
+    "playwright": "1.63.0"
+  },
+  "qualification": {
+    "rust_units": {
+      "passed": 21,
+      "ignored": 5,
+      "ignored_scope": "intentional subprocess helpers, not feature proof"
+    },
+    "installed_and_affected_python": {
+      "passed": 54,
+      "skipped": 0
+    },
+    "required_source_profile": {
+      "passed": 16,
+      "skipped": 0,
+      "module": "$LOCAL_EVIDENCE/location-71"
+    },
+    "installed_profile": {
+      "module": "$LOCAL_EVIDENCE/location-70"
+    },
+    "clock_gate_followthrough": {
+      "passed": 2,
+      "deselected": 14
+    },
+    "fractional": {
+      "requested_pixels": [
+        787.5,
+        525.75
+      ],
+      "actual_pixels": [
+        787,
+        525
+      ],
+      "dpr": 2,
+      "css_zoom": 1.25,
+      "pointer_kinds": [
+        "title",
+        "legend",
+        "text",
+        "annotation"
+      ],
+      "maximum_pointer_pixel_error": 4.001776687800884e-11,
+      "maximum_keyboard_pixel_error": 5.820766091346741e-11
+    },
+    "legend_nondefault_reference": {
+      "location": "upper left",
+      "pointer_actual": [
+        990.0000337783063,
+        285.0000084447287
+      ],
+      "pointer_expected": [
+        990,
+        285
+      ],
+      "keyboard_actual": [
+        1014.0000337783063,
+        285.0000084447287
+      ],
+      "keyboard_expected": [
+        1014,
+        285
+      ],
+      "tolerance_native_pixels": 1
+    },
+    "downloads": "actual Chromium downloads decoded with Pillow/XML/pdfinfo; PNG native dimensions, SVG/PDF physical dimensions checked",
+    "visual_review": [
+      "installed/rust-specialized0/bounded-inspector-1400.png",
+      "installed/rust-specialized0/bounded-inspector-540.png",
+      "fractional/fractional.png",
+      "cartesian-initial/specialized-1-1400.png"
+    ]
+  },
+  "ci": {
+    "source_hooks": [
+      ".github/workflows/ci.yml",
+      ".github/workflows/release.yml"
+    ],
+    "required_flag": "MUDPLOT_REQUIRE_BROWSER=1",
+    "source_profile_env": "MUDPLOT_BRIDGE_SOURCE_ROOT",
+    "executed_here": "equivalent local required-source command, not remote GitHub CI",
+    "installed_proof": "separate explicit installed interpreter; no source fallback",
+    "tool_boundary": "Playwright Clock introduced1.45; capability gate fails required qualification if absent. Browser-extra floor1.40 unchanged; product UI/render does not require Playwright.",
+    "clock_reference": "https://playwright.dev/python/docs/api/class-clock",
+    "rug_owned_scripts": "not edited"
+  },
+  "commands_and_outcomes": [
+    {
+      "phase": "isolated baseline copy",
+      "command": "mkdir -p $LOCAL_EVIDENCE/location-68 $LOCAL_EVIDENCE/location-69 && rsync -a --exclude=.git --exclude=.pi --exclude=.venv --exclude=artifacts --exclude=target --exclude=__pycache__ --exclude=.pytest_cache --exclude=.mypy_cache --exclude=.ruff_cache $CHECKOUT $LOCAL_EVIDENCE/location-68/ && rsync -a $LOCAL_EVIDENCE/location-68/ $LOCAL_EVIDENCE/location-69/",
+      "outcome": "completed; copied Hypothesis cache was subsequently removed from both copies; main untouched"
+    },
+    {
+      "phase": "baseline Rust build",
+      "command": "env CARGO_TARGET_DIR=$LOCAL_EVIDENCE/location-72/target cargo build --manifest-path mudplot-editor/Cargo.toml",
+      "outcome": "passed",
+      "log": "baseline-build.log"
+    },
+    {
+      "phase": "baseline actual services",
+      "commands": [
+        "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg $LOCAL_EVIDENCE/location-73/mudplot-editor --bind 127.0.0.1:8891 --python $PROVIDER/environment-03/bin/python",
+        "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg $PROVIDER/environment-03/bin/python -c 'from dashboard.editor_server import serve; serve(port=8892)'"
+      ],
+      "outcome": "both served actual Chromium comparison; stopped after comparison"
+    },
+    {
+      "phase": "wheel builds/install",
+      "commands": [
+        "$PROVIDER/environment-03/bin/python -m build --wheel --outdir $LOCAL_EVIDENCE/location-72/dist",
+        "uv pip install --target $LOCAL_EVIDENCE/location-74 --no-deps $LOCAL_EVIDENCE/location-75/mudplot-1.1.0-py3-none-any.whl",
+        "uv pip install --target $LOCAL_EVIDENCE/location-74 --reinstall --no-deps $LOCAL_EVIDENCE/location-75/mudplot-1.1.0-py3-none-any.whl"
+      ],
+      "outcome": "passed after each implementation correction; repeated builds/reinstalls use the changed source, not remote publication; uv reported cross-filesystem hardlink fallback to copy"
+    },
+    {
+      "phase": "attempt1",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_review_coordinate_frames.py tests/test_dashboard_editor.py -q --basetemp=$LOCAL_EVIDENCE/location-77",
+      "outcome": "14 failed, 152 passed; nonexistent test loader, native metadata/legacy fixture migration, and preserved Python enable/reset semantics corrected",
+      "log": "regression-attempt-1.log"
+    },
+    {
+      "phase": "attempt2",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_review_coordinate_frames.py tests/test_dashboard_editor.py -q --basetemp=$LOCAL_EVIDENCE/location-78",
+      "outcome": "3 failed, 163 passed; real HTMX-disabled-control focus loss fixed via exact request-source provenance",
+      "log": "regression-attempt-2.log"
+    },
+    {
+      "phase": "attempt3",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -k '1-1-1400 or installed_cli' -q --basetemp=$LOCAL_EVIDENCE/location-79",
+      "outcome": "1 failed, 1 passed, 6 deselected; fixture compared sparse vs expanded defaults; fixture made typed/canonical without altering measurements",
+      "log": "regression-attempt-3.log"
+    },
+    {
+      "phase": "initial complete lifecycle",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -k '1-1-1400 or installed_cli' -q --basetemp=$LOCAL_EVIDENCE/location-80",
+      "outcome": "2 passed, 6 deselected"
+    },
+    {
+      "phase": "native canvas + Rust units",
+      "commands": [
+        "env CARGO_TARGET_DIR=$LOCAL_EVIDENCE/location-72/target cargo build --locked --manifest-path mudplot-editor/Cargo.toml",
+        "env CARGO_TARGET_DIR=$LOCAL_EVIDENCE/location-72/target cargo test --locked --manifest-path mudplot-editor/Cargo.toml",
+        "env MPLBACKEND=Agg $LOCAL_EVIDENCE/location-76 $LOCAL_EVIDENCE/location-72/fractional_case.py"
+      ],
+      "outcome": "Rust21 passed/5 intentional subprocess helper tests ignored; actual787x525 PNG vs requested787.5x525.75; four pointer+keyboard anchors matched native coordinates",
+      "log": "native-canvas-qualification.log"
+    },
+    {
+      "phase": "attempt4",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_dashboard_editor.py tests/test_review_coordinate_frames.py tests/test_editor_browser.py tests/test_review_coordinate_browser.py tests/test_review_hidpi_browser.py tests/test_review_gesture_browser.py tests/test_review_keyboard_browser.py tests/test_review_editor_recovery_browser.py tests/test_review_response_order_browser.py tests/test_review_shared_session_browser.py -q --basetemp=$LOCAL_EVIDENCE/location-81",
+      "outcome": "4 failed, 206 passed; view generation removed from cached native layout, a phantom-legend fixture gained a real labelled artist, and long pointer delivery investigated",
+      "log": "regression-attempt-4.log"
+    },
+    {
+      "phase": "attempt5",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_dashboard_editor.py tests/test_review_coordinate_frames.py tests/test_editor_browser.py tests/test_review_coordinate_browser.py tests/test_review_hidpi_browser.py tests/test_review_gesture_browser.py tests/test_review_keyboard_browser.py tests/test_review_editor_recovery_browser.py tests/test_review_response_order_browser.py tests/test_review_shared_session_browser.py -q --basetemp=$LOCAL_EVIDENCE/location-82",
+      "outcome": "1 failed, 209 passed; long legacy pointer movement did not deliver pointerup/POST; native gesture suppression restored",
+      "log": "regression-attempt-5.log"
+    },
+    {
+      "phase": "long-gesture trace",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg $PROVIDER/environment-03/bin/python $LOCAL_EVIDENCE/location-72/debug_python_drag.py",
+      "outcome": "real pointer trace showed down/first move but no pointerup or POST; no mutation",
+      "log": "python-pointer-cancellation.log"
+    },
+    {
+      "phase": "corrected affected browser cohort",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_editor_browser.py tests/test_review_coordinate_browser.py tests/test_review_hidpi_browser.py tests/test_review_gesture_browser.py tests/test_review_keyboard_browser.py tests/test_review_editor_recovery_browser.py tests/test_review_response_order_browser.py tests/test_review_shared_session_browser.py -q --basetemp=$LOCAL_EVIDENCE/location-83",
+      "outcome": "51 passed; separate prior failing long-drag case passed1; fractional native probe passed"
+    },
+    {
+      "phase": "review sparse reproduction",
+      "command": "env MPLBACKEND=Agg $PROVIDER/environment-03/bin/python $LOCAL_EVIDENCE/location-72/probe_sparse.py",
+      "outcome": "both{} and version-only rendered panel0 yet had0 controls/options; first specialized label/limit rejected without mutation",
+      "log": "sparse-before.json"
+    },
+    {
+      "phase": "review trusted multi-touch reproduction",
+      "command": "env MPLBACKEND=Agg $PROVIDER/environment-03/bin/python $LOCAL_EVIDENCE/location-72/probe_touch.py",
+      "outcome": "initial hit-test setup missed handle and was corrected by scrollIntoView; trusted targeted primary+secondary sequence reproduced unintended title edit",
+      "log": "touch-before.json"
+    },
+    {
+      "phase": "queued key reproduction",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 MUDPLOT_REQUIRE_BROWSER=1 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -k 'queued_keyboard and click' -q --basetemp=$LOCAL_EVIDENCE/location-84",
+      "outcome": "1 failed,13 deselected: frozen-clock key then click canceled the only pending POST",
+      "log": "queued-keyboard-before.log"
+    },
+    {
+      "phase": "review corrections",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 MUDPLOT_REQUIRE_BROWSER=1 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -k 'sparse or secondary_touch or queued_keyboard or inspector' -q --basetemp=$LOCAL_EVIDENCE/location-85",
+      "outcome": "7 passed,9 deselected; Rust21 passed/5 intentional helpers ignored after Bytes/default-axis correction",
+      "log": "review-corrections.log"
+    },
+    {
+      "phase": "FINAL installed + affected Python consumers",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 MUDPLOT_REQUIRE_BROWSER=1 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py tests/test_editor_browser.py tests/test_review_hidpi_browser.py tests/test_review_gesture_browser.py tests/test_review_editor_recovery_browser.py -q --basetemp=$LOCAL_EVIDENCE/location-86",
+      "outcome": "54 passed, zero skips"
+    },
+    {
+      "phase": "FINAL required source profile (CI-equivalent setup)",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$PROVIDER/environment-03/bin/python MUDPLOT_BRIDGE_SOURCE_ROOT=$LOCAL_EVIDENCE/location-69 MUDPLOT_REQUIRE_BROWSER=1 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -q --basetemp=$LOCAL_EVIDENCE/location-87",
+      "outcome": "16 passed, zero skips; source profile is not installed-artifact evidence"
+    },
+    {
+      "phase": "FINAL fractional real surface",
+      "command": "env MPLBACKEND=Agg $LOCAL_EVIDENCE/location-76 $LOCAL_EVIDENCE/location-72/fractional_case.py",
+      "outcome": "passed; four pointer and Shift-key handles; maximum physical-pixel error5.820766091346741e-11"
+    },
+    {
+      "phase": "explicit Clock capability gate",
+      "command": "env PYTHONPATH=$LOCAL_EVIDENCE/location-69 MPLBACKEND=Agg MUDPLOT_EDITOR_BIN=$LOCAL_EVIDENCE/location-73/mudplot-editor MUDPLOT_BRIDGE_PYTHON=$LOCAL_EVIDENCE/location-76 MUDPLOT_REQUIRE_BROWSER=1 $PROVIDER/environment-03/bin/python -m pytest tests/test_rust_specialized_controls.py -k queued_keyboard -q --basetemp=$LOCAL_EVIDENCE/location-88",
+      "outcome": "2 passed,14 deselected; Clock-capable qualification ran, no skipped proof"
+    }
+  ],
+  "development_browser_failures": [
+    "Managed browser open timed out; explicit headless /usr/bin/chromium Playwright worked.",
+    "Initial comparison driver tried a closed disclosure textarea, then corrected disclosure opening.",
+    "Driver selector quoting produced SyntaxError; corrected locators.",
+    "String wait_for_function was blocked by real Rust CSP; used locators instead, without weakening CSP."
+  ],
+  "sources": {
+    "mudplot/_editor.py": {
+      "baseline_sha256": null,
+      "sha256": "600328118c1cbb425d7ebb57b1f62cb7e30b97081282fd0b3e9e25486e68f397",
+      "hunks": [
+        "@@ -0,0 +1,121 @@"
+      ]
+    },
+    "mudplot/__main__.py": {
+      "baseline_sha256": "32df67c68a88a91a65c945b3393241bdb074095970324e54e1232b748c9dddf4",
+      "sha256": "0ed7d01e4ef73fa1c662b36b72ac0b24cb68697a8bab1070d13ea3a8f2995d6c",
+      "hunks": [
+        "@@ -80,6 +80,27 @@",
+        "@@ -170,6 +191,11 @@"
+      ]
+    },
+    "mudplot/_render.py": {
+      "baseline_sha256": "6e7a7361ac513073da3d30af8ecf32706559659cba512aff405513a131729788",
+      "sha256": "04c12a0b7873599695a6ba289d110f95887d3b5fbe70dcf20dced62885ef5484",
+      "hunks": [
+        "@@ -2382,7 +2382,7 @@",
+        "@@ -2417,6 +2417,7 @@",
+        "@@ -2432,6 +2433,7 @@",
+        "@@ -2571,6 +2573,7 @@",
+        "@@ -2681,7 +2684,7 @@",
+        "@@ -2748,7 +2751,7 @@"
+      ]
+    },
+    "mudplot-editor/src/lib.rs": {
+      "baseline_sha256": "a6408bd926eb067a76440b7e27c5d4d4badcbd1d651bdad8cc3ace2a08cd118f",
+      "sha256": "98af13ba1c09b60b3a10dc83fd140531949bd00232b2eacafb5a8f05aaf23036",
+      "hunks": [
+        "@@ -1,12 +1,13 @@",
+        "@@ -19,6 +20,7 @@",
+        "@@ -50,18 +52,34 @@",
+        "@@ -82,10 +100,10 @@",
+        "@@ -117,23 +135,27 @@",
+        "@@ -141,64 +163,70 @@",
+        "@@ -284,6 +312,12 @@",
+        "@@ -437,7 +471,7 @@",
+        "@@ -452,15 +486,26 @@",
+        "@@ -510,6 +555,10 @@",
+        "@@ -552,7 +601,7 @@",
+        "@@ -560,31 +609,36 @@",
+        "@@ -594,7 +648,7 @@",
+        "@@ -612,7 +666,7 @@",
+        "@@ -630,7 +684,7 @@",
+        "@@ -660,34 +714,34 @@",
+        "@@ -720,27 +774,31 @@",
+        "@@ -814,7 +872,8 @@",
+        "@@ -828,9 +887,11 @@"
+      ]
+    },
+    "mudplot-editor/src/python.rs": {
+      "baseline_sha256": "cdddac07ecac4855eb337538f4e563162f3cc0ed200d88d141c6f6317681db18",
+      "sha256": "169b319e268b04de82bc06525344bdb76e1d541ace730ebb0865edfb2c18c33c",
+      "hunks": [
+        "@@ -65,6 +65,26 @@"
+      ]
+    },
+    "mudplot-editor/src/specialized.rs": {
+      "baseline_sha256": null,
+      "sha256": "8316d10bd3fbf2994df6a14183eb33ebe8c72e63a71fdaf02e3b5298102c4079",
+      "hunks": [
+        "@@ -0,0 +1,250 @@"
+      ]
+    },
+    "mudplot-editor/templates/fragment.html": {
+      "baseline_sha256": "714ee4b7cad5572de63cbc55ad8ce1296e976c41ea35cc2ddb298f2e872c6168",
+      "sha256": "95086d84fd92efed937499dcd29fccc611dcd4efe30dcd15af6bc43f3cc1c69e",
+      "hunks": [
+        "@@ -3,18 +3,84 @@",
+        "@@ -37,10 +103,10 @@",
+        "@@ -57,7 +123,7 @@"
+      ]
+    },
+    "mudplot-editor/templates/page.html": {
+      "baseline_sha256": "a29763f6ae994f436d4d613c22ec17d8cfb94ab3e53e665d1bc91fa2c05a8943",
+      "sha256": "49302767cfc3b731b8a7a38f4433ac1463213de3b5ab95301f39bf500ffe897b",
+      "hunks": [
+        "@@ -7,6 +7,7 @@",
+        "@@ -15,8 +16,20 @@",
+        "@@ -28,7 +41,11 @@"
+      ]
+    },
+    "dashboard/editor_server.py": {
+      "baseline_sha256": "4b20702f073e43501039db19e3359383f51a980eb1ac0181eeef6a6eee55991f",
+      "sha256": "c67330da8f04d8265f905ee114557eb04896d6cf4494c830e4276977b3d19ef7",
+      "hunks": [
+        "@@ -18,7 +18,6 @@",
+        "@@ -165,26 +164,13 @@",
+        "@@ -232,42 +218,6 @@",
+        "@@ -585,6 +535,7 @@",
+        "@@ -596,6 +547,7 @@",
+        "@@ -631,6 +583,7 @@",
+        "@@ -675,6 +628,8 @@"
+      ]
+    },
+    "dashboard/editor_view.py": {
+      "baseline_sha256": "1533cd6717961d612da796e1e55859e7e867809f9227f007cba3927fb12ab986",
+      "sha256": "59b9af4b2dc41ff8c254c6a6a7c19f304e754fea4f9241198e1858899b5ad36d",
+      "hunks": [
+        "@@ -16,7 +16,7 @@",
+        "@@ -98,9 +98,10 @@",
+        "@@ -124,7 +125,7 @@",
+        "@@ -143,212 +144,8 @@",
+        "@@ -701,8 +498,19 @@",
+        "@@ -721,56 +529,12 @@",
+        "@@ -826,13 +590,15 @@",
+        "@@ -914,18 +680,6 @@",
+        "@@ -950,94 +704,43 @@",
+        "@@ -1049,6 +752,7 @@",
+        "@@ -1088,7 +792,7 @@",
+        "@@ -1114,6 +818,7 @@",
+        "@@ -1123,6 +828,7 @@"
+      ]
+    },
+    "dashboard/static/editor.js": {
+      "baseline_sha256": null,
+      "sha256": "cb4d1b80194262ddeb1268ba6b82aebbacb1b6b8573c7f05070944845dc8fc01",
+      "hunks": [
+        "@@ -0,0 +1,170 @@"
+      ]
+    },
+    "tests/test_rust_specialized_controls.py": {
+      "baseline_sha256": null,
+      "sha256": "5511ad39cf8d368f3ee40e37be9c9dfc4c4f924b6e9648223df09ceb35f1f3c5",
+      "hunks": [
+        "@@ -0,0 +1,922 @@"
+      ]
+    },
+    "tests/test_dashboard_editor.py": {
+      "baseline_sha256": "c5a53586c645295a03235166170aa96e7c6e8aa6b0043aecc2ea2f540934d36e",
+      "sha256": "e3691d6627f774feaa7d79b32471e1afd7c37464a7de6a9993e50cf3dd952ded",
+      "hunks": [
+        "@@ -216,90 +216,51 @@",
+        "@@ -579,7 +540,8 @@"
+      ]
+    },
+    "tests/test_review_coordinate_frames.py": {
+      "baseline_sha256": "e6adf5dbeb6130d4e5fdb9d03fa731a5a76c35a9625b63074a4abdddf9fc8cd5",
+      "sha256": "690c8ba3f28917f828953fcd8db5adbd55972d6364059facecd9ff12a335a625",
+      "hunks": [
+        "@@ -88,7 +88,7 @@"
+      ]
+    },
+    "tests/test_editor_browser.py": {
+      "baseline_sha256": "a32ed6ac81d39dc5c7a118717a550101afe440f4a9093e57896dc1c7342d37aa",
+      "sha256": "15aea7b611c2a39d9472843726f212bb2f8bdcdcad6d4fd08a7c2208c29c5741",
+      "hunks": [
+        "@@ -12,6 +12,7 @@",
+        "@@ -29,10 +30,10 @@",
+        "@@ -177,6 +178,7 @@",
+        "@@ -320,6 +322,7 @@"
+      ]
+    },
+    "tests/test_review_hidpi_browser.py": {
+      "baseline_sha256": "e27a59b3f193875ba1e402913227a34e61746c8c637fec0e335c79cfa304a400",
+      "sha256": "f9a97e878d8f6373791ee6f946d4e26aecba767b24fed9b567638ca337d235e3",
+      "hunks": [
+        "@@ -39,7 +39,7 @@"
+      ]
+    },
+    "mudplot-editor/README.md": {
+      "baseline_sha256": "ce86176104b6d828d7718e4ee14a507da905f42516fa88c52ce2306a91f6c419",
+      "sha256": "f2089a84551ca7efc3b84f78e3aeb54180b73918f120e2ad73fb4e0dff16cb7a",
+      "hunks": [
+        "@@ -79,6 +79,11 @@",
+        "@@ -101,7 +106,7 @@",
+        "@@ -114,6 +119,4 @@"
+      ]
+    },
+    "mudplot-editor/README.ko.md": {
+      "baseline_sha256": "4332ce3d98aa15cdc4a02462c5849b9f8c7ba8b8ab3bcd33fe60dbdba8d98d1a",
+      "sha256": "c42d63d469779f8fc312d591105e9b571cd6d71d93f9f3362bbcedb1bbc79546",
+      "hunks": [
+        "@@ -62,6 +62,11 @@",
+        "@@ -79,10 +84,8 @@"
+      ]
+    },
+    "dashboard/README.md": {
+      "baseline_sha256": "8732287b399d98c4cb153228c9d7d2ebbd60caf1aa91cbd76131880070062f84",
+      "sha256": "c85573ad91480a90e511d35d3fd9c4f460e1ca15e68d01a3e670860974e46c4a",
+      "hunks": [
+        "@@ -94,19 +94,8 @@"
+      ]
+    },
+    "dashboard/README.ko.md": {
+      "baseline_sha256": "5cd6600bb58d306e5338bebf3116f3f2dc95124eee303420f7ad0b101cca5376",
+      "sha256": "841c28c92af054931d94f279784c66cbd8462bb6cdfa624bbfee19a1fbbf9943",
+      "hunks": [
+        "@@ -64,10 +64,9 @@"
+      ]
+    },
+    "ROADMAP.md": {
+      "baseline_sha256": "8eba5f051bec063ccd4e6018d20c89e8e7c8410997088c5faf8d3926a1510b91",
+      "sha256": "e633eb3259f24796eecf922a26323157285164d68298e1600a89763b630beb08",
+      "hunks": [
+        "@@ -254,11 +254,9 @@"
+      ]
+    },
+    "CHANGELOG.md": {
+      "baseline_sha256": "a133991e703b1b005d92b2f7d75138478bb39d1fd314c0617067c05930367707",
+      "sha256": "0579834be24a3c8d93aa22bac9187bc8bbe89a5e4e97dcbe9a5b0c7664390338",
+      "hunks": [
+        "@@ -17,6 +17,8 @@"
+      ]
+    },
+    "docs/V2_SCOPE.md": {
+      "baseline_sha256": "2e8d9af5cee6ed1df3032e39bbd348e513078dd6843a85f7d1bea72bcd54435d",
+      "sha256": "900714042f58e18d425a0ef271f8bc161eb203e08e8920d4541942c3d6cb3134",
+      "hunks": [
+        "@@ -288,6 +288,7 @@"
+      ]
+    },
+    "docs/V2_SCOPE.ko.md": {
+      "baseline_sha256": "e0ce9dfb57b5448ca6a6d3fea76d237cc0c8f2920f4eae03919ab05b8a89eb21",
+      "sha256": "292b6cad49eaf63ea6596505cbe6fa03792d3dc8e628013acc4d786485903700",
+      "hunks": [
+        "@@ -227,5 +227,6 @@"
+      ]
+    },
+    ".github/workflows/ci.yml": {
+      "baseline_sha256": "3f1354155d3da788806933a3f1fc721b1d72719d6ea542e948cde053a5b95282",
+      "sha256": "39df15fc43f6a3e13183a7261dffa73296be7f2ea6bfb8ba98f3f83ec35c6c67",
+      "hunks": [
+        "@@ -115,6 +115,20 @@"
+      ]
+    },
+    ".github/workflows/release.yml": {
+      "baseline_sha256": "240d617783d52afcd4b440f3c747fdc33a22625c2089b150416825f13a5daafd",
+      "sha256": "9b2779efb4af158350ef3de449ee47f31caf77df79ce0b2c7f0c12271f07b595",
+      "hunks": [
+        "@@ -136,6 +136,19 @@"
+      ]
+    },
+    "ROADMAP.ko.md": {
+      "baseline_sha256": "9cb519dd9e6e67bd709a3c848b7343d59edd44487fb2b7187e10f5713f887684",
+      "sha256": "21cc2b44df2de89d578629c66d26bb2a8ff169197b142f5158eaaf3c07d599f1",
+      "hunks": [
+        "@@ -212,9 +212,9 @@"
+      ]
+    }
+  },
+  "unchanged_contracts": {
+    "mudplot/spec.py": {
+      "baseline_sha256": "0744f92716fbc019d534223d12565d9ef5acaef9d27e2bc786c3dae63583812f",
+      "sha256": "0744f92716fbc019d534223d12565d9ef5acaef9d27e2bc786c3dae63583812f"
+    },
+    "mudplot/actions.py": {
+      "baseline_sha256": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+      "sha256": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a"
+    },
+    "mudplot/reducer.py": {
+      "baseline_sha256": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49",
+      "sha256": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49"
+    },
+    "mudplot/__init__.py": {
+      "baseline_sha256": "845bed314ed119570cd5c927499b1b8fa66d2dc11491df64ed4f0baa22fa4e00",
+      "sha256": "845bed314ed119570cd5c927499b1b8fa66d2dc11491df64ed4f0baa22fa4e00"
+    },
+    "pyproject.toml": {
+      "baseline_sha256": "e39eff4d2c59c9ad9db777d7507b693112786b05f8dbee7c4889d1f3cc948725",
+      "sha256": "e39eff4d2c59c9ad9db777d7507b693112786b05f8dbee7c4889d1f3cc948725"
+    },
+    "mudplot-editor/src/model.rs": {
+      "baseline_sha256": "758db2c8262c8c6091cde793e1c8a8ec5da40963b388f5d1ffd5dcf142b11f65",
+      "sha256": "758db2c8262c8c6091cde793e1c8a8ec5da40963b388f5d1ffd5dcf142b11f65"
+    },
+    "mudplot-editor/Cargo.toml": {
+      "baseline_sha256": "51e6f16b6a8b13a12c4b4b65f070d52e644fa8f017b42ffd63b9dfbc2460ed23",
+      "sha256": "51e6f16b6a8b13a12c4b4b65f070d52e644fa8f017b42ffd63b9dfbc2460ed23"
+    }
+  },
+  "artifact_root": "$LOCAL_EVIDENCE/location-89",
+  "artifacts": {
+    "evidence/source/rust-specialized0/bounded-inspector-540.png": {
+      "sha256": "829daac628520148018be95ae124302b3930de94552a0cd4323d110d931ae133",
+      "bytes": 162520
+    },
+    "evidence/source/rust-specialized0/bounded-inspector-1400.png": {
+      "sha256": "7a2aedf7f85140c5ab38734ab80704628de1d9d5d5957c128bb00b6cbcb4b0ef",
+      "bytes": 104081
+    },
+    "evidence/source/rust-specialized0/queued-keyboard-cancel.json": {
+      "sha256": "52621bd8d6ac8c650859928d26acdd1f1c3dde120c32620201204802e54ab154",
+      "bytes": 1332
+    },
+    "evidence/source/rust-specialized0/queued-keyboard-click.json": {
+      "sha256": "52621bd8d6ac8c650859928d26acdd1f1c3dde120c32620201204802e54ab154",
+      "bytes": 1332
+    },
+    "evidence/source/rust-specialized0/trusted-pointer-ownership.json": {
+      "sha256": "1777aa98997b90285295dfe7620f6adc0d5af267c6a4584102965f7efccc92f2",
+      "bytes": 585
+    },
+    "evidence/source/rust-specialized0/server.log": {
+      "sha256": "42c363982a741c6fb5239ea40fd2499586f1e32265fc17dba406752ca6df343f",
+      "bytes": 72
+    },
+    "evidence/source/rust-specialized0/sparse-0-browser.png": {
+      "sha256": "5caa59e3ee10f0589487267f26e5ffe8f71fc537131fcacbaf77f4f19b0a4be2",
+      "bytes": 70806
+    },
+    "evidence/source/rust-specialized0/sparse-0-secondary.json": {
+      "sha256": "ae9d80e684c7d2e2f2e45e50f8b3db321b35dffcd747b8df1c61f6d8f6f54bf0",
+      "bytes": 1341
+    },
+    "evidence/source/rust-specialized0/sparse-0-limits.json": {
+      "sha256": "16a9c204bf64975519d0c0e54e161727a7a2d6933316138434ded440d866a0b4",
+      "bytes": 1291
+    },
+    "evidence/source/rust-specialized0/sparse-0-label.json": {
+      "sha256": "dffcc33bef9d3b9859eb86a54184d6004826bafabdee2f89b3eaf19d5d587fd3",
+      "bytes": 1300
+    },
+    "evidence/source/rust-specialized0/sparse-1-browser.png": {
+      "sha256": "302094853ebf2e2c78d8d92a84dff3f2b14cb41c83480ffbf66ba79289254ef1",
+      "bytes": 70807
+    },
+    "evidence/source/rust-specialized0/sparse-1-secondary.json": {
+      "sha256": "ae9d80e684c7d2e2f2e45e50f8b3db321b35dffcd747b8df1c61f6d8f6f54bf0",
+      "bytes": 1341
+    },
+    "evidence/source/rust-specialized0/sparse-1-limits.json": {
+      "sha256": "16a9c204bf64975519d0c0e54e161727a7a2d6933316138434ded440d866a0b4",
+      "bytes": 1291
+    },
+    "evidence/source/rust-specialized0/sparse-1-label.json": {
+      "sha256": "dffcc33bef9d3b9859eb86a54184d6004826bafabdee2f89b3eaf19d5d587fd3",
+      "bytes": 1300
+    },
+    "evidence/source/rust-specialized0/trace-1-1400.json": {
+      "sha256": "9e5c6fc8992444e1a694c44c65a422799b7a1e7d755c5e8b6a4d2597349cbe1f",
+      "bytes": 12605
+    },
+    "evidence/source/rust-specialized0/polar-1-1400-browser.png": {
+      "sha256": "79b64114e1a2cb28c49ad297e16269e3572b12f9bec4dea1ae53bc96f016663a",
+      "bytes": 170457
+    },
+    "evidence/source/rust-specialized0/specialized-1-1400-browser.png": {
+      "sha256": "dca6796fcdce0a29e55f674b7a200d62cb78bf8953934bfd5381f531896e44a8",
+      "bytes": 128450
+    },
+    "evidence/source/rust-specialized0/initial-1-1400.json": {
+      "sha256": "1ac927456f7af6ae00b9ee215cdbb9a5c83c3f4bfb65e7b01835c7b2c522ee81",
+      "bytes": 7589
+    },
+    "evidence/source/rust-specialized0/specialized-1-1400.png": {
+      "sha256": "33651cb6705a673b3008115abe055cc676f517b5ac09900df42a8917188cd120",
+      "bytes": 56957
+    },
+    "evidence/source/rust-specialized0/specialized-1-1400.svg": {
+      "sha256": "90ba94466850ed27ecf1881a6a6faf57f686d7fba7869e64655a53ddd9e68a8a",
+      "bytes": 45811
+    },
+    "evidence/source/rust-specialized0/specialized-1-1400.pdf": {
+      "sha256": "5ab3b1790138507aabc2b8ea93691737052260ea3c609a27811e5aeed288014d",
+      "bytes": 15278
+    },
+    "evidence/source/rust-specialized0/trace-2-1000.json": {
+      "sha256": "6f0f8c482268e36d61af61312fb7b4b97d33917d00d960c7db5b89989f510103",
+      "bytes": 12633
+    },
+    "evidence/source/rust-specialized0/polar-2-1000-browser.png": {
+      "sha256": "869fcb0a4084e63ac5423fdca0960993908a75ce3a0610a2ae3a44f07cea4832",
+      "bytes": 404408
+    },
+    "evidence/source/rust-specialized0/specialized-2-1000-browser.png": {
+      "sha256": "3357d63beecb7cdc18f8febaf298c22d1a7e12c9e5706e469e07c7a0a223aa81",
+      "bytes": 311548
+    },
+    "evidence/source/rust-specialized0/initial-2-1000.json": {
+      "sha256": "48f797396c503063f5ec5effbdc8b0770b04c004e955e3a919829dd46da17192",
+      "bytes": 7589
+    },
+    "evidence/source/rust-specialized0/specialized-2-1000.png": {
+      "sha256": "2f423728eab537dd9c6ad6b6a69fc1339086c4a7400f166a70111e213b29b4bb",
+      "bytes": 101067
+    },
+    "evidence/source/rust-specialized0/specialized-2-1000.svg": {
+      "sha256": "669a2321d894e88eee82a04187ca427fe715e310b53c6030b5fa23fdd4982a51",
+      "bytes": 45816
+    },
+    "evidence/source/rust-specialized0/specialized-2-1000.pdf": {
+      "sha256": "5468efb1da13c1e1c4a15ff874c9fb8085f5b9154b62512b197527d0032865df",
+      "bytes": 15278
+    },
+    "evidence/source/rust-specialized0/trace-2-540.json": {
+      "sha256": "12c3c339545142175741f24780a23c0659dec4b0d18ef590dffeb6d4789d9eb1",
+      "bytes": 12634
+    },
+    "evidence/source/rust-specialized0/polar-2-540-browser.png": {
+      "sha256": "fc4b4ee6431b69be2b3d0823813c05bb224f1867666a93f9faeea37213a88b6c",
+      "bytes": 465904
+    },
+    "evidence/source/rust-specialized0/specialized-2-540-browser.png": {
+      "sha256": "34495fd6bd5ea2091d08f22c09264c3cdc6aa15e4553b37381ae3a8dee0f0cef",
+      "bytes": 447643
+    },
+    "evidence/source/rust-specialized0/initial-2-540.json": {
+      "sha256": "48f797396c503063f5ec5effbdc8b0770b04c004e955e3a919829dd46da17192",
+      "bytes": 7589
+    },
+    "evidence/source/rust-specialized0/specialized-2-540.png": {
+      "sha256": "3759c1c9987cd7a011f63940631b36515d284916b28a6d47114133f7cf04eb9d",
+      "bytes": 101080
+    },
+    "evidence/source/rust-specialized0/specialized-2-540.svg": {
+      "sha256": "531f482d85f567f9c689c71db71ab46268836018cdfae54c29f61289a92da5b4",
+      "bytes": 45824
+    },
+    "evidence/source/rust-specialized0/specialized-2-540.pdf": {
+      "sha256": "10d05656c36afdea479850e62a4c8d3963c5b6689ef8e43ca417dfc5b378ece5",
+      "bytes": 15273
+    },
+    "evidence/installed/rust-specialized0/bounded-inspector-540.png": {
+      "sha256": "829daac628520148018be95ae124302b3930de94552a0cd4323d110d931ae133",
+      "bytes": 162520
+    },
+    "evidence/installed/rust-specialized0/bounded-inspector-1400.png": {
+      "sha256": "3c1bd19da4fa0aceb86aad7f145edf48b642e2ae1a866301904196688a0f2bbe",
+      "bytes": 104152
+    },
+    "evidence/installed/rust-specialized0/queued-keyboard-cancel.json": {
+      "sha256": "52621bd8d6ac8c650859928d26acdd1f1c3dde120c32620201204802e54ab154",
+      "bytes": 1332
+    },
+    "evidence/installed/rust-specialized0/queued-keyboard-click.json": {
+      "sha256": "52621bd8d6ac8c650859928d26acdd1f1c3dde120c32620201204802e54ab154",
+      "bytes": 1332
+    },
+    "evidence/installed/rust-specialized0/trusted-pointer-ownership.json": {
+      "sha256": "1777aa98997b90285295dfe7620f6adc0d5af267c6a4584102965f7efccc92f2",
+      "bytes": 585
+    },
+    "evidence/installed/rust-specialized0/server.log": {
+      "sha256": "ebb9cb2aef0b6e6749631021a1e4e6d6cc27e40d95301de8c37197ca55ea01d8",
+      "bytes": 72
+    },
+    "evidence/installed/rust-specialized0/sparse-0-browser.png": {
+      "sha256": "325c73ced4a95cc0d386e1a33098ff6f2b28298494ae991a0f52f75de2f644fb",
+      "bytes": 70819
+    },
+    "evidence/installed/rust-specialized0/sparse-0-secondary.json": {
+      "sha256": "ae9d80e684c7d2e2f2e45e50f8b3db321b35dffcd747b8df1c61f6d8f6f54bf0",
+      "bytes": 1341
+    },
+    "evidence/installed/rust-specialized0/sparse-0-limits.json": {
+      "sha256": "16a9c204bf64975519d0c0e54e161727a7a2d6933316138434ded440d866a0b4",
+      "bytes": 1291
+    },
+    "evidence/installed/rust-specialized0/sparse-0-label.json": {
+      "sha256": "dffcc33bef9d3b9859eb86a54184d6004826bafabdee2f89b3eaf19d5d587fd3",
+      "bytes": 1300
+    },
+    "evidence/installed/rust-specialized0/sparse-1-browser.png": {
+      "sha256": "302094853ebf2e2c78d8d92a84dff3f2b14cb41c83480ffbf66ba79289254ef1",
+      "bytes": 70807
+    },
+    "evidence/installed/rust-specialized0/sparse-1-secondary.json": {
+      "sha256": "ae9d80e684c7d2e2f2e45e50f8b3db321b35dffcd747b8df1c61f6d8f6f54bf0",
+      "bytes": 1341
+    },
+    "evidence/installed/rust-specialized0/sparse-1-limits.json": {
+      "sha256": "16a9c204bf64975519d0c0e54e161727a7a2d6933316138434ded440d866a0b4",
+      "bytes": 1291
+    },
+    "evidence/installed/rust-specialized0/sparse-1-label.json": {
+      "sha256": "dffcc33bef9d3b9859eb86a54184d6004826bafabdee2f89b3eaf19d5d587fd3",
+      "bytes": 1300
+    },
+    "evidence/installed/rust-specialized0/trace-1-1400.json": {
+      "sha256": "9e5c6fc8992444e1a694c44c65a422799b7a1e7d755c5e8b6a4d2597349cbe1f",
+      "bytes": 12605
+    },
+    "evidence/installed/rust-specialized0/polar-1-1400-browser.png": {
+      "sha256": "79b64114e1a2cb28c49ad297e16269e3572b12f9bec4dea1ae53bc96f016663a",
+      "bytes": 170457
+    },
+    "evidence/installed/rust-specialized0/specialized-1-1400-browser.png": {
+      "sha256": "9390858f0b4a26674f0d5eb826af309edf9abe565fd5a42bf780153d09758d67",
+      "bytes": 128439
+    },
+    "evidence/installed/rust-specialized0/initial-1-1400.json": {
+      "sha256": "1ac927456f7af6ae00b9ee215cdbb9a5c83c3f4bfb65e7b01835c7b2c522ee81",
+      "bytes": 7589
+    },
+    "evidence/installed/rust-specialized0/specialized-1-1400.png": {
+      "sha256": "33651cb6705a673b3008115abe055cc676f517b5ac09900df42a8917188cd120",
+      "bytes": 56957
+    },
+    "evidence/installed/rust-specialized0/specialized-1-1400.svg": {
+      "sha256": "90ba94466850ed27ecf1881a6a6faf57f686d7fba7869e64655a53ddd9e68a8a",
+      "bytes": 45811
+    },
+    "evidence/installed/rust-specialized0/specialized-1-1400.pdf": {
+      "sha256": "5ab3b1790138507aabc2b8ea93691737052260ea3c609a27811e5aeed288014d",
+      "bytes": 15278
+    },
+    "evidence/installed/rust-specialized0/trace-2-1000.json": {
+      "sha256": "6f0f8c482268e36d61af61312fb7b4b97d33917d00d960c7db5b89989f510103",
+      "bytes": 12633
+    },
+    "evidence/installed/rust-specialized0/polar-2-1000-browser.png": {
+      "sha256": "869fcb0a4084e63ac5423fdca0960993908a75ce3a0610a2ae3a44f07cea4832",
+      "bytes": 404408
+    },
+    "evidence/installed/rust-specialized0/specialized-2-1000-browser.png": {
+      "sha256": "3357d63beecb7cdc18f8febaf298c22d1a7e12c9e5706e469e07c7a0a223aa81",
+      "bytes": 311548
+    },
+    "evidence/installed/rust-specialized0/initial-2-1000.json": {
+      "sha256": "48f797396c503063f5ec5effbdc8b0770b04c004e955e3a919829dd46da17192",
+      "bytes": 7589
+    },
+    "evidence/installed/rust-specialized0/specialized-2-1000.png": {
+      "sha256": "2f423728eab537dd9c6ad6b6a69fc1339086c4a7400f166a70111e213b29b4bb",
+      "bytes": 101067
+    },
+    "evidence/installed/rust-specialized0/specialized-2-1000.svg": {
+      "sha256": "669a2321d894e88eee82a04187ca427fe715e310b53c6030b5fa23fdd4982a51",
+      "bytes": 45816
+    },
+    "evidence/installed/rust-specialized0/specialized-2-1000.pdf": {
+      "sha256": "5468efb1da13c1e1c4a15ff874c9fb8085f5b9154b62512b197527d0032865df",
+      "bytes": 15278
+    },
+    "evidence/installed/rust-specialized0/trace-2-540.json": {
+      "sha256": "12c3c339545142175741f24780a23c0659dec4b0d18ef590dffeb6d4789d9eb1",
+      "bytes": 12634
+    },
+    "evidence/installed/rust-specialized0/polar-2-540-browser.png": {
+      "sha256": "fc4b4ee6431b69be2b3d0823813c05bb224f1867666a93f9faeea37213a88b6c",
+      "bytes": 465904
+    },
+    "evidence/installed/rust-specialized0/specialized-2-540-browser.png": {
+      "sha256": "34495fd6bd5ea2091d08f22c09264c3cdc6aa15e4553b37381ae3a8dee0f0cef",
+      "bytes": 447643
+    },
+    "evidence/installed/rust-specialized0/initial-2-540.json": {
+      "sha256": "48f797396c503063f5ec5effbdc8b0770b04c004e955e3a919829dd46da17192",
+      "bytes": 7589
+    },
+    "evidence/installed/rust-specialized0/specialized-2-540.png": {
+      "sha256": "3759c1c9987cd7a011f63940631b36515d284916b28a6d47114133f7cf04eb9d",
+      "bytes": 101080
+    },
+    "evidence/installed/rust-specialized0/specialized-2-540.svg": {
+      "sha256": "531f482d85f567f9c689c71db71ab46268836018cdfae54c29f61289a92da5b4",
+      "bytes": 45824
+    },
+    "evidence/installed/rust-specialized0/specialized-2-540.pdf": {
+      "sha256": "10d05656c36afdea479850e62a4c8d3963c5b6689ef8e43ca417dfc5b378ece5",
+      "bytes": 15273
+    },
+    "evidence/installed/bridge-runtime.json": {
+      "sha256": "190586b02ab8f9c9288231275dbdd87c7b09139930dc25347479c304b371448d",
+      "bytes": 106
+    },
+    "evidence/source/bridge-runtime.json": {
+      "sha256": "1df50a123b003b4f599bb4fb53f0b010e00f7a1ed0d7b1a59c8a78381d40c3af",
+      "bytes": 98
+    },
+    "evidence/fractional/source.json": {
+      "sha256": "86beea45a7afd5b4dde95f2f6ee71fa2b874e556a2e00767b9434e398308669c",
+      "bytes": 10439
+    },
+    "evidence/fractional/final.json": {
+      "sha256": "ba6d7b19eb6a397c1434c927bdb8fce1defa393ac161bb10ba59e3452434124c",
+      "bytes": 16773
+    },
+    "evidence/fractional/trace.json": {
+      "sha256": "8e82a92e70b897b72a959bd7b46bfd8b645d14507e29540896f66e813803f087",
+      "bytes": 14591
+    },
+    "evidence/fractional/fractional.png": {
+      "sha256": "dcc9ed7ee7014f6e6e6ac52ab72c8504702314b028a94e7e9070ee03c4ada559",
+      "bytes": 44717
+    },
+    "evidence/fractional/fractional-browser.png": {
+      "sha256": "5d838bc10e0383ba7c739f1af197d823077b3cbbf8278e61c55321889f5e5121",
+      "bytes": 368265
+    },
+    "evidence/sparse-before.json": {
+      "sha256": "96c3f0b437225956cc736388eead3d589a5ee47fd83deb8f37ccc1506fbb89ea",
+      "bytes": 434
+    },
+    "evidence/sparse-before.png": {
+      "sha256": "24e4c5d9a46cc8b8f9e47357064f99d29adf1bc020b3f285313126b4a2e15416",
+      "bytes": 139325
+    },
+    "evidence/touch-before.json": {
+      "sha256": "3c97f08b07c74c04aee349cd4a662585c953cd1ad2bcaabe976dbd1b17b6958f",
+      "bytes": 801
+    },
+    "evidence/native-canvas-qualification.log": {
+      "sha256": "a61d412c86e33902d33fc139b56aac4d82c78464ad3a80cfe93b3510d9d30328",
+      "bytes": 3931
+    },
+    "evidence/review-corrections.log": {
+      "sha256": "6593307dd503700b489f871b772817bf3cdbb6125b9e07ee3af52d955ede056a",
+      "bytes": 2959
+    },
+    "evidence/queued-keyboard-before.log": {
+      "sha256": "b18d1913b878e5e79108f41265c3376eeb75a84f84c274e1cd923ecd2ce8ee17",
+      "bytes": 3501
+    },
+    "evidence/python-pointer-cancellation.log": {
+      "sha256": "2b66cdf40afcfeee60dafc9fefb6941602f85f92d749c93b68478677dffe6dc3",
+      "bytes": 2445
+    },
+    "evidence/regression-attempt-1.log": {
+      "sha256": "e59decd0a909875349d8626ca809abf03bb3a53e44ffcf992aa31d0e87ed00dc",
+      "bytes": 35666
+    },
+    "evidence/regression-attempt-2.log": {
+      "sha256": "26c9eb202e9e9b8ee00c0e3ecef737179fc69524d236bf714da80b0263b03623",
+      "bytes": 22866
+    },
+    "evidence/regression-attempt-3.log": {
+      "sha256": "6013b41f7eca5dc271c9f7475a0fb5522017e5c9349ae0c564196a4bb5d534a8",
+      "bytes": 18723
+    },
+    "evidence/regression-attempt-4.log": {
+      "sha256": "9411962fdaac349c2ce163989b0d2d7e494567b633f5ddff736a01c34a1e70d2",
+      "bytes": 251119
+    },
+    "evidence/regression-attempt-5.log": {
+      "sha256": "e8fbad598c38ae5d0bbd6174b5f47891d0e94ff29a2aed98854de7b0fd978ccc",
+      "bytes": 2628
+    }
+  },
+  "build_artifacts": {
+    "wheel": {
+      "path": "$LOCAL_EVIDENCE/location-75/mudplot-1.1.0-py3-none-any.whl",
+      "sha256": "1b0edc793ef2748157c59e60a5d05edac3ebdac6f21c731eae7e35a0591e529b"
+    },
+    "rust_binary": {
+      "path": "$LOCAL_EVIDENCE/location-73/mudplot-editor",
+      "sha256": "647ae23a53a40c16f9a1b30283a7d1741d8a8cc0ce3a950834e39d8555eceaf8"
+    }
+  },
+  "remaining_CND01_valid_scenario_gaps": [],
+  "limits": [
+    "3-D title/data and polar data-anchor text/annotation dragging remain actually unsupported current paths; polar title and figure legend remain supported.",
+    "Manual off-canvas positions stay caller-owned and may clip; no smart layout toggle or unrelated plot redesign.",
+    "Full v2 catalogue/E01 across every row/REL01, full supported-Python/minimum/TeX/static/security/reproducibility matrices and Windows/macOS are not claimed.",
+    "Remote CI, format/lint runs and main integration were not exercised/authorized here."
+  ],
+  "integration_notes": [
+    "Apply reviewed patch, not this older tree, onto v2-rug sole-writer source.",
+    "Preserve newer F01 guards and LayerSpec.strip-after-z placement; spec.py/model/schema snapshots are untouched.",
+    "Merge original-layer enumeration/native artist tags into the latest draw loop; preserve D07 routing.",
+    "No changes to rug-owned scripts/check_wheel.py or scripts/rust_editor_smoke_test.py."
+  ]
+}

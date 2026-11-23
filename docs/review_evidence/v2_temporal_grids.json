@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "kind": "local-feature-checkpoint",
+  "catalogue": [
+    "F02",
+    "G02",
+    "G03"
+  ],
+  "status": "ISO joint/pair extension locally verified; not catalogue or release completion",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "implemented": [
+    "Explicit template joint clocks validate converted coordinates without replacing source columns; matching observation marginals inherit clocks, density axes stay numeric.",
+    "Plot.pair temporal map accepts strict per-variable TemporalSpec/dict; group selection before parsing, cell-local missingness, no ISO inference.",
+    "SetPairGrid temporal appended to preserve positional arguments and omitted when unset; recursive existing spec serializer handles nested clocks without rewriting legacy fixtures.",
+    "Hist/KDE/ECDF geometry checked against canonical UTC day data; bad clocks/declarations reject transactionally."
+  ],
+  "checks": {
+    "current": {
+      "passed": 210,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "artifacts/v2_temporal_20261030/grid-current.xml"
+    },
+    "minimum": {
+      "passed": 191,
+      "failed": 0,
+      "skipped": 0,
+      "xml": "artifacts/v2_temporal_20261030/grid-minimum.xml"
+    },
+    "policy_neighbors": {
+      "passed": 37
+    },
+    "counts_overlap_not_additive": true,
+    "core": "python -S explicit ISO pair/action JSON replay passed; NumPy not imported",
+    "static": "Ruff/Pyright passed; source=lsp paths all-server probe clean for five changed runtime/test files",
+    "contracts": "schema/capabilities/reference/gallery sync passed; six bilingual temporal Python fences executed",
+    "browser": {
+      "actual_chromium": "153.0.8010.12",
+      "log": "artifacts/v2_temporal_20261030/rust-grid-temporal.log",
+      "scenarios": [
+        "agent ISO joint -> human fixed-offset clock/title edit -> undo/redo -> download/reopen -> PNG/SVG/PDF -> invalid edit preserves current source/state",
+        "human raw SetPairGrid clock map creates matching pair spec -> same edit/history/reopen/export/invalid-state checks"
+      ]
+    },
+    "rust_persistent": "Updated scripts/rust_editor_smoke_test.py recent-layer helper executed successfully, including temporal joint/pair; not full Rust/browser suite",
+    "installed": "scripts/check_wheel.py --render outside-checkout installed prefix/JSON/actions/PNG canonical geometry/installed CLI SVG passed. Active dependency smoke, not final metadata-resolved matrix.",
+    "review": {
+      "run": "2c7473af-fc67-4e81-b453-70159f9bbc89",
+      "result": "No issues found, bounded read-only review; tests/LSP not independently rerun"
+    },
+    "visual": {
+      "path": "artifacts/v2_temporal_20261030/grid-example-legible",
+      "parent_viewed": true,
+      "canonical_geometry": "test_temporal_grids.py",
+      "adjacent_tick_overlaps": 0,
+      "text_overlaps": 0,
+      "clipped_elements": 0,
+      "min_font_pt": 8,
+      "joint_advisory": "Panel 1 y-axis description warning remains on shared marginal axis; figure overall describes known signal units.",
+      "limit": "Explicit wide 12-inch teaching pair figure, not publication-size/physical-print qualification."
+    }
+  },
+  "preserved_attempts": [
+    "grids-initial.xml/log: 9 failures and 1 pass; initial KDE/ECDF bins=3 setup corrected to existing default20 contract, then actual temporal integration fixed",
+    "Original grid-example remains; cramped ISO pair ticks prompted explicit width change in new grid-example-legible, not automatic layout/formatting behavior changes.",
+    "First persistent artifact harness Ruff B904 startup chaining finding corrected before runtime execution; original tool finding retained in session."
+  ],
+  "remaining_required": [
+    "F02 broader applicable semantic/distribution secondary-y integration with F01/D06",
+    "Other G02/G03 and native N01-N06 requirements remain independently required; temporal hookup is not their completion",
+    "All final frozen Linux/support-Python/minimum/TeX/security/reproducible build and metadata-resolved installation gates for 2.0.0"
+  ],
+  "delivery": "Local unpublished development checkpoint only. No commit, push, PR, merge, tag or publication. No Windows/macOS or original experimental-data/physical-print proof.",
+  "source_sha256": {
+    "mudplot/_joint.py": "3fbe775df2afb9b5c7adf74d1fa3fc61a23a50b4b14bed68e183b2cc5a9d88dd",
+    "mudplot/_pair.py": "26dee74983cea92be86c6393182b857a998e199eb6e5573dd951db8e0e70706f",
+    "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+    "mudplot/api.py": "01477afe701707105846a09790a19807f811ad38666ee04a12a145e9b472df58",
+    "mudplot/spec.py": "4e18ff21bb34173a2763708bf8243595afdc07ab61b255d11b435133e4a8d5c5",
+    "mudplot/_temporal.py": "8c313ec44a0001a35d83872dc8b2fc942456b9ea96383cebace491f9b469db83",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "mudplot/capabilities.py": "261bbe65c4a717a5c72d0fad812ec13bc5a50368bffa6e1be77964d54a9edee9",
+    "tests/test_temporal_grids.py": "588e3a749a14443a7885c8c24fdda21be1769fb7a3dbe3866ada478f8f4cf30c",
+    "scripts/check_wheel.py": "fed5bcba87e551d393dddef9665440f7fb9e85ecd22d8e247f000840e42fd153",
+    "scripts/rust_editor_smoke_test.py": "1e005e1d29dbb8dd2f39268360fc118ae392ad9e45a00b6b10977f46af38d047",
+    "scripts/check_minimum_versions.py": "7159220d1343ccf0833a4f4b2c01e3d43a9b95f2d3859ff47cbd64a8557ab907",
+    "examples/temporal_grids.py": "601ac27924328461cc9a3542d48adc49dba50e711c89f835e11b554d43de0afd",
+    "docs/TEMPORAL_AXES.md": "7ad750d4c1c01326748deb592d952a48a7f65b87fb3e13337b1a76fd94fb1448",
+    "docs/TEMPORAL_AXES.ko.md": "4aa0813e15c4822c29d6d9473c919abf4663ac986951fc2feafa53d9feea399b",
+    "docs/PAIR_GRID.md": "7303cefa23bfe000e6581585eeabca3a49a59e0cfe0545d96d6dbe67adfc9d6b",
+    "docs/PAIR_GRID.ko.md": "b35bb535de9de82b16acd861af8f4870bafcc05d54e2d449ac20afd3a9ca67ee",
+    "docs/JOINT_GRID.md": "085d03698cb592f15c4b2185662cb5ab04cd735137a70e6dabf1f3d2cf6f7d41",
+    "docs/JOINT_GRID.ko.md": "1f80d4f5ce45c35c939bc096e4c55cd5d58fd6b03dd9bd5de8283e8772806c34",
+    "docs/V2_SCOPE.md": "0a305c4603c7219df972cfec76249802defb7f520970896943c90ff5dd74aee2",
+    "docs/V2_SCOPE.ko.md": "1f6c4b5836ca9cfa0b93765661e2157b0cafe6dbebb1ec87a101b2951889dc94",
+    "schemas/figure_spec.schema.json": "e017cee030d9aa0e33653a594b40701be5515abce050a0158a20264bd6915990",
+    "schemas/capabilities.json": "1dc25699169691b2d1e4b4b43b5a71d74c09aed60303761b9588a12f10ba596e",
+    "docs/REFERENCE.md": "fa8345cb72f456fc782d9f06396333bd90713b82f8e42696d1e0d9b8c3e4c741",
+    "docs/PLOT_GALLERY.md": "ffbd90e094a0748a6577cf513b286b9ee6a6f50487d368f750bbb6626a1f1f56"
+  },
+  "artifacts_sha256": {
+    "artifacts/v2_temporal_20261030/grid-checkpoint-dist/mudplot-1.1.0.tar.gz": "81abe079c291415921e1976f92a2049c602e09636e5753e036b189e37cc1cc1e",
+    "artifacts/v2_temporal_20261030/grid-checkpoint-dist/mudplot-1.1.0-py3-none-any.whl": "a8617f33f69bba33fb71f4b7b998393e8715734348feb3641e6c603045b2e6d4",
+    "artifacts/v2_temporal_20261030/grid-current.xml": "d5ffec6529fc6dc4cf2f493f52972ae8b6121057e0b1d5610be3d48ecaf9e8de",
+    "artifacts/v2_temporal_20261030/grid-minimum.xml": "7c24af1644ca692fcdced3ea5bbe51653e7f1d619b3db744887a26bf0b2f570b",
+    "artifacts/v2_temporal_20261030/rust-grid-temporal.log": "c9ce5d15bd1a073c4482c18e11ac5f035b0d5f6bb9f601ca4f8e445c539ff2df",
+    "artifacts/v2_temporal_20261030/rust-grid-persistent.log": "fd6049ae12b4d98c9e2ddd22b13b78659f42dace3bb1707325e1abc47e855431",
+    "artifacts/v2_temporal_20261030/grid-checkpoint-distribution.log": "cb6e7c0db5917a2a287a0475c2dab7e66d1aba22f1d14adb63a666577b4510ed",
+    "artifacts/v2_temporal_20261030/grid-example-legible/measured-quality.json": "52c7d7c9b7102a09f7f019bfab279641eee98d25e782a1bf6aa68a5c529a8bc0",
+    "artifacts/v2_temporal_20261030/rust_grid_temporal.py": "0025d59ed4e04204e0cb6435b2b61eb8c8173e98dd073e71dc99391dbeccc310",
+    "artifacts/v2_temporal_20261030/rust_recent_grid_persistent.py": "2153127243ecc85aa3534a8e0b49b448e7bcdf23c2980c06ba27d8d20a99feb7"
+  },
+  "xml_suites": {
+    "grid-current.xml": {
+      "tests": "210",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    },
+    "grid-minimum.xml": {
+      "tests": "191",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0"
+    }
+  }
+}

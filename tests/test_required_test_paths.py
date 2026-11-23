@@ -135,7 +135,7 @@ def test_workflow_result_gates_are_wired_to_distinct_reports():
     assert "check_required_test_paths.py minimum minimum-results.xml" in ci
     assert "test-results-python-${{ matrix.python-version }}-${{ github.sha }}" in ci
     assert "cache-suffix: python-${{ matrix.python-version }}" in ci
-    assert "cache-suffix: minimum-python-3.10" in ci
+    assert "cache-suffix: minimum-python-3.11" in ci
     assert "cache-suffix: rust-${{ matrix.os }}-python-3.12" in ci
     assert "check_required_test_paths.py tex tex-results.xml" in tex
     assert "check_required_test_paths.py release release-results.xml" in release

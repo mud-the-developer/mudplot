@@ -16,9 +16,15 @@ from __future__ import annotations
 
 import html
 import json
-import math
+from pathlib import Path
 
-from mudplot.capabilities import LAYER_TYPES, PROJECTIONS
+from mudplot.actions import (
+    ReplaceLayer,
+    SetFacetTemplate,
+    SetSharedGuides,
+    action_to_dict,
+)
+from mudplot.capabilities import COORDINATE_PIPELINE, LAYER_TYPES, PROJECTIONS
 from mudplot.spec import FigureSpec
 from mudplot.theme import AVAILABLE_JOURNALS, AVAILABLE_THEMES
 
@@ -98,9 +104,10 @@ button.danger { background: #fff; color: #b91c1c; border: 1px solid #fca5a5; }
          margin-bottom: 1rem; font-size: .84rem; white-space: pre-wrap; }
 figure { margin: 0; text-align: center; }
 .preview-wrap { position: relative; display: inline-block; max-width: 100%;
-       border-radius: 8px; overflow: visible; background: repeating-conic-gradient(
+       border: 1px solid var(--border); border-radius: 8px; overflow: visible;
+       background: repeating-conic-gradient(
        #f0f1f3 0% 25%, white 0% 50%) 50% / 16px 16px; }
-.preview-wrap img { display: block; max-width: 100%; border: 1px solid var(--border);
+.preview-wrap img { display: block; max-width: 100%; border: 0;
              border-radius: 8px; background: white; }
 .log { font-family: ui-monospace, "SF Mono", monospace; font-size: .72rem;
        color: #4b5563; max-height: 220px; overflow: auto; background: #fafbfc;
@@ -124,7 +131,7 @@ figure { margin: 0; text-align: center; }
 .drag-handle { position: absolute; width: 20px; height: 20px; margin: -10px 0 0 -10px;
        padding: 0; border: 0; border-radius: 50%; display: flex;
        align-items: center; justify-content: center; cursor: grab; font-size: 11px;
-       user-select: none; color: white;
+       user-select: none; touch-action: none; color: white;
        box-shadow: 0 0 0 2px white, 0 1px 3px rgba(0,0,0,.35); }
 .drag-handle:active { cursor: grabbing; }
 .drag-handle:focus { outline: 2px solid #0a5; outline-offset: 1px; }
@@ -143,212 +150,8 @@ nav.tabs .navtab.active { color: white; border-bottom: 2px solid var(--accent); 
        font-size: .86em; }
 """
 
-# Generic drag-handle system: any element with class "drag-handle" and the
-# data-* attributes below wires up the same way, whether it represents the
-# legend, a title, or a text/annotate layer's anchor point. Coordinates are
-# resolved through one of two spaces (see data-space):
-#   "figure" -- 0..1 directly over the whole preview image (legend).
-#   "axes"   -- 0..1 within the selected panel's axes box, further mapped to
-#               data values (with log-scale support) if data-data="1"
-#               (title uses axes-fraction directly; text/annotate layers
-#               use the data-coordinate mapping).
-_DRAG_JS = """
-(function () {
-  function scaleInverse(f, lo, hi, scale) {
-    if (scale === "log") {
-      var a = Math.log10(lo), b = Math.log10(hi);
-      return Math.pow(10, a + f * (b - a));
-    }
-    return lo + f * (hi - lo);
-  }
-  function scaleForward(v, lo, hi, scale) {
-    if (scale === "log") {
-      var a = Math.log10(lo), b = Math.log10(hi);
-      return (Math.log10(v) - a) / (b - a);
-    }
-    return (v - lo) / (hi - lo);
-  }
-  window.__mudplotScaleForward = scaleForward;
-  window.__mudplotScaleInverse = scaleInverse;
-
-  function wireHandle(handle) {
-    var wrap = handle.closest(".preview-wrap");
-    var space = handle.dataset.space;
-    var bbox = handle.dataset.bbox ? JSON.parse(handle.dataset.bbox) : null;
-    var xlim = handle.dataset.xlim ? JSON.parse(handle.dataset.xlim) : null;
-    var ylim = handle.dataset.ylim ? JSON.parse(handle.dataset.ylim) : null;
-    var xscale = handle.dataset.xscale || "linear";
-    var yscale = handle.dataset.yscale || "linear";
-    var isData = handle.dataset.data === "1";
-
-    function toValue(imgFracX, imgFracY) {
-      if (space === "figure") return [imgFracX, imgFracY];
-      var ax = Math.min(1, Math.max(0, (imgFracX - bbox[0]) / (bbox[2] - bbox[0])));
-      var ay = Math.min(1, Math.max(0, (imgFracY - bbox[1]) / (bbox[3] - bbox[1])));
-      if (!isData) return [ax, ay];
-      return [
-        scaleInverse(ax, xlim[0], xlim[1], xscale),
-        scaleInverse(ay, ylim[0], ylim[1], yscale),
-      ];
-    }
-
-    function post(value) {
-      var values = { x: value[0], y: value[1] };
-      for (var k in handle.dataset) {
-        if (k.indexOf("field") === 0) {
-          var pair = handle.dataset[k].split("=");
-          values[pair[0]] = pair[1];
-        }
-      }
-      htmx.ajax("POST", handle.dataset.postUrl, {
-        source: handle, target: "#app-body", values: values,
-        swap: "innerHTML focus-scroll:false",
-      });
-    }
-
-    var current = {
-      x: parseFloat(handle.dataset.imgx), y: parseFloat(handle.dataset.imgy),
-    };
-
-    function place(imgFracX, imgFracY) {
-      handle.style.left = (imgFracX * 100) + "%";
-      handle.style.top = ((1 - imgFracY) * 100) + "%";
-    }
-
-    handle.addEventListener("mousedown", function (ev) {
-      ev.preventDefault();
-      handle.focus();
-      var rect = wrap.getBoundingClientRect();
-      var moved = false;
-      function onMove(mv) {
-        var fx = Math.min(1, Math.max(0, (mv.clientX - rect.left) / rect.width));
-        var fy = Math.min(1, Math.max(0, 1 - (mv.clientY - rect.top) / rect.height));
-        moved = true;
-        current = { x: fx, y: fy };
-        place(fx, fy);
-      }
-      function onUp() {
-        document.removeEventListener("mousemove", onMove);
-        document.removeEventListener("mouseup", onUp);
-        // A plain click (focusing the handle to use the arrow keys) is not
-        // an edit: posting here would append a no-op action to the history
-        // and swap in a new overlay, stealing the focus the click just set.
-        if (moved) post(toValue(current.x, current.y));
-      }
-      document.addEventListener("mousemove", onMove);
-      document.addEventListener("mouseup", onUp);
-    });
-
-    // Each post swaps in a fresh overlay, destroying this handle mid-press.
-    // Holding an arrow key (or any burst faster than a round trip) would
-    // otherwise drop every keypress that lands during a swap, so move the
-    // handle immediately and coalesce the posts.
-    var pending = null;
-    function postSoon(value) {
-      if (pending) clearTimeout(pending);
-      pending = setTimeout(function () {
-        pending = null;
-        post(value);
-      }, 180);
-    }
-
-    handle.addEventListener("keydown", function (ev) {
-      var step = ev.shiftKey ? 0.06 : 0.02;
-      var dx = 0, dy = 0;
-      if (ev.key === "ArrowLeft") dx = -step;
-      else if (ev.key === "ArrowRight") dx = step;
-      else if (ev.key === "ArrowUp") dy = step;
-      else if (ev.key === "ArrowDown") dy = -step;
-      else return;
-      ev.preventDefault();
-      current = {
-        x: Math.min(1, Math.max(0, current.x + dx)),
-        y: Math.min(1, Math.max(0, current.y + dy)),
-      };
-      place(current.x, current.y);
-      postSoon(toValue(current.x, current.y));
-    });
-  }
-
-  // A swap replaces the whole inspector, so <details> collapse and the
-  // sidebar jumps to the top after every edit. Snapshot both just before
-  // the swap and restore them right after.
-  // (keyed by data-key, not summary text: the history section's label
-  // contains a live action count, so its text changes on every swap.)
-  var state = null;
-  var latestViewGeneration = 0;
-  document.body.addEventListener("htmx:beforeSwap", function (ev) {
-    var generation = Number(
-      ev.detail.xhr.getResponseHeader("X-Mudplot-View-Generation")
-    );
-    if (Number.isSafeInteger(generation) && generation > 0) {
-      if (generation < latestViewGeneration) {
-        ev.detail.shouldSwap = false;
-        return;
-      }
-      latestViewGeneration = generation;
-    }
-    var open = {};
-    document.querySelectorAll("details[data-key]").forEach(function (d) {
-      open[d.dataset.key] = d.open;
-    });
-    var inspector = document.querySelector(".inspector");
-    // Each nudge dispatches an edit that replaces the overlay, so without
-    // remembering which handle had focus, arrow keys move a handle exactly
-    // once and then go nowhere.
-    var active = document.activeElement;
-    state = {
-      open: open,
-      scroll: inspector ? inspector.scrollTop : 0,
-      handle: active && active.dataset ? active.dataset.handleId : null,
-    };
-  });
-  document.body.addEventListener("htmx:afterSwap", function () {
-    document.querySelectorAll(".drag-handle").forEach(wireHandle);
-  });
-  // Restoring scroll has to wait for layout: right after the swap the new
-  // content hasn't been laid out yet, so assigning scrollTop gets clamped
-  // to the (still short) scroll height and the sidebar jumps anyway.
-  document.body.addEventListener("htmx:afterSettle", function () {
-    if (!state) return;
-    requestAnimationFrame(function () {
-      document.querySelectorAll("details[data-key]").forEach(function (d) {
-        var was = state.open[d.dataset.key];
-        if (was !== undefined) d.open = was;
-      });
-      var inspector = document.querySelector(".inspector");
-      if (inspector) {
-        // Force a reflow first: re-opening the <details> above changes the
-        // scroll height, and without this the assignment is clamped against
-        // the stale (collapsed) height, losing the position anyway.
-        void inspector.scrollHeight;
-        inspector.scrollTop = state.scroll;
-      }
-      if (state.handle) {
-        var again = document.querySelector(
-          '.drag-handle[data-handle-id="' + state.handle + '"]'
-        );
-        if (again) again.focus({ preventScroll: true });
-      }
-      state = null;
-    });
-  });
-  document.querySelectorAll(".drag-handle").forEach(wireHandle);
-
-  // Read a chosen .mplot.json into the form's textarea, so the upload is a
-  // plain form post and the server needs no multipart parsing.
-  document.body.addEventListener("change", function (ev) {
-    var input = ev.target;
-    if (!input || input.id !== "spec-file" || !input.files.length) return;
-    var reader = new FileReader();
-    reader.onload = function () {
-      var box = document.getElementById("spec-json");
-      if (box) box.value = reader.result;
-    };
-    reader.readAsText(input.files[0]);
-  });
-})();
-"""
+# The two editors serve the same external, CSP-safe interaction client.
+_DRAG_JS = (Path(__file__).parent / "static" / "editor.js").read_text(encoding="utf-8")
 
 
 def _nav_html(active: str) -> str:
@@ -501,7 +304,12 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
         picker = '<div class="hint">One panel. Add rows/columns to split it.</div>'
     else:
         buttons = "".join(
-            _hx_form("/select-panel", {"panel": i}, "", f"{i + 1}").replace(
+            _hx_form(
+                "/select-panel",
+                {"panel": i},
+                "",
+                f"{i}: {spec.panels[i].panel_id or '(anonymous)'}",
+            ).replace(
                 "<button",
                 '<button aria-pressed="true" class="panel-btn active"'
                 if i == active
@@ -517,6 +325,125 @@ def _panels_panel(spec: FigureSpec, active: int) -> str:
     return (
         f'<div class="panel"><h2>Panels</h2>{layout_form}{picker}'
         f"{projection_form}</div>"
+    )
+
+
+def _layout_panel(spec: FigureSpec, active: int) -> str:
+    """Typed public-action forms, not a second layout implementation."""
+    from mudplot._layout import allocated_ids
+
+    panel = spec.panels[active]
+    ids = [p.panel_id for p in spec.panels]
+
+    def action_form(label, value):
+        body = _field(
+            label,
+            '<textarea name="json" rows="6">'
+            + _esc(json.dumps(value, indent=2))
+            + "</textarea>",
+        )
+        return _hx_form("/action/raw", {}, body, label)
+
+    forms = []
+    if spec.panel_layout is not None:
+        placements = {}
+        for item in spec.panels:
+            assert item.placement is not None
+            placements[item.panel_id] = item.placement.to_dict()
+        assert panel.placement is not None
+        forms.append(
+            action_form(
+                "Apply complete panel layout",
+                {
+                    "type": "SetPanelLayout",
+                    "layout": spec.panel_layout.to_dict(),
+                    "placements": placements,
+                },
+            )
+        )
+        forms.append(
+            action_form(
+                "Move active panel",
+                {
+                    "type": "SetPanelPlacement",
+                    "panel_id": panel.panel_id,
+                    "placement": panel.placement.to_dict(),
+                },
+            )
+        )
+    mosaic_ids = allocated_ids(spec)
+    forms.append(
+        action_form(
+            "Apply mosaic",
+            {
+                "type": "SetMosaic",
+                "rows": [mosaic_ids],
+                "width_ratios": [1] * len(ids),
+            },
+        )
+    )
+    forms.append(
+        action_form(
+            "Nest current grid",
+            {
+                "type": "NestLayout",
+                "rows": 1,
+                "cols": 2,
+                "row": 0,
+                "col": 0,
+                "width_ratios": [3, 1],
+            },
+        )
+    )
+    if panel.panel_id is not None:
+        forms.append(
+            action_form(
+                "Add inset panel",
+                {
+                    "type": "AddInset",
+                    "parent": panel.panel_id,
+                    "bounds": [0.1, 0.1, 0.3, 0.3],
+                },
+            )
+        )
+        forms.append(
+            action_form(
+                "Rename active panel",
+                {
+                    "type": "RenamePanel",
+                    "panel_id": panel.panel_id,
+                    "new_id": panel.panel_id,
+                },
+            )
+        )
+        forms.append(
+            action_form(
+                "Reorder panels",
+                {
+                    "type": "ReorderPanels",
+                    "panel_ids": ids,
+                },
+            )
+        )
+        forms.append(
+            action_form(
+                "Remove active leaf panel",
+                {
+                    "type": "RemovePanel",
+                    "panel_id": panel.panel_id,
+                },
+            )
+        )
+    return (
+        '<details data-key="panel-layout">'
+        "<summary>Layout · mosaic, nested, inset</summary>"
+        '<div class="panel"><p class="hint">Edit these typed JSON actions. Mosaic rows '
+        "use stable IDs or null empty positions; repeated IDs must form rectangles. "
+        "Cell spans use zero-based row/col; inset bounds are parent-axes fractions. "
+        "First choose mosaic/nest to assign anonymous panels IDs. All existing IDs "
+        "must remain present unless explicitly removed. Nesting, reordering and "
+        "placement preserve live facet ownership; removing a live cell leaves "
+        "saved materialized views.</p>" + "".join(forms) + "</div></details>"
     )
 
 
@@ -599,12 +526,73 @@ def _all_layers_panel() -> str:
         "<code>LayerSpec</code> field is accepted, including citation/href and "
         "array-valued at/to/levels/bins. Invalid or unknown fields are rejected."
         "</div>"
+        + (
+            '<details data-key="coordinate-pipeline"><summary>Coordinate '
+            "pipeline</summary>"
+        )
+        + "<p>Include <code>&quot;transforms&quot;:[{&quot;role&quot;:"
+        "&quot;x&quot;,&quot;name&quot;:&quot;log&quot;}]</code> "
+        "in Layer fields. On one role choose identity, log, standardize, or log then "
+        "standardize. Omit the field or use null to clear. Transforms run before "
+        "the statistic; "
+        "the layer move and panel scale remain separate.</p><ul>"
+        + "".join(
+            f"<li><code>{_esc(kind)}</code>: {_esc(', '.join(roles))}</li>"
+            for kind, roles in COORDINATE_PIPELINE["roles"].items()
+        )
+        + "</ul></details>"
         + '<details data-key="layer-fields"><summary>Fields by layer type</summary>'
         + field_reference
         + "</details>"
     )
     form = _hx_form("/action", {"type": "add_layer_json"}, body, "Add layer")
     return f'<div class="panel"><h2>Any layer · advanced</h2>{form}</div>'
+
+
+def _cluster_cut_panel(layout, active, view_generation):
+    controls = []
+    for axis, item in layout.get("matrix_cuts", {}).items():
+        name = "Row" if axis == "row" else "Column"
+        hidden = {
+            "type": "set_cluster_cut",
+            "panel": active,
+            "axis": axis,
+            "view_generation": view_generation,
+        }
+        height = "" if item["height"] is None else item["height"]
+        options = ['<option value="">No selected group</option>']
+        for leaf in item["items"]:
+            index = leaf["index"]
+            selected = " selected" if index == item["anchor"] else ""
+            options.append(
+                f'<option value="{index}"{selected}>'
+                f"{_esc(leaf['label'])} [{index}]</option>"
+            )
+        body = _field(
+            f"{name} cut height",
+            '<input type="number" min="0" step="any" '
+            f'name="height" value="{height}" required>',
+        )
+        body += _field(
+            f"{name} original index",
+            '<select name="anchor">' + "".join(options) + "</select>",
+        )
+        controls.append(_hx_form("/action", hidden, body, f"Apply {name.lower()} cut"))
+        partition = item["partition"]
+        if partition is not None:
+            selected = ", ".join(str(i) for i in partition["selected"]) or "None"
+            controls.append(
+                '<p class="hint" role="status">'
+                f"{name} selected original indices: {selected}</p>"
+            )
+            controls.append(
+                _hx_form(
+                    "/action", {**hidden, "clear": "1"}, "", f"Clear {name.lower()} cut"
+                )
+            )
+    if not controls:
+        return ""
+    return '<div class="panel"><h2>Cluster cuts</h2>' + "".join(controls) + "</div>"
 
 
 def _layers_panel(spec: FigureSpec, active: int) -> str:
@@ -630,6 +618,37 @@ def _layers_panel(spec: FigureSpec, active: int) -> str:
                 ).replace("<button", '<button class="danger"')
                 + "</div>"
             )
+            replacement = json.dumps(
+                action_to_dict(ReplaceLayer(i, layer, panel=active)),
+                ensure_ascii=False,
+                indent=2,
+            )
+            parts.append(
+                f'<details data-key="replace-layer-{active}-{i}">'
+                f"<summary>Edit panel {active}, layer {i}</summary>"
+                + _hx_form(
+                    "/action/raw",
+                    {},
+                    _field(
+                        f"Replace layer {i} · full typed action JSON",
+                        '<textarea name="json" rows="8" spellcheck="false">'
+                        f"{_esc(replacement)}</textarea>",
+                    )
+                    + '<div class="hint">Authoritative existing-layer replacement; '
+                    "indices and order stay fixed. Regression uses one confidence "
+                    "and optional bootstrap {n_boot, seed}, partial "
+                    "{columns, reference, method}, sampling {train, query}, "
+                    "diagnostics {kind, trend}, components {fit, scatter, "
+                    "show_fit, show_scatter}. Edit these inside regression. "
+                    "Line predictor/resampling/calibration/family, units, semantics "
+                    "and boxen.band_components/hue_components stay independent. "
+                    "Coordinate pipeline: edit the ordered transforms list or use "
+                    "null to clear. "
+                    "This edit changes only this cell.</div>",
+                    "Replace layer",
+                )
+                + "</details>"
+            )
         rows = "".join(parts)
     return f'<div class="panel"><h2>Current layers</h2>{rows}</div>'
 
@@ -651,7 +670,68 @@ def _figure_panel(spec: FigureSpec) -> str:
         + "</div></div>"
     )
     size_form = _hx_form("/action", {"type": "set_size"}, size_body, "Set size")
-    return f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}</div>'
+    shared_action = json.dumps(
+        action_to_dict(SetSharedGuides(spec.shared_guides)),
+        ensure_ascii=False,
+        indent=2,
+    )
+    shared_form = (
+        '<details data-key="shared-guides">'
+        "<summary>Figure-wide shared semantic guides</summary>"
+        '<p class="hint">One authoritative request list. Membership is the stored '
+        "SemanticSpec.scale_id, across every compatible member "
+        "and empty facet template. "
+        'Use guides: [{"scale_id": "your-scope"}]; null clears all requests. '
+        "Each strict request also accepts location (outside right/top/bottom), title, "
+        "frame and a finite [x,y] figure-fraction bbox_to_anchor. Dataset labels and "
+        "unrelated scales remain panel-owned.</p>"
+        + _hx_form(
+            "/action/raw",
+            {},
+            _field(
+                "SetSharedGuides · populated authoritative action",
+                '<textarea name="json" rows="9" spellcheck="false">'
+                + _esc(shared_action)
+                + "</textarea>",
+            ),
+            "Set shared guides",
+        )
+        + "</details>"
+    )
+    template_form = ""
+    if spec.facet_template is not None:
+        template_action = json.dumps(
+            action_to_dict(SetFacetTemplate(spec.facet_template.template)),
+            ensure_ascii=False,
+            indent=2,
+        )
+        template_form = (
+            '<details data-key="live-facet-template">'
+            "<summary>Whole live facet template</summary>"
+            '<p class="hint">Saved panels are authoritative local views. This explicit '
+            "whole-template action replaces every frozen cell and supersedes local "
+            "overrides, preserving selectors, N13 IDs/placements "
+            "and shared-guide membership. "
+            "SetData and reopening never apply it automatically. Omitted same-channel "
+            "orders retain reservations; reset_orders recaptures them. "
+            "Edit the layers' transforms here to update all fixed cells.</p>"
+            + _hx_form(
+                "/action/raw",
+                {},
+                _field(
+                    "SetFacetTemplate · populated authoritative action",
+                    '<textarea name="json" rows="14" spellcheck="false">'
+                    + _esc(template_action)
+                    + "</textarea>",
+                ),
+                "Replace whole facet template",
+            )
+            + "</details>"
+        )
+    return (
+        f'<div class="panel"><h2>Figure</h2>{suptitle_form}{size_form}'
+        f"{shared_form}{template_form}</div>"
+    )
 
 
 def _labels_panel(spec: FigureSpec, active: int) -> str:
@@ -701,13 +781,36 @@ def _axis_controls_panel(spec: FigureSpec, active: int) -> str:
         )
 
     forms = []
-    for name, axis in (("x", panel.x), ("y", panel.y)):
+    axes = [("x", panel.x), ("y", panel.y)]
+    if panel.y2 is not None:
+        axes.append(("y2", panel.y2))
+    if panel.z is not None:
+        axes.append(("z", panel.z))
+    for name, axis in axes:
         forms.append(f'<div class="field-label">{name.upper()} axis</div>')
+        if name in ("y2", "z"):
+            forms.append(
+                _hx_form(
+                    "/action",
+                    {"type": "set_axis_label", "axis": name},
+                    _field("Label", f'<input name="text" value="{_esc(axis.label)}">'),
+                    "Apply label",
+                )
+            )
         forms.append(
             _hx_form(
                 "/action",
                 {"type": "set_scale", "axis": name},
-                _field("Scale", _select("scale", ("linear", "log"), axis.scale)),
+                _field(
+                    "Scale",
+                    _select(
+                        "scale",
+                        ("linear", "log", "symlog", "asinh", "logit")
+                        if panel.projection == "2d" and name != "z"
+                        else ("linear", "log"),
+                        axis.scale,
+                    ),
+                ),
                 "Apply scale",
             )
         )
@@ -721,30 +824,16 @@ def _axis_controls_panel(spec: FigureSpec, active: int) -> str:
         )
 
     if panel.projection == "2d":
-        secondary = panel.y2
-        secondary_label = secondary.label if secondary else ""
-        secondary_scale = secondary.scale if secondary else "linear"
-        secondary_body = (
-            _field(
-                "Label",
-                f'<input name="label" value="{_esc(secondary_label)}">',
+        if panel.y2 is None:
+            forms.append(
+                _hx_form(
+                    "/action",
+                    {"type": "set_secondary_axis"},
+                    "",
+                    "Enable secondary axis",
+                )
             )
-            + _field(
-                "Scale",
-                _select("scale", ("linear", "log"), secondary_scale),
-            )
-            + limits_inputs(secondary)
-        )
-        forms.append('<div class="field-label">Secondary Y axis</div>')
-        forms.append(
-            _hx_form(
-                "/action",
-                {"type": "set_secondary_axis"},
-                secondary_body,
-                "Apply secondary axis" if secondary else "Enable secondary axis",
-            )
-        )
-        if secondary is not None:
+        else:
             forms.append(
                 _hx_form(
                     "/action",
@@ -753,24 +842,8 @@ def _axis_controls_panel(spec: FigureSpec, active: int) -> str:
                     "Remove secondary axis",
                 )
             )
-
-    if panel.projection == "3d":
-        z_axis = panel.z
-        z_label = z_axis.label if z_axis else ""
-        z_scale = z_axis.scale if z_axis else "linear"
-        z_body = (
-            _field(
-                "Label",
-                f'<input name="label" value="{_esc(z_label)}">',
-            )
-            + _field(
-                "Scale",
-                _select("scale", ("linear", "log"), z_scale),
-            )
-            + limits_inputs(z_axis)
-        )
-        forms.append('<div class="field-label">Z axis</div>')
-        forms.append(_hx_form("/action", {"type": "set_z_axis"}, z_body))
+    if panel.projection == "3d" and panel.z is None:
+        forms.append(_hx_form("/action", {"type": "set_z_axis"}, "", "Set up z axis"))
 
     return (
         '<div class="panel"><h2>Axis scales &amp; limits</h2>'
@@ -826,13 +899,15 @@ def _position_panel(spec: FigureSpec, active: int) -> str:
             f'<div class="btn-row">{enable}{reset}</div></div>'
         )
 
-    body = row("Legend", "legend", leg_active) + row(
-        "Title", "title", title_active, default_xy=(0.5, 0.9)
-    )
+    body = row("Legend", "legend", leg_active)
+    if panel is None or panel.projection != "3d":
+        body += row("Title", "title", title_active, default_xy=(0.5, 0.9))
     body += (
         '<div class="hint">Once enabled, drag the coloured handle on the '
         "preview, or click it and use the arrow keys (Shift = bigger step). "
-        "Text/annotation layers are always draggable once added.</div>"
+        "Titles support Cartesian/polar axes fractions; text/annotation data "
+        "dragging supports Cartesian 2-D panels. 3-D title/data dragging is "
+        "unavailable.</div>"
     )
     return f'<div class="panel"><h2>Position (drag on preview)</h2>{body}</div>'
 
@@ -914,20 +989,6 @@ def _action_log_html(action_log: list[dict]) -> str:
     return f'<div class="log">{rows}</div>'
 
 
-def _axes_frac_to_img_frac(ax_frac: float, lo: float, hi: float) -> float:
-    return lo + ax_frac * (hi - lo)
-
-
-def _data_to_img_frac(value: float, lo: float, hi: float, scale: str, bbox_lo, bbox_hi):
-    lo_l = math.log10(lo) if scale == "log" else lo
-    hi_l = math.log10(hi) if scale == "log" else hi
-    v_l = math.log10(value) if scale == "log" else value
-    denom = hi_l - lo_l
-    ax_frac = (v_l - lo_l) / denom if denom else 0.5
-    ax_frac = min(1.0, max(0.0, ax_frac))
-    return _axes_frac_to_img_frac(ax_frac, bbox_lo, bbox_hi)
-
-
 def _drag_handle_html(
     *,
     kind: str,
@@ -945,99 +1006,68 @@ def _drag_handle_html(
     )
     # Stable across swaps, so keyboard focus can be restored onto the same
     # handle after the edit it just dispatched replaced the whole overlay.
-    handle_id = f"{kind}:{fields.get('layer_index', '')}:{fields.get('panel', 0)}"
+    identity = extra_data.get("panel-id", fields.get("panel", 0))
+    handle_id = f"{kind}:{fields.get('layer_index', '')}:{identity}"
     instruction = f"Move {label}; drag or use arrow keys"
     return (
         f'<button type="button" class="drag-handle {kind}" '
         f'aria-label="{_esc(instruction)}" data-handle-id="{_esc(handle_id)}" '
-        f'data-imgx="{img_x:g}" data-imgy="{img_y:g}" '
+        f'data-imgx="{img_x:.17g}" data-imgy="{img_y:.17g}" '
         f'style="left:{img_x * 100:g}%; top:{(1 - img_y) * 100:g}%" '
         f"{data_attrs} {field_attrs} "
         f'title="{_esc(instruction)}">{symbol}</button>'
     )
 
 
-def _preview_handles_html(spec: FigureSpec, layout: dict, active: int) -> str:
-    """Draggable overlay handles for the legend, title, and any text/
-    annotate layers -- positioned using the layout info from the last
-    render (panel bbox / xlim / ylim / scale), see EditorSession.refresh().
-    """
-    if not spec.panels:
-        return ""
-    panel = spec.panels[active]
+def _preview_handles_html(
+    spec: FigureSpec, layout: dict, active: int, view_generation: int = 0
+) -> str:
+    """Overlay the exact native artist anchors extracted with the saved PNG."""
     handles = []
-
-    leg = panel.legend
-    if leg.bbox_to_anchor is not None:
-        hx, hy = leg.bbox_to_anchor
+    for entry in layout.get("handles", []):
+        kind = entry["kind"]
+        panel = spec.panels[active]
+        if kind == "legend" and panel.legend.bbox_to_anchor is None:
+            continue
+        if kind == "title" and panel.title_position is None:
+            continue
+        fields = {
+            "type": "set_layer_at" if kind == "layer-at" else f"set_{kind}_position",
+            "panel": active,
+        }
+        extra = {
+            "space": "figure" if kind == "legend" else "axes",
+            "post-url": "/action",
+        }
+        if panel.panel_id is not None:
+            extra["panel-id"] = panel.panel_id
+        extra["bbox"] = json.dumps(
+            layout["figure_bbox"] if kind == "legend" else layout["panel_bbox"]
+        )
+        if kind == "layer-at":
+            fields["layer_index"] = entry["layer_index"]
+            extra.update(
+                {
+                    "data": "1",
+                    "xlim": json.dumps(entry["xlim"]),
+                    "ylim": json.dumps(entry["ylim"]),
+                    "xscale": entry["xscale"],
+                    "yscale": entry["yscale"],
+                }
+            )
+            extra["bbox"] = json.dumps(entry["bbox"])
+        fields["view_generation"] = view_generation
         handles.append(
             _drag_handle_html(
-                kind="legend",
-                label="legend",
-                symbol="\u2725",
-                img_x=hx,
-                img_y=hy,
-                extra_data={"space": "figure", "post-url": "/action"},
-                fields={"type": "set_legend_position", "panel": active},
+                kind=kind,
+                label=entry.get("label", "panel title" if kind == "title" else kind),
+                symbol="T" if kind == "title" else "✥" if kind == "legend" else "•",
+                img_x=entry["imgx"],
+                img_y=entry["imgy"],
+                extra_data=extra,
+                fields=fields,
             )
         )
-
-    bx0, by0, bx1, by1 = 0.0, 0.0, 1.0, 1.0
-    has_bbox = not layout.get("is_3d") and "panel_bbox" in layout
-    if has_bbox:
-        bx0, by0, bx1, by1 = layout["panel_bbox"]
-
-    if panel.title and panel.title_position is not None and has_bbox:
-        tx, ty = panel.title_position
-        handles.append(
-            _drag_handle_html(
-                kind="title",
-                label="panel title",
-                symbol="T",
-                img_x=_axes_frac_to_img_frac(tx, bx0, bx1),
-                img_y=_axes_frac_to_img_frac(ty, by0, by1),
-                extra_data={
-                    "space": "axes",
-                    "bbox": json.dumps(layout["panel_bbox"]),
-                    "post-url": "/action",
-                },
-                fields={"type": "set_title_position", "panel": active},
-            )
-        )
-
-    xlim, ylim = layout.get("xlim"), layout.get("ylim")
-    xscale, yscale = layout.get("xscale", "linear"), layout.get("yscale", "linear")
-    if has_bbox and xlim and ylim:
-        for entry in layout.get("text_layers", []):
-            ax_v, ay_v = entry["at"]
-            layer_ylim = entry.get("ylim", ylim)
-            layer_yscale = entry.get("yscale", yscale)
-            handles.append(
-                _drag_handle_html(
-                    kind="layer-at",
-                    label=f"{entry['type']} layer {entry['index'] + 1}",
-                    symbol="\u2022",
-                    img_x=_data_to_img_frac(ax_v, xlim[0], xlim[1], xscale, bx0, bx1),
-                    img_y=_data_to_img_frac(
-                        ay_v, layer_ylim[0], layer_ylim[1], layer_yscale, by0, by1
-                    ),
-                    extra_data={
-                        "space": "axes",
-                        "data": "1",
-                        "bbox": json.dumps(layout["panel_bbox"]),
-                        "xlim": json.dumps(xlim),
-                        "ylim": json.dumps(layer_ylim),
-                        "xscale": xscale,
-                        "yscale": layer_yscale,
-                        "post-url": "/action",
-                    },
-                    fields={
-                        "type": "set_layer_at",
-                        "panel": active,
-                        "layer_index": entry["index"],
-                    },
-                )
-            )
     return "".join(handles)
 
 
@@ -1049,6 +1079,7 @@ def render_app_body(
     error: str | None = None,
     active_panel: int = 0,
     draft_json: str = "",
+    view_generation: int = 0,
 ) -> str:
     """The inner ``#app-body`` content: everything htmx swaps after an
     action, and what ``render_page`` embeds for the first load.
@@ -1067,6 +1098,7 @@ def render_app_body(
         + "</details>"
         + _figure_panel(spec)
         + _panels_panel(spec, active)
+        + _layout_panel(spec, active)
         + _labels_panel(spec, active)
         + _axis_controls_panel(spec, active)
         + _theme_panel(spec)
@@ -1077,6 +1109,7 @@ def render_app_body(
         + _all_layers_panel()
         + "</details>"
         + _layers_panel(spec, active)
+        + _cluster_cut_panel(layout, active, view_generation)
         + _position_panel(spec, active)
         + _history_panel()
         + '<details data-key="advanced"><summary>Advanced · JSON actions</summary>'
@@ -1088,11 +1121,17 @@ def render_app_body(
         + _open_panel(draft_json)
         + "</details>"
     )
-    handles_html = _preview_handles_html(spec, layout, active)
+    handles_html = _preview_handles_html(spec, layout, active, view_generation)
+    drag_status = (
+        f'<p class="hint" role="status">{_esc(layout["data_drag_reason"])}</p>'
+        if layout.get("data_drag_reason")
+        else ""
+    )
     right = (
         '<div class="panel"><h2>Preview</h2><figure><div class="preview-wrap">'
-        '<img src="/fig.png" alt="figure preview">'
+        f'<img src="/fig.png?view_generation={view_generation}" alt="figure preview">'
         f"{handles_html}</div></figure>"
+        f"{drag_status}"
         '<p class="hint">Preview fits this workspace. Check exported dimensions '
         "and the actual-size reading examples separately.</p></div>"
         '<details class="panel" data-key="history"><summary>Action history · '
@@ -1114,6 +1153,7 @@ def render_page(
     error: str | None = None,
     active_panel: int = 0,
     draft_json: str = "",
+    view_generation: int = 0,
 ) -> str:
     """Render the full editor page (used for the initial ``GET /`` only)."""
     body = render_app_body(
@@ -1123,6 +1163,7 @@ def render_page(
         error=error,
         active_panel=active_panel,
         draft_json=draft_json,
+        view_generation=view_generation,
     )
     return f"""<!doctype html>
 <html lang="en">

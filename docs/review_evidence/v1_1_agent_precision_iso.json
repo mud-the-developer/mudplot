@@ -1,0 +1,90 @@
+{
+  "observed_at_utc": "2026-10-29T09:37:16.154680+00:00",
+  "scope": "Agent numeric/ISO time precision, targeted local development checkpoint only",
+  "previous_precision_checkpoint": "v1_1_agent_precision.json",
+  "policy": {
+    "remote_ci_required_for_current_development": false,
+    "windows": "deferred",
+    "commit_push_pr_tag_publication_performed": false
+  },
+  "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "iso_reproduction_before_fix": {
+    "tests": 6,
+    "failed": 5,
+    "passed": 1,
+    "problem": "Sub-microsecond timestamp/offset fractions were truncated and falsely reported as repeated times"
+  },
+  "after_fix": {
+    "affected_recommendation_quality_lint": {
+      "tests": 103,
+      "passed": 103,
+      "failed": 0,
+      "skipped": 0
+    },
+    "pinned_minimum_precision": {
+      "python": "3.11.14",
+      "executable": "$PROVIDER/environment-01/bin/python3",
+      "versions": {
+        "numpy": "1.23.5",
+        "matplotlib": "3.8.0",
+        "pillow": "13.0.0",
+        "statsmodels": "0.14.1",
+        "scipy": "1.10.0",
+        "pytest": "9.0.3"
+      },
+      "tests": 35,
+      "passed": 35,
+      "failed": 0,
+      "skipped": 0,
+      "deselected": 3636
+    }
+  },
+  "behaviour": [
+    "Integer profiles/time order/event offsets retain original integer values",
+    "coordinate-precision warns about float plot-coordinate limitations without transforming values or inferring units",
+    "time-precision declines unsupported sub-microsecond ISO string time/offset precision instead of inventing repeats or bad ordering",
+    "Zero-only padding and supported microsecond ISO strings remain accepted",
+    "Missing time values warn; booleans/numeric-looking text are not coerced into time"
+  ],
+  "compatibility": {
+    "matplotlib_renderer_unchanged": true,
+    "figurespec_json_schema_unchanged": true,
+    "input_measurements_order_and_units_unchanged": true,
+    "new_third_party_dependencies": false
+  },
+  "checks": {
+    "ruff": "passed",
+    "pyright": "0 errors",
+    "active_lsp": "7 affected/import-related files, 0 error diagnostics",
+    "full_current_tree_rerun": false,
+    "rust_browser_tex_package_rerun_this_iteration": false
+  },
+  "qualification_note": "This is focused post-fix evidence, not a clean whole-suite or publication approval. Earlier raw full-run failures remain unchanged.",
+  "implementation_sha256": {
+    "mudplot/_recommend.py": "043b33c9d9f2dd5e8703ef2f980fceae760485153488998ee84236e7d426bca2",
+    "tests/test_recommend_precision.py": "c2395cc744152b269ff10dc7c06e16b9d3d26b2ab06f03fa0c72623e7fbd4cb5",
+    "scripts/check_minimum_versions.py": "9648455aac699da3b237a758930d376c2a560806f4c6f7b00c25fc4d57e41dc1"
+  },
+  "raw_local_evidence": [
+    {
+      "path": "artifacts/v1_1_agent_precision_20261029/iso/before.log",
+      "sha256": "530948f116e2d093fd071707a42b7103788c457eac9c257bb2f56f6c2cb60803"
+    },
+    {
+      "path": "artifacts/v1_1_agent_precision_20261029/iso/affected.xml",
+      "sha256": "f24b74a292c5c714c73f04df887b328d5ca8d51a7256e7f8523c7b390d3f28db"
+    },
+    {
+      "path": "artifacts/v1_1_agent_precision_20261029/iso/affected.log",
+      "sha256": "711e3c56fa3ffce11da1f367c07aa27a7d29b1d233de5625b8e9d4ae6ab9abfd"
+    },
+    {
+      "path": "artifacts/v1_1_agent_precision_20261029/iso/minimum.xml",
+      "sha256": "60269f5840dc6b04cdc24eaa03a5b9b90b75138cfbe8cb461fbe90663a300eb6"
+    },
+    {
+      "path": "artifacts/v1_1_agent_precision_20261029/iso/minimum.log",
+      "sha256": "1398e8ed06c0cd909a8f4d48b28861bfd625b7230cfa53a74ba55f5732c9187e"
+    }
+  ]
+}

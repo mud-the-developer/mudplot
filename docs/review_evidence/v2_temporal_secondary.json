@@ -1,0 +1,322 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-feature-checkpoint",
+  "catalogue": [
+    "F02",
+    "F01",
+    "D02",
+    "D04",
+    "D06"
+  ],
+  "status": "Secondary-y temporal/distribution subset locally verified; not catalogue or release completion",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "implemented": [
+    "Vertical hist/KDE/ECDF route numeric response mass to y2, retaining the observation x clock; horizontal y2 and temporal mass reject.",
+    "Explicit temporal semantic scatter/line and existing raw y2 paths preserve clocks, source values, input order, JSON and action replay.",
+    "Primary-y category validation excludes y2 layers while shared x includes both axes; quality checks inspect both axes with the original panel index.",
+    "Full-field fixture includes TemporalSpec and normalize_scope; nullable tests explicitly verify omit_none normalization.",
+    "English/Korean documentation and the explicit-alpha dual-y example distinguish the verified subset from remaining work."
+  ],
+  "checks": {
+    "bounded_xml": [
+      {
+        "path": "artifacts/v2_temporal_20261030/secondary-review-regression-retry.xml",
+        "cases": 634,
+        "passed": 634,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_temporal_20261030/secondary-review-minimum.xml",
+        "cases": 184,
+        "passed": 184,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_temporal_20261030/secondary-full/fixture-recheck.xml",
+        "cases": 218,
+        "passed": 218,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_temporal_20261030/secondary-full/ecdf-recheck.xml",
+        "cases": 103,
+        "passed": 103,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_temporal_20261030/secondary-full/minimum-recheck.xml",
+        "cases": 641,
+        "passed": 629,
+        "failure": 0,
+        "error": 0,
+        "skipped": 12
+      }
+    ],
+    "static": "ruff check/format passed on changed runtime, tests, check_wheel and browser verification script. Active LSP probe on 6 changed paths reported no errors.",
+    "environment": {
+      "python": "3.13.12",
+      "platform": "Linux",
+      "dependencies": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pillow": "13.0.0",
+        "pytest": "9.1.1"
+      }
+    },
+    "minimum": "Python 3.11.14, NumPy 1.23.5, Matplotlib 3.8.0, Pillow 13.0.0; optional SciPy 1.10.0 and statsmodels 0.14.1 added before corrected rechecks.",
+    "browser": {
+      "script": "artifacts/v2_temporal_20261030/rust_secondary_temporal.py",
+      "log": "artifacts/v2_temporal_20261030/rust-secondary-temporal.log",
+      "chromium": "153.0.8010.12",
+      "scenes": [
+        "hist",
+        "kde",
+        "ecdf",
+        "semantic-scatter"
+      ],
+      "workflow": "Actual human JSON clock/title edit, exact spec+PNG undo/redo, download/reopen, PNG/SVG/PDF. Invalid clock/mass edits preserve state and preview.",
+      "binary": "$LOCAL_EVIDENCE/location-144/mudplot-editor",
+      "binary_sha256": "26e88f3716c8e6205b22e044ac7a33324d705c8ddbdc296aa8f2e428ed553cd0",
+      "fresh_rust_rebuild": false
+    },
+    "installed_wheel": {
+      "command": "PYTHONPATH=. MPLBACKEND=Agg .venv/bin/python scripts/check_wheel.py --render --out-dir artifacts/v2_temporal_20261030/secondary-wheel",
+      "status": "passed",
+      "assertions": "sdist -> wheel, required/forbidden paths, core, outside-checkout API/JSON/actions/PNG and CLI SVG for y2 hist/KDE/ECDF and temporal semantic scatter, independent ordinal primary y.",
+      "release_qualification": false
+    },
+    "visual_review": "Inspected native histogram and semantic-scatter PNGs. Semantic date axis/hue guide are legible. Default opaque histogram fill obscures portions of primary line/legend; explicit alpha is documented and used in the executable example. No publication/physical-print suitability claim."
+  },
+  "preserved_attempts": {
+    "original_current_shards": {
+      "suites": [
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-0.xml",
+          "cases": 590,
+          "passed": 575,
+          "failure": 3,
+          "error": 0,
+          "skipped": 12
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-1.xml",
+          "cases": 457,
+          "passed": 456,
+          "failure": 0,
+          "error": 0,
+          "skipped": 1
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-2.xml",
+          "cases": 595,
+          "passed": 593,
+          "failure": 0,
+          "error": 0,
+          "skipped": 2
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-3.xml",
+          "cases": 377,
+          "passed": 369,
+          "failure": 0,
+          "error": 0,
+          "skipped": 8
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-4.xml",
+          "cases": 729,
+          "passed": 714,
+          "failure": 1,
+          "error": 0,
+          "skipped": 14
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-5.xml",
+          "cases": 691,
+          "passed": 691,
+          "failure": 0,
+          "error": 0,
+          "skipped": 0
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-6.xml",
+          "cases": 788,
+          "passed": 766,
+          "failure": 0,
+          "error": 0,
+          "skipped": 22
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/current-7.xml",
+          "cases": 771,
+          "passed": 768,
+          "failure": 0,
+          "error": 0,
+          "skipped": 3
+        }
+      ],
+      "totals": {
+        "cases": 4998,
+        "passed": 4932,
+        "failure": 4,
+        "error": 0,
+        "skipped": 62
+      }
+    },
+    "original_minimum_shards": {
+      "suites": [
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/minimum-0.xml",
+          "cases": 1273,
+          "passed": 1270,
+          "failure": 3,
+          "error": 0,
+          "skipped": 0
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/minimum-1.xml",
+          "cases": 897,
+          "passed": 878,
+          "failure": 0,
+          "error": 0,
+          "skipped": 19
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/minimum-2.xml",
+          "cases": 1219,
+          "passed": 1180,
+          "failure": 0,
+          "error": 0,
+          "skipped": 39
+        },
+        {
+          "path": "artifacts/v2_temporal_20261030/secondary-full/minimum-3.xml",
+          "cases": 788,
+          "passed": 751,
+          "failure": 16,
+          "error": 4,
+          "skipped": 17
+        }
+      ],
+      "totals": {
+        "cases": 4177,
+        "passed": 4079,
+        "failure": 19,
+        "error": 4,
+        "skipped": 75
+      }
+    },
+    "interpretation": "Historical pre-review diagnostics, not final-source qualification. Four current failures were fixture/nullable and ECDF capability drift. Minimum also lacked optional SciPy. Original failures and skips remain recorded.",
+    "review": "First reviewer failed on MONTHLY_REQUEST_COUNT without a review. Announced active-provider retry completed source-only review. Parent reproduced/fixed category leakage and omitted quality diagnostics; no independent executed or post-fix review is claimed.",
+    "new_regressions": "Review-before retains 6 failures, including a primary histogram harness that failed to apply hatches. Corrected parity test explicitly sets rendered hatches before assess. Final bounded current/minimum runs pass without skips.",
+    "aborted_regression": "secondary-review-regression.xml/log retain a no-tests-run attempt from a nonexistent filename; separately named regression-retry passed."
+  },
+  "remaining_required": [
+    "Wider F01/D06 semantics, explicit bivariate ECDF cumulative workflow, and the remaining frozen statistical catalogue.",
+    "Remaining G02/G03 and native/axis/export catalogue; this does not close F02/F01/D02/D04/D06/E01/REL01.",
+    "Final frozen-source full Linux/Python/optional-adapter/browser/Rust/TeX/PGF/static/security qualification; required skips are not passes.",
+    "2.0.0 version synchronization, independent final rebuilds and release-candidate evidence; current package remains 1.1.0."
+  ],
+  "delivery": {
+    "local_only": true,
+    "committed": false,
+    "published": false
+  },
+  "source_sha256": {
+    "mudplot/api.py": "01477afe701707105846a09790a19807f811ad38666ee04a12a145e9b472df58",
+    "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+    "mudplot/spec.py": "4e18ff21bb34173a2763708bf8243595afdc07ab61b255d11b435133e4a8d5c5",
+    "mudplot/validate.py": "083c36ad4fe32bc2578a11c274a503bf06480671b56804fb78c818fe8c9878a6",
+    "mudplot/_semantics.py": "b0971ce59817fa8f6f1c0e33e1a6fbca094feeb446e99ef275677681c0979780",
+    "mudplot/_render.py": "e5d1dadc58f05a1ee685bfe3614f2b9581bc4a60dfbef27c536440178377f6de",
+    "mudplot/_quality.py": "aa7e5fd1be163bc0cbde4b47bfc3914ca13b7ed7163f6f05b11734d88485bd90",
+    "mudplot/capabilities.py": "24de2e2d367ef9939c67a449aa2baac002bc3bfa057e30254ac17cf15b6ee7b4",
+    "mudplot/_temporal.py": "8c313ec44a0001a35d83872dc8b2fc942456b9ea96383cebace491f9b469db83",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "mudplot/_temporal_render.py": "c05181e46e5b73bdf7c6539a70d44844996c75cc68a85b109d0594e7b56694d5",
+    "tests/test_temporal_secondary.py": "15e2d47e2331f6d3e5c1e14f1a7483655480e5d719b553f347eb095634024a71",
+    "tests/test_histogram_statistics.py": "f0d81b493bb8f270502612ef21531648408af2880cc86ac141d16fc21748f233",
+    "tests/test_kde_options.py": "2b62cd474833fe6dedec93445a39772ba03e998f0d4daa8856f128d64d23735d",
+    "tests/test_ecdf.py": "07e97173ff76712af48d0f618b74a0af082127efe483d929b1e656cfe5dd16a7",
+    "tests/test_review_full_spec_fields.py": "487a9dcf1340002e2069028fca5eea5f834a0c5364f489f9123a45dc32a65f76",
+    "tests/fixtures/review_full_spec_fields.json": "75056d97d45402eb631d4c1b35759428bec61f63870109b7d6ed171c3f887c53",
+    "examples/temporal_axes.py": "7a9a41027b7ea5c9df08d32107426fc6400425b8e41edc512111ca0872b79dc8",
+    "scripts/check_wheel.py": "83be7c51c3df20ca938fd310e40966244ecac9f2ed7f4ded288090f626646eab",
+    "scripts/check_minimum_versions.py": "5b9d535a6cd53f14d29c8c307fe5da90ae4890cf671970b39cfb9781a5bec718",
+    "scripts/rust_editor_smoke_test.py": "1b1d7ae1987eb18115908d031d78dac873aae117d4c64efddb44e94ef9049910",
+    "docs/TEMPORAL_AXES.md": "539831509d1af73b5e313d6da1051f758abf4510519108010ebfb65086f3f5d0",
+    "docs/TEMPORAL_AXES.ko.md": "7696e70950e6737122a629bf543fa7daf6e916c9858cce5ea243c987ab0d43e0",
+    "docs/V2_SCOPE.md": "9e8ccad4ebbc150e67c08dcb92d3a843eecf0bd9e3e8626d5ca1bd6a111ad0a8",
+    "docs/V2_SCOPE.ko.md": "88e0ed260999e4f9d25b7d08de422d3835329cbcffc72159bb55ea39cb62ee7b"
+  },
+  "artifacts_sha256": {
+    "artifacts/v2_temporal_20261030/full-spec-fields-original.json": "3d3b16258c6846ddac553fef5ee241575326fc59a9639a7d6bd540f5a2349ef7",
+    "artifacts/v2_temporal_20261030/full-spec-fields-original.py": "3b075484d37835110b52ac98fdc09bbb2726ee82a2254a9f6d1ec06fbe7d2444",
+    "artifacts/v2_temporal_20261030/rust-secondary-temporal.log": "038c025f70b4e03a74e65971a6e73308967b8c39fcbd5af687426ddb2d798a43",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-agent.json": "7466ad59b720ef8fb4c95c1f7c6468877f9e79b4e39050bc010cb25e7b17d311",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-browser.png": "6df0a15d1ade16523c4f75faf2f8950c1df3f245d215fec1fb0b3b46e62f73f8",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-human.json": "3334b0b34c194b9fdf957baf98f728828b46104d22cade9eb5284bbb1d70abe3",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-human.pdf": "876457d049367a53815a4c9f702871f3f5d51f08fa4ae28f8ddcff281c0e61d7",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-human.png": "a535def2a57cd1fdc88e0fa62effa70e2f3e55723112d279d7cd74a7728ccf48",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/ecdf-human.svg": "cb6ab91dad328aaf48ca806a3eed62fb26bccfac19bde8e31e84235e12cffe02",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-agent.json": "8d96bc6df891ffbbc82b3051b979937c5b109e4df96329ffc5254922a4fa8f32",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-browser.png": "ddf140ed1867272731c220c47b1feb45225267775c658d9fc675a4f7bc2c098f",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-human.json": "a23c6c2da7d7c1580ae6adc7fc542d469678ace0695c0ee5357a32d151209756",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-human.pdf": "5e094818088da7a66c8b113b09bc4cb06f47daf382d42df1167453ec6fdfe328",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-human.png": "97a73e5b388a712d62dff3c68cdef58385a7624a54067ca83b8d710bec5b5c3d",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/hist-human.svg": "2e49425383959260c6a0f3d75392533d7232e14cd7469975663f2136a44b665c",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-agent.json": "6268ab1f825b9210dd36452c972b397cc3cb42f1b41df12f405fb86a7927a18d",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-browser.png": "f038c91569096b225ccc7407c789e2b2125e53547152481fe70b5737be59a440",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-human.json": "46ad095588c5af2b8a861b476536dc3b2b5c1da9363830abe5de504aa98a5e8d",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-human.pdf": "7fcb014a0880d5700578beadbd790adb35bc576a93b8c6d12c93ebc901fd44d8",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-human.png": "49f5bd446bb8ae9cd0d70d76e044641e7ade529652aad702433da37df8259dc5",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/kde-human.svg": "785caae25fb363fa7a8b5addbba14aba81881546ff8847165c6735f83b51ea9b",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-agent.json": "001b241fd0a0849f8daf9e2973ea4e95d581bb3e4011e7d863a3ea2bfc297b2a",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-browser.png": "bd573e48ba7f01c1c6455b815a79fab07d9aca395cc4af940996c24711e8cde0",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-human.json": "d8054e5f8a96e679be2c7bc510cd8defb4f9e9ce7452eab9d3ff976bb77148d3",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-human.pdf": "8a223b8dec17923632ae8420876b3dccdf390cde32f7e69ad1c530e684c00a0d",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-human.png": "9ae2adf20acb7f702f17cab4d4320021b9fdabd089a6e23a6bb3bbb5e05a5f29",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal/semantic-scatter-human.svg": "3a1250002b4ab26bc5e589475e78eb1b3420cb922c92419a2dc27d58d0211dfe",
+    "artifacts/v2_temporal_20261030/rust_secondary_temporal.py": "7ecb278b2de521426749c0ee3fca80e6a932490513523428ffa2af82ef82beca",
+    "artifacts/v2_temporal_20261030/secondary-full/current-0.xml": "255169686910bf07860901c04aedd7faf35a89c216950e30ed7518ecc5faad53",
+    "artifacts/v2_temporal_20261030/secondary-full/current-1.xml": "6e3fb9ad11b2afe34aafa3f8bb4f59f28f3544e15be014775fd827a41b75e76f",
+    "artifacts/v2_temporal_20261030/secondary-full/current-2.xml": "aa3121891cf7c3c855e299f9c1ccf8515ada2079a4fc60ba16596630af4ceff5",
+    "artifacts/v2_temporal_20261030/secondary-full/current-3.xml": "222251fbf6c2dfdad26ebce1d9ee155f4fbc377e4a4cabbfff6fa27d8348df7c",
+    "artifacts/v2_temporal_20261030/secondary-full/current-4.xml": "f165c3292fa0f64b4e31a29ba191f48eb56612db9f7f0d76874e82570cab8efd",
+    "artifacts/v2_temporal_20261030/secondary-full/current-5.xml": "bfe0914eb4ac1f74c168b0573bcbe0180779d6d57c029ec22dbdc177cba194ca",
+    "artifacts/v2_temporal_20261030/secondary-full/current-6.xml": "0adc712350241115b8b26f72691caa5a30c487e170924ed069ee88f5de632338",
+    "artifacts/v2_temporal_20261030/secondary-full/current-7.xml": "1c04a220b1e3aabf4c440381341f43bb7c2bbf6ff82ad855701128d5d5a8b0db",
+    "artifacts/v2_temporal_20261030/secondary-full/ecdf-recheck.xml": "3e248d140dcea058b294269b6386e40a5393d05e2293baa936e0b505937ec500",
+    "artifacts/v2_temporal_20261030/secondary-full/fixture-recheck.xml": "00ba24bc3952aa6130759ecfc40569feb7434b02ac79298694601ac5574cf08f",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-0.xml": "e1f869906739abcc6a301a4e4414092174e3891f42e9b6b4ec3129a47624960d",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-1.xml": "2c80f6d5ca44a10f9384b47b99a0678211d8411be6bedf56eee98bceaaaa44a7",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-2.xml": "c0b82d868d5447cb6ac322408201c03ad8d0e455cbb2feb9945925c2547b7fdc",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-3.xml": "4d8213ee942ab5e4c9548b331b7cef2c46e3ac3c187b6f67909d1e42211c9424",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-optional-install.log": "e631ef94526a7289790b9a16b1386213146d2dfe3d910b442d138b269eede10a",
+    "artifacts/v2_temporal_20261030/secondary-full/minimum-recheck.xml": "addf6c62da8d2892f833095a2054b864a131d19e379367730ba504cb495f0ba2",
+    "artifacts/v2_temporal_20261030/secondary-original-pins.md": "eb220a56398774ec011376322a74326696790e83baa3134f3f95b72b56bae4ce",
+    "artifacts/v2_temporal_20261030/secondary-review-after.log": "4b7f07f0ca23dfd0cc4c65fe40955ec3587671b668d3cdd40756bf8e60c55445",
+    "artifacts/v2_temporal_20261030/secondary-review-after.xml": "2a27443e77c220f837afe5bbacc2acc284209ff9d5e6bb658d4440eb410b40e9",
+    "artifacts/v2_temporal_20261030/secondary-review-before.log": "e9fcf6452a198081001d9b64d008e8ccd4484c7ad8e11e86a3526d86fcaee265",
+    "artifacts/v2_temporal_20261030/secondary-review-before.xml": "1cb5640000738fab363743d8c3f96847b3b41cbeb4706086bdda053c409426f6",
+    "artifacts/v2_temporal_20261030/secondary-review-minimum.log": "355e6623797158d028e6049dcbc37d976205d2c04619e7016180de85514d86c6",
+    "artifacts/v2_temporal_20261030/secondary-review-minimum.xml": "d23ac669a46ce9d6d859fe923d236f4aa58712966b7611c378cc1630ee5b88d8",
+    "artifacts/v2_temporal_20261030/secondary-review-regression-retry.log": "dfa6e62b5192d2cb06c3fa1d76266ed91c15be933aadf7dc9507fcd02f98516b",
+    "artifacts/v2_temporal_20261030/secondary-review-regression-retry.xml": "84ef682a2f4c801f71c8f2d89423c42e1606848ef970dcfcab0aa4f5a85169cc",
+    "artifacts/v2_temporal_20261030/secondary-review-regression.log": "bb02946534463b0151dab650270987262ae36591d7c318b318eed4bd3e2bbb80",
+    "artifacts/v2_temporal_20261030/secondary-review-regression.xml": "964534b3052f9d7ce2776844bacd4db2ce960c3e727de1e69715c0365825df0c",
+    "artifacts/v2_temporal_20261030/secondary-review.md": "a16219d16a426ea59543fa373856ddf7be242cf363f0679cde6513ef5da68e9b",
+    "artifacts/v2_temporal_20261030/secondary-wheel/mudplot-1.1.0-py3-none-any.whl": "7be62c5f95e4b41c45bc3f922d4d1bda996ac3b285e993e2ead05f0f12743233",
+    "artifacts/v2_temporal_20261030/secondary-wheel/mudplot-1.1.0.tar.gz": "49a796b8e6875458c1b4dde4793cf0f129ee58d3ac3275d78ccbd6d1bd894742",
+    "artifacts/v2_temporal_20261030/secondary-wheel.log": "627b208affbe4ee75e93bc79c9d12a9600ee8270b611d91f99959fd2ccef6fa5"
+  }
+}

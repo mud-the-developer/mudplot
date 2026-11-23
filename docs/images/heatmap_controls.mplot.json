@@ -234,7 +234,32 @@
               "Method A",
               "Method B"
             ],
-            "square": false
+            "square": false,
+            "annot_data": [
+              [
+                "low",
+                "low",
+                "masked",
+                "rising",
+                "rising"
+              ],
+              [
+                "low",
+                "near 0",
+                "rising",
+                "high",
+                "high"
+              ],
+              [
+                "near 0",
+                "rising",
+                "high",
+                "high",
+                "peak"
+              ]
+            ],
+            "xrotation": 25,
+            "yrotation": 0
           },
           "cluster": null,
           "levels": null,

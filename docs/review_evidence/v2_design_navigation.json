@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "feature_id": "CND03",
+  "status": "evaluation-complete-condition-not-triggered",
+  "decision": "condition not triggered",
+  "evaluation": "Read-only worker performed actual DESIGN/source/history/dependency navigation; parent reviewed its evaluation.",
+  "observed_navigation": {
+    "DESIGN.md": {
+      "dependency_policy": 20,
+      "architecture": 62,
+      "history_and_effects": 96,
+      "engine_UI_boundary": 137,
+      "module_structure": 392,
+      "Rust_boundary": 415
+    },
+    "outcome": "Descriptive numbered sections and direct source references answered all three navigation tasks; no concrete TOC obstruction was observed. No split or reorganization was justified."
+  },
+  "separate_accuracy_correction": {
+    "not_a_trigger": true,
+    "reason": "Old prose said replay checkpoints remained deferred although Store already retained one preceding64-action checkpoint.",
+    "corrected_English": "DESIGN.md:130-135",
+    "corrected_Korean": "DESIGN.ko.md:118-123",
+    "source_contract": "mudplot/store.py:23-29,63-68,76-86"
+  },
+  "current_source_sha256_before_CND02_optimization": {
+    "DESIGN.md": "b1e82eea7a55500d39ae66680c5a535a3c392d8d2ba08717b39ac6ad99d6c0a3",
+    "DESIGN.ko.md": "bde16e2d5e62b7d178967af9c51dc208209dfed4dcbf8479c59222bf695b825f",
+    "mudplot/store.py": "f9bdea12f317f2075e5a1d6fc8e1cc0366a38791d46db6aee61567d65fc7a5df"
+  },
+  "historical_input": "$LOCAL_EVIDENCE/location-49/decisions.json CND03 (decision preserved above; temp path not required to understand this record)",
+  "limits": "This closes only the required CND03 evaluation, not an implemented product feature or any other row. CND01 remains open. CND02 was separately triggered by the subsequently completed100k-row x1000-action measurement; the earlier partial no-trigger CND02 opinion in the same temp file is not adopted here.",
+  "git_or_publication_actions": false
+}

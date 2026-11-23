@@ -4,9 +4,20 @@
 
 Target: **v1.1**, expanding the functional plotting/statistics coverage described
 in [FEATURE_COVERAGE.md](FEATURE_COVERAGE.md). This is work in progress, not a
-release announcement or a claim of full upstream parity. The package/editor
-version remains 1.0.0 until the actual release gates pass; no tag or publication
-is authorized by this tracker.
+release announcement or a claim of full upstream parity. After clean local
+qualification, package/editor metadata is **1.1.0 as a local candidate**, with
+FigureSpec schema 0.1 unchanged. Historical receipts below retain their original
+versions/counts; no tag or publication is authorized by this tracker.
+
+## Scoped release decision
+
+The owner selected the implemented subsets plus scientific figure quality work
+for v1.1. The current [release checklist](V1_1_RELEASE_CHECKLIST.md) supersedes
+an interpretation that every unchecked expansion below must ship in this release.
+Open B2b/B3/B4/B5/B6 expansion items move to the post-v1.1 backlog and remain
+unchecked. Rust smart-option UI is not a gate. Security, integrity, compatibility
+and release qualification are not waived; version/tag/publication rules above
+remain in force.
 
 ## Ordered batches
 

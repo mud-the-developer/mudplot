@@ -1,0 +1,84 @@
+{
+  "catalogue_id": "D02",
+  "status": "WHOLE bounded D02 existing feature acceptance plus final-source lineage PARENT ACCEPTED/CLOSED; no new science/runtime/wheel, not REL01/v2",
+  "parent_acceptance": "Parent reviewed full old bounded acceptance, unchanged histogram/bin/renderer seams and actual current/minimum installed/native recent consumers/core-S bindings; exactly missing latest71-aa624/de3 source lineage accepted without repeating or relabelling old cohorts.",
+  "original_closure": {
+    "path": "$CHECKOUT/docs/review_evidence/v2_histogram_bins_closure.json",
+    "sha256": "1332d281430675a83885a548009f7856f5512e63d1e08193783ab7bfb0386c63",
+    "unchanged": true,
+    "subreceipts": [
+      "docs/review_evidence/v2_histogram_step_dodge.r2.json",
+      "docs/review_evidence/v2_histogram_fill.json",
+      "docs/review_evidence/v2_histogram_modes.json",
+      "docs/review_evidence/v2_histogram_bins.json"
+    ],
+    "original56_module_installation_not_relabelled71": true,
+    "old_cohorts": "Each563related/0skip and later41current+2minimum interface cases stay distinct original stages; no repeats/sums."
+  },
+  "exact_missing_before": "Original accepted closure bound its older56-module final-interface wheel and old source/doc ledger,not current accepted71-aa624/de3/corrected908 source. No named histogram feature is newly implemented here.",
+  "latest_binding": {
+    "wheel_sha256": "de3fe109473895d770f2254794765ab4f7d3f54ca1739b64143c8e1e70b6bfb4",
+    "runtime_sha256": "aa6243b8fceafc2e064dcfea8ef638cdbc422fed4e9300bc2d168a1f22798ff6",
+    "modules": 71,
+    "original_immutable906_source": "$LOCAL_EVIDENCE/location-24",
+    "corrected_final908_source": "$LOCAL_EVIDENCE/location-44",
+    "corrected_final_SDIST_sha256": "b8faa78f370d80b925aa435c555da2949aac2eab699f9736e64ab55fc4e48eff",
+    "source_doc_binding": "artifacts/v2_c07/final_source_doc_binding.json",
+    "no_new_runtime_or_wheel": true,
+    "same_new_profiles": {
+      "current": {
+        "driver": "$LOCAL_EVIDENCE/location-45",
+        "origin": "$LOCAL_EVIDENCE/location-28",
+        "versions": {
+          "numpy": "2.5.2",
+          "matplotlib": "3.11.1",
+          "Pillow": "13.0.0",
+          "pytest": "9.1.1"
+        },
+        "installed71_binding": "$LOCAL_EVIDENCE/location-27/binding-short-tmp.json"
+      },
+      "minimum": {
+        "driver": "$LOCAL_EVIDENCE/location-46",
+        "origin": "$LOCAL_EVIDENCE/location-31",
+        "versions": {
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "Pillow": "13.0.0",
+          "pytest": "9.0.3"
+        },
+        "installed71_binding": "$LOCAL_EVIDENCE/location-30/binding-short-tmp.json"
+      }
+    }
+  },
+  "source_seams": {
+    "histogram_module_byte_exact_to_accepted_D02": "fd0261721f9ad139fbe843411915f4dbae22dad3e6ba7276a87629c83554d5eb",
+    "bin_rule_module_byte_exact_to_accepted_D02": "ee3e25bb1b1d3fa4ce9ff61c1e27cbf403c10d940c5add44f818328a273e79c0",
+    "native_histogram_renderer_function_byte_exact_to_accepted_R4": "a3f7aa80f3f8f7f05d6252bd60f06f27856cc687f26e8b2db69ee702536367c5",
+    "shared_outer_modules_changed": "Spec/API/renderer/temporal/facet grew accepted unrelated features; do not claim whole files match old56-source tree. Current actual native/CLI/core consumers below close latest71-source lineage."
+  },
+  "actual_same_final_artifact_consumers": {
+    "commands": [
+      "artifacts/v2_c07/established_consumers_corrected_current_command.json",
+      "artifacts/v2_c07/established_consumers_corrected_minimum_command.json"
+    ],
+    "source": "Corrected shipped scripts/check_wheel.py _smoke_installed and scripts/rust_editor_smoke_test.py _review_recent_layer_contracts actually executed, all0; no hash-only or test-only closure.",
+    "weighted_nonnuniform_step_dodge": "Public native filled step+dodge bins[0,1,3] matches independent concrete edge/height geometry; installed CLI SVG and JSON/actions/source identity.",
+    "fill_poly_and_outlines": "Actual outline-bar native patches; default and true filled normalized poly compositions; transparent zero-line native SVG retained without source rewrite.",
+    "automatic_discrete_and_clock_units": "Public auto input produces43cells/44edges,total15; weight scaling preserves edges and scalesmass; native declared seconds/milliseconds/discrete and actual date/y2 density exports.",
+    "pure": "Both actual Python-S actively deny optional libs and run all eight fixed automatic names plus discrete through public validation/actions/JSON; no pure-fit claim.",
+    "profiles": {
+      "current": {
+        "receipt": "$LOCAL_EVIDENCE/location-52/receipt.json",
+        "pure": "$LOCAL_EVIDENCE/location-52/C06-D02-pure-lineage.json",
+        "artifacts": "$LOCAL_EVIDENCE/location-52"
+      },
+      "minimum": {
+        "receipt": "$LOCAL_EVIDENCE/location-53/receipt.json",
+        "pure": "$LOCAL_EVIDENCE/location-53/C06-D02-pure-lineage.json",
+        "artifacts": "$LOCAL_EVIDENCE/location-53"
+      }
+    }
+  },
+  "retained_accepted_science": "All8 fixed estimator equations/native/reference guards,raw-width/log/date contracts,invalid unsupported combinations,old7spec/action/RGBA controls,actual old human forms/undo/download/reopen/PNG-SVG-PDF and visual review remain original accepted evidence. Critical math modules and histogram renderer seam unchanged; no frozen cohort redo.",
+  "not_closed": "D03/D04/D05/D06,F01/F02/G01/E01/Q01/DOC01/REL01/fullv2. No new dependency/floor/version/provider/security or bin/row limit."
+}

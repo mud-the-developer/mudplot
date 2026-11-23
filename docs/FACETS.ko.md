@@ -1,4 +1,4 @@
-# 자동 facet: 첫 지원 범위
+# 자동 facet과 제한된 figure 빌더
 
 *[English](FACETS.md)*
 
@@ -14,6 +14,40 @@ Facet은 같은 원자료를 나누어 **동일한 질문**을 비교하는 기�
 이 예제의 목표 표시는 데스크톱 900px이며 임의의 모바일 축소판이 아닙니다.
 모든 값은 합성이며 site마다 방법/시점당 독립 관측 6개입니다. 음영은 평균의
 점별 95% percentile-bootstrap CI로, SD·동시 신뢰대·site를 합친 추정값이 아닙니다.
+
+## 공개 빌더
+
+`relplot`, `displot`, `catplot`, `lmplot`은 원자료와 논리 `x`(짝지은 mark는 `y`도)를
+받습니다. 같은 이름의 `Plot` 메서드는 비어 있는 패널 하나에서 시작하므로
+시계·y2·표시 척도를 미리 선언할 수 있습니다. 빌더 이름이나 숨은 자료는
+저장하지 않고 기존 mark와 facet action을 사용합니다.
+
+| 빌더 | 지원하는 `kind` |
+|---|---|
+| `relplot` | `scatter`, `line`, `lineplot` (추정) |
+| `displot` | `hist`, `kde`, `ecdf`, `rug`, `hist2d`, `kde2d`, `ecdf2d` |
+| `catplot` | `strip`, `swarm`, `box`, `boxen`, `violin`, `bar`, `point`, `count` |
+| `lmplot` | `regplot`, `residplot` |
+
+`row`나 `col`을 주면 기본은 `live=True`입니다. 순서·줄바꿈·축 공유는
+`facet()`과 같고 통계는 셀마다 적합합니다. facet 차원이 없으면 mark 하나를
+그립니다. 나머지 인자는 기존 mark 옵션이며 잘못된 조합은 plot과 이력을
+바꾸지 않고 거부합니다.
+
+`displot(rows, "dose", col="site")`는 선택된 관측에서 공통 20빈 경계를 한 번
+정하고 저장합니다. 변환 히스토그램은 작업 좌표의 경계를 명시합니다.
+빈 데이터 전체의 경계나 과학적으로 고정된 경계도 명시합니다.
+
+의미 매핑과 지원되는 원시 그룹 line/scatter/bar의 실제 핸들을 figure guide로
+모을 수 있습니다. 예약 순서는 유지하되 빈 슬롯에 가짜 범례를 만들거나
+텍스트가 같은 다른 범례를 없애지 않습니다. 자동 역할 범례는 `guide=False`로
+끄세요. facet의 `scatter(c=...)`는 기존 팔레트의 P01 공통 원시 숫자 범위를
+사용합니다. x/y2 시계가 `c`를 변환하지 않습니다. `colorbar=True`는 하나의
+figure 색상 막대, `False`는 색상 막대 없는 동일 매핑입니다. 명시 P01의 로컬
+막대는 유지됩니다. 그림 전체에 모을 때는 `kind="scalar"`의
+`ScalarDisplaySpec.scale_id`, `kind="raw"`의 `LayerSpec.raw_guide_id`를
+사용합니다. `kind` 생략은 기존 SemanticSpec 경로입니다.
+[실행 예제](../examples/facet_builders.py)도 참고하세요.
 
 ## 먼저 템플릿을 만든 뒤 분할
 
@@ -33,6 +67,10 @@ p.legend(location="upper left", panel=0)
 명시적 panel label을 유지하며 셀 제목에 facet key를 추가합니다. 전체 그림 크기는
 자동으로 늘리지 않으므로 직접 정하세요. 전체 질문은 suptitle에 두면 긴 제목이
 셀마다 반복되지 않습니다. 범례도 복사하므로 예제처럼 반복을 명시적으로 숨깁니다.
+
+명시적 semantic scale에는 `p.shared_guides([{"scale_id": "scope"}])`로 실제
+mapping guide를 figure마다 한 번 모을 수 있습니다. Dataset label과 다른 scale은
+유지하며 label/panel ID에서 membership을 추측하지 않습니다.
 
 ```python
 p.facet(row="batch", col="site", row_order=["B", "A"],
@@ -94,23 +132,43 @@ p = (mp.plot(raw).line("x", "y", group="method", hue_order=["B", "A"])
 # North의 x=[2,1,1], y=[8,4,5]를 두 점의 평균으로 바꾸지 않습니다.
 ```
 
+## 원본 선과 complete-unit 추론
+
+[Line workflow](LINE_WORKFLOW.ko.md)는 numeric/real-clock native 및 선언한
+categorical predictor, 실제 primary/y2와 v/h geometry를 지원합니다. Raw hue/size/style은
+원본 순서·중복 predictor·결측 장벽을 유지하고 lineplot 평균을 호출하지 않습니다.
+Native 추정 grid는 해당 raw curve의 것이며 다른 hue의 관측 x를 합쳐 가짜 gap을
+만들지 않습니다. 선언 categorical slot은 pooled 상태입니다. Complete-unit은 실제
+선택 cell 안의 typed unit 합집합을 사용하며 curve/layer 동시 family도 facet panel을
+넘는 coverage를 주장하지 않습니다.
+
+`facet(live=True)`는 고정 selector와 그리지 않는 template을 보존합니다. Local 편집은
+권위 있는 saved view이고 SetData/reopen은 재확장하지 않습니다. 명시적 whole-template은
+override를 대체하되 N13 ID/nesting/placement·선택 행·scale_id guide membership을
+보존합니다. ID reorder/rename에 중복 guide-panel 참조를 고칠 필요가 없습니다.
+Live cell을 제거하면 saved materialized view로 남습니다. 두 editor에는 채워진
+whole-template·figure-wide shared-guide action이 있으며 `examples/line_workflow.py`를
+직접 실행할 수 있습니다.
+
+
 ## 지원 밖 조합은 변환하지 않고 거부
 
-- Primary Cartesian 2-D 행 기반 layer만 지원합니다. 행렬/3-D/polar/보조축/
-  pie/stackplot/vector/count-map facet은 이번 범위에 없습니다.
+- Cartesian 2-D 행 기반 layer입니다. Line/lineplot·swarm·box·violin·boxen·
+  barplot·pointplot은 실제 primary/y2 경로를 지원합니다. 다른 보조축 guard는
+  유지하며 행렬/3-D/polar/pie/stackplot/vector/count-map facet을 추측하지 않습니다.
 - Raw 그룹 궤적이나 미리 계산한 막대를 자동으로 lineplot/barplot으로 바꾸지
   않습니다. 중복 x 원자료와 평균 추정의 의미는 다릅니다. Stackplot/vector/
   count-map facet은 아직 미지원입니다.
-- Legacy `c`/colorbar는 미지원입니다. 공통 numeric SemanticSpec hue를 사용합니다.
-- Hist는 typed HistogramSpec(`stat="density"` 등)과 공통의 명시적 bin 경계가
-  필요합니다. 기존 hist 동작을 바꾸지 않습니다. KDE는 typed KDESpec 옵션이
-  필요하며 셀별 bandwidth/밀도를 계산합니다. 단일값/특이 셀은 기존 규칙으로
-  건너뛸 수 있습니다.
-- Source layer 자체가 먼저 유효해야 합니다. 임의 query 문자열·callable·predicate
-  실행·live template mapping은 지원하지 않습니다.
+- Facet의 `scatter(c=...)`만 위 P01 원시 숫자 예외를 사용합니다. 다른 `c`
+  사용이나 SemanticSpec hue로 자동 변환하는 동작은 없습니다.
+- Hist는 typed 통계와 공통 경계를 사용하고 KDE는 typed 옵션으로 셀마다
+  적합합니다.
+- Source layer 자체가 먼저 유효해야 합니다. 임의 query 문자열·callable·runtime
+  predicate·암묵적인 live template callback은 없습니다.
   [Numeric pair matrix](PAIR_GRID.ko.md)는 별도 데이터 구성 작업입니다.
-  [Joint histogram 구성](JOINT_GRID.ko.md)은 별도 terminal 작업이며 facet/joint
-  중첩 grid는 미지원입니다.
+  [Joint 구성](JOINT_GRID.ko.md)은 별도 constructor입니다. N13 공개
+  [배치 API](PANEL_LAYOUTS.ko.md)로 materialized grid를 nest하고 outer 형제를
+  선언하며 저장 selector/원자료를 보존합니다. Pair와 Joint의 구성 규칙은 별개입니다.
 
 ## JSON/action/에디터
 

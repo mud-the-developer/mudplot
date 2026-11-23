@@ -18,12 +18,24 @@ plot = (
         order=["Low", "High"],
         hue_order=["B", "A"],
         whis=(5, 95),
+        median_ci={"level": 90, "n_boot": 1000, "seed": 17},
+        cap_fraction=0.8,
+        hue_components=[
+            {
+                "level": "A",
+                "components": {"cap": {"color": "#007f87", "line_width": 1.5}},
+            },
+            {
+                "level": "B",
+                "components": {"cap": {"color": "#8b3f8f", "line_width": 1.5}},
+            },
+        ],
         gap=0.16,
         showmeans=True,
         edge_color="#4b5563",
         line_width=0.8,
     )
-    .labels(x="Dose", y="Value", title="Nested boxes / 5-95% whiskers")
+    .labels(x="Dose", y="Value", title="Median CI / explicit per-hue cap styles")
     .legend(title="Method", location="upper left")
     .size(4.5, 3.2)
 )

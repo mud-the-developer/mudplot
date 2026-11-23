@@ -172,20 +172,13 @@ def test_bad_joint_options_leave_state_and_history_unchanged(options):
     assert p.to_json() == before and p.action_log == history
 
 
-@pytest.mark.parametrize(
-    "kind", ["empty", "line", "multiple", "semantic", "c", "polar", "y2"]
-)
+@pytest.mark.parametrize("kind", ["empty", "line", "multiple", "polar", "y2"])
 def test_unsupported_joint_templates_fail_before_partial_composition(kind):
     p = mp.plot({"x": [1, 2, 3], "y": [2, 3, 4], "h": ["A"] * 3})
     if kind == "line":
         p.line("x", "y")
     elif kind != "empty":
-        if kind == "semantic":
-            p.scatter("x", "y", hue="h")
-        elif kind == "c":
-            p.scatter("x", "y", c="y")
-        else:
-            p.scatter("x", "y")
+        p.scatter("x", "y")
         if kind == "multiple":
             p.layout(1, 2)
         elif kind == "polar":
@@ -196,6 +189,43 @@ def test_unsupported_joint_templates_fail_before_partial_composition(kind):
     with pytest.raises(ValueError):
         p.joint()
     assert p.spec == before
+
+
+@pytest.mark.parametrize("kind", ["semantic", "c"])
+def test_joint_scatter_native_center_preserves_paired_rows_and_own_guide(kind):
+    raw = {
+        "x": [1, None, 3, 4],
+        "y": [2, 8, 4, 7],
+        "h": ["A", "B", "B", None],
+        "c": [10, 99, 30, None],
+    }
+    p = mp.plot(raw).size(10, 7)
+    if kind == "semantic":
+        p.scatter("x", "y", hue="h")
+    else:
+        p.scatter("x", "y", c="c", colorbar=True)
+    p.joint(marginal_stat="count")
+    fig = p.render()
+    try:
+        center, right, bottom = fig.axes[:3]
+        points = sorted(
+            tuple(point) for mark in center.collections for point in mark.get_offsets()
+        )
+        assert points == [(1, 2), (3, 4)]
+        assert sum(bar.get_width() for bar in right.patches) == 2
+        assert sum(bar.get_height() for bar in bottom.patches) == 2
+        if kind == "semantic":
+            assert len(fig.legends) == 1
+            assert {"A", "B"} <= {
+                text.get_text().split("=")[-1] for text in fig.legends[0].get_texts()
+            }
+        else:
+            mark = center.collections[0]
+            assert list(mark.get_array()) == [10, 30] and mark.get_clim() == (10, 30)
+            assert len([axes for axes in fig.axes if hasattr(axes, "_colorbar")]) == 1
+        assert p.spec.data.columns == raw
+    finally:
+        plt.close(fig)
 
 
 @pytest.mark.parametrize(

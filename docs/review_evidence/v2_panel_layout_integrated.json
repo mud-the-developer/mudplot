@@ -1,0 +1,138 @@
+{
+  "catalogue_row": "N13",
+  "status": "integrated whole N13 formally functionally accepted by parent; immutable local-qualification source/SDIST retain their earlier pending status",
+  "scope": "Inset/nested/mosaic layouts and richer stable panel placement, not overall E01/Q01/DOC01/REL01/v2",
+  "artifacts": {
+    "package_version": "1.1.0",
+    "schema_version": "0.1",
+    "wheel": {
+      "path": "$LOCAL_EVIDENCE/location-61/mudplot-1.1.0-py3-none-any.whl",
+      "sha256": "94de3f91fa4ca13f29313b22e8075b55d256306c6f23939f20691f15f8f33584"
+    },
+    "runtime_manifest_sha256": "4eb190f051a98fd5ac3d689135fec42c706b70283d8cfc1e0d084e520ed976cd",
+    "engine_modules": 69,
+    "runtime_binding": "artifacts/v2_c04_n13_qualification/source_binding.json",
+    "original_frozen_source": "$LOCAL_EVIDENCE/location-62/source",
+    "original_source_archive": {
+      "path": "$LOCAL_EVIDENCE/location-63/frozen_source.tar.gz",
+      "sha256": "0b44d3bab585c9af06d2920a87cd6a2ca159ed7dd6dd7f35d4fc3cb6acc856d7",
+      "classification": "immutable original source; contains superseded failing test bytes, NOT latest corrected distributable source"
+    },
+    "original_sdist": {
+      "path": "$LOCAL_EVIDENCE/location-61/mudplot-1.1.0.tar.gz",
+      "sha256": "f47f4613bb044be0c5579ba385b8d7e6706b065e551540583cbc969f31177e4c",
+      "classification": "immutable pre-test-correction artifact, NOT latest corrected source distribution"
+    },
+    "corrected_final_source_binding": "artifacts/v2_c04_n13_qualification/final_source_binding.json",
+    "corrected_test_sha256": "18ec0d76937265cf15a56f8f6bfa6928aee548990a3ab6decbdf6aa990c52778",
+    "editor_binary": {
+      "path": "$LOCAL_EVIDENCE/location-64/mudplot-editor",
+      "sha256": "71fa4bec9e933386d700b222467d5edac51844b4f82280b5dce2a867e9e32b35"
+    },
+    "no_runtime_wheel_rebuild_for_test_only_correction": true
+  },
+  "accepted_isolated_lineage": {
+    "receipt": "artifacts/v2_panel_layout_integrated/isolated/FINAL_RECEIPT.json",
+    "receipt_sha256": "98e2a1e8a70dcce3f121057eea061c7ca5250e7344dbf73ba19ce6ed0174f224",
+    "runtime_forward_patch_sha256": "a3b51f818ee196d987b43a39984e6ee17541841fbbf2539e03832ef7a6600468",
+    "full_reviewed_patch_sha256": "f8a484299611102b8cb64b71ade245bb29a287430b320271bf4734b630aa650e",
+    "applied_hunks": "artifacts/v2_panel_layout_integrated/applied_reviewed_hunks.patch",
+    "integration": "manual exact forward hunks into latest C04/C03/C02/N11/N12, no old tree/schema replacement; isolated ca069…wheel/counts remain ISOLATED only"
+  },
+  "contract": {
+    "graph": "one flat bounded graph/shared resolver; final panel IDs authoritative; newly materialized real panels append lexical ID order; no second renderer/layout hierarchy",
+    "lifecycle": "mosaic spans/ratios,nesting,insets,placement,rename,reorder,sharing,sparse docs; selector-stable live IDs and partial-grid counts, explicit structural detach; callbacks not serialized",
+    "native": "native GridSpec/Subgridspec/child Axes, actual twins/colourbars traversed; explicit-only uniform Tight engine BEFORE colourbars; rect endpoints not width convention; measured axislabels/eligible tick-band diagnostics without tick-by-tick allpairs",
+    "unit_gate": "new dimension classifier only for actual panel_layout or storedpanelID; legacy validity remains global, old no-opt-in mixed raw/count sharing preserved; C04 neutral cohort/advanced Box/classifier,clock/live/SEM/source hooks preserved",
+    "unchanged": "package/schema/floors; panel256/layer1024/pixel bounds;no callback serialization/shims"
+  },
+  "cohorts": {
+    "source_current_original": {
+      "result": "2662 passed,1 obsolete-contract failure,6 skipped,31 warnings",
+      "seconds": 1001.91,
+      "returncode": 1,
+      "command_record": "artifacts/v2_c04_n13_qualification/frozen_source_current_command.json",
+      "failure": "stale test demanded rejection of newly supported Violin SEM; not an engine regression"
+    },
+    "source_current_corrected_case": {
+      "result": "1 passed",
+      "seconds": 0.3,
+      "log": "artifacts/v2_violin/frozen_source_current_corrected_scatter_case.log",
+      "separate_not_summed": true
+    },
+    "source_minimum_with_explicit_test_overlay": {
+      "result": "2663 passed,6 skipped,9361 warnings",
+      "seconds": 1254.08,
+      "returncode": 0,
+      "command_record": "artifacts/v2_c04_n13_qualification/frozen_source_minimum_command.json",
+      "overlay_sha256": "18ec0d76937265cf15a56f8f6bfa6928aee548990a3ab6decbdf6aa990c52778"
+    },
+    "installed_current": {
+      "result": "1718 passed,3 skipped,16 warnings",
+      "seconds": 1274.81,
+      "command_record": "artifacts/v2_c04_n13_qualification/installed_current_command.json",
+      "required_browser": true,
+      "matching_reference_bridge": true,
+      "source_unset": true,
+      "per_test_owned_figure_isolation": true
+    },
+    "installed_minimum": {
+      "result": "1718 passed,3 skipped,6712 warnings",
+      "seconds": 1209.77,
+      "command_record": "artifacts/v2_c04_n13_qualification/installed_minimum_command.json",
+      "required_browser": true,
+      "matching_reference_bridge": true,
+      "source_unset": true,
+      "per_test_owned_figure_isolation": true
+    },
+    "skip_accounting": "SOURCE6=3hostPGF+3unavailableCJK; installed3=hostPGF only; no CJK pass claim. Separate actual rootfs native PGF tests4passed/279deselected/profile; never summed.",
+    "rust_static_generated": "artifacts/v2_c04_n13_qualification/static_and_rust_gate_ledger.json",
+    "no_count_summing_or_failed_cohort_relabel": true
+  },
+  "actual_installed_work_limits": {
+    "summary": "artifacts/v2_c04_n13_qualification/final_native_work_limits.json",
+    "ten_step_commands": "artifacts/v2_c04_n13_qualification/installed_native_limits_commands.json",
+    "each_profile": "actual thin AND balanced256grids/256panels/1024cells/1024line layers; validdepth16/rejected17;255-node cycle rejects before output replacement;16384actual configured tick labels,512/rank; no sampling or cap lift",
+    "classification": "functional stress/diagnostic cost, not publication readability,RSS,SLA; native warnings retained",
+    "native_lifecycle": "actual fractional1803x1202 image,SVG432.936x288.504pt,inset bbox from parent transform,stable SVGpanelGIDs,CLI action/history/reopen/source IDs; exact final69 installed binding"
+  },
+  "actual_ui": {
+    "binding": "artifacts/v2_panel_layout_integrated/installed-ui/same-wheel-binding.json",
+    "receipts": "artifacts/v2_panel_layout_integrated/installed-ui/{current,minimum}-qualified/{rust,python}/receipt.json",
+    "each_flow": "15decoded displayed DOM-RGBA=current-cache checkpoints; actual human sparse/mosaic/nest/inset/placement/duplicate rejection/keyboard/native-frame pointer/history/4downloads/reopen/post-reopen placement",
+    "provenance": "all4 actual driver invocations/source-unset installed69 guards; Rust each37 real CLI bridge invocations in own port/TMP namespace and exact71fa binary; Python actual copied frozen frontend audits, no source engine fallback",
+    "receipt_schema_note": "original UI receipt lacks wheel/module fields; explicit actual execution envelope supplies them without rerun/schema mutation",
+    "whole_mobile_desktop": "artifacts/v2_panel_layout_integrated/installed-whole-ui/same-wheel-binding.json; all4 frontend/profile cases each1400x1000 and540x1000,8populated/reachable controls;body scrollWidth matches viewport"
+  },
+  "examples_vectors": "examples/panel_layouts.py actually executed through both installed prefixes; artifacts/v2_panel_layout_integrated/installed-example/{current,minimum}; actual stable native child axes,shared response/density dimensions,reserved empty and title containment",
+  "tex": {
+    "proof": "artifacts/v2_c04_n13_qualification/pgf-proof/{current,minimum}-lualatex/record.json",
+    "same_wheel_and_69_sources_verified": true,
+    "native_exports_per_profile": 13,
+    "document_pages_per_profile": 14,
+    "classification": "13plots+bibliography; N13 native layout page includes real inset/density/reserved panel and contained title; actual µm/Σ/²/2100microseconds,citations,URI,no final missing characters",
+    "selected_tests": "4passed/279deselected per real TeX profile separate from3hostPGFskips; LuaLaTeX→BibTeX→Lua×2, not a pdflatex claim",
+    "profiles": "currentTeXPy3.11.15/NP2.4.6/MPL3.11.1 distinct fromdesktop3.13.12/NP2.5.2;minimumNP1.23.5/MPL3.8/Pillow13"
+  },
+  "legacy_and_output": {
+    "proof": "artifacts/v2_c04_n13_qualification/legacy-qualified/{current,minimum}/comparison.json",
+    "actual": "accepted5fd66modules versus new94de69modules, matching renderer;24cases/profile exact JSON/actions/RGBA/size/limits/labels including old no-opt-in shared raw/count and auxiliary axes; never same-engine comparison",
+    "installed_native_cli": "artifacts/v2_c04_n13_qualification/native_wheel_smoke_commands.json and installed_native_limits_commands.json; actualPNG/SVG/PDF source/replay/CLI/history and previous invalid-cycle output retention"
+  },
+  "pure_license_static": {
+    "pure": "actual installed Python-S bothprofiles,optional imports actively denied,all69hashes/origins;artifacts/v2_c04_n13_qualification/pure_{current,minimum}.json",
+    "static_rust": "artifacts/v2_c04_n13_qualification/static_and_rust_gate_ledger.json; Rustlib20pass/5ignoredprocesshelpers+binary1pass;freshbuild/fmt/clippy/MSRV1.88,projecttypes/Ruff/generated/fixture checks",
+    "license": "artifacts/v2_c04_n13_qualification/wheel_license_metadata.json; compositeMIT AND LicenseRef-Matplotlib/fullnotice/ownMIT unchanged, floors unchanged"
+  },
+  "lineage": {
+    "r3_legacy_regression": "fixed in parent-approved isolatedr4 before integration; original revisions/old58427…RGBA proof preserved, not rerun to reconfirm",
+    "provisional_design_snapshot": "invalid5fejbnwy stale generated gallery excluded; corrected fresh-process1c1gc0wv69-module design snapshot routed to C05, not main feature closure; same runtime4eb190…",
+    "original_current_source_failure": "stale Violin SEM rejection only;2662pass/1fail/6skip retained, correctedcase1pass separate; minimumoverlay2663/6 distinct",
+    "ui_private_launcher": "first out-of-root script correctly rejected; relocated inside each private admitted root, guard unchanged; original command/log preserved",
+    "harness_source": "per-test conftest figure isolation and installed-only temporal -S child import-root/hash bootstrap present before final installed cohorts; no scientific engine mask",
+    "source_distribution": "oldf47f SDIST/0b44 source archive immutable pre-test-correction lineage; corrected latest SOURCE/SDIST-only identity at linked external final_source_binding; SAME94de runtime wheel unchanged"
+  },
+  "parent_reviewed": "parent formally accepted whole integrated N13 after full source/target-native/installed/UI/legacy/PGF/work-limit/output and corrected SOURCE/SDIST ledger review; immutable qualification archives preserve their earlier pending status",
+  "required_gates_unexercised": [],
+  "not_claimed": "No broader F01/F02/G01/E01/Q01/DOC01/REL01/v2 closure; no C05 ReplaceLayer/N13 isolated wheel relabel, no version/git/publication/floor change."
+}

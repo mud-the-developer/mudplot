@@ -5,6 +5,46 @@
 `HeatmapSpec` opts into matrix display controls without changing the original
 numeric matrix. `heatmap=None` retains the existing imshow defaults.
 
+## Explicit native grid fields
+
+`GridFieldSpec` is required for `imshow`, `pcolor`, `pcolormesh`, and `spy`;
+omitting it on `contour` or `contourf` retains the old unit-grid behavior.
+Register scalar input via `.matrix(name, rows)`. The original rows and
+coordinates are saved separately from the observation table and survive `SetData`.
+
+- `imshow` accepts `[left, right, bottom, top]` and `origin="upper"|"lower"`.
+  Use a named scalar matrix **or** inline `pixels` with uniform RGB or RGBA
+  depth and channels in `[0,1]`. RGBA opacity is pixel alpha times layer alpha;
+  masks make pixels transparent. RGB(A) has no scalar mapping or colourbar.
+- Meshes require `position="edges", shading="flat"` (X has N+1 edges and Y has
+  M+1), or `position="centers", shading="nearest"` (N and M centers, both at
+  least two). X indexes columns and Y rows. Native `pcolor` omits masked
+  polygons; `pcolormesh` keeps mesh extent and transparent masked faces, so
+  visible edge strokes are rejected on masked meshes.
+- The boolean `mask` must exactly match the data shape. Scalar nulls are also
+  masked, not zero. Scalar colour uses visible raw values with a linear norm.
+  A constant is padded by 5% on either side (half a unit at zero or at
+  subnormal display scale), without changing the sample. An unrepresentable
+  raw bar domain rejects rather than silently expanding on the backend.
+- `spy` marks visible entries satisfying `abs(value) > threshold` in original
+  row order. Coordinates are zero-based column/row indices; origin controls
+  row direction. No scalar colourbar or sparse `present` inference.
+- Explicit contours require center vectors, at least 2×2 scalar samples and
+  increasing `levels`. `corner_mask=False` omits every quad touching a masked
+  vertex. Line `label_levels` chooses a declared subset; `label_format` is
+  `g`, `.1f`, `.2f` or `.3f`, and `label_inline` controls gaps where a label
+  fits. Outside or empty levels retain their identity without inventing
+  lines or labels. A line colourbar requires two levels. Filled levels are
+  boundaries: intervals are `(low, high]`, with the lowest also including
+  its lower bound. `extend` declares whether to include under/over bands.
+
+Grid layers require a primary linear numeric Cartesian target. The opt-in
+limits are 10,000 raw cells/pixels, 512 explicit levels, 4,096 prospective
+labels, and aggregate matrix work/storage and 2,000,000 prospective path
+vertices. No legacy budget or broad P01 control changes.
+[Example exporting PNG/SVG/PDF](../examples/grid_field_workflow.py).
+
+
 ![Synthetic masked and annotated heatmap](images/heatmap_controls.png)
 
 [Editable spec](images/heatmap_controls.mplot.json) ·
@@ -65,6 +105,16 @@ fractions. `fmt` uses the existing bounded numeric whitelist:
 `g`, `.0f`, `.1f`, `.2f`, `.3f`, `.1%`, `e`, `.2e`. At most 4096 visible
 annotation cells are supported. For larger grids, omit text or select a view.
 
+Optional `annot_data` supplies a same-shaped matrix of strings instead of
+formatting scalar values. It requires `annot=True`; each cell is at most 512
+characters, including masked cells, and an empty string is valid. It never
+replaces the numeric matrix, colour normalization or clustering fit values.
+Masks still suppress text. Clustermap permutes text/masks/labels together using
+the original row/column identities; custom strings are not recomputed from a
+standardized display matrix. `xrotation`/`yrotation` are optional finite degrees
+in [-360,360] and apply with explicit or automatic tick labels. Omitted fields
+preserve legacy JSON and default artists.
+
 Text chooses the stronger black/white contrast from this image's colormap and
 alpha-composited axes background. It does not evaluate arbitrary overlay layers,
 font legibility or every accessibility requirement.
@@ -86,6 +136,24 @@ its advanced form. Stored matrix and config round-trip unchanged. If a matrix
 shape changes, update mask/labels too; invalid prospective imports/actions keep
 existing editor state under the normal atomic validation/rendering path.
 
-Custom annotation matrices, clustering, categorical/date cell coordinates and
-more normalization kinds remain out of scope. Review the final size and layout;
-automated font/bounds checks are not aesthetic scores.
+In addition to linear/log and centered diverging `TwoSlopeNorm`, opt into
+`symlog` (positive `linthresh`, base 10 and linscale 1), `power` (positive `gamma`,
+native clipping), or `boundary` (2–512 strictly increasing limits, one equally
+spaced swatch per half-open interval). The last boundary is the over-range edge;
+outside cells keep their stored values and use the extreme swatches.
+Boundary mode excludes `robust`, `center` and explicit `vmin`/`vmax`.
+
+`ColorbarOptionsSpec` (or `heatmap={"colorbar_options": {...}}`) independently
+sets `location` (`left`, `right`, `top`, `bottom`), increasing raw-unit `ticks`,
+and `tick_format` from the numeric format whitelist. Boundary ticks must be
+declared edges. `fraction` controls thickness; `pad` reserves a minimum blank
+gap before native text margins (relative to the body perpendicular to the bar;
+defaults `.05` and `.04`). A visible guide uses the image's actual normalization
+and swatches; masked data, annotations and axis indices remain independent.
+`SetColorbar` can hide it without losing options; edit options with `ReplaceLayer`.
+
+If dense labels or guides do not fit, change the figure/panel size, rotate or
+shorten labels, or use existing fixed `TickSpec` for explicitly chosen positions.
+The renderer does not silently discard labels or resize the figure. Run
+`python -m examples.matrix_workflow /path/to/output` for a PNG/SVG/PDF and editable
+JSON. These source features are not a claim of installed or P01 qualification.

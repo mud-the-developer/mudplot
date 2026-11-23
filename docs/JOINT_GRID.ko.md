@@ -14,6 +14,10 @@ Joint-grid는raw scatter/regression 또는ungroupedhist2d/hexbin과x/y주변hist
 80개 값은 모두 독립 합성 관측입니다. 데스크톱 700px를 확인한 예제로,
 모바일 배치나 독립적인 가독성 인증이 아닙니다.
 
+`joint()` 전에 template에 `date_axis()`를 선언하면 ISO 원문을 보존하고
+각 clock을 관측 marginal 축에만 복사한다. 밀도 축은 숫자다.
+[시간 계약](TEMPORAL_AXES.ko.md)을 참조한다.
+
 ## 본 그래프를 만든 뒤 구성
 
 ```python
@@ -53,10 +57,14 @@ p = (mp.plot(raw).hist2d("dose", "response", bins=12, colorbar=False)
 # 또는hexbin("dose", "response", gridsize=20, colorbar=False)
 ```
 
-Binned중심은ungrouped/unweightedrawnumericx/y와명시colorbarFalse를요구합니다. 중심의
-bins/gridsize/density는유지하고jointbins는주변hist에만적용합니다. Pairedselector는중심/주변
-validation·render전에적용되고SetData뒤갱신됩니다. Hist/KDE주변모두지원하지만일반binnedfacet
-filter/hue_order/group/암묵colorbar제거는지원하지않습니다.
+중심의 bins/gridsize는 주변 히스토그램용 `joint(bins=...)`와 별개입니다.
+그룹 `hist2d`는 기존 공통 격자와 실제 통계 색상 막대를 사용합니다. KDE
+오버레이와 주변 분포는 bin 범위 밖을 포함한 동일한 관측 쌍을 사용합니다.
+`hexbin(..., mincnt=2).joint(group="Arm", weights="Weight")`는 선형 또는
+달력 좌표의 공통 native 격자를 사용합니다. 최소 개수는 질량이 아니라 양의
+가중치를 가진 실제 행 수입니다. 부족한 칸은 중심에서만 생략합니다.
+그룹은 테두리로 구분하며 색상 막대는 칸별 개수 또는 가중 질량입니다.
+[가중 예제](../examples/weighted_grids.py)를 참고하세요.
 
 ## KDE 주변 분포
 
@@ -76,7 +84,7 @@ KDESpec/dict로 bandwidth·grid·cut/clip·공통 정규화/grid·fill을 설정
 가짜 fit을 만들지 않습니다. Common norm에는 건너뛴 그룹의 유효 질량도 포함합니다.
 
 KDE는 density만 지원합니다. 사용하지 않는 bins는 기본 20으로 두고 count/
-probability/percent·weights·cumulative CDF는 요청할 수 없습니다. 같은 설정을
+probability/percent 및 cumulative CDF는 요청할 수 없지만 같은 이름의 가중치는 사용할 수 있습니다. 같은 설정을
 변수별로 복사하므로 clip 경계는 두 변수의 단위 모두에 맞아야 합니다. Histogram
 기본 동작은 그대로입니다.
 
@@ -90,7 +98,7 @@ p = (mp.plot(raw).scatter("dose", "response", group="condition")
 ECDF는count/probability(proportion)/percent를지원하며density는아닙니다. 미사용bins=20을유지하고
 KDE옵션은생략하세요. 다른bins/config를조용히무시하지않습니다. 곡선별pairedgroup질량/반복값/
 최소값의전체jump를사용하며가짜무한tail/KDEfit은없습니다. X주변steps-post/y주변좌표교환·steps-pre,
-양수log관측에서도stat축은linear/독립입니다. Grid구성에weighted/complementaryECDF설정은없습니다.
+양수 log 관측에서도 stat 축은 선형이며 독립입니다. `complementary=True`는 각 관측값보다 엄격히 큰 질량을 표시합니다.
 
 ## 같은 관측 집합과 보존된 원자료
 
@@ -111,6 +119,14 @@ X/y 또는 매핑한 group이 결측인 행을 세 그림 모두에서 제외합
 새 템플릿에서 다시 만드세요. 이후 편집은 panel index를 따릅니다. 주변 분포에
 본 그래프에서 빠진 x/y 단독 행을 섞지 않습니다.
 
+확장 모드에서는 0/결측 가중치를 제외하고 선택된 음수·비유한 값·불리언 가중치는
+거부합니다. `scatter(c=..., colorbar=...)`의 `c`는 세 패널의 완전 관측 조건이지만
+중심의 색에만 쓰며 가중치나 범주가 아닙니다. `SemanticSpec`을 쓰는 경우 각 마크의
+실제 역할을 따릅니다. 원자료 가이드와 통계 색상 막대는 별개입니다.
+중심이 실제 `y2`이면 오른쪽의 값 y축만 연결되며 중심의 기본 y축은 독립입니다.
+라벨을 바꿔도 시간 선언과 연결을 유지합니다. `SetLimits`/`SetAxisScale`는 두 값축에
+함께 적용합니다. 달력 limits는 기존과 같은 epoch day 숫자입니다.
+
 ## JSON/에디터
 
 ```json
@@ -124,9 +140,9 @@ scatter/regplot에 raw-action 폼으로 적용할 수 있습니다. 예전 spec�
 
 ## 명시적인 제한
 
-- Semantic role·legacy c/colorbar·보조축·가중 주변 분포·group/weightedbinned중심·
-  facet/joint 중첩 구성은 아직 미지원입니다. [Numeric pair matrix](PAIR_GRID.ko.md)는
-  별도 구성 API입니다.
+- N13 중첩·빈 외부 셀·형제 배치는 원자료를 다시 만들지 않습니다.
+  [배치 계약](PANEL_LAYOUTS.ko.md), 별도 [pair 구성](PAIR_GRID.ko.md) 참고.
+- 확장 회귀 중심은 동일한 원 관측 쌍을 유지해야 하므로 residual/train-query 분할을 거부합니다.
 - Raw line/band를 scatter/평균 곡선으로 바꾸지 않습니다. 쌍 결측을 제외하면서
   경로의 빈 구간을 바꿀 수 있으므로 명시한 본 그래프 종류만 허용합니다.
 - 기존 histogram의 계산 bin/log 검사는 유지합니다. 아주 작은 양의 상수 log

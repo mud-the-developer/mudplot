@@ -10,6 +10,7 @@ from __future__ import annotations
 import math
 from dataclasses import dataclass, replace
 from itertools import pairwise
+from typing import cast
 
 from ._ecdf import ecdf_groups, ecdf_rows, finite_number
 from ._kde import _positive_product
@@ -52,6 +53,8 @@ def kde2d_groups(columns: dict, layer: LayerSpec, rows: list[int]) -> list:
 
 
 def option_issues(config: KDE2DSpec) -> list[str]:
+    from ._density import kde_extra_issues, level_kind
+
     # Share only the actual scalar/boolean bandwidth contracts, not 1-D semantics.
     issues = univariate_option_issues(
         KDESpec(
@@ -76,7 +79,9 @@ def option_issues(config: KDE2DSpec) -> list[str]:
                     break
                 low, high = bound
                 if not all(v is None or finite_number(v) for v in bound) or (
-                    low is not None and high is not None and low >= high
+                    low is not None
+                    and high is not None
+                    and cast(float, low) >= cast(float, high)
                 ):
                     valid = False
                     break
@@ -87,13 +92,19 @@ def option_issues(config: KDE2DSpec) -> list[str]:
     levels = config.levels
     valid = isinstance(levels, (list, tuple)) and 1 <= len(levels) <= MAX_KDE2D_LEVELS
     if valid:
-        valid = all(finite_number(p) and 0 < p < 1 for p in levels)
+        valid = all(
+            finite_number(value)
+            and value > 0
+            and (level_kind(config) == "density" or value < 1)
+            for value in levels
+        )
         valid = valid and all(a < b for a, b in pairwise(levels))
     if not valid:
         issues.append(
             f"levels require 1..{MAX_KDE2D_LEVELS} increasing "
-            "enclosed fractions in (0,1)"
+            "positive density heights or mass/CDF fractions in (0,1)"
         )
+    issues.extend(kde_extra_issues(config, bivariate=True))
     return issues
 
 
@@ -193,8 +204,8 @@ def _support(fit: _Fit2D, config: KDE2DSpec):
         low, high = min(values) - config.cut * width, max(values) + config.cut * width
         if config.clip is not None:
             a, b = config.clip[axis]
-            low = low if a is None else max(low, a)
-            high = high if b is None else min(high, b)
+            low = low if a is None else max(low, cast(float, a))
+            high = high if b is None else min(high, cast(float, b))
         if not all(math.isfinite(v) for v in (low, high)):
             raise ValueError(
                 "KDE2D derived support must be finite; reduce cut/provide clip"
@@ -318,6 +329,16 @@ def conditional_levels(gx, gy, density, levels):
         )
     # Normalize dimensionless quadrature only for HDR selection. The density
     # field and reported raw integral are unchanged by conditional level choice.
+    thresholds, included = conditional_strata(
+        density, masses, levels, total, minimum, peak
+    )
+    return thresholds, included, raw_mass
+
+
+def conditional_strata(density, masses, levels, total, minimum, peak):
+    """ONE conditional ranking/tie convention for old and new coordinate laws."""
+    import numpy as np
+
     order = np.argsort(-density.ravel(), kind="stable")
     heights = density.ravel()[order]
     from ._ecdf import _cumulative
@@ -337,7 +358,7 @@ def conditional_levels(gx, gy, density, levels):
         raise ValueError(
             "KDE2D enclosed levels are unresolved; increase grid/change levels"
         )
-    return tuple(thresholds[::-1]), tuple(included[::-1]), raw_mass
+    return tuple(thresholds[::-1]), tuple(included[::-1])
 
 
 def kde2d_summary(columns: dict, layer: LayerSpec) -> tuple[KDE2DField, ...]:
@@ -397,3 +418,226 @@ def kde2d_summary(columns: dict, layer: LayerSpec) -> tuple[KDE2DField, ...]:
             )
         )
     return tuple(result)
+
+
+JOINT_CDF_ABSOLUTE_ERROR = 1e-6
+
+
+@dataclass(slots=True)
+class ComputedFieldValues:
+    x: tuple
+    y: tuple
+    values: object
+    cumulative: bool
+    absolute_error: float
+    source_error: float
+    leases: list
+    scaled_values: tuple | None = None
+
+    def close(self):
+        self.values = None
+        self.scaled_values = None
+        for lease in reversed(self.leases):
+            lease.close()
+        self.leases.clear()
+
+
+def evaluate_computed_field(model, config, *, grid_model=None):
+    """The SAME canonical fit supplies density, true CDF and histogram overlays."""
+    import sys
+    from contextlib import nullcontext
+    from fractions import Fraction
+
+    import numpy as np
+
+    from ._ecdf import canonical_units
+    from ._kde import kernel_query_grid
+    from ._kernel_math import _GaussianRectangleWorkspace
+
+    arithmetic, budget = model.arithmetic, model.budget
+    x, y = kernel_query_grid(model if grid_model is None else grid_model, config)
+    nx, ny = len(x), len(y)
+    leases, scratch = [], []
+    result = ComputedFieldValues(
+        x, y, None, bool(config.cumulative), 0.0, model.source_tv, leases
+    )
+    try:
+        if budget is not None:
+            leases.append(budget.array_lease((nx, ny), copies=2))
+        values = np.empty((nx, ny), dtype=float)
+        result.values = values
+        if not config.cumulative:
+            if budget is not None:
+                leases.append(budget.scaled_lease(nx * ny))
+            scaled = []
+            for ix, raw_x in enumerate(x):
+                for iy, raw_y in enumerate(y):
+                    if budget is not None:
+                        budget.charge("field_queries")
+                    part = model.pdf_scaled(
+                        (raw_x, raw_y), density_space=config.density_space or "data"
+                    )
+                    scaled.append(part)
+                    bounds = arithmetic.finish_scaled(*part)
+                    values[ix, iy] = arithmetic.midpoint(bounds)
+                    result.absolute_error = max(
+                        result.absolute_error, bounds[1] - bounds[0]
+                    )
+            result.scaled_values = tuple(scaled)
+            return result
+        # Positive rectangle integration, not independent midpoint-CDF estimates:
+        # canonical dyadic prefix sums are monotone in BOTH coordinates by
+        # construction and cannot silently fall/require a clip/isotonic repair.
+        if model.source_tv >= JOINT_CDF_ABSOLUTE_ERROR / 4:
+            raise ValueError("source-parameter uncertainty exceeds joint CDF precision")
+        count = nx * ny
+        target = JOINT_CDF_ABSOLUTE_ERROR / (4 * count)
+        if budget is not None:
+            scratch.append(budget.array_lease((nx, ny)))
+            # Binary64 probability endpoints have dyadic denominator<=2**1074.
+            endpoint_bits = 1 - sys.float_info.min_exp + sys.float_info.mant_dig
+            scratch.append(
+                budget.integer_lease(
+                    endpoint_bits + count.bit_length() + 2, count=4 * count
+                )
+            )
+            scratch.append(budget.array_lease((nx, ny), dtype="object"))
+        lower = np.empty((nx, ny), dtype=float)
+        numerical_width = Fraction(0)
+        context = (
+            _GaussianRectangleWorkspace(arithmetic, target)
+            if model.kernel == "gaussian" and budget is not None
+            else nullcontext()
+        )
+        with context as gaussian_workspace:
+            for ix, raw_x in enumerate(x):
+                for iy, raw_y in enumerate(y):
+                    if budget is not None:
+                        budget.charge("joint_field_rectangles")
+                    bounds = model.logical_rectangle(
+                        None if ix == 0 else x[ix - 1],
+                        raw_x,
+                        None if iy == 0 else y[iy - 1],
+                        raw_y,
+                        target,
+                        gaussian_workspace=gaussian_workspace,
+                    )
+                    numerical_width += Fraction(bounds[1]) - Fraction(bounds[0])
+                    lower[ix, iy] = bounds[0]
+        # Only the method-local cache is gone here. Returned field arrays,
+        # source/model owners and the positive exact prefix remain independent.
+        denominator, masses = canonical_units(map(float, lower.flat))
+        prefix = np.empty((nx, ny), dtype=object)
+        maximum_mass = sum(masses)
+        if maximum_mass > denominator:
+            raise ValueError("positive joint-CDF enclosures exceed normalized mass")
+        rounding = Fraction(0)
+        for ix in range(nx):
+            subtotal = 0
+            for iy in range(ny):
+                mass = masses[ix * ny + iy]
+                if budget is not None:
+                    budget.charge(
+                        "integer_joint_cdf_prefix",
+                        2,
+                        bits=denominator.bit_length() + count.bit_length(),
+                    )
+                subtotal += mass
+                full = subtotal + (prefix[ix - 1, iy] if ix else 0)
+                prefix[ix, iy] = full
+                exact = Fraction(full, denominator) * model.amplitude
+                value = float(exact)
+                values[ix, iy] = value
+                rounding = max(rounding, abs(Fraction(value) - exact))
+        error = (
+            numerical_width + Fraction(model.source_tv)
+        ) * model.amplitude + rounding
+        result.absolute_error = arithmetic.fraction(error)[1]
+        if result.absolute_error > JOINT_CDF_ABSOLUTE_ERROR:
+            raise ValueError("joint CDF numerical/source enclosure is unresolved")
+        return result
+    except Exception:
+        result.close()
+        raise
+    finally:
+        for lease in reversed(scratch):
+            lease.close()
+
+
+def computed_conditional_levels(model, field, config):
+    """Reuse conditional strata with ORIGINAL-law node masses in the right units."""
+    from fractions import Fraction
+
+    import numpy as np
+
+    arithmetic, budget = model.arithmetic, model.budget
+    x, y = field.x, field.y
+
+    def widths(grid):
+        exact = tuple(map(Fraction, grid))
+        return tuple(
+            (exact[1] - exact[0]) / 2
+            if index == 0
+            else (exact[-1] - exact[-2]) / 2
+            if index == len(exact) - 1
+            else (exact[index + 1] - exact[index - 1]) / 2
+            for index in range(len(exact))
+        )
+
+    wx, wy = widths(x), widths(y)
+    scratch = []
+    try:
+        if budget is not None:
+            scratch.append(budget.scaled_lease(len(x) * len(y)))
+            scratch.append(budget.array_lease((len(x), len(y)), copies=3))
+        parts = []
+        for ix, raw_x in enumerate(x):
+            for iy, raw_y in enumerate(y):
+                value = field.scaled_values[ix * len(y) + iy]
+                area = wx[ix] * wy[iy]
+                part = arithmetic.combine_scaled(
+                    [
+                        value,
+                        arithmetic.scaled_ratio(area.numerator, area.denominator),
+                    ]
+                )
+                if config.density_space == "fit" and any(model.log_axes):
+                    _chart, fit = model.query_chart((raw_x, raw_y))
+                    part = arithmetic.combine_scaled(
+                        [
+                            part,
+                            model.jacobian_scaled(fit),
+                        ]
+                    )
+                parts.append(part)
+        nonzero = [part for part in parts if part[0][1] > 0]
+        if not nonzero:
+            raise ValueError("conditional KDE grid has no resolvable probability mass")
+        exponent = max(part[1] for part in nonzero)
+        scaled = np.asarray(
+            [
+                arithmetic.midpoint(
+                    arithmetic.to_shared_exponent(value, power, exponent)
+                )
+                for value, power in parts
+            ]
+        ).reshape(len(x), len(y))
+        total = math.fsum(scaled.flat)
+        if not math.isfinite(total) or total <= 0:
+            raise ValueError("conditional KDE grid normalization is unresolved")
+        metric = np.asarray(field.values).T
+        thresholds, included = conditional_strata(
+            metric,
+            scaled.T,
+            config.levels,
+            total,
+            float(metric.min()),
+            float(metric.max()),
+        )
+        # Keep the exponent in the derived reference summary if the integral
+        # itself is not a binary64 scalar; do not invent0 or1 as a substitute.
+        integral = arithmetic.sum_scaled(parts)
+        return thresholds, included, integral
+    finally:
+        for lease in reversed(scratch):
+            lease.close()

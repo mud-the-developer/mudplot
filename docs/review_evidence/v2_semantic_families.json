@@ -1,0 +1,58 @@
+{
+  "status": "F01 four-family subset verified, not F01 closure",
+  "prerequisite": "unsupported horizontal semantic lineplot+y2 axis guard runs before temporal coordinate conversion",
+  "checks": [
+    {
+      "log": "artifacts/v2_rug/prerequisite_focused.log",
+      "result": "218 passed; 1 warning"
+    },
+    {
+      "log": "artifacts/v2_rug/prerequisite_broad.log",
+      "result": "726 passed; 1 warning"
+    },
+    {
+      "log": "artifacts/v2_rug/prerequisite_minimum.log",
+      "result": "726 passed; 494 dependency/overflow warnings; no skips"
+    }
+  ],
+  "cohort": [
+    "semantic_families",
+    "semantic_colourbars",
+    "strip_categories",
+    "ecdf",
+    "scatter_semantics",
+    "line_semantics",
+    "shared_semantics",
+    "temporal_secondary",
+    "temporal_distributions",
+    "temporal_native",
+    "facets",
+    "json_schema_compat",
+    "review_full_spec_fields",
+    "capabilities_consistency"
+  ],
+  "source_sha256": {
+    "mudplot/_semantics.py": "f2777faf61e2124cd82e69636f61083e86997340cd7f50ccdb3947357b4c2bb6",
+    "mudplot/validate.py": "0990c43159d2d9387b2f8227b72891efb219d1fed17f36fd37b21c9036abfe1e",
+    "mudplot/spec.py": "b1feacba324a920b48e325cc35e87f8b08ef986bd2877f4768839e0866b6a712",
+    "mudplot/_line_semantics.py": "d73bb5bbe9c0f6323d7e03833f6199e6dc8cf06f7bf411474c42fc7c6d70c625",
+    "mudplot/_scatter_semantics.py": "c0143a92934ad40f05c4a696cd6eabd4edcb80f38c72dd0b8902824c8cf95305",
+    "mudplot/_temporal_data.py": "40ded807784e80e26f3c44d1c68f41b1db29235ae48d8d6cb4d95e9db2210c67",
+    "mudplot/_render.py": "2ae164babda27915966bafa3453737c4b72e8418762ef44d1cc88f45da542a69",
+    "mudplot/api.py": "4d7bf25d392cbeca93b812218abfb812bd5172e9c91ee339184d64df7a81e7f9",
+    "tests/test_semantic_families.py": "c2980855f7bcd88b0625115a4063db5ab53263bb4c9aef18bef6871af0399fc5",
+    "examples/shared_semantic_families.py": "b4b6808254abc832d96594f563cb2d430573f8085fbf8741d4a6a03edcd33f5e"
+  },
+  "artifacts": {
+    "artifacts/v2_semantic_families/shared_semantic_families.png": "afcc13e347396af3ca84de3d128ddf562dd7d569f1c7286ea3babd0168b008a0",
+    "artifacts/v2_semantic_families/shared_semantic_families.svg": "b1d1220ae76cd18cb7659f42a552699f938656247aa9e4401431733bfb1217ed",
+    "artifacts/v2_semantic_families/shared_semantic_families.pdf": "f58f6b73ea68cf4d25cffd254786c8965d2b4ba5e51c684ef7b4b234db892111",
+    "artifacts/v2_semantic_families/shared_semantic_families.mplot.json": "aab213d5cbce9dcfbce24c05e1cbc98d354cf0cfb0e30ee89b087ef3c33e9bf6",
+    "artifacts/v2_semantic_families/shared_semantic_families_cli.png": "afcc13e347396af3ca84de3d128ddf562dd7d569f1c7286ea3babd0168b008a0"
+  },
+  "cli_initial_failure": "prerequisite_cli.log: unsupported -o option, corrected positional OUT invocation in prerequisite_cli_corrected.log",
+  "limitations": [
+    "Wider F01 families and browser/installed full workflow remain required",
+    "Broader old 705 pass/1 failure was pre-guard and is not counted as a passing run"
+  ]
+}

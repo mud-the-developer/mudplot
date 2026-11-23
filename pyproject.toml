@@ -4,12 +4,12 @@ build-backend = "hatchling.build"
 
 [project]
 name = "mudplot"
-version = "1.0.0"
+version = "2.0.0"
 description = "Declarative, reproducible scientific plotting with exact sizing and CVD-aware palettes"
 readme = "README.md"
-requires-python = ">=3.10"
-license = "MIT"
-license-files = ["LICENSE"]
+requires-python = ">=3.11"
+license = "MIT AND LicenseRef-Matplotlib"
+license-files = ["LICENSE", "mudplot/_matplotlib_notice.txt"]
 authors = [{ name = "mud" }]
 keywords = [
     "matplotlib",
@@ -40,8 +40,9 @@ Roadmap = "https://github.com/mud-the-developer/mudplot/blob/main/ROADMAP.md"
 mudplot = "mudplot.__main__:main"
 
 [project.optional-dependencies]
-color = ["numpy>=1.23"]                       # colour engine (LCH, CVD, palettes)
-render = ["numpy>=1.23", "matplotlib>=3.8"]   # native title wrapping + rendering
+# Pillow is already used by Matplotlib; constrain it to the security-fixed line.
+color = ["numpy>=1.23.5"]
+render = ["numpy>=1.23.5", "matplotlib>=3.8", "pillow>=13.0.0"]
 # Advanced regressions are optional effects; never imported by the pure core.
 regression = ["mudplot[render]", "statsmodels>=0.14.1"]
 cluster = ["mudplot[render]", "scipy>=1.10"]
@@ -64,10 +65,15 @@ browser = ["mudplot[dev]", "playwright>=1.40"]
 
 [tool.hatch.build]
 exclude = [
+    "/.pi/**",
+    "/artifacts/**",
     "/.hypothesis/**",
     "/src/pretext/**",
     "/src/SciencePlots/**",
     "/mudplot-editor/target/**",
+    "**/.mudplot-pgf-*/**",
+    "**/.mudplot-write-*.tmp",
+    "**/.mudplot-backup-*.bak",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -100,7 +106,7 @@ ignore = [
 
 [tool.pyright]
 include = ["mudplot", "dashboard", "scripts"]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 typeCheckingMode = "basic"
 venvPath = "."
 venv = ".venv"

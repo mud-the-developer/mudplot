@@ -10,22 +10,49 @@ from __future__ import annotations
 from dataclasses import dataclass, field, fields
 from typing import cast
 
-from .spec import KDESpec, LayerSpec, SpecBase, _from_dict
+from .spec import (
+    Camera3DSpec,
+    KDESpec,
+    LayerSpec,
+    PanelLayoutSpec,
+    PanelPlacementSpec,
+    PanelSpec,
+    ScaleOptionsSpec,
+    SecondaryAxisSpec,
+    SemanticSpec,
+    SharedGuideSpec,
+    TemporalSpec,
+    TickSpec,
+    _from_dict,
+    _to_dict,
+)
 
 __all__ = [
     "ACTION_REGISTRY",
     "Action",
+    "AddInset",
     "AddLayer",
     "AddPanel",
+    "NestLayout",
     "RemoveLayer",
+    "RemovePanel",
+    "RenamePanel",
+    "ReorderPanels",
+    "ReplaceLayer",
     "SetAutoLabel",
     "SetAxesStyle",
     "SetAxisLabel",
+    "SetAxisScale",
     "SetAxisShare",
+    "SetAxisTicks",
+    "SetCamera3D",
     "SetColorbar",
+    "SetContext",
     "SetData",
+    "SetDerivedAxis",
     "SetDpi",
     "SetEncoding",
+    "SetFacetTemplate",
     "SetFacets",
     "SetFont",
     "SetGridStyle",
@@ -35,17 +62,23 @@ __all__ = [
     "SetLayout",
     "SetLegend",
     "SetLimits",
+    "SetLiveFacets",
     "SetMatrix",
+    "SetMosaic",
     "SetPairGrid",
     "SetPalette",
     "SetPanelLabel",
+    "SetPanelLayout",
+    "SetPanelPlacement",
     "SetProjection",
     "SetReferenceMeasureText",
     "SetScale",
     "SetSecondaryAxis",
     "SetShare",
+    "SetSharedGuides",
     "SetSize",
     "SetSuptitle",
+    "SetTemporalAxis",
     "SetTheme",
     "SetTicksStyle",
     "SetTitle",
@@ -76,6 +109,11 @@ class SetData:
 @dataclass(frozen=True)
 class SetTheme:
     name: str
+
+
+@dataclass(frozen=True)
+class SetContext:
+    name: str | None
 
 
 @dataclass(frozen=True)
@@ -144,6 +182,12 @@ class SetZAxis:
 
 
 @dataclass(frozen=True)
+class SetCamera3D:
+    camera: Camera3DSpec | None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
 class SetColorbar:
     layer_index: int
     show: bool = True
@@ -154,7 +198,7 @@ class SetColorbar:
 @dataclass(frozen=True)
 class SetMatrix:
     name: str
-    values: list  # list of rows (list[list[float]])
+    values: list[list[float | None]]
 
 
 @dataclass(frozen=True)
@@ -171,6 +215,62 @@ class SetLayout:
 
 
 @dataclass(frozen=True)
+class SetPanelLayout:
+    layout: PanelLayoutSpec
+    placements: dict[str, PanelPlacementSpec]
+    panel_ids: list[str] | None = None
+
+
+@dataclass(frozen=True)
+class SetMosaic:
+    rows: list[list[str | None]]
+    width_ratios: list[float] | None = None
+    height_ratios: list[float] | None = None
+
+
+@dataclass(frozen=True)
+class NestLayout:
+    rows: int
+    cols: int
+    row: int = 0
+    col: int = 0
+    row_span: int = 1
+    col_span: int = 1
+    grid_id: str | None = None
+    width_ratios: list[float] | None = None
+    height_ratios: list[float] | None = None
+
+
+@dataclass(frozen=True)
+class SetPanelPlacement:
+    panel_id: str
+    placement: PanelPlacementSpec
+
+
+@dataclass(frozen=True)
+class AddInset:
+    parent: str
+    bounds: list[float]
+    panel_id: str | None = None
+
+
+@dataclass(frozen=True)
+class RenamePanel:
+    panel_id: str
+    new_id: str
+
+
+@dataclass(frozen=True)
+class ReorderPanels:
+    panel_ids: list[str]
+
+
+@dataclass(frozen=True)
+class RemovePanel:
+    panel_id: str
+
+
+@dataclass(frozen=True)
 class SetFacets:
     row: str | None = None
     col: str | None = None
@@ -182,12 +282,42 @@ class SetFacets:
 
 
 @dataclass(frozen=True)
+class SetLiveFacets:
+    row: str | None = None
+    col: str | None = None
+    row_order: list[str | bool | int | float] | None = None
+    col_order: list[str | bool | int | float] | None = None
+    col_wrap: int | None = None
+    share_x: str = "all"
+    share_y: str = "all"
+
+
+@dataclass(frozen=True)
+class SetFacetTemplate:
+    template: PanelSpec
+    reset_orders: bool = False
+
+
+@dataclass(frozen=True)
+class SetSharedGuides:
+    """Authoritative figure-wide requests; scale_id alone defines membership."""
+
+    guides: list[SharedGuideSpec] | None
+
+
+@dataclass(frozen=True)
 class SetJointGrid:
     bins: int = 20
     ratio: float = 3.0
     marginal_stat: str = "density"
     marginal_kind: str = "hist"
     kde: KDESpec | None = None
+    weights: str | None = field(default=None, metadata={"omit_none": True})
+    complementary: bool | None = field(default=None, metadata={"omit_none": True})
+    group: str | None = field(default=None, metadata={"omit_none": True})
+    hue_order: list[str | bool | int | float] | None = field(
+        default=None, metadata={"omit_none": True}
+    )
 
 
 @dataclass(frozen=True)
@@ -199,6 +329,13 @@ class SetPairGrid:
     diag_stat: str = "density"
     diag_kind: str = "hist"
     kde: KDESpec | None = None
+    temporal: dict[str, TemporalSpec] | None = field(
+        default=None, metadata={"omit_none": True}
+    )
+    corner: bool | None = field(default=None, metadata={"omit_none": True})
+    weights: str | None = field(default=None, metadata={"omit_none": True})
+    complementary: bool | None = field(default=None, metadata={"omit_none": True})
+    semantics: SemanticSpec | None = field(default=None, metadata={"omit_none": True})
 
 
 @dataclass(frozen=True)
@@ -218,6 +355,15 @@ class AddLayer:
 @dataclass(frozen=True)
 class RemoveLayer:
     layer_index: int
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class ReplaceLayer:
+    """Authoritative cell-local content replacement, retaining list positions."""
+
+    layer_index: int
+    layer: LayerSpec
     panel: int = 0
 
 
@@ -261,9 +407,39 @@ class SetLayerAt:
 
 
 @dataclass(frozen=True)
+class SetTemporalAxis:
+    axis: str
+    temporal: TemporalSpec | None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
 class SetScale:
     axis: str  # "x" | "y"
     scale: str  # "linear" | "log"
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetAxisScale:
+    axis: str
+    scale: str
+    options: ScaleOptionsSpec | None = None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetAxisTicks:
+    axis: str
+    which: str
+    ticks: TickSpec | None
+    panel: int = 0
+
+
+@dataclass(frozen=True)
+class SetDerivedAxis:
+    axis: str
+    secondary: SecondaryAxisSpec | None
     panel: int = 0
 
 
@@ -285,6 +461,8 @@ class SetLegend:
     # Explicit [x, y] figure-fraction override (0..1); None leaves
     # ``location`` in charge (or clears a previous override, if it was set).
     bbox_to_anchor: list[float] | None = None
+    ncols: int | None = field(default=None, metadata={"omit_none": True})
+    handler: str | None = field(default=None, metadata={"omit_none": True})
 
 
 @dataclass(frozen=True)
@@ -315,20 +493,33 @@ Action = (
     | SetAxisShare
     | SetJointGrid
     | SetFacets
+    | SetLiveFacets
+    | SetFacetTemplate
     | SetLayout
+    | SetPanelLayout
+    | SetMosaic
+    | NestLayout
+    | SetPanelPlacement
+    | AddInset
+    | RenamePanel
+    | ReorderPanels
+    | RemovePanel
     | SetSize
     | SetDpi
     | SetData
     | SetTheme
+    | SetContext
     | SetJournal
     | SetPalette
     | SetFont
     | AddPanel
     | AddLayer
     | RemoveLayer
+    | ReplaceLayer
     | SetAxisLabel
     | SetTitle
     | SetScale
+    | SetTemporalAxis
     | SetLimits
     | SetLegend
     | SetReferenceMeasureText
@@ -343,10 +534,15 @@ Action = (
     | SetSecondaryAxis
     | SetProjection
     | SetZAxis
+    | SetCamera3D
     | SetColorbar
     | SetMatrix
     | SetTitlePosition
     | SetLayerAt
+    | SetAxisScale
+    | SetAxisTicks
+    | SetDerivedAxis
+    | SetSharedGuides
 )
 
 # --------------------------------------------------------------------------
@@ -357,20 +553,33 @@ _ACTION_CLASSES = (
     SetDpi,
     SetData,
     SetTheme,
+    SetContext,
     SetJournal,
     SetPalette,
     SetFont,
     AddPanel,
     SetLayout,
+    SetPanelLayout,
+    SetMosaic,
+    NestLayout,
+    SetPanelPlacement,
+    AddInset,
+    RenamePanel,
+    ReorderPanels,
+    RemovePanel,
     SetFacets,
+    SetLiveFacets,
+    SetFacetTemplate,
     SetJointGrid,
     SetPairGrid,
     SetAxisShare,
     AddLayer,
     RemoveLayer,
+    ReplaceLayer,
     SetAxisLabel,
     SetTitle,
     SetScale,
+    SetTemporalAxis,
     SetLimits,
     SetLegend,
     SetReferenceMeasureText,
@@ -385,23 +594,22 @@ _ACTION_CLASSES = (
     SetSecondaryAxis,
     SetProjection,
     SetZAxis,
+    SetCamera3D,
     SetColorbar,
     SetMatrix,
     SetTitlePosition,
     SetLayerAt,
+    SetAxisScale,
+    SetAxisTicks,
+    SetDerivedAxis,
+    SetSharedGuides,
 )
 ACTION_REGISTRY: dict[str, type] = {cls.__name__: cls for cls in _ACTION_CLASSES}
 
 
 def action_to_dict(action) -> dict:
     """Serialise an action to a JSON-ready dict tagged with ``type``."""
-    out: dict = {"type": type(action).__name__}
-    for f in fields(action):
-        val = getattr(action, f.name)
-        if isinstance(val, SpecBase):
-            val = val.to_dict()
-        out[f.name] = val
-    return out
+    return {"type": type(action).__name__, **_to_dict(action)}
 
 
 def action_from_dict(data: dict) -> Action:

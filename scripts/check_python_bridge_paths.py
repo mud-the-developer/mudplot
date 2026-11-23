@@ -217,8 +217,8 @@ def _failure_cases(connection: http.client.HTTPConnection, fault_file: Path):
         ("apply-exit", "exited with"),
         ("apply-stderr", "stderr truncated"),
         ("render-exit", "exited with"),
-        ("render-missing", "read rendered figure"),
-        ("render-empty", "empty rendered figure"),
+        ("render-missing", None),
+        ("render-empty", None),
         ("missing-optional", "mudplot[regression]"),
     ):
         fault_file.write_text(mode, encoding="utf-8")
@@ -244,8 +244,16 @@ def _failure_cases(connection: http.client.HTTPConnection, fault_file: Path):
         else:
             status, body = action("must not commit")
         fault_file.write_text("", encoding="utf-8")
-        assert status == 400 and expected in body.decode(), (mode, status, body[:200])
-        assert len(body) < 70_000 and b"stdout-only-marker" not in body
+        assert status == 400 and 0 < len(body) < 70_000, (mode, status, body[:200])
+        assert b"stdout-only-marker" not in body
+        error = json.loads(body)["error"]
+        assert isinstance(error, str) and error.strip(), (mode, error)
+        if mode == "render-missing":
+            assert "preview" in error.lower() and "file" in error.lower(), error
+        elif mode == "render-empty":
+            assert "preview" in error.lower() and "empty" in error.lower(), error
+        else:
+            assert expected is not None and expected in error, (mode, error)
         assert snapshot() == before, mode
         connection.request("POST", "/redo", b"")
         response = connection.getresponse()
@@ -260,7 +268,7 @@ def _failure_cases(connection: http.client.HTTPConnection, fault_file: Path):
         rows.append(
             {
                 "mode": mode,
-                "error": expected,
+                "error": error,
                 "state_png_redo_preserved": True,
                 "spec_sha256": hashlib.sha256(
                     json.dumps(before[0], sort_keys=True).encode()

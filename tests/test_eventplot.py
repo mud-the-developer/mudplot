@@ -106,9 +106,9 @@ def test_nonrepresentable_or_invalid_mark_geometry_preserves_output(
     "style",
     [
         {"orient": "h"},
-        {"group": "event"},
+        {"group": "missing"},
         {"weights": "event"},
-        {"semantics": {"hue": "event"}},
+        {"semantics": {"hue": "missing"}},
         {"density": True},
         {"colorbar": True},
         {"marker": "s"},
@@ -122,13 +122,13 @@ def test_unused_mappings_are_rejected(style):
 
 
 @pytest.mark.parametrize("axis", ["x", "y"])
-def test_linear_only_subset_does_not_hide_log_geometry(axis):
-    p = mp.plot({"event": [1, 2]}).eventplot("event", offset=2)
+def test_eventplot_log_requires_positive_geometry(axis):
+    p = mp.plot({"event": [0, 2]}).eventplot("event")
     if axis == "x":
         p.xscale("log")
     else:
         p.yscale("log")
-    with pytest.raises(ValueError, match="linear"):
+    with pytest.raises(ValueError, match="must be positive"):
         p.render()
 
 
@@ -158,11 +158,11 @@ def test_setdata_updates_events_without_aggregation_and_keeps_selection_limits()
         plt.close(figure)
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history
     spec = p.spec
     spec.panels[0].dropna = ["event"]
-    assert any("does not support panel filters" in issue for issue in mp.validate(spec))
+    assert not mp.validate(spec)
 
 
 def test_event_budget_and_capability_are_explicit():

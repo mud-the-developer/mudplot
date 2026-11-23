@@ -1,4 +1,4 @@
-# Numeric event train
+# Native event trains
 
 *[한국어 / Korean](EVENTPLOT.ko.md)*
 
@@ -13,31 +13,38 @@ p = (mp.plot({"event": [2, 1, 2]})
        .labels(x="Event position", y="Raw offset"))
 ```
 
-This first subset draws one train of vertical marks. Event positions are x values;
-mark endpoints are `offset - length/2` and `offset + length/2` in raw y units.
-Unlike `rug`, the marks do not use an axis-fraction transform. No binning, density,
-rate estimation or aggregation is implied. Repeated events remain separate marks.
-Native Matplotlib sorts its EventCollection positions, so artist order is not the
-input order; the original table/rows/duplicates/JSON/actions remain unchanged.
+Each event is a disconnected vertical mark at its supplied X position; duplicates
+remain separate. `offset` is the center and `length` is the **full** raw lane span
+(`center ± length/2`), not an axes fraction. Omitted or null geometry uses 0/1.
+The simple native `EventCollection` may sort its artist positions, but the saved
+table never changes. Grouped or mapped ticks paint in original row order, even
+when positions coincide; no binning or rate estimation is implied.
 
-The existing LayerSpec.x column, baseline offset and width length fields are reused.
-Default offset is zero and length one; raw JSON None selects those same defaults.
-Require 1..10,000 finite numeric events (not bool/missing/dates/categories), a finite
-numeric offset, positive finite length and finite distinct representable endpoints.
-Overflow or collapsed endpoints fail before artists rather than clamping geometry.
+Use a typed `group` and optional `hue_order` to fix lane slots. Slot `i` is centered
+at `offset + i * lane_step`; `lane_step` is optional and must be finite and
+positive when provided with a group. Without it, groups overlay at the same
+offset. Fixed and live facets retain row selection; reserved empty levels occupy
+their slots without an artist or legend entry. The 10,000 selected event cap is
+across all groups. Invalid or indistinguishable endpoints fail before publication.
 
-Only linear Cartesian primary/y2 axes are supported. Source SetData updates events;
-colour/dash/alpha/line-width apply to the train, including explicit zero line width.
-Explicit line width is finite in [0,1000]. At zero width, the invisible dash pattern
-is removed to avoid Matplotlib 3.8's degenerate legend dashes; source style and zero
-stroke remain unchanged. Positive-width dashes are preserved.
-Returned successful Figures are caller-owned
-and must be closed. This is not a total CPU/RAM/sandbox guarantee.
+Explicit date X positions use the declared clock. A date-formatted lane uses an
+absolute UTC-1970 day center and day differences for length and spacing,
+regardless of the declared numeric input clock. Use a configured `axis="y2"` for
+the independent twin. Log X requires positive event positions; log Y/Y2 requires
+both actual lane endpoints positive. Logit uses its open domain; symlog and asinh
+remain supported. Grouped/log views use actual mark extents, not a full-length
+autoscale hint.
 
-Horizontal/group/hue/semantic/weight/facet/dropna/log/polar/3-D mappings are explicitly
-unsupported. The synthetic example is not experimental data or independent human
-readability/AT certification. Existing raw action routes require no new fields:
+The existing `SemanticSpec` can map categorical or numeric row hue, physical
+stroke width in **points**, and named dash style. Size does not change center,
+span or event position. `group` still chooses the lane when hue is mapped; only
+the hue mapping chooses colour in that case. Numeric colourbars and figure-scope
+guides use the existing owner. Zero stroke keeps its geometry invisible; there
+is no fake marker. Horizontal geometry, weights and estimators are unsupported.
+
+See the [native lane example](../examples/native_lane_workflow.py). Successful
+figures belong to the caller. The existing raw action admits the lane options:
 
 ```json
-{"type":"AddLayer","layer":{"type":"eventplot","x":"event","baseline":0.5,"width":0.4}}
+{"type":"AddLayer","layer":{"type":"eventplot","x":"event","baseline":0.5,"width":0.4,"group":"train","lane_step":1}}
 ```

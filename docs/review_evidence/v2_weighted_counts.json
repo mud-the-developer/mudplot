@@ -1,0 +1,129 @@
+{
+  "catalogue_ids": [
+    "C06"
+  ],
+  "status": "partial-sub-batch-verified; C06 remains in progress",
+  "created_utc": "2026-10-30T15:18:03.274476+00:00",
+  "host": "Linux",
+  "git_head": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "current_environment": {
+    "python": "3.13.12",
+    "numpy": "2.5.2",
+    "matplotlib": "3.11.1",
+    "pillow": "13.0.0",
+    "pytest": "9.1.1"
+  },
+  "minimum_environment": {
+    "python": "3.11.14",
+    "numpy": "1.23.5",
+    "matplotlib": "3.8.0",
+    "pillow": "13.0.0",
+    "pytest": "9.2.0",
+    "jsonschema": "4.26.0"
+  },
+  "source_sha256": {
+    "mudplot/api.py": "f59c470a6f6e18117404f96d0f99317418622007635f800ddaca0c716f3ec258",
+    "mudplot/_estimate.py": "52bef0af495b48f6c3d2bbe3877831b1fb6f2f7817422dfa87ef49a0dbd79f29",
+    "mudplot/_ecdf.py": "c877e8565c20128dba3af5fc09bbb5cd7eb310514cda64fa2dd5ba9523447d4a",
+    "mudplot/_render.py": "86e7f27648108fd3d82f55010493842322121d019ef1788ec5afaf2b7fbe4b82",
+    "mudplot/validate.py": "6ab329b3e9bb7c4b13e6c61e58fad3faed7e6054fc8bdfb08e770f892782d634",
+    "mudplot/capabilities.py": "284db8b11d3ee64a1a144ce4442d0638fb9a510759ff0b0c390e3d4df7dd8176",
+    "tests/test_weighted_counts.py": "e69a40661780632e7fa270596a85fd7768e31ebad4f6eb85f3a05797151d6b3c",
+    "examples/weighted_counts.py": "dd9eb9861e2f82993799cd922dd9289d96b1f34763f1d4b6ce5668cdd785950e",
+    "scripts/check_minimum_versions.py": "308b9763c37c1d6a1805ef6b59117b447adebb97035c4fca2f884d7644f66830",
+    "scripts/check_wheel.py": "19217e95bc68a74c896ec19bc80acff5346974abad69db09562c58f8aea40bd2",
+    "scripts/rust_editor_smoke_test.py": "3ed84f498a0ab976d043eb000e477c08162d898520f58ae65bce50236b1b2b3c",
+    "schemas/capabilities.json": "cf82ee45cfeab9b3e8b94ad5827c2aa651f167c48bfcc18ef1bd504aaeb24828",
+    "schemas/figure_spec.schema.json": "9f10da048cea5c17706eb31195a3eb049fa58dd85e1ee16d19af9566a09e2cca",
+    "docs/REFERENCE.md": "e4669a8e3f74405363f1807903a1c2a4ff2e5bd94faef0f13673835b9636cb43",
+    "docs/V2_SCOPE.md": "ada62f1a5901301ab01208b55b1163aa12f32e1ab908c207f3a6bc66dd7f9863",
+    "docs/V2_SCOPE.ko.md": "945cdae3408c816e806c6780b7abeced594a821f48c0eeea0b21b3a593ba1c4d",
+    "docs/WEIGHTED_COUNTS.md": "c127b5dc6917f8d842af9c22c32b5e6437d35c0b21bc1831e516821098eed2af",
+    "docs/WEIGHTED_COUNTS.ko.md": "4f600c9e69635a0bea70ca9e416400a37eed15105f9623fc6593d80a5a1c4a46"
+  },
+  "targeted_results": {
+    "current_related": {
+      "tests": 374,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum": {
+      "tests": 244,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contracts": {
+      "tests": 45,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "weighted_regressions": 44
+  },
+  "proofs": {
+    "rust_http_form_workflow": {
+      "log": "artifacts/v2_counts_20261030/rust-weighted-complete.log",
+      "scenario": "agent-created JSON -> Rust reopen -> FigureSpec JSON-form weight/normalization edit -> undo/redo -> reopen -> PNG/SVG/PDF; invalid weights preserve spec/preview",
+      "actual_browser": false
+    },
+    "example": "examples/weighted_counts.py",
+    "example_outputs": "artifacts/v2_counts_20261030/example",
+    "visual_review": "parent viewed generated PNG; segment totals 40/60, labels 10/20/30/40, no measured overlaps/clipping",
+    "cli_visual_report": "artifacts/v2_counts_20261030/cli-visual-lint.json",
+    "cli_render": "artifacts/v2_counts_20261030/cli-render.log",
+    "generated_contract_sync": "scripts/check_schema_sync.py passed",
+    "bilingual_doc_examples": "both Python fences executed in independent temporary output directories",
+    "static": "artifacts/v2_counts_20261030/static.log",
+    "active_lsp": "11 changed Python files probed; no language-server type errors; 19 auxiliary numeric-conversion/local-test-URL findings at 15 locations triaged as false positives, plus prior dispositions not reassessed",
+    "development_distribution": {
+      "log": "artifacts/v2_counts_20261030/distribution.log",
+      "artifacts": {
+        "artifacts/v2_counts_20261030/development-dist/mudplot-1.1.0-py3-none-any.whl": "295bdf57dda5e746bc20cd85b57bb71e0c00b3f52bca3c5f4a51f50081fec7b2",
+        "artifacts/v2_counts_20261030/development-dist/mudplot-1.1.0.tar.gz": "248d9b22e10d8da969187a8e78c7592e10df991572a4f36d9fe53bd68b83e849"
+      },
+      "scope": "required files/privacy guard and installed default/smart/CLI render smoke borrowing active dependencies; not final v2/reproducible/metadata-resolved matrix qualification"
+    }
+  },
+  "review": {
+    "run_id": "4f7d87bd-1dc1-4126-88a9-b00d33b3be14",
+    "finding": "P1 all-selected-empty native facets validated but rendering failed",
+    "resolution": "parent reproduced the failure, skipped absent native categories before geometry and added seven rendering regressions; all 44 new tests pass",
+    "claim": "source review followed by parent-verified correction, not an independent post-fix approval"
+  },
+  "preserved_attempts": [
+    {
+      "path": "artifacts/v2_counts_20261030/minimum.xml",
+      "result": {
+        "tests": 244,
+        "failures": 2,
+        "errors": 0,
+        "skipped": 0
+      },
+      "cause": "jsonschema test dependency absent; provisioned without runtime changes"
+    },
+    {
+      "path": "artifacts/v2_counts_20261030/rust-weighted-initial.log",
+      "script": "artifacts/v2_counts_20261030/rust_weighted_probe_initial.py",
+      "cause": "probe used nonexistent EditLayer; corrected to existing undoable FigureSpec JSON-form workflow, no product action/API added"
+    }
+  ],
+  "other_initial_attempts": "Unsupported .3g fixture, invalid example file API and CLI --out invocations are retained in session tool history; corrected to supported formats/APIs/positional output and rerun. Offline minimum provisioning cache miss required downloading existing approved dependencies.",
+  "unfinished": [
+    "C06 named denominator scopes",
+    "C06 scientific log-value stacking/stat-scale contract",
+    "remaining required/conditional v2 catalogue work",
+    "full frozen Linux/Python/browser/Rust/TeX/security/installed/reproducibility qualification",
+    "2.0.0 version coordination"
+  ],
+  "not_claimed": [
+    "v2 release candidate completion",
+    "Windows/macOS verification",
+    "new actual browser proof for this sub-batch",
+    "original experimental data or physical print certification"
+  ],
+  "git_publication_actions": "none performed"
+}

@@ -1,0 +1,207 @@
+{
+  "schema_version": 1,
+  "catalogue_id": "CND02",
+  "status": "triggered-resolved-bounded-acceptance",
+  "parent_acceptance": "Parentsource/proof review and independentv2-historyreview approved the narrow default-only change; integratedsnapshot407case/current and369case/minimum+installedcore evidence reviewed and accepted2026-11-03.",
+  "preserved_provisional_decision": {
+    "evaluation": "completed bounded current-source baseline",
+    "decision": "condition not triggered for an additional optimization on this evidence",
+    "rationale": "Known defensive copying is the measured cost, not a newly isolated incorrect or unusable operation. Existing one 64-action checkpoint already bounds near-tail replay. Observation time budgets are not an SLA; stopped cells cannot justify a performance failure or a completed long-history claim. No structural sharing or limit change justified without a representative user operation/target showing the current tradeoff unacceptable.",
+    "limits": "100k x100/x1000 and 10k x1000 stopped explicitly; their undo/redo unknown, not zero. This is synthetic core-only profiling, not browser publication latency or native allocation/leak qualification.",
+    "evidence": [
+      "history.json",
+      "allocations.json",
+      "allocation_probe.py"
+    ]
+  },
+  "pre_implementation_trigger_decision": {
+    "catalogue_id": "CND02",
+    "decision": "condition triggered: approved narrow redundant near-tail replay improvement",
+    "recorded_before_implementation": true,
+    "supersedes_provisional_interpretation_only": "decisions.json retained unchanged as historical provisional no-trigger interpretation",
+    "evidence": "long-history.json:100000rows,1000actions,dispatchmedian54.555ms,p9562.166ms,undo1272.703ms,redo1485.523ms,total58.988s,source/history/state equalities true",
+    "reason": "Measured immediate near-tail undo/redo repeats roughly40 pure reductions for an operation whose transition can reuse one previous private state / one redo action. This is redundant work with a narrowly approved design, not a failed invented latency SLA.",
+    "approved_design": "Default reduce only: one previous internal state indexed by exact pre-transition history length for immediate undo; invalidate after fallback replay/second undo/branch mismatch. Redo computes one pure reduce before changing history/redo and then commits transition with current state retained for immediate undo. Existing64 checkpoint/deeper replay/custom reducer call semantics/public defensive copies retained. At most one extra old graph and no dispatch deepcopy.",
+    "no_optimization_implemented_at_record_creation": true,
+    "limits_unchanged": true,
+    "baseline_source": "long-history profile used main mudplot/store.py f9bdea12f317f2075e5a1d6fc8e1cc0366a38791d46db6aee61567d65fc7a5df, reducer.py9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49; compare isolated copies before edits",
+    "repository_writes": false
+  },
+  "implementation": "Defaultreduce only: retain one previous privately owned transition graph for immediate matching-prefix undo; defaultredo reduces just nextaction beforecommit. Keep deeper64-actioncheckpoint/fallback, allhistory, public/listener defensivecopies and customreducerfullreplay/callorder.",
+  "memory_tradeoff": "No extra dispatchcopy; one extra old fullgraph may remain alive. One-dispatch tracemalloc does not quantify an oldgraph retained beforetracing. No limit lift/streaming/structuralsharing/SLA.",
+  "failure_boundary": "Only defaultredo candidate reduction is precommit. Deeperfallback undo still pops history before replay and can be nontransactional onfailure EXACT priorsemantics; no general undo failureatomicityclaim.",
+  "isolated_historical_proof": {
+    "catalogue_id": "CND02",
+    "status": "approved narrow optimization implemented and locally exercised in isolated source; parent integration/final qualification not claimed",
+    "trigger_record": "$LOCAL_EVIDENCE/location-49/cnd02-trigger-decision.json",
+    "baseline_hashes": {
+      "mudplot/store.py": "f9bdea12f317f2075e5a1d6fc8e1cc0366a38791d46db6aee61567d65fc7a5df",
+      "mudplot/reducer.py": "9d5412790daf564d99c4bd25e249f2efcf6b157add009a900b58536a7845bf49",
+      "mudplot/spec.py": "3a2e7ec3b63b8be02c680784a619b006a42b01221fa385bdaeeac47a9396bfae",
+      "DESIGN.md": "b1e82eea7a55500d39ae66680c5a535a3c392d8d2ba08717b39ac6ad99d6c0a3",
+      "DESIGN.ko.md": "bde16e2d5e62b7d178967af9c51dc208209dfed4dcbf8479c59222bf695b825f"
+    },
+    "changed_hashes": {
+      "mudplot/store.py": "f0d62bd945e287c6783097c2d3e771c57def1f152841a645b6922323ec79a033",
+      "DESIGN.md": "24a1eb62468392bf09257f355c4b28ea5e0d3be2b70fbcbb863144e573d22c93",
+      "DESIGN.ko.md": "9a59e4d47a87088fd5d65d116883318fb29b1d275968581be2641a86fed6ec19",
+      "tests/test_history_immediate_transitions.py": "925ee8da2c49dd6097ed2543198a9495cfebb6f312031402aa4237297e18c95d"
+    },
+    "patch": "$LOCAL_EVIDENCE/location-54/cnd02-immediate-history.patch",
+    "full_workload": {
+      "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=<isolated-work> TMPDIR=<cnd02> XDG_CACHE_HOME=<cnd02>/cache CND02_PROFILE_OUTPUT=<before-or-after-json> <main-venv-python> <cnd02>/long_history.py",
+      "same_driver_before_after": true,
+      "baseline": {
+        "scenario": "Separate full100k-row x1000-title-action observation; not a rerun under changed script budgets.",
+        "checkpoint": "Existing one preceding64-action checkpoint, default reducer",
+        "rss_bound_bytes": 536870912,
+        "outer_cap_seconds": 180,
+        "rss_before": {
+          "rss_bytes": 55324672,
+          "lifetime_peak_rss_bytes": 55324672
+        },
+        "target_history": 1000,
+        "completed_actions": 1000,
+        "dispatch_elapsed_seconds": 58.52655329508707,
+        "latency": {
+          "samples": 1000,
+          "median_ms": 54.38494146801531,
+          "p95_nearest_rank_ms": 92.230006121099
+        },
+        "rss_after_dispatch": {
+          "rss_bytes": 59834368,
+          "lifetime_peak_rss_bytes": 59834368
+        },
+        "undo_ms": 1524.9066981486976,
+        "redo_ms": 1305.9287061914802,
+        "source_row_history_and_state_equalities": true,
+        "total_elapsed_seconds": 61.37465955410153,
+        "rss_final": {
+          "rss_bytes": 62869504,
+          "lifetime_peak_rss_bytes": 62869504
+        }
+      },
+      "optimized": {
+        "scenario": "Separate full100k-row x1000-title-action observation; not a rerun under changed script budgets.",
+        "checkpoint": "Existing one preceding64-action checkpoint, default reducer",
+        "rss_bound_bytes": 536870912,
+        "outer_cap_seconds": 180,
+        "rss_before": {
+          "rss_bytes": 52174848,
+          "lifetime_peak_rss_bytes": 57180160
+        },
+        "target_history": 1000,
+        "completed_actions": 1000,
+        "dispatch_elapsed_seconds": 70.40623187087476,
+        "latency": {
+          "samples": 1000,
+          "median_ms": 57.378557510674,
+          "p95_nearest_rank_ms": 105.99970677867532
+        },
+        "rss_after_dispatch": {
+          "rss_bytes": 62173184,
+          "lifetime_peak_rss_bytes": 62173184
+        },
+        "undo_ms": 27.421214152127504,
+        "redo_ms": 53.88945993036032,
+        "source_row_history_and_state_equalities": true,
+        "total_elapsed_seconds": 70.50141626829281,
+        "rss_final": {
+          "rss_bytes": 65208320,
+          "lifetime_peak_rss_bytes": 65208320
+        }
+      },
+      "interpretation": "Immediate undo/redo avoid redundant prefix replay. No dispatch speed or SLA claim; after dispatch elapsed/p95 were higher on shared host. Baseline allocation profile overlapped part of baseline dispatch; neither is a controlled isolated benchmark. Undo/redo measured after allocation profile completed. Existing observation bounds unchanged."
+    },
+    "allocation": {
+      "baseline_peak_bytes": 4828472,
+      "optimized_peak_bytes": 4830040,
+      "baseline_current_bytes": 4819472,
+      "optimized_current_bytes": 4821296,
+      "scope": "Separate100k-row one-dispatch tracemalloc trials; Python allocation only, not RSS/native allocations. Driver hash field targets original main; authoritative actual isolated before/after source identities are this proof and baseline-hashes.json."
+    },
+    "checks": {
+      "pytest_cases": 89,
+      "failed": 0,
+      "skipped": 0,
+      "log": "$LOCAL_EVIDENCE/location-54/targeted.log",
+      "junit": "$LOCAL_EVIDENCE/location-54/targeted.xml",
+      "ruff_check": "passed",
+      "ruff_format": "executed on isolated store/new tests only",
+      "editor": {
+        "editor": "Actual Python HTTP editor and Chromium UI undo/redo; Rust editor uses stateless CLI apply and is not this Store implementation.",
+        "checks": [
+          "Undo exact state and PNG",
+          "Undo exact state and PNG",
+          "Redo exact state and PNG",
+          "Redo exact state and PNG",
+          "Undo exact state and PNG",
+          "branch invalidates old redo via real HTTP endpoint",
+          "invalid edit retained exact state and PNG"
+        ],
+        "chromium": "150.0.7871.100",
+        "final_png_sha256": "ab66bde53401a0792c41c37f211fe961ee0e560c1f5a8c92fa72c8f70aba1042",
+        "reopen_equal": true
+      },
+      "preserved_attempt": "editor-browser.log: default Playwright cache executable absent; explicit installed /usr/bin/chromium corrected runtime prerequisite; no download or repo cache writes"
+    },
+    "source_scope": "store.py plus existing English/Korean DESIGN paragraph and consumer-only new regression test; no public schema/API/version changes; no main checkout edits"
+  },
+  "snapshot": {
+    "archive": "artifacts/v2_integrated_qualification/source.tar",
+    "sha256": "8d0fa0d9d6d275c8b7a39c2b8d0c4896fccad79f40e89505c559515c8cc92c3c",
+    "wheel": "artifacts/v2_integrated_qualification/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "dc125140d8279eaf61db70c6261dad23ef75492f0593de2b714259b813311dce",
+    "version": "1.1.0",
+    "schema": "0.1",
+    "scope": "ONE frozen C01+M01 annotation/rotation subset+CND02 snapshot; later F01 source is not qualified by these results",
+    "privacy": "archive excludes .pi/.git/.venv/artifacts/generated caches/targets; .pi untouched"
+  },
+  "integrated_same_unchanged_driver": {
+    "sha256": "956aeeb0c0b3100d67ccaea3b124330458b68caa4f954e23c31892aa2237a427",
+    "record": {
+      "scenario": "Separate full100k-row x1000-title-action observation; not a rerun under changed script budgets.",
+      "checkpoint": "Existing one preceding64-action checkpoint, default reducer",
+      "rss_bound_bytes": 536870912,
+      "outer_cap_seconds": 180,
+      "rss_before": {
+        "rss_bytes": 52359168,
+        "lifetime_peak_rss_bytes": 56901632
+      },
+      "target_history": 1000,
+      "completed_actions": 1000,
+      "dispatch_elapsed_seconds": 61.32454507704824,
+      "latency": {
+        "samples": 1000,
+        "median_ms": 55.55633548647165,
+        "p95_nearest_rank_ms": 99.17777823284268
+      },
+      "rss_after_dispatch": {
+        "rss_bytes": 62263296,
+        "lifetime_peak_rss_bytes": 62263296
+      },
+      "undo_ms": 28.84009573608637,
+      "redo_ms": 57.86591488867998,
+      "source_row_history_and_state_equalities": true,
+      "total_elapsed_seconds": 61.4268712089397,
+      "rss_final": {
+        "rss_bytes": 65273856,
+        "lifetime_peak_rss_bytes": 65273856
+      }
+    },
+    "commands": "../../artifacts/v2_integrated_qualification/current-commands.json"
+  },
+  "integrated_checks": {
+    "current": "407passed96.01s,0skips; exact11-filecohort plus Ruff/schema and configuredstrip/heatmapStore smoke; current-cohort.log/current-core-history.log",
+    "minimum": "369passed75.52s,203warnings,0skips; exact8-filecohort ininstalled3.11floorenv; installed Python-S StripSpec+HeatmapSpec history/defaultbranch/customreplay proof",
+    "no_summing": "Isolated89pass modelSHA3a2e... is historical; integratedmodel differs withM01 and its current/minimumcounts are distinct, not summed."
+  },
+  "interpretation": "Integrated100k×1000 retainedsource/historyequalities, immediateundo28.84009573608637ms/redo57.86591488867998ms. Shared-host observation: no controlleddispatchspeedclaim or SLA. PythonStore only; Rustindependentsnapshothistory unaffected.",
+  "cache_exception": {
+    "note": "Hypothesis generated a .hypothesis cache in frozen cwd during cohort; archive contains no .hypothesis members. Relocated only this generated directory to own outputs. No source/tests/docs were edited. No test rerun.",
+    "relocated_from": "$LOCAL_EVIDENCE/location-55",
+    "relocated_to": "$LOCAL_EVIDENCE/location-56"
+  },
+  "remaining": "CND02 required evaluation and triggered narrowimplementation accepted. FinalallrowLinux/installedreproducible2.0.0qualification remains separate; CND01triggeredwork and otherfeaturecatalogue remain open.",
+  "git_publication_actions": false
+}

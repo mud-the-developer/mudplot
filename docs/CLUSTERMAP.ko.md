@@ -67,10 +67,10 @@ leaf는 cell centre와 맞춥니다. row_colors/col_colors는 축당 선택적 �
 - standard_scale='row'/'col': min-max [0,1].
 - 둘 다 없음: 원래 값을 표시.
 
-상수 축은 표준화할 수 없습니다. Fit-time scaling은 큰 단위 overflow를 방지할
-뿐 잘못된 데이터를 대체하지 않습니다. Masked 셀까지 유한 숫자인 비어 있지 않은
-직사각 행렬이 필요하며 NaN/null/bool 변환이나 결측 보간은 하지 않습니다. 거리
-계산 자원을 제한하도록 행/열 각각 최대 512개입니다.
+상수 축은 표준화할 수 없습니다. Fit-time scaling은 불필요한 overflow를 줄일 뿐
+잘못된 데이터를 고치지 않습니다. 기본값은 masked 셀까지 유한 숫자를 요구합니다.
+행과 열은 각각 최대 512개입니다. 아래 명시적 결측 모드에서도 NaN/Inf/bool을
+`null`로 바꾸거나 보간하지 않습니다.
 
 Mask는 표시 전용이고 군집/표준화의 행을 제외하지 않습니다. 재정렬 뒤에는
 HeatmapSpec처럼 hidden 셀을 숨기며 색상 범위/주석에서 제외합니다. 주석은 변환된
@@ -96,7 +96,45 @@ uv run python -m examples.clustered_profiles
 uv run pytest -q tests/test_clustermap.py tests/test_heatmap_options.py
 ```
 
-독립 SciPy 순서/optimal leaf·표시 변환·기하/metadata·잘못된 입력·동적 갱신·
-effect 누락·schema/action/editor와 PNG/PDF/SVG 정확 재생·global RNG 비사용을
-검사합니다. 여러 색상 track/자동 strip legend·결측·임의 metric·interactive cut·
-더 넓은 clustering layout은 이번 범위 밖입니다.
+## 결측, 제공 거리, 편집 가능한 절단
+
+`missing="complete_features"`인 군집 행렬만 실제 `None`/JSON `null`을 소비합니다.
+`SetMatrix`로 먼저 저장할 수는 있지만 이 정책 없는 군집/heatmap/contour/surface
+레이어에 쓰면 검증에 실패합니다. 표준화는 표시 마스크가 숨긴 숫자까지 관측값으로
+포함합니다. 축마다 **원본 항목 전체에 관측된 공통 특성**만 골라 named metric을
+계산합니다. 행/열 ID를 삭제하거나 pairwise 거리/대체값을 만들지 않습니다.
+공통 특성 또는 유효 거리가 없으면 실패합니다. 보이는 결측은 슬래시와 범례로
+표시하고 수치 색상과 주석에는 쓰지 않습니다.
+
+`row_distances`/`col_distances`의 `CondensedDistanceSpec(label, values)`는 원본
+순서의 SciPy condensed `d01,d02,…,d12,…`에 맞춘 유한·비음수 값 `n(n−1)/2`개와
+거리/단위 이름입니다. single/complete/average/weighted로 이 거리에서 트리를
+만듭니다. Ward/median/centroid는 Euclidean 입력이 필요합니다. 제공 트리의
+순서 비용으로 쓰려면 `optimal_ordering=True`를 지정합니다. 같은 형태로 `SetMatrix`
+갱신해도 제공 거리/트리는 불변입니다. 원본 위치의 항목이나 거리 의미가 바뀌면
+호출자가 다시 선언해야 하며, 길이/유효 조건이 맞지 않으면 거부됩니다.
+명시적 결측·제공 거리·절단으로 새로 계산한 병합의 양수 높이가 단위 복원 뒤
+표현 불가능하면 거부합니다. 실제 0과 제공 트리의 높이는 그대로 유지합니다.
+
+`row_cut`/`col_cut`의 `ClusterCutSpec(height, anchor=None)`은 **하위 병합 중 최대
+높이**가 `height` 이하인 최대 서브트리로 나눕니다. 동률은 포함하고 역전된 트리의
+실제 높이는 바꾸지 않습니다. 선택값은 원본 0부터 시작하는 인덱스입니다. 양쪽
+에디터에서 높이·인덱스를 바꾸면 실제 선택 인덱스가 표시되고, `ReplaceLayer`로
+기록되어 실행 취소와 다시 실행이 가능합니다. 행/열을 필터링하지 않습니다.
+
+## 여러 트랙과 배치
+
+`row_tracks`/`col_tracks`: 축마다 고유한 `id`, `title`, 원본 순서의 `values`,
+순서가 지정된 `{key,label,color}` `levels`, 선택적 `ratio`와 `legend`.
+기존 색 strip은 본체에 가장 가깝고 범례가 없습니다. 연속 트랙/자동 구간은
+추론하지 않습니다. `row_dendrogram_ratio`/`col_dendrogram_ratio`로 축마다 나무
+비율을, `track_legend_side`로 `right`/`bottom`을 지정합니다. 색상표는 heatmap
+옵션을 재사용합니다. `python -m examples.matrix_workflow /path/to/output`으로
+예제를 실행합니다.
+고급 행렬 옵션을 쓰는 중첩 배치가 모두 직교좌표 패널이면 native constrained
+배치가 회전 글자와 가이드를 위한 자리를 확보합니다. 기존·극좌표·3D 경로는 그대로입니다.
+
+새 행렬 옵션에 대해 그림당 작업 크레딧 838,860,800, 관리 예약 96 MiB,
+단일 직렬 SciPy 호출 예약 최대 16 MiB를 검사합니다. 실행 시간, 프로세스 RSS,
+외부 라이브러리의 모든 할당을 보장하지 않습니다. 기존 캔버스·크기·주석·에디터
+한도를 유지합니다. 장식이 들어가지 않으면 출력 크기/위치를 변경하세요.

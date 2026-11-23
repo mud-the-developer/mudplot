@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-feature-checkpoint",
+  "catalogue": [
+    "D02"
+  ],
+  "status": "Bounded functional evidence verified; parent closure review and final RC qualification remain; not total v2 or goal completion",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "owner_contract": "artifacts/v2_histogram_bins/owner-contract.md",
+  "contracts": [
+    "Eight fixed NumPy 1.23.5 definitions: auto/fd/doane/scott/stone/rice/sturges/sqrt; classic FD/Sturges auto (43 bins for [0,1,2,3,100]), not installed-version delegation.",
+    "10,000-bin cap checked before allocation; never silently coarsen. Stone candidate membership avoids collapsed-grid runtime failure; final edges still validate.",
+    "Usable observation selection first; positive weight magnitudes do not select edges; heights retain weights.",
+    "Discrete numeric integer centers; temporal numeric uses declared s/ms/us/ns/day input unit. ISO/date strictly display-clock midnight, one day; fractional or unrepresentable half units reject (us/ns half-unit precision rejects).",
+    "Named/discrete dispatch is typed-string-only; legacy untyped defaults, API/0.1 compatibility and Matplotlib remain unchanged."
+  ],
+  "prior_receipts": [
+    "docs/review_evidence/v2_histogram_modes.json",
+    "docs/review_evidence/v2_histogram_fill.json",
+    "docs/review_evidence/v2_histogram_step_dodge.r2.json"
+  ],
+  "reports": [
+    "artifacts/v2_histogram_bins/worker.md",
+    "artifacts/v2_histogram_bins/review.md",
+    "artifacts/v2_histogram_bins/integration-worker.md"
+  ],
+  "xml_reports": [
+    {
+      "path": "artifacts/v2_histogram_bins/bins-current-regression.xml",
+      "tests": 563,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 563
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/bins-integration-recheck.xml",
+      "tests": 65,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 65
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/bins-integration.xml",
+      "tests": 65,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 64
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/bins-minimum-core.xml",
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 70
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/bins-minimum-regression.xml",
+      "tests": 563,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 563
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/bins-review-recheck.xml",
+      "tests": 70,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 70
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/interface-minimum.xml",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 2
+    },
+    {
+      "path": "artifacts/v2_histogram_bins/interface-tests.xml",
+      "tests": 41,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 41
+    }
+  ],
+  "checks": {
+    "legacy_defaults": "ALL 7 spec/action/RGBA records equal immutable fill previous-defaults.json; parent independently executed, closure worker rechecked JSON equality",
+    "installed_wheel": "Parent installed/render proof; closure worker independently matched all 56 current library Python files byte-for-byte in wheel-interface-final wheel",
+    "cohorts": "563 current and 563 minimum core, zero skips, before later interface changes. 70 focused current/minimum before interface; 41 current interface and 2 minimum interface separate. No invented final full-tree core run.",
+    "parent_checks": "Parent reports Ruff check/format 16 files, all four schema sync checks and diff whitespace check passed; not rerun by closure writer.",
+    "visual": "Parent visually read six-panel example: labels, 43 auto bins, empty discrete, s/ms/day legible. Parent has not read native final PNG; no physical print claim.",
+    "browser": "Retained early HTTP endpoint probes are not UI proof. Final harness source/read receipts demonstrate real JSON form, history/reopen, actual SVG/PDF link downloads; PNG is actual preview fetch, not PNG download link. Reused Rust binary; no fresh build or generic smoke."
+  },
+  "retained_failures": [
+    "Initial integration XML records 65 tests including one snapshot failure; snapshot fixed, later receipts retained separately.",
+    "Initial LSP two import-configuration diagnostics resolved with extraPaths, not a code fix.",
+    "Raw first reviewer P1 BLOCK is source-only review, not executed probes: Stone narrow-span and missing-column KeyError findings fixed later with current/minimum tests; original report preserved.",
+    "Early numeric worker 31 tests predates integration; not final full-feature count."
+  ],
+  "artifact_manifest": "artifacts/v2_histogram_bins/artifactsmanifest.json",
+  "limits": [
+    "Latest closure reviewer verdict belongs to parent and is not asserted here.",
+    "Windows/macOS, full Linux/Python/optional matrix, TeX/PGF, full security/static qualification, fresh Rust rebuild and final version 2.0 release remain pending.",
+    "No publish, commit, tag, physical print, new dependency or full-suite run by closure writer.",
+    "Managed evidence-worker.md final output is excluded from this manifest because generated after closure; parent may append a separate closure note."
+  ]
+}

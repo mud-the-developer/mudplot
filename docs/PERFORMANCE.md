@@ -52,12 +52,11 @@ must not be replaced by a single claimed cold-start speedup.
 
 ## Small measured optimization, not a rewrite
 
-The default pure Store reducer retains one preceding64-action-boundary internal
-state. On the recorded fixtures1k-row/1000-action undo changed~405→17ms; the matched
-10k-row/256-action cached/full-replay control was~219/860ms, with~280KB extra traced
-Python retention. It retains all history and detached public snapshots. Custom
-reducers still replay fully; earlier cursors can fall back to initial state. One
-extra full Spec is a memory tradeoff, not a total-RSS bound or universal speedup.
+The earlier checkpoint-only experiment retained one preceding64-action-boundary
+state. On its recorded fixtures1k-row/1000-action undo changed~405→17ms; the
+matched10k-row/256-action cached/full-replay control was~219/860ms, with~280KB
+extra traced Python retention. Those historical measurements are not refreshed
+by the v2 implementation below. All history and detached public snapshots remain.
 
 Mouse gestures already submit once on release and keyboard bursts coalesce in the
 existing UI. No core event/no-op/listener is discarded. The cheap raw validation
@@ -65,13 +64,38 @@ probe does not justify deleting trust-boundary validation; Rust child startup/JS
 and rendering are different bottlenecks. Immutable/zero-copy rewrites are not a
 measured prerequisite for the present paper-oriented workload.
 
+### v2 immediate-history increment (CND02)
+
+The completed 100k-row × 1000-title-action workload exposed redundant near-tail
+pure-reducer replay, triggering a narrow change rather than structural sharing.
+The default reducer now retains one immediately previous internal transition
+state for matching immediate undo; redo computes its next action before
+committing history. Deeper undo retains the 64-action checkpoint/fallback path.
+Custom reducers preserve full replay and call order. Public state/action/history/
+listener snapshots stay defensive copies; no dispatch copy or history truncation
+is added. One additional full old graph can remain live: this is a memory tradeoff,
+not zero-copy storage. Existing data/request/algorithm limits are unchanged.
+
+The matched isolated workload observed undo 1524.9 → 27.4 ms and redo 1305.9 → 53.9 ms.
+These are shared-host observations, not an SLA or controlled dispatch speedup;
+dispatch was slower in the optimized run. A one-dispatch tracemalloc trial does
+not measure an old graph retained from before tracing. See the
+[v2 evidence](review_evidence/v2_history_immediate.json) for exact source/workload
+identities and distinct integrated-main checks. This optimization affects Python
+Store history, not Rust's independent snapshot history.
+
+Only default redo candidate reduction is precommit. A deeper fallback undo still
+updates history before replay and retains the old nontransactional failure
+semantics; no general undo-failure atomicity guarantee is introduced.
+
 ## Practical dataset guidance
 
 - Start around1k rows and short10–100-action paper histories when interactive cost
   matters.10k-row raw-line cases completed here, but not with a20ms UI promise.
-- A separate100k-row core matrix completed short10-action cases; larger target
-  histories hit the observed dispatch budget before completion. Missing undo/redo
-  timings remain **null**, not0. Do not extrapolate them to working100k×1000 sessions.
+- The earlier100k-row matrix completed short10-action cases but its larger
+  histories stopped at an observation budget; those undo/redo timings remain
+  **null**, not0. The later completed100k×1000 workload above is separate evidence,
+  not an extrapolation or replacement of that partial record.
 - Typed statistical/semantic paths have their own row/group/algorithm bounds
   (several are10k usable rows). Raw-line measurements do not waive those limits.
 - Inline data is copied/serialized with state.16MiB request bytes,2000px/axis preview,

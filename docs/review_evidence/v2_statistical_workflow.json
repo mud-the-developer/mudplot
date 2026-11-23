@@ -1,0 +1,488 @@
+{
+  "catalogue_id": "C07",
+  "status": "WHOLE C07 PARENT FINAL FUNCTIONAL ACCEPTANCE CLOSED; every specified local gate and final nonruntime source/SDIST lineage accepted; not whole v2/REL01",
+  "parent_acceptance": {
+    "decision": "Parent reviewed all482 receipt lines, exact96-line source/SDIST-only binding and914-proof ledger, scientific/native/source/installed/current-minimum/bothUI/PGF/legacy/static evidence; whole C07 accepted.",
+    "preserved": "Accepted adbe4988 receipt, proof ledger1b6f1ece and bindingb6c7ebdc, original906/f655 design SDK, corrected908/e61f SDK/b8faa SDIST, original673 SDIST/de3 wheel and all failures remain immutable.",
+    "current_docs_only": "This accepted-status update and bilingual pure-load versus render clarification do not change runtime71/aa624, rebuild/re-hash any accepted milestone or alter D01 source-design input.",
+    "not_closed": "Broader F01/F02/G01/E01/Q01/DOC01/REL01/full v2"
+  },
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "platform": "Linux",
+  "sole_Main_writer": true,
+  "frozen_artifact": {
+    "wheel": "$LOCAL_EVIDENCE/location-23/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "de3fe109473895d770f2254794765ab4f7d3f54ca1739b64143c8e1e70b6bfb4",
+    "runtime_sha256": "aa6243b8fceafc2e064dcfea8ef638cdbc422fed4e9300bc2d168a1f22798ff6",
+    "engine_modules": 71,
+    "runtime_manifest": "artifacts/v2_c07/final_runtime-manifest.json",
+    "original_from_SDIST": {
+      "sha256": "673f27cc22072f72dd18fa116b73f35710ffe59550857c3fee86cf795c94cd74",
+      "files": 906,
+      "source_root": "$LOCAL_EVIDENCE/location-24",
+      "binding": "artifacts/v2_c07/final_BINDING.json",
+      "binding_sha256": "3231271c9bc0b6905da86012c5a1caa761430a8e945aec1de760c487083ba8d1"
+    },
+    "final_SOURCE_SDIST_only_correction": "artifacts/v2_c07/final_source_doc_binding.json",
+    "correction_scope": "Exact3 nonruntime consumer/test files plus current acceptance/support docs/receipts; original906/f655 design SDK remains immutable; same runtime71 and wheel, no duplicate wheel build.",
+    "D01_handoff": "Original906-file full source is a PROVISIONAL SOURCE-DESIGN baseline, not prior C07 feature acceptance."
+  },
+  "approved_science": {
+    "estimators": [
+      "mean",
+      "median",
+      "sum",
+      "min",
+      "max",
+      "count"
+    ],
+    "weighted_matrix": {
+      "mean": [
+        null,
+        "sd",
+        "se",
+        "pi",
+        "ci"
+      ],
+      "median": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "min": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "max": [
+        null,
+        "sd",
+        "pi",
+        "ci"
+      ],
+      "sum": [
+        null,
+        "ci"
+      ],
+      "count": [
+        null
+      ]
+    },
+    "SD": "Descriptive reliability-weight sample spread; exact canonical mass denominator, physical-row Kish before ties.",
+    "SE": "Mean only: SD/sqrt(physical-row effective N); not cluster analytic SE or extrema/sum/median SE.",
+    "PI": "Unweighted type7 retained; NEW weighted observed LEFT CDF, exact canonical PERCENT p=(100-Fraction(level))/200 and upper1-p. [0,10,20]x[1,38,1] at95 gives[0,10].",
+    "CI": "Percentile requested estimator, original uniform case indices carrying original values/weights; units resampled then within-unit cases, no probability-weight sampling or unit means. Per-layer local seeded cell schedule retained.",
+    "canonical_arithmetic": "ONE shared pure canonical CDF/type7/source-unit boundary, clean migrated letter-value/statistical callers. Exact dyadic selected arithmetic avoids global MaxAbs erasure; mean/sum representable cancellation and large-int SD/SE/PI independently exercised. Native final rounding/finite derived-coordinate and positive-span precision boundaries remain explicit, not arbitrary high-precision geometry promises.",
+    "unit_identity": "Opaque all-string IDs including empty string; None/NaN required IDs exclude paired rows. NEW bool True !=numeric1; numeric1==1.0; old raw unit keys/admission unchanged.",
+    "interval_geometry": "Absolute ranges need not bracket extrema/centers; no clipping/fake nonnegative errorbar fallback. Singleton/no independent units omits interval truthfully with zero bootstrap work.",
+    "coordinates": "Raw/data vs log10-axis statistics explicit; display log base2 does not change fit-space meaning. Axis-log/calendar SUM/COUNT reject; raw positive weighted totals can display on log with declared baseline. Actual v/h, primary/y2, numeric/date category and measurement clocks, selected fixed/live views and N13 IDs use resolved actual panel context."
+  },
+  "owned_visual_contract": {
+    "hue": "Bar BODY fill; actual point/connecting-line colour, nondata normalized numeric colourbar/raw labels.",
+    "size": "Bar BODY OUTLINE stroke pt; point actual MARKER DIAMETER pt; existing line remains MAIN stroke pt. Never bar area/width/height/weight mass.",
+    "style": "Real bar BODY dash, no fake flier/point glyph; actual point marker+connecting dash. Legacy hue can coexist with independent size/style; independent mapped hue conflicts with second legacy hue.",
+    "truthful_guides": "Same per-curve effect context captures actual native main artist; guide inherits actual stroke/dash/fill/edge/hatch/alpha/glyph/diameter and changes only owned role. Zero strokes retain independent fill/glyphs; no visibility suppression/epsilon. Native bar HandlerPatch retains real dash metadata/pattern.",
+    "unowned_point_stroke": "Independent point connecting line_width0 or3 remains valid with mapped marker diameter and real markers; scalar conflicts reject only owned properties.",
+    "validation_root": "Exactly barplot/pointplot added to existing semantic_data_issues hook; other unsupported families/guards unchanged.",
+    "compound_response_units": "Only weighted SUM response is value*mass within existing explicit N13 unit gate; means/raw/unweighted sums remain value, COUNT mass distinct, homogeneous totals compatible and old no-N13 sharing unchanged."
+  },
+  "new_only_resource_policy": {
+    "persisted_predicate": "New weighted combination OR bar/point SemanticSpec OR specifically newly admitted bar/point target route; not old weighted meanNone/CI, old unitsCI/countplotmass, old unweighted/plain/existingSEM dense line merely due arithmetic repair.",
+    "selected_positive_complete_physical_rows_per_layer": 10000,
+    "drawn_pointwise_cells_per_layer": 256,
+    "categorical_levels": 64,
+    "continuous_distinct_numeric_values_not_capped_at64": true,
+    "max_active_random_chunk_elements": 1000000,
+    "actual_CI_unit_choice_plus_case_work_per_NEW_layer": 2000000000,
+    "n_boot_existing_max": 100000,
+    "algorithm": "Original compact original-case multiplicities, bounded same-order random stream; O(rows+units+n_boot) storage. Ordinary work charged before draw; hierarchical unit choices before unit draw and actual row cases from chosen multiplicities before row chunks. Whole failure before artists/Editor commit, no prefix CI/reduced repetitions. Seed-dependent actual-work admission explicit.",
+    "no_new_legacy_row_work_cap": true,
+    "not_claimed": "No SLA/RSS/universal latency or1B hierarchical upper bound; approved potential2.5005e12 uncapped cases and figure multiplication remain explicit."
+  },
+  "actual_profiles": {
+    "current": {
+      "driver_bridge": "$LOCAL_EVIDENCE/location-45",
+      "engine_origin": "$LOCAL_EVIDENCE/location-28",
+      "versions": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "Pillow": "13.0.0",
+        "pytest": "9.1.1"
+      },
+      "binding": "$LOCAL_EVIDENCE/location-27/binding-short-tmp.json",
+      "all71_hashes_verified_each_invocation": true,
+      "source_profile_unset": true,
+      "same_process_SOURCE_binding": "artifacts/v2_c07/frozen_source_current_binding.json",
+      "frozen_SOURCE_cohort": {
+        "command": "artifacts/v2_c07/frozen_source_current_command.json",
+        "log": "artifacts/v2_c07/frozen_source_current.log",
+        "passed": 3010,
+        "skipped": 22,
+        "warnings": 63,
+        "scope": "61 exact modules; SOURCE not installed"
+      },
+      "original_INSTALLED_FAILED_cohort": {
+        "command": "artifacts/v2_c07/installed_current_command.json",
+        "log": "artifacts/v2_c07/installed_current.log",
+        "passed": 2183,
+        "skipped": 11,
+        "errors": 20,
+        "warnings": 49
+      },
+      "affected_BROWSER_correction_FAILED_cohort": {
+        "command": "artifacts/v2_c07/installed_browser_short_tmp_current_command.json",
+        "passed": 32,
+        "failed": 1,
+        "warnings": 0,
+        "no_launch_skips": true
+      },
+      "separate_desktop_continuation": {
+        "commands": "artifacts/v2_c07/final-test-overlay/commands.json",
+        "log": "artifacts/v2_c07/desktop_disclosure_current.log",
+        "passed": 1,
+        "warnings": 0
+      },
+      "pure_Python_S_active_denial": "$LOCAL_EVIDENCE/location-123/pure-active-denial.json",
+      "independent_native_geometry": {
+        "receipt": "$LOCAL_EVIDENCE/location-124/receipt.json",
+        "cases": 32,
+        "scope": "v/h primary/y2 numeric-native-log base2; log10 working geometry,72/300DPI,inverted real N13 inset, absolute ranges outside extrema, native glyph paths and physical points"
+      },
+      "actual_limits": {
+        "receipt": "$LOCAL_EVIDENCE/location-125/receipt.json",
+        "source_stored": 10002,
+        "selected_positive_complete": 10000,
+        "native_drawn_cells": 256,
+        "raw_numeric_hues": 256,
+        "full_requested_bootstraps": 100000,
+        "actual_unit_plus_case_work": 2000000000,
+        "actual_random_elements": 1000000000,
+        "native_reference_center": 479782,
+        "native_reference_CI": [
+          472319,
+          487285
+        ],
+        "final_RNG_state_reference_equal": true,
+        "observed_full_render_tracemalloc_bytes": 142076949,
+        "not_kernel_peak_RSS_SLA": true
+      },
+      "old_oversized_admission": {
+        "receipt": "$LOCAL_EVIDENCE/location-126/receipt.json",
+        "source_rows": 1000007,
+        "largest_unit": 1000003,
+        "actual_max_draw": 1000000,
+        "independent_materialized_reference_cases": 5000021,
+        "n_boot": 3
+      },
+      "actual_publication": {
+        "commands": "artifacts/v2_c07/installed_publication_commands.json",
+        "directory": "$LOCAL_EVIDENCE/location-127",
+        "actual_PNGs": [
+          [
+            4800,
+            2700
+          ],
+          [
+            6000,
+            3600
+          ],
+          [
+            6000,
+            3000
+          ]
+        ],
+        "independent_raw_tuple_curves": 8,
+        "raw_source_rows_shared": 144,
+        "typed_live_curves_and_reserved_empty": true,
+        "synthetic_declared_data": true
+      },
+      "readable_human_frontends": {
+        "rust": "$LOCAL_EVIDENCE/location-128/receipt.json",
+        "python": "$LOCAL_EVIDENCE/location-129/receipt.json"
+      },
+      "readable_per_frontend": {
+        "decoded_current_PNG_checkpoints": 10,
+        "cached_PNG": [
+          2000,
+          1166
+        ],
+        "actual_API_CLI_identical_full_PNG": [
+          3600,
+          2100
+        ],
+        "vectors_pt": [
+          864,
+          504
+        ],
+        "native_independent_hierarchical_LEFT_CI": true,
+        "real_glyphs": [
+          "P",
+          "X"
+        ],
+        "actual_diameters_pt": [
+          7,
+          10
+        ],
+        "independent_connecting_stroke_pt": 1.5
+      },
+      "actual_established_consumers": {
+        "commands": "artifacts/v2_c07/established_consumers_corrected_current_command.json",
+        "receipt": "$LOCAL_EVIDENCE/location-130/receipt.json",
+        "meaning": "Shipped installed-wheel render/CLI payload plus actual bound native recent-layer(C07 included)/history/state/failure/HostOrigin16MiB/JSON consumers, no cargo/wheel rebuild"
+      },
+      "actual_archived_legacy": {
+        "directory": "$LOCAL_EVIDENCE/location-131",
+        "reference": "Actual immutable accepted C05R4 runtime68947, not same-engine comparison.",
+        "controls": 16,
+        "all_spec_actions_RGBA_size_source_literal_labels_ticks_exact": true,
+        "view_float_differences": 5,
+        "maximum_view_endpoint_ULP_delta": 2,
+        "NOT_all_exact_limits": true,
+        "independent_arithmetic_after": "$LOCAL_EVIDENCE/location-27/legacy-arithmetic-reference.json"
+      },
+      "actual_offline_TeX": {
+        "record": "$LOCAL_EVIDENCE/location-132/record.json",
+        "versions": {
+          "mudplot": "1.1.0",
+          "numpy": "2.4.6",
+          "matplotlib": "3.11.1",
+          "Pillow": "13.0.0"
+        },
+        "native_PGFs": 7,
+        "document_pages": 8,
+        "page_classification": "7 real native plots + bibliography,not8 plotted figures",
+        "provider": "LuaLaTeX→BibTeX→LuaLaTeX×2 only",
+        "compiled_native_mu_Sigma_superscript2": true,
+        "resolved_bibliography_and_actual_PDF_URIs": true,
+        "missing_final_characters": false,
+        "same_de3_all71": true,
+        "common_multiline_reference_tests": "2passed0skip, 0warnings6.39s",
+        "retained_PGF_tests": "4passed279deselected0skip, 0warnings3.95s",
+        "desktop_current_numpy_not_TeX_current_numpy": true
+      }
+    },
+    "minimum": {
+      "driver_bridge": "$LOCAL_EVIDENCE/location-46",
+      "engine_origin": "$LOCAL_EVIDENCE/location-31",
+      "versions": {
+        "numpy": "1.23.5",
+        "matplotlib": "3.8.0",
+        "Pillow": "13.0.0",
+        "pytest": "9.0.3"
+      },
+      "binding": "$LOCAL_EVIDENCE/location-30/binding-short-tmp.json",
+      "all71_hashes_verified_each_invocation": true,
+      "source_profile_unset": true,
+      "same_process_SOURCE_binding": "artifacts/v2_c07/frozen_source_minimum_binding.json",
+      "frozen_SOURCE_cohort": {
+        "command": "artifacts/v2_c07/frozen_source_minimum_command.json",
+        "log": "artifacts/v2_c07/frozen_source_minimum.log",
+        "passed": 3010,
+        "skipped": 22,
+        "warnings": 10077,
+        "scope": "61 exact modules; SOURCE not installed"
+      },
+      "original_INSTALLED_FAILED_cohort": {
+        "command": "artifacts/v2_c07/installed_minimum_command.json",
+        "log": "artifacts/v2_c07/installed_minimum.log",
+        "passed": 2183,
+        "skipped": 11,
+        "errors": 20,
+        "warnings": 7073
+      },
+      "affected_BROWSER_correction_FAILED_cohort": {
+        "command": "artifacts/v2_c07/installed_browser_short_tmp_minimum_command.json",
+        "passed": 32,
+        "failed": 1,
+        "warnings": 753,
+        "no_launch_skips": true
+      },
+      "separate_desktop_continuation": {
+        "commands": "artifacts/v2_c07/final-test-overlay/commands.json",
+        "log": "artifacts/v2_c07/desktop_disclosure_minimum.log",
+        "passed": 1,
+        "warnings": 13
+      },
+      "pure_Python_S_active_denial": "$LOCAL_EVIDENCE/location-133/pure-active-denial.json",
+      "independent_native_geometry": {
+        "receipt": "$LOCAL_EVIDENCE/location-134/receipt.json",
+        "cases": 32,
+        "scope": "v/h primary/y2 numeric-native-log base2; log10 working geometry,72/300DPI,inverted real N13 inset, absolute ranges outside extrema, native glyph paths and physical points"
+      },
+      "actual_limits": {
+        "receipt": "$LOCAL_EVIDENCE/location-135/receipt.json",
+        "source_stored": 10002,
+        "selected_positive_complete": 10000,
+        "native_drawn_cells": 256,
+        "raw_numeric_hues": 256,
+        "full_requested_bootstraps": 100000,
+        "actual_unit_plus_case_work": 2000000000,
+        "actual_random_elements": 1000000000,
+        "native_reference_center": 479782,
+        "native_reference_CI": [
+          472319,
+          487285
+        ],
+        "final_RNG_state_reference_equal": true,
+        "observed_full_render_tracemalloc_bytes": 142078910,
+        "not_kernel_peak_RSS_SLA": true
+      },
+      "old_oversized_admission": {
+        "receipt": "$LOCAL_EVIDENCE/location-136/receipt.json",
+        "source_rows": 1000007,
+        "largest_unit": 1000003,
+        "actual_max_draw": 1000000,
+        "independent_materialized_reference_cases": 5000021,
+        "n_boot": 3
+      },
+      "actual_publication": {
+        "commands": "artifacts/v2_c07/installed_publication_commands.json",
+        "directory": "$LOCAL_EVIDENCE/location-137",
+        "actual_PNGs": [
+          [
+            4800,
+            2700
+          ],
+          [
+            6000,
+            3600
+          ],
+          [
+            6000,
+            3000
+          ]
+        ],
+        "independent_raw_tuple_curves": 8,
+        "raw_source_rows_shared": 144,
+        "typed_live_curves_and_reserved_empty": true,
+        "synthetic_declared_data": true
+      },
+      "readable_human_frontends": {
+        "rust": "$LOCAL_EVIDENCE/location-138/receipt.json",
+        "python": "$LOCAL_EVIDENCE/location-139/receipt.json"
+      },
+      "readable_per_frontend": {
+        "decoded_current_PNG_checkpoints": 10,
+        "cached_PNG": [
+          2000,
+          1166
+        ],
+        "actual_API_CLI_identical_full_PNG": [
+          3600,
+          2100
+        ],
+        "vectors_pt": [
+          864,
+          504
+        ],
+        "native_independent_hierarchical_LEFT_CI": true,
+        "real_glyphs": [
+          "P",
+          "X"
+        ],
+        "actual_diameters_pt": [
+          7,
+          10
+        ],
+        "independent_connecting_stroke_pt": 1.5
+      },
+      "actual_established_consumers": {
+        "commands": "artifacts/v2_c07/established_consumers_corrected_minimum_command.json",
+        "receipt": "$LOCAL_EVIDENCE/location-140/receipt.json",
+        "meaning": "Shipped installed-wheel render/CLI payload plus actual bound native recent-layer(C07 included)/history/state/failure/HostOrigin16MiB/JSON consumers, no cargo/wheel rebuild"
+      },
+      "actual_archived_legacy": {
+        "directory": "$LOCAL_EVIDENCE/location-141",
+        "reference": "Actual immutable accepted C05R4 runtime68947, not same-engine comparison.",
+        "controls": 16,
+        "all_spec_actions_RGBA_size_source_literal_labels_ticks_exact": true,
+        "view_float_differences": 5,
+        "maximum_view_endpoint_ULP_delta": 2,
+        "NOT_all_exact_limits": true,
+        "independent_arithmetic_after": "$LOCAL_EVIDENCE/location-30/legacy-arithmetic-reference.json"
+      },
+      "actual_offline_TeX": {
+        "record": "$LOCAL_EVIDENCE/location-142/record.json",
+        "versions": {
+          "mudplot": "1.1.0",
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "Pillow": "13.0.0"
+        },
+        "native_PGFs": 7,
+        "document_pages": 8,
+        "page_classification": "7 real native plots + bibliography,not8 plotted figures",
+        "provider": "LuaLaTeX→BibTeX→LuaLaTeX×2 only",
+        "compiled_native_mu_Sigma_superscript2": true,
+        "resolved_bibliography_and_actual_PDF_URIs": true,
+        "missing_final_characters": false,
+        "same_de3_all71": true,
+        "common_multiline_reference_tests": "2passed0skip, 3warnings6.63s",
+        "retained_PGF_tests": "4passed279deselected0skip, 1warning4.06s",
+        "desktop_current_numpy_not_TeX_current_numpy": true
+      }
+    }
+  },
+  "source_and_runtime_review": {
+    "parent_review_v1": "artifacts/v2_c07/prequalified-review-v1/BINDING.json",
+    "parent_accepted_v2": "artifacts/v2_c07/prequalified-review-v2/BINDING.json",
+    "v2_binding_sha256": "40ed8ef067659820e2360f3306e9f80a5f64edeae15735c215bb4151570acccd",
+    "exact_v1_v2_delta_sha256": "7ffd0070cbe355e11172975896d26fc9ef43852be9d812b398f63050d23d092d",
+    "before_observed": [
+      "artifacts/v2_c07_research/arithmetic-before/receipt.json",
+      "artifacts/v2_c07/unweighted-interval-before/receipt.json",
+      "artifacts/v2_c07/guide-traits-before/receipt.json",
+      "artifacts/v2_c07/unit-seams-before/receipt.json",
+      "artifacts/v2_c07/owned-role-hook/lineage.json"
+    ],
+    "MEAN_before": "Source inference only, not an observed public mean failure; strict independent native after values exercised.",
+    "intermediate_guide_source": "Early standalone after receipt76b4... was before final edit/format; critical20/capturedv2 a86fae... are distinct. Final frozen wheel71 binding/native guide/Editor/PGF/readable consumers settle actual latest bytes. Never relabelled identical."
+  },
+  "static_and_packaging": {
+    "canonical_one_build": "artifacts/v2_c07/final_build_command.json",
+    "private_exclusions": "No .pi/.git/.venv/artifacts/native target/private atomic temp content; complete frozen SDK906 independently extracted with no mutable symlinks/hardlinks.",
+    "license": "MIT AND LicenseRef-Matplotlib; own MIT unchanged, full Matplotlib notice and license files shipped; dependency/provider/Python floors unchanged.",
+    "four_generated": "Fresh schema/capabilities/reference/gallery; no copied old generated snapshots/cache.",
+    "models_fields": "48 dataclasses/415 fields; generic MISSING fixture generator/check preserved, no reflected-default/snapshot tautology repins.",
+    "final_Ruff_pyright_generated_fixture": "artifacts/v2_c07/final_complete_static_commands.json all rc0",
+    "Rust": "artifacts/v2_c07/rust-source/commands.json: fmt/clippy/-Dwarnings/MSRV1.88 all0; cargo library20passed5ignored, main1passed; same prebuilt bound binary.",
+    "source_only_overlay": "artifacts/v2_c07/final-test-overlay/consumer-overlay.patch and lineage.json; no runtime change."
+  },
+  "failure_and_correction_integrity": {
+    "original_installed_cohorts": "Each original broad installed cohort2183passed/11skipped/20browser setup errors is FAILED. Chromium SingletonSocket path too long in deep OWN profileTMP; 8 Python setup skips are not browser passes.",
+    "private_harness_fix": "Fresh exact UID/device-owned short disk roots, no product/sandbox/CSP/security changes. Side-by-side corrected launchers preserve original bootstrap/binding/argv/logs.",
+    "affected_browser_cohorts": "All affected6 modules including every8 setup-skip+20error scenarios actually execute; each32passed/1desktop disclosure-precondition test failure is retained, not relabelled full-pass.",
+    "desktop_test_only": "Actual ancestor details collapsed after panel selection; five real summary-click lines disclose it. No product persistence repair claim, hidden force or weakened fixed-preview/scroll/focus/mobile assertions. Each separate1-case continuation passed; no sums.",
+    "established_consumer_before": "Both actual check_wheel._smoke_installed executions failed new oracle including CI-cap Line2Ds among main centers. Explicit chosen D glyph separates actual main data; companion Rust D/^ selector corrected before first execution, not a fabricated observed Rust failure. Original logs preserved; corrected affected shipped functions separately pass.",
+    "historical_prequalified": "Original146/10 Linefixture-style failures+separate10cases; current874/2/1+separate2 correction; minimum876/1; each251/1/16+separate1 guide-selector correction; each248/2 wrong error_width fixture+separate9 ownership/stroke correction; Source UI original8 setup/harness failures and later genuine missing ownership hook remain their exact snapshots. No cohort sums or final-pass relabelling.",
+    "Tectonic": "Historical C05Source80/3 provider DNS failures retained; no third retry/offline provider bypass or Tectonic pass claim. Actual final Lua/BibTeX continuations are distinct.",
+    "immutable_archives": "All accepted69/94de,C05R1/R2/R3/R4, v1/v2 source review/before proofs and original de3/673 SDK unchanged."
+  },
+  "complete_public_workflows": {
+    "builder_action_JSON": "Original rows/IDs/order/clock units preserved; strict SemanticSpec/dict equivalence, typed raw tuple cells, shared original-row domain dedup only.",
+    "editor": "Real human populated ReplaceLayer/add registered layer/raw whole-template forms, invalid scientific/owned requests retain full Spec/current PNG/history; local cell vs whole transaction contrast, undo/redo, actual downloaded JSON reopen/post-reopen edit.",
+    "actual_visible_image": "Decoded DOM RGBA equals current cached PNG at each checkpoint, not URL/source presence. Both real frontends/current+minimum at desktop/mobile, native reference and Rust bridge use same guarded installed profile.",
+    "exports": "Actual installed CLI/API and human PNG/SVG/PDF downloads; cached preview2000x1166 correctly distinct from actual same downloadedJSON full3600x2100 PNG and864x504pt vectors. Invalid outputs keep complete prior PNG.",
+    "C05_shared_foundation": "Whole Main C05 parent accepted separately: docs/review_evidence/v2_boxen_workflow.json; not borrowed isolated passes."
+  },
+  "limits_of_claim": {
+    "all_named_local_C07_gates_exercised": true,
+    "physical_print_or_remote_CI_or_nonLinux": "Not exercised/not requested in local goal.",
+    "host_skips": "22 source skips are host TeX/CJK, not passes; installed original3 hostPGF plus8 launch skips remain original. Actual final same-wheel Lua/native/glyph/refs/URI proof separately recorded. No CJK provider pass claimed.",
+    "not_closed": [
+      "D01 simultaneous/whole curve and wider predictors",
+      "broader F01",
+      "F02",
+      "G01",
+      "E01",
+      "Q01",
+      "DOC01",
+      "REL01",
+      "full v2 catalogue"
+    ]
+  },
+  "final_source_proof_ledger": "artifacts/v2_c07/final_proof_manifest.json"
+}

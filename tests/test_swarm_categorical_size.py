@@ -267,21 +267,20 @@ def test_categorical_sizes_keep_physical_clearance_on_native_log_categories(
         plt.close(fig)
 
 
-def test_categorical_mapping_rejects_facet_bad_scale_and_style():
+def test_categorical_mapping_rejects_invalid_scale_and_facet():
     source = {
         "cat": ["A", "A"],
         "value": [1, 2],
         "class": ["low", "high"],
         "g": ["u", "v"],
     }
-    for extra in ({"scale_id": ""}, {"style": "g"}, {"hue": "g"}):
-        p = mp.plot(source).swarmplot(
-            "cat",
-            "value",
-            semantics={"size": "class", "size_kind": "categorical", **extra},
-        )
-        with pytest.raises(ValueError):
-            p.render()
+    p = mp.plot(source).swarmplot(
+        "cat",
+        "value",
+        semantics={"size": "class", "size_kind": "categorical", "scale_id": ""},
+    )
+    with pytest.raises(ValueError):
+        p.render()
     p = mp.plot(source).swarmplot(
         "cat", "value", semantics={"size": "class", "size_kind": "categorical"}
     )

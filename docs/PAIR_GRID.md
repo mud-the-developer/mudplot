@@ -2,8 +2,8 @@
 
 *[한국어 / Korean](PAIR_GRID.ko.md)*
 
-This pair-grid subset creates a square scatter matrix with histogram/KDE/ECDF
-diagonals. It is not full Seaborn PairGrid/pairplot parity.
+Pair grids use scatter off the diagonal and typed histogram/KDE/ECDF on the
+diagonal. The full square remains the default; `corner=True` uses the lower triangle.
 
 ![Synthetic numeric pair matrix](images/pair_observations.png)
 
@@ -13,6 +13,14 @@ diagonals. It is not full Seaborn PairGrid/pairplot parity.
 
 The 80 independent observations are synthetic; the example is reviewed at 900px
 desktop width, not as an arbitrary mobile thumbnail or accessibility certificate.
+
+## Explicit temporal variables
+
+Numeric remains the default. Declare date variables with
+`pair(columns, temporal={"time": {"timezone": "UTC"}})`; each map value is a
+`TemporalSpec` or its strict dictionary form. The [temporal contract](TEMPORAL_AXES.md)
+also covers explicit numeric unit/origin, cell-local missing rows and per-day
+hist/KDE density. Density axes stay numeric; undeclared strings still reject.
 
 ## Construct from data, then edit cells
 
@@ -48,7 +56,8 @@ p = (mp.plot(raw).pair(["Dose", "Response"], group="condition",
 [Source](../examples/kde_grids.py). KDE uses each variable's univariate cohort,
 not a new global listwise-deletion rule. All KDESpec bandwidth/grid/cut/clip/
 common_norm/common_grid/fill controls are validated and independently copied.
-KDE requires diag_stat='density', unused default bins=20, no weights and no CDF.
+KDE requires `diag_stat="density"` and unused default `bins=20`. It accepts
+the same named `weights` column; use ECDF for cumulative mass.
 Singular groups retain existing warning/skip semantics; no density is invented.
 Finite support and skipped mass mean displayed area need not equal one. One clip
 configuration applies to every variable, so choose bounds appropriate to their
@@ -66,7 +75,8 @@ unused bins=20 and omit KDE config. Each diagonal uses only its own variable/gro
 rows, not complete cases across all variables, and normalizes per curve. Ties keep
 their full jump and the ECDF includes a duplicated minimum/zero-mass start, without
 infinite tail coordinates. Cumulative-mass y axes never share measurement-value y.
-Weighted/complementary ECDF grid options are not exposed; hist stays the default.
+`complementary=True` draws strictly greater mass at each knot. `weights=`
+selects one original nonnegative mass column. Histogram remains the default.
 
 ## Pairwise data is not global listwise deletion
 
@@ -84,6 +94,30 @@ After `SetData`, pairwise cases and automatic display ranges refresh. Column and
 group memberships remain materialized snapshots: rebuild from an empty template
 to add variables/group levels.
 
+### Weighted corners and typed roles
+
+```python
+p = (mp.plot(raw).size(11, 9)
+     .pair(["Dose", "Response", "Delay"], corner=True, weights="Weight",
+           semantics=mp.SemanticSpec(hue="Arm"),
+           diag_kind="ecdf", diag_stat="probability", complementary=True))
+```
+
+See [weighted grid example](../examples/weighted_grids.py). The actual N13
+placements are the lower `n(n+1)/2` cells in row-major order; the upper cells
+have no axes. A cell remains editable when all its observations are missing.
+The named semantic scope shares raw domains, not observations or statistical
+axes. Scatter size is marker diameter; diagonal size is native stroke width.
+Style is an actual glyph or native dash as allowed by the mark, not a dummy
+scatter point. Use either `semantics=` or legacy `group=`/`hue_order=`.
+
+Raw role orders and missingness are checked before clock/coordinate projection.
+Missing or zero weights omit the physical row; selected nonfinite, negative or
+Boolean weights fail. No normalization turns scatter weights into marker sizes.
+Advanced panels save `grid_cohort: true` and the normal owner declarations, not
+filtered columns or ID arrays. One scientific layer plus annotations is allowed;
+replace the owner to change only that cell. Omitted options retain old behavior.
+
 ## Density is not a measurement-value axis
 
 `AxisSpec.share_id` names explicit primary Cartesian x/y sharing groups. Pair
@@ -99,8 +133,8 @@ p.share_axis("y", "response", panel=2)
 
 Manual named sharing uses `SetAxisShare`. The corresponding figure-wide sharing
 mode must be `none`. Conflicting scales or explicit limits fail validation;
-secondary/polar/3-D named groups are rejected. Old AxisSpec JSON defaults to
-`share_id=None`. Existing `share(x='all'|'row'|'col')` is unchanged when names
+polar/3-D named groups are rejected. Joint's explicit mixed y2 link is separate.
+Old AxisSpec JSON defaults to `share_id=None`. Existing `share(x='all'|'row'|'col')` is unchanged when names
 are absent.
 
 ## JSON, editors and limits
@@ -112,10 +146,9 @@ are absent.
 
 Construction, validation and action replay require no optional numeric/render
 dependencies. Specs open in the existing editors, with normal cell selection,
-label controls and SVG/PDF exports. Unsupported corner/triangular grids,
-continuous/semantic hue, weights, complementary CDF, callables and nested grids remain
-explicitly outside this first subset. This is an additional workflow, not a new
-layer type or spec-version bump.
+label controls and SVG/PDF exports. N13 adds public declarative
+`pair(...).nest(...)` and complete outer placement with stable IDs; see
+[layout contract](PANEL_LAYOUTS.md). No callback, new layer type or spec-version bump.
 
 ```bash
 uv run python -m examples.pair_observations

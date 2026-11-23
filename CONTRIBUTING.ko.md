@@ -7,7 +7,7 @@ Python API, 대시보드, 저장 JSON, Rust editor가 공유하는 계약입니�
 
 ## 개발 환경
 
-Python 3.10+와 [uv](https://docs.astral.sh/uv/)가 필요합니다.
+Python 3.11+와 [uv](https://docs.astral.sh/uv/)가 필요합니다.
 
 ```bash
 git clone https://github.com/mud-the-developer/mudplot.git
@@ -48,7 +48,7 @@ uv run python scripts/check_required_test_paths.py ci paths.xml
 ```
 
 무관한optional skip은그대로보이고허용합니다. 필수case검사/reportupload는실패뒤에도실행하지만
-pytest/job실패를성공으로바꾸지않습니다. Linuxfull은Python3.10/3.12,격리floor는3.10,
+pytest/job실패를성공으로바꾸지않습니다. Linuxfull은Python3.11/3.12,격리floor는3.11,
 RustMSRV1.88/Python3.12bridge는Windows/Linux이며모든OS/minor증명은아닙니다. UVcache접미사는
 Python/minimum/Rust·OSlane을분리하고lock입력은명시합니다. Nightly/releasecache는비활성이고
 결과artifact는matrix/sourceSHA이름으로release `dist`와분리합니다. JUnitidentity검사는서명된
@@ -81,7 +81,7 @@ uv run ruff check .
 uv run ruff format --check .
 uv run pyright
 uv run pytest -q --ignore=tests/test_editor_browser.py
-uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
+uv run --python 3.11 --locked --script scripts/check_minimum_versions.py
 uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
 uv run python scripts/check_wheel.py
@@ -193,12 +193,23 @@ spec도 재생성합니다. Gallery coverage는 `capabilities.LAYER_TYPES`와 �
 사용자 환경을 제한하지 않습니다. Fresh-install 버전과 build backend/전이 의존성 버전은
 근거에서 구분하세요. Backend pin만으로 모든 환경의 byte-identical build를 보장하지 않습니다.
 
-`scripts/check_wheel.py`는 현재 build 환경의 빠른 contents/core 검사입니다. 비어 있는
-출력 디렉터리에서 PEP 517 격리도 따로 확인하세요:
+`scripts/check_wheel.py`의 기본 모드는 빠른 contents/core 검사입니다. Locked
+dev/render 환경과 `uv`가 준비되어 있으면 다음 검사도 실행하세요:
+
+```bash
+uv run python scripts/check_wheel.py --render
+```
+
+Checkout 밖의 임시 prefix에 wheel을 offline 설치하여 기본/smart PNG,
+smart-print SVG, 설치된 CLI와 JSON visual lint를 검사합니다. 활성 환경의
+render 의존성을 사용하므로 fresh resolver/의존성 범위 검사는 아닙니다.
+CI와 release build는 이 모드를 요구하며, core-only `-S` 검사는 계속 별도입니다.
+
+비어 있는 출력 디렉터리에서 PEP 517 격리도 따로 확인하세요:
 
 ```bash
 uv build --sdist --out-dir dist-isolated
-uv build --wheel dist-isolated/mudplot-1.0.0.tar.gz --out-dir dist-isolated
+uv build --wheel dist-isolated/mudplot-1.1.0.tar.gz --out-dir dist-isolated
 ```
 
 Audit 설치는 별도 `UV_PROJECT_ENVIRONMENT`를 써서 기존 개발 환경을 덮어쓰지 마세요.

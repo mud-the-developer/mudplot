@@ -11,7 +11,7 @@ import copy
 from collections.abc import Callable, Iterable
 
 from .actions import Action
-from .reducer import reduce
+from .reducer import admit_transform_action, reduce
 from .spec import FigureSpec
 
 __all__ = ["Store"]
@@ -25,8 +25,9 @@ class Store:
     Snapshot safety is deliberate, but copying scales with the full spec,
     including inline data. This is an editor state store, not a streaming data
     pipeline. The default pure reducer retains one preceding 64-action state
-    to shorten near-tail replay, without dropping history. Custom reducers
-    keep full replay and their existing call semantics.
+    for deeper replay and one previous transition state for immediate undo.
+    Default redo reduces only the next action. Custom reducers keep full replay
+    and their existing call semantics.
     """
 
     def __init__(self, state: FigureSpec | None = None, *, reducer=reduce):
@@ -42,6 +43,7 @@ class Store:
         self._history: list[Action] = []
         self._redo_stack: list[Action] = []
         self._checkpoint: tuple[int, FigureSpec] | None = None
+        self._previous: tuple[int, FigureSpec] | None = None
 
     @property
     def state(self) -> FigureSpec:
@@ -55,12 +57,15 @@ class Store:
 
     def _dispatch(self, action: Action) -> None:
         """Internal dispatch that skips only the public return snapshot."""
+        if self._reducer is reduce:
+            admit_transform_action(action)
         action = copy.deepcopy(action)
         cursor, previous = len(self._history), self._state
         self._state = self._reducer(self._state, action)
         self._history.append(action)
         self._redo_stack.clear()
         if self._reducer is reduce:
+            self._previous = (cursor, previous)
             if self._checkpoint is not None and self._checkpoint[0] > cursor:
                 self._checkpoint = None
             # Keep one prior pure-reducer state, never a cache of every snapshot.
@@ -74,6 +79,7 @@ class Store:
         return self.state
 
     def _replay(self) -> None:
+        self._previous = None
         cursor, initial = 0, self._initial
         if (
             self._reducer is reduce
@@ -86,11 +92,20 @@ class Store:
             self._state = self._reducer(self._state, action)
 
     def undo(self) -> FigureSpec:
-        """Revert the last action by replaying the retained history prefix."""
+        """Revert the last action, reusing an exact prior state when available."""
         if not self._history:
             return self.state
         self._redo_stack.append(self._history.pop())
-        self._replay()
+        target = len(self._history)
+        if (
+            self._reducer is reduce
+            and self._previous is not None
+            and self._previous[0] == target
+        ):
+            self._state = self._previous[1]
+            self._previous = None
+        else:
+            self._replay()
         for cb in tuple(self._listeners):
             cb(self.state, None)
         return self.state
@@ -99,8 +114,16 @@ class Store:
         """Re-apply the most recently undone action."""
         if not self._redo_stack:
             return self.state
-        self._history.append(self._redo_stack.pop())
-        self._replay()
+        if self._reducer is reduce:
+            previous = self._state
+            action = self._redo_stack[-1]
+            candidate = self._reducer(previous, action)
+            self._previous = (len(self._history), previous)
+            self._state = candidate
+            self._history.append(self._redo_stack.pop())
+        else:
+            self._history.append(self._redo_stack.pop())
+            self._replay()
         for cb in tuple(self._listeners):
             cb(self.state, None)
         return self.state

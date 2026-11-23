@@ -1,4 +1,4 @@
-# 수직 numeric stem plot
+# 원본 관측값을 그리는 스템 플롯
 
 *[English](STEM.md)*
 
@@ -13,19 +13,31 @@ p = (mp.plot({"x": [2, 1, 2], "y": [3, -1, 4]})
        .labels(x="Position", y="Response"))
 ```
 
-첫범위는primaryCartesian/y2의수직numericstem입니다. 행마다marker와rawscalarbaseline부터y까지의
-segment를만들고원본순서/반복위치/linear음수/원자료를보존합니다. Sorting/binning/집계/추론구간은없고
-SetData뒤artist를갱신하며오래된파생segment를저장하지않습니다.
+`x`는 위치 열, `y`는 끝점 값 열입니다. 기본 `orient="v"`는 X에 위치,
+Y에 값을 표시합니다. `orient="h"`는 Y에 위치, X에 값을 표시합니다.
+`axis="y2"`를 쓰면 `.secondary_yaxis(...)`로 활성화한 실제 Y2를 Y 대신
+사용합니다. 입력 순서와 중복 위치를 보존하며 집계, 구간화, 위치 이동은
+하지 않습니다. `SetData`는 원본 열을 교체하고 파생 기하를 저장하지 않습니다.
 
-Baseline은기존LayerSpec필드이며기본0(rawJSON의None도0)입니다. Logx는양수위치,log응답축은
-head와baseline모두양수여야하고epsilon대체는없습니다. X/y/baseline은bool이아닌유한숫자이며
-1..10,000행을지원합니다. 결측은조용히버리지않고거절합니다. 명시markersize0을보존하며명시설정
-marker_size/line_width는유한[0,1000]입니다. 색/alpha/dash는stem·baseline에일관적용하고markershape/
-size는head를설정합니다. 성공시반환Figure는호출자가소유하므로사용후close해야합니다.
+`baseline`의 생략 또는 JSON `null`은 0입니다. 로그 위치 축에서는 위치가,
+로그 값 축에서는 끝점과 기준선이 모두 양수여야 합니다. 날짜 축은 명시적으로
+선택한 선형 축입니다. 날짜 값 축의 기준선은 입력 단위나 원점 오프셋이 아닌
+UTC 1970 기준의 절대 일 좌표입니다. 선택된 좌표의 결측은 자동 제거하지 않습니다.
 
-Horizontal/group/hue/semantic/weight/facet·dropna/polar·3D/colorbar/다른layer옵션은명시미지원입니다.
-자원상한은전체CPU/RAM/sandbox보장이아니며합성예제는실험값이나독립사람가독성/AT인증이아닙니다.
-기존AddLayer/JSON/editorrawaction경로를사용합니다.
+`group`과 `hue_order`는 그룹과 순서를 지정합니다. `.facet(...)`와 라이브
+패싯은 고정 선택자를 사용하며, 비어 있는 그룹이나 패널에는 가짜 스템이나
+기준선을 그리지 않습니다. 각 스템 뷰의 선택된 관측값 상한은 10,000개입니다.
+
+기존 `SemanticSpec`은 색, **포인트 단위 스템 선 두께**, 끝점 마커 모양과
+선택적 스템 점선을 매핑합니다. 색은 선과 끝점에 함께 적용합니다. `marker_size`는
+끝점 지름이며 매핑된 두께와 별개입니다. 매핑된 두께와 `line_width`를 함께 쓸 수
+없습니다. `group`은 크기·스타일과 병용할 수 있지만 매핑된 색과는 함께 쓸 수
+없습니다. 그룹 또는 매핑을 사용해도 기준선은 하나이며 고정 설정을 따릅니다.
+연속 색상표와 공유 범례는 기존 범위 설정을 사용합니다.
+[수평 예제](../examples/stem_workflow.py)를 참고하세요.
+
+극좌표·3D, 가중치 및 추정은 지원하지 않습니다. 반환된 Figure는 호출자가
+닫아야 합니다. 기존 AddLayer/JSON/editor 액션 경로를 이어서 사용합니다.
 
 ```json
 {"type":"AddLayer","layer":{"type":"stem","x":"x","y":"y","baseline":0}}

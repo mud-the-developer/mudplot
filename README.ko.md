@@ -20,6 +20,15 @@
   [흑백 인쇄 데모](docs/DEMO.md#5-grouped-bar-chart-readable-after-black--white-printing)
   참고
 
+### 유한 저장 축 제어 (N12, v2 진행 중)
+
+ticks(...,which="major"|"minor")·typed axis_scale·이름 기반 secondary_xaxis/
+derived secondary_axis가 JSON/action/CLI/editor에 연결됩니다.
+[유한 과학 계약](docs/FEATURE_COVERAGE.ko.md)·
+[여섯 패널 실행 예제](examples/axis_controls.py)를 참조하십시오. 명시 clock·
+원본 단위·독립 y2는 구분하고 임의 callback/새 의존성은 없습니다.
+Isolated 검증을 전체 v2 완료로 주장하지 않습니다.
+
 ## 읽기 중심 예제
 
 <a href="docs/VISUAL_REVIEW.html"><img src="docs/images/visual_response_mobile.png" width="320" alt="직접 라벨과 점별 신뢰대가 있는 합성 평균 반응 곡선"></a>
@@ -35,6 +44,19 @@ Complete figure drafts**에서도 같은 그림을 고를 수 있습니다. 선�
 채우며 명시적으로 열기 전까지 현재 그림을 바꾸지 않습니다.
 이전 프로토타입의 원자료와 추정값을 유지합니다. 실제 저장 PNG·브라우저 크기
 검사가 독립적인 가독성 평가 결과를 뜻하지는 않습니다.
+
+## Opt-in 과학 그림 구성·QA (Unreleased)
+
+`render(layout_policy="smart")` / `save(..., layout_policy="smart")`로 실제
+범례·데이터 경계의 충돌을 검사·수정하고, 공유 범례와 단순 2-method 막대의
+직접 라벨을 사용합니다. `smart-print`는 기존 hatch를 유지합니다.
+`lint(visual=True).to_dict()`는 실제 출판 크기의 겹침·잘림·밀도·수치 scale
+문제와 수정 제안을 반환합니다. `mp.recommend(...)`는 geometry·측정값·미지의
+단위를 몰래 바꾸지 않는 결정적 추천입니다. 기본값과 FigureSpec/JSON은 유지합니다.
+
+[사용법·범위·4종 before/after](docs/SCIENTIFIC_QUALITY.md) ·
+[300-DPI QA 보고서](docs/images/scientific_quality/report.json) ·
+[실행 예제](examples/scientific_quality.py).
 
 ## 아키텍처: Spec 중심 상태 전이 (functional core / imperative shell)
 
@@ -71,15 +93,18 @@ benchmark하세요.
 
 ## 상태
 
-**v1.0.0**, 안정된 1.x 공개 Python/CLI/JSON 계약을 제공하며 Matplotlib을
-canonical renderer로 유지합니다. [호환성 정책](docs/COMPATIBILITY.ko.md),
+**v2.0.0** 로컬 후보이며 아직 발행하지 않았고 릴리스 검증도 끝나지 않았습니다.
+JSON wire는 0.1을 유지하며, Matplotlib이 기본 렌더러입니다. [호환성 정책](docs/COMPATIBILITY.ko.md),
 아키텍처/전체 마일스톤은
 [`DESIGN.md`](DESIGN.md), 버전별 상세 내역은 [`CHANGELOG.md`](CHANGELOG.md),
 다음 단계는 [`ROADMAP.md`](ROADMAP.md) 참고.
 
-**37종 layer 지원은 Matplotlib·Seaborn과 전체 기능이 동등하다는 뜻이 아닙니다.**
-[기능 지원 비교표](docs/FEATURE_COVERAGE.ko.md)는 부분 지원과 빠진 옵션·자동 통계·
-facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 설명합니다.
+이 후보에는 범위가 정해진 v2 워크플로가 포함되어 있습니다.
+[실행 예제와 업그레이드 안내](examples/README.ko.md)에서 시작하세요.
+등록 레이어 66종은 **Matplotlib·Seaborn과 전체 기능이 동등하다는 뜻이 아닙니다.**
+[지원 범위](docs/FEATURE_COVERAGE.ko.md)에서 적용 가능한 조합을 확인하고,
+[v2 검증 기준](docs/V2_SCOPE.ko.md)에서 소스 검증과 설치본 검증을 구분합니다.
+최종 2.0.0 배포 산출물과 TeX 검증은 완료되지 않았습니다.
 
 **엔진 (`mudplot/`)의 구현 범위는 아래와 같습니다.** 최신 전체/최소환경/대상
 검증 결과와 적용 범위는 [개발 체크포인트](docs/V1_1_PLAN.ko.md#현재-체크포인트)를
@@ -95,32 +120,20 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
 - [x] 선언적 Spec 모델(`FigureSpec`) + 무손실 JSON 왕복 + 부수효과 없는 reducer +
       action + store (`Store.undo()`/`redo()`) — render/io/preview 등
       effect는 가장자리로 분리
-- [x] 렌더러: 레이어 37종(line/lineplot/regplot/scatter/stripplot/swarmplot/bar/barplot/
-      pointplot/countplot/errorbar/
-      band/stackplot/hline/vline/text/annotate/hist/box/boxenplot/violin/kde/kde2d/ecdf/rug/
-      hist2d/hexbin/quiver/heatmap/clustermap/contour/contourf/pie/scatter3d/
-      line3d/surface/wireframe), 멀티패널 레이아웃, 보조 y축, 공유축,
-      despine, 외부 범례, 연속값 컬러매핑 + colorbar
-- [x] **자동 facet 첫 범위**: 단일 템플릿 뒤
-      `.facet(row=..., col=..., col_wrap=...)`로 셀을 만들고 공통 축·범주/hue 자리·
-      semantic domain을 유지합니다. 통계는 셀별입니다.
-      [지원 범위와 예제](docs/FACETS.ko.md); raw 그룹 궤적/막대도 원래 값과
-      hue 자리를 유지합니다. Legacy c/colorbar facet은 남았습니다.
-- [x] **Joint histogram/KDE grid**: `.scatter(...).joint(...)` 또는
-      `.regplot(...).joint(...)`로 같은 완전 관측 x/y/group 행과 histogram/KDE를
-      연결하며 원자료를 버리지 않습니다. Count/density 축은 측정값 축과
-      독립입니다. [지원 범위와 예제](docs/JOINT_GRID.ko.md) 참고.
-- [x] **Numeric pair matrix 첫 범위**: `.pair(["a", "b", "c"], group=...)`로
-      쌍별 결측을 처리한 raw scatter와 대각선 histogram/KDE를 구성합니다. 이름 기반
-      축으로 측정값 범위를 공유하되 대각선 density는 분리합니다.
-      [지원 범위와 예제](docs/PAIR_GRID.ko.md) 참고.
+- [x] 렌더러: 등록 레이어 66종, 이름 기반 패널 배치, 공유·보조 축,
+      실제 가이드 및 [실행 가능한 레이어 갤러리](docs/PLOT_GALLERY.md).
+- [x] **Facet·pair·joint 구성:** 지원되는 라이브 패싯 템플릿과 스칼라 `c`
+      가이드, 쌍별 corner 격자와 가중 보완 누적분포, 원행 선택을 공유하는 joint
+      패널. 적용 가능한 마크·축·통계 조합은 [facet](docs/FACETS.ko.md),
+      [pair](docs/PAIR_GRID.ko.md), [joint](docs/JOINT_GRID.ko.md) 문서를 참조하세요.
 - [x] **Typed heatmap 옵션**: opt-in `HeatmapSpec`의 mask/주석/label,
       linear/log/중심/robust 색상 범위·정사각 셀·경계를 지원하며 원래 행렬과
       legacy 기본값은 유지합니다. [범위와 예제](docs/HEATMAP.ko.md) 참고.
-- [x] **설정형 회귀/residual (Unreleased)**: `RegressionSpec`의 log-x/Huber/
-      binomial-logit/LOWESS와 원자료 y-fitted의 `.residplot()`. Advanced effect만
-      optional `regression` extra를 쓰고 기존 polynomial/core는 유지합니다.
-      [범위와 예제](docs/REGRESSION.ko.md) 참고.
+- [x] **설정형 회귀/진단 (Unreleased)**: 다섯 모델의 명시적 paired-case percentile,
+      상대 기준질량, partial nuisance, 원행 hold-out 예측과 독립 residual trend/
+      fit/scatter style을 지원합니다. 기존 polynomial/core 및 optional regression
+      effect 경계는 유지합니다. [과학/API/자원 범위](docs/REGRESSION.ko.md).
+      명목상 점별 불확실성이지 prediction interval/동시·모집단 coverage 보장이 아닙니다.
 - [x] **군집 heatmap (Unreleased)**: `.clustermap()`/`ClusterSpec`으로 행/열
       계층 군집·트리/label/mask/색 strip과 z-score/min-max 표시를 정렬합니다.
       원래 행렬은 유지하고 SciPy는 optional `cluster` effect로 분리합니다.
@@ -149,7 +162,7 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
       pyarrow/SQL) 지원; AI 에이전트 친화 인터페이스(`capabilities()`/
       `json_schema()`/`apply()`/`action_log`); 렌더링 전 자동 실행되는
       부수효과 없는 `validate()`/`assert_valid()`
-- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render|migrate`);
+- [x] CLI (`python -m mudplot capabilities|schema|docs|validate|apply|render|lint|migrate`);
       JSON 스키마/capabilities/docs export 파일 + CI 동기화 검증
 - [x] 안정성 하드닝 3회, 실제 버그 약 20건 발견/수정 후 회귀 테스트로
       잠금 (저널 크기 미적용, Store 상태 외부 변형 유출, 범주형 좌표가
@@ -159,7 +172,7 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
 
 **대시보드 (`dashboard/`, source-tree 도구) — 로컬 editor + 문서:**
 
-- [x] 실제 코드에서 생성하는 37개 전체 layer 영문·한글 실행 갤러리,
+- [x] 실제 코드에서 생성하는 등록 레이어 영문·한글 실행 갤러리,
       디자인 갤러리 및 엔진 reference 정적 사이트
       (`python -m dashboard build`)
 - [x] 로컬 인터랙티브 에디터(`python -m dashboard serve`) — fluent API와
@@ -172,12 +185,12 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
       편집, 저장된 `.mplot.json` 열기, 지정 크기 그대로 PDF/SVG 내보내기
 - [x] 실제 브라우저 테스트(Playwright, 선택적 `browser` extra) — HTML
       검사로는 볼 수 없는 드래그·키보드·멀티패널 경로 검증
-- [x] capabilities 기반 advanced 폼으로 등록된 레이어 37종 모두 지원;
+- [x] capabilities에서 등록된 레이어를 구성하는 고급 폼;
       향후 registry 추가도 자동 반영. htmx로 전체 페이지 reload 없이 app
       fragment만 갱신. 인증 없는 서버는 loopback bind/Host, same-origin
       mutation, browser security header, 16 MiB request 상한을 강제
 
-**Rust editor (`mudplot-editor/`, v1.0):**
+**Rust editor (`mudplot-editor/`, v1.1 로컬 후보):**
 
 - [x] 함께 versioning하는 axum + Askama + htmx 로컬 서버. serde
       `FigureSpec`/action envelope, atomic open/action history, PNG cache,
@@ -185,22 +198,36 @@ facet/grid 구성을 구분하고 Matplotlib 직접 수정 경로의 한계도 �
       layer/theme/projection capability 기반 control 지원. 자세한 내용은
       [`mudplot-editor/README.ko.md`](mudplot-editor/README.ko.md).
 
+## 보안 지원 하한 (Unreleased, v1.1)
+
+현재 checkout은 **Python 3.11+**, 색상·렌더의 NumPy 1.23.5+,
+렌더의 Pillow 13.0.0+를 요구합니다. 수정된 Pillow가 Python 3.11을 요구하므로
+사용자가 승인한 보안상 예외로 Python 3.10 지원을 종료합니다. Python API,
+FigureSpec/JSON, 원본 측정값과 Matplotlib 기본 동작은 유지합니다.
+이미 발행된 v1.0.0 산출물을 수정하거나 v1.1이 발행됐다고 주장하는 변경은 아닙니다.
+[릴리스 체크리스트](docs/V1_1_RELEASE_CHECKLIST.ko.md)를 참고하세요.
+
 ## 설치
 
-현재 release는 GitHub에서만 배포하며 PyPI trusted publishing은 의도적으로
-활성화하지 않았다.
+이 checkout은 v2.0.0 로컬 후보입니다. 태그나 릴리스는 발행하지 않았으므로
+후보는 현재 checkout에서 설치하세요.
 
 ```bash
-# Core package만 (필수 의존성 0) — spec/actions/store/JSON/TeX 크기 계산
-python -m pip install "mudplot @ https://github.com/mud-the-developer/mudplot/releases/download/v1.0.0/mudplot-1.0.0-py3-none-any.whl"
+# Core package만 (필수 외부 의존성 0)
+python -m pip install .
 
-# 색상 엔진 + 렌더링까지 (numpy + matplotlib)
-python -m pip install "mudplot[render] @ https://github.com/mud-the-developer/mudplot/releases/download/v1.0.0/mudplot-1.0.0-py3-none-any.whl"
+# 색상 엔진·Matplotlib 렌더와 보안 하한이 고정된 Pillow
+python -m pip install '.[render]'
 ```
 
-wheel에는 `mudplot` engine만 포함됩니다. Python dashboard와 Rust editor는
-source-tree 도구이므로 template·계약 version을 맞추기 위해 같은 release tag를
-checkout해서 실행하세요.
+아래는 발행 예정 metadata이며 **아직 다운로드 가능한 주소가 아닙니다**:
+`https://github.com/mud-the-developer/mudplot/releases/download/v2.0.0/mudplot-2.0.0-py3-none-any.whl`.
+기존 v1.0.0 산출물은 그대로 유지합니다. 발행 경로는 GitHub-only이며 PyPI
+trusted publishing은 활성화하지 않았습니다.
+
+wheel에는 `mudplot` engine만 포함됩니다. 로컬 후보의 Python dashboard·Rust editor는
+이 checkout에서 함께 실행하고, 발행 후에는 같은 release tag를 사용해 template과
+계약 version을 맞추세요.
 
 개발:
 
@@ -210,7 +237,8 @@ uv sync --locked --extra dev
 
 Unreleased robust/logistic/LOWESS는 이 source tree의 `pip install '.[regression]'`
 경로에 있으며 이미 공개한 v1.0.0 wheel의 기능이 아닙니다. `all`/`dev` extra는 이를
-포함하고 `render`만 설치하면 기존 NumPy/Matplotlib만 사용합니다.
+포함하고 `render`는 NumPy/Matplotlib과 보안 하한을 고정한 기존 Pillow 이미지
+의존성을 사용합니다.
 
 ### 현재 checkout의 자원 범위 (Unreleased)
 
@@ -236,8 +264,8 @@ Unreleased robust/logistic/LOWESS는 이 source tree의 `pip install '.[regressi
 | --- | --- | --- |
 | 의존성 없는 상태 core | `spec` `actions` `reducer` `store` `validate` `schema` | **없음** |
 | stdlib effect/helper | JSON/CLI I/O, bibliography, TeX 크기 계산 | **없음** |
-| 색상 엔진 | `color/*` | NumPy ≥ 1.23 |
-| 렌더 effect | `render` `tex_preview` | NumPy ≥ 1.23 + Matplotlib ≥ 3.8 |
+| 색상 엔진 | `color/*` | NumPy ≥ 1.23.5 |
+| 렌더 effect | `render` `tex_preview` | NumPy ≥ 1.23.5 + Matplotlib ≥ 3.8 + Pillow ≥ 13.0.0 |
 | Advanced 회귀 effect (Unreleased) | `regression` extra | render + statsmodels ≥ 0.14.1; 필수 core 의존성 없음 |
 | 군집 effect (Unreleased) | `cluster` extra | render + SciPy ≥ 1.10; 필수 core 의존성 없음 |
 
@@ -247,7 +275,7 @@ Unreleased robust/logistic/LOWESS는 이 source tree의 `pip install '.[regressi
 
 `python -m scripts.render_docs_demo`로 생성한 실제 출력입니다.
 고정 난수 시드의 **합성 데이터**이며 실험 결과가 아닙니다.
-**[37개 전체 layer 플롯 갤러리](docs/PLOT_GALLERY.md)**에서 각 plot의
+**[등록 레이어 66종 플롯 갤러리](docs/PLOT_GALLERY.md)**에서 각 플롯의
 실행 코드·실제 출력·편집 가능한 spec을 확인할 수 있습니다.
 **[디자인 데모 갤러리](docs/DEMO.md)**에는 수정 전후 이미지, heatmap·3D,
 PDF 및 실행·검증 방법이 있습니다.
@@ -327,8 +355,8 @@ soft 팔레트의 측정된 안전성 보장 범위는 최대 5개 범주입니�
 
 ### v1.1 개발: 원자료 통계 그래프
 
-첫 하위 범위는 구현했습니다. 남은 배치·검증 조건은
-[v1.1 진행표](docs/V1_1_PLAN.ko.md)를 따릅니다. 아직 1.1 릴리스는 아닙니다.
+현재 워크플로와 검증 상태는 [v2 예제 안내](examples/README.ko.md)를 참고하세요.
+이 기능은 발행된 1.1 또는 2.0 릴리스를 뜻하지 않습니다.
 
 ```python
 raw = {"dose": ["Control"] * 3 + ["High"] * 3,
@@ -346,11 +374,11 @@ mean/median/sum/min/max/count와 `errorbar=None`, `"sd"`, `"se"`, `"pi"`,
 `"ci"`, `(method, level)`을 사용합니다. SD/SEM은 `ddof=1` 표본 통계와
 기본 배수 1, PI/CI는 coverage percent(기본 95)를 뜻합니다. SEM은 표본평균의
 표준오차이며 임의 estimator의 불확실성이 아닙니다. count에는 구간이 없습니다.
-기본 bootstrap은 cell 내부 독립 행과 저장한 local seed를 사용합니다.
-`weights=`는 평균과 값·가중치 쌍 bootstrap CI를 지원하며, 가중치를 추출
-확률로 사용하지 않습니다. 0 가중치 행은 제외합니다. `units=`는 독립 단위를
-뽑고 선택한 단위 내부 행을 재표본화합니다. 점 추정값은 관측 행 기준이며
-단위별 평균을 동일 가중하는 방식이 아닙니다. 필요한 x/y/group/weight/unit의
+Bootstrap은 원래 행 쌍과 local seed를 사용합니다. 가중 mean은 SD/SE/PI/CI,
+관측 LEFT median/min/max는 SD/PI/CI, 가중 total은 CI를 지원하며 count mass에는
+구간이 없습니다. SD는 관측 퍼짐·SE는 평균 전용·PI는 관측 분위수·CI는 추정량
+재표본 분포입니다. 가중치를 추출 확률로 쓰지 않습니다. Units는 unit→내부 행의
+짝지어진 CI이며 unit 평균 방식이 아닙니다. 물리 행의 reliability/Kish를 tie 전에 셉니다.
 결측 행은 제외하고 유효 관측값·단위가 2개 미만이면 구간을 경고와 함께
 생략합니다. 추정값 밖의 일반 구간도 임의 clipping 없이 표시합니다.
 
@@ -359,9 +387,13 @@ mean/median/sum/min/max/count와 `errorbar=None`, `"sd"`, `"se"`, `"pi"`,
 bar `gap`은 할당된 폭에 대한 비율입니다. countplot은 모든 선택된 유효 행을
 분모로 하는 `stat="probability"`/`"proportion"`/`"percent"`와 `stack=True`를
 지원합니다. bar/count `value_labels=True`, `label_format=".2f"` 등으로 값을
-표시합니다. 충돌하는 shared-axis 순서는 거부하고 가로 그래프의 y2 routing은
-미지원입니다. Native/log는 아래 명시적 범위로 지원하고 임의 callable은 미지원이며
-**upstream 전체 동등성을 뜻하지 않습니다.**
+표시합니다. 충돌하는 shared-axis 순서는 거부합니다. Bar/point는 실제 primary/y2를
+v/h로 사용하고 strict SemanticSpec hue/size/style·date/native/log 단위를 지원합니다.
+SIZE는 bar BODY 윤곽 stroke pt와 point 실제 지름 pt이며 연결/오차 stroke는 독립입니다.
+[전체 C07 계약](docs/STATISTICAL_WORKFLOW.ko.md)에 정확한 percent LEFT PI·canonical
+산술·typed 역할·명시적 live-template 편집을 설명합니다. NEW 전용 선택10000행/
+점별256cell/실제2Bwork 상한은 기존 weightedmean/units/dense-line이라는 이유만으로
+붙지 않으며 latency/RSS나 upstream 전체 동등성을 약속하지 않습니다.
 
 `python examples/statistical_categories.py`로 가중치·단위 CI, 가로 SEM,
 누적 percent 비교를 재현합니다:
@@ -372,6 +404,23 @@ bar `gap`은 할당된 폭에 대한 비율입니다. countplot은 모든 선택
 [Count 결과](docs/images/plots/countplot.png) ·
 [실행 코드와 편집 가능한 spec](docs/PLOT_GALLERY.md).
 
+### 명시적 line 추론과 figure 소유 guide
+
+`LineSpec(resampling="unit", calibration="max_deviation")`은 원본 trajectory
+전체를 재추출하여 명목 유한-grid curve/layer family를 보정합니다.
+`calibration="percentile"`은 동시 구간이 아닌 점별 구간이며 complete-unit
+min/max는 nonregular 경험 envelope로 명시합니다. Raw `.line()`은 독립
+hue/stroke-size/marker-style을 추가하되 원본 순서·중복·결측 장벽을 평균/제거하지
+않습니다. Numeric/date/categorical·실제 y2·v/h의 원본 식별성과 working/native
+단위를 유지합니다.
+
+`Plot.shared_guides([SharedGuideSpec("scope")])`은 기존 `SemanticSpec.scale_id`만
+membership authority로 사용하며 실제 mark family/물리 문맥을 구분합니다.
+Dataset legend/다른 scale은 남기고 두 editor의 채워진 전체 list/live-template
+action으로 편집합니다. [전체 과학/API/자원 계약](docs/LINE_WORKFLOW.ko.md) ·
+[실행 가능한 합성 예제](examples/line_workflow.py).
+넓은 facet/grid 동등성이나 전체 v2 승인 완료를 뜻하지 않습니다.
+
 ### v1.1 개발: 통계 native/log 축
 
 ```python
@@ -381,7 +430,8 @@ p = (mp.plot(raw_numeric)
        .xscale("log").yscale("log"))
 ```
 
-Bar/point/count는 숫자 native 범주를 지원하며 bool/문자열/날짜는 제외합니다.
+Bar/point/count는 유한 숫자 native 범주와 명시적 date clock의 canonical UTC-day
+slot을 지원하며 bool/일반 ordinal 문자열을 native 숫자로 추측하지 않습니다.
 Order는 실제 위치를 선택·예약하고 폭/dodge는 선택·예약 최소 축 좌표 간격 비율입니다.
 Log 범주에서는 log10 간격, 범주 하나에서는 1을 사용합니다. Point의 빈 셀은 선을
 끊지만 단순히 실제 위치가 멀다고 끊지 않습니다. Native bar_width는 (0,1], point
@@ -394,9 +444,9 @@ sum/count는 곱/거듭제곱으로 해석하지 않고 거부합니다. Count �
 
 비누적 bar/count baseline은 원자료 값이며 선형 기본 0, log에서는 명시적 양수가
 필요합니다. 도형은 baseline→추정값이고 라벨은 높이 또는 baseline+추정값이 아닙니다.
-누적 count의 값축은 선형이어야 하고 명시적 baseline은 거부하되 native/log 범주 축은
-지원합니다. 비양수인 계산 구간·역변환 overflow는 clip 없이 오류로 알립니다.
-Primary 2-D 하위 범위이며 기존 선형 ordinal y2는 유지합니다.
+누적 log count는 C06의 명시적 양수 baseline·cumulative-top 계약을 유지합니다.
+비양수인 결과/구간·역변환 overflow는 clip 없이 오류입니다. Bar/point는 선언한
+y2/v-h 경로를 지원하며 line/count는 각자 문서화한 target 하위 범위를 유지합니다.
 [실행 예제](examples/statistical_scales.py):
 ![통계 native/log 축](docs/images/statistical_scales.png)
 [편집 가능한 비교](docs/images/statistical_scales.mplot.json).
@@ -512,6 +562,21 @@ p = mp.plot(raw).violin("dose", "response", group="method", weights="weight",
 ![가중 violin 비교](docs/images/weighted_violin.png)
 [편집 가능한 비교](docs/images/weighted_violin.mplot.json).
 
+### 짝지은 밀도·경험분포 필드
+
+명시 `Histogram2DSpec`/`BivariateBinsSpec`은 불균등 실제 면적의 6가지 가중 셀
+통계와 **집계 전 같은 코호트**의 KDE를 지원합니다. Gaussian/product-Epanechnikov,
+공통-grid 1D stack/구성비, 실제 결합 KDE CDF, 명시 전체-model HDR, ecdf2d의
+strict OR 보완은 서로 다른 확률·정규화 의미를 유지합니다. Actual primary/y2,
+v/h, 선언 clock·log10 fit/Jacobian 단위를 쓰며 원본 행을 바꾸지 않습니다.
+전체 HDR은 유한 내부 보장 셀 합집합이지 매끄러운 contour·정확한 원본 모집단
+보장이 아닙니다. 실제 보이는 클리핑 질량은 별도로 보고합니다.
+
+[과학/API/자원 계약](docs/DENSITY_FIELDS.ko.md) ·
+[전체 실행 예제](examples/density_fields.py).
+NEW figure의 유한 사전 수락과 최종 동일 설치 artifact/DOM 검증은 별도이며
+전체 v2 완료를 뜻하지 않습니다.
+
 ### v1.1 개발: 가중 2변량 KDE 등고선
 
 ```python
@@ -526,14 +591,15 @@ Scott/Silverman은 `n_eff**(-1/6)`으로 같습니다. Cut/clip은 평가만 제
 결손은 경고를 선택하며 jitter/가짜 Gaussian 없이 건너뜁니다. 결측/0 가중치도
 x/y 행 쌍을 유지합니다.
 
-**Levels는 유한 격자 안 trapezoidal 고밀도 영역의 조건부 질량 비율입니다.**
-동률을 모두 포함합니다. 근사 KDE 영역이지 **신뢰구간/전체 공간 확률 보장이
-아닙니다.** Clip/grid를 바꾸면 HDR 문턱도 변하지만 밀도는 raw 정규화입니다.
+**명시 HDRSpec이나 다른 level kind가 없으면 levels는 유한 격자 안의
+trapezoidal 고밀도 영역 조건부 질량 비율입니다.** 동률을 모두 포함하는
+기존 기본 경로이며 **신뢰구간/전체 공간 보장이 아닙니다.** Clip/grid는 문턱을
+바꾸지만 밀도는 raw 정규화를 유지합니다.
 Native 선/채운 등고선·hue dash/hatch·정확한 alpha/outline을 지원합니다. Log 표시도
-양수 관측/범위의 원자료 단위이며 Jacobian을 적용하지 않습니다. 유효 행 10000개,
-축별 격자 256개, (0,1) 증가 levels 16개로 제한하며 잘못된 범위/밀도/격자 질량/
-동률 문턱은 오류입니다. 2D 누적/자동 보정/colorbar/다른 커널/callable/날짜/y2/
-절대 밀도 수준/log fit/stack/multiple/kwargs 및 upstream 전체 동등성은 미지원입니다.
+기본 data 통계의 원자료 밀도 단위를 유지합니다. 유효 행10000·축당 node256·
+levels16을 제한하며 mass/CDF는(0,1), 절대 density는 양수 레벨입니다.
+위의 명시 커널/CDF/전체-HDR/clock/log-fit 경로가 기존 의미를 확장합니다.
+자동 regularization·2D stack·임의 callback·upstream 전체 동등성 주장은 없습니다.
 [실행 예제](examples/kde2d_semantics.py):
 ![2변량 KDE 조건부 HDR](docs/images/kde2d_semantics.png)
 [편집 가능한 비교](docs/images/kde2d_semantics.mplot.json).
@@ -556,20 +622,22 @@ p = mp.plot(raw).kde("value", weights="weight", group="method",
 유한 수, 가중치는 비음수입니다.
 
 Common_norm=True는 건너뛴 단일값 hue를 포함한 유효 선택 질량 전체, False는
-곡선별 분모입니다. Cut/clip은 평가 범위만 제한하며 fit 행/꼬리 정규화를 바꾸지
-않습니다. 전체 실수축 면적/CDF 끝은 그룹 비중 또는 1이고, 유한 표시 범위의
+유효 hue의 모든 raw size/style 튜플을 함께 묶은 분모입니다.
+Cut/clip은 평가 범위만 제한하며 fit 행/꼬리 정규화를 바꾸지 않습니다.
+전체 실수축 면적/CDF 끝은 그룹 비중 또는1이고, 유한 표시 범위의
 면적/끝이 1인 것은 아닙니다. Common_grid는 pooled 가중 범위를 쓰되 각 hue의
 대역폭을 유지합니다. 단일값/상수는 경고를 선택적으로 내며 건너뛰고 가짜
 Gaussian/CDF/범례를 만들지 않습니다.
 
 누적은 첫 격자점이 아닌 -infinity부터의 해석적 Gaussian CDF 합입니다. 크기를
 맞춘 질량/공분산·정확한 양수 합·bounded 평가로 큰 행렬/소실을 피하고 계산된
-범위/대역폭/높이가 잘못되면 오류로 알립니다. Primary2D 선/채우기/v-h·정확한
-alpha/width·면 outline·hue dash/hatch·reference를 지원합니다. 관측 log 표시도
-원자료 단위 fit이며 Jacobian을 적용하지 않으므로 관측값과 평가 범위 모두
-양수여야 합니다. Clip/cut을 명시해야 할 수 있고 density/CDF 축은 선형입니다.
-2변량/날짜/y2/stack/다른 커널/callable bandwidth/log-fit/구간/임의 kwargs와
-upstream 전체 동등성은 미지원입니다. 가중 violin KDE는 위의 별도 violin 옵션으로 지원합니다.
+범위/대역폭/높이가 잘못되면 오류로 알립니다. Actual primary/y2 선/채우기/v-h,
+선언된 관측 clock·정확한 alpha/width·hue dash/hatch·reference를 지원합니다.
+기본 data 통계는 log 표시에서도 원자료 밀도 단위입니다. 명시 stat_scale='axis'는
+표시 밑과 독립적인 log10이며 data/fit Jacobian 단위를 구분합니다. Density/CDF
+높이 축은 선형입니다. 이름 있는 커널과 공통-grid layer/stack/fill은 위 계약을
+따릅니다. 임의 커널/callback/추론 구간/전체 동등성은 주장하지 않습니다.
+가중 violin KDE는 별도의 violin 옵션을 사용합니다.
 [실행 예제](examples/kde_semantics.py):
 ![가중 Gaussian KDE 의미](docs/images/kde_semantics.png)
 [편집 가능한 비교](docs/images/kde_semantics.mplot.json).
@@ -655,12 +723,12 @@ q = mp.plot(raw).violin("dose", "response", group="cell", orient="h",
 의미는 유지합니다. 두 열일 때 x는 항상 범주, y는 값이며 가로 방향에서도 같습니다.
 order/hue order, width/gap, 숫자 dodge(None 자동·0 겹침), 공통 hue 색상/해칭을
 지원하고 필요한 결측 행은 함께 제외하며 빈 범주에는 도형을 만들지 않습니다.
-box whisker는 IQR/분위수 규칙이지 **신뢰구간이 아닙니다**. notch는 결정론적
-Gaussian 근사입니다. violin은 native Gaussian KDE, 각 violin 폭 정규화와
-관측 min/max 범위를 사용하고 showmeans/showmedians/showextrema로 표시를
+box whisker는 IQR/분위수 규칙이지 **신뢰구간이 아닙니다**. 기존 notch는 결정론적
+Gaussian 근사이며 명시 원자료 중앙값 bootstrap CI는 아래 C03 경로입니다. Violin은
+native Gaussian KDE·각 폭 정규화·관측 min/max를 사용하고 showmeans/showmedians/showextrema로 표시를
 선택합니다. 이름 기반 inner·두 hue split·area/count·bw_adjust·cut/clip은
-아래 확장 옵션으로 지원합니다. 가중/callable KDE·임의 inner kwargs는 미지원이며
-중첩은 primary 축의 숫자 native/log 범주와 양수 log 값을 지원합니다.
+아래 확장 옵션으로 지원합니다. Callable KDE·임의 inner kwargs는 미지원이며
+C03 box의 문서화한 date/y2 조합은 기존 숫자 native/log 경로와 별도로 연결합니다.
 [Box 코드](examples/plots/box.py) · [Box 결과](docs/images/plots/box.png) ·
 [Violin 코드](examples/plots/violin.py) · [Violin 결과](docs/images/plots/violin.png).
 
@@ -681,31 +749,39 @@ ComponentStyleSpec/DistributionComponentsSpec 타입도 공개합니다. 생략�
 중복 해칭을 끄고 구성 요소 alpha=1은 정확히 불투명합니다. Marker 윤곽/채움은
 edge_color/face_color로 따로 선택합니다. Mean은 showmeans=True가 필요하고
 숨김·미지원·알 수 없는 옵션은 render 전에 거부합니다. 제한된 basic/hex/cycle 색상,
-이름 기반 선/marker·유한 크기만 지원하며 임의 kwargs·hue/띠별 매핑·precomputed bxp는
-미지원입니다. [실행 예제](examples/distribution_components.py):
+이름 기반 선/marker·유한 크기만 지원하며 임의 kwargs·boxen의 hue/띠별 재해석은
+미지원입니다. Box의 columnar `bxp`·seeded 중앙값 CI·최종 폭 cap·typed hue별
+스타일·공유 body-stroke/date/y2/live는 [C03 workflow](docs/BOX_WORKFLOW.ko.md)와
+[실행 예제](examples/box_workflow.py)를 참고하세요. 기존 무요청 기본값/JSON은
+유지하며 넓은 F01/F02/G01 종결은 아닙니다. [기존 구성 요소 예제](examples/distribution_components.py):
 ![분포 구성 요소](docs/images/distribution_components.png)
 [편집 가능한 비교](docs/images/distribution_components.mplot.json).
 
-### v1.1 개발: violin inner·밀도 의미
+### Violin workflow: 가중 profile·짝 반쪽·공유 역할
 
 ```python
-p = mp.plot(raw).violin("dose", "response", group="cell", inner="quart",
-                        split=True, density_norm="area", bw_adjust=0.8, cut=1)
+p = mp.plot(raw).violin(
+    "dose", "response", group="cell", weights="weight", inner="quart",
+    split=True, violin={"split_policy": "paired"},
+    density_norm="area", bw_adjust=0.8, cut=1,
+)
 ```
 
-기본값은 기존 중앙값/폭/관측 범위(inner="legacy", density_norm="width", cut 0)를
-유지합니다. Inner는 box(IQR/whisker/median, CI 아님), quart, point, stick 또는 None.
-Showmeans/showmedians/showextrema는 legacy에서만 지원합니다. Point/stick은 유효
-선택 행 10000개까지 샘플링 없이 보존합니다. Split은 선택·예약 hue가 정확히 둘이며
-공통 중심을 쓰고 양수 dodge와 함께 쓰지 않습니다. 빈 반쪽은 만들지 않습니다.
+새 제어를 생략하면 기존 native/default 경로·JSON을 유지합니다. ViolinSpec 없는
+기존 split은 두 hue 계약이고, 명시 paired 정책은 고정 다중 hue lane·H=1·마지막
+왼쪽 반쪽을 지원하며 가짜 상대편을 만들지 않습니다. Named native component와
+정확한 typed hue별 override는 기존 component 모델을 재사용합니다.
 
-Area는 공통 KDE peak 기준, count는 셀 n/기준 최대 n 비율로 폭을 조정합니다.
-Common_norm=False는 hue 내 범주끼리, True는 모든 셀끼리 비교하며 area/count에서만
-지원합니다. 잘린 grid의 실제 면적이 정확히 같다는 뜻은 아닙니다. Bw_adjust는
-(0,1000] 배율, cut은 [0,10] bandwidth, clip은 원자료 단위 finite/None 경계이며
-KDE 범위만 제한하고 fit 행·개수·inner 원자료는 제외하지 않습니다. Log clip은
-양수이며 stat_scale의 raw/명시적 log 통계 선택을 유지합니다. 전체 동등성이 아닌
-제한된 하위 범위입니다. [실행 예제](examples/violin_semantics.py):
+공유 HUE는 body fill, SIZE는 BODY 윤곽 stroke point, STYLE은 body dash와
+실제 point/box-median glyph만 소유합니다. Raw tuple로 fit하되 정규화 pool은
+size/style tuple이 아닌 effective hue 또는 전체입니다. 가중 Gaussian/ECDF·
+유한 bandwidth/support·원본 행을 유지하고 callable/임의 kwargs/새 nonlinear
+통계는 추가하지 않습니다. Date/native/log/v-h/y2/facet/live는 기존 기반을 씁니다.
+새 advanced 상한은 선택행10000 AND 그리는 profile256·범주형 level64이며,
+연속 숫자 hue/size 값은64로 제한하지 않고 support1000을 유지합니다.
+[전체 과학/소유권/수명주기 계약](docs/VIOLIN_WORKFLOW.ko.md) ·
+[짝/공유 역할/live 실행 예제](examples/violin_workflow.py).
+넓은 F01/F02/G01·v2/제품 전체 검증과는 구분합니다.
 ![Violin 의미](docs/images/violin_semantics.png)
 [편집 가능한 비교](docs/images/violin_semantics.mplot.json).
 
@@ -769,7 +845,7 @@ native/ordinal 혼용과 상충하는 scale 선언은 거부합니다. 통계 ba
 ### 지원하는 플롯 종류
 
 기본(line/regplot/scatter/bar/errorbar/band/stackplot), 원자료 통계(barplot/pointplot/countplot), 분포(hist/box/boxenplot/violin/kde/rug/stripplot/swarmplot),
-2D 필드(heatmap/contour/contourf/hist2d/hexbin), 벡터장(quiver), polar line/scatter/bar(`.projection_polar()`), 3D(scatter3d/line3d/surface/wireframe),
+2D 필드(heatmap/contour/contourf/hist2d/hexbin/ecdf2d), 벡터장(quiver), polar line/scatter/bar(`.projection_polar()`), 3D(scatter3d/line3d/surface/wireframe),
 주석(hline/vline/text/annotate), pie. `line(..., drawstyle="steps-post")`
 (`steps`/`steps-pre`/`steps-mid` 포함)으로 계단선을 그릴 수 있습니다.
 `regplot("x", "y", degree=2, confidence=95)`의 신뢰구간은 prediction
@@ -1074,7 +1150,7 @@ python -m dashboard --out dashboard/site_build
 # dashboard/site_build/index.html 열기 → 엔진 능력 마크다운 문서 + 디자인 갤러리
 ```
 
-### Rust editor (로컬 v1.0)
+### Rust editor (v1.1 로컬 후보)
 
 ```bash
 MUDPLOT_PYTHON="$PWD/.venv/bin/python" \

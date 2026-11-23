@@ -1,0 +1,169 @@
+{
+  "scope": [
+    "CND01 integrated conditional workflow",
+    "related E01 controls only"
+  ],
+  "status": "CND01 integrated FINAL FUNCTIONAL ACCEPTANCE granted by parent after source/raster/proof review. All three conditional evaluations are resolved; not global E01/QA/docs/REL01 or v2 closure.",
+  "authority": {
+    "reviewed_patch": "$LOCAL_EVIDENCE/location-32/reviewed.patch",
+    "sha256": "764ab69dd51681e0deb0eb237b0fd3db2ad0c9005b4f79ce6916c8dab41e3ce8",
+    "inventory": "$LOCAL_EVIDENCE/location-32/reviewed-files.json",
+    "integration": "Surgical current-target hunks; no old-tree copy. Renderer original layer indices/tagged text+annotation/title retained manually in current F01/D07 guide/rug loop."
+  },
+  "preserved": [
+    "LayerSpec.strip remains after existing z tail",
+    "All F01/D07 guide intent, rug dispatch, temporal semantic guards and permanent smoke hunks",
+    "Package1.1.0/schema0.1, existing action/model/dependency floors",
+    "Old D07 frozen archive/wheel/failed receipts immutable",
+    "No N11/spectra integration, git mutation or publication"
+  ],
+  "implementation": {
+    "shared_boundary": "mudplot._editor renderer-bound saved-PNG/metadata helper, no dashboard dependency; additive --editor-metadata CLI",
+    "Rust": "Active logical panel, sparse-default-compatible x/y/y2/z controls and title/legend/text/annotation native handles, move-only PNG Bytes ownership",
+    "UI": "Shared editor.js coordinate inverse, trusted pointer identity/cancel semantics, queued keyboard intent, revision/generation ordering, focus and scroll retention, desktop bounded inspector/mobile document flow",
+    "source_preservation": "Raw timestamps, rows, metadata title citation/href and nondefault legend fields remain unchanged except requested actions. Rejected edits preserve spec/history/preview.",
+    "packaging_guards_added": [
+      "mudplot/_editor.py",
+      "dashboard/static/editor.js",
+      "mudplot-editor/src/specialized.rs",
+      "tests/test_rust_specialized_controls.py"
+    ]
+  },
+  "frozen": {
+    "root": "$LOCAL_EVIDENCE/location-33/source",
+    "source_archive": "$LOCAL_EVIDENCE/location-32/frozen_source.tar.gz",
+    "source_sha256": "065d8c4cc32b2bf79be162747f7c915e98a4fd9317a26ff527680fedde098044",
+    "source_manifest": "$LOCAL_EVIDENCE/location-32/source_manifest.json",
+    "source_manifest_sha256": "beb423c3ba5719efd842ede21a29787328bfcad3865acf58727b5e7bd05a28e8",
+    "wheel": "$LOCAL_EVIDENCE/location-34/mudplot-1.1.0-py3-none-any.whl",
+    "wheel_sha256": "2030cc1a2dd464abeccd74934a06c9fd5243fe0d2dabe18ffa848652c55f194b",
+    "sdist": "$LOCAL_EVIDENCE/location-34/mudplot-1.1.0.tar.gz",
+    "sdist_sha256": "9e1a508092a5ea80c4c39b85e66eac3da0ffb55e18e37bc9e75ecb50392a39b4",
+    "build_count": 1,
+    "qualified_editor_binary": "$LOCAL_EVIDENCE/location-35",
+    "editor_sha256": "7b9c7a386ce99289ce7aa5521f34249fe2a87a7f7b91dca9e4ad8002e4ba14e1",
+    "Rust_format_lineage": "Fresh merged Rust build/clippy/tests executed before cargo-fmt whitespace correction; subsequent format check and Rust1.88 compilation checked formatted source. Qualified binary is the exact executable used by both native profiles.",
+    "postfreeze_changes": "Only final evidence/scope prose appended after freeze; no further runtime changes or duplicate build."
+  },
+  "qualification": {
+    "source_current": {
+      "passed": 413,
+      "skipped": 0,
+      "log": "$LOCAL_EVIDENCE/location-32/integrated_source_focused.log",
+      "includes": "CND16 required browser/native, affected Python editor/browser/HIDPI/coordinate tests, core D07/SEM/strip/temporal-secondary/no-deps"
+    },
+    "installed_current": {
+      "passed": 144,
+      "skipped": 0,
+      "log": "$LOCAL_EVIDENCE/location-32/installed_current_profile.log",
+      "tests": [
+        "test_rust_specialized_controls.py",
+        "test_rug.py",
+        "test_semantic_families.py",
+        "test_semantic_colourbars.py",
+        "test_no_deps.py"
+      ],
+      "launcher": "$LOCAL_EVIDENCE/location-36",
+      "origin": "$LOCAL_EVIDENCE/location-32/installed_origin_current.log",
+      "source_fallback": false,
+      "notes": "-S launcher includes only NEW installed prefix, declared dependency site and stdlib; checkout excluded. Test driver/native references and Rust bridge use this launcher."
+    },
+    "installed_minimum": {
+      "passed": 16,
+      "skipped": 0,
+      "warnings": 577,
+      "result": "$LOCAL_EVIDENCE/location-37/minimum-cnd01-result.json",
+      "log": "$LOCAL_EVIDENCE/location-38/minimum-cnd01-pytest.log",
+      "provenance": "$LOCAL_EVIDENCE/location-39",
+      "driver": "$LOCAL_EVIDENCE/location-38/minimum-driver-provenance.json",
+      "versions": {
+        "python": "3.11.14",
+        "numpy": "1.23.5",
+        "matplotlib": "3.8.0",
+        "pillow": "13.0.0",
+        "pytest": "9.0.3",
+        "playwright": "1.63.0"
+      },
+      "source_fallback": false,
+      "same_minimum_driver_native_references_and_bridge": true,
+      "executed_by": "v2-rug worker; read-only peer prepared tooling but did not run qualification"
+    },
+    "minimum_fractional": {
+      "actual_pixels": [
+        787,
+        525
+      ],
+      "requested_pixels": [
+        787.5,
+        525.75
+      ],
+      "dpr": 2,
+      "css_zoom": "1.25",
+      "maximum_pointer_pixel_error": 3.9904080040287226e-11,
+      "maximum_keyboard_pixel_error": 5.820766091346741e-11,
+      "trace": "$LOCAL_EVIDENCE/location-40/trace.json",
+      "scope": "Real title/legend/text/annotation pointer and keyboard against native Matplotlib3.8 day/log/y2/PNG frame references; coordinate stress fixture, not publication-layout proof."
+    },
+    "Rust": {
+      "library_passed": 20,
+      "binary_passed": 1,
+      "ignored": 5,
+      "ignored_reason": "Intentional subprocess helpers",
+      "build": "$LOCAL_EVIDENCE/location-32/rust_build.log",
+      "tests": "$LOCAL_EVIDENCE/location-32/rust_tests.log",
+      "clippy": "$LOCAL_EVIDENCE/location-32/rust_clippy.log",
+      "format": "$LOCAL_EVIDENCE/location-32/rust_format_corrected.log",
+      "MSRV_1_88": "$LOCAL_EVIDENCE/location-32/rust_msrv_188.log"
+    },
+    "static": {
+      "ruff": "$LOCAL_EVIDENCE/location-32/ruff_final.log",
+      "format": "$LOCAL_EVIDENCE/location-32/format_final.log",
+      "pyright": "$LOCAL_EVIDENCE/location-32/pyright_corrected.log",
+      "generated": "$LOCAL_EVIDENCE/location-32/generated_sync.log",
+      "result": "All pass; project Pyright zero errors/warnings and four generated artifacts synchronized."
+    },
+    "installed_build_and_metadata_cli": {
+      "build_smoke": "$LOCAL_EVIDENCE/location-32/integrated_wheel_build.log",
+      "CLI": "$LOCAL_EVIDENCE/location-32/installed_current_metadata_cli.log",
+      "PNG": "$LOCAL_EVIDENCE/location-32/integrated-rug-preview.png",
+      "metadata": "$LOCAL_EVIDENCE/location-32/integrated-rug-metadata.json",
+      "explicit_CLI_oracles": "CND tests exercise actual installed apply/PNG+metadata/source-overlap rejection/failure preservation and pure -S module origins on both profiles."
+    }
+  },
+  "native_coverage": [
+    "Sparse {} and version-only documents remain sparse until requested edit",
+    "All original layer indices despite guides/secondary axes",
+    "Actual active panel x/y/y2/z forms and native temporal/day/log/inverted frame references",
+    "Desktop/mobile/DPR/CSS zoom, source measurements and date units",
+    "Secondary touch cannot own primary pointer; cancellation and immediate gesture/queued key intent",
+    "Title citation/href, nondefault legend show/title/location/frame preserved",
+    "Focus/scroll/history, rejection source/raster retention, actual downloads/save/reopen PNG/SVG/PDF"
+  ],
+  "isolated_history": {
+    "receipt": "docs/review_evidence/v2_rust_specialized_controls.json",
+    "bundle": "$LOCAL_EVIDENCE/location-32/isolated-evidence.tar.gz",
+    "bundle_sha256": "f5c059f51ee71b3142a9828d9d30b805e5366ceda4263db9af2c65cc09af68fb",
+    "copied_reports": "$LOCAL_EVIDENCE/location-41",
+    "counts": "54/16/2 Python and 21 Rust with 5 ignored remain isolated historical proof, never relabelled or summed as integrated checks."
+  },
+  "failure_lineage": {
+    "pyright.log": "Initial six earlier F01/D07 type inference diagnostics corrected only with local typed casts/key annotation; no model/schema/default/runtime semantic changes.",
+    "rust_format.log": "Reviewed patch was not rustfmt-formatted; formatter applied and format gate passed.",
+    "read_only_peer_failure": "Parent reported explicit external coding-service usage-limit failure after tooling preparation; no peer qualification ran or is claimed. Existing local subprocess execution completed the minimum profile without retrying that failed service."
+  },
+  "reviewed_surfaces": {
+    "current_desktop": "$LOCAL_EVIDENCE/location-42/bounded-inspector-1400.png",
+    "current_mobile": "$LOCAL_EVIDENCE/location-42/bounded-inspector-540.png",
+    "minimum_desktop": "$LOCAL_EVIDENCE/location-43/bounded-inspector-1400.png",
+    "minimum_mobile": "$LOCAL_EVIDENCE/location-43/bounded-inspector-540.png",
+    "minimum_fractional": "$LOCAL_EVIDENCE/location-40/fractional-browser.png",
+    "worker_review": "Actual current/minimum desktop and mobile surfaces inspected: bounded independent desktop scroll and mobile flow preserve reachable native controls. Fractional stress frame/coordinate image also inspected."
+  },
+  "commands": "$LOCAL_EVIDENCE/location-32/commands.json",
+  "artifact_integrity": {
+    "manifest": "$LOCAL_EVIDENCE/location-32/artifact_hashes.json",
+    "sha256": "636d440c81a22285a8d57bfe9ded7f123befababc11d3e295be2e0eed3e5eb42",
+    "files": 519
+  },
+  "boundary": "Parent accepted integrated source/default axes/Bytes/editor helper/sdist guards/latest F01-D07/strip placement, actual current desktop and minimum mobile, distinct source413/current-installed144/minimum16/native-fractional/Rust21/MSRV/clippy/format/generated/type provenance and failure lineage. All three conditional evaluations are done; global E01/QA/docs/REL01 and the remaining frozen catalogue stay required. All frozen archives/wheels and failed isolated evidence remain immutable."
+}

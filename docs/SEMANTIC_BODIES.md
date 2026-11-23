@@ -1,0 +1,7 @@
+# Shared histogram and count body roles
+
+[한국어](SEMANTIC_BODIES.ko.md) · [Runnable example](../examples/semantic_bodies.py)
+
+Use `SemanticSpec` with a named `HistogramSpec` (`hist(..., stat="density", semantics=...)`) or `countplot(..., semantics=...)`. Hue colours the filled face or unfilled histogram stroke. Size is outline/stroke width in points, not area, bin width or mass. Style is a native dash, never a fabricated glyph. Filled outlines remain separately coloured. A mapped property cannot also be set by a conflicting scalar option. Weight stays an original named column; zero or missing weights do not participate. Legacy `group` can coexist with size/style but cannot compete with mapped hue.
+
+Raw role tuples partition the selected data, even when different values map to the same colour. Histogram density uses original bin widths before dodge. `common_norm=True` uses eligible in-range mass; false uses effective hue in-range mass across its size/style tuples. Count `normalize_scope` uses all, category or effective hue mass. Stacked count geometry still adds raw heights; plot baselines do not change total mass. `scale_id` pools original rows for appearance only and does not share statistical denominators. Numeric `colorbar=True`/`clabel` shows raw hue, not a paired field's statistic. Edit through the existing registered layer and shared-guide controls; omitted roles keep legacy behavior.

@@ -1,0 +1,114 @@
+{
+  "catalogue_row": "N11",
+  "status": "parent_final_integrated_functional_acceptance_closed",
+  "package_version": "1.1.0",
+  "schema_version": "0.1",
+  "floors_changed": false,
+  "reviewed_isolated_patch": {
+    "path": "artifacts/v2_signal_spectra_integrated/reviewed.patch",
+    "sha256": "dc265e44763ab4c88946cc11ed0fe3019963a2bbbc305d27d95f1dafebc8819b",
+    "inventory": "artifacts/v2_signal_spectra_integrated/reviewed-paths.json",
+    "original_source_acceptance": "Parent reviewed full417-line core and29path patch, authorized surgical integration, not isolated row closure",
+    "isolated_receipt": "docs/review_evidence/v2_signal_spectra.json"
+  },
+  "integration": "Narrow reviewed hunks merged into latest C02/F01/D07/CND, no old-tree copy. LayerSpec.spectrum appended AFTER strip and pack_scope; old positional binding/default omitted JSON retained. Required SpectrumSpec.fs has no invented default. Shared schemas/reference/gallery regenerated, generic Rust codec keeps additive fields.",
+  "source_binding": "artifacts/v2_swarm/source_binding.json",
+  "wheel_sha256": "75c080327f83620f87eef1af464c0f0e9700efaaa55ad252ce4f1255e5e344d7",
+  "source_archive_sha256": "7978e91420457b1d4be138fcdf398760a1700e211300e4d275676ca3ea050dda",
+  "finite_contract": {
+    "kinds": [
+      "spectrogram",
+      "psd",
+      "csd",
+      "coherence",
+      "magnitude",
+      "angle",
+      "phase"
+    ],
+    "fs": "Explicit positive finite nonbool samples/second (Hz)",
+    "windows": [
+      "boxcar",
+      "hann",
+      "hamming",
+      "blackman"
+    ],
+    "detrend": [
+      "none",
+      "mean",
+      "linear"
+    ],
+    "sides": [
+      "onesided",
+      "twosided"
+    ],
+    "scaling": [
+      "density",
+      "spectrum"
+    ],
+    "scale": [
+      "linear",
+      "dB"
+    ],
+    "segmented": "nfft=None256, full windows only, trailing partial source retained but unused; finite overlap<nfft; pad_to>=effective window; actual FFT parity defines Nyquist",
+    "whole": "magnitude/wrapped angle/unwrapped whole phase use entire signal, nfft=None,overlap0",
+    "csd": "Preserve complex conj(X)*Y numerical result; display magnitude of segment mean, no false zero-phase rewrite",
+    "coherence": "At least2 complete segments; consumed-prefix positive channel scaling then per-frequency segment-vector max normalization before powers/cross; no significance claim",
+    "zero_width": "Correct native no-line representation supports Matplotlib3.8 zero dash without dropping independently requested data",
+    "bounds": {
+      "max_samples_channel": 1000000,
+      "max_fft": 65536,
+      "max_complex_cells": 1048576
+    },
+    "unsupported": "No silent row selection/drop, temporal/log/y2/raw-unit mixed panels, arbitrary callable windows, or fake fallback. Unsupported native/CLI requests reject truthfully."
+  },
+  "precision_boundary": {
+    "guarantee": "Protect nonzero COMPUTED coefficients against subsequent power/cross underflow using frequency-local normalization. Detectable consumed-sample normalization erasure remains explicit precision error. Unused trailing partial does not change normalization. Physical CSD is unchanged.",
+    "not_guaranteed": "Float64 window/detrend/FFT may round tiny true bins to zero; masks show zero computed coefficient/power, not physical proof of exact zeros or high-dynamic-range exact/relative accuracy.",
+    "retained_probe": "[1,1e-200,-1,1e-200]*4 with nfft4/pad5 rounded computed DC to zero on observed Python3.13.12/NumPy2.5.2/Matplotlib3.11.1; original2C02pass/1N11oraclefail log retained. No provider-dependent mask permanent pin and no special-case FFT/input/mask change.",
+    "real_gui_oracles": "Approved weak-bin nfft4/padNone gives frequencies0,1,2 coherence1 INCLUDING tiny bins; then actual form edit to well-conditioned1e-3 signal/pad5, independent analytic/DFT check. Both source and installed current/min required browser profiles execute this split."
+  },
+  "consumer_test_policy": "Removed incidental pre-render validate-stage assertion in main tests, not immutable original patch. Full-field reflected/default/same-generator copy tests deleted; generic MISSING-required fixture construction and runnable freshness tool retain real typed codec/null/Unicode/large-int/Rust losslessness.",
+  "integrated_qualification": {
+    "shared_distinct_cohorts": "artifacts/v2_swarm/qualification_cohorts.json",
+    "counts_must_not_be_summed": true,
+    "source_current": "1035pass/1hostPGFskip",
+    "source_minimum": "1035pass/1hostPGFskip",
+    "installed_current_final": "302pass/1hostPGFskip/0warnings",
+    "installed_minimum_final": "302pass/1hostPGFskip/1973dependencywarnings",
+    "active_denial_pure": "Same combinedwheel Python-S newbuilder/validate/action/JSON with effects actively unavailable, current+minimum",
+    "Rust": "20library+1binary passed/5helper ignored, fresh build/format/clippy/MSRV1.88, actual generic human spectrum form/history/rejection/save/reopen/PNG/SVG/PDF export",
+    "scripts": "Single combined sdist->wheel packaging run performs actual installed signal PNG/SVG/PDF CLI; updated native Rust HTTP consumer smoke passed",
+    "commands": "artifacts/v2_swarm/commands.json"
+  },
+  "full_pgf": {
+    "integrated_summary": "artifacts/v2_signal_spectra_integrated/integrated-pgf/receipt.json",
+    "actual_records": [
+      "artifacts/v2_signal_spectra_integrated/integrated-pgf/current-lualatex/record.json",
+      "artifacts/v2_signal_spectra_integrated/integrated-pgf/minimum-lualatex/record.json"
+    ],
+    "same_wheel": "75c080327f83620f87eef1af464c0f0e9700efaaa55ad252ce4f1255e5e344d7",
+    "fresh_install": "Private real ensurepip/pip --no-deps --no-index prefixes, packagehashes matchedwheel, explicit NEWfrozen /work mount; engine imports installed prefix, not historical/source",
+    "profiles": "current rootfs3.11.15/NP2.4.6/MPL3.11.1/Pillow13; minimum3.11.15/NP1.23.5/MPL3.8/Pillow13",
+    "exports": "7nativePGFs/profile; LuaLaTeX1.14 -> BibTeX0.99d -> Lua twice,8compiled pages, PDFURI/Σ²/native font indices/extracted text/resolved[1]/References, Ghostscript rasters; final no missing characters",
+    "permanent_host_skip_replaced_in_separate_profile": "1pass/78deselected/0skip each actualTeXprofile, not added to source1035 count",
+    "not_exercised": "pdflatex; no claim",
+    "warning": "Nonfatal wrapper serif bold/italic fallback, no plotglyphloss",
+    "parent_visual": "Parent viewed integrated minimum magnitude page Σ and units, accepted visual proof"
+  },
+  "isolated_pgf_companion": {
+    "receipt": "artifacts/v2_signal_spectra_integrated/isolated-pgf/receipt.json",
+    "sha256": "079cac81862cf3614a4f303dcf1cb406647a3b322109c952c24ccc9d72fde17b",
+    "isolated_wheel": "f38a03c26ea500caff30a952c0d7acc5385d0cc13295599353eef68cbe14b9ef",
+    "not_main_proof": true,
+    "immutable_failure_lineage_retained": true
+  },
+  "visuals_and_sources": [
+    "examples/signal_spectra.py",
+    "examples/plots/spectrum.py",
+    "artifacts/v2_swarm/installed-current-corrected/rust-specialized0/integrated-spectrum",
+    "artifacts/v2_swarm/installed-minimum-corrected/rust-specialized0/integrated-spectrum",
+    "artifacts/v2_signal_spectra_integrated/integrated-pgf/current-lualatex/paper.pdf",
+    "artifacts/v2_signal_spectra_integrated/integrated-pgf/minimum-lualatex/paper.pdf"
+  ],
+  "closure_boundary": "Parent final functional acceptance granted for INTEGRATED N11 after reviewing final receipts/source binding, source/installed/minimum evidence, actual Rust editing/export and integrated minimum PGF. Entire specified local feature gates are fulfilled. Original isolated cohorts and immutable wheel/archive/failures remain distinct and unchanged. This does not close whole F01/F02/G01/E01/Q01/DOC01/REL01/v2; no version/floor/git/publication change."
+}

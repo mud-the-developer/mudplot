@@ -32,7 +32,7 @@ Grouped trajectories use colour, marker, and dash together.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `drawstyle`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `group`, `semantics`, `line`, `native_style`, `orient`, `order`, `cmap_kind`, `colorbar`, `clabel`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `drawstyle`, `marker`, `marker_size`, `alpha`, `axis`, `path_effects`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -70,7 +70,7 @@ Numeric x-cell means with seeded pointwise CI, not simultaneous bands.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `semantics`, `cmap_kind`, `group`, `stat`, `orient`, `stat_scale`, `hue_order`, `sort`, `error_style`, `error_alpha`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`
+**Optional / 선택:** `semantics`, `line`, `order`, `native_scale`, `cmap_kind`, `colorbar`, `clabel`, `group`, `stat`, `orient`, `stat_scale`, `hue_order`, `sort`, `error_style`, `error_alpha`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -125,7 +125,7 @@ Finite synthetic vertical observations retain their supplied order and raw basel
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`, `orient`, `group`, `hue_order`, `semantics`, `colorbar`, `clabel`, `cmap_kind`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -160,7 +160,7 @@ Supplied heights and explicit edges, without rebinning observations.
 
 **Required / 필수:** `x`, `bins`
 
-**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+**Optional / 선택:** `baseline`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`, `stairs`, `group`, `hue_order`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -192,7 +192,7 @@ Supplied event positions with raw-coordinate offset and mark length.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `baseline`, `width`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`
+**Optional / 선택:** `baseline`, `width`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`, `group`, `hue_order`, `lane_step`, `semantics`, `colorbar`, `clabel`, `cmap_kind`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -226,7 +226,7 @@ Explicit start/duration intervals retain overlaps in one raw band.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `baseline`, `width`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`, `axis`
+**Optional / 선택:** `baseline`, `width`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`, `axis`, `group`, `hue_order`, `lane_step`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -260,7 +260,7 @@ A polynomial mean fit with an explicit opt-in confidence band.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `regression`, `weights`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `regression`, `semantics`, `edge_color`, `cmap_kind`, `colorbar`, `clabel`, `weights`, `degree`, `confidence`, `group`, `hue_order`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `axis`, `orient`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -294,7 +294,7 @@ Point colour shares one continuous normalization and colorbar.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `semantics`, `group`, `hue_order`, `label`, `color`, `marker`, `marker_size`, `alpha`, `c`, `cmap_kind`, `colorbar`, `clabel`, `axis`
+**Optional / 선택:** `semantics`, `native_style`, `group`, `hue_order`, `label`, `color`, `marker`, `edge_color`, `line_width`, `marker_size`, `alpha`, `c`, `scalar_display`, `cmap_kind`, `colorbar`, `clabel`, `axis`, `path_effects`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -331,7 +331,7 @@ Deterministic jitter reveals individual categorical observations.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `jitter`, `group`, `hue_order`, `label`, `color`, `marker`, `marker_size`, `alpha`, `axis`
+**Optional / 선택:** `jitter`, `strip`, `semantics`, `cmap_kind`, `colorbar`, `clabel`, `edge_color`, `line_width`, `orient`, `order`, `dodge`, `native_scale`, `group`, `hue_order`, `label`, `color`, `marker`, `marker_size`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -377,7 +377,7 @@ Circular observations repack in display space on each draw, including positive l
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `semantics`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`
+**Optional / 선택:** `group`, `semantics`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `warn_thresh`, `label`, `color`, `edge_color`, `line_width`, `marker`, `marker_size`, `alpha`, `pack_scope`, `axis`, `cmap_kind`, `colorbar`, `clabel`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -468,7 +468,7 @@ Vector direction and magnitude are encoded in data coordinates.
 
 **Required / 필수:** `x`, `y`, `u`, `v`
 
-**Optional / 선택:** `c`, `cmap_kind`, `colorbar`, `clabel`, `label`, `color`, `line_width`, `quiver_scale`, `quiver_width`, `alpha`, `axis`
+**Optional / 선택:** `c`, `cmap_kind`, `colorbar`, `clabel`, `label`, `color`, `line_width`, `quiver_scale`, `quiver_width`, `alpha`, `axis`, `vector`, `group`, `hue_order`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -518,7 +518,7 @@ Grouped means with supplied SD, light fills, and aligned capped errors; default 
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `yerr`, `y_lower`, `y_upper`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `bar_width`, `bar_geometry`, `edge_color`, `line_width`, `yerr`, `y_lower`, `y_upper`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -566,7 +566,7 @@ Raw replicates aggregate to means and seeded percentile-bootstrap CI.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `stat`, `native_scale`, `stat_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
+**Optional / 선택:** `semantics`, `cmap_kind`, `colorbar`, `clabel`, `group`, `stat`, `native_scale`, `stat_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -647,7 +647,7 @@ Raw means and sample SE use aligned, optionally dodged point estimates.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `group`, `stat`, `native_scale`, `stat_scale`, `orient`, `order`, `hue_order`, `dodge`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`
+**Optional / 선택:** `semantics`, `cmap_kind`, `colorbar`, `clabel`, `group`, `stat`, `native_scale`, `stat_scale`, `orient`, `order`, `hue_order`, `dodge`, `label`, `color`, `line_width`, `line_style`, `marker`, `marker_size`, `error_color`, `error_line_width`, `capsize`, `capthick`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -714,7 +714,7 @@ y 열이나 추정 구간 없이 범주별 원자료 관측 개수를 표시합�
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `stat`, `native_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `stack`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `alpha`, `axis`
+**Optional / 선택:** `group`, `stat`, `native_scale`, `baseline`, `orient`, `order`, `hue_order`, `gap`, `stack`, `value_labels`, `label_format`, `label`, `color`, `bar_width`, `edge_color`, `line_width`, `alpha`, `axis`, `semantics`, `colorbar`, `clabel`, `line_style`, `cmap_kind`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -752,7 +752,7 @@ Caller-supplied x/y uncertainty is rendered without inference.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `yerr`, `xerr`, `y_lower`, `y_upper`, `group`, `hue_order`, `label`, `color`, `error_color`, `error_line_width`, `capsize`, `capthick`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`
+**Optional / 선택:** `yerr`, `xerr`, `y_lower`, `y_upper`, `group`, `hue_order`, `label`, `color`, `error_color`, `error_line_width`, `capsize`, `capthick`, `marker`, `marker_size`, `line_width`, `alpha`, `axis`, `error_magnitudes`, `native_style`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -787,7 +787,7 @@ A shaded lower/upper envelope accompanies the central trajectory.
 
 **Required / 필수:** `x`, `y`, `y2`
 
-**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `axis`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `axis`, `orient`, `fill`, `native_style`, `line_width`, `path_effects`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -814,6 +814,66 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/band.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#band)
 
+### `barh` — Signed horizontal bars
+
+![Signed horizontal bars](images/plots/barh.png)
+
+Signed changes extend left or right from zero.
+
+부호 있는 변화량은 0에서 왼쪽 또는 오른쪽으로 뻗습니다.
+
+**Required / 필수:** `x`, `y`
+
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `bar_width`, `bar_geometry`, `edge_color`, `line_width`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot({"site": ["North", "West", "South"], "delta": [3, -2, 4]})
+    .barh("site", "delta")
+    .labels(x="Change (mV)", y="Site")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/barh.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#barh)
+
+### `barbs` — Speed barbs
+
+![Speed barbs](images/plots/barbs.png)
+
+Point-length staffs encode signed component vectors.
+
+포인트 길이의 바브가 부호 있는 성분 벡터를 나타냅니다.
+
+**Required / 필수:** `x`, `y`, `u`, `v`, `vector`
+
+**Optional / 선택:** `color`, `line_width`, `alpha`, `axis`, `group`, `hue_order`, `label`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot({"x": [1, 2, 3], "y": [1, 2, 1], "u": [5, -10, 8], "v": [2, 4, -6]})
+    .barbs("x", "y", "u", "v", vector=mp.VectorSpec(length=7))
+    .xlim(0, 4)
+    .ylim(0, 3)
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/barbs.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#barbs)
+
 ## Distributions / 분포
 
 ### `hist` — Histogram
@@ -826,7 +886,7 @@ Grouped samples share bins for direct distribution comparison.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `bins`, `density`, `histogram`, `group`, `hue_order`, `orient`, `label`, `color`, `edge_color`, `line_width`, `alpha`
+**Optional / 선택:** `bins`, `density`, `histogram`, `group`, `hue_order`, `orient`, `label`, `color`, `edge_color`, `line_width`, `alpha`, `axis`, `semantics`, `colorbar`, `clabel`, `line_style`, `cmap_kind`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -864,13 +924,13 @@ plot.save("figure.png")
 
 ![Box plot](images/plots/box.png)
 
-Nested category/hue boxes show medians, means and 5-95% whiskers; percentile whiskers are not confidence intervals.
+Nested raw boxes show seeded 90% median CI, means, 5-95% whiskers and explicit per-hue cap styles; whiskers are not CIs.
 
-범주/그룹 box로 중앙값·평균과 5-95% whisker를 표시합니다. 분위수 whisker는 신뢰구간이 아닙니다.
+중첩 원자료 box에 seeded 90% 중앙값 CI·평균·5-95% whisker와 명시 hue별 cap 스타일을 표시합니다. Whisker는 CI가 아닙니다.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `whis`, `components`, `notch`, `showmeans`, `showfliers`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
+**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `whis`, `components`, `notch`, `showmeans`, `showfliers`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`, `box`, `semantics`, `axis`, `cmap_kind`, `colorbar`, `clabel`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -895,12 +955,24 @@ plot = (
         order=["Low", "High"],
         hue_order=["B", "A"],
         whis=(5, 95),
+        median_ci={"level": 90, "n_boot": 1000, "seed": 17},
+        cap_fraction=0.8,
+        hue_components=[
+            {
+                "level": "A",
+                "components": {"cap": {"color": "#007f87", "line_width": 1.5}},
+            },
+            {
+                "level": "B",
+                "components": {"cap": {"color": "#8b3f8f", "line_width": 1.5}},
+            },
+        ],
         gap=0.16,
         showmeans=True,
         edge_color="#4b5563",
         line_width=0.8,
     )
-    .labels(x="Dose", y="Value", title="Nested boxes / 5-95% whiskers")
+    .labels(x="Dose", y="Value", title="Median CI / explicit per-hue cap styles")
     .legend(title="Method", location="upper left")
     .size(4.5, 3.2)
 )
@@ -921,7 +993,7 @@ Nested raw-data quantile bands reveal tails with exponential widths; median and 
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `k_depth`, `components`, `width_method`, `outlier_prop`, `trust_alpha`, `showfliers`, `showmedians`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
+**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `k_depth`, `components`, `boxen`, `weights`, `semantics`, `axis`, `colorbar`, `clabel`, `cmap_kind`, `width_method`, `outlier_prop`, `trust_alpha`, `showfliers`, `showmedians`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `marker`, `marker_size`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -973,7 +1045,7 @@ Horizontal nested violins use named bandwidth, median lines and consistent hue c
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `y`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `bw_method`, `points`, `weights`, `inner`, `split`, `density_norm`, `common_norm`, `bw_adjust`, `cut`, `clip`, `marker`, `marker_size`, `showmeans`, `showmedians`, `showextrema`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`
+**Optional / 선택:** `y`, `violin`, `components`, `semantics`, `axis`, `cmap_kind`, `colorbar`, `clabel`, `group`, `orient`, `order`, `hue_order`, `width`, `dodge`, `gap`, `native_scale`, `stat_scale`, `bw_method`, `points`, `weights`, `inner`, `split`, `density_norm`, `common_norm`, `bw_adjust`, `cut`, `clip`, `marker`, `marker_size`, `showmeans`, `showmedians`, `showextrema`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1026,7 +1098,7 @@ Typed NumPy Gaussian KDE에 Scott 대역폭·곡선별 정규화를 명시합니
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `kde`, `group`, `hue_order`, `orient`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`
+**Optional / 선택:** `kde`, `semantics`, `stat_scale`, `cmap_kind`, `colorbar`, `clabel`, `group`, `hue_order`, `orient`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1063,7 +1135,7 @@ Weighted empirical steps aggregate ties and normalize within each curve; no bins
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `ecdf`, `group`, `hue_order`, `orient`, `label`, `color`, `line_width`, `line_style`, `alpha`
+**Optional / 선택:** `ecdf`, `semantics`, `cmap_kind`, `colorbar`, `clabel`, `marker`, `marker_size`, `group`, `hue_order`, `orient`, `label`, `color`, `line_width`, `line_style`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1106,7 +1178,7 @@ Rug marks expose observations underneath a density estimate.
 
 **Required / 필수:** `x`
 
-**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`
+**Optional / 선택:** `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`, `orient`, `width`, `axis`, `semantics`, `cmap_kind`, `colorbar`, `clabel`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1133,6 +1205,37 @@ plot.save("figure.png")
 
 ## Bivariate and matrix fields / 이변량 및 행렬 필드
 
+### `spectrum` — Signal spectrum
+
+![Signal spectrum](images/plots/spectrum.png)
+
+Explicit Hz sampling, named windows and Welch density retain raw signals.
+
+Hz 표본율·이름 기반 window·Welch 밀도에서 원본 신호를 보존합니다.
+
+**Required / 필수:** `x`, `spectrum`
+
+**Optional / 선택:** `y`, `label`, `color`, `line_width`, `line_style`, `alpha`, `cmap_kind`, `colorbar`, `clabel`, `citation`, `href`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+"""A declared 8 Hz sine: density and derived Hz, never raw signal coordinates."""
+
+import math
+
+import mudplot as mp
+
+plot = mp.plot({"signal": [math.sin(2 * math.pi * 8 * j / 64) for j in range(256)]})
+plot.theme("publication").spectrum("signal", fs=64, nfft=64, window="hann")
+plot.labels(title="Welch power density: 8 Hz signal")
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/spectrum.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#spectrum)
+
 ### `kde2d` — Weighted bivariate KDE
 
 ![Weighted bivariate KDE](images/plots/kde2d.png)
@@ -1143,7 +1246,7 @@ Full weighted Gaussian covariance; contour levels enclose conditional finite-gri
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `kde2d`, `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`
+**Optional / 선택:** `kde2d`, `semantics`, `orient`, `axis`, `cmap_kind`, `colorbar`, `clabel`, `group`, `hue_order`, `label`, `color`, `alpha`, `line_width`, `line_style`, `edge_color`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1188,7 +1291,7 @@ Rectangular bins show observation counts across two variables.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `bins`, `density`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `axis`
+**Optional / 선택:** `bins`, `histogram2d`, `group`, `hue_order`, `semantics`, `orient`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `density`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `axis`, `transforms`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1211,6 +1314,53 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/hist2d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#hist2d)
+
+### `ecdf2d` — Paired empirical OR complement
+
+![Paired empirical OR complement](images/plots/ecdf2d.png)
+
+Right-continuous paired mass uses the strict X>qx OR Y>qy complement; finite bounds do not remove denominator observations.
+
+오른쪽 연속의 짝지은 질량에서 X>qx OR Y>qy의 엄격한 보완을 표시합니다. 유한 경계가 분모 관측값을 제외하지 않습니다.
+
+**Required / 필수:** `x`, `y`, `ecdf2d`
+
+**Optional / 선택:** `group`, `hue_order`, `semantics`, `orient`, `axis`, `label`, `color`, `edge_color`, `line_width`, `line_style`, `alpha`, `cmap_kind`, `colorbar`, `clabel`, `transforms`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+source = {
+    "x": [0, 0, 1, 2, 2, 3],
+    "y": [0, 1, 1, 0, 2, 3],
+    "weight": [1, 3, 2, 1, 2, 3],
+    "row_id": ["a", "b", "c", "d", "e", "f"],
+}
+plot = (
+    mp.plot(source)
+    .ecdf2d(
+        "x",
+        "y",
+        weights="weight",
+        stat="percent",
+        complementary=True,
+        bounds=[[-0.5, 3.5], [-0.5, 3.5]],
+        query_x=[0.5, 1.5],
+        query_y=[0.5, 1.5],
+        colorbar=True,
+        clabel="Strict OR mass, %",
+    )
+    .labels(x="Original x", y="Original y", title="Paired empirical OR complement")
+    .size(4.5, 3.3)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/ecdf2d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#ecdf2d)
 
 ### `hexbin` — Hexbin
 
@@ -1256,7 +1406,7 @@ A diverging LCH colormap represents a signed matrix field.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `heatmap`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `line_width`, `edge_color`
+**Optional / 선택:** `heatmap`, `scalar_display`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `line_width`, `edge_color`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1326,7 +1476,7 @@ Level curves trace equal values across a matrix field.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`, `grid`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1360,7 +1510,7 @@ Filled level regions combine contour structure with continuous colour.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `levels`, `grid`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1383,6 +1533,313 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/contourf.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#contourf)
+
+### `imshow` — Scalar image
+
+![Scalar image](images/plots/imshow.png)
+
+Physical extent and lower origin are explicit.
+
+물리적 범위와 아래쪽 원점을 명시합니다.
+
+**Required / 필수:** `grid`
+
+**Optional / 선택:** `matrix`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `scalar_display`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .matrix("z", [[1, 3, 2], [4, 6, 5]])
+    .imshow("z", grid={"extent": [0, 6, 0, 4], "origin": "lower"})
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/imshow.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#imshow)
+
+### `pcolor` — Cell polygons
+
+![Cell polygons](images/plots/pcolor.png)
+
+A missing cell is omitted from a nonuniform grid.
+
+비균일 격자에서 값이 없는 셀을 생략합니다.
+
+**Required / 필수:** `matrix`, `grid`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `edge_color`, `line_width`, `scalar_display`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+grid = {"x": [0, 1, 3, 6], "y": [0, 1, 3], "position": "edges", "shading": "flat"}
+plot = (
+    mp.plot()
+    .matrix("z", [[1, None, 3], [4, 5, 6]])
+    .pcolor("z", grid=grid)
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/pcolor.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#pcolor)
+
+### `pcolormesh` — Quadrilateral mesh
+
+![Quadrilateral mesh](images/plots/pcolormesh.png)
+
+Nonuniform edges keep the authored cell widths.
+
+비균일 모서리가 지정된 셀 너비를 유지합니다.
+
+**Required / 필수:** `matrix`, `grid`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `edge_color`, `line_width`, `scalar_display`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+grid = {"x": [0, 1, 3, 6], "y": [0, 1, 3], "position": "edges", "shading": "flat"}
+plot = (
+    mp.plot()
+    .matrix("z", [[1, 2, 3], [4, 5, 6]])
+    .pcolormesh("z", grid=grid)
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/pcolormesh.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#pcolormesh)
+
+### `spy` — Dense threshold pattern
+
+![Dense threshold pattern](images/plots/spy.png)
+
+Squares show finite absolute values strictly above two.
+
+절댓값이 2를 넘는 유한 값만 사각형으로 표시합니다.
+
+**Required / 필수:** `matrix`, `grid`
+
+**Optional / 선택:** `alpha`, `color`, `marker`, `marker_size`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .matrix("z", [[0, -4, 2, 0], [3, None, 0, 5], [0, 0, -3, 0]])
+    .spy("z", grid={"threshold": 2})
+    .labels(x="Column", y="Row")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/spy.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#spy)
+
+### `triplot` — Explicit triangle edges
+
+![Explicit triangle edges](images/plots/triplot.png)
+
+Edges come from authored connectivity, not inferred triangulation.
+
+삼각분할을 추론하지 않고 지정한 연결을 표시합니다.
+
+**Required / 필수:** `x`, `y`, `triangulation`
+
+**Optional / 선택:** `color`, `line_width`, `line_style`, `alpha`, `label`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"x": [0, 2, 0, 2, 1], "y": [0, 0, 2, 2, 1], "z": [0, 2, 1, 4, 2]}
+faces = [[0, 1, 4], [1, 3, 4], [3, 2, 4], [2, 0, 4]]
+plot = (
+    mp.plot(data)
+    .triplot("x", "y", triangulation=mp.TriangulationSpec(faces))
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/triplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#triplot)
+
+### `tripcolor` — Face-coloured triangles
+
+![Face-coloured triangles](images/plots/tripcolor.png)
+
+Each face takes one explicitly supplied temperature.
+
+각 삼각형에 별도로 지정한 온도를 사용합니다.
+
+**Required / 필수:** `x`, `y`, `triangulation`
+
+**Optional / 선택:** `c`, `cmap_kind`, `colorbar`, `clabel`, `alpha`, `edge_color`, `line_width`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"x": [0, 2, 0, 2, 1], "y": [0, 0, 2, 2, 1], "z": [0, 2, 1, 4, 2]}
+faces = [[0, 1, 4], [1, 3, 4], [3, 2, 4], [2, 0, 4]]
+plot = (
+    mp.plot(data)
+    .tripcolor(
+        "x",
+        "y",
+        triangulation=mp.TriangulationSpec(faces, None, "face", [4, 7, 9, 6]),
+        colorbar=True,
+        clabel="Temperature (°C)",
+    )
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/tripcolor.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#tripcolor)
+
+### `tricontour` — Triangular isolines
+
+![Triangular isolines](images/plots/tricontour.png)
+
+Vertex measurements define three explicit contour levels.
+
+정점 측정값으로 세 개의 명시 등고선을 그립니다.
+
+**Required / 필수:** `x`, `y`, `c`, `triangulation`, `levels`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"x": [0, 2, 0, 2, 1], "y": [0, 0, 2, 2, 1], "z": [0, 2, 1, 4, 2]}
+faces = [[0, 1, 4], [1, 3, 4], [3, 2, 4], [2, 0, 4]]
+plot = (
+    mp.plot(data)
+    .tricontour(
+        "x",
+        "y",
+        "z",
+        triangulation=mp.TriangulationSpec(faces, None, "vertex"),
+        levels=[1, 2, 3],
+    )
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/tricontour.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#tricontour)
+
+### `tricontourf` — Filled triangle contours
+
+![Filled triangle contours](images/plots/tricontourf.png)
+
+Declared boundaries define three filled bands.
+
+지정 경계가 채워진 세 띠를 정의합니다.
+
+**Required / 필수:** `x`, `y`, `c`, `triangulation`, `levels`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"x": [0, 2, 0, 2, 1], "y": [0, 0, 2, 2, 1], "z": [0, 2, 1, 4, 2]}
+faces = [[0, 1, 4], [1, 3, 4], [3, 2, 4], [2, 0, 4]]
+plot = (
+    mp.plot(data)
+    .tricontourf(
+        "x",
+        "y",
+        "z",
+        triangulation=mp.TriangulationSpec(faces, None, "vertex"),
+        levels=[0, 1, 2, 4],
+    )
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/tricontourf.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#tricontourf)
+
+### `streamplot` — Seeded streamlines
+
+![Seeded streamlines](images/plots/streamplot.png)
+
+Three seeds trace the horizontal native vector field.
+
+세 시작점에서 수평 벡터장의 유선을 그립니다.
+
+**Required / 필수:** `vector`
+
+**Optional / 선택:** `color`, `line_width`, `alpha`, `label`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .matrix("u", [[1] * 4 for _ in range(3)])
+    .matrix("v", [[0] * 4 for _ in range(3)])
+    .streamplot(
+        vector=mp.VectorSpec(
+            x_coords=[0, 1, 2, 3],
+            y_coords=[0, 1, 2],
+            u_matrix="u",
+            v_matrix="v",
+            start_points=[[0.1, 0.35], [0.1, 1], [0.1, 1.65]],
+            integration_direction="forward",
+        ),
+        color="#225761",
+    )
+    .xlim(0, 3.2)
+    .ylim(0, 2)
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/streamplot.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#streamplot)
 
 ## Reference marks and annotations / 기준선 및 주석
 
@@ -1466,7 +1923,7 @@ Free text is placed at an exact data-coordinate position.
 
 **Required / 필수:** `text`, `at`
 
-**Optional / 선택:** `color`, `alpha`, `axis`
+**Optional / 선택:** `color`, `alpha`, `axis`, `annotation`, `path_effects`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1501,7 +1958,7 @@ An arrow connects explanatory text to a selected observation.
 
 **Required / 필수:** `text`, `at`
 
-**Optional / 선택:** `to`, `color`, `alpha`, `axis`
+**Optional / 선택:** `to`, `color`, `alpha`, `axis`, `annotation`, `path_effects`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1526,6 +1983,207 @@ plot.save("figure.png")
 
 [Editable spec / 편집 가능한 spec](images/plots/annotate.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#annotate)
 
+### `hlines` — Horizontal segments
+
+![Horizontal segments](images/plots/hlines.png)
+
+Independent levels retain finite spans.
+
+각 수준의 유한 구간을 독립적으로 표시합니다.
+
+**Required / 필수:** `segments`
+
+**Optional / 선택:** `native_style`, `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`, `path_effects`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .hlines(mp.SegmentSpec([1, 2, 3], [0, 1, 2], [5, 4, 6]))
+    .labels(x="Time (s)", y="Level")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/hlines.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#hlines)
+
+### `vlines` — Vertical segments
+
+![Vertical segments](images/plots/vlines.png)
+
+Independent ranges stay on their measured x positions.
+
+독립 범위를 지정된 x 위치에 표시합니다.
+
+**Required / 필수:** `segments`
+
+**Optional / 선택:** `native_style`, `label`, `color`, `line_style`, `line_width`, `alpha`, `axis`, `path_effects`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .vlines(mp.SegmentSpec([1, 3, 5], [1, 2, 1], [4, 6, 3]))
+    .labels(x="Station", y="Range (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/vlines.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#vlines)
+
+### `hspan` — Horizontal span
+
+![Horizontal span](images/plots/hspan.png)
+
+A shaded operating range sits behind a measured trace.
+
+측정선 뒤에 운전 범위를 음영으로 표시합니다.
+
+**Required / 필수:** `span`
+
+**Optional / 선택:** `native_style`, `label`, `color`, `alpha`, `axis`, `path_effects`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot({"t": [0, 1, 2, 3, 4], "v": [1, 2, 2.8, 2, 3.4]})
+    .hspan(
+        mp.SpanSpec(1.6, 2.5),
+        native_style=mp.ComponentStyleSpec(color="#d6e8ea", line_width=0),
+    )
+    .line("t", "v", color="#225761")
+    .labels(x="Time (s)", y="Signal (mV)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/hspan.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#hspan)
+
+### `vspan` — Vertical span
+
+![Vertical span](images/plots/vspan.png)
+
+The shaded time window does not alter the observations.
+
+시간 구간을 음영으로 표시하되 관측값은 바꾸지 않습니다.
+
+**Required / 필수:** `span`
+
+**Optional / 선택:** `native_style`, `label`, `color`, `alpha`, `axis`, `path_effects`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot({"t": [0, 1, 2, 3, 4], "v": [1, 2, 2.8, 2, 3.4]})
+    .vspan(
+        mp.SpanSpec(1.5, 2.7),
+        native_style=mp.ComponentStyleSpec(color="#eadcbc", line_width=0),
+    )
+    .line("t", "v", color="#225761")
+    .labels(x="Time (s)", y="Signal (mV)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/vspan.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#vspan)
+
+### `patch` — Anchored polygon
+
+![Anchored polygon](images/plots/patch.png)
+
+The polygon follows literal data coordinates.
+
+다각형은 지정한 데이터 좌표를 따릅니다.
+
+**Required / 필수:** `patch`
+
+**Optional / 선택:** `native_style`, `path_effects`, `label`, `color`, `edge_color`, `line_width`, `alpha`, `axis`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .patch(
+        mp.PatchSpec("polygon", [[1, 1], [4, 1], [3, 3], [1, 2]]),
+        native_style=mp.ComponentStyleSpec(
+            color="#7eb4bd", edge_color="#254d55", line_width=1.4
+        ),
+    )
+    .xlim(0, 5)
+    .ylim(0, 4)
+    .labels(x="Easting (m)", y="Northing (m)")
+).size(4.8, 3.6)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/patch.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#patch)
+
+### `table` — Literal table
+
+![Literal table](images/plots/table.png)
+
+Labels and cell values remain literal and editable.
+
+라벨과 셀 값은 그대로 편집할 수 있습니다.
+
+**Required / 필수:** `table`
+
+**Optional / 선택:** —
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+no_ticks = mp.TickSpec(locator=mp.LocatorSpec(kind="none"))
+plot = (
+    mp.plot()
+    .table(
+        mp.LiteralTableSpec(
+            [["2.3", "m"], ["4", "samples"]],
+            [0.12, 0.25, 0.76, 0.5],
+            row_labels=["Span", "Run"],
+            column_labels=["Value", "Unit"],
+            font_size=12,
+            header_color="#dcebee",
+        )
+    )
+    .ticks("x", no_ticks)
+    .ticks("y", no_ticks)
+    .size(4.8, 3.6)
+)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/table.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#table)
+
 ## Part-to-whole / 구성 비율
 
 ### `pie` — Pie
@@ -1538,7 +2196,7 @@ A small category set displays part-to-whole composition.
 
 **Required / 필수:** `x`, `y`
 
-**Optional / 선택:** `color`, `alpha`
+**Optional / 선택:** `color`, `alpha`, `pie_geometry`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1659,7 +2317,7 @@ A matrix becomes a continuously coloured 3-D surface.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `spatial`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1695,7 +2353,7 @@ A matrix surface is represented by a lightweight line mesh.
 
 **Required / 필수:** `matrix`
 
-**Optional / 선택:** `color`, `alpha`
+**Optional / 선택:** `color`, `alpha`, `spatial`
 
 <details><summary>Runnable code / 실행 코드</summary>
 
@@ -1720,3 +2378,234 @@ plot.save("figure.png")
 </details>
 
 [Editable spec / 편집 가능한 spec](images/plots/wireframe.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#wireframe)
+
+### `trisurf` — Triangulated surface
+
+![Triangulated surface](images/plots/trisurf.png)
+
+The surface uses the literal vertex heights and faces.
+
+지정한 정점 높이와 삼각형으로 표면을 그립니다.
+
+**Required / 필수:** `x`, `y`, `z`, `triangulation`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+data = {"x": [0, 2, 0, 2, 1], "y": [0, 0, 2, 2, 1], "z": [0, 2, 1, 4, 2]}
+faces = [[0, 1, 4], [1, 3, 4], [3, 2, 4], [2, 0, 4]]
+plot = (
+    mp.plot(data)
+    .projection3d()
+    .trisurf("x", "y", "z", triangulation=mp.TriangulationSpec(faces))
+    .labels(x="Easting", y="Northing")
+    .zlabel("Height")
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/trisurf.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#trisurf)
+
+### `quiver3d` — Spatial arrows
+
+![Spatial arrows](images/plots/quiver3d.png)
+
+Shafts follow the declared raw displacement.
+
+화살표 몸체가 지정한 원시 변위를 따릅니다.
+
+**Required / 필수:** `x`, `y`, `z`, `u`, `v`, `w`, `vector`
+
+**Optional / 선택:** `color`, `line_width`, `alpha`, `group`, `hue_order`, `label`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot(
+        {"x": [1, 2], "y": [1, 2], "z": [1, 2], "u": [1, 0], "v": [0, 1], "w": [1, 1]}
+    )
+    .projection3d()
+    .quiver3d("x", "y", "z", "u", "v", "w", vector=mp.VectorSpec(length=1))
+    .xlim(0, 4)
+    .ylim(0, 4)
+    .labels(x="Easting", y="Northing")
+    .zlabel("Height", limits=[0, 4])
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/quiver3d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#quiver3d)
+
+### `bar3d` — Signed spatial bars
+
+![Signed spatial bars](images/plots/bar3d.png)
+
+One box descends from its independent base.
+
+독립 기준점에서 내려가는 상자를 포함합니다.
+
+**Required / 필수:** `x`, `y`, `z`, `spatial`
+
+**Optional / 선택:** `color`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot(
+        {
+            "x": [1, 3],
+            "y": [1, 2],
+            "z": [0, 4],
+            "dx": [1, 1],
+            "dy": [1, 1],
+            "dz": [3, -2],
+        }
+    )
+    .projection3d()
+    .bar3d("x", "y", "z", spatial={"dx": "dx", "dy": "dy", "dz": "dz"}, color="#317885")
+    .labels(x="Easting", y="Northing")
+    .zlabel("Height", limits=[0, 5])
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/bar3d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#bar3d)
+
+### `contour3d` — Spatial isolines
+
+![Spatial isolines](images/plots/contour3d.png)
+
+Isolines remain at their authored height levels.
+
+등고선을 각각 지정한 높이에 표시합니다.
+
+**Required / 필수:** `matrix`, `levels`, `spatial`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`, `line_width`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+grid = {"x_coords": [0, 1, 4], "y_coords": [0, 2, 3]}
+plot = (
+    mp.plot()
+    .matrix("z", [[0, 1, 4], [1, 2, 5], [2, 3, 6]])
+    .projection3d()
+    .contour3d("z", spatial=grid, levels=[1, 3, 5])
+    .labels(x="Easting", y="Northing")
+    .zlabel("Height")
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/contour3d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#contour3d)
+
+### `contourf3d` — Projected contour bands
+
+![Projected contour bands](images/plots/contourf3d.png)
+
+Height bands project onto a fixed horizontal plane.
+
+높이 띠를 고정된 수평 평면에 투영합니다.
+
+**Required / 필수:** `matrix`, `levels`, `spatial`
+
+**Optional / 선택:** `cmap_kind`, `colorbar`, `clabel`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+grid = {"x_coords": [0, 1, 4], "y_coords": [0, 2, 3]}
+plot = (
+    mp.plot()
+    .matrix("z", [[0, 1, 4], [1, 2, 5], [2, 3, 6]])
+    .projection3d()
+    .contourf3d("z", spatial={**grid, "offset": 0}, levels=[0, 2, 4, 6])
+    .labels(x="Easting", y="Northing")
+    .zlabel("Projection plane", limits=[0, 3])
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/contourf3d.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#contourf3d)
+
+### `voxels` — Occupied cells
+
+![Occupied cells](images/plots/voxels.png)
+
+Only occupied cells expose faces on nonuniform edges.
+
+비균일 격자에서 점유 셀의 노출 면만 그립니다.
+
+**Required / 필수:** `spatial`
+
+**Optional / 선택:** `color`, `edge_color`, `line_width`, `alpha`
+
+<details><summary>Runnable code / 실행 코드</summary>
+
+```python
+import mudplot as mp
+
+plot = (
+    mp.plot()
+    .projection3d()
+    .voxels(
+        spatial={
+            "occupancy": [
+                [[True, True], [False, True]],
+                [[False, True], [False, False]],
+            ],
+            "x_coords": [0, 1, 3],
+            "y_coords": [0, 1, 2],
+            "z_coords": [0, 1, 3],
+        },
+        color="#39878c",
+        edge_color="#254d55",
+        line_width=0.6,
+    )
+    .labels(x="Easting", y="Northing")
+    .zlabel("Height")
+).size(5.8, 4.5)
+plot.save("figure.png")
+```
+
+</details>
+
+[Editable spec / 편집 가능한 spec](images/plots/voxels.mplot.json) · [Reference / 레퍼런스](REFERENCE.md#voxels)
+
+## Saved axis workflow / 저장 가능한 축 workflow
+
+[Executable N12 comparison](../examples/axis_controls.py) uses six native
+panels for symlog/asinh/logit, major/minor ticks, a declared local clock,
+Celsius/Fahrenheit, base-two frequency/reciprocal period and derived
+length units. It saves PNG/SVG/PDF and JSON with edit/history/reopen.
+These are axis controls, not extra registered layer types.
+
+[N12 실행 비교](../examples/axis_controls.py)는 여섯 native 패널의 눈금·
+scale·clock·보조 단위와 PNG/SVG/PDF·JSON 편집/history/재개방을 제공합니다.
+새 layer 개수를 늘리는 기능이 아니며 [유한 계약](FEATURE_COVERAGE.md)을
+따릅니다. Isolated qualification and parent integration remain separate.

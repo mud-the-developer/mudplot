@@ -701,3 +701,171 @@ def test_pdf_text_uses_utf8_independently_of_windows_locale(monkeypatch):
     monkeypatch.setattr(shutil, "which", lambda name: "gs")
     monkeypatch.setattr(subprocess, "run", ghostscript_output)
     assert _pdf_text("paper.pdf") == "θ fi 中文"
+
+
+def _native_paper_links(pdf):
+    """Inspect these uncompressed LuaLaTeX papers, not arbitrary PDFs.
+
+    Resolve page -> annotation -> action references, including shared URI
+    actions. Native xref offsets avoid interpreting embedded font streams.
+    """
+    import re
+
+    trailer = re.search(rb"startxref\s+(\d+)\s+%%EOF\s*$", pdf)
+    assert trailer is not None
+    xref = int(trailer.group(1))
+    lines = pdf[xref:].splitlines()
+    assert lines[0] == b"xref"
+    offsets = {}
+    index = 1
+    while lines[index] != b"trailer":
+        first, count = map(int, lines[index].split())
+        index += 1
+        for number, line in enumerate(lines[index : index + count], first):
+            offset, generation, state = line.split()
+            if state == b"n":
+                offsets[(number, int(generation))] = int(offset)
+        index += count
+    ordered = sorted(offsets.items(), key=lambda item: item[1])
+    objects = {}
+    for position, (key, offset) in enumerate(ordered):
+        end = ordered[position + 1][1] if position + 1 < len(ordered) else xref
+        header, _, body = pdf[offset:end].partition(b"obj")
+        assert tuple(map(int, header.split())) == key
+        objects[key] = body.rsplit(b"endobj", 1)[0].strip()
+
+    def resolve(value):
+        seen = set()
+        while match := re.fullmatch(rb"(\d+)\s+(\d+)\s+R", value.strip()):
+            key = tuple(map(int, match.groups()))
+            assert key not in seen
+            seen.add(key)
+            value = objects[key]
+        return value
+
+    links = []
+    reference = rb"\d+\s+\d+\s+R"
+    for page in objects.values():
+        if not re.search(rb"/Type\s*/Page\b", page):
+            continue
+        annotations = re.search(rb"/Annots\s*(\[[^\]]*\]|" + reference + rb")", page)
+        if annotations is None:
+            continue
+        array = resolve(annotations.group(1))
+        for reference_value in re.findall(reference, array):
+            annotation = resolve(reference_value)
+            if not re.search(rb"/Subtype\s*/Link\b", annotation):
+                continue
+            action = re.search(rb"/A\s*(<<.*?>>|" + reference + rb")", annotation)
+            assert action is not None
+            action_value = resolve(action.group(1))
+            if not re.search(rb"/S\s*/URI\b", action_value):
+                continue
+            uri = re.search(
+                rb"/URI\s*(\((?:\\.|[^\\)])*\)|" + reference + rb")", action_value
+            )
+            rectangle = re.search(rb"/Rect\s*\[([^\]]*)\]", annotation)
+            assert uri is not None and rectangle is not None
+            literal = resolve(uri.group(1))
+            assert literal.startswith(b"(") and literal.endswith(b")")
+            url = re.sub(rb"\\([\\()])", rb"\1", literal[1:-1]).decode("utf-8")
+            links.append((url, tuple(map(float, rectangle.group(1).split()))))
+    return links
+
+
+@pytest.mark.skipif(
+    bool(_missing("lualatex", "bibtex")),
+    reason="native multiline reference compilation needs LuaLaTeX/BibTeX/Ghostscript",
+)
+@pytest.mark.parametrize(
+    "title",
+    [
+        "Scientific reference Σ²\nOriginal observations",
+        "Scientific reference Σ² with original observations and deliberately "
+        "long descriptive wording that wraps on the finite figure canvas",
+    ],
+    ids=["explicit-newline", "native-autowrap"],
+)
+def test_multiline_references_compile_with_one_citation_and_real_links(tmp_path, title):
+    from pathlib import Path
+
+    from matplotlib import font_manager
+
+    contrast = "https://example.org/observed-cohort"
+    title_href = "https://example.org/wrapped-title"
+    plot = (
+        mp.plot({"x": [1, 2, 3], "y": [1, 4, 9]})
+        .size(4, 5)
+        .line(
+            "x",
+            "y",
+            label="Observed\ncohort",
+            citation="fischler1981",
+            href=DOI,
+        )
+        .line("x", "y", label="Href-only\ncontrast", href=contrast)
+        .line("x", "y", label="Citation only", citation="hartley2003")
+        .line(
+            "x",
+            "y",
+            label="Single-line reference",
+            citation="fischler1981",
+            href=DOI,
+        )
+        .labels(title=title)
+        .title_reference(citation="hartley2003", href=title_href)
+        .reference_style(measure_text="(Author, 2025)")
+        .legend(location="outside bottom")
+    )
+    original = plot.to_json()
+    fontdir = Path(font_manager.findfont("DejaVu Sans")).parent.as_posix() + "/"
+    fonts = (
+        "\\usepackage{fontspec}\n"
+        rf"\setsansfont{{DejaVuSans.ttf}}[Path={fontdir}]"
+        "\n"
+        rf"\setmainfont{{DejaVuSerif.ttf}}[Path={fontdir}]"
+        "\n"
+    )
+    with matplotlib.rc_context(
+        {"pgf.texsystem": "lualatex", "pgf.rcfonts": False, "pgf.preamble": fonts}
+    ):
+        plt.close(plot.save(str(tmp_path / "fig.pgf")))
+    assert plot.to_json() == original
+    (tmp_path / "preamble.tex").write_text(mp.PREAMBLE, encoding="utf-8")
+    (tmp_path / "refs.bib").write_text(REFS_BIB, encoding="utf-8")
+    (tmp_path / "paper.tex").write_text(
+        "\\documentclass{article}\n"
+        "\\pdfvariable objcompresslevel=0\n"
+        "\\usepackage[paperwidth=7in,paperheight=9in,margin=.5in]{geometry}\n"
+        "\\usepackage{pgf}\n"
+        "\\def\\mathdefault#1{#1}\n"
+        "\\usepackage[strings]{underscore}\n" + fonts + "\\input{preamble.tex}\n"
+        "\\newcounter{figurecitations}\n"
+        "\\renewcommand{\\figcite}[1]{\\stepcounter{figurecitations}\\cite{#1}}\n"
+        "\\begin{document}\n"
+        "\\input{fig.pgf}\n"
+        "\\typeout{FIGURE-CITATIONS:\\arabic{figurecitations}}\n"
+        "Glyph check: Σ ².\n"
+        "\\bibliographystyle{plain}\\bibliography{refs}\n"
+        "\\end{document}\n",
+        encoding="utf-8",
+    )
+    _compile_paper(tmp_path, "lualatex", "bibtex")
+    text = _pdf_text(tmp_path / "paper.pdf")
+    assert " ".join(title.split()) in text
+    assert "Observed cohort" in text and "Href-only contrast" in text
+    assert "Single-line reference" in text and "Citation only" in text
+    assert "(Author, 2025)" not in text
+    assert "Σ" in text and "²" in text and "[1]" in text and "[2]" in text
+    log = (tmp_path / "paper.log").read_text(encoding="utf-8")
+    assert "FIGURE-CITATIONS:4" in log
+    assert "Missing character" not in log
+    pdf = (tmp_path / "paper.pdf").read_bytes()
+    assert b"/URI" in pdf
+    assert DOI.encode() in pdf and contrast.encode() in pdf
+    title_links = [rect for url, rect in _native_paper_links(pdf) if url == title_href]
+    assert len(title_links) >= 2
+    assert all(x1 > x0 and y1 > y0 for x0, y0, x1, y1 in title_links)
+    # Distinct actual link rectangles at different native baselines prove that
+    # wrapping retained clickable coverage, even if URI actions are deduplicated.
+    assert len({round((rect[1] + rect[3]) / 2, 6) for rect in title_links}) >= 2

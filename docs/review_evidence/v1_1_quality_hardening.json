@@ -1,0 +1,409 @@
+{
+  "schema_version": 1,
+  "qualified_utc": "2026-10-30T00:54:11.062478+00:00",
+  "status": "qualified-local-1.1.0-candidate-not-published",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "base_commit": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "local_only": true,
+  "commit_push_pr_tag_publication_performed": false,
+  "scope": "Correctness hardening of existing agent-facing v1.1 policies; no new chart types, dependencies, schema fields or Rust smart controls.",
+  "changes": [
+    "Validate selected role-column lengths before recommendation analysis.",
+    "Require complete identifiers and finite numeric measurements for paired advice; withhold advice without usable coordinate/measurement rows.",
+    "Warn when datetime parsing discards fractional zero UTC offsets instead of inventing repeated timestamps.",
+    "Respect journal/explicit visual font minima while retaining the 8-pt unprofiled default.",
+    "Check effective RGBA/array opacity, collection member visibility, masked images and combined image alpha; retain hatch-only patches and alternate marker faces.",
+    "Add 41 regression cases to existing test modules already covered by the pinned minimum runner."
+  ],
+  "qualification": {
+    "locked_py311": {
+      "python": "3.11.15",
+      "failed": 0,
+      "errors": 0,
+      "skipped": 45,
+      "total": 4533,
+      "passed": 4488,
+      "junit_xml": "artifacts/v1_1_hardening_20261029/run/results/locked-py311.xml",
+      "sha256": "cf54c5eae2a64a121394603395162ec6db279fc8b737611d82b45b5271977e1c",
+      "required_profile": {
+        "counts": {
+          "passed": 4488,
+          "skipped": 45
+        },
+        "ok": true,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4533
+      }
+    },
+    "locked_py312": {
+      "python": "3.12.13",
+      "failed": 0,
+      "errors": 0,
+      "skipped": 45,
+      "total": 4533,
+      "passed": 4488,
+      "junit_xml": "artifacts/v1_1_hardening_20261029/run/results/locked-py312.xml",
+      "sha256": "c5aaaea3fa1d815ec94cf5cdd754b6152904fb6f07fe30ec98ea7e12e0da05ad",
+      "required_profile": {
+        "counts": {
+          "passed": 4488,
+          "skipped": 45
+        },
+        "ok": true,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4533
+      }
+    },
+    "minimum": {
+      "environment": {
+        "python": "3.11.15",
+        "executable": "$PROVIDER/environment-02/bin/python",
+        "versions": {
+          "numpy": "1.23.5",
+          "matplotlib": "3.8.0",
+          "pillow": "13.0.0",
+          "statsmodels": "0.14.1",
+          "scipy": "1.10.0",
+          "pytest": "9.0.3"
+        }
+      },
+      "failed": 0,
+      "errors": 0,
+      "skipped": 36,
+      "total": 3712,
+      "passed": 3676,
+      "junit_xml": "artifacts/v1_1_hardening_20261029/run/results-initial/minimum.xml",
+      "sha256": "2234882d1bfdb037c56470ba294a2c4ea5f99a20d3287ae6c5d9ca8ab454154e",
+      "required_profile": {
+        "counts": {
+          "passed": 3676,
+          "skipped": 36
+        },
+        "ok": true,
+        "profile": "minimum",
+        "required": [
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 3712
+      }
+    },
+    "required_profiles_passed": true,
+    "minimum_report_reused_from_initial_run": true,
+    "minimum_reuse_reason": "The browser-free minimum profile passed at exactly the same frozen source; later browser provisioning changed no source or locks.",
+    "source_manifest": "artifacts/v1_1_hardening_20261029/run/results/source-implementation.sha256"
+  },
+  "historical_initial_gate_failure": {
+    "reason": "Chromium's executable was absent from the fresh container; installing its OS dependencies alone was insufficient.",
+    "container_exit_code": 1,
+    "locked_py311": {
+      "failed": 0,
+      "errors": 0,
+      "skipped": 87,
+      "total": 4533,
+      "passed": 4446,
+      "junit_xml": "artifacts/v1_1_hardening_20261029/run/results-initial/locked-py311.xml",
+      "sha256": "f2b33170f1604b4e31372f0367a1f87bdc7ad6cb67138d6779eb8b9592d4596f",
+      "required_profile": {
+        "counts": {
+          "passed": 4446,
+          "skipped": 87
+        },
+        "ok": false,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "skipped"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4533
+      }
+    },
+    "locked_py312": {
+      "failed": 0,
+      "errors": 0,
+      "skipped": 87,
+      "total": 4533,
+      "passed": 4446,
+      "junit_xml": "artifacts/v1_1_hardening_20261029/run/results-initial/locked-py312.xml",
+      "sha256": "3e011ec63fb80a4869cb643902fbeab831963a55b5befa69ccbe65a12742cb06",
+      "required_profile": {
+        "counts": {
+          "passed": 4446,
+          "skipped": 87
+        },
+        "ok": false,
+        "profile": "release",
+        "required": [
+          {
+            "module": "test_editor_browser",
+            "name": "test_dragging_the_legend_moves_it_and_persists",
+            "outcomes": [
+              "skipped"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_pgf_export_emits_figcite_and_href_macros",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[tectonic]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[pdflatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+bibtex]",
+            "outcomes": [
+              "passed"
+            ]
+          },
+          {
+            "module": "test_references",
+            "name": "test_exported_pgf_compiles_into_a_real_paper[lualatex+biblatex]",
+            "outcomes": [
+              "passed"
+            ]
+          }
+        ],
+        "total": 4533
+      }
+    },
+    "test_assertion_failures": 0,
+    "additional_browser_skips_per_environment": 42,
+    "recovery": "Provision cached locked Chromium 153.0.8010.12, require a launch/content preflight, then rerun both complete locked suites.",
+    "original_reports_preserved": true,
+    "original_recipe": "artifacts/v1_1_hardening_20261029/run/validate-initial.sh"
+  },
+  "source_integrity": {
+    "frozen_host_source_manifest": "artifacts/v1_1_hardening_20261029/run/host-source-before.json",
+    "frozen_source_files": 768,
+    "implementation_manifest_sha256": "510371468720c8acecdc468225f0d7866b83e8ba2b39741586b3d73927b99dd2",
+    "implementation_checksums_identical_across_runs": true,
+    "before_after_checksums_match": true,
+    "host_matched_frozen_source_before_documentation_updates": true,
+    "postqualification_documentation_updates": [
+      "docs/V1_1_RELEASE_CHECKLIST.ko.md",
+      "docs/V1_1_RELEASE_CHECKLIST.md",
+      "docs/review_evidence/v1_1_quality_hardening.json"
+    ],
+    "runtime_tests_metadata_and_locks_unchanged": true,
+    "qualification_directly_used_version_1_1_0": true
+  },
+  "supporting_checks": {
+    "targeted_minimum_regressions": {
+      "passed": 41,
+      "log": "artifacts/v1_1_hardening_20261029/minimum-targeted.log"
+    },
+    "pre_documentation_metadata_policy_guards": {
+      "passed": 35,
+      "log": "artifacts/v1_1_hardening_20261029/pre-documentation-policy-guards.log"
+    },
+    "post_documentation_guard_log": "artifacts/v1_1_hardening_20261029/post-documentation-guards.log",
+    "static_contracts_metadata": {
+      "result": "passed",
+      "log": "artifacts/v1_1_hardening_20261029/static-contracts-metadata.log"
+    },
+    "lsp_changed_paths": {
+      "paths_checked": 5,
+      "type_errors": 0,
+      "reviewed_false_positive_numeric_cast_findings": 4
+    },
+    "rust_browser_bridge": {
+      "result": "passed",
+      "rust_msrv": "1.88.0",
+      "windows_verified": false,
+      "log": "artifacts/v1_1_hardening_20261029/rust-browser-bridge.log"
+    },
+    "dependency_audits": {
+      "result": "all three locks passed without waivers",
+      "log": "artifacts/v1_1_hardening_20261029/security-figures.log"
+    },
+    "figures": {
+      "result": "eight PNGs and report.json byte-identical to the earlier checkpoint",
+      "after_composition_errors": 0,
+      "min_font_pt": 8,
+      "log": "artifacts/v1_1_hardening_20261029/scientific-quality-comparison.json",
+      "visual_inspection": [
+        "shared_legend_after.png",
+        "metric_semantics_after.png"
+      ]
+    },
+    "packaging_preflight": {
+      "result": "passed; packaged core-only recommendation/schema smoke passed",
+      "log": "artifacts/v1_1_hardening_20261029/pre-documentation-packaging.log"
+    }
+  },
+  "final_artifacts": {
+    "directory": "artifacts/v1_1_hardening_20261029/final-dist",
+    "external_manifest": "artifacts/v1_1_hardening_20261029/final-artifact-manifest.json",
+    "qualification_reports": "artifacts/v1_1_hardening_20261029/qualification-reports.zip",
+    "verification_note": "Final hashes and byte-identical rebuild verification are recorded outside the sdist to avoid self-referential hashes; these checks follow the documentation-only updates."
+  },
+  "historical_receipts_preserved": [
+    "docs/review_evidence/v1_1_local_candidate.json",
+    "docs/review_evidence/v1_1_dependency_blocker.json",
+    "docs/review_evidence/v1_1_security_resolution.json",
+    "docs/review_evidence/v1_1_local_validation.json",
+    "docs/review_evidence/v1_1_agent_precision.json",
+    "docs/review_evidence/v1_1_agent_precision_iso.json"
+  ],
+  "remaining_limits": [
+    "Windows and remote CI intentionally deferred/not required for current local development.",
+    "Original failure datasets and physical-print review remain unavailable/unperformed.",
+    "QA uses deterministic geometry proxies, not accessibility/statistical certification; partially transparent raster footprints remain conservative.",
+    "Owner review and renewed explicit authorization are required before any commit, push, PR, tag or publication."
+  ]
+}

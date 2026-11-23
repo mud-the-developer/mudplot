@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import numpy as np
+from matplotlib.cm import ScalarMappable
+from matplotlib.colors import ListedColormap, Normalize
 from matplotlib.lines import Line2D
 
 from ._semantics import (
@@ -15,11 +17,71 @@ from ._semantics import (
 )
 
 
+def draw_semantic_colourbar(ax, layer, bounds, cmap):
+    """One requested hue guide per shared scale and panel, separate from size."""
+    if not layer.colorbar:
+        return
+    ax = getattr(ax, "_mudplot_semantic_guide_axis", ax)
+    scale_id = layer.semantics.scale_id
+    collector = getattr(ax, "_mudplot_shared_guide_collector", None)
+    if collector is not None and scale_id in collector.requests:
+        return  # One figure-owned bar is created from the exact shared domain.
+    shown = getattr(ax, "_mudplot_semantic_colourbars", set())
+    if scale_id is not None and scale_id in shown:
+        return
+    low, high = bounds
+    label = layer.clabel if layer.clabel is not None else layer.semantics.hue
+    if low == high:
+        # A constant maps to the midpoint, not an invented surrounding gradient.
+        mappable = ScalarMappable(
+            norm=Normalize(0, 1), cmap=ListedColormap([cmap(0.5)])
+        )
+        bar = ax.figure.colorbar(
+            mappable,
+            ax=ax,
+            label=label,
+            boundaries=[0, 1],
+            values=[0.5],
+            ticks=[0.5],
+        )
+        bar.set_ticklabels([str(low)])
+    else:
+        # Guide geometry is normalized, not a second observation coordinate
+        # axis. Native raw-boundary meshes overflow for valid wide domains.
+        values = numeric_guides(bounds)
+        ticks, _ = numeric_mapping(values, bounds)
+        bar = ax.figure.colorbar(
+            ScalarMappable(norm=Normalize(0, 1), cmap=cmap),
+            ax=ax,
+            label=label,
+            ticks=ticks,
+        )
+        bar.set_ticklabels([str(value) for value in values])
+    if scale_id is not None:
+        shown.add(scale_id)
+        ax._mudplot_semantic_colourbars = shown
+
+
+def marker_areas(diameters):
+    """Use native scatter area units without losing a positive diameter."""
+    diameters = np.asarray(diameters, dtype=float)
+    areas = np.square(diameters)
+    if np.any((diameters > 0) & (areas == 0)):
+        raise ValueError("positive semantic marker area is not representable")
+    return areas
+
+
 def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides=True):
-    from ._render import _continuous_cmap, _decorate
+    from ._render import _continuous_cmap, _decorate, _scatter_outline
 
     config = layer.semantics
     rows = semantic_rows(columns, layer)
+    primary = getattr(ax, "_mudplot_semantic_guide_axis", ax)
+    collector = getattr(primary, "_mudplot_shared_guide_collector", None)
+    root_owned = collector is not None and config.scale_id in collector.requests
+    native_contexts: list[dict[str, object] | None] | None = None
+    if root_owned:
+        native_contexts = [None for _ in rows]
     x = np.asarray([columns[layer.x][i] for i in rows], dtype=float)
     y = np.asarray([columns[layer.y][i] for i in rows], dtype=float)
     base = layer.color or (next(color_iter) if config.hue is None else "#4b5563")
@@ -79,10 +141,7 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
             fractions = categorical_fractions(role_values["size"], role_levels["size"])
         low, high = config.sizes
         diameters = [low * (1 - t) + high * t for t in fractions]
-    diameters = np.asarray(diameters, dtype=float)
-    areas = np.square(diameters)
-    if np.any((diameters > 0) & (areas == 0)):
-        raise ValueError("positive semantic marker area is not representable")
+    areas = marker_areas(diameters)
     styles = role_levels.get("style", [None])
     for index, value in enumerate(styles):
         selection = np.asarray(
@@ -97,7 +156,8 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
         marker = (
             (layer.marker or "o") if config.style is None else config.markers[index]
         )
-        ax.scatter(
+        outline = _scatter_outline(layer)
+        native = ax.scatter(
             x[selection],
             y[selection],
             c=np.asarray(colors)[selection],
@@ -105,22 +165,64 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
             marker=marker,
             alpha=layer.alpha,
             label="_nolegend_",
+            **outline,
         )
+        if native_contexts is not None:
+            faces, edges = native.get_facecolors(), native.get_edgecolors()
+            sizes, widths = native.get_sizes(), native.get_linewidths()
+            for local, row_index in enumerate(np.flatnonzero(selection)):
+                native_contexts[row_index] = {
+                    "color": faces[min(local, len(faces) - 1)]
+                    if len(faces)
+                    else "none",
+                    "edgecolor": edges[min(local, len(edges) - 1)]
+                    if len(edges)
+                    else "none",
+                    "edge_fixed": layer.edge_color is not None,
+                    "edgewidth": widths[min(local, len(widths) - 1)],
+                    "diameter": float(np.sqrt(sizes[min(local, len(sizes) - 1)])),
+                    "marker": marker,
+                    "width": 0,
+                    "dash": "None",
+                    "alpha": native.get_alpha(),
+                }
+    if rows and hue_bounds is not None:
+        draw_semantic_colourbar(ax, layer, hue_bounds, cmap)
 
-    def proxy(label, *, color=base, marker="o", diameter=6):
-        ax.add_line(
-            Line2D(
-                [],
-                [],
-                linestyle="None",
-                marker=marker,
-                markersize=diameter,
-                markerfacecolor=color,
-                markeredgecolor=color,
-                alpha=layer.alpha,
-                label=label,
-            )
+    def proxy(label, *, color=base, marker="o", diameter=6, role=None, value=None):
+        handle = Line2D(
+            [],
+            [],
+            linestyle="None",
+            marker=marker,
+            markersize=diameter,
+            markerfacecolor=color,
+            markeredgecolor=(color if layer.edge_color is None else layer.edge_color),
+            alpha=layer.alpha,
+            **(
+                {}
+                if layer.line_width is None
+                else {"markeredgewidth": layer.line_width}
+            ),
+            label=label,
         )
+        ax.add_line(handle)
+        if role is not None and root_owned:
+            if not rows:
+                handle.remove()
+                return
+            from ._shared_guides import tag_entry
+
+            index = next(
+                (
+                    i
+                    for i, actual in enumerate(role_values[role])
+                    if category_key(actual) == category_key(value)
+                ),
+                0,
+            )
+            assert native_contexts is not None
+            tag_entry(ax, handle, layer, role, value, context=native_contexts[index])
 
     if layer.label:
         proxy(_decorate(layer.label, layer.citation, layer.href), marker="None")
@@ -129,6 +231,8 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
     for role in ("hue", "size", "style"):
         column = getattr(config, role)
         if column is None:
+            continue
+        if role == "hue" and config.hue_kind == "numeric" and layer.colorbar:
             continue
         kind = "categorical" if role == "style" else getattr(config, f"{role}_kind")
         if kind == "categorical":
@@ -148,6 +252,8 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
                     color=color,
                     marker=marker,
                     diameter=diameter,
+                    role=role,
+                    value=value,
                 )
         else:
             bounds = hue_bounds if role == "hue" else size_bounds
@@ -167,4 +273,10 @@ def draw_semantic_scatter(ax, columns, layer, color_iter, *, domain=None, guides
                     if role == "size"
                     else 6
                 )
-                proxy(f"{role}: {column}={value}", color=color, diameter=diameter)
+                proxy(
+                    f"{role}: {column}={value}",
+                    color=color,
+                    diameter=diameter,
+                    role=role,
+                    value=value,
+                )

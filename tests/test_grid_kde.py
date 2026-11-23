@@ -133,7 +133,7 @@ def test_kde_options_are_copied_and_replay_as_plain_json(kind, key):
         {"kind": "hist", "kde": {"cut": 0}},
         {"kind": "kde", "bins": 30},
         {"kind": "kde", "stat": "count"},
-        {"kind": "kde", "kde": {"weights": "w"}},
+        {"kind": "kde", "kde": {"weights": "absent_weight_column"}},
         {"kind": "kde", "kde": {"cumulative": True}},
         {"kind": "kde", "kde": {"bw_adjust": -1}},
         {"kind": "kde", "kde": {"unknown": True}},

@@ -93,7 +93,61 @@ def test_step_weighted_heights_and_paths_match_independent_native_stairs(
         baseline = top
 
 
-@pytest.mark.parametrize("multiple", ["layer", "stack"])
+@pytest.mark.parametrize("orient,axis", [("v", "y"), ("h", "y"), ("v", "y2")])
+@pytest.mark.parametrize(
+    "stat,cumulative", [("count", False), ("density", False), ("density", True)]
+)
+def test_step_dodge_matches_independent_raw_bin_slots(orient, axis, stat, cumulative):
+    plot = mp.plot(data()).secondary_yaxis("Mass")
+    plot.hist(
+        "x",
+        bins=[0, 1, 3],
+        weights="w",
+        group="g",
+        stat=stat,
+        cumulative=cumulative,
+        multiple="dodge",
+        element="step",
+        orient=orient,
+        axis=axis,
+    )
+    before = plot.to_json()
+    assert mp.validate(plot.spec) == []
+    assert mp.Plot.from_json(before).spec == mp.apply(plot.action_log) == plot.spec
+    ax = plot.render().axes[0 if axis == "y" else 1]
+    _, reference = plt.subplots()
+    expected_edges = ([0, 0, 0.5, 1, 1, 2, 3], [0, 0.5, 1, 1, 2, 3, 3])
+    assert len(ax.patches) == 2
+    assert ax.get_legend_handles_labels()[1] == ["A", "B"]
+    for patch, counts, edges in zip(
+        ax.patches, ([1, 9], [2, 9]), expected_edges, strict=True
+    ):
+        heights = np.array(counts, dtype=float)
+        if cumulative:
+            heights = np.cumsum(heights) / 21
+        elif stat == "density":
+            heights /= np.array([1, 2]) * 21
+        values = [0, heights[0], 0, 0, heights[1], 0]
+        native = reference.stairs(
+            values,
+            edges,
+            baseline=0,
+            fill=False,
+            orientation="vertical" if orient == "v" else "horizontal",
+        )
+        assert isinstance(patch, StepPatch) and not patch.get_fill()
+        observed_values, observed_edges, observed_baseline = patch.get_data()
+        np.testing.assert_allclose(observed_values, values)
+        np.testing.assert_array_equal(observed_edges, edges)
+        np.testing.assert_array_equal(observed_baseline, 0)
+        np.testing.assert_allclose(
+            np.asarray(patch.get_path().vertices),
+            np.asarray(native.get_path().vertices),
+        )
+    assert plot.to_json() == before
+
+
+@pytest.mark.parametrize("multiple", ["layer", "stack", "dodge"])
 @pytest.mark.parametrize("orient", ["v", "h"])
 def test_step_edges_stay_raw_on_inverted_log_observation_axes(multiple, orient):
     p = mp.plot({"x": [1, 3, 2, 10], "g": ["A", "A", "B", "B"]}).hist(
@@ -107,13 +161,18 @@ def test_step_edges_stay_raw_on_inverted_log_observation_axes(multiple, orient):
     (p.xscale if orient == "v" else p.yscale)("log")
     (p.xlim if orient == "v" else p.ylim)(12, 0.8)
     ax = p.render().axes[0]
-    for patch in ax.patches:
+    for slot, patch in enumerate(ax.patches):
         assert isinstance(patch, StepPatch)
-        np.testing.assert_array_equal(patch.get_data()[1], [1, 3, 10])
+        expected = [1, 3, 10]
+        if multiple == "dodge":
+            expected = (
+                [1, 1, 2, 3, 3, 6.5, 10] if slot == 0 else [1, 2, 3, 3, 6.5, 10, 10]
+            )
+        np.testing.assert_array_equal(patch.get_data()[1], expected)
     assert ax.xaxis_inverted() if orient == "v" else ax.yaxis_inverted()
 
 
-@pytest.mark.parametrize("multiple", ["layer", "stack"])
+@pytest.mark.parametrize("multiple", ["layer", "stack", "dodge"])
 def test_step_empty_hues_reserve_dashes_and_exact_stroke_style(multiple):
     raw = {"x": [0.5, 2.5, 20], "g": ["A", "B", "outside"]}
     full = (
@@ -145,11 +204,19 @@ def test_step_empty_hues_reserve_dashes_and_exact_stroke_style(multiple):
     assert to_rgba(patch.get_edgecolor()) == to_rgba("#123456", 0.4)
     assert patch.get_linewidth() == 0.7 and patch.get_alpha() == 0.4
     assert partial.get_legend_handles_labels()[1] == ["B"]
+    if multiple == "dodge":
+        np.testing.assert_allclose(
+            patch.get_data()[1], [0, 1 / 3, 2 / 3, 1, 1 + 2 / 3, 1 + 4 / 3, 3]
+        )
+        np.testing.assert_array_equal(patch.get_data()[0], [0, 0, 0, 0, 1, 0])
 
 
+@pytest.mark.parametrize("multiple", ["layer", "stack", "dodge"])
 @pytest.mark.parametrize("orient", ["v", "h"])
 @pytest.mark.parametrize("width,alpha", [(0, 1), (1.4, 0)])
-def test_step_zero_width_or_alpha_never_fills_and_keeps_legend(orient, width, alpha):
+def test_step_zero_width_or_alpha_never_fills_and_keeps_legend(
+    multiple, orient, width, alpha
+):
     p = mp.plot(data()).hist(
         "x",
         bins=[0, 1, 3],
@@ -157,6 +224,7 @@ def test_step_zero_width_or_alpha_never_fills_and_keeps_legend(orient, width, al
         group="g",
         label="sample",
         orient=orient,
+        multiple=multiple,
         line_width=width,
         alpha=alpha,
         color="#123456",
@@ -287,6 +355,7 @@ def test_empty_and_outside_hues_reserve_geometry_color_and_hatch_slots(multiple)
         ("bars", "stack", [1e308, 1e308], [0, 1]),
         ("bars", "stack", [1e308, 1], [0, 1]),
         ("bars", "dodge", [1, 1], [0.5, np.nextafter(0.5, 1)]),
+        ("step", "dodge", [1, 1], [0.5, np.nextafter(0.5, 1)]),
         ("step", "stack", [1e308, 1e308], [0, 1]),
         ("step", "stack", [1e308, 1], [0, 1]),
     ],
@@ -316,7 +385,7 @@ def test_nonfinite_or_collapsed_group_geometry_fails_before_any_bar(
         p.render()
 
 
-@pytest.mark.parametrize("multiple", ["layer", "stack", "dodge"])
+@pytest.mark.parametrize("multiple", ["layer", "stack", "dodge", "fill"])
 def test_multiple_round_trips_actions_and_generated_contracts(multiple):
     import jsonschema
 
@@ -325,8 +394,13 @@ def test_multiple_round_trips_actions_and_generated_contracts(multiple):
     assert mp.Plot.from_json(p.to_json()).spec == mp.apply(p.action_log) == p.spec
     assert p.spec.panels[0].layers[0].histogram == HistogramSpec(multiple=multiple)
     jsonschema.validate(p.spec.to_dict(), mp.json_schema())
-    assert mp.capabilities()["histogram"]["multiple"] == ["layer", "stack", "dodge"]
-    assert mp.capabilities()["histogram"]["elements"] == ["bars", "step"]
+    assert mp.capabilities()["histogram"]["multiple"] == [
+        "layer",
+        "stack",
+        "dodge",
+        "fill",
+    ]
+    assert mp.capabilities()["histogram"]["elements"] == ["bars", "step", "poly"]
     assert mp.json_schema()["$defs"]["HistogramSpec"]["properties"]["element"] == {
         "type": "string",
         "default": "bars",
@@ -615,15 +689,14 @@ def test_wide_weight_mass_prefixes_are_monotone_and_stay_in_normalized_range(
     [
         ({"stat": "median"}, "invalid histogram stat"),
         ({"stat": []}, "invalid histogram stat"),
-        ({"multiple": "fill"}, "invalid histogram multiple"),
+        ({"multiple": "mirror"}, "invalid histogram multiple"),
         ({"multiple": []}, "invalid histogram multiple"),
         ({"multiple": False}, "invalid histogram multiple"),
         ({"multiple": "stack"}, "requires group"),
         ({"multiple": "dodge"}, "requires group"),
-        ({"element": "poly"}, "invalid histogram element"),
+        ({"element": "curve"}, "invalid histogram element"),
         ({"element": []}, "invalid histogram element"),
         ({"element": False}, "invalid histogram element"),
-        ({"element": "step", "multiple": "dodge", "group": "g"}, "not dodge"),
         ({"common_norm": 1}, "common_norm must be boolean"),
         ({"common_norm": False}, "only applies to normalized"),
         ({"cumulative": 1}, "cumulative must be boolean"),
@@ -638,7 +711,7 @@ def test_wide_weight_mass_prefixes_are_monotone_and_stay_in_normalized_range(
         ({"bins": [1]}, "histogram bins require"),
         ({"bins": [0, 1, 1]}, "histogram bins require"),
         ({"bins": [0, float("inf")]}, "histogram bins require"),
-        ({"bins": "auto"}, "histogram bins require"),
+        ({"bins": "adaptive"}, "histogram bins require"),
         ({"orient": "horizontal"}, "orient must be"),
         ({"hue_order": ["A"]}, "hue_order requires group"),
         ({"group": "g", "hue_order": ["A", "A"]}, "levels must be unique"),
@@ -672,8 +745,6 @@ def test_invalid_selected_weights_rejected_including_false_not_excluded_as_zero(
         {"stat_scale": "axis"},
         {"native_scale": True},
         {"order": [1, 2]},
-        {"line_style": ":"},
-        {"element": "step", "line_style": ":"},
         {"ecdf": mp.ECDFSpec()},
         {"marker": "o"},
         {"baseline": 1},
@@ -683,6 +754,18 @@ def test_invalid_selected_weights_rejected_including_false_not_excluded_as_zero(
 def test_ignored_geometry_inference_and_other_configurations_are_not_accepted(style):
     p = mp.plot({"x": [1, 2]}).hist("x", stat="count", **style)
     assert any("not supported" in i for i in mp.validate(p.spec))
+
+
+@pytest.mark.parametrize("element", ["bars", "step"])
+def test_raw_histogram_dash_is_rejected_before_allocating_native_artists(element):
+    p = mp.plot({"x": [1, 2, 2]}).hist(
+        "x", bins=[0.5, 1.5, 2.5], stat="count", element=element, line_style=":"
+    )
+    saved = p.to_json()
+    figures = plt.get_fignums()
+    with pytest.raises(ValueError):
+        p.render()
+    assert plt.get_fignums() == figures and p.to_json() == saved
 
 
 @pytest.mark.parametrize("orient", ["v", "h"])
@@ -766,7 +849,7 @@ def test_typed_json_actions_schema_strict_config_alias_and_wrong_layer_guard():
     jsonschema.validate(p.spec.to_dict(), mp.json_schema())
     assert mp.json_schema()["$defs"]["HistogramSpec"]["additionalProperties"] is False
     raw = p.spec.to_dict()
-    raw["panels"][0]["layers"][0]["histogram"]["fill"] = True
+    raw["panels"][0]["layers"][0]["histogram"]["fill_policy"] = True
     with pytest.raises(ValueError, match="unknown HistogramSpec"):
         mp.FigureSpec.from_dict(raw)
     with pytest.raises(jsonschema.ValidationError):
@@ -781,10 +864,11 @@ def test_typed_json_actions_schema_strict_config_alias_and_wrong_layer_guard():
 def test_projection_and_y2_rejected_and_direct_legacy_style_options_not_ignored():
     p = (
         mp.plot(data())
-        .hist("x", stat="count", axis="y2")
+        .hist("x", stat="count", axis="y2", orient="h")
         .secondary_yaxis(label="second")
     )
-    assert any("axis='y2' is not supported" in i for i in mp.validate(p.spec))
+    issues = mp.validate(p.spec)
+    assert any("horizontal distributions do not route" in i for i in issues)
     p = mp.plot(data()).hist("x", stat="count").projection_polar()
     assert any("polar" in i for i in mp.validate(p.spec))
     q = mp.plot(data()).dispatch(A.AddLayer(LayerSpec(type="hist", x="x", orient="h")))

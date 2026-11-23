@@ -293,9 +293,7 @@ def test_invalid_facet_requests_do_not_mutate_the_plot_or_history(options):
 @pytest.mark.parametrize(
     "kind",
     [
-        "legacy_c",
         "legacy_hist",
-        "auto_hist",
         "legacy_kde",
         "matrix",
         "polar",
@@ -305,12 +303,8 @@ def test_invalid_facet_requests_do_not_mutate_the_plot_or_history(options):
 )
 def test_unsupported_faceting_fails_instead_of_silently_ignoring_options(kind):
     p = mp.plot(data())
-    if kind == "legacy_c":
-        p.scatter("x", "y", c="m", colorbar=True)
-    elif kind == "legacy_hist":
+    if kind == "legacy_hist":
         p.hist("x")
-    elif kind == "auto_hist":
-        p.hist("x", stat="count")
     elif kind == "legacy_kde":
         p.kde("x")
     elif kind == "matrix":
@@ -320,6 +314,34 @@ def test_unsupported_faceting_fails_instead_of_silently_ignoring_options(kind):
         p.projection_polar() if kind == "polar" else p.layout(1, 2)
     with pytest.raises(ValueError):
         p.facet(col="col")
+
+
+@pytest.mark.parametrize("kind", ["legacy_c", "auto_hist"])
+def test_direct_facets_draw_pooled_scalar_or_common_native_bins(kind):
+    raw = data()
+    p = mp.plot(raw).size(9, 4)
+    if kind == "legacy_c":
+        p.scatter("x", "y", c="m", colorbar=True)
+    else:
+        p.hist("x", stat="count")
+    p.facet(col="col")
+    assert p.spec.data.columns == raw and mp.apply(p.action_log) == p.spec
+    fig = p.render()
+    panels = [ax for ax in fig.axes if hasattr(ax, "_mudplot_panel")]
+    assert len(panels) == 2
+    if kind == "legacy_c":
+        for panel, axes in zip(p.spec.panels, panels, strict=True):
+            mark = axes.collections[0]
+            ids = panel_rows(raw, panel)
+            np.testing.assert_array_equal(mark.get_array(), [raw["m"][i] for i in ids])
+            assert mark.get_clim() == (1, 112)
+        bars = [a for a in fig._mudplot_shared_guide_artists if hasattr(a, "_colorbar")]
+        assert len(bars) == 1
+    else:
+        first, second = (panel.layers[0].bins for panel in p.spec.panels)
+        assert isinstance(first, list) and first == second and len(first) == 21
+        for axes in panels:
+            assert sum(rect.get_height() for rect in axes.patches) == 8
 
 
 @pytest.mark.parametrize("extension", ["png", "pdf", "svg"])

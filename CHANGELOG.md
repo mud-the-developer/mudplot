@@ -2,20 +2,610 @@
 
 All notable changes to this project are documented here.
 
-## [Unreleased]
+## [2.0.0] - local candidate (unpublished; qualification incomplete)
+
+Package and editor metadata align at 2.0.0. The JSON wire schema remains 0.1.
+This entry does not record a publication or a passing release qualification.
+
+The combined panel legend stays above populated secondary-y marks without
+moving legends away from primary data when the twin is empty.
+
+### Added — v2 work in progress / v2 진행 중
+
+- N14 adds finite literal patches/Path codes, native tables, mixed-coordinate
+  annotation anchors, shared spans and named physical stroke/shadow effects.
+- N14는 리터럴 패치·Path 코드, 네이티브 표, 혼합 좌표 주석, 공통 구간 음영과
+  지정된 물리 단위 획/그림자 효과를 추가합니다.
+
+- N02 adds supplied horizontal bars, explicit baselines/alignment and signed
+  stacks, raw per-bar styles/labels and native pie wedge/text controls.
+- N02는 원자료의 가로 막대, 명시 기준값·정렬·부호 누적, 막대별 스타일/라벨과
+  원형 조각/텍스트 제어를 추가합니다.
+
+- N01 adds finite native line/collection styles, data-coordinate segments,
+  asymmetric error magnitudes, horizontal and vertical bands and data spans.
+- N01은 네이티브 스타일, 원자료 좌표의 선분, 비대칭 오차, 가로/세로 띠와
+  데이터 구간 음영을 추가합니다.
+
+- G02/G03 add weighted original-row pair and joint views, true lower-corner
+  cells, strict complementary ECDFs, native grouped binned centers and a
+  real center-y2 to marginal-y link that preserves independent statistic axes.
+- G02/G03은 원자료 행의 가중 pair/joint, 실제 아래 삼각 셀, 엄격한 보완 ECDF,
+  네이티브 그룹 bin, 독립 통계축을 유지하는 중심 y2–주변 y 연결을 추가합니다.
+
+- G01 adds finite relational, distribution, categorical and regression facet
+  builders, pooled scatter-c calibration, and native figure legends for
+  eligible grouped marks.
+- G01은 관계·분포·범주·회귀 facet 빌더, 공통 원시 scatter-c 보정과 지원되는
+  그룹 mark의 네이티브 figure 범례를 추가합니다.
+
+- P01 adds render-local typography contexts, authored categorical palettes
+  and native scalar maps with named shared ranges, local calibrated bars,
+  and finite legend columns and handlers.
+- P01은 렌더링 내부 글자 크기 context, 사용자 범주 팔레트, 공유 원시
+  범위·개별 색상표, 유한 범례 열과 네이티브 handler를 추가합니다.
+
+- F01 regression glyphs share hue, physical marker diameter and marker style
+  with scatter without changing any R4 fit, sampling or diagnostic inputs.
+  Typed hold-out selectors no longer inherit sibling mark/axis restrictions.
+- F01 회귀점은 R4 입력·표본·진단을 바꾸지 않고 색, 물리 지름, 마커를
+  매핑합니다. hold-out 선택자는 형제 레이어나 축 제약을 상속하지 않습니다.
+
+- N10 adds native explicit nonuniform 3-D grids, signed bars, projected
+  contours, voxels, and a typed display-only camera.
+- N10은 비균일 3D 격자, 부호 있는 막대, 투영 등고선, 복셀 및
+  화면 전용 타입 기반 카메라를 추가합니다.
+
+- N09 adds typed native planar and 3-D quiver, raw-unit barbs, and finite
+  uniform-grid streamplots without changing the legacy quiver path.
+- N09은 타입 기반 평면·3D 화살표, 원시 단위 바브와 유한한 균일 격자
+  유선 표시를 추가합니다. 기존 quiver 경로는 그대로입니다.
+
+- Full-model HDR reuses a certified native geometry bound across compatible
+  draws, without reusing backend-specific clipping checks or raising limits.
+- 전체 모델 HDR은 호환되는 그리기에서 네이티브 기하 인증 범위를 재사용하되,
+  백엔드별 클리핑 검사는 다시 수행하며 자원 한도는 그대로 유지합니다.
+
+- A generated full-HDR unit label that is taller than its canvas can wrap
+  at a word break on a single constrained-grid colourbar without changing calibration.
+- 캔버스보다 높은 단일 제약 그리드의 전체 HDR 단위 라벨은 원시 보정을
+  바꾸지 않고 기존 공백에서 줄을 바꿀 수 있습니다.
+
+- N08 adds explicit masked triangle edges, face/vertex colours, contours and
+  a native 3-D `trisurf` sharing the same persisted XY topology.
+- N08은 명시적 연결·마스크를 사용하는 삼각형 변과 면·정점 색, 등고선,
+  동일 XY 연결을 공유하는 네이티브 3D `trisurf`를 추가합니다.
+
+- N07 adds [explicit native grid fields](docs/HEATMAP.md#explicit-native-grid-fields):
+  scalar/RGB(A) images, rectilinear meshes, dense spy and editable contour levels
+  and labels. Old unit-grid contours retain their existing behavior.
+- N07은 [명시적 네이티브 격자](docs/HEATMAP.ko.md)를 추가합니다. 스칼라/RGB(A)
+  영상, 직교 격자, 밀집 `spy`와 등고선 레벨·라벨을 지원하며 기존 등고선은
+  그대로 동작합니다.
+
+- Stacked statistic colourbars reserve a measured grid lane once while retaining
+  every visible bar's native bounds in tight exports.
+- 그리드에 쌓인 통계 색상 막대의 너비는 한 번만 예약하고, 여백을 자르는
+  내보내기에도 모든 막대의 표시 경계를 유지합니다.
+
+- N05/N06 add [event](docs/EVENTPLOT.md) and [interval](docs/BROKEN_BARH.md)
+  group/facet lanes with explicit raw spacing, dates and log endpoints. Events
+  support shared hue, physical stroke width and named dashes in source order.
+- N05/N06은 [이벤트](docs/EVENTPLOT.ko.md)와 [구간](docs/BROKEN_BARH.ko.md)의
+  그룹·패싯, 원시 간격, 날짜·로그 끝점을 지원합니다. 이벤트에는 원본 순서의
+  공유 색·물리 선 두께·점선 매핑을 적용할 수 있습니다.
+
+- N04 adds [native stairs](docs/STAIRS.md) with explicit mass/density rebinning,
+  open and filled windows, fixed group/facet selection and positive log geometry.
+- N04 [계단 플롯](docs/STAIRS.ko.md)은 질량·밀도 재구간화, 열린 경로와 채우기,
+  고정 그룹·패싯 선택 및 양수 로그 좌표를 지원합니다.
+
+- F01: typed histogram and count bodies accept shared raw hue, physical
+  outline size and native dashes without changing mass denominators.
+- F01: 히스토그램·도수 막대의 공유 색, 외곽선 두께와 선 스타일을 추가합니다.
+  가중 질량 분모는 표시 스타일과 분리됩니다.
+
+- N03 extends [stem plots](docs/STEM.md) with horizontal primary/twin axes,
+  fixed typed groups and facets, explicit date coordinates, and shared per-mark
+  hue, stroke width and marker/dash guides without changing the source rows.
+- N03 [스템 플롯](docs/STEM.ko.md)은 수평 기본·보조 축, 고정 그룹과 패싯,
+  명시적 날짜 좌표 및 색·선 두께·마커/점선 공유 범례를 지원합니다.
+
+- O01 adds typed [coordinate composition](docs/COORDINATE_PIPELINE.md) before
+  existing statistics and native moves, preserving raw source rows and JSON
+  defaults. Live date category orders now keep every eligible spelling of a
+  saved UTC instant; explicitly repeated instants still reject.
+- O01 [좌표 합성](docs/COORDINATE_PIPELINE.ko.md)은 원본과 기존 JSON을
+  보존하며 통계·배치 전에 적용됩니다. 날짜 패싯은 같은 시각의 다른 표기도
+  함께 선택하고, 명시적 중복 시각은 계속 거부합니다.
+
+- M01/M02 add scalar matrix norms and calibrated colourbars, explicit nullable
+  clustered data and supplied condensed geometry, ordered tracks/legends, and
+  editor cuts selecting original indices. See [heatmaps](docs/HEATMAP.md) and
+  [clustering and matrix reservations](docs/CLUSTERMAP.md).
+- M01/M02는 행렬 norm/색상표, 명시적 결측·제공 거리, 범주 트랙/범례와
+  원본 인덱스 군집 절단 편집을 추가합니다. [행렬](docs/HEATMAP.ko.md) ·
+  [군집 및 자원 예약](docs/CLUSTERMAP.ko.md).
+- M01/M02 reject a positive computed merge height that would restore to zero
+  and use the native constrained engine for advanced all-Cartesian nested matrices.
+- M01/M02는 단위를 복원할 때 0이 되는 양수 병합 높이를 거부하며, 고급 행렬의
+  직교좌표 중첩 배치에서 native constrained 엔진을 사용합니다.
+
+- R01/R02 add strict appended regression bootstrap/partial/sampling/diagnostics/
+  components declarations: one uniform paired physical-case percentile law with
+  original criterion masses, full-basis/joint/two-stage nuisance fits, real source-
+  aligned query/raw/deviance diagnostics and independently refitted full residual
+  trends. All requested replicates remain; undefined required fits reject without
+  retries, clipping, hidden deletion or changing point factory when CI is enabled.
+  NEW-only6B invocation/figure work,19-column full design and conservative256MiB
+  numerical managed/provider-reserve admission include actual target/stage/tail/
+  seed/lifetime costs, not an RSS/native-artist/opaque-provider allocation promise.
+  Existing omitted defaults, package1.1.0/schema0.1, providers/floors and native limits remain.
+  See [regression science/API/resource workflow](docs/REGRESSION.md).
+- R01/R02는 기존 네 positional 필드 뒤 strict bootstrap/partial/sampling/
+  diagnostics/components를 추가합니다. 원래 기준질량의 균등 physical-case 추출,
+  전체 nuisance/독립 trend 재적합, 실제 원행 query/raw/deviance와 모든 B 유지/
+  정의불가 거부를 명시합니다. NEW6B/전체19열/보수적256MiB numerical admission은
+  RSS/native artist/opaque provider 보장이 아니며 기존 생략 경로·버전·의존성·
+  native 경계를 바꾸지 않습니다. [한국어 계약](docs/REGRESSION.ko.md).
+- R01/R02 numerical admission borrows original source/spec values, projects
+  consumed columns once, and preflights all known figure byte lifetimes before
+  the first RNG. Paired-case curve traversal uses the first positive original
+  training/query occurrence independently of display order; sparse strict errors
+  retain original row indices.
+- R01/R02는 원자료/spec 값을 빌려 쓰고 소비 열을 한 번만 준비하며, 알려진 전체
+  figure byte 수명을 첫 RNG 전에 검사합니다. 추출 곡선 순서는 표시 순서와 무관한
+  첫 양의 training/query 원행을 따르고 sparse strict 오류도 원행 위치를 유지합니다.
+
+- Gaussian joint-CDF rectangles now use signed Plackett/fourth-derivative
+  integration, outward exact-midpoint enclosures and exact current-leaf dyadic
+  totals. Bounded exact field-local reuse ends before native output;
+  original-law1e-6/source/pool/positive-prefix
+  semantics and all guards stay unchanged, without an arbitrary relative-
+  precision promise or a new numerical provider.
+- Gaussian 결합 CDF는 부호 있는 Plackett 적분·미분 경계·정확한 중점 포함구간·
+  현재 leaf의 정확한 합을 쓰며, 한 필드의 제한된 동일 결과 재사용은 native
+  출력 전에 끝납니다.
+  원래 법칙의1e-6·원천/모집단/양수 prefix와 자원 경계는 그대로이며 새 수치
+  provider나 임의 상대 정밀도 보장을 추가하지 않습니다.
+
+- D01 adds strict persisted LineSpec predictor/resampling/calibration/family
+  declarations: complete original-unit percentile and exact finite-grid
+  max-deviation inference, with honest undefined support and empirical-only
+  nonregular extrema envelopes. Calibration is independent of bars/ribbon
+  geometry. Native numeric/real-clock/categorical, v/h and actual y2 routes
+  preserve per-curve missing topology without disconnecting unrelated irregular
+  curves. Raw supplied lines gain independent physical hue/size/style mappings,
+  never averaging or discarding source order/duplicates/barriers.
+- D01 adds scale_id-owned SharedGuideSpec / SetSharedGuides whole-list requests
+  and populated controls in both editors. Actual family-specific native contexts
+  remain distinct unless truly equivalent; dataset legends/unrelated scales stay.
+  Raw/estimated line mapping domains use the existing predictor-selected finite
+  observation cohort; excluded rows cannot create guides for empty reservations.
+  Complete-unit missing-response topology remains separate.
+  Empty mapped line families still register declared predictor reservations on
+  their actual target axes without manufacturing data or guide artists.
+  Fixed live facets retain stable N13 selectors/IDs/placements through nesting,
+  local edits and explicit whole-template transactions. NEW-only componentized
+  2B figure work and conservative256MiB working-state admission use exact bounded
+  tails, not full replicate matrices; omitted/predictor-only/cheap views retain
+  old admission. See [the complete line workflow](docs/LINE_WORKFLOW.md).
+  Weighted-total tail/endpoint/comparison bounds retain the real canonical weight
+  denominator; mean cancellation and all numeric/RNG kernels remain unchanged.
+  Percentile finalization also charges its actual per-vector sign-negation
+  objects and overlapping ordered-list/sort workspace, not a full matrix.
+  Shared inverse-log effects reject positive working intervals that round to a
+  false zero native span, including inherited cell routes, without changing RNG.
+- D01은 엄격한 저장 LineSpec으로 원본 unit 전체 percentile·유한-grid
+  max-deviation을 구분합니다. Undefined support를 숨기지 않고 min/max는 두
+  calibration 모두 nonregular 경험 envelope로 표시합니다. Bars/ribbon은
+  calibration과 독립이며 numeric/date/categorical·v/h·실제 y2와 curve별 결측
+  topology를 지원합니다. Raw line은 독립 물리 hue/size/style을 추가하되 원본
+  순서·중복·장벽을 평균/제거하지 않습니다.
+- scale_id가 유일한 membership인 SharedGuideSpec/SetSharedGuides 전체 list와
+  두 editor의 채워진 control을 추가합니다. 실제 mark family/native 문맥을
+  구분하고 진짜 같은 문맥만 합치며 dataset legend/다른 scale은 유지합니다.
+  Raw/추정 line 매핑 domain은 기존 predictor 선택 finite 관측 cohort를 사용해
+  제외된 행이 빈 예약 view에 guide를 만들지 않습니다. Complete-unit 결측 응답
+  topology는 별도로 보존합니다.
+  매핑할 관측이 없어도 실제 target 축의 선언한 predictor 예약 자리는 표시하고
+  data/guide artist를 만들지 않습니다.
+  Live facet의 N13 selector/ID/placement·local/whole-template 의미도 보존합니다.
+  NEW 전용 component별2B figure work·보수적256MiB working state·정확한 bounded
+  tail을 사용하며 omitted/predictor-only/저렴한 view의 기존 승인은 유지합니다.
+  [Line workflow 한국어](docs/LINE_WORKFLOW.ko.md)를 참고하세요.
+  Weighted total의 tail/endpoint/비교 byte 상한에는 실제 canonical weight 분모를
+  포함하며 mean 분모 상쇄와 수치·RNG kernel은 바꾸지 않습니다.
+  Percentile 마무리의 실제 vector별 부호 반전 객체와 동시에 살아 있는 정렬
+  list/sort workspace도 계상하며 전체 반복 행렬로 부풀리지 않습니다.
+  공유 역-log effect는 양의 working 구간이 가짜0 native 폭으로 반올림되면 기존
+  cell 경로도 거부하며 RNG는 바꾸지 않습니다.
+
+- D03–D06 add strict logical BivariateBinsSpec/Histogram2DSpec/ECDF2DSpec/HDRSpec
+  declarations and source-preserving paired workflows. Six histogram statistics
+  use true nonuniform raw/day areas and in-bin effective-hue/global mass; optional
+  KDE shares the pre-tally cohort, never count-height scaling. Gaussian and
+  variance-one Cholesky product-Epanechnikov share canonical physical covariance/
+  Kish/Scott/Silverman meaning. Shared-grid 1D layer/stack/fill and cumulative
+  contribution/composition remain distinct from an original-law joint CDF.
+  Actual primary/y2/v-h/clocks and explicit log10-fit data/fit Jacobian units reuse
+  the existing axis/row boundaries. Joint ECDF keeps every interior source knot,
+  exact tied/prefix masses and strict OR complement; percent combines its unit
+  before final float rounding. Statistic bars keep actual raw mappables/norms,
+  including subnormal values, separate from semantic hue guides.
+- Explicit full-model HDR calibrates ordered unknown cutoffs and retains all
+  requested levels as disjoint earliest-band guaranteed-inside native cells.
+  Support/source/numeric/transform/native/visible-clip error statements stay
+  separate; visible probability is not labelled target mass or raster-pixel mass.
+  NEW-only figure-wide2B composite work/256MiB owned working and retained state/
+  1M live pair scalars/2M native closure-inclusive vertices retain old admission
+  and separate D01/C07 ledgers. Construction caches release at real lifetimes;
+  bounded depth-first tessellation and growing edge/polygon scratch are admitted
+  before allocation, without recursive concatenations or reverse-slice copies.
+  Physical-cohort/group construction, empirical edge/order/native-probe
+  workspaces are prospectively admitted, with borrowed source leaves excluded.
+  Temporal capability layers share the actual dispatch authority, including ecdf2d.
+  Multiple owned statistic bars use one measured native lane; generated prose
+  units wrap without shortening raw ticks/authored math, and real backend
+  guide/body/twin bounds reject physically unresolved output.
+  Provisional lane width uses full native axis bounds to settle label anchors;
+  final visible-component checks retain a shared spine and actual owner frame.
+  Unresolved requests reject wholly; no tolerance/level/data substitution.
+  [Scientific/API/resource workflow](docs/DENSITY_FIELDS.md) and
+  [executable example](examples/density_fields.py); final same-artifact
+  installed/editor/product qualification remains separate.
+- D03–D06은 명시적인 짝지은 bin/통계/KDE/결합 ECDF/전체-HDR 모델을 추가합니다.
+  실제 원자료/day 면적·빈 내부 분모와 집계 전 동일 KDE 코호트를 유지하며
+  원본 행·질량·식별자를 바꾸지 않습니다. Gaussian/Cholesky product-Epanechnikov,
+  물리 공분산/Kish, 1D stack/구성비와 원래 법칙의 결합 CDF를 구분합니다.
+  Actual primary/y2/v-h/clock·log10 fit/Jacobian 단위, 모든 경험 매듭·strict OR,
+  최종 반올림 전 percent와 실제 원시 통계 mappable을 유지합니다.
+  전체 HDR은 오차를 분리한 내부 보장 셀 합집합이며 보이는 질량을 목표 p나
+  픽셀 질량으로 부르지 않습니다. NEW 전용2B/256MiB/1M/2M 경계와
+  깊이 우선·증가 scratch의 사전 수락은 기존 경로/D01/C07을 바꾸지 않습니다.
+  코호트·그룹 및 경험 경계·정렬·네이티브 검사 공간도 할당 전에 수락하고 원본
+  값은 빌린 참조로 유지합니다. 시간 capability는 실제 ecdf2d 포함 dispatch와 같습니다.
+  여러 통계 막대는 측정한 네이티브 영역을 함께 쓰며 생성 단위 설명만 줄바꿈합니다.
+  원시 눈금·작성 수학은 유지하고 실제 장식·본체·보조축 경계가 맞지 않으면 거부합니다.
+  임시 영역 너비는 실제 축 경계로 라벨 위치를 정하며, 최종 구성요소 검사는
+  공통 막대 기준선과 실제 소유 축 영역을 유지합니다.
+  실패를 축소된 허용오차·생략한 레벨·다른 데이터로 대신하지 않습니다.
+  [한국어 계약](docs/DENSITY_FIELDS.ko.md); 최종 동일 artifact 검증은 별도입니다.
+- Shared figure guide colourbars are figure-owned decorations rather than data
+  axes children. Measured whole-axis decoration bands repair nested column
+  spacing without moving manual titles/ticks or changing canvas/source geometry;
+  final unresolved spacing still warns. Invalid implicit layout shapes/types/
+  capacity reject before shared-axis expansion instead of leaking IndexError.
+
+- C07 adds finite weighted estimator/inference combinations, exact declared-percent
+  LEFT PI, full-exponent canonical source-unit reductions/moments and real
+  bar-outline/point-diameter/curve-stroke role guides. Typed date/native/log/y2 and
+  explicit live-template/local edits use the existing reducer/ReplaceLayer path.
+  NEW-only10000selected rows/256pointwise cells/2Bactual resampling-work guard,
+  compact case counts and1M active chunks preserve old admitted weighted/unit/
+  dense-line routes and seeded paired schedules. Whole-effect rejection never
+  returns prefix uncertainty, truncates resamples or rewrites observations.
+  Guides inherit actual native zero/nonzero stroke/fill/glyph contexts; opaque
+  unit IDs include empty strings, and explicit N13 sharing distinguishes weighted
+  totals (value*mass) from means/raw values without changing the old unit gate.
+- C07은 가중 named 통계·정확한 percent LEFT PI·canonical 원자료 산술/moment·
+  실제 bar 윤곽/point 지름/curve stroke guide를 지원합니다. Date/native/log/y2·
+  whole-template/로컬 편집은 기존 reducer/ReplaceLayer를 사용합니다. NEW 전용
+  선택10000행/점별256cell/실제2Bwork와1M active chunk는 기존 가중치·units·
+  dense-line 승인을 바꾸지 않고 seed·행 쌍을 보존합니다. 초과하면 요청 전체를
+  거부하며 prefix CI/줄인 resample/원본 변경/SLA·RSS 약속을 만들지 않습니다.
+  Guide는 실제 zero/nonzero stroke·fill·glyph를 상속하고 opaque unit ID의 빈
+  문자열을 허용합니다. N13의 명시적 공유는 가중 total(value*mass)과 평균/원자료
+  value를 구별하며 기존 단위 gate를 바꾸지 않습니다.
+
+- C05 adds declared relative-weight LEFT letter values, exact empirical band/tail
+  masses, physical-row Kish stopping, stable rank/side/raw-hue component ownership
+  and BODY colour/stroke/dash plus actual observed-flier mappings through shared
+  C04 selectors/domains/traits. New effect admission is32768 real band paths/
+  1000000 requested flier instances per figure; advanced source rows10000/cells256
+  per layer. Pure source validation does not fit; rendering prepares once before
+  native construction. These are not SLA/RAM claims; legacy admission/depth32 stay.
+  Declared secondary targets also compose with filtered and live facet cells.
+- C05는 상대 가중 LEFT 분위수·정확한 경험 band/tail 질량·물리 행 Kish 깊이·
+  안정적 rank/side/raw-hue 스타일과 실제 BODY/관측 flier 매핑을 같은 C04
+  규칙으로 제공합니다. 새 한도는 layer 원본 행10000/cell256, figure 실제
+  띠32768/요청 flier1000000이며 원본 검증과 한번의 effect 준비를 구분합니다.
+  기존 admission/깊이32를 유지하며 SLA/RAM 보장은 아닙니다.
+  선언한 보조 축을 필터·live facet cell 및 cell별 편집/기록과 함께 유지합니다.
+- Generic typed ReplaceLayer edits an already existing integer-indexed layer
+  without expansion/reordering or implicit live-template changes. Both real
+  editors populate collapsed full action JSON, retaining normal preview-commit,
+  rejection/history/reopen and existing generation/pointer ownership.
+- Typed ReplaceLayer는 기존 정수 인덱스 layer를 확장/재정렬/recipe 변경 없이
+  교체합니다. 양쪽 편집기의 접힌 전체 actionJSON·정상 preview commit·실패/기록/
+  재열기와 기존 세대/pointer 소유권을 유지합니다.
+- Correct finite unweighted type7 interpolation with one final rounding,
+  including the observed subnormal even median, without special-case values,
+  source mutation or a copied private selector.
+- 비가중 type7 보간은 관측된 subnormal 짝수 중앙값을 포함해 한 번만
+  반올림하며 특정 값 예외/원본 변경/비공개 selector 복제를 사용하지 않습니다.
+- PGF reference export now balances the same hyperlink independently inside
+  each native text group for explicit multiline and automatically wrapped
+  labels. Citations remain once at their original final marker, outside the
+  hyperlink; font/style, placement, source text and measurement stay unchanged.
+- PGF 참조는 명시적 여러 줄·자동 줄바꿈의 각 native 텍스트 그룹 안에서 같은
+  링크를 완결합니다. 인용은 마지막 원래 위치에서 링크 밖에 한 번만 유지하며,
+  글꼴·스타일·배치·원문·측정 규칙을 바꾸지 않습니다.
+
+- C04 adds explicit paired multi-hue half-violin lanes, H=1/odd tails/reserved
+  slots, native mode-specific and typed per-hue component traits, and shared
+  hue/BODY-outline-point/style mappings. Weighted tuple fits retain original
+  rows and normalize by effective hue/global pools with one reference plan.
+  Applicable date/native/log/v-h/y2/facet/live paths reuse the existing boundary.
+  Advanced admission is10000 selected rows/256 drawn profiles, categorical64
+  levels/overrides and existing1000 support points; no continuous-value64 cap.
+- C04는 명시 paired 다중 hue 반쪽·H=1/홀수/예약 자리·mode별/typed hue별 native
+  component·공유 hue/BODY 윤곽 point/style을 추가합니다. 원본 행/가중 fit을
+  보존하고 effective hue/전체 pool 참조를 한 번 해결하며 기존 날짜/target/live
+  기반을 재사용합니다. Advanced 행10000/profile256/범주형64/support1000이며
+  연속 숫자값64 제한·기존 상한 확대·callable·임의 kwargs는 없습니다.
+- Raw unextended violin component-only edits retain actual native inner
+  flag/color/span defaults through already fitted native statistics, without
+  refitting or erasing extended normalization. New Collection component proof
+  on Matplotlib3.8 exposed lowercase no-line setter incompatibility; canonical
+  native no-stroke representation retains segments/fill/independent glyphs.
+  Logical raw-hue guides no longer repeat per category, without global label
+  deduplication or dropping any plotted profile.
+- 비확장 raw violin의 component-only 편집은 이미 fit한 native 통계로 기존
+  inner flag/color/span을 재fit 없이 유지합니다. MPL3.8의 새 Collection
+  component no-line token 문제는 native 표현으로 해결해 segment/fill/독립
+  glyph를 보존하고 범주별 중복 hue guide만 logical 소유권에서 제거합니다.
+
+- N13 adds typed stable panel identities and one declarative cell/span/inset
+  convention for native nested grids and mosaics, empty positions/frames,
+  ratios, safe rename/reorder/removal and complete placement updates. Named and
+  hierarchical sharing use the same pure components as N12 tick inheritance;
+  known statistical/spectral units are not mixed with observation axes.
+  Both real editors expose populated layout actions and retain generation-safe
+  visible previews. Old 0.1 omitted defaults and regular-grid rendering remain;
+  isolated qualification does not close G02/G03, REL01 or the v2 catalogue.
+- N13에 안정적 typed 패널 ID·단일 cell/span/inset 규칙·native 중첩 grid/mosaic·
+  빈 자리/frame·비율·명시적 이름/순서/삭제/전체 배치 편집을 추가합니다.
+  공유·N12 눈금 상속은 같은 순수 component를 쓰며 알려진 통계/스펙트럼 단위를
+  관측값 축과 섞지 않습니다. 양쪽 편집기의 배치 폼·세대별 preview를 유지하고
+  기존 버전/하한/기본 경로는 그대로입니다. 전체 v2 완료 주장이 아닙니다.
+- Actual sparse legacy-open browser proof exposed missing Rust layout forms.
+  Forms now consume effective renderer panel identities/counts without adding
+  phantom defaults to the saved sparse document before a structural action.
+- 실제 sparse legacy-open에서 빠졌던 Rust 배치 폼은 renderer의 유효 패널
+  ID/수를 사용하도록 고쳤습니다. 구조 action 전 원본에 가짜 기본 필드를 넣지 않습니다.
+- N13 explicit hierarchies uniformly select native tight layout before
+  axes/colourbars. Full-bound thin and balanced constrained-solver stalls are
+  retained as failure evidence; there is no threshold/fallback/drop-to-fit.
+  Engine-specific guide rectangles and honest native decoration warnings remain.
+- N13 명시 hierarchy는 axes/colorbar 생성 전 native tight layout을 일관되게
+  선택합니다. 전체 한도의 constrained solver 지연 증거를 보존하고 threshold/
+  fallback/표본 삭제 없이 engine별 guide 좌표와 실제 장식 경고를 유지합니다.
+- Explicit tight-layout diagnostics now measure real visible axis labels and
+  narrowly check eligible tick groups against automatic decorations. Tick
+  union-box broadphase avoids tick-vs-tick all-pairs work. The retained R2
+  publication title/tick collision warns without moving source geometry; the
+  example explicitly positions its reserved-panel title inside that frame.
+- 명시 tight 배치는 실제 보이는 축 label 및 기존 eligibility의 tick group과
+  자동 장식 충돌을 측정합니다. Union bbox로 후보를 좁히고 tick끼리 전수 비교하지
+  않습니다. R2 실제 제목/tick 충돌은 geometry를 바꾸지 않고 경고하며 예제는 공개
+  title_position으로 빈 frame 안의 제목 위치를 명시합니다.
+- New statistical/spectral sharing-role checks require explicit N13 geometry
+  or stored panel identities. Ordinary legacy shared raw/count scenes retain
+  native behavior; original category/clock/domain/sharing validation stays global.
+- 새 통계/스펙트럼 공유 차원 검사는 명시 N13 geometry 또는 저장 패널 ID가 있을
+  때만 적용합니다. 기존 raw/count 공유 장면과 원래 범주/시간/domain/공유 검증은
+  유지하며 N13 opt-in 안의 차원 검증을 완화하지 않습니다.
+- N12 adds finite typed major/minor locators/formatters, native scale
+  parameters and named derived top-x/right-y unit conversions, without
+  repurposing independent y2. Shared conflicts, actual primitive domains,
+  every derived-view refresh and dedicated active-tick bounds reject misleading
+  requests. Canonical opt-in clocks retain accepted distant-epoch microseconds;
+  new logit constant views contain data. Existing schema/package/floors/default
+  paths remain unchanged; isolated qualification is not integration/all-v2 closure.
+- N12에 유한 typed major/minor 눈금·native scale parameter·이름 기반 보조
+  x/y 단위 view를 추가하며 독립 y2를 유지합니다. 공유 충돌·실제 도형 domain·
+  view 갱신·전용 active tick 상한·canonical 시간 정밀도·상수 logit 자료
+  포함을 확인합니다. 기존 버전/하한은 유지하고 isolated 검증과 통합을 구분합니다.
+- Canonical concise format selection adapts Matplotlib3.8 policy; full license,
+  attribution and changes are bundled. Distribution expression is
+  `MIT AND LicenseRef-Matplotlib`; the project's own LICENSE remains MIT.
+- Actual Python browser qualification exposed stale visible preview reuse despite
+  no-store responses. Preview images now use the existing view generation in
+  their URL; stale generation reads reject without mixing current PNGs with old
+  native handles. Bare PNG downloads remain unchanged. Disabled-data reasons
+  from canonical per-panel metadata are escaped and visibly rendered.
+- Python 실제 화면의 오래된 preview 재사용을 기존 view generation URL과
+  stale 요청 거부로 고쳤습니다. PNG·native handle 세대를 맞추며 기존 bare
+  다운로드는 유지합니다. 비활성 data drag 이유는 공통 metadata를 escape해 표시합니다.
+
+- C03 adds typed column-reference `bxp` mode on the existing box layer, raw
+  seeded median bootstrap CI, final-body-fraction caps and exact raw-key per-hue
+  components. Shared box hue/body-stroke/flier-style roles support applicable
+  date/log/v-h/y2/facet/live paths without rewriting source rows or units.
+  New advanced work bounds are 256 drawn samplecells, 10000 selected rows and,
+  independently, 10000 declared flier values; legacy no-new-request limits stay.
+- C03은 기존 box layer에 typed column 참조 `bxp`·원자료 seeded 중앙값 CI·최종
+  body 폭 비율 cap·정확한 raw key의 hue별 component를 추가합니다. 공유 box
+  hue/body-stroke/flier-style과 적용 가능한 date/log/v-h/y2/facet/live는 원본 행/
+  단위를 보존합니다. 새 advanced 상한은 samplecell256·선택행10000·별도 flier
+  값10000이며 기존 무요청 경로의 상한은 그대로입니다.
+- Shared selector statistics and bootstrap percentile endpoints retain tiny
+  selected observations; safe midpoint/binary interpolation avoids needless
+  overflow/underflow without replacing mean/sum arithmetic. Native zero-width
+  dashed box components retain independent markers/fill on Matplotlib3.8.
+  Raw absent controls inherit actual native rc settings; orthogonal cap edits
+  do not enable unrelated bodies/means/fliers. Explicit category inference in
+  live one-column distributions follows the category source, not the value x.
+- 공유 선택 통계/percentile endpoint는 작은 선택 관측값을 보존하고 mean/sum
+  변경 없이 불필요한 overflow/underflow를 피합니다. 3.8의 width0 dash도 실제
+  marker/fill을 유지합니다. Raw 생략 제어는 실제 native rc를 따르고 cap 편집은
+  무관한 body/mean/flier를 켜지 않습니다. 한 열 live 분포의 명시 범주 재추론은
+  값 x가 아닌 실제 category source를 따릅니다.
+
+- C02 adds native filled marker/style choices, independent shared hue/size/style,
+  explicit date/log/v-h/y2 and compatible cross-layer packing. Original rows and
+  exact legacy circles remain; one draw-pass coordinator counts duplicate drawn
+  instances separately. Existing2000/layer stays; the profiled new named-scope
+  operation bound is4000 physical instances, not an SLA or data downsampling.
+- C02에 실제 native marker/style·공유 hue/size/style·날짜/log/v-h/y2·명시 호환
+  cross-layer packing을 추가합니다. 원본 행·기존 원을 보존하고 pass마다 한 번
+  중복 물리 instance도 따로 셉니다. 2000/layer 유지, 새 scope4000 연산 상한은
+  SLA나 downsampling/제한 완화가 아닙니다.
+- A reusable G01 increment adds opt-in SetLiveFacets/FacetTemplateSpec and explicit
+  SetFacetTemplate transactions. Saved local views remain authoritative on load;
+  whole-template edits deliberately supersede local overrides while preserving
+  fixed selectors, same-channel slots and compatible ratios/sharing. This is the
+  new C02 live-grid unit, not the old SetData/materialization subset or G01 closure.
+- 재사용 G01 증분은 선택 SetLiveFacets/FacetTemplateSpec·명시 SetFacetTemplate를
+  제공합니다. 로드한 로컬 view는 그대로이고 전체 편집은 로컬 override를 의도적으로
+  대체하되 고정 selector·같은 채널 slot·호환 ratio/sharing을 보존합니다. 기존
+  SetData/materialization이 아닌 새 C02 live 단위이며 G01 전체 종결은 아닙니다.
+- N11 adds required-Hz typed spectrogram, Welch PSD/CSD/coherence and whole
+  magnitude/wrapped angle/unwrapped phase. Named FFT/window/detrend/sides/
+  scaling, correct padded Nyquist factors, derived units and undefined gaps
+  preserve raw samples/order. Dedicated algorithm caps precede allocation.
+  Native artists/pure core/JSON/actions/CLI/generic Rust share the contract.
+  Isolated qualification awaits integration; no all-v2/version/floor claim.
+- N11에 필수 Hz 표본율·typed spectrogram/PSD/CSD/coherence/magnitude/angle/
+  phase를 추가합니다. 원본 표본·순서·미정의 gap·단위·전용 할당 상한을 유지하며
+  통합 전 isolated 검증이지 전체 v2 완료나 버전/의존성 상향이 아닙니다.
+- N11 source review corrected coherence's unit-dependent fourth-order numeric
+  underflow/overflow with coherence-only positive channel scaling before FFT.
+  Shared colour/text/reference validation now rejects malformed/unused metadata,
+  and spectral legends honour existing SVG links and PGF citation/href macros.
+- N11 검토에서 coherence의 단위 의존 곱 underflow/overflow를 effect 내부 양수
+  채널 scaling으로 보정했습니다. 공통 metadata 검증과 SVG/PGF reference를
+  재사용하며 원본/CSD 물리 단위는 유지합니다.
+- The same coherence numeric boundary also normalizes each frequency's private
+  segment-coefficient vector before products, preserving nonzero weak bins
+  beside strong frequencies. Physical CSD remains unscaled. Zero-width dashed
+  spectra use native no-line geometry with unchanged artist data on Matplotlib
+  3.8 as well as current versions.
+- 같은 coherence 수치 경계에서 주파수별 private segment 계수도 곱 전에
+  정규화하여 강한 주파수 옆의 약한 nonzero bin을 보존합니다. 물리 CSD는
+  바꾸지 않고 width 0 dash는 3.8/current 모두 데이터 보존 no-line으로 표시합니다.
+- Coherence channel scaling uses only the actually consumed full-window prefix,
+  never unused trailing samples; detectable nonzero loss from extreme consumed
+  dynamic range raises a precision error before FFT rather than false zero bins.
+- Coherence scaling은 실제 소비한 full-window prefix만 쓰며 trailing 표본은
+  원본에 유지합니다. 극단 범위의 nonzero 소실은 FFT 전 정밀도 오류로 보고합니다.
+
+- C01 opt-in categorical strips now support selected/reserved category × hue
+  slots, native numeric/log/date spacing, v/h and named local uniform/none
+  jitter. Keep legacy raw-x defaults/JSON and raw measurements unchanged.
+  Real Rust/browser history/reopen and installed minimum API/CLI bounded
+  acceptance are recorded; final frozen-product qualification remains separate.
+- C01 명시 범주 strip에 빈 category×hue 슬롯 예약·native 숫자/log/날짜 간격·
+  v/h·이름 있는 local uniform/none jitter를 추가합니다. 이전 raw-x 기본값·JSON과
+  관측값은 보존합니다. 실제 Rust/browser history·재개방·설치 최소 환경 API/CLI의
+  제한 기능 인수를 기록하며 최종 고정 제품 자격 검증은 별도입니다.
+- CND01's real Python/Rust comparison triggered active-panel x/y/y2/z controls and native title/legend/text/annotation handles in Rust. Shared installed preview metadata uses actual PNG pixels, preserving clocks, source data, history, and existing generic forms. Local evidence is in `docs/review_evidence/v2_rust_specialized_controls.json`; schema 0.1 and package 1.1.0 remain unchanged.
+- CND01 실제 비교에 따라 Rust 활성 패널 x/y/y2/z 제어와 native 제목·범례·text/annotate 이동을 추가합니다. 설치 가능한 공통 preview metadata는 실제 PNG 픽셀을 사용하고 시간 설정·원자료·history·기존 generic form을 유지합니다. 로컬 근거는 `docs/review_evidence/v2_rust_specialized_controls.json`이며 schema 0.1·package 1.1.0은 바꾸지 않습니다.
+- M01 custom same-shaped heatmap annotation strings (up to 512 characters/cell)
+  and finite x/y tick rotations now round-trip separately from scalar colour
+  values. Masked cells suppress text; clustermap reorders text, masks and labels
+  together by original cell identity. Wider norms/colourbar/layout remain required.
+- M01에 숫자와 독립적인 같은 모양 사용자 주석(셀마다 최대 512자)·유한 x/y tick
+  각도를 추가합니다. Mask는 주석을 숨기며 clustermap은 원래 cell ID에 맞춰
+  text/mask/label을 함께 재배열합니다. 추가 norm/colourbar/layout은 계속 필수입니다.
+- CND02 narrows redundant default-Store history replay: retain one prior
+  internal transition for immediate undo and reduce only the next redo action.
+  Existing deeper64-action checkpoint/custom-reducer replay and defensive public
+  copies remain; no dispatch copy or resource-limit change. Retaining one extra
+  old graph is an explicit memory tradeoff, not a universal speed/atomicity claim.
+- CND02 기본 Store의 중복 재생을 줄여 직전 내부 상태 하나로 즉시 undo하고 다음
+  redo action만 계산합니다. 깊은64-action checkpoint/custom 재생·공개 방어적 복사는
+  유지하며 dispatch 복사·자원 상한 변경은 없습니다. 이전 graph 하나 추가 보관은
+  명시적 메모리 tradeoff이며 보편 속도/실패 원자성 보장이 아닙니다.
+- F01's scatter/lineplot increment adds explicit numeric-hue colourbars and
+  scatter outlines in points. Exact raw ticks share mark normalization, including
+  signed extremes and constant swatches; one logical-panel/shared guide respects
+  primary/y2 and later requests without deleting dataset/size/style guides.
+  Wider applicable families and complete F01 qualification remain required.
+- F01 scatter/lineplot 증분에 숫자 hue colourbar·point 윤곽을 추가합니다. 정확한
+  raw tick은 signed extreme·상수를 포함해 mark 정규화를 공유하며 논리 panel/
+  shared guide 하나로 primary/y2·후순위 요청을 처리합니다. Dataset/size/style은
+  보존하며 넓은 적용 계열·F01 전체 검증은 계속 필수입니다.
+- F01 now connects independent strip/weighted-ECDF roles to the shared raw-row
+  pools. Point diameters and curve strokes retain distinct physical units;
+  ECDF markers show right-continuous observed knots, never boundary sentinels.
+  Preserve all remaining family/inference scope as unfinished.
+- Preserve legacy positional LayerSpec alpha binding by appending optional strip
+  after existing fields. Actual archived-baseline/current artist opacity was
+  compared; the earlier C01 frozen receipt remains historical, not overwritten.
+- F01 strip/가중 ECDF를 공유 raw-row pool에 연결하며 지름/곡선 stroke의 point
+  단위를 구분합니다. ECDF marker는 경계 sentinel이 아닌 실제 우연속 knot입니다.
+  새 strip 필드는 뒤에 추가해 이전 positional alpha를 보존하고 실제 baseline/
+  current artist를 비교했습니다. 다른 필수 계열·추론 범위는 여전히 미완료입니다.
+- D07 adds vertical/horizontal/secondary-y rugs, finite axes-fraction heights,
+  independent raw-row hue/stroke-point/dash mappings and shared guides. Native
+  blended segments retain duplicates/order and zero height/stroke without changing
+  perpendicular density/value limits or parsing height as calendar data.
+  The existing width field and omitted 0.04 defaults remain; no schema/version
+  change, weights, inference or point-marker reinterpretation.
+- D07에 수직/수평/y2 rug·유한 axes-fraction 높이·독립 raw-row hue/point-stroke/
+  dash 매핑·공유 guide를 추가합니다. 중복/순서와 높이·stroke 0을 보존하고 독립
+  밀도/값축 범위를 오염시키거나 높이를 날짜로 해석하지 않습니다. 기존 width/
+  생략 기본값 0.04 유지, schema/version 변경·가중치·추론·point 재해석은 없습니다.
+
+## [1.1.0] - local candidate (not published)
 
 ### Fixed
 
-- Update only the audit script's transitive certifi lock to2026.10.19 for
-  GHSA-6q48-6c7w-9gw2. Keep application/minimum locks and audit enforcement unchanged;
-  UV's generated script-lock format revision advances without a package release.
+- Correct subnormal and mixed integer/float recommendation medians and Tukey
+  fences using exact interpolation, without changing inputs or scalar types.
+  Include configured secondary-axis descriptions in visual QA.
+- Stage PGF text and raster sidecars before publication; back up existing files
+  and roll back failed publication without changing successful asset names.
+  Keep temporary writes private, retain recovery backups if restoration fails,
+  exclude private export files from distributions, and surface recovery notes in
+  the CLI. Report the actual Matplotlib-resolved path for extensionless output.
+- Include all eight linked scientific-quality PNGs in source distributions;
+  the generated-image ignore rule previously omitted this subdirectory.
+  Add an offline installed-wheel render/CLI smoke (`check_wheel.py --render`),
+  required by CI/release, while retaining the dependency-free core smoke.
+- Require finite numeric measurements and complete identifiers for paired
+  recommendations; reject misaligned role columns and withhold advice without
+  usable coordinate/measurement rows. Detect fractional UTC offsets discarded
+  by the datetime parser without inventing repeated timestamps.
+- Respect journal font minima in visual lint. Ignore transparent collection
+  members, RGBA strokes/text and fully masked images; combine image opacity
+  sources while retaining hatch-only patches and alternate marker faces.
+- Preserve integer precision in scientific chart advice: extrema, integral
+  medians, Tukey fences, numeric time ordering and native event offsets no longer
+  round through float first. Add coordinate-precision warnings without changing
+  measurements/units, reject implicit nonnumeric time coercion, and handle missing
+  ISO time values without a crash. Decline unsupported sub-microsecond ISO string
+  precision instead of falsely reporting repeats. Cover these cases in the
+  minimum runner.
+- Update the audit script's transitive certifi lock to2026.10.19 for
+  GHSA-6q48-6c7w-9gw2. That isolated patch left application/minimum locks unchanged;
+  the later Pillow/security-floor changes are recorded separately below.
 - Repack native swarm artist size/linewidth arrays using pairwise radii and
   individual gutters, preserving scalar geometry, rows, transforms and crowding
   warnings. Reject invalid arrays before changing offsets; no new public size
   semantic mapping is implied.
 
+### Security
+
+- End Python 3.10 support for v1.1 as an owner-approved security exception;
+  require Python >=3.11 and NumPy >=1.23.5, and explicitly constrain rendering to
+  Pillow >=13.0.0. The previous Pillow 12.3.0 lock failed the dependency audit,
+  while the patched line requires Python 3.11. Keep the Python API, FigureSpec/
+  JSON, measurements and Matplotlib defaults unchanged.
+- Refresh all affected locks, including auditor-only filelock/msgpack patches,
+  without audit waivers. Requalify the new locks instead of reusing older passes.
+
 ### Added
 
+- Added opt-in `smart` / `smart-print` render/save policies for measured
+  legend/data collision repair, shared legends and safe direct two-method labels.
+  Added deterministic `recommend()` chart advice and actual-size visual lint with
+  JSON repair suggestions and CLI access. Preserve default rendering, raw data,
+  FigureSpec/JSON and the existing Matplotlib renderer; no new dependency.
+  Four synthetic 300-DPI before/after cases document both automatic layout and
+  explicit author decisions: see `docs/SCIENTIFIC_QUALITY.md`.
 - Added Swarm facet/filter selection with pooled size domains and frame-only
   reserved empty cells, including fully empty semantic grids and stable SetData
   filters. Keep plain empty layers invalid and all option/column/geometry guards;

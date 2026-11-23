@@ -29,11 +29,11 @@ sizeorder로숨기지않으며결측은category/value/group/size동일cohort에�
 Legend=False는크기guide만생략하고mapping은유지합니다. Numeric의clipping/중간값경로는변경하지않고
 categorical에numeric size_norm을주면거절합니다.
 
-PrimaryCartesianlayer에서semantic hue/style/date/y2/cross-familysharedscale/
-동시scalar marker_size는계속거절합니다. 유효행2000상한은명시선택뒤적용하고양수면적표현불가는
-artist전에실패합니다. Epsilon/source강제변환이나새model/action/specfield/의존성은없습니다.
-성공Figure는호출자가소유하며close해야합니다. [Swarm-onlynamed size](SWARM_SHARED_SIZE.ko.md)는
-pooledcategoricalrank를공유할수있습니다. [Facet/선택빈frame](SWARM_FACETS.ko.md)도지원합니다.
-
-양editorrawJSON은보존하지만전용control/독립사람가독성·AT인증완료를주장하지않습니다.
-자원상한은전체CPU/RAM/sandbox보장이아니며더넓은style/date/facet의미는남습니다.
+[전체 C02 workflow](SWARM_FACETS.ko.md)는 숫자/범주 공유 hue/size·실제 named style
+glyph·날짜·v/h/y2·명시 cross-layer packing/live template 편집을 지원합니다.
+[Named size](SWARM_SHARED_SIZE.ko.md)는 기존 다른 point/curve 계열과 rank를 공유하고
+mark별 물리 단위를 구분합니다. Scalar marker_size와 mapped size 충돌은 계속 거부합니다.
+선택 뒤 layer별 2,000행 상한은 그대로이며 새 named 연산은 그린 instance를 중복 제거하지
+않고 4,000개로 제한합니다. 양수 면적 표현 불가는 artist 전에 실패하며 epsilon/원본 강제
+변환/의존성 변경은 없습니다. Figure는 호출자가 close하며 합성 preview나 행 상한을
+사람 접근성/전체 CPU·RAM 보장으로 부르지 않습니다.

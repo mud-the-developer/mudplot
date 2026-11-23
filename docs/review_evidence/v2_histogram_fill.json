@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-feature-checkpoint",
+  "catalogue": [
+    "D02"
+  ],
+  "status": "Explicit typed histogram fill locally verified; D02/statistical task/v2 remain incomplete",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "implemented": [
+    "HistogramSpec.fill bool/null is appended after six positional fields. Omission/null inherits filled bars/unfilled steps and omits the new JSON key. Explicit bool opts into the existing typed HistogramSpec contracts.",
+    "Within fixed typed statistics, fill changes native drawing only: weighted heights, cumulative mass, raw widths, source measurements and input order remain unchanged.",
+    "Native filled steps and outline bars support layer/stack/dodge and v/h. Filled steps use contrasting native hatch/edge defaults; outlines use group-colored strokes/theme dashes without hatches.",
+    "Typed alpha=0 suppresses native fallback hatch ink without dropping curves, source data, limits or legend labels. The untyped legacy effect path remains unchanged.",
+    "API/actions/strict schema/capabilities/CLI/Python editor/Rust JSON editing, field fixtures, example and English/Korean guidance are synchronized."
+  ],
+  "checks": {
+    "current_final_renderer": {
+      "path": "artifacts/v2_histogram_fill/fill-current-opacity.xml",
+      "cases": 301,
+      "passed": 301,
+      "failure": 0,
+      "error": 0,
+      "skipped": 0
+    },
+    "minimum_reconciled": {
+      "original": {
+        "path": "artifacts/v2_histogram_fill/fill-minimum-opacity.xml",
+        "cases": 301,
+        "passed": 293,
+        "failure": 8,
+        "error": 0,
+        "skipped": 0
+      },
+      "focused_recheck": {
+        "path": "artifacts/v2_histogram_fill/fill-minimum-opacity-recheck.xml",
+        "cases": 25,
+        "passed": 25,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "rechecked_failed_ids": [
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-#7C3AED-False-bars]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-#7C3AED-False-step]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-#7C3AED-True-bars]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-#7C3AED-True-step]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-None-False-bars]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-None-False-step]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-None-True-bars]",
+        "tests.test_histogram_fill.test_fill_face_outline_hatch_reserved_style_and_legend[0-0-None-True-step]"
+      ],
+      "unique_latest_outcomes": {
+        "cases": 301,
+        "passed": 301,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      "single_clean_full_run": false,
+      "explanation": "Eight strict pixel comparisons were confounded by Matplotlib 3.8 iterative constrained layout. minimum-opacity-diagnosis.log proves repeat drift; the test alone freezes its already chosen layout. All eight failed identities are in the passing 25-case recheck. Production geometry is unchanged; the raw failed report remains intact."
+    },
+    "earlier_core_schema_profiles": [
+      {
+        "path": "artifacts/v2_histogram_fill/fill-current-contrast.xml",
+        "cases": 521,
+        "passed": 521,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_fill/fill-minimum-contrast.xml",
+        "cases": 521,
+        "passed": 521,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    ],
+    "profile_scope": "Earlier 521-case profiles include full-field codecs/schema and dependency-free core. Later production changes were renderer-only. Final renderer evidence is the current 301-case report plus reconciled minimum outcomes, not a claimed new whole-profile 521 run.",
+    "field_fixture": "25 model types / 278 fields / 3 structural figures. Earlier fixture and published-schema snapshots retained.",
+    "numerical_reference": "Independent weighted native density/CDF geometry: bars/step, fill/outline, layer/stack/dodge, v/h, raw slots, empty reservations, log/inversion and ISO/y2 canonical-day paths. Installed count slots/heights also asserted. Strict bool/null API+JSON+actual published schema, actions/editor rejected-edit state and CLI covered.",
+    "default_compatibility": {
+      "cases": 7,
+      "proof": [
+        "exact spec JSON hash",
+        "exact action JSON hash",
+        "exact RGBA pixel hash"
+      ],
+      "previous": "artifacts/v2_histogram_fill/previous-defaults.json",
+      "final_current": "artifacts/v2_histogram_fill/current-defaults-opacity.json",
+      "baseline_wheel": "artifacts/v2_histogram_d02/step-dodge-wheel/mudplot-1.1.0-py3-none-any.whl",
+      "baseline_sha256": "73bf9b02a1ff3f8d7f592a229b57e1b07f9aa9afaee84570375c44e0a3ed82b2",
+      "old_import_outside_checkout": true
+    },
+    "zero_alpha_probe": {
+      "cases": 16,
+      "log": "artifacts/v2_histogram_fill/zero-alpha-pixel-probe-fixed.log",
+      "result": "Exact RGBA equality with hidden data and unchanged limits/spec across bars/step,v/h,default/explicit edge and zero/nonzero stroke width."
+    },
+    "schema_sync": "All four scripts/check_schema_sync.py targets passed after the final typed-alpha0 documentation update.",
+    "static": "Ruff check/format passed 13 changed Python paths. Active LSP passed 13 paths and subsequent changed subsets. The last test-only layout freeze passed Ruff and the focused minimum recheck; final active probe follows receipt creation.",
+    "current_environment": {
+      "python": "3.13.12",
+      "dependencies": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pillow": "13.0.0",
+        "pytest": "9.1.1"
+      }
+    },
+    "minimum_runtime_environment": {
+      "python": "3.11.14",
+      "numpy": "1.23.5",
+      "matplotlib": "3.8.0",
+      "pillow": "13.0.0",
+      "pytest": "9.2.0",
+      "scope": "Bounded runtime-minimum cohort, not full scripted qualification"
+    },
+    "human_lifecycle": {
+      "script": "artifacts/v2_histogram_fill/rust_histogram_fill_opacity.py",
+      "log": "artifacts/v2_histogram_fill/rust-histogram-fill-opacity.log",
+      "chromium": "153.0.8010.12",
+      "scenes": [
+        "filled-step",
+        "outline-bars",
+        "zero-opacity-step"
+      ],
+      "workflow": "Actual human JSON fill/clock/title/alpha edit, exact spec+PNG undo/redo, downloaded JSON reopen, PNG/SVG/PDF. Rejected fill=yes preserves state/preview; source columns exact. Zero-opacity SVG has no hatch patterns.",
+      "rust_binary_sha256": "26e88f3716c8e6205b22e044ac7a33324d705c8ddbdc296aa8f2e428ed553cd0",
+      "fresh_rust_build": false,
+      "full_standard_smoke_rerun": false
+    },
+    "installed_wheel": {
+      "status": "passed",
+      "command": "PYTHONPATH=. MPLBACKEND=Agg .venv/bin/python scripts/check_wheel.py --render --out-dir artifacts/v2_histogram_fill/wheel-opacity",
+      "log": "artifacts/v2_histogram_fill/fill-wheel-opacity.log",
+      "coverage": "sdist->wheel,required/forbidden files,outside-checkout core/API/actions/JSON/PNG/CLI SVG,filled weighted step count slots,outline bars,zero-opacity SVG without patterns. Prior temporal/y2 smoke retained.",
+      "final_release_qualification": false
+    },
+    "visual_review": "Inspected final example-contrast four-panel PNG and native filled-step PNG. Hatches contrast, outline styles/legends/input-weight line are legible. No physical-print, global gallery-image refresh or real-source-data validation claim.",
+    "independent_review": "Read-only scout/reviewer reports retained. The reviewer lacked execution tools; its pending obsolete strictness-test and published-schema findings were fixed and verified. No independent post-visual-fix review is claimed."
+  },
+  "preserved_attempts": {
+    "initial_api": {
+      "path": "artifacts/v2_histogram_fill/fill-before.xml",
+      "cases": 2,
+      "passed": 0,
+      "failure": 2,
+      "error": 0,
+      "skipped": 0
+    },
+    "initial_oracles": {
+      "path": "artifacts/v2_histogram_fill/fill-initial.xml",
+      "cases": 85,
+      "passed": 79,
+      "failure": 6,
+      "error": 0,
+      "skipped": 0
+    },
+    "notes": [
+      "Original unsupported-fill characterization is preserved in original-fill-pin.md. A genuinely unknown fill_policy still rejects in codec and schema.",
+      "Initial six failures were oracle assumptions: native filled bars have no-edge defaults and capability fields are list objects. Corrected assertions preserve those native contracts.",
+      "Actual visual/pixel checks found same-color hatch contrast and zero-alpha fallback ink after earlier passes. Both were fixed and checked with SVG/Agg and actual native exports.",
+      "zero-alpha-pixel-probe.log retains empty stdout of the initial failing bars/v/default-edge assertion; tool history retains stderr. zero-alpha-diagnosis.log proves the cause; the fixed probe uses another filename.",
+      "All failed/partial reports and pre-fix wheel/browser/default artifacts remain. No failure receipt was overwritten as success.",
+      "Receipt assembly hit a tool-output limit and then a quoting error before a receipt was written. Artifact hashes are split into a separate manifest; no product checks were rerun for those recording errors."
+    ]
+  },
+  "remaining_required": [
+    "D02 multiple=fill normalization,poly,discrete/named automatic bins and the complete width-coordinate contract. Still mandatory,not excluded or deferred.",
+    "Other frozen F01/C01-C07/D01-D07/O01 and remaining catalogue. No D02/statistical-task/REL01 completion.",
+    "Frozen-source complete Linux/supported-Python/minimum/optional-adapter/browser/Rust/TeX/PGF/static/security qualification. Required skips are not passes; Windows/macOS unverified.",
+    "2.0.0 version synchronization and final independent rebuilds/file checks/outside-checkout release evidence. This bounded build predates this receipt and is not final delivery."
+  ],
+  "delivery": {
+    "local_only": true,
+    "performed_commit": false,
+    "published": false
+  },
+  "source_sha256": {
+    "mudplot/spec.py": "417d559a46cfed7c6b8584bc3918c249a8f5cf9c5c9f5292284d32c0badec06a",
+    "mudplot/api.py": "917fee998500300287ae19669015fb2c6b84f1ab08fafe1ee50d5ea133ec4591",
+    "mudplot/_render.py": "bf08cafc406d8b182410816817f5013ee363f13c16aac3d7286090294de5e3f6",
+    "mudplot/_histogram.py": "f9775c1b7d7c36e728e1007c78b6287d9ab6e7e1b4868bb3da669816d5b733e2",
+    "mudplot/validate.py": "1053abe80de9015063af7d7bcff71b8ff2230912430aba9a420cc28008f4f08f",
+    "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+    "mudplot/capabilities.py": "5daa0bee6a00e6df61bfb67a6e8840b171af8d2d2f8f9e6ceed8f502f3b8c47e",
+    "mudplot/docs.py": "3a7a863a1622290e980006be3ac171162d976ff18200d3e6b3d5d3612fbc293a",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "tests/test_histogram_fill.py": "fb0254e2822b669b10a2992fb2345a753b7d2e48b21df2bf6613551ad6921c8d",
+    "tests/test_histogram_statistics.py": "00d41705e0a71bb0f75e7bf9e40d524643ab49fea22e29572eef89733b5a4438",
+    "tests/test_no_deps.py": "299f8dcc3f1d9312e8c5cb30b888a58019678b5d189bcd4b373f088dd6ce25c7",
+    "tests/test_review_full_spec_fields.py": "487a9dcf1340002e2069028fca5eea5f834a0c5364f489f9123a45dc32a65f76",
+    "tests/fixtures/review_full_spec_fields.json": "e7fdbdb4fe4dafce13fb688e2d5db930d5861e1c5ab1d0b2aad76caffb00062d",
+    "scripts/check_minimum_versions.py": "f90c012dff821545e7f7b6f5b69718e26cc6b9dee6cc09c658e77e2e71449696",
+    "scripts/check_wheel.py": "78887cec88845d8307b245c0ba7759c2ca4e08b65973576f4373b3da625004cc",
+    "scripts/rust_editor_smoke_test.py": "0c44eb0f5e4dfa55409f1c87c5594a09c816690b35e63d5644384229f9160368",
+    "examples/histogram_statistics.py": "f0c524e564969c518d1d404343621a46d7eb05bc4d57042f49d45247e402d1b4",
+    "schemas/figure_spec.schema.json": "0e3ba5adc7873f2b4c89e493849441d47237d84da7a00ec0826fcbe75a1600d6",
+    "schemas/capabilities.json": "606fee95544d0910bec17008fa55df6bac68c88625cd2969d9aab6994271a3b7",
+    "docs/REFERENCE.md": "f9adbc4ccaeb89235289ec3ac085ebb6d2f5ff3f716361ba6585663f0f623126",
+    "docs/FEATURE_COVERAGE.md": "3c1e1083b2791d3c6380aba7a6efb95ba585fe545ad80b1a9358c6f16ae7635b",
+    "docs/FEATURE_COVERAGE.ko.md": "3c482630463e325423ce6bf861a4df9b16d651b641e3d734ffa3bd1e9229dc86",
+    "docs/V2_SCOPE.md": "f8c5a72fc31e99c5f02849900366dd1133a693a4625f06f162368faea6bdc14f",
+    "docs/V2_SCOPE.ko.md": "5da9c3a50f3dcd9d4ce2f407ab7b643b335c22bfdde7f8b6abb4090489e2589d"
+  },
+  "artifacts_manifest": {
+    "path": "artifacts/v2_histogram_fill/artifacts.sha256.json",
+    "sha256": "29785d5ef317afba1178fc71349ddca0317f373098cf22c53c037238d9e739a0",
+    "files": 104
+  }
+}

@@ -330,6 +330,12 @@ def test_render_and_save_failures_close_their_figures(tmp_path, capsys):
         ("layout", [1.5, 2]),
         ("width_ratios", [0]),
         ("height_ratios", [1, 2]),
+        ("layout", []),
+        ("layout", 2),
+        ("layout", "2x2"),
+        ("layout", {"rows": 2, "cols": 2}),
+        ("layout", [True, 1]),
+        ("layout", [257, 1]),
     ],
 )
 def test_invalid_geometry_is_rejected(field, value):

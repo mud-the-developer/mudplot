@@ -139,7 +139,7 @@ def test_invalid_or_collapsed_band_preserves_existing_output(tmp_path, bottom, h
     "style",
     [
         {"orient": "h"},
-        {"group": "start"},
+        {"group": "missing"},
         {"weights": "duration"},
         {"semantics": {"hue": "start"}},
         {"density": True},
@@ -156,19 +156,19 @@ def test_unimplemented_mappings_are_not_ignored(style):
 
 
 @pytest.mark.parametrize("axis", ["x", "y"])
-def test_initial_band_subset_requires_linear_axes(axis):
-    p = mp.plot({"start": [1], "duration": [2]}).broken_barh(
-        "start", "duration", bottom=1
+def test_interval_log_requires_positive_geometry(axis):
+    p = mp.plot({"start": [0], "duration": [2]}).broken_barh(
+        "start", "duration", bottom=0
     )
     if axis == "x":
         p.xscale("log")
     else:
         p.yscale("log")
-    with pytest.raises(ValueError, match="linear"):
+    with pytest.raises(ValueError, match="must be positive"):
         p.render()
 
 
-def test_setdata_rebuilds_intervals_and_rejects_unsupported_cohort_selection():
+def test_setdata_rebuilds_intervals_and_rejects_invalid_cohort_selection():
     p = mp.plot({"start": [1, 2], "duration": [2, 3], "g": ["A", "B"]}).broken_barh(
         "start", "duration"
     )
@@ -187,11 +187,11 @@ def test_setdata_rebuilds_intervals_and_rejects_unsupported_cohort_selection():
         plt.close(figure)
     before, history = p.spec, p.action_log
     with pytest.raises(ValueError):
-        p.facet(col="g")
+        p.facet(col="missing")
     assert p.spec == before and p.action_log == history
     spec = p.spec
     spec.panels[0].dropna = ["start"]
-    assert any("does not support panel filters" in issue for issue in mp.validate(spec))
+    assert not mp.validate(spec)
 
 
 @pytest.mark.parametrize("projection", ["polar", "3d"])

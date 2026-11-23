@@ -47,7 +47,9 @@ def mixed(size=(6, 3), secondary=True):
 
 
 def legend(ax):
-    result = ax.get_legend()
+    from mudplot._layout_render import panel_legend
+
+    result = panel_legend(ax)
     assert result is not None
     return result
 

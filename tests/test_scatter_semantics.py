@@ -333,8 +333,6 @@ def test_unbound_or_kind_mismatched_options_fail(config):
         {"colorbar": True},
         {"clabel": "z"},
         {"axis": "y2"},
-        {"edge_color": "#123456"},
-        {"line_width": 1},
         {"cmap_kind": "diverging"},
         {"references": {"A": mp.Reference(href="https://example.org")}},
     ],
@@ -365,14 +363,15 @@ def test_bounds_limits_misplaced_config_and_shared_axes():
     raw = {"x": list(range(65)), "y": [1] * 65, "h": list(range(65))}
     p = mp.plot(raw).scatter("x", "y", hue="h")
     assert any("limit" in v for v in mp.validate(p.spec))
-    # Aggregated lineplot now has its own tested semantic path; raw line doesn't.
-    for kind in ("line", "hist", "violin"):
+    # Histogram still has no semantic-role adapter.
+    for kind in ("hist",):
         p = mp.plot(_data()).dispatch(
             mp.actions.AddLayer(
                 LayerSpec(type=kind, x="x", y="y", semantics=SemanticSpec(hue="h"))
             )
         )
-        assert any("semantics" in v for v in mp.validate(p.spec))
+        with pytest.raises(ValueError):
+            p.render()
     p = mp.plot(_data()).scatter("x", "y", hue="h").pointplot("x", "y", errorbar=None)
     assert any("native and ordinal" in v for v in mp.validate(p.spec))
 

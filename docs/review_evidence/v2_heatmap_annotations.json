@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "feature_ids": ["M01"],
+  "status": "in-progress-annotation-and-rotation-subset",
+  "integrated_patch": "$LOCAL_EVIDENCE/location-50/m01-annotation-rotation-final.patch (parent-authorized after source, test and raster review)",
+  "contract": {
+    "annot_data": "Optional same-shaped list-of-lists of strings <=512 characters including masked cells; empty strings valid; requires annot=True. Does not replace scalar matrix, norm or cluster fit values.",
+    "rotation": "Optional finite non-bool xrotation/yrotation in [-360,360] degrees, explicit/automatic tick labels.",
+    "mask": "Masks suppress text without bypassing type/length validation.",
+    "cluster": "Custom text, masks and labels permute with original row/column identities.",
+    "legacy": "New None fields omitted; old default JSON/actions/RGBA parity independently observed in throwaway isolated comparison, not permanent incidental-field tests.",
+    "dependency_boundary": "No new dependency; clustered rendering keeps existing optional SciPy boundary."
+  },
+  "observed_current_main_checks": [
+    {
+      "command": "uv run python $LOCAL_EVIDENCE/location-51/mudplot_m01_main_runtime.py",
+      "outcome": "Actual same worker runtime path replayed on integrated main source: both heatmap and clustermap created/saved/reopened; source/JSON/actions equal; CLI validate/render succeed; PNG900x600 verified; SVG432ptx288pt and expected annotation presence/masked absence parsed; PDF signature/EOF/MediaBox432x288 parsed."
+    },
+    {
+      "command": "uv run python -m examples.heatmap_controls docs/images",
+      "outcome": "OK: masked annotated heatmap;700px desktop review; existing save_and_assess checks passed; permanent PNG/SVG/PDF/JSON refreshed with custom strings and rotations."
+    },
+    {
+      "command": "uv run pytest -q tests/test_strip_categories.py tests/test_heatmap_annotation_matrix.py tests/test_heatmap_options.py tests/test_clustermap.py tests/test_review_full_spec_fields.py",
+      "outcome": "348 passed in48.86s including parent-requested strip test corrections. Later Ruff identified one capability string line-length issue and it was wrapped without behavioral changes. This is not the isolated worker's19/101 cohorts and results are not summed."
+    }
+  ],
+  "artifacts": {
+    "runtime": "artifacts/v2_heatmap_annotations/{annotated,cluster}.{mplot.json,png,svg,pdf};*-cli.png;report.json",
+    "permanent_example": "docs/images/heatmap_controls.{mplot.json,png,svg,pdf}"
+  },
+  "visual_review": "Integrated900x600 annotated and clustered PNGs read: masks blank, low/mid/high strings and row/column identity reordering correct, rotated labels readable. Permanent1400x860 custom-text example also read. No independent physical-print or OS claim.",
+  "remaining_M01": [
+    "wider normalization families",
+    "colourbar and layout controls",
+    "real Rust/browser human feature editing/history/reopen/export; installed minimum subset proof is recorded below",
+    "final frozen-source Linux/product-wide gates"
+  ],
+  "frozen_installed_minimum_subset": {
+    "source_archive_sha256": "8d0fa0d9d6d275c8b7a39c2b8d0c4896fccad79f40e89505c559515c8cc92c3c",
+    "wheel_sha256": "dc125140d8279eaf61db70c6261dad23ef75492f0593de2b714259b813311dce",
+    "current": "407 cases passed; minimum source-import cohort369 passed/203 warnings/0 skips. Separate cohorts, not summed.",
+    "installed_report": "../../artifacts/v2_integrated_qualification/installed-report.json",
+    "installed_cli": "../../artifacts/v2_integrated_qualification/installed-cli-results.json",
+    "failure_lineage": "Both original installed_smoke invocations exited1 (pixel truncation then final metadata spelling); consumer matrix/annotation/cluster/source/JSON/CLI/export assertions completed before the second metadata failure. Corrected output observer exited0; original scripts are not labelled PASS.",
+    "scope": "Annotations/rotations only; no whole-M01 or final-v2 qualification."
+  },
+  "scope_note": "M01 is not closed. All other frozen catalogue requirements remain mandatory; no version bump or git/publication action."
+}

@@ -1,4 +1,4 @@
-"""OUT-06: PGF sidecars are relocatable together, not a transactional bundle."""
+"""OUT-06: PGF sidecars are relocatable; ordinary failures preserve old outputs."""
 
 import shutil
 import subprocess
@@ -65,11 +65,15 @@ def test_pgf_relative_sidecars_move_together_and_missing_sidecar_fails(tmp_path)
 
 
 @needs_tex
-def test_pgf_postprocess_failure_closes_figure_but_is_not_atomic(tmp_path, monkeypatch):
+def test_pgf_postprocess_failure_closes_figure_and_preserves_previous_bundle(
+    tmp_path, monkeypatch
+):
     from mudplot import _render
 
     path = tmp_path / "figure.pgf"
+    image = tmp_path / "figure-img0.png"
     path.write_bytes(b"previous user PGF")
+    image.write_bytes(b"previous user PNG")
     figures = set(plt.get_fignums())
 
     def fail(*_args):
@@ -79,5 +83,6 @@ def test_pgf_postprocess_failure_closes_figure_but_is_not_atomic(tmp_path, monke
     with pytest.raises(OSError, match="synthetic PGF"):
         heatmap().save(str(path))
     assert set(plt.get_fignums()) == figures
-    assert sorted(tmp_path.glob("figure-img*.png"))
-    assert path.read_bytes() != b"previous user PGF"
+    assert path.read_bytes() == b"previous user PGF"
+    assert image.read_bytes() == b"previous user PNG"
+    assert {p.name for p in tmp_path.iterdir()} == {path.name, image.name}

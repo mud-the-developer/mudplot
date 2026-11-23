@@ -2,8 +2,8 @@
 
 *[한국어 / Korean](JOINT_GRID.ko.md)*
 
-This joint-grid subset links one raw scatter/regression or ungrouped hist2d/hexbin
-view to x/y histogram/KDE/ECDF marginals. It does not implement every Seaborn joint kind.
+Joint grids link one scatter, regression, hist2d or hexbin center to x/y
+histogram/KDE/ECDF marginals. They do not implement every Seaborn joint kind.
 
 ![Synthetic paired dose and response observations](images/joint_observations.png)
 
@@ -13,6 +13,10 @@ view to x/y histogram/KDE/ECDF marginals. It does not implement every Seaborn jo
 
 All 80 observations are synthetic and independent. The example is checked at a
 700px desktop display; this is not mobile or independent readability certification.
+
+Declare template date axes with `date_axis()` before `joint()` to preserve
+ISO timestamps and propagate each clock only to its observation marginal.
+Density axes remain numeric. See the [temporal contract](TEMPORAL_AXES.md).
 
 ## Build a main view, then compose
 
@@ -31,7 +35,7 @@ p = (mp.plot(raw)
 - There is **no fourth axes** in the unused bottom-right corner.
 
 The template must contain exactly one raw `scatter`, `regplot`, `hist2d` or `hexbin`, optionally
-with reference/annotation layers, on primary Cartesian 2-D axes. Axes labels
+with reference/annotation layers on Cartesian 2-D axes. Axis labels
 fall back to column names when empty. The main x label moves to the lower
 marginal; the repeated right-side y label is hidden. Marginal legends are hidden,
 and raw group colours/slots match the main view.
@@ -55,12 +59,25 @@ p = (mp.plot(raw).hist2d("dose", "response", bins=12, colorbar=False)
 # Or: hexbin("dose", "response", gridsize=20, colorbar=False)
 ```
 
-Binned centers require ungrouped, unweighted raw numeric x/y and an explicitly
-disabled colorbar. The center's bins/gridsize/density remain its own settings;
-`joint(bins=...)` configures histogram marginals only. The paired selector is
-applied before center and marginal validation/rendering, and SetData refreshes it.
-Hist/KDE marginals both work. No general binned facet filters, hue_order/group or
-implicit colorbar removal is introduced.
+Center bins/gridsize remain independent of `joint(bins=...)`, which only sets
+marginal histogram bins. Typed grouped `hist2d` uses the existing shared edges
+and actual paired field colourbars. Its optional KDE overlay fits the complete
+paired cohort before explicit bin-range exclusions; neither clipping nor out-of-bin
+mass changes marginal membership. A statistic colourbar is not a raw-hue guide.
+
+```python
+p = (mp.plot(raw).size(10, 7)
+     .hexbin("Dose", "Response", gridsize=5, mincnt=2)
+     .joint(group="Arm", weights="Weight", bins=5, marginal_stat="count"))
+```
+
+Each group's real hexagons use the same lattice and pooled extent, on linear
+numeric or declared calendar axes. `mincnt` is a minimum number of *positive
+physical rows*, not weight: one row with mass 100 cannot clear `mincnt=2`.
+Empty/under-occupied cells disappear from the center, not the marginals. The
+group uses native outlines; one optional bar reports count (unweighted) or
+weighted mass per hexagon. `hue_order=` optionally selects/reserves raw groups
+for this hexbin adapter; there is no custom reducer or log-hexbin mode.
 
 ## KDE marginals
 
@@ -81,7 +98,7 @@ be less than one. Singular/singleton groups warn and skip without invented fits;
 common normalization still includes their usable mass under existing KDE rules.
 
 KDE supports density only: leave bins at its unused default 20 and do not request
-count/probability/percent, weights or cumulative CDF. The same config is copied
+count/probability/percent or cumulative CDF. Use one named shared weight with KDE
 across variables: shared clip bounds must make sense for both units. Histogram
 remains the default and is unchanged.
 
@@ -98,7 +115,7 @@ Each curve uses its own paired group's mass, aggregates ties and draws its full
 jump at the minimum, without fabricated infinite tails or KDE fitting. Vertical x
 marginals use steps-post; horizontal y marginals swap coordinates/use steps-pre.
 The statistic axis stays linear/independent even with positive log observations.
-Weighted or complementary ECDF configuration is not exposed by grid construction.
+`complementary=True` reports strictly greater mass at each observed knot.
 
 ## One cohort, original data intact
 
@@ -120,6 +137,21 @@ are materialized snapshots like [facets](FACETS.md): rebuild a fresh template to
 include newly introduced group levels. Later edits are panel-scoped. Histograms
 are not estimates from extra unpaired x/y rows.
 
+The extended path additionally uses the same named weight (zero/missing excluded;
+negative, nonfinite or Boolean selected weights rejected) and typed raw roles before
+coordinate conversion. `scatter(c=..., colorbar=...)` adds `c` to complete-case
+requirements in all three views. Raw c values colour only the center; they are
+not weights or categorical groups. `SemanticSpec` instead maps the same raw
+channels in applicable scatter, regression and histogram-field workflows, using
+the native roles of each mark. Raw semantic legends and statistic bars are separate.
+
+With an actual `axis="y2"` center, the right y joins that value scale, while
+the center primary y and marginal count/density/CDF axes stay independent.
+Changing the y2 label retains its clock and link. A `SetLimits` or `SetAxisScale`
+on either member edits both; incompatible unilateral clock/tick changes reject.
+Calendar limits use the existing numeric display units (Matplotlib epoch days).
+Reopening keeps ordinary stored panels, not a separate grid/cohort result.
+
 ## JSON and editors
 
 ```json
@@ -134,9 +166,11 @@ spec version is still 0.1.
 
 ## Explicit limits
 
-- No semantic roles, legacy c/colourbar, secondary axes, weighted marginals,
-  grouped/weighted binned centers or nested facet/joint composition yet.
-  [Numeric pair matrices](PAIR_GRID.md) use a separate constructor.
+- N13 supports nesting, empty outer cells and stable sibling placements without
+  rebuilding the data. See [layouts](PANEL_LAYOUTS.md) and the separate
+  [pair constructor](PAIR_GRID.md).
+- Extended paired regression excludes residual and train/query-split centers;
+  those centers would not describe the same raw observations as both marginals.
 - Raw lines/bands are not converted into scatter or mean curves: dropping pairs
   could otherwise change path gaps. Only the stated main kinds are accepted.
 - Existing histogram derived-bin/log guards still apply. For example, an

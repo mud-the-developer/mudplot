@@ -1,4 +1,4 @@
-# mudplot Rust editor (v1.0)
+# mudplot Rust editor (v1.1.0 로컬 후보)
 
 Python mudplot과 같은 `FigureSpec`·JSON action을 쓰는 로컬 axum + Askama +
 htmx editor다. 생성 계약의 drift를 막기 위해 이 저장소 안에서 Python
@@ -28,7 +28,8 @@ cargo run --locked --manifest-path mudplot-editor/Cargo.toml -- --python ".venv/
 한글·공백·`&`가 있는 별도 venv를 검증한다. 같은 render 버전을 그 임시 venv에만
 내려받을 수 있고 프로젝트 의존성은 유지한다. 로컬 Windows와 기준e14의
 CI39111782233 Linux/Windows job에서 이 probe 통과를 관찰했다. 후속 변경은
-별도 CI가 필요하며 모든 checkout을 검증했다는 뜻은 아니다.
+별도 검증이 필요하다. v1.1.0 후보는 로컬 Linux에서 검증했고 Windows는 사용자
+지시로 후순위다. 과거 근거로 이 checkout까지 검증했다고 주장하지 않는다.
 
 인증이 없는 로컬 단일 사용자 도구이며 non-loopback bind 주소/HTTP Host와
 cross-origin browser mutation을 거부하며 이 거부를 포함한 application response를
@@ -61,6 +62,11 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   두 editor 모두 정상적인 새 편집 후 redo를 지운다.
 - capability에서 전체 layer selector/field reference와 theme/projection
   control을 생성하고 title·정확한 figure size도 같은 JSON action으로 변경한다.
+- **Active panel (zero-based)**를 선택한 뒤 패널별 x/y label·linear/log scale·유한/자동 범위를 편집합니다. y2는 활성화 후 각 속성을 별도로 편집하거나 제거합니다. 유효한 3-D 패널에서는 z 축을 설정하고 편집합니다. 기존 축의 시간대·단위·원점·공유 설정은 granular action으로 보존합니다.
+- 제목·범례·text/annotate 핸들을 마우스나 방향키로 이동하며 Shift는 이동 폭을 늘립니다. 제목은 Cartesian/polar axes fraction, 범례는 figure fraction을 사용합니다. text/annotate는 선택 패널의 기본/y2 데이터 좌표와 반전·log·날짜 축을 따릅니다. 지원하지 않는 3-D 제목/data 및 polar data-anchor 이동은 지원 기능처럼 표시하지 않습니다.
+- 설치한 `mudplot`의 한 native render에서 PNG와 metadata를 함께 얻으며 bridge는 `dashboard`를 import하지 않습니다. 좌표는 소수 크기×DPI의 절삭까지 포함한 실제 PNG canvas를 기준으로 합니다. revision이 다른 이미지·이동은 거부하고 HTMX 교체 뒤 키보드 focus를 복원합니다.
+- CLI protocol은 `mudplot render spec.json preview.png --preview --editor-metadata layout.json`입니다. 세 경로는 달라야 하며 layout policy와 함께 사용할 수 없습니다. 두 산출물과 command가 모두 성공한 뒤에만 소비자가 commit하며 두 파일의 동시 공개를 보장하지는 않습니다.
+- CI/release는 실제 특수 제어 소비자를 source bridge profile로 실행하고 설치 wheel 검사는 별도로 구분합니다. `MUDPLOT_REQUIRE_BROWSER=1`에서는 필수 준비가 없으면 skip 대신 실패합니다. 결정적 queued-key 검사는 Playwright 1.45에서 도입한 Clock 테스트 도구 기능을 요구하지만 기존 browser extra 하한 1.40은 바꾸지 않습니다. 제품 UI/render는 Playwright에 의존하지 않습니다.
 - 저장 spec 열기와 정확한 크기의 PDF/SVG/JSON export를 지원한다. cached
   PNG preview는 어느 축이든 2000 pixel을 넘을 때만 DPI를 낮추며
   spec/final export는 바꾸지 않는다.
@@ -78,10 +84,8 @@ cross-origin browser mutation을 거부하며 이 거부를 포함한 applicatio
   렌더 자식/전체 앱 메모리·CPU·동시 부하 보장은 아니며 정확한 범위는 리뷰 대장에 있다.
 
 Route: `GET /`, `/fig.{png,pdf,svg}`, `/spec.json`,
-`/static/htmx.min.js`; `POST /action`은 action JSON object를 받는다. visual
+`/static/htmx.min.js`, `/static/editor.js`; `POST /action`은 action JSON object를 받는다. visual
 control은 `/control/*`와 `/layers`, `/open`·`/action/raw`·`/undo`·`/redo`·
 `/reset`은 `#app` htmx fragment를 반환한다.
 
-계속 의도적으로 제외: 다중 사용자 session/auth, 성숙한 Python editor의
-모든 특수 axis/drag control, native Rust renderer. 로컬 실사용이 추가
-상태와 코드를 정당화할 때만 도입한다.
+다중 사용자 session/auth와 native Rust renderer는 계속 범위 밖입니다. CND01의 실제 누락 비교로 위 특수 제어를 구현했으며 설치 bridge·실제 browser 검사와 한계는 [기능 근거](../docs/review_evidence/v2_rust_specialized_controls.json)에 기록합니다. 전체 v2 catalogue, 모든 행의 E01 또는 최종 release qualification 완료는 아닙니다.

@@ -43,6 +43,13 @@ def build_plot() -> mp.Plot:
                 mask=[[False, False, True, False, False], [False] * 5, [False] * 5],
                 xlabels=["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
                 ylabels=["Reference", "Method A", "Method B"],
+                annot_data=[
+                    ["low", "low", "masked", "rising", "rising"],
+                    ["low", "near 0", "rising", "high", "high"],
+                    ["near 0", "rising", "high", "high", "peak"],
+                ],
+                xrotation=25,
+                yrotation=0,
             ),
             line_width=0.7,
             edge_color="#ffffff",

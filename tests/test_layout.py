@@ -53,13 +53,49 @@ def test_outside_legend_no_longer_clips_at_exact_column_width():
     )
     fig = p.render()
     fig.canvas.draw()
-    legend = fig.axes[0].get_legend()
+    legend = fig.axes[1].get_legend()
+    assert fig.axes[0].get_legend() is None
     assert legend is not None
     bb = legend.get_window_extent()
     bb = bb.transformed(fig.transFigure.inverted())
     assert bb.x0 >= 0 and bb.x1 <= 1.001
     assert bb.y0 >= 0 and bb.y1 <= 1.001
     plt.close(fig)
+
+
+@pytest.mark.parametrize("secondary_data", [False, True])
+def test_logical_legend_drag_anchor_stays_native_with_unlabelled_twin(secondary_data):
+    from mudplot._editor import extract_layout
+    from mudplot._layout_render import panel_legend
+
+    plot = (
+        mp.plot({"x": [1, 2, 3], "y": [2, 1, 2]})
+        .size(7, 5)
+        .secondary_yaxis("Right")
+        .line("x", "y", label="Primary observations")
+    )
+    if secondary_data:
+        plot.bar("x", "y", axis="y2")
+    fig = plot.render()
+    try:
+        primary, twin = fig.axes
+        owner = twin if secondary_data else primary
+        legend = panel_legend(primary)
+        assert legend is owner.get_legend() and legend is not None
+        assert [t.get_text() for t in legend.get_texts()] == ["Primary observations"]
+        handles = extract_layout(plot.spec, fig, 0)["handles"]
+        assert len([h for h in handles if h["kind"] == "legend"]) == 1
+    finally:
+        plt.close(fig)
+    plot.legend(bbox_to_anchor=[0.27, 0.69])
+    fig = plot.render()
+    try:
+        legend = panel_legend(fig.axes[0])
+        bounds = legend.get_window_extent().transformed(fig.transFigure.inverted())
+        center = ((bounds.x0 + bounds.x1) / 2, (bounds.y0 + bounds.y1) / 2)
+        assert center == pytest.approx((0.27, 0.69), abs=0.01)
+    finally:
+        plt.close(fig)
 
 
 def test_long_title_wraps_instead_of_clipping_at_exact_column_width():

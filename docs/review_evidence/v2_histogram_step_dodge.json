@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-feature-checkpoint",
+  "catalogue": [
+    "D02"
+  ],
+  "status": "Step+dodge geometry subset verified locally; D02 and v2 remain incomplete",
+  "package_version": "1.1.0",
+  "figure_spec_version": "0.1",
+  "implemented": [
+    "Explicit element=step,multiple=dodge uses the existing raw hue slots, retaining weighted/cumulative heights and normalization.",
+    "One native unfilled stairs patch per observed hue; unused slot intervals are zero-baseline geometry, not inserted observations or added mass.",
+    "Empty reservations consume the same slots/colors/dashes. Existing orientation, positive log/inverted axes, date clocks and vertical y2 routing remain intact.",
+    "All group geometry validates before drawing; collapsed slots and invalid stack heights still reject. Existing bars derive exactly the same stop-start widths.",
+    "No fields, options, defaults, dependencies, inference, sorting or aggregation added. Untyped legacy hist branch remains unchanged.",
+    "API/spec comments, capability/schema output, generated reference, EN/KO coverage, executable example, standard Rust form case and installed-wheel smoke updated."
+  ],
+  "checks": {
+    "bounded_xml": [
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-current.xml",
+        "cases": 259,
+        "passed": 259,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-minimum.xml",
+        "cases": 259,
+        "passed": 259,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    ],
+    "numeric_reference": "Manual unequal raw slot edges and weighted count/density/cumulative values compared with independent native stairs paths across vertical/horizontal/y2. Original raw widths remain density/frequency denominators, not narrowed slots. Additional empty-slot/dash, inverted-log, zero-width/alpha, pre-draw collapsed-slot and ISO-to-canonical-day geometry cases pass.",
+    "schema_sync": "scripts/check_schema_sync.py passed all four generated targets; FigureSpec schema remains unchanged.",
+    "static": "Ruff check and format passed for 11 changed source/test/script paths; active LSP probe checked all 11 with no errors. git diff --check passed.",
+    "environment": {
+      "python": "3.13.12",
+      "dependencies": {
+        "numpy": "2.5.2",
+        "matplotlib": "3.11.1",
+        "pillow": "13.0.0",
+        "pytest": "9.1.1"
+      }
+    },
+    "minimum": "Python 3.11.14, NumPy 1.23.5, Matplotlib 3.8.0, Pillow 13.0.0; no required skips in this bounded profile.",
+    "human_lifecycle": {
+      "script": "artifacts/v2_histogram_d02/rust_step_dodge.py",
+      "log": "artifacts/v2_histogram_d02/rust-step-dodge.log",
+      "chromium": "153.0.8010.12",
+      "scenes": [
+        "vertical-step-dodge",
+        "horizontal-step-dodge"
+      ],
+      "workflow": "Agent weighted date bars/dodge -> actual human JSON element=step plus clock/title edit -> exact spec/PNG undo+redo -> downloaded JSON reopen -> PNG/SVG/PDF. Unsupported multiple=fill rejects without changing state/preview; source columns remain exact.",
+      "rust_binary_sha256": "26e88f3716c8e6205b22e044ac7a33324d705c8ddbdc296aa8f2e428ed553cd0",
+      "fresh_rust_build": false,
+      "standard_smoke_note": "scripts/rust_editor_smoke_test.py registers step+dodge for final qualification; its full suite was not rerun here."
+    },
+    "installed_wheel": {
+      "command": "PYTHONPATH=. MPLBACKEND=Agg .venv/bin/python scripts/check_wheel.py --render --out-dir artifacts/v2_histogram_d02/step-dodge-wheel",
+      "status": "passed",
+      "assertions": "sdist->wheel, required/forbidden paths and outside-checkout installation/core/render. New step+dodge API/JSON/actions/PNG/manual weighted edges+heights and CLI SVG passed, with prior temporal/y2 smoke retained.",
+      "final_release_build": false
+    },
+    "visual_review": "Inspected regenerated four-panel histogram example and native vertical date/y2 step+dodge export. Shapes, group colors/dashes, slots and labels visible. Native vertical scene has an empty primary-y debugging axis; not a publication example. No physical-print claim.",
+    "independent_review": "Source-only reviewer found no issues; no execution tool was exposed to child. Parent executed requested numeric control probes. Read-only report retained at artifacts/v2_histogram_d02/step-dodge-review.md."
+  },
+  "preserved_attempts": {
+    "original_pin": "artifacts/v2_histogram_d02/step-dodge-original-pins.md",
+    "xml": [
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-before.xml",
+        "cases": 12,
+        "passed": 2,
+        "failure": 10,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-focused.xml",
+        "cases": 195,
+        "passed": 195,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-routes.xml",
+        "cases": 259,
+        "passed": 258,
+        "failure": 1,
+        "error": 0,
+        "skipped": 0
+      },
+      {
+        "path": "artifacts/v2_histogram_d02/step-dodge-temporal-fix.xml",
+        "cases": 1,
+        "passed": 1,
+        "failure": 0,
+        "error": 0,
+        "skipped": 0
+      }
+    ],
+    "interpretation": "Initial new positives exposed the old rejection; focused195 passed before extra route tests. The extended route run retained one test-harness helper-signature failure (258 passed); corrected helper then passed alone and both final259-case profiles pass. No failure receipt overwritten.",
+    "native_extreme_probe": "extreme-slot-probe.log records successful controls through 5e307 and shared native ticker failures at 8e307. Matplotlib sum-based NaN-edge checks can also fail at extreme primitive ranges; no additional end-to-end regression was demonstrated and no native-range fix is claimed."
+  },
+  "remaining_required": [
+    "D02 filled steps, fill/poly, discrete and named automatic-bin rules, plus complete explicit width-coordinate contract/qualification; none excluded or deferred to another version.",
+    "All remaining frozen F01/C01-C07/D01-D07/O01 statistical requirements, other catalogue rows and final source-frozen Linux qualification.",
+    "2.0.0 version synchronization, final independent rebuilds and release evidence. This bounded package build predates this evidence document and is not final delivery."
+  ],
+  "delivery": {
+    "local_only": true,
+    "committed": false,
+    "published": false
+  },
+  "source_sha256": {
+    "mudplot/_render.py": "c649d6018d28eb1a34a5218df5632cfc2f67e1ae00a5f81c16129b40e50536b5",
+    "mudplot/_histogram.py": "f9775c1b7d7c36e728e1007c78b6287d9ab6e7e1b4868bb3da669816d5b733e2",
+    "mudplot/validate.py": "b5e6e00eae877a0098c0e1953227b84fb3567bc2bfd82682b31fbcd9657d921c",
+    "mudplot/api.py": "c93016f95e2da0f011ea81bc75d8dabf3b09e2343fd07d71b71b2a22a7c06f5c",
+    "mudplot/spec.py": "528f5e599d3da054678cc1eacd2fa1817d26c8d1e7a8c1a06283d42e594b2562",
+    "mudplot/actions.py": "a04ce6dbe936ebe4dc82939ef655c35f71ad27865bdc65a51338e5b272df874a",
+    "mudplot/capabilities.py": "2d9098a27a3e7b3d5bce50fc1b6fbcb5ce3f1b86a85191f3c20e4935ba93dfa9",
+    "mudplot/docs.py": "74bd9bb5827c65ea4f27200396faa8ff03acfd5b492de43975d5c767c2a211a4",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "tests/test_histogram_statistics.py": "5e8baaa442c425336501981e2e8a1ce8a1d5eaddcbb98c580792748856aa3805",
+    "tests/test_temporal_secondary.py": "4d072cc23ac8d29eba03307989d00b57cb3868427eef2b199a02ab1855a866b3",
+    "scripts/check_wheel.py": "22d61660dac9c9a80bc7ef1599d46a6e13438c6f684cce84a420384719baaa88",
+    "scripts/rust_editor_smoke_test.py": "1cc69156a6f8b20e76818fb37fc667cb31e88c37a9533b58d35ef8989a545c75",
+    "examples/histogram_statistics.py": "a9d3f47aef45c28b59c60c9f3cffa5e26de68dd61054df589db65ddb37045200",
+    "schemas/figure_spec.schema.json": "e017cee030d9aa0e33653a594b40701be5515abce050a0158a20264bd6915990",
+    "schemas/capabilities.json": "c5bb85755ac8d02f8aaacfafb24f067d4e8d8859d2748d371deda1399cc6cc15",
+    "docs/REFERENCE.md": "b682c7defe7d503039e0322f2887cea276f6e9dbfa7cc937ec4526fe0e22e151",
+    "docs/FEATURE_COVERAGE.md": "7e61e7050d4312a2423ae1c5318a7de4d06a94e7aab4a2cad0e18c8ecfb45889",
+    "docs/FEATURE_COVERAGE.ko.md": "895f0b94b882be24a6b40c2d82d0dac3b81506e79f79d106467193897fe9fae8",
+    "docs/V2_SCOPE.md": "72088c25d57240c19d750ff66675bbf974fa2669b223bb94b30aae777818f803",
+    "docs/V2_SCOPE.ko.md": "5c7bd39c733810687e7ca6c19df22f19655ebb8db293dad9473ed448086ba6fa"
+  },
+  "artifacts_sha256": {
+    "artifacts/v2_histogram_d02/example/histogram_statistics.mplot.json": "398f372737687cd762ca6a6937969be969e869a3acfc67102e5eae4b8a945b21",
+    "artifacts/v2_histogram_d02/example/histogram_statistics.png": "5639fe6941d62ef5db0ca5b3beab9c3692115368ef57245cb8c759c4262b6b18",
+    "artifacts/v2_histogram_d02/example/histogram_statistics.svg": "c652813d436c7463b069a82bff140538a5b3b728817a9c574721d764aaf12b97",
+    "artifacts/v2_histogram_d02/extreme-slot-probe.log": "a6b24df682ba39f5df1faf131795868f5dcdd07699c5af3c6dc2f7eace5730c3",
+    "artifacts/v2_histogram_d02/freeze_step_dodge.py": "e00c39bfd02a37f5f889585e39a090db90d648ce962d5674ed07a50bb47d2a8a",
+    "artifacts/v2_histogram_d02/rust-step-dodge.log": "3cb57885791da4bbf61c1c9aa3f57e97bfce292c0e4eca6ce5dc52b79a4c6029",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-agent.json": "5379ea5db17ba08c7f43069520abc8e789f9b9e0e9cc8ea2b7b9e11a3a7e642b",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-browser.png": "7a8c56ee4468875c74d8eddc7f6667ad79af7346b0f73301b0869187dac208c6",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-human.json": "c4f3066521449c31914dd90476a49503ef1dcf87717157c70359df263b82107c",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-human.pdf": "81d989ace90b55eb1a93f24afd852e730425798c7fc6005e8421f4e6c3ea4112",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-human.png": "7c7dab2f115927a973ec4167ba0377520aabf3f197f037d415abe08a047f6c90",
+    "artifacts/v2_histogram_d02/rust_step_dodge/horizontal-step-dodge-human.svg": "62a08d740ce6c92242ea7a190b4ca67d3a2fdfce96a6eb30c37b72ebf50350b7",
+    "artifacts/v2_histogram_d02/rust_step_dodge/server.log": "b59d40a8e375837d2e537295241f3d55d1547584e28644b9a996022b6570a76e",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-agent.json": "2e92144e6f94f999c38197a0a89cf49e77ab4b0170307b04b47f599fe17e9109",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-browser.png": "5cc55e6c3fca91cdbd0aa3aa7513c4e1b44dd70fa02ddb797341142d85f508ec",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-human.json": "94731b9ecc6cb588e34cebb30b15715a6a33c51e725b654346343a5716fdf214",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-human.pdf": "f11b37547e79bb04fb340ba282c948cc7f04a790dd9d717d1df75a1a1d91e663",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-human.png": "d9cc55fd42de2bcd32c7db0ac1c30556fd068a7617bb90af49dd96013f44b3ba",
+    "artifacts/v2_histogram_d02/rust_step_dodge/vertical-step-dodge-human.svg": "b676114054722c415c5d6be40f6dcd7c9e68a9bfc80e4b063660a405c4efb474",
+    "artifacts/v2_histogram_d02/rust_step_dodge.py": "76172b9a7df39a4883503f39a2dbf887edf8a72fdb6b031f5177361273642438",
+    "artifacts/v2_histogram_d02/scout.md": "543a7e72c149c7b9a89feae4d17afcdb45566dd81bc523f5081aaf5a45f02ab2",
+    "artifacts/v2_histogram_d02/step-dodge-before.log": "fb56723aefd44a4db3a0aeb3a09340e005a8eb9e2f0afd1b893c7a72fd4e41bb",
+    "artifacts/v2_histogram_d02/step-dodge-before.xml": "3f5c392a96f50ea2de7e76e70faae69e08ac8a24ded7d50af04712eb6ae4e2c4",
+    "artifacts/v2_histogram_d02/step-dodge-current.log": "447d35ce526ca177ae032883c6645836907515bcd2d336ca3d935c1428d42115",
+    "artifacts/v2_histogram_d02/step-dodge-current.xml": "6b690e7cfd450e475e2ff522d12402f93af1fb85030940da41c1378a1fb28aab",
+    "artifacts/v2_histogram_d02/step-dodge-focused.log": "e1be899d3f730fb6f6f9b5fe61bf8b712f7ceb979ced0118a596a9b0f54e36a1",
+    "artifacts/v2_histogram_d02/step-dodge-focused.xml": "6d4fadb0fc53a341318e6cd6f815d0dd47cd12df34056f3016a84b9ae46f3f08",
+    "artifacts/v2_histogram_d02/step-dodge-minimum.log": "7df7612783b6ed264bc2282d1ec25e22e62f8dbdb193584774310ccc8fc82369",
+    "artifacts/v2_histogram_d02/step-dodge-minimum.xml": "12168392bbe4fbafd47e692347b0d3d9bc167fa6b600a3cff04c283266bc0004",
+    "artifacts/v2_histogram_d02/step-dodge-original-pins.md": "886fdfe3b14ca8683e7bd9b6b498e39ff57677742de225a9ab35a5680b95cc7e",
+    "artifacts/v2_histogram_d02/step-dodge-review.md": "def6fce67c0fede461ccd8919cb835efdb103c58606b5382a99455238baa6497",
+    "artifacts/v2_histogram_d02/step-dodge-routes.log": "ec73936f1029a336c7e08b8fa787080aa24cca1ce723277f7fb6055f1f3c5a1e",
+    "artifacts/v2_histogram_d02/step-dodge-routes.xml": "f388e0027ba78c2ce42ea4601e72872d18302daca8af1f106ec378b97d0d3a56",
+    "artifacts/v2_histogram_d02/step-dodge-temporal-fix.xml": "f175eff71896a3d29c4a1e534e2c65b6b3f50f3fac1331ec92f0a9e74be7f947",
+    "artifacts/v2_histogram_d02/step-dodge-wheel/mudplot-1.1.0-py3-none-any.whl": "73bf9b02a1ff3f8d7f592a229b57e1b07f9aa9afaee84570375c44e0a3ed82b2",
+    "artifacts/v2_histogram_d02/step-dodge-wheel/mudplot-1.1.0.tar.gz": "6dd56a96c0f5c7a98c34ed9d0099d4b7959df2478689a22f985042cb420dc24b",
+    "artifacts/v2_histogram_d02/step-dodge-wheel.log": "09980078cc2fdaa38ad93b933ad551368bc07af9b6f7af900d470a5178df27cc"
+  }
+}

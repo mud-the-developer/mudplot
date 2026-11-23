@@ -7,7 +7,7 @@ the contract shared by the Python API, dashboard, saved JSON, and the Rust edito
 
 ## Setup
 
-Requirements: Python 3.10+ and [uv](https://docs.astral.sh/uv/).
+Requirements: Python 3.11+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 git clone https://github.com/mud-the-developer/mudplot.git
@@ -51,7 +51,7 @@ uv run python scripts/check_required_test_paths.py ci paths.xml
 
 Unrelated optional skips remain visible/allowed. Required-path checks and report
 uploads run after failures too; they do not repair a failed pytest/job verdict.
-The Linux full matrix is Python3.10/3.12; the isolated floor is Python3.10.
+The Linux full matrix is Python3.11/3.12; the isolated floor is Python3.11.
 Rust MSRV1.88 and Python3.12 bridge probes run on Windows/Linux. This is the tested
 matrix, not proof of every OS/Python minor. UV cache suffixes separate Python,
 minimum and Rust/OS lanes; dependency-lock inputs remain explicit. Nightly/release
@@ -92,7 +92,7 @@ uv run ruff check .
 uv run ruff format --check .
 uv run pyright
 uv run pytest -q --ignore=tests/test_editor_browser.py
-uv run --python 3.10 --locked --script scripts/check_minimum_versions.py
+uv run --python 3.11 --locked --script scripts/check_minimum_versions.py
 uv run --locked --script scripts/audit_dependencies.py
 uv run python scripts/check_schema_sync.py
 uv run python scripts/check_wheel.py
@@ -211,12 +211,24 @@ users installing the wheel's declared dependency ranges. Keep fresh-install
 versions and build-backend/transitive versions separate in evidence. A pinned
 backend alone is not a universal byte-identical build guarantee.
 
-`scripts/check_wheel.py` is a fast contents/core check using the active build
-environment. Separately test PEP 517 isolation with fresh output directories:
+`scripts/check_wheel.py` defaults to a fast contents/core check. With the locked
+dev/render environment and `uv` available, also run:
+
+```bash
+uv run python scripts/check_wheel.py --render
+```
+
+This installs the wheel offline into a temporary prefix outside the checkout and
+checks default/smart PNG, smart-print SVG, the installed CLI and JSON visual lint.
+It borrows the active environment's render dependencies; it is not a fresh
+resolver/dependency-range test. CI and release builds require this mode. The
+core-only `-S` check remains independent of optional render packages.
+
+Separately test PEP 517 isolation with fresh output directories:
 
 ```bash
 uv build --sdist --out-dir dist-isolated
-uv build --wheel dist-isolated/mudplot-1.0.0.tar.gz --out-dir dist-isolated
+uv build --wheel dist-isolated/mudplot-1.1.0.tar.gz --out-dir dist-isolated
 ```
 
 Use a disposable `UV_PROJECT_ENVIRONMENT` for audit installs rather than replacing

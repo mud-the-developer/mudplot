@@ -39,13 +39,13 @@ def test_minimum_suite_has_its_own_finite_job_with_the_same_tex_prerequisites():
     regular, minimum = workflow.split("\n  minimum-render:\n", 1)
     minimum = minimum.split("\n  rust-editor:\n", 1)[0]
     assert "Minimum render dependency contract" not in regular
-    assert "timeout-minutes: 60" in minimum and 'python-version: "3.10"' in minimum
+    assert "timeout-minutes: 60" in minimum and 'python-version: "3.11"' in minimum
     assert "persist-credentials: false" in minimum
     assert "scripts/check_minimum_versions.py.lock" in minimum
     assert "uv sync --locked --extra dev --extra browser" in minimum
     assert "uv run --no-sync playwright install-deps chromium" in minimum
     assert "playwright install --with-deps chromium" in regular
-    assert "uv run --python 3.10 --locked --script" in " ".join(minimum.split())
+    assert "uv run --python 3.11 --locked --script" in " ".join(minimum.split())
     assert "scripts/check_minimum_versions.py" in minimum
     for prerequisite in (
         "texlive-latex-base",
@@ -81,3 +81,15 @@ def test_minimum_runner_keeps_all_files_and_propagates_pytest_result(monkeypatch
         "not browser",
         *runner.TESTS,
     ]
+
+
+def test_security_floor_is_consistent_with_the_supported_python_runtime():
+    project = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
+    assert 'requires-python = ">=3.11"' in project
+    assert 'pythonVersion = "3.11"' in project
+    assert '"pillow>=13.0.0"' in project
+    assert '"numpy>=1.23.5"' in project
+    runner = (ROOT / "scripts/check_minimum_versions.py").read_text(encoding="utf-8")
+    assert '# requires-python = ">=3.11,<3.12"' in runner
+    assert '"pillow==13.0.0"' in runner and '"numpy==1.23.5"' in runner
+    assert '"tests/test_smart_quality.py"' in runner

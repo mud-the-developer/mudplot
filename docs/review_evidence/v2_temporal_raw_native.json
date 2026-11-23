@@ -1,0 +1,122 @@
+{
+  "catalogue_ids": [
+    "F02"
+  ],
+  "status": "raw/native temporal slice verified; F02 and v2 remain in progress",
+  "created_utc": "2026-10-30T19:36:45.588291+00:00",
+  "git_head": "fe34259ad697efec0976652db6d7fc051c1f3eed",
+  "source_sha256": {
+    "mudplot/_temporal.py": "8c313ec44a0001a35d83872dc8b2fc942456b9ea96383cebace491f9b469db83",
+    "mudplot/_temporal_data.py": "b1e67a20746aa8fec0bd100389f263d5d14a5f9340a3c467a973da51a805f1fb",
+    "mudplot/_render.py": "99c1d51538e47a40da2663bd1a910862719ee7dc298e459ff3ea244821fa6efb",
+    "mudplot/validate.py": "5521869528b83518686e1f9fa1ab1df07be06cbb966d6f5575359d32b195741b",
+    "mudplot/_semantics.py": "1f59cc395bf3c16bcd261b3bfadaeb77cac74b1c6383cde825142a4d8cd19944",
+    "mudplot/api.py": "5e616e7d3c1d0d918f517016927aae367de0efc00169307f096cbad38df6e80b",
+    "mudplot/spec.py": "4e18ff21bb34173a2763708bf8243595afdc07ab61b255d11b435133e4a8d5c5",
+    "mudplot/capabilities.py": "9ae9005f0ee460514de32e6fb8a369d50ac701f6af2b25b5a53ee09562bc424b",
+    "tests/test_temporal_raw.py": "4607ad5d46bea9662a8489d5cdaf1dea0b2ead4ae6be9d974f1e928228ae47cd",
+    "tests/test_temporal_native.py": "93ce8eb7169e8fbb8b1ff98b54e64b32588446953e911818809ac30ba4f2e07a",
+    "tests/test_temporal_coordinates.py": "4bc4ff77fd840ada6150fc2e93b0b3723783c56d1e06da74a626422ee1f97587",
+    "tests/test_temporal_statistics.py": "7ebc0a4135c97cd14aec156c918965888c764ec1c97fd9627552c3a1817a777d",
+    "scripts/check_wheel.py": "772fa43b313f3c5782bb7c3be3da7e475798cd550f0bae76e2a6a00a84ffd84b",
+    "scripts/check_minimum_versions.py": "24269591efc608a75f26c86e4bbcb7eb68fe2d252a77627d134b942c7076fc22",
+    "scripts/rust_editor_smoke_test.py": "2722da3f0460a81bacf0eab48a35b19d3c619b333b5843ac5b987bfc0bdf3728",
+    "schemas/figure_spec.schema.json": "e017cee030d9aa0e33653a594b40701be5515abce050a0158a20264bd6915990",
+    "schemas/capabilities.json": "02cbb1c3cc6f08a5c00b2dfbacfa969356804b2fcc0001bfe86b4e13b2e74bac",
+    "docs/REFERENCE.md": "a7fa5c141fbcb9747266909043c7461bb8d484165df07351ad19e9d9edba95de",
+    "docs/PLOT_GALLERY.md": "ffbd90e094a0748a6577cf513b286b9ee6a6f50487d368f750bbb6626a1f1f56",
+    "docs/TEMPORAL_AXES.md": "572dbe0c95c03c430de1679bb7673366987596f4c2286ad705eaa9d549ed06cc",
+    "docs/TEMPORAL_AXES.ko.md": "fb0d0601d5986fdf2ce15ae9c09c0a47fb70532b04758ab39596f2ab951d398f",
+    "docs/V2_SCOPE.md": "a5315483e9259e755c03fd055a55c5a028a3a7298328b9317064865d85b85cb5",
+    "docs/V2_SCOPE.ko.md": "3cd4c924806b7ff1a9bdd696bb00eadf0c8ec50732987a91494104571050fa6b"
+  },
+  "new_paths": [
+    "rawbar/errorbar/band/hexbin/stackplot/rug date coordinates",
+    "absolute endpoint clock conversion",
+    "numeric timestamp uncertainty/duration uses declared input unit without origin; ISO magnitudes/durations use days",
+    "stem/date events/start-duration intervals and supplied stair ISOedges/height dates",
+    "shared coordinate/selection mask for uncertainty validation/effect; errors on usable observations still reject",
+    "row-indexed ValueError for duration overflow"
+  ],
+  "results": {
+    "current_neighbors": {
+      "tests": 481,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum_neighbors": {
+      "tests": 280,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "native_baseline": {
+      "tests": 141,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "minimum_native_prior_mask_fix": {
+      "tests": 234,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "contracts": {
+      "tests": 38,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "stairs_after_reverting_cleanup": "37pass; validation timing for invalid scalar retained"
+  },
+  "qualification_limits": "Overlapping targeted suites, not finalfullLinux/Python/Rust/TeX/security/reproducibility matrix. Native baseline/minimum prior fix supplemented by481/280finalmask suites.",
+  "review": {
+    "run": "67699c45-a5a9-44e7-a2a4-89650b302706",
+    "verdict": "OK for boundedfollow-up; noissuesfound",
+    "not_rerun_by_child": "tests/browser/installed; parent executed and verified",
+    "resolved_prior_run": "f566a85d-5ac4-4ff9-8273-ddff9a1d6446",
+    "resolved_P1": [
+      "missing coordinate no longer invalidates uncertainty; malformed errors on usable rows reject, effect uses same mask",
+      "duration overflow caught as row-indexed ValueError"
+    ]
+  },
+  "actual_native_lifecycle": {
+    "browser": "Chromium153.0.8010.12, ISOstairs and numericstart-duration interval agentfiles -> JSONform edge/origin/band edits -> undo/redo -> download/reopen -> PNG/SVG/PDF; invalid edits preserve state/source/preview",
+    "log": "artifacts/v2_temporal_20261030/rust-native-temporal.log",
+    "probe_sha256": "784b65d009f03b36ac408c8e97a7e81b88360107b3c7d54dfee79e361abe69e1",
+    "human_source_preservation": "source columns/heights/durations equal initial agentfile in both scenarios",
+    "installed": "outsidecheckout prefix asserted; native stairs/interval PNG, canonical bounds/spans, JSONreopen and installedCLI SVG, alongside default/smart/coretemporal/weighted cases",
+    "installed_log": "artifacts/v2_temporal_20261030/native-distribution.log",
+    "development_artifacts": {
+      "artifacts/v2_temporal_20261030/native-development-dist/mudplot-1.1.0-py3-none-any.whl": "a5f1011ec7c370c614a7084a32e871354892840e29ed76796e1b021da1fa809d",
+      "artifacts/v2_temporal_20261030/native-development-dist/mudplot-1.1.0.tar.gz": "e3b717b0c585e98f62d4f4937b0284b608191ee2affba11ceefe4825611c30e2"
+    },
+    "artifact_limit": "1.1.0developmentcheckpoint, not final2.0candidate or independent reproducible finalbuild; current receipt/docs-ledger addition is later"
+  },
+  "static": "Ruff/Pyright/schema-capability-reference-gallery sync pass; activeallLSP10changedpaths0errors;38policy/schema cases pass",
+  "preserved_failures": [
+    "raw-required-initial.xml",
+    "duration-initial.xml",
+    "stack-rug-initial.xml",
+    "native-initial.xml",
+    "native-missing-initial.xml",
+    "uncertainty-mask-initial.xml"
+  ],
+  "other_preserved": "Earlier core/groundwork/failed browser/timeout reports untouched. Sequence/list-normalization cleanup caused an existing scalar-validation-timing regression and was reverted;37stairs/native tests pass; stale editor type diagnostics live-confirmed clean and dispositioned without inline suppression.",
+  "still_required": [
+    "F02/G02/G03 ISOjoint/pair integration",
+    "F02/F01/D06 broader semantic/distribution y2",
+    "broader native N01–N06 and D07 functions beyond this temporal slice",
+    "remaining requiredcatalogue and conditional evaluations",
+    "finalsupportedPython/Linux/browser/Rust/TeX/security/installedmatrix/reproducibility qualification and2.0version coordination"
+  ],
+  "not_claimed": [
+    "F02completion",
+    "any broader native-unit or goalcompletion",
+    "Windows/macOS verification",
+    "originalexperimentaldata/physicalprint certification"
+  ],
+  "git_publication_actions": "none; local-only"
+}

@@ -193,10 +193,10 @@ GALLERY_EXAMPLES = tuple(
             "box",
             "distributions",
             "Box plot",
-            "Nested category/hue boxes show medians, means and 5-95% whiskers; "
-            "percentile whiskers are not confidence intervals.",
-            "범주/그룹 box로 중앙값·평균과 5-95% whisker를 표시합니다. "
-            "분위수 whisker는 신뢰구간이 아닙니다.",
+            "Nested raw boxes show seeded 90% median CI, means, 5-95% whiskers "
+            "and explicit per-hue cap styles; whiskers are not CIs.",
+            "중첩 원자료 box에 seeded 90% 중앙값 CI·평균·5-95% whisker와 "
+            "명시 hue별 cap 스타일을 표시합니다. Whisker는 CI가 아닙니다.",
         ),
         (
             "boxenplot",
@@ -235,6 +235,13 @@ GALLERY_EXAMPLES = tuple(
             "Bin·평활화·추정 신뢰구간은 사용하지 않습니다.",
         ),
         (
+            "spectrum",
+            "fields",
+            "Signal spectrum",
+            "Explicit Hz sampling, named windows and Welch density retain raw signals.",
+            "Hz 표본율·이름 기반 window·Welch 밀도에서 원본 신호를 보존합니다.",
+        ),
+        (
             "rug",
             "distributions",
             "Rug",
@@ -256,6 +263,15 @@ GALLERY_EXAMPLES = tuple(
             "2-D histogram",
             "Rectangular bins show observation counts across two variables.",
             "직사각형 bin으로 두 변수의 관측 빈도를 표시합니다.",
+        ),
+        (
+            "ecdf2d",
+            "fields",
+            "Paired empirical OR complement",
+            "Right-continuous paired mass uses the strict X>qx OR Y>qy complement; "
+            "finite bounds do not remove denominator observations.",
+            "오른쪽 연속의 짝지은 질량에서 X>qx OR Y>qy의 엄격한 보완을 표시합니다. "
+            "유한 경계가 분모 관측값을 제외하지 않습니다.",
         ),
         (
             "hexbin",
@@ -354,6 +370,167 @@ GALLERY_EXAMPLES = tuple(
             "Wireframe",
             "A matrix surface is represented by a lightweight line mesh.",
             "행렬 표면을 가벼운 선 mesh로 표현합니다.",
+        ),
+        (
+            "hlines",
+            "annotations",
+            "Horizontal segments",
+            "Independent levels retain finite spans.",
+            "각 수준의 유한 구간을 독립적으로 표시합니다.",
+        ),
+        (
+            "vlines",
+            "annotations",
+            "Vertical segments",
+            "Independent ranges stay on their measured x positions.",
+            "독립 범위를 지정된 x 위치에 표시합니다.",
+        ),
+        (
+            "hspan",
+            "annotations",
+            "Horizontal span",
+            "A shaded operating range sits behind a measured trace.",
+            "측정선 뒤에 운전 범위를 음영으로 표시합니다.",
+        ),
+        (
+            "vspan",
+            "annotations",
+            "Vertical span",
+            "The shaded time window does not alter the observations.",
+            "시간 구간을 음영으로 표시하되 관측값은 바꾸지 않습니다.",
+        ),
+        (
+            "barh",
+            "series",
+            "Signed horizontal bars",
+            "Signed changes extend left or right from zero.",
+            "부호 있는 변화량은 0에서 왼쪽 또는 오른쪽으로 뻗습니다.",
+        ),
+        (
+            "imshow",
+            "fields",
+            "Scalar image",
+            "Physical extent and lower origin are explicit.",
+            "물리적 범위와 아래쪽 원점을 명시합니다.",
+        ),
+        (
+            "pcolor",
+            "fields",
+            "Cell polygons",
+            "A missing cell is omitted from a nonuniform grid.",
+            "비균일 격자에서 값이 없는 셀을 생략합니다.",
+        ),
+        (
+            "pcolormesh",
+            "fields",
+            "Quadrilateral mesh",
+            "Nonuniform edges keep the authored cell widths.",
+            "비균일 모서리가 지정된 셀 너비를 유지합니다.",
+        ),
+        (
+            "spy",
+            "fields",
+            "Dense threshold pattern",
+            "Squares show finite absolute values strictly above two.",
+            "절댓값이 2를 넘는 유한 값만 사각형으로 표시합니다.",
+        ),
+        (
+            "triplot",
+            "fields",
+            "Explicit triangle edges",
+            "Edges come from authored connectivity, not inferred triangulation.",
+            "삼각분할을 추론하지 않고 지정한 연결을 표시합니다.",
+        ),
+        (
+            "tripcolor",
+            "fields",
+            "Face-coloured triangles",
+            "Each face takes one explicitly supplied temperature.",
+            "각 삼각형에 별도로 지정한 온도를 사용합니다.",
+        ),
+        (
+            "tricontour",
+            "fields",
+            "Triangular isolines",
+            "Vertex measurements define three explicit contour levels.",
+            "정점 측정값으로 세 개의 명시 등고선을 그립니다.",
+        ),
+        (
+            "tricontourf",
+            "fields",
+            "Filled triangle contours",
+            "Declared boundaries define three filled bands.",
+            "지정 경계가 채워진 세 띠를 정의합니다.",
+        ),
+        (
+            "trisurf",
+            "three-dimensional",
+            "Triangulated surface",
+            "The surface uses the literal vertex heights and faces.",
+            "지정한 정점 높이와 삼각형으로 표면을 그립니다.",
+        ),
+        (
+            "barbs",
+            "series",
+            "Speed barbs",
+            "Point-length staffs encode signed component vectors.",
+            "포인트 길이의 바브가 부호 있는 성분 벡터를 나타냅니다.",
+        ),
+        (
+            "streamplot",
+            "fields",
+            "Seeded streamlines",
+            "Three seeds trace the horizontal native vector field.",
+            "세 시작점에서 수평 벡터장의 유선을 그립니다.",
+        ),
+        (
+            "quiver3d",
+            "three-dimensional",
+            "Spatial arrows",
+            "Shafts follow the declared raw displacement.",
+            "화살표 몸체가 지정한 원시 변위를 따릅니다.",
+        ),
+        (
+            "bar3d",
+            "three-dimensional",
+            "Signed spatial bars",
+            "One box descends from its independent base.",
+            "독립 기준점에서 내려가는 상자를 포함합니다.",
+        ),
+        (
+            "contour3d",
+            "three-dimensional",
+            "Spatial isolines",
+            "Isolines remain at their authored height levels.",
+            "등고선을 각각 지정한 높이에 표시합니다.",
+        ),
+        (
+            "contourf3d",
+            "three-dimensional",
+            "Projected contour bands",
+            "Height bands project onto a fixed horizontal plane.",
+            "높이 띠를 고정된 수평 평면에 투영합니다.",
+        ),
+        (
+            "voxels",
+            "three-dimensional",
+            "Occupied cells",
+            "Only occupied cells expose faces on nonuniform edges.",
+            "비균일 격자에서 점유 셀의 노출 면만 그립니다.",
+        ),
+        (
+            "patch",
+            "annotations",
+            "Anchored polygon",
+            "The polygon follows literal data coordinates.",
+            "다각형은 지정한 데이터 좌표를 따릅니다.",
+        ),
+        (
+            "table",
+            "annotations",
+            "Literal table",
+            "Labels and cell values remain literal and editable.",
+            "라벨과 셀 값은 그대로 편집할 수 있습니다.",
         ),
     )
 )
@@ -462,6 +639,21 @@ def gallery_markdown(image_prefix: str = "images/plots") -> str:
                 f"[Reference / 레퍼런스](REFERENCE.md#{example.name})",
                 "",
             ]
+    lines += [
+        "## Saved axis workflow / 저장 가능한 축 workflow",
+        "",
+        "[Executable N12 comparison](../examples/axis_controls.py) uses six native",
+        "panels for symlog/asinh/logit, major/minor ticks, a declared local clock,",
+        "Celsius/Fahrenheit, base-two frequency/reciprocal period and derived",
+        "length units. It saves PNG/SVG/PDF and JSON with edit/history/reopen.",
+        "These are axis controls, not extra registered layer types.",
+        "",
+        "[N12 실행 비교](../examples/axis_controls.py)는 여섯 native 패널의 눈금·",
+        "scale·clock·보조 단위와 PNG/SVG/PDF·JSON 편집/history/재개방을 제공합니다.",
+        "새 layer 개수를 늘리는 기능이 아니며 [유한 계약](FEATURE_COVERAGE.md)을",
+        "따릅니다. Isolated qualification and parent integration remain separate.",
+        "",
+    ]
     return "\n".join(lines).rstrip() + "\n"
 
 
