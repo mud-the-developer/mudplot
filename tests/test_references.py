@@ -9,6 +9,7 @@ import matplotlib
 
 matplotlib.use("Agg")
 
+import re
 import shutil
 import subprocess
 import sys
@@ -573,6 +574,46 @@ def _run(cmd: list[str], cwd) -> subprocess.CompletedProcess:
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, timeout=300)
 
 
+def _assert_paper_pass(proc, cmd, cwd, phase: str, log_name: str) -> None:
+    if proc.returncode == 0:
+        return
+
+    def excerpt(text: str, limit: int = 2400) -> str:
+        if len(text) <= limit:
+            return text
+        half = limit // 2
+        return f"{text[:half]}\n[... omitted ...]\n{text[-half:]}"
+
+    try:
+        with (cwd / log_name).open("rb") as log_file:
+            head = log_file.read(4096)
+            end = log_file.seek(0, 2)
+            if end > len(head):
+                log_file.seek(max(len(head), end - 4096))
+                head += b"\n[... omitted ...]\n" + log_file.read(4096)
+            log = head.decode("utf-8", errors="replace")
+    except OSError:
+        log = "(not available)"
+
+    first_error = ""
+    for stream in (proc.stdout, proc.stderr, log):
+        match = re.search(
+            r"(?im)^(?:!\s|[^\n]+:\d+:\s|(?:fatal )?error:\s)"
+            r"[^\n]*",
+            stream,
+        )
+        if match is not None:
+            first_error = stream[match.start() : match.start() + 800].rstrip()
+            break
+    assert proc.returncode == 0, (
+        f"TeX pass {phase}: {' '.join(cmd)} (exit {proc.returncode})\n"
+        f"First error context:\n{first_error or '(not found)'}\n"
+        f"stdout:\n{excerpt(proc.stdout)}\n"
+        f"stderr:\n{excerpt(proc.stderr)}\n"
+        f"{log_name}:\n{excerpt(log)}"
+    )
+
+
 def _compile_paper(tmp_path, engine: str, bibtool: str) -> None:
     """Run whichever engine/bibliography-tool pass sequence ``paper.tex``
     actually needs -- each combination has its own real-world compile
@@ -580,25 +621,29 @@ def _compile_paper(tmp_path, engine: str, bibtool: str) -> None:
     needs its own pass instead; tectonic resolves everything in one call).
     """
     if engine == "tectonic":
+        cmd = ["tectonic", "--keep-intermediates", "--print", "paper.tex"]
         proc = subprocess.run(
-            ["tectonic", "--keep-intermediates", "--print", "paper.tex"],
+            cmd,
             cwd=tmp_path,
             capture_output=True,
             text=True,
             timeout=600,
         )
-        assert proc.returncode == 0, proc.stderr[-3000:]
+        _assert_paper_pass(proc, cmd, tmp_path, "1/1", "paper.log")
         assert "Citation" not in proc.stderr or "undefined" not in proc.stderr
         return
-    passes = [
-        [engine, "-interaction=nonstopmode", "paper.tex"],
-        [bibtool, "paper"],
-        [engine, "-interaction=nonstopmode", "paper.tex"],
-        [engine, "-interaction=nonstopmode", "paper.tex"],
+    latex = [
+        engine,
+        "-interaction=nonstopmode",
+        "-halt-on-error",
+        "-file-line-error",
+        "paper.tex",
     ]
-    for cmd in passes:
+    passes = [latex, [bibtool, "paper"], latex, latex]
+    for number, cmd in enumerate(passes, 1):
         proc = _run(cmd, tmp_path)
-        assert proc.returncode == 0, f"{' '.join(cmd)}:\n{proc.stdout[-3000:]}"
+        log_name = "paper.blg" if number == 2 else "paper.log"
+        _assert_paper_pass(proc, cmd, tmp_path, f"{number}/4", log_name)
 
 
 @needs_tex
@@ -839,7 +884,10 @@ def test_multiline_references_compile_with_one_citation_and_real_links(tmp_path,
         "\\usepackage[paperwidth=7in,paperheight=9in,margin=.5in]{geometry}\n"
         "\\usepackage{pgf}\n"
         "\\def\\mathdefault#1{#1}\n"
-        "\\usepackage[strings]{underscore}\n" + fonts + "\\input{preamble.tex}\n"
+        # Font paths can contain underscores (for example in uv's cache).
+        # Read the paths before the underscore package changes their catcode.
+        + fonts
+        + "\\usepackage[strings]{underscore}\n\\input{preamble.tex}\n"
         "\\newcounter{figurecitations}\n"
         "\\renewcommand{\\figcite}[1]{\\stepcounter{figurecitations}\\cite{#1}}\n"
         "\\begin{document}\n"
